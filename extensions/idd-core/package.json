@@ -1,0 +1,128 @@
+{
+  "name": "idd-core",
+  "displayName": "IDD Core",
+  "description": "Intent Driven Development — captura, geração e verificação de intenções",
+  "version": "0.1.0",
+  "publisher": "idd-ide",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "idd.newIntent",
+        "title": "IDD: Nova Intenção"
+      },
+      {
+        "command": "idd.generateCode",
+        "title": "IDD: Gerar Código"
+      },
+      {
+        "command": "idd.verify",
+        "title": "IDD: Verificar Alinhamento"
+      },
+      {
+        "command": "idd.openGraph",
+        "title": "IDD: Abrir Intent Graph"
+      },
+      {
+        "command": "idd.openCapture",
+        "title": "IDD: Abrir Painel de Captura"
+      }
+    ],
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "idd-sidebar",
+          "title": "IDD",
+          "icon": "media/idd-icon.svg"
+        }
+      ]
+    },
+    "views": {
+      "idd-sidebar": [
+        {
+          "id": "idd.intentTree",
+          "name": "Intenções",
+          "type": "tree"
+        },
+        {
+          "id": "idd.driftPanel",
+          "name": "Drift Ativo",
+          "type": "tree"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "IDD IDE",
+      "properties": {
+        "idd.anthropicApiKey": {
+          "type": "string",
+          "default": "",
+          "description": "Chave de API Anthropic (ou use variável ANTHROPIC_API_KEY)"
+        },
+        "idd.model": {
+          "type": "string",
+          "default": "claude-sonnet-4-20250514",
+          "description": "Modelo Claude a usar no Intent Engine"
+        },
+        "idd.autoVerify": {
+          "type": "boolean",
+          "default": true,
+          "description": "Verificar alinhamento automaticamente ao salvar"
+        },
+        "idd.blockCommitOnDrift": {
+          "type": "boolean",
+          "default": true,
+          "description": "Bloquear commit via pre-commit hook quando houver drift crítico"
+        }
+      }
+    },
+    "languages": [
+      {
+        "id": "intent-yaml",
+        "aliases": [
+          "Intent YAML",
+          "intent"
+        ],
+        "extensions": [
+          ".intent.yaml"
+        ],
+        "configuration": "./language-configuration.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "intent-yaml",
+        "scopeName": "source.intent.yaml",
+        "path": "./syntaxes/intent-yaml.tmGrammar.json"
+      }
+    ]
+  },
+  "scripts": {
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "lint": "eslint src --ext ts",
+    "test": "node ./out/test/runTest.js"
+  },
+  "dependencies": {
+    "better-sqlite3": "^9.4.3",
+    "js-yaml": "^4.1.0",
+    "uuid": "^9.0.0"
+  },
+  "devDependencies": {
+    "@types/better-sqlite3": "^7.6.8",
+    "@types/js-yaml": "^4.0.9",
+    "@types/node": "^20.19.41",
+    "@types/uuid": "^9.0.7",
+    "@types/vscode": "^1.120.0",
+    "typescript": "^5.9.3"
+  }
+}

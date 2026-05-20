@@ -1,0 +1,12 @@
+node_modules/
+dist/
+out/
+*.js.map
+*.d.ts
+coverage/
+.idd/store.db
+.idd/snapshots/
+*.zip
+*.vsix
+.env
+.env.local

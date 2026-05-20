@@ -1,0 +1,62 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://idd-ide.dev/schemas/intent.schema.json",
+  "title": "IDD Intent",
+  "description": "Schema de um arquivo .intent.yaml do paradigma Intent Driven Development",
+  "type": "object",
+  "required": ["intent", "module", "constraints", "acceptance"],
+  "additionalProperties": false,
+  "properties": {
+    "intent": {
+      "type": "string",
+      "minLength": 10,
+      "description": "Declaração da intenção em linguagem natural. Descreva o QUÊ, não o COMO."
+    },
+    "module": {
+      "type": "string",
+      "pattern": "^[a-z0-9-]+/[a-z0-9-]+$",
+      "description": "Caminho do módulo no formato 'dominio/funcionalidade' (ex: auth/login)"
+    },
+    "constraints": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "type": "string", "minLength": 5 },
+      "description": "Regras de negócio e limites que o código DEVE respeitar obrigatoriamente"
+    },
+    "acceptance": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "type": "string", "minLength": 5 },
+      "description": "Critérios de aceite — cada item vira um teste automaticamente"
+    },
+    "depends_on": {
+      "type": "array",
+      "items": { "type": "string", "pattern": "^[a-z0-9-]+/[a-z0-9-]+$" },
+      "description": "Intenções que este módulo consome (alimenta o Context Manager)"
+    },
+    "used_by": {
+      "type": "array",
+      "items": { "type": "string", "pattern": "^[a-z0-9-]+/[a-z0-9-]+$" },
+      "description": "Intenções que dependem deste módulo (para propagação de drift)"
+    },
+    "language": {
+      "type": "string",
+      "enum": ["typescript", "javascript", "python", "go", "rust", "java"],
+      "description": "Linguagem alvo do código gerado (auto-detectada se omitido)"
+    },
+    "framework": {
+      "type": "string",
+      "description": "Framework alvo (ex: express, fastapi, gin)"
+    },
+    "tags": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Tags para organização e filtragem no Intent Graph"
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$",
+      "description": "Versão semântica — gerenciada automaticamente pelo Intent Store"
+    }
+  }
+}
