@@ -31,9 +31,14 @@ const typescript: LangConfig = {
     'Testes com Vitest: import { describe, it, expect } from "vitest".',
   ],
   staticChecks: [
-    { pattern: /:\s*any\b/,             message: 'Uso de "any" — prefira tipos explícitos', severity: 'warn' },
-    { pattern: /require\s*\(/,          message: 'Use import ES modules em vez de require()', severity: 'warn' },
-    { pattern: /console\.log.*password/i, message: 'Credencial em console.log', severity: 'critical' },
+    { pattern: /:\s*any\b/,               message: 'Uso de "any" — prefira tipos explícitos',       severity: 'warn'     },
+    { pattern: /require\s*\(/,            message: 'Use import ES modules em vez de require()',      severity: 'warn'     },
+    { pattern: /console\.log.*(?:password|senha|secret|passwd)/i,
+                                          message: 'Credencial em console.log',                     severity: 'critical' },
+    { pattern: /console\.log.*token/i,    message: 'Token exposto em log',                          severity: 'warn'     },
+    { pattern: /Math\.random\(\)/,        message: 'Math.random() não é seguro para criptografia',  severity: 'warn'     },
+    { pattern: /eval\s*\(/,              message: 'eval() — risco de injeção de código',            severity: 'critical' },
+    { pattern: /TODO|FIXME|HACK/,        message: 'Marcador de código incompleto presente',         severity: 'warn'     },
   ],
   testTemplate: (module, acceptance) => {
     const [, sub] = module.split('/');
