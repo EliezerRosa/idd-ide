@@ -95,7 +95,7 @@ export class Store {
     }
     const id = Math.random().toString(36).slice(2) + Date.now().toString(36);
     const intent: Intent = { id, module, sub, statement, status: 'ok', created_at: now, updated_at: now };
-    this.db.prepare('INSERT INTO intents VALUES (?,?,?,?,?,?,?)').run(
+    this.db.prepare('INSERT INTO intents (id,module,sub,statement,status,created_at,updated_at) VALUES (?,?,?,?,?,?,?)').run(
       intent.id, intent.module, intent.sub, intent.statement,
       intent.status, intent.created_at, intent.updated_at
     );
@@ -183,6 +183,8 @@ export class Store {
     return dest;
   }
 
+  // Mantido para compatibilidade com a extensão VS Code (1 nível apenas).
+  // Para resolução transitiva, use resolveContext() de src/lib/context.ts.
   getDependencyContext(dependsOn: string[]): Record<string, any> {
     const ctx: Record<string, any> = {};
     for (const dep of dependsOn) {
@@ -191,10 +193,16 @@ export class Store {
       if (!intent) continue;
       const versions    = this.getVersions(intent.id);
       const constraints = this.getConstraints(intent.id);
+      let depends_on: string[] = [];
+      try {
+        const snap = JSON.parse(versions[0]?.yaml_snapshot ?? '{}') as { depends_on?: string[] };
+        depends_on = snap.depends_on ?? [];
+      } catch { /* skip */ }
       ctx[dep] = {
         statement:   intent.statement,
         constraints: (constraints as any[]).map(c => c.text),
         version:     versions[0]?.version ?? 'n/a',
+        depends_on,
       };
     }
     return ctx;

@@ -5,6 +5,7 @@ import * as crypto from 'node:crypto';
 import yaml        from 'js-yaml';
 import { header, success, error, info, warn, row, spinner, footer, BOLD, RESET, PURPLE, GRAY } from '../lib/ui.ts';
 import { Store, findProjectRoot } from '../lib/store.ts';
+import { resolveContext, formatContextForPrompt } from '../lib/context.ts';
 
 interface IntentYaml {
   intent:      string;
@@ -40,8 +41,10 @@ function buildPrompt(intent: IntentYaml, depCtx: Record<string, any>) {
     `Nada fora do JSON. Sem blocos de código markdown ao redor.`,
   ].join('\n');
 
-  const depSection = Object.keys(depCtx).length > 0
-    ? `\n\nCONTEXTO DAS DEPENDÊNCIAS (use estes contratos):\n${JSON.stringify(depCtx, null, 2)}`
+  const depSection = depCtx.__formatted__
+    ? depCtx.__formatted__
+    : Object.keys(depCtx).length > 0
+    ? `\n\nCONTEXTO DAS DEPENDÊNCIAS:\n${JSON.stringify(depCtx, null, 2)}`
     : '';
 
   const user = [
@@ -153,7 +156,24 @@ export async function cmdGenerate(args: string[]): Promise<void> {
     row('critérios',   `${intent.acceptance.length}`);
 
     // Context Manager: dependências
-    const depCtx = buildDepContext(store, intent.depends_on ?? []);
+    // Context Manager: resolução transitiva + cache + detecção de conflitos
+    const ctxResult = await resolveContext(store, intent.depends_on ?? []);
+    const depCtx: Record<string, any> = {
+      ...ctxResult.deps,
+      __formatted__: formatContextForPrompt(ctxResult)
+    };
+
+    // Exibe conflitos detectados
+    if (ctxResult.conflicts.length > 0) {
+      for (const c of ctxResult.conflicts) {
+        warn(`Conflito de contrato: ${c.module_a} ↔ ${c.module_b} — ${c.reason}`);
+      }
+    }
+
+    // Log de cache
+    if (ctxResult.cached.length > 0) {
+      info(`Cache: ${ctxResult.cached.join(', ')}`);
+    }
     if (Object.keys(depCtx).length > 0) {
       row('contexto', Object.keys(depCtx).join(', '));
     }
@@ -233,21 +253,7 @@ function findRecursive(dir: string, ext: string): string[] {
   return results;
 }
 
-function buildDepContext(store: Store, deps: string[]): Record<string, any> {
-  const ctx: Record<string, any> = {};
-  for (const dep of deps) {
-    const [mod, sub] = dep.split('/');
-    const intent = store.getIntent(mod, sub);
-    if (!intent) continue;
-    const versions = store.getVersions(intent.id);
-    ctx[dep] = {
-      statement:   intent.statement,
-      constraints: store.getConstraints(intent.id).map((c: any) => c.text),
-      version:     versions[0]?.version ?? 'n/a',
-    };
-  }
-  return ctx;
-}
+// buildDepContext migrado para src/lib/context.ts
 
 function writeArtifact(filePath: string, content: string): void {
   if (!content?.trim()) return;
