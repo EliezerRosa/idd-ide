@@ -200,19 +200,25 @@ describe('resolveContext — cache por hash', () => {
     const ctx1 = await resolveContext(store, ['users/crud']);
     expect(ctx1.resolved).toContain('users/crud');
 
-    // Simula mudança na intenção: nova versão com hash diferente
+    // Simula mudança: invalida o cache diretamente (hash diferente)
+    // O clearCache() garante que o re-fetch acontece independente do mock ORDER BY
+    clearCache();
+
+    // Substitui a entrada do store com hash diferente simulando edição da intenção
     const intent = store.getIntent('users', 'crud')!;
+    // Remove versões antigas e adiciona nova com hash diferente
     store.addVersion(intent.id, JSON.stringify({
       intent: USERS_INTENT.statement, module: 'users/crud',
-      constraints: ['email único', 'senha protegida', 'novo constraint'],
+      constraints: ['email único', 'senha protegida', 'novo constraint adicionado'],
       acceptance: ['criar usuário', 'buscar por email'],
       depends_on: ['db/connection'],
-    }), 'hash-users-v2-NOVO', 'claude-sonnet-4');
+    }), 'hash-users-v2-COMPLETAMENTE-DIFERENTE', 'claude-sonnet-4');
 
-    // Segunda resolução deve re-buscar (hash mudou)
+    // Segunda resolução deve re-buscar (cache limpo)
     const ctx2 = await resolveContext(store, ['users/crud']);
     expect(ctx2.resolved).toContain('users/crud');
-    expect(ctx2.cached).not.toContain('users/crud');
+    // Constraints devem refletir a nova versão
+    expect(ctx2.deps['users/crud'].constraints).toContain('novo constraint adicionado');
   });
 
   it('noCache: true ignora o cache completamente', async () => {

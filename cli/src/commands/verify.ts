@@ -5,6 +5,7 @@ import yaml      from 'js-yaml';
 import { header, success, error, info, warn, row, table, footer, spinner,
          statusBadge, BOLD, RESET, RED, YELLOW, GRAY, GREEN } from '../lib/ui.ts';
 import { Store, findProjectRoot } from '../lib/store.ts';
+import { loadConfig } from '../lib/config.ts';
 
 interface IntentYaml {
   intent:      string;
@@ -144,7 +145,9 @@ async function verifySemantic(
 // ── Comando principal ────────────────────────────────────────────
 
 export async function cmdVerify(args: string[]): Promise<void> {
-  const failOnCritical = args.includes('--fail-on=critical');
+  const cfg            = loadConfig();
+  const failOnCritical = args.includes('--fail-on=critical') || cfg.fail_on === 'critical';
+  const threshold      = Number(args.find(a => a.startsWith('--threshold='))?.split('=')[1] ?? cfg.drift_threshold);
   const semantic       = args.includes('--semantic');
   const stagedOnly     = args.includes('--staged');
   const target         = args.find(a => !a.startsWith('--'));
@@ -216,19 +219,21 @@ export async function cmdVerify(args: string[]): Promise<void> {
       : critical ? 30 : staticViol.length > 0 ? 70 : 100;
 
     const status: 'ok' | 'warn' | 'drift' =
-      critical || (semantic && semanticScore < 50) ? 'drift' :
-      allViolations.length > 0 || missingTests.length > 0 ? 'warn' : 'ok';
+      critical || (semantic && semanticScore < threshold / 2) ? 'drift' :
+      allViolations.length > 0 || missingTests.length > 0 || (semantic && semanticScore < threshold) ? 'warn' : 'ok';
 
     results.push({
       module: intent.module, status, score,
       violations: allViolations, missingTests, filePath: codeFile
     });
 
-    // Atualiza store
+    // Atualiza store e grava score histórico
     const stored = store.getIntent(mod, sub);
     if (stored) {
       store.setStatus(stored.id, status);
       if (status === 'drift') store.recordDrift(stored.id, 'static');
+      const source = semantic ? 'semantic' : 'static';
+      store.recordAlignmentScore(stored.id, score, source);
     }
   }
 

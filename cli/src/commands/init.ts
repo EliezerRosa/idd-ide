@@ -2,6 +2,7 @@
 import * as fs   from 'node:fs';
 import * as path from 'node:path';
 import { header, success, info, warn, footer, row, BOLD, RESET, PURPLE } from '../lib/ui.ts';
+import { writeDefaultConfig } from '../lib/config.ts';
 
 const GITIGNORE_APPEND = `
 # IDD IDE
@@ -75,6 +76,10 @@ export async function cmdInit(args: string[]): Promise<void> {
     fs.writeFileSync(gitignorePath, GITIGNORE_APPEND.trim() + '\n');
     success('.gitignore criado');
   }
+
+  // 4.5. IDD config.yaml
+  writeDefaultConfig(cwd);
+  success('.idd/config.yaml criado');
 
   // 5. VS Code settings
   const vscodeDir      = path.join(cwd, '.vscode');

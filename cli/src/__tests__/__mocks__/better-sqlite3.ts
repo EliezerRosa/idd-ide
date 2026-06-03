@@ -103,20 +103,35 @@ class InMemoryDB {
     const orderMatch = sql.match(/ORDER BY (.+?)(?:\s+LIMIT|$)/i);
     if (orderMatch) {
       const parts = orderMatch[1].split(',').map(p => p.trim());
-      rows.sort((a, b) => {
+      // Preserve original indices for stable sort (tiebreaker = insertion order)
+      const indexed = rows.map((r, i) => ({ r, i }));
+      indexed.sort((a, b) => {
         for (const part of parts) {
           const [col, dir] = part.split(' ');
-          const av = a[col], bv = b[col];
+          const av = a.r[col], bv = b.r[col];
           const cmp = String(av ?? '') < String(bv ?? '') ? -1 :
                       String(av ?? '') > String(bv ?? '') ? 1 : 0;
           if (cmp !== 0) return dir?.toUpperCase() === 'DESC' ? -cmp : cmp;
         }
-        return 0;
+        // Tiebreaker: DESC = last inserted first; ASC = first inserted first
+        const hasDesc = parts.some(p => p.toUpperCase().endsWith('DESC'));
+        return hasDesc ? b.i - a.i : a.i - b.i;
       });
+      rows = indexed.map(x => x.r);
     }
 
-    const limitMatch = sql.match(/LIMIT (\d+)/i);
-    if (limitMatch) rows = rows.slice(0, parseInt(limitMatch[1]));
+    // LIMIT: can be literal or ? (any remaining params after WHERE are consumed)
+    const limitLiteral = sql.match(/LIMIT (\d+)/i);
+    const limitParam   = sql.match(/LIMIT \?/i);
+    if (limitParam) {
+      // Find remaining unconsumed params
+      const whereParamCount = (sql.match(/\?/g) || []).length - 1; // subtract LIMIT ?
+      const consumed = Math.min(whereParamCount, params.length);
+      const limitVal  = params[consumed];
+      if (limitVal !== undefined) rows = rows.slice(0, parseInt(String(limitVal)));
+    } else if (limitLiteral) {
+      rows = rows.slice(0, parseInt(limitLiteral[1]));
+    }
 
     // HAVING MAX(created_at) GROUP BY — simplificado: retorna último por intent_id
     if (/GROUP BY intent_id HAVING MAX/i.test(sql)) {
@@ -184,4 +199,37 @@ class MockDatabase {
   _copyTo(dest: string): void { this.db.copyTo(dest); }
 }
 
-export default MockDatabase;
+
+// ── Singleton per path (simula arquivo físico) ──────────────────
+const DB_INSTANCES = new Map<string, InMemoryDB>();
+
+function getOrCreate(dbPath: string): InMemoryDB {
+  if (!DB_INSTANCES.has(dbPath)) DB_INSTANCES.set(dbPath, new InMemoryDB());
+  return DB_INSTANCES.get(dbPath)!;
+}
+
+export function resetMockDb(dbPath?: string): void {
+  if (dbPath) DB_INSTANCES.delete(dbPath);
+  else DB_INSTANCES.clear();
+}
+
+class SingletonMockDatabase {
+  private db: InMemoryDB;
+  private _path: string;
+
+  constructor(dbPath: string) {
+    this._path = dbPath;
+    this.db    = getOrCreate(dbPath);
+  }
+
+  exec(sql: string): void                    { this.db.exec(sql); }
+  prepare(sql: string): Statement            { return new Statement(this.db, sql); }
+  close(): void                              { /* keep data alive for other handles */ }
+  _getDbPath(): string                       { return this._path; }
+  _copyTo(dest: string): void               { this.db.copyTo(dest); }
+}
+
+export default SingletonMockDatabase as unknown as typeof MockDatabase;
+
+// Register alignment_scores table schema
+TABLE_SCHEMAS['alignment_scores'] = ['id','intent_id','score','source','recorded_at'];

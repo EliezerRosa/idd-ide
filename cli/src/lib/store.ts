@@ -207,4 +207,33 @@ export class Store {
     }
     return ctx;
   }
+
+  // ── Alignment score history (issue #2) ──────────────────────
+
+  recordAlignmentScore(intentId: string, score: number, source: 'static' | 'semantic'): void {
+    const id  = createHash('sha256').update(intentId + Date.now() + Math.random()).digest('hex').slice(0, 16);
+    const now = new Date().toISOString();
+    this.db.prepare(
+      'INSERT INTO alignment_scores (id,intent_id,score,source,recorded_at) VALUES (?,?,?,?,?)'
+    ).run(id, intentId, score, source, now);
+  }
+
+  getAlignmentHistory(intentId: string, limit = 30): Array<{ score: number; source: string; recorded_at: string }> {
+    return this.db.prepare(
+      'SELECT score, source, recorded_at FROM alignment_scores WHERE intent_id=? ORDER BY recorded_at DESC LIMIT ?'
+    ).all(intentId, limit) as Array<{ score: number; source: string; recorded_at: string }>;
+  }
+
+  getAlignmentStats(intentId: string): { avg: number; min: number; max: number; trend: 'up' | 'down' | 'stable' } {
+    const history = this.getAlignmentHistory(intentId, 10);
+    if (history.length === 0) return { avg: 100, min: 100, max: 100, trend: 'stable' };
+    const scores = history.map(h => h.score);
+    const avg    = Math.round(scores.reduce((a, b) => a + b, 0) / scores.length);
+    const min    = Math.min(...scores);
+    const max    = Math.max(...scores);
+    const trend  = scores.length < 2 ? 'stable' :
+                   scores[0] > scores[scores.length - 1] ? 'up'   :
+                   scores[0] < scores[scores.length - 1] ? 'down' : 'stable';
+    return { avg, min, max, trend };
+  }
 }
