@@ -152,19 +152,71 @@ export class Store {
 
   getGraphData(): { nodes: any[]; edges: any[] } {
     const intents = this.listIntents();
-    const nodes = intents.map(i => ({ id: `${i.module}-${i.sub}`, module: i.module, sub: i.sub, status: i.status }));
-    const edges: any[] = [];
+    const drifts  = new Set((this.getActiveDrifts() ?? []).map((d: any) => d.intent_id));
+    const nodes:  any[] = [];
+    const edges:  any[] = [];
+
     for (const intent of intents) {
-      const v = this.getVersions(intent.id)[0];
-      if (!v) continue;
-      try {
-        const snap = JSON.parse(v.yaml_snapshot) as { depends_on?: string[] };
-        const fromId = `${intent.module}-${intent.sub}`;
-        for (const dep of snap.depends_on ?? []) {
-          edges.push({ from: dep.replace('/', '-'), to: fromId });
-        }
-      } catch { /* skip */ }
+      const versions    = this.getVersions(intent.id);
+      const constraints = this.getConstraints(intent.id);
+      let depends_on:   string[] = [];
+      let criteria:     number   = 0;
+
+      if (versions[0]?.yaml_snapshot) {
+        try {
+          const snap = JSON.parse(versions[0].yaml_snapshot) as {
+            depends_on?: string[]; acceptance?: string[];
+          };
+          depends_on = snap.depends_on ?? [];
+          criteria    = snap.acceptance?.length ?? 0;
+        } catch { /* skip */ }
+      }
+
+      // Alignment stats
+      const history   = this.getAlignmentHistory(intent.id, 5);
+      const scores    = history.map((h: any) => h.score);
+      const avg_score = scores.length > 0
+        ? Math.round(scores.reduce((a: number, b: number) => a + b, 0) / scores.length)
+        : 100;
+      const trend = scores.length < 2 ? 'stable' :
+        scores[0] > scores[scores.length - 1] ? 'up'   :
+        scores[0] < scores[scores.length - 1] ? 'down' : 'stable';
+
+      nodes.push({
+        id:          `${intent.module}-${intent.sub}`,
+        module:       intent.module,
+        sub:          intent.sub,
+        status:       intent.status,
+        statement:    intent.statement,
+        constraints:  constraints.length,
+        criteria,
+        versions:     versions.length,
+        depends_on,
+        used_by:      [] as string[],
+        avg_score,
+        trend,
+      });
+
+      // Edges — drift flag based on current intent status
+      const fromId = `${intent.module}-${intent.sub}`;
+      for (const dep of depends_on) {
+        edges.push({
+          from:  dep.replace('/', '-'),
+          to:    fromId,
+          drift: intent.status === 'drift',
+        });
+      }
     }
+
+    // Populate used_by
+    for (const node of nodes) {
+      for (const dep of node.depends_on as string[]) {
+        const depKey  = dep.replace('/', '-');
+        const depNode = nodes.find((n: any) => n.id === depKey);
+        if (depNode) depNode.used_by.push(`${node.module}/${node.sub}`);
+      }
+    }
+
     return { nodes, edges };
   }
 

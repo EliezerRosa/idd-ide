@@ -38,9 +38,23 @@ export interface DriftEvent {
   resolution:    'fixed' | 'updated_intent' | 'ignored' | null;
 }
 
+export interface GraphNode {
+  id:           string;
+  module:       string;
+  sub:          string;
+  status:       string;
+  statement:    string;
+  constraints:  number;
+  criteria:     number;
+  versions:     number;
+  depends_on:   string[];
+  used_by:      string[];
+  avg_score:    number;
+  trend:        string;
+}
 export interface GraphData {
-  nodes: Array<{ id: string; module: string; sub: string; status: string }>;
-  edges: Array<{ from: string; to: string }>;
+  nodes: GraphNode[];
+  edges: Array<{ from: string; to: string; drift: boolean }>;
 }
 
 type ChangeListener = () => void;
@@ -101,6 +115,13 @@ export class IntentStore {
         detected_at   TEXT NOT NULL,
         resolved_at   TEXT,
         resolution    TEXT
+      );
+      CREATE TABLE IF NOT EXISTS alignment_scores (
+        id          TEXT PRIMARY KEY,
+        intent_id   TEXT REFERENCES intents(id),
+        score       INTEGER NOT NULL,
+        source      TEXT NOT NULL DEFAULT 'static',
+        recorded_at TEXT NOT NULL
       );
     `);
   }
@@ -230,24 +251,75 @@ export class IntentStore {
   // ── Graph data ───────────────────────────────────────────────
 
   getGraphData(): GraphData {
-    const intents = this.listIntents();
-    const nodes = intents.map(i => ({
-      id: `${i.module}-${i.sub}`, module: i.module, sub: i.sub, status: i.status
-    }));
+    const intents  = this.listIntents();
+    const drifts   = new Set((this.getActiveDrifts() ?? []).map((d: any) => d.intent_id));
+    const nodes:   GraphNode[] = [];
+    const edges:   Array<{ from: string; to: string; drift: boolean }> = [];
 
-    // Reconstruir arestas a partir dos snapshots yaml
-    const edges: Array<{ from: string; to: string }> = [];
-    for (const v of this.db?.prepare(
-      "SELECT intent_id, yaml_snapshot FROM intent_versions GROUP BY intent_id HAVING MAX(created_at)"
-    ).all() ?? []) {
-      try {
-        const yaml = JSON.parse(v.yaml_snapshot) as { module?: string; depends_on?: string[] };
-        const moduleKey = yaml.module?.replace('/', '-');
-        for (const dep of yaml.depends_on ?? []) {
-          edges.push({ from: dep.replace('/', '-'), to: moduleKey! });
+    for (const intent of intents) {
+      const versions     = this.getVersions(intent.id);
+      const constraints  = this.getConstraints(intent.id);
+      let depends_on:    string[] = [];
+      let criteria:      number   = 0;
+
+      if (versions[0]?.yaml_snapshot) {
+        try {
+          const snap = JSON.parse(versions[0].yaml_snapshot) as {
+            depends_on?: string[]; acceptance?: string[];
+          };
+          depends_on = snap.depends_on ?? [];
+          criteria    = snap.acceptance?.length ?? 0;
+        } catch { /* skip */ }
+      }
+
+      // Alignment stats
+      let avg_score = 100;
+      let trend     = 'stable';
+      if (this.db) {
+        const scores = this.db.prepare(
+          'SELECT score FROM alignment_scores WHERE intent_id=? ORDER BY recorded_at DESC LIMIT 5'
+        ).all(intent.id) as Array<{ score: number }>;
+        if (scores.length > 0) {
+          avg_score = Math.round(scores.reduce((s, r) => s + r.score, 0) / scores.length);
+          trend     = scores.length >= 2
+            ? scores[0].score > scores[scores.length - 1].score ? 'up'
+            : scores[0].score < scores[scores.length - 1].score ? 'down' : 'stable'
+            : 'stable';
         }
-      } catch { /* yaml não parseável */ }
+      }
+
+      nodes.push({
+        id:          `${intent.module}-${intent.sub}`,
+        module:       intent.module,
+        sub:          intent.sub,
+        status:       intent.status,
+        statement:    intent.statement,
+        constraints:  constraints.length,
+        criteria,
+        versions:     versions.length,
+        depends_on,
+        used_by:      [],
+        avg_score,
+        trend,
+      });
+
+      // Build edges
+      const fromKey = `${intent.module}-${intent.sub}`;
+      for (const dep of depends_on) {
+        const toKey = dep.replace('/', '-');
+        edges.push({ from: toKey, to: fromKey, drift: drifts.has(intent.id) });
+      }
     }
+
+    // Fill used_by
+    for (const node of nodes) {
+      for (const dep of node.depends_on) {
+        const depKey  = dep.replace('/', '-');
+        const depNode = nodes.find(n => n.id === depKey);
+        if (depNode) depNode.used_by.push(`${node.module}/${node.sub}`);
+      }
+    }
+
     return { nodes, edges };
   }
 
