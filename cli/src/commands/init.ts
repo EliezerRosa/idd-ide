@@ -130,10 +130,116 @@ export async function cmdInit(args: string[]): Promise<void> {
     info('Execute "git init" e depois "idd init" novamente');
   }
 
+  // 7. GitHub Actions workflow
+  const isGithubRepo = fs.existsSync(path.join(cwd, '.git'));
+  if (isGithubRepo) {
+    const created = writeWorkflow(cwd);
+    if (created) success('.github/workflows/idd-verify.yml criado');
+    else         info('.github/workflows/idd-verify.yml já existe — pulando');
+  }
+
+  // 8. Badge no README
+  const badge = writeBadge(cwd);
+  if (badge === 'created')  success('Badge IDD adicionado ao README.md');
+  else if (badge === 'skipped') info('README.md já contém badge IDD — pulando');
+  else                          info('README.md não encontrado — badge não adicionado');
+
   console.log('');
   row('Projeto inicializado em', cwd);
+  row('Workflow CI',   '.github/workflows/idd-verify.yml');
+  row('Pre-commit',    'idd verify --fail-on=critical');
+  row('Configuração', '.idd/config.yaml');
 
-  footer('Próximo passo: edite src/example/hello.intent.yaml e execute "idd generate"');
+  footer([
+    'Próximo passo: edite src/example/hello.intent.yaml e execute "idd generate"',
+    'CI/CD: adicione ANTHROPIC_API_KEY aos Secrets do repositório GitHub',
+    'Docs: https://github.com/EliezerRosa/idd-ide/blob/main/docs/CI.md',
+  ].join('\n  '));
+}
+
+function writeWorkflow(cwd: string): boolean {
+  const workflowDir  = path.join(cwd, '.github', 'workflows');
+  const workflowPath = path.join(workflowDir, 'idd-verify.yml');
+  if (fs.existsSync(workflowPath)) return false;
+  fs.mkdirSync(workflowDir, { recursive: true });
+
+  const yaml = [
+    '# IDD IDE — Workflow de verificação contínua de alinhamento',
+    '# Documentação: https://github.com/EliezerRosa/idd-ide/blob/main/docs/CI.md',
+    'name: IDD Verify',
+    '',
+    'on:',
+    '  push:',
+    '    branches: ["main", "develop", "feature/**"]',
+    '  pull_request:',
+    '    branches: ["main", "develop"]',
+    '',
+    'jobs:',
+    '  verify:',
+    '    name: Verificar alinhamento de intenções',
+    '    runs-on: ubuntu-latest',
+    '',
+    '    steps:',
+    '      - name: Checkout',
+    '        uses: actions/checkout@v4',
+    '',
+    '      - name: Setup Node.js',
+    '        uses: actions/setup-node@v4',
+    '        with:',
+    '          node-version: "20"',
+    '          cache: "npm"',
+    '          cache-dependency-path: "cli/package-lock.json"',
+    '',
+    '      - name: Instalar IDD CLI',
+    '        run: |',
+    '          cd cli',
+    '          npm ci --ignore-scripts',
+    '          npm run build',
+    '          npm link',
+    '',
+    '      - name: Verificar alinhamento (análise estática)',
+    '        run: idd verify --fail-on=critical',
+    '',
+    '      - name: Verificar alinhamento (semântico, se API key presente)',
+    '        if: ${{ secrets.ANTHROPIC_API_KEY != \'\' }}',
+    '        run: idd verify --semantic --fail-on=critical',
+    '        env:',
+    '          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}',
+    '',
+    '      - name: Exibir estatísticas de alinhamento',
+    '        if: always()',
+    '        run: idd stats',
+    '        env:',
+    '          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}',
+  ].join('\n');
+
+  fs.writeFileSync(workflowPath, yaml + '\n', 'utf8');
+  return true;
+}
+
+function writeBadge(cwd: string): 'created' | 'skipped' | 'notfound' {
+  const readmePath = path.join(cwd, 'README.md');
+  if (!fs.existsSync(readmePath)) return 'notfound';
+  const content = fs.readFileSync(readmePath, 'utf8');
+  if (content.includes('IDD Verify')) return 'skipped';
+
+  const repoName = path.basename(cwd);
+  const badge = [
+    '',
+    '[![IDD Verify](https://github.com/EliezerRosa/' + repoName + '/actions/workflows/idd-verify.yml/badge.svg)](https://github.com/EliezerRosa/' + repoName + '/actions/workflows/idd-verify.yml)',
+    '',
+  ].join('\n');
+
+  // Insert badge after first H1 or at the top
+  const h1Match = content.match(/^# .+$/m);
+  if (h1Match && h1Match.index !== undefined) {
+    const insertAt = h1Match.index + h1Match[0].length;
+    const updated  = content.slice(0, insertAt) + badge + content.slice(insertAt);
+    fs.writeFileSync(readmePath, updated, 'utf8');
+  } else {
+    fs.writeFileSync(readmePath, badge.trimStart() + content, 'utf8');
+  }
+  return 'created';
 }
 
 function writeHook(hookPath: string, lines: string[]): void {

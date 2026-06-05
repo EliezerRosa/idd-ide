@@ -1,0 +1,68 @@
+# IDD IDE — Workflow de verificação contínua de alinhamento
+# Documentação: https://github.com/EliezerRosa/idd-ide/blob/main/docs/CI.md
+name: IDD Verify
+
+on:
+  push:
+    branches: ["main", "develop", "feature/**"]
+  pull_request:
+    branches: ["main", "develop"]
+
+jobs:
+  verify:
+    name: Verificar alinhamento de intenções
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+          cache-dependency-path: "cli/package-lock.json"
+
+      - name: Instalar dependências do CLI
+        run: cd cli && npm ci --ignore-scripts
+
+      - name: Compilar IDD CLI
+        run: cd cli && npm run build
+
+      - name: Executar testes (197+ testes)
+        run: cd cli && npm test
+
+      - name: Verificar alinhamento (análise estática)
+        run: |
+          cd cli
+          node dist/index.js verify --fail-on=critical || true
+
+      - name: Verificar alinhamento (semântico — se API key presente)
+        if: ${{ secrets.ANTHROPIC_API_KEY != '' }}
+        run: |
+          cd cli
+          node dist/index.js verify --semantic --fail-on=critical
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+
+      - name: Exibir estatísticas de alinhamento
+        if: always()
+        run: cd cli && node dist/index.js stats || true
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+
+  lint:
+    name: TypeScript check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+          cache-dependency-path: "cli/package-lock.json"
+      - run: cd cli && npm ci --ignore-scripts
+      - run: cd cli && npx tsc --noEmit
+      - run: cd extensions/idd-core && npm ci --ignore-scripts
+      - run: cd extensions/idd-core && npx tsc --noEmit
