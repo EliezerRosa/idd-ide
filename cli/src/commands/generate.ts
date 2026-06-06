@@ -6,6 +6,7 @@ import yaml        from 'js-yaml';
 import { header, success, error, info, warn, row, spinner, footer, BOLD, RESET, PURPLE, GRAY } from '../lib/ui.ts';
 import { Store, findProjectRoot } from '../lib/store.ts';
 import { resolveContext, formatContextForPrompt } from '../lib/context.ts';
+import { getLangConfig, autoDetectLanguage, buildLangPrompt, Language } from '../lib/lang.ts';
 
 interface IntentYaml {
   intent:      string;
@@ -41,6 +42,8 @@ function buildPrompt(intent: IntentYaml, depCtx: Record<string, any>) {
     `Nada fora do JSON. Sem blocos de código markdown ao redor.`,
   ].join('\n');
 
+  const lang    = (intent.language ?? 'typescript') as Language;
+  const langHints = buildLangPrompt(lang, intent.framework);
   const depSection = depCtx.__formatted__
     ? depCtx.__formatted__
     : Object.keys(depCtx).length > 0
@@ -50,7 +53,8 @@ function buildPrompt(intent: IntentYaml, depCtx: Record<string, any>) {
   const user = [
     `INTENÇÃO: ${intent.intent}`,
     `MÓDULO: ${intent.module}`,
-    `LINGUAGEM: ${intent.language ?? 'typescript'}${intent.framework ? ` + ${intent.framework}` : ''}`,
+    `LINGUAGEM: ${lang}${intent.framework ? ` + ${intent.framework}` : ''}`,
+    `CONVENÇÕES:\n${langHints}`,
     ``,
     `CONSTRAINTS (todas obrigatórias):`,
     ...intent.constraints.map((c, i) => `  ${i + 1}. ${c}`),
@@ -197,8 +201,15 @@ export async function cmdGenerate(args: string[]): Promise<void> {
     // Gravar artefatos
     const dir    = path.dirname(yamlPath);
     const [, sub] = intent.module.split('/');
-    const ext     = intent.language === 'python' ? 'py' : 'ts';
-    const testSfx = intent.language === 'python' ? '_test.py' : '.test.ts';
+    // Auto-detecta linguagem se não declarada no .intent.yaml
+    const resolvedLang = (intent.language
+      ?? autoDetectLanguage(dir)
+      ?? 'typescript') as Language;
+    const langCfg = getLangConfig(resolvedLang);
+    const ext     = langCfg.ext;
+    const testSfx = resolvedLang === 'go' ? `_test.${ext}` :
+                    resolvedLang === 'python' ? `_test.py` :
+                    `.${langCfg.testExt}`;
 
     writeArtifact(path.join(dir, `${sub}.${ext}`),   result.code);
     writeArtifact(path.join(dir, `${sub}${testSfx}`), result.tests);

@@ -1,3 +1,4 @@
+import * as fs from 'node:fs';
 // src/lib/lang.ts — suporte multi-linguagem para o Intent Engine
 
 export type Language = 'typescript' | 'python' | 'go' | 'javascript' | 'rust' | 'java';
@@ -65,16 +66,26 @@ const python: LangConfig = {
     'Levante exceções específicas — nunca capturar Exception genérica sem re-raise.',
   ],
   staticChecks: [
-    { pattern: /print\s*\(.*(?:password|senha|secret)/i,
+    { pattern: /print\s*\(.*(?:password|senha|secret|passwd)/i,
       message: 'Credencial em print()', severity: 'critical' },
+    { pattern: /logging\.(?:info|debug|warning).*(?:password|senha|secret)/i,
+      message: 'Credencial em log', severity: 'critical' },
     { pattern: /except\s+Exception\s*:/,
-      message: 'Captura genérica de Exception — seja específico', severity: 'warn' },
+      message: 'Captura genérica de Exception — use exceção específica', severity: 'warn' },
+    { pattern: /except\s*:/,
+      message: 'Bare except — capture exceções específicas', severity: 'warn' },
     { pattern: /eval\s*\(/,
       message: 'eval() — risco de injeção de código', severity: 'critical' },
     { pattern: /pickle\.loads/,
       message: 'pickle.loads() inseguro com dados não confiáveis', severity: 'warn' },
     { pattern: /os\.system\s*\(/,
       message: 'os.system() — prefira subprocess com lista de args', severity: 'warn' },
+    { pattern: /subprocess\.call\(.*shell=True/,
+      message: 'shell=True em subprocess — risco de injeção', severity: 'critical' },
+    { pattern: /#\s*type:\s*ignore/,
+      message: '# type: ignore suprime verificação de tipos', severity: 'warn' },
+    { pattern: /assert\s+.+,?.*\btest\b/i,
+      message: 'Usar pytest.raises() em vez de assert para testes de exceção', severity: 'warn' },
   ],
   testTemplate: (module, acceptance) => {
     const [, sub] = module.split('/');
@@ -102,14 +113,24 @@ const go: LangConfig = {
     'Nomes exportados têm documentação GoDoc.',
   ],
   staticChecks: [
-    { pattern: /fmt\.Print.*(?:password|senha|secret)/i,
+    { pattern: /fmt\.(?:Print|Println|Printf).*(?:password|senha|secret|passwd)/i,
       message: 'Credencial em fmt.Print', severity: 'critical' },
-    { pattern: /log\.Print.*(?:password|senha|secret)/i,
+    { pattern: /log\.(?:Print|Println|Printf).*(?:password|senha|secret|passwd)/i,
       message: 'Credencial em log.Print', severity: 'critical' },
-    { pattern: /err\s*==\s*nil\s*\{[\s\S]{0,20}panic/,
-      message: 'panic() como tratamento de erro — use retorno de erro', severity: 'warn' },
+    { pattern: /\.Fatal\(err\)|log\.Fatal\(/,
+      message: 'log.Fatal() — use retorno de erro em vez de matar o processo', severity: 'warn' },
+    { pattern: /panic\s*\(/,
+      message: 'panic() — use retorno de error para fluxo normal', severity: 'warn' },
+    { pattern: /\.\s*Unwrap\(\)\s*\.|err\.\(\*.*\)\.Msg/,
+      message: 'Unwrap manual de error — prefira errors.As()', severity: 'warn' },
     { pattern: /interface\s*\{\s*\}/,
-      message: 'interface{} — prefira any (Go 1.18+) ou tipo específico', severity: 'warn' },
+      message: 'interface{} vago — use any (Go 1.18+) ou tipo específico', severity: 'warn' },
+    { pattern: /\/\/\s*nolint/,
+      message: '//nolint suprime análise estática — documente o motivo', severity: 'warn' },
+    { pattern: /os\.Getenv\(.*(?:password|secret|key)/i,
+      message: 'Variável de ambiente sensível — use vault ou secret manager', severity: 'warn' },
+    { pattern: /http\.DefaultClient\b/,
+      message: 'http.DefaultClient sem timeout — crie cliente com timeout explícito', severity: 'warn' },
   ],
   testTemplate: (module, acceptance) => {
     const [pkg, sub] = module.split('/');
@@ -206,6 +227,30 @@ const LANG_MAP: Record<Language, LangConfig> = {
 export function getLangConfig(language?: string): LangConfig {
   const lang = (language ?? 'typescript').toLowerCase() as Language;
   return LANG_MAP[lang] ?? typescript;
+}
+
+export function autoDetectLanguage(moduleDir: string): Language | null {
+  if (!fs.existsSync(moduleDir)) return null;
+  const files = fs.readdirSync(moduleDir);
+  const extCounts: Record<string, number> = {};
+  for (const f of files) {
+    const ext = f.split('.').pop()?.toLowerCase();
+    if (ext && ext !== 'yaml' && ext !== 'md') {
+      extCounts[ext] = (extCounts[ext] ?? 0) + 1;
+    }
+  }
+  // Pick most common extension
+  const topExt = Object.entries(extCounts).sort((a, b) => b[1] - a[1])[0]?.[0];
+  if (!topExt) return null;
+  const map: Record<string, Language> = {
+    ts: 'typescript', tsx: 'typescript',
+    js: 'javascript', mjs: 'javascript',
+    py: 'python',
+    go: 'go',
+    rs: 'rust',
+    java: 'java',
+  };
+  return map[topExt] ?? null;
 }
 
 export function detectLanguage(filePath: string): Language {

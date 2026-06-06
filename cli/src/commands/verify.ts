@@ -6,6 +6,7 @@ import { header, success, error, info, warn, row, table, footer, spinner,
          statusBadge, BOLD, RESET, RED, YELLOW, GRAY, GREEN } from '../lib/ui.ts';
 import { Store, findProjectRoot } from '../lib/store.ts';
 import { loadConfig } from '../lib/config.ts';
+import { runStaticChecks, detectLanguage, autoDetectLanguage, Language } from '../lib/lang.ts';
 
 interface IntentYaml {
   intent:      string;
