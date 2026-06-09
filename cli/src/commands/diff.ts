@@ -83,14 +83,17 @@ function buildDiff(
   const currentLines = currentCode.split('\n');
   const result: DiffLine[] = [];
 
-  // Se temos o código gerado originalmente, fazemos diff real
-  // Caso contrário, apenas anotamos o código atual
+  // Use LCS diff when original baseline is available
+  if (intentCode !== null && intentCode.trim()) {
+    return computeLcsDiff(intentCode, currentCode);
+  }
+
+  // Fallback: annotate current code only
   for (let i = 0; i < currentLines.length; i++) {
     const line       = currentLines[i];
     const annotation = getAnnotation(line);
     const hasDrift   = INLINE_CHECKS.some(c => c.re.test(line) && c.kind === 'drift');
     const hasWarn    = INLINE_CHECKS.some(c => c.re.test(line) && c.kind === 'warn');
-
     result.push({
       lineNo:     i + 1,
       content:    line,
@@ -289,6 +292,8 @@ export async function cmdDiff(args: string[]): Promise<void> {
   const target    = args.find(a => !a.startsWith('--'));
   const semantic  = args.includes('--semantic');
   const splitView = !args.includes('--linear');
+  const sinceVer  = args.find(a => a.startsWith('--since='))?.split('=')[1];
+  const showVers  = args.includes('--versions');
 
   header('diff');
 
@@ -326,7 +331,35 @@ export async function cmdDiff(args: string[]): Promise<void> {
     const code = fs.readFileSync(codeFile, 'utf8');
 
     // Análise estática
-    const diff               = buildDiff(null, code, intent);
+
+    // Fetch original generated code for LCS diff
+    let originalCode: string | null = null;
+    const [_mod, _sub] = intent.module.split('/');
+    const _stored = store.getIntent(_mod, _sub);
+    if (_stored) {
+      const _versions = store.getVersions(_stored.id);
+      if (showVers) {
+        console.log('');
+        console.log('  Versoes de ' + intent.module + ':');
+        _versions.forEach((v, i) => {
+          const _date = new Date(v.created_at).toLocaleString('pt-BR');
+          const _tag  = i === 0 ? ' <- atual' : '';
+          console.log('  v' + v.version + _tag + '  ' + _date);
+        });
+        console.log('');
+        continue;
+      }
+      const _base = sinceVer
+        ? _versions.find(v => v.version === sinceVer)
+        : _versions[0];
+      if (_base?.yaml_snapshot) {
+        try {
+          const _snap = JSON.parse(_base.yaml_snapshot) as { _generated_code?: string };
+          if (_snap._generated_code) originalCode = _snap._generated_code;
+        } catch { /* no stored code */ }
+      }
+    }
+    const diff = buildDiff(originalCode, code, intent);
     const missingConstraints = findMissingConstraints(code, intent);
 
     // Análise semântica opcional
@@ -411,9 +444,11 @@ export async function cmdDiff(args: string[]): Promise<void> {
 
   store.close();
   footer([
-    '"idd diff --semantic"  → inclui análise via LLM',
-    '"idd diff --linear"    → vista linear em vez de split',
-    '"idd verify"           → verificação completa de todos os módulos',
+    '"idd diff --since=v1.0 <mod/sub>"  -> diff vs versao especifica do store',
+    '"idd diff --versions <mod/sub>"    -> lista versoes disponiveis',
+    '"idd diff --semantic"              -> inclui analise via LLM',
+    '"idd diff --linear"                -> vista linear com +/- por linha',
+    '"idd verify"                       -> verificacao completa',
   ].join('\n  '));
 }
 
@@ -456,4 +491,90 @@ function findAll(dir: string, ext: string): string[] {
     else if (entry.name.endsWith(ext)) results.push(full);
   }
   return results;
+}
+
+// ── LCS Diff Engine (issue #7) ──────────────────────────────────
+
+export interface LcsDiffLine {
+  lineNo:          number;
+  originalLineNo?: number;
+  content:         string;
+  kind:            'ok' | 'added' | 'removed' | 'drift' | 'warn';
+  annotation?:     string;
+}
+
+/** Myers LCS diff between two texts. */
+export function computeLcsDiff(original: string, current: string): LcsDiffLine[] {
+  // Normalise: remove single trailing empty string from split('\n')
+  const splitNorm = (s: string) => {
+    const arr = s.split('\n');
+    if (arr.length > 0 && arr[arr.length - 1] === '') arr.pop();
+    return arr;
+  };
+  const aLines = splitNorm(original);
+  const bLines = splitNorm(current);
+  const m = aLines.length;
+  const n = bLines.length;
+
+  const dp: number[][] = Array.from({ length: m + 1 }, () => new Array(n + 1).fill(0));
+  for (let i = 1; i <= m; i++) {
+    for (let j = 1; j <= n; j++) {
+      if (aLines[i - 1] === bLines[j - 1]) dp[i][j] = dp[i - 1][j - 1] + 1;
+      else dp[i][j] = Math.max(dp[i - 1][j], dp[i][j - 1]);
+    }
+  }
+
+  const ops: Array<{ op: 'eq' | 'add' | 'rm'; a: string; b: string; ai: number; bi: number }> = [];
+  let i = m, j = n;
+  while (i > 0 || j > 0) {
+    if (i > 0 && j > 0 && aLines[i - 1] === bLines[j - 1]) {
+      ops.unshift({ op: 'eq', a: aLines[i - 1], b: bLines[j - 1], ai: i, bi: j }); i--; j--;
+    } else if (j > 0 && (i === 0 || dp[i][j - 1] >= dp[i - 1][j])) {
+      ops.unshift({ op: 'add', a: '', b: bLines[j - 1], ai: i, bi: j }); j--;
+    } else {
+      ops.unshift({ op: 'rm', a: aLines[i - 1], b: '', ai: i, bi: j }); i--;
+    }
+  }
+
+  const FORBIDDEN_INLINE = [
+    { re: /console\.log\s*\(.*(?:password|senha|secret|passwd)/i, ann: 'DRIFT: credencial em log',    kind: 'drift' as const },
+    { re: /console\.log\s*\(.*token/i,                             ann: 'aviso: token em log',          kind: 'warn'  as const },
+    { re: /Math\.random\(\)/,                                       ann: 'aviso: nao seguro',            kind: 'warn'  as const },
+    { re: /eval\s*\(/,                                              ann: 'DRIFT: eval() inseguro',       kind: 'drift' as const },
+    { re: /TODO|FIXME|HACK/,                                        ann: 'aviso: codigo incompleto',     kind: 'warn'  as const },
+  ];
+
+  const annotate = (line: string, baseKind: LcsDiffLine['kind'] = 'ok'): { ann?: string; kind: LcsDiffLine['kind'] } => {
+    for (const { re, ann, kind } of FORBIDDEN_INLINE) {
+      if (re.test(line)) return { ann, kind };
+    }
+    return { kind: baseKind };
+  };
+
+  const result: LcsDiffLine[] = [];
+  let currentLineNo = 0;
+
+  for (const op of ops) {
+    if (op.op === 'rm') {
+      result.push({ lineNo: op.ai, originalLineNo: op.ai, content: op.a, kind: 'removed' });
+    } else if (op.op === 'add') {
+      currentLineNo++;
+      const { ann, kind } = annotate(op.b, 'added');
+      result.push({ lineNo: currentLineNo, content: op.b, kind, annotation: ann });
+    } else {
+      currentLineNo++;
+      const { ann, kind } = annotate(op.b);
+      result.push({ lineNo: currentLineNo, originalLineNo: op.ai, content: op.b, kind, annotation: ann });
+    }
+  }
+
+  return result;
+}
+
+/** Summary stats from LCS diff. */
+export function diffStats(lines: LcsDiffLine[]): { added: number; removed: number } {
+  return {
+    added:   lines.filter(l => l.kind === 'added').length,
+    removed: lines.filter(l => l.kind === 'removed').length,
+  };
 }
