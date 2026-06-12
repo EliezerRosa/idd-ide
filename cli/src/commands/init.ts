@@ -3,6 +3,7 @@ import * as fs   from 'node:fs';
 import * as path from 'node:path';
 import { header, success, info, warn, footer, row, BOLD, RESET, PURPLE } from '../lib/ui.ts';
 import { writeDefaultConfig } from '../lib/config.ts';
+import { checkEnvInGitignore } from '../lib/security.ts';
 
 const GITIGNORE_APPEND = `
 # IDD IDE
@@ -80,6 +81,33 @@ export async function cmdInit(args: string[]): Promise<void> {
   // 4.5. IDD config.yaml
   writeDefaultConfig(cwd);
   success('.idd/config.yaml criado');
+
+  // 4.6. .idd/.env.example
+  const envExample = path.join(cwd, '.idd', '.env.example');
+  if (!fs.existsSync(envExample)) {
+    fs.writeFileSync(envExample,
+      '# IDD IDE — copie para .idd/.env e preencha\n' +
+      'ANTHROPIC_API_KEY=sk-ant-...\n' +
+      'IDD_MODEL=claude-sonnet-4-20250514\n', 'utf8');
+    success('.idd/.env.example criado (copie para .idd/.env e preencha)');
+  }
+
+  // 4.7. Verifica se .env está no .gitignore
+  const envProtected = checkEnvInGitignore(cwd);
+  if (!envProtected) {
+    warn('ATENÇÃO: .idd/.env não está no .gitignore — chaves de API podem vazar!');
+    // Adiciona automaticamente
+    const gitignorePath2 = path.join(cwd, '.gitignore');
+    if (fs.existsSync(gitignorePath2)) {
+      const gc = fs.readFileSync(gitignorePath2, 'utf8');
+      if (!gc.includes('.idd/.env')) {
+        fs.appendFileSync(gitignorePath2, '\n# IDD env files\n.idd/.env\n.env\n');
+        success('.idd/.env adicionado ao .gitignore automaticamente');
+      }
+    }
+  } else {
+    success('.idd/.env protegido pelo .gitignore');
+  }
 
   // 5. VS Code settings
   const vscodeDir      = path.join(cwd, '.vscode');

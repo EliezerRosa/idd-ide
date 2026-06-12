@@ -6,6 +6,7 @@ import yaml        from 'js-yaml';
 import { header, success, error, info, warn, row, spinner, footer, BOLD, RESET, PURPLE, GRAY } from '../lib/ui.ts';
 import { Store, findProjectRoot } from '../lib/store.ts';
 import { resolveContext, formatContextForPrompt } from '../lib/context.ts';
+import { validateIntent, getApiKey, checkRateLimit, recordCall, loadDotEnv } from '../lib/security.ts';
 import { getLangConfig, autoDetectLanguage, buildLangPrompt, Language } from '../lib/lang.ts';
 
 interface IntentYaml {
@@ -119,8 +120,10 @@ function parseOutput(raw: string): { code: string; tests: string; docs: string }
 export async function cmdGenerate(args: string[]): Promise<void> {
   header('generate');
 
-  const apiKey = process.env.ANTHROPIC_API_KEY ?? '';
+  const apiKey = getApiKey();
   const model  = process.env.IDD_MODEL ?? 'claude-sonnet-4-20250514';
+  const dryRun = args.includes('--dry-run') || args.includes('--dry');
+  const noLimit = args.includes('--no-rate-limit');
 
   if (!apiKey) {
     error('ANTHROPIC_API_KEY não definida.');
@@ -160,6 +163,31 @@ export async function cmdGenerate(args: string[]): Promise<void> {
     row('critérios',   `${intent.acceptance.length}`);
 
     // Context Manager: dependências
+    // Validate .intent.yaml against schema before any LLM call
+    const validation = validateIntent(intent);
+    if (!validation.valid) {
+      console.log('');
+      error(`Schema inválido — ${intent.module ?? yamlPath}`);
+      for (const e of validation.errors) {
+        console.log(`  ${BOLD}${e.field}:${RESET} ${e.message}`);
+        console.log(`  ${GRAY}Exemplo: ${e.example}${RESET}`);
+      }
+      console.log('');
+      failed++;
+      continue;
+    }
+
+    // Rate limit check
+    if (!dryRun) {
+      const rl = checkRateLimit();
+      if (!rl.allowed && !noLimit) {
+        error(`Rate limit atingido (${rl.callsUsed}/${rl.callsLimit} chamadas/min). Aguarde ${rl.resetInSecs}s.`);
+        info('Use --no-rate-limit para ignorar (cuidado com custos).');
+        failed++;
+        continue;
+      }
+    }
+
     // Context Manager: resolução transitiva + cache + detecção de conflitos
     const ctxResult = await resolveContext(store, intent.depends_on ?? []);
     const depCtx: Record<string, any> = {
@@ -188,6 +216,7 @@ export async function cmdGenerate(args: string[]): Promise<void> {
     try {
       const { system, user } = buildPrompt(intent, depCtx);
       const raw = await callClaude(system, user, apiKey, model);
+      recordCall();
       const parsed = parseOutput(raw);
       result = { ...parsed, model };
       spin.stop(true);
