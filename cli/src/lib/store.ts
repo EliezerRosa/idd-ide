@@ -19,6 +19,7 @@ export interface IntentVersion {
   yaml_snapshot: string; intent_hash: string;
   code_hash: string; model_used: string;
   git_commit: string | null; created_at: string;
+  git_author?: string | null; git_email?: string | null;
 }
 export interface DriftEvent {
   id: string; intent_id: string; type: string;
@@ -62,7 +63,8 @@ export class Store {
         id TEXT PRIMARY KEY, intent_id TEXT, version TEXT NOT NULL,
         yaml_snapshot TEXT NOT NULL, intent_hash TEXT NOT NULL,
         code_hash TEXT NOT NULL DEFAULT '', model_used TEXT NOT NULL DEFAULT '',
-        git_commit TEXT, created_at TEXT NOT NULL
+        git_commit TEXT, created_at TEXT NOT NULL,
+        git_author TEXT, git_email TEXT
       );
       CREATE TABLE IF NOT EXISTS constraints (
         id TEXT PRIMARY KEY, intent_id TEXT, text TEXT NOT NULL,
@@ -113,17 +115,25 @@ export class Store {
     ).all(intentId) as IntentVersion[];
   }
 
-  addVersion(intentId: string, yamlSnapshot: string, hash: string, model: string): IntentVersion {
+  addVersion(
+    intentId: string, yamlSnapshot: string, hash: string, model: string,
+    gitInfo?: { author?: string; email?: string; commit?: string }
+  ): IntentVersion {
     const latest = this.getVersions(intentId)[0];
     const [maj, min, pat] = (latest?.version ?? '0.0.0').split('.').map(Number);
     const version = `${maj}.${min}.${pat + 1}`;
     const now = new Date().toISOString();
     const id = createHash('sha256').update(intentId + now).digest('hex').slice(0, 16);
     this.db.prepare(
-      'INSERT INTO intent_versions (id,intent_id,version,yaml_snapshot,intent_hash,model_used,created_at) VALUES (?,?,?,?,?,?,?)'
-    ).run(id, intentId, version, yamlSnapshot, hash, model, now);
-    return { id, intent_id: intentId, version, yaml_snapshot: yamlSnapshot,
-             intent_hash: hash, code_hash: '', model_used: model, git_commit: null, created_at: now };
+      'INSERT INTO intent_versions (id,intent_id,version,yaml_snapshot,intent_hash,model_used,created_at,git_commit,git_author,git_email) VALUES (?,?,?,?,?,?,?,?,?,?)'
+    ).run(id, intentId, version, yamlSnapshot, hash, model, now,
+          gitInfo?.commit ?? null, gitInfo?.author ?? null, gitInfo?.email ?? null);
+    return {
+      id, intent_id: intentId, version, yaml_snapshot: yamlSnapshot,
+      intent_hash: hash, code_hash: '', model_used: model,
+      git_commit: gitInfo?.commit ?? null, created_at: now,
+      git_author: gitInfo?.author ?? null, git_email: gitInfo?.email ?? null,
+    };
   }
 
   setConstraints(intentId: string, texts: string[]): void {

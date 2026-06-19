@@ -10,6 +10,7 @@ import { cmdDiff }     from './commands/diff.ts';
 import { cmdNew }      from './commands/new.ts';
 import { cmdStats }    from './commands/stats.ts';
 import { cmdTemplate } from './commands/template.ts';
+import { cmdBlame }    from './commands/blame.ts';
 import { BOLD, RESET, PURPLE, GRAY, CYAN, GREEN } from './lib/ui.ts';
 
 const args    = process.argv.slice(2);
@@ -29,6 +30,7 @@ async function main(): Promise<void> {
     case 'new':      return cmdNew(rest);
     case 'stats':    return cmdStats(rest);
     case 'template': return cmdTemplate(rest);
+    case 'blame':    return cmdBlame(rest);
     case 'version':
     case '--version':
     case '-v':       return printVersion();

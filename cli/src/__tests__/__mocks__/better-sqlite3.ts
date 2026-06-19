@@ -6,7 +6,7 @@ type Row = Record<string, any>;
 // Schema das tabelas conhecidas do IDD Store
 const TABLE_SCHEMAS: Record<string, string[]> = {
   intents: ['id','module','sub','statement','status','created_at','updated_at'],
-  intent_versions: ['id','intent_id','version','yaml_snapshot','intent_hash','code_hash','model_used','git_commit','created_at'],
+  intent_versions: ['id','intent_id','version','yaml_snapshot','intent_hash','code_hash','model_used','git_commit','created_at','git_author','git_email'],
   constraints: ['id','intent_id','text','severity','active'],
   drift_events: ['id','intent_id','constraint_id','type','detected_at','resolved_at','resolution'],
 };

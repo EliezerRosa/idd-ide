@@ -7,6 +7,7 @@ import { header, success, error, info, warn, row, spinner, footer, BOLD, RESET, 
 import { Store, findProjectRoot } from '../lib/store.ts';
 import { resolveContext, formatContextForPrompt } from '../lib/context.ts';
 import { validateIntent, getApiKey, checkRateLimit, recordCall, loadDotEnv } from '../lib/security.ts';
+import { getCurrentGitIdentity, getCurrentCommit } from '../lib/git.ts';
 import { getLangConfig, autoDetectLanguage, buildLangPrompt, Language } from '../lib/lang.ts';
 
 interface IntentYaml {
@@ -248,8 +249,12 @@ export async function cmdGenerate(args: string[]): Promise<void> {
     const [module, subName] = intent.module.split('/');
     const stored = store.upsertIntent(module, subName, intent.intent);
     store.setConstraints(stored.id, intent.constraints);
-    const hash = crypto.createHash('sha256').update(intentRaw).digest('hex');
-    const ver  = store.addVersion(stored.id, JSON.stringify(intent), hash, model);
+    const hash    = crypto.createHash('sha256').update(intentRaw).digest('hex');
+    const gitId   = getCurrentGitIdentity(root);
+    const gitInfo = gitId
+      ? { author: gitId.name, email: gitId.email, commit: getCurrentCommit(root) ?? undefined }
+      : undefined;
+    const ver = store.addVersion(stored.id, JSON.stringify(intent), hash, model, gitInfo);
 
     success(`${sub}.${ext} gerado`);
     success(`${sub}${testSfx} gerado (${intent.acceptance.length} testes)`);
