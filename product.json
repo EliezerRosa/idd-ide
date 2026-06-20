@@ -1,0 +1,129 @@
+{
+  "nameShort": "IDD IDE",
+  "nameLong": "IDD IDE — Intent Driven Development",
+  "applicationName": "idd-ide",
+  "dataFolderName": ".idd-ide",
+  "win32MutexName": "iddide",
+  "win32DirName": "IDD IDE",
+  "win32NameVersion": "IDD IDE",
+  "win32RegValueName": "IDDIDE",
+  "win32AppId": "{{D4F1A0B2-9C3E-4F8A-B1D6-2A8E5F0C7B91}",
+  "win32x64AppId": "{{E5A2B1C3-AD4F-5A9B-C2E7-3B9F6A1D8C02}",
+  "win32arm64AppId": "{{F6B3C2D4-BE50-6BAC-D3F8-4CA07B2E9D13}",
+  "win32AppUserModelId": "EliezerRosa.IDDIDE",
+  "win32ShellNameShort": "IDD IDE",
+  "win32TunnelServiceMutex": "iddidetunnelservice",
+  "win32TunnelMutex": "iddidetunnel",
+  "darwinBundleIdentifier": "dev.idd-ide.cli",
+  "linuxIconName": "idd-ide",
+  "licenseName": "MIT",
+  "licenseUrl": "https://github.com/EliezerRosa/idd-ide/blob/main/LICENSE",
+  "serverLicenseUrl": "https://github.com/EliezerRosa/idd-ide/blob/main/LICENSE",
+  "serverGreeting": [],
+  "serverLicense": [],
+  "serverLicensePrompt": "",
+  "serverApplicationName": "idd-ide-server",
+  "serverDataFolderName": ".idd-ide-server",
+  "tunnelApplicationName": "idd-ide-tunnel",
+  "tunnelApplicationConfig": "idd-ide/tunnel",
+  "win32RegValueName2": "IDDIDE",
+  "urlProtocol": "idd-ide",
+  "extensionAllowedProposedApi": [],
+  "extensionsGallery": {
+    "serviceUrl": "https://open-vsx.org/vscode/gallery",
+    "itemUrl": "https://open-vsx.org/vscode/item",
+    "resourceUrlTemplate": "https://open-vsx.org/vscode/asset/{publisher}/{name}/{version}/Microsoft.VisualStudio.Code.WebResources/{path}",
+    "controlUrl": "",
+    "nlsBaseUrl": ""
+  },
+  "extensionRecommendations": {
+    "idd-ide.idd-core": {
+      "onFileOpen": [
+        {
+          "languages": ["yaml"],
+          "pathGlobs": ["**/*.intent.yaml"]
+        }
+      ]
+    }
+  },
+  "builtInExtensions": [
+    {
+      "name": "idd-ide.idd-core",
+      "version": "0.1.0",
+      "repo": "https://github.com/EliezerRosa/idd-ide",
+      "metadata": {
+        "id": "idd-core",
+        "publisherDisplayName": "IDD IDE",
+        "publisherId": "idd-ide",
+        "isPreReleaseVersion": false
+      }
+    }
+  ],
+  "configurationSync.store": {
+    "url": "https://github.com/EliezerRosa/idd-ide",
+    "stableUrl": "https://github.com/EliezerRosa/idd-ide",
+    "insidersUrl": "https://github.com/EliezerRosa/idd-ide",
+    "canSwitch": false,
+    "authenticationProviders": {
+      "github": {
+        "scopes": ["user:email"]
+      }
+    }
+  },
+  "editSessions.store": {
+    "url": "https://github.com/EliezerRosa/idd-ide",
+    "authenticationProviders": {
+      "github": { "scopes": ["repo"] }
+    }
+  },
+  "linkProtectionTrustedDomains": [
+    "https://github.com/EliezerRosa/idd-ide",
+    "https://open-vsx.org"
+  ],
+  "reportIssueUrl": "https://github.com/EliezerRosa/idd-ide/issues/new",
+  "documentationUrl": "https://github.com/EliezerRosa/idd-ide/tree/main/docs",
+  "releaseNotesUrl": "https://github.com/EliezerRosa/idd-ide/releases",
+  "keyboardShortcutsUrlMac": "https://github.com/EliezerRosa/idd-ide/blob/main/docs/CLI.md",
+  "keyboardShortcutsUrlLinux": "https://github.com/EliezerRosa/idd-ide/blob/main/docs/CLI.md",
+  "keyboardShortcutsUrlWin": "https://github.com/EliezerRosa/idd-ide/blob/main/docs/CLI.md",
+  "introductoryVideosUrl": "https://github.com/EliezerRosa/idd-ide/tree/main/docs",
+  "tipsAndTricksUrl": "https://github.com/EliezerRosa/idd-ide/blob/main/docs/ARCHITECTURE.md",
+  "twitterUrl": "",
+  "requestFeatureUrl": "https://github.com/EliezerRosa/idd-ide/issues/new?labels=enhancement",
+  "privacyStatementUrl": "https://github.com/EliezerRosa/idd-ide/blob/main/docs/CI.md",
+  "showTelemetryOptOut": true,
+  "telemetryOptOutUrl": "https://github.com/EliezerRosa/idd-ide/blob/main/docs/CI.md",
+  "npsSurveyUrl": "",
+  "surveys": [],
+  "checksumFailMoreInfoUrl": "https://github.com/EliezerRosa/idd-ide/blob/main/docs/CI.md",
+  "version": "0.1.0",
+  "quality": "stable",
+  "nameForOpenInBrowser": "Abrir no IDD IDE",
+  "icons": {
+    "application": {
+      "svg": "resources/idd/idd-icon.svg",
+      "ico": "resources/idd/idd-icon.ico",
+      "icns": "resources/idd/idd-icon.icns"
+    },
+    "fileIcon": {
+      "intentYaml": "resources/idd/file-icon-intent.svg"
+    }
+  },
+  "colors": {
+    "brand": {
+      "primary": "#534AB7",
+      "primaryLight": "#EEEDFE",
+      "accent": "#0F6E56",
+      "drift": "#E24B4A",
+      "warn": "#EF9F27",
+      "ok": "#1D9E75"
+    }
+  },
+  "defaultTheme": "IDD Dark",
+  "extensionsCacheUrl": "",
+  "embedderIdentifier": "idd-ide-eliezer-rosa",
+  "aiConfig": {
+    "model": "claude-sonnet-4-20250514",
+    "provider": "anthropic"
+  }
+}

@@ -1,0 +1,30 @@
+<svg width="256" height="256" viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="iddGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#7F77DD"/>
+      <stop offset="100%" stop-color="#534AB7"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background hexagon -->
+  <polygon points="128,16 224,72 224,184 128,240 32,184 32,72"
+           fill="url(#iddGrad)" stroke="none"/>
+
+  <!-- Inner hexagon outline (intent boundary) -->
+  <polygon points="128,48 196,86 196,170 128,208 60,170 60,86"
+           fill="none" stroke="#EEEDFE" stroke-width="6" opacity="0.9"/>
+
+  <!-- Center node (the "intent") -->
+  <circle cx="128" cy="128" r="22" fill="#EEEDFE"/>
+  <circle cx="128" cy="128" r="22" fill="none" stroke="#534AB7" stroke-width="3"/>
+
+  <!-- Three satellite nodes representing dependencies -->
+  <circle cx="128" cy="72"  r="10" fill="#1D9E75"/>
+  <circle cx="176" cy="156" r="10" fill="#1D9E75"/>
+  <circle cx="80"  cy="156" r="10" fill="#1D9E75"/>
+
+  <!-- Connecting lines (dependency graph) -->
+  <line x1="128" y1="106" x2="128" y2="82"  stroke="#EEEDFE" stroke-width="4" stroke-linecap="round"/>
+  <line x1="145" y1="140" x2="168" y2="151" stroke="#EEEDFE" stroke-width="4" stroke-linecap="round"/>
+  <line x1="111" y1="140" x2="88"  y2="151" stroke="#EEEDFE" stroke-width="4" stroke-linecap="round"/>
+</svg>
