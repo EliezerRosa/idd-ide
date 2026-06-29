@@ -11,6 +11,7 @@ import { cmdNew }      from './commands/new.ts';
 import { cmdStats }    from './commands/stats.ts';
 import { cmdTemplate } from './commands/template.ts';
 import { cmdBlame }    from './commands/blame.ts';
+import { cmdExport }   from './commands/export.ts';
 import { BOLD, RESET, PURPLE, GRAY, CYAN, GREEN } from './lib/ui.ts';
 
 const args    = process.argv.slice(2);
@@ -31,6 +32,7 @@ async function main(): Promise<void> {
     case 'stats':    return cmdStats(rest);
     case 'template': return cmdTemplate(rest);
     case 'blame':    return cmdBlame(rest);
+    case 'export':   return cmdExport(rest);
     case 'version':
     case '--version':
     case '-v':       return printVersion();
@@ -77,6 +79,14 @@ function printHelp(): void {
       Mostra diff lado a lado: intenção vs código atual.
       ${GRAY}--semantic${RESET}          inclui análise via LLM
       ${GRAY}--linear${RESET}            vista linear em vez de split
+
+    ${CYAN}idd export [flags]${RESET}
+      Exporta o grafo de intenções como documentação de arquitetura.
+      ${GRAY}--format=md|json|mermaid|dot${RESET}  formato de saída (padrão: md)
+      ${GRAY}--out=<arquivo>${RESET}                salva em arquivo (padrão: stdout)
+
+    ${CYAN}idd blame <mod/sub> [--all]${RESET}
+      Histórico de autoria das intenções (Intent Store + git log).
 
     ${CYAN}idd graph [flags]${RESET}
       Exibe o grafo de intenções no terminal.
