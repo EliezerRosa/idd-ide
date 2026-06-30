@@ -23,8 +23,13 @@ echo ""
 echo "→ Compilando CLI..."
 cd "$ROOT_DIR/cli"
 npm ci --ignore-scripts
-npm run build
-echo "  ✓ CLI compilado em cli/dist/"
+npx esbuild src/index.ts --bundle --platform=node --target=node20 \
+  --format=esm --outfile=dist/index.js --external:better-sqlite3
+# Garante shebang único e executável
+sed -i.bak '2{/^#!/d}' dist/index.js 2>/dev/null || sed -i '' '2{/^#!/d;}' dist/index.js
+rm -f dist/index.js.bak
+chmod +x dist/index.js
+echo "  ✓ CLI compilado em cli/dist/index.js"
 
 # ── 2. Build da extensão VS Code ─────────────────────────────────
 echo ""
