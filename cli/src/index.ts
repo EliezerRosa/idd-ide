@@ -12,6 +12,7 @@ import { cmdStats }    from './commands/stats.ts';
 import { cmdTemplate } from './commands/template.ts';
 import { cmdBlame }    from './commands/blame.ts';
 import { cmdExport }   from './commands/export.ts';
+import { cmdCapture }  from './commands/capture.ts';
 import { BOLD, RESET, PURPLE, GRAY, CYAN, GREEN } from './lib/ui.ts';
 
 const args    = process.argv.slice(2);
@@ -33,6 +34,7 @@ async function main(): Promise<void> {
     case 'template': return cmdTemplate(rest);
     case 'blame':    return cmdBlame(rest);
     case 'export':   return cmdExport(rest);
+    case 'capture':  return cmdCapture(rest);
     case 'version':
     case '--version':
     case '-v':       return printVersion();
@@ -57,6 +59,12 @@ function printHelp(): void {
   ${GRAY}${'─'.repeat(50)}${RESET}
 
   ${BOLD}Comandos principais${RESET}
+
+    ${CYAN}idd capture "descrição livre" [flags]${RESET}
+      Expande uma frase solta em .intent.yaml completo via LLM.
+      ${GRAY}--module=<mod/sub>${RESET}  força o módulo (senão o LLM sugere)
+      ${GRAY}--dry-run${RESET}           mostra preview sem escrever
+      ${GRAY}--yes${RESET}               pula confirmação interativa
 
     ${CYAN}idd new <modulo/sub>${RESET}
       Cria um novo .intent.yaml interativamente.

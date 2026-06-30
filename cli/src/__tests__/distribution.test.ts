@@ -273,7 +273,7 @@ describe('scripts/build.sh — existência e estrutura', () => {
 
   it('compila o CLI antes de empacotar', () => {
     const content = readRepoFile('scripts/build.sh');
-    expect(content).toMatch(/npm run build/);
+    expect(content).toMatch(/esbuild/);
   });
 
   it('compila a extensão idd-core', () => {
