@@ -13,6 +13,7 @@ import { cmdTemplate } from './commands/template.ts';
 import { cmdBlame }    from './commands/blame.ts';
 import { cmdExport }   from './commands/export.ts';
 import { cmdCapture }  from './commands/capture.ts';
+import { cmdServer, cmdPush, cmdPull } from './commands/server.ts';
 import { BOLD, RESET, PURPLE, GRAY, CYAN, GREEN } from './lib/ui.ts';
 
 const args    = process.argv.slice(2);
@@ -35,6 +36,9 @@ async function main(): Promise<void> {
     case 'blame':    return cmdBlame(rest);
     case 'export':   return cmdExport(rest);
     case 'capture':  return cmdCapture(rest);
+    case 'server':   return cmdServer(rest);
+    case 'push':     return cmdPush(rest);
+    case 'pull':     return cmdPull(rest);
     case 'version':
     case '--version':
     case '-v':       return printVersion();
