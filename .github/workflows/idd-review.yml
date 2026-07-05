@@ -1,0 +1,173 @@
+# IDD Review — GitHub Action para análise de PR baseada em intenções
+# Documentação: https://github.com/EliezerRosa/idd-ide/blob/main/docs/CI.md
+#
+# Como usar em outro repositório:
+#
+#   on: [pull_request]
+#   jobs:
+#     idd-review:
+#       uses: EliezerRosa/idd-ide/.github/workflows/idd-review.yml@main
+#       with:
+#         fail-on: drift
+#         semantic: false
+#       secrets:
+#         ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+
+name: IDD Review
+
+on:
+  workflow_call:
+    inputs:
+      fail-on:
+        description: "Nível de falha: 'drift' (padrão) ou 'warn'"
+        type: string
+        default: drift
+        required: false
+      semantic:
+        description: "Habilitar análise semântica via LLM (requer ANTHROPIC_API_KEY)"
+        type: boolean
+        default: false
+        required: false
+      node-version:
+        description: "Versão do Node.js"
+        type: string
+        default: "20"
+        required: false
+    secrets:
+      ANTHROPIC_API_KEY:
+        description: "Chave de API Anthropic (necessária para semantic: true)"
+        required: false
+    outputs:
+      review-outcome:
+        description: "Resultado do review: 'ok', 'warn', ou 'drift'"
+        value: ${{ jobs.review.outputs.outcome }}
+      blockers:
+        description: "Número de módulos com drift crítico"
+        value: ${{ jobs.review.outputs.blockers }}
+
+  pull_request:
+    branches: ["main", "develop"]
+
+jobs:
+  review:
+    name: IDD Review — Verificação de alinhamento
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+
+    outputs:
+      outcome:  ${{ steps.review.outputs.outcome }}
+      blockers: ${{ steps.review.outputs.blockers }}
+
+    steps:
+      - name: Checkout (com histórico para diff)
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ inputs.node-version || '20' }}
+          cache: npm
+          cache-dependency-path: cli/package-lock.json
+
+      - name: Instalar e compilar IDD CLI
+        run: |
+          cd cli
+          npm ci --ignore-scripts
+          npx esbuild src/index.ts --bundle --platform=node \
+            --target=node20 --format=esm --outfile=dist/index.js \
+            --external:better-sqlite3
+          sed -i '2{/^#!/d}' dist/index.js 2>/dev/null || true
+          npm link
+
+      - name: Executar IDD Review
+        id: review
+        run: |
+          # Determina base e head do PR
+          BASE="${{ github.event.pull_request.base.sha || 'HEAD~1' }}"
+          HEAD="${{ github.event.pull_request.head.sha || 'HEAD' }}"
+          PR="${{ github.event.pull_request.number || 'local' }}"
+
+          SEMANTIC_FLAG=""
+          if [ "${{ inputs.semantic || 'false' }}" = "true" ]; then
+            SEMANTIC_FLAG="--semantic"
+          fi
+
+          # Gera o comentário markdown
+          mkdir -p /tmp/idd-review
+          idd review \
+            --base="$BASE" \
+            --head="$HEAD" \
+            --pr="$PR" \
+            --fail-on="${{ inputs.fail-on || 'drift' }}" \
+            --out=/tmp/idd-review/comment.md \
+            --ci \
+            $SEMANTIC_FLAG && EXIT_CODE=0 || EXIT_CODE=$?
+
+          # Extrai outcome
+          if grep -q "❌ Bloqueado" /tmp/idd-review/comment.md 2>/dev/null; then
+            echo "outcome=drift"   >> $GITHUB_OUTPUT
+            echo "blockers=$(grep -c '🔴' /tmp/idd-review/comment.md || echo 0)" >> $GITHUB_OUTPUT
+          elif grep -q "⚠ Avisos" /tmp/idd-review/comment.md 2>/dev/null; then
+            echo "outcome=warn"    >> $GITHUB_OUTPUT
+            echo "blockers=0"      >> $GITHUB_OUTPUT
+          else
+            echo "outcome=ok"      >> $GITHUB_OUTPUT
+            echo "blockers=0"      >> $GITHUB_OUTPUT
+          fi
+
+          exit $EXIT_CODE
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+
+      - name: Postar comentário no PR
+        if: github.event_name == 'pull_request' && always()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const commentPath = '/tmp/idd-review/comment.md';
+            if (!fs.existsSync(commentPath)) {
+              console.log('Arquivo de comentário não encontrado, pulando.');
+              return;
+            }
+            const body = fs.readFileSync(commentPath, 'utf8');
+            const pr   = context.payload.pull_request?.number;
+            if (!pr) return;
+
+            // Atualiza comentário existente ou cria novo
+            const { data: comments } = await github.rest.issues.listComments({
+              owner: context.repo.owner,
+              repo:  context.repo.repo,
+              issue_number: pr,
+            });
+            const existing = comments.find(c =>
+              c.body?.startsWith('## ⬡ IDD Review') &&
+              c.user?.type === 'Bot'
+            );
+
+            if (existing) {
+              await github.rest.issues.updateComment({
+                owner:      context.repo.owner,
+                repo:       context.repo.repo,
+                comment_id: existing.id,
+                body,
+              });
+            } else {
+              await github.rest.issues.createComment({
+                owner:        context.repo.owner,
+                repo:         context.repo.repo,
+                issue_number: pr,
+                body,
+              });
+            }
+
+      - name: Exibir resultado no log
+        if: always()
+        run: |
+          if [ -f /tmp/idd-review/comment.md ]; then
+            cat /tmp/idd-review/comment.md
+          fi
