@@ -96,6 +96,18 @@
           ".intent.yaml"
         ],
         "configuration": "./language-configuration.json"
+      },
+      {
+        "id": "yaml-intent",
+        "extensions": [
+          ".intent.yaml"
+        ],
+        "aliases": [
+          "IDD Intent",
+          "intent.yaml"
+        ],
+        "filenames": [],
+        "configuration": "./language-configuration.json"
       }
     ],
     "grammars": [
@@ -103,6 +115,11 @@
         "language": "intent-yaml",
         "scopeName": "source.intent.yaml",
         "path": "./syntaxes/intent-yaml.tmGrammar.json"
+      },
+      {
+        "language": "yaml-intent",
+        "scopeName": "source.yaml",
+        "path": "./syntaxes/yaml.tmGrammar.json"
       }
     ],
     "themes": [
@@ -123,7 +140,10 @@
   "dependencies": {
     "better-sqlite3": "^9.4.3",
     "js-yaml": "^4.1.0",
-    "uuid": "^9.0.0"
+    "uuid": "^9.0.0",
+    "vscode-languageclient": "^9.0.1",
+    "vscode-languageserver": "^9.0.1",
+    "vscode-languageserver-textdocument": "^1.0.11"
   },
   "devDependencies": {
     "@types/better-sqlite3": "^7.6.8",

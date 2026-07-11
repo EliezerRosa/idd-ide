@@ -1,3 +1,4 @@
+import { startLanguageClient, stopLanguageClient } from './lsp/client';
 import * as vscode from 'vscode';
 import { IntentCapturePanel } from './capture/IntentCapturePanel';
 import { IntentGraphPanel }   from './capture/IntentGraphPanel';
