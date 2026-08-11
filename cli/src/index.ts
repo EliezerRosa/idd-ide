@@ -15,7 +15,10 @@ import { cmdExport }   from './commands/export.ts';
 import { cmdCapture }  from './commands/capture.ts';
 import { cmdServer, cmdPush, cmdPull } from './commands/server.ts';
 import { cmdReview } from './commands/review.ts';
-import { cmdDomain } from './commands/domain.ts';
+import { cmdDomain }    from './commands/domain.ts';
+import { cmdWatch }     from './commands/watch.ts';
+import { cmdAnalytics } from './commands/analytics.ts';
+import { cmdSuggest }   from './commands/suggest.ts';
 import { BOLD, RESET, PURPLE, GRAY, CYAN, GREEN } from './lib/ui.ts';
 
 const args    = process.argv.slice(2);
@@ -43,6 +46,9 @@ async function main(): Promise<void> {
     case 'pull':     return cmdPull(rest);
     case 'review':   return cmdReview(rest);
     case 'domain':   return cmdDomain(rest);
+    case 'watch':    return cmdWatch(rest);
+    case 'analytics':return cmdAnalytics(rest);
+    case 'suggest':  return cmdSuggest(rest);
     case 'version':
     case '--version':
     case '-v':       return printVersion();

@@ -5,6 +5,7 @@ import { findProjectRoot } from '../lib/store.ts';
 import { parseDomainFile, parseMermaid, parseYamlDomain } from '../lib/domain/parser.ts';
 import { normalizeModel, NormalizationReport } from '../lib/domain/normalizer.ts';
 import { compile, compileToDomainYaml, compileToSql, compileToJsonSchema, compileToErDiagram } from '../lib/domain/compiler.ts';
+import { diffDomainModels } from '../lib/domain/evolver.ts';
 import { parseSqlMigration, verifySchema, formatVerificationComment, loadMigrationFiles } from '../lib/domain/verifier.ts';
 import { DomainModel, NormalFormLevel } from '../lib/domain/types.ts';
 import {
@@ -441,6 +442,74 @@ function domainHelp(): void {
   footer('');
 }
 
+
+// ── idd domain evolve ─────────────────────────────────────────────
+
+async function domainEvolve(args: string[]): Promise<void> {
+  const v1File = args[0];
+  const v2File = args[1];
+  const outArg = args.find(a => a.startsWith('--out='))?.split('=')[1];
+  const dryRun = args.includes('--dry-run');
+  const root   = findProjectRoot() ?? process.cwd();
+
+  header('domain evolve');
+
+  if (!v1File || !v2File) {
+    error('Uso: idd domain evolve <v1.mmd> <v2.mmd> [--out=migration.sql]');
+    info('Compara dois snapshots do domain model e gera SQL de migração.');
+    process.exit(1);
+  }
+
+  const spin = spinner('Comparando modelos...');
+  const v1   = parseDomainFile(v1File);
+  const v2   = parseDomainFile(v2File);
+  const evo  = diffDomainModels(v1, v2);
+  spin.stop(true);
+
+  console.log('');
+  row('versão origem', v1.version);
+  row('versão destino', v2.version);
+  row('mudanças safe',    `${GREEN}${evo.safeCount}${RESET}`);
+  row('mudanças warn',    evo.warnCount > 0  ? `${YELLOW}${evo.warnCount}${RESET}`  : `${GREEN}0${RESET}`);
+  row('mudanças breaking',evo.breakCount > 0 ? `${RED}${evo.breakCount}${RESET}`    : `${GREEN}0${RESET}`);
+  row('requer downtime',  evo.requiresDowntime ? `${RED}Sim${RESET}` : `${GREEN}Não${RESET}`);
+
+  if (evo.diffs.length === 0) {
+    console.log(`\n  ${GREEN}✓ Nenhuma diferença estrutural encontrada.${RESET}\n`);
+    footer('');
+    return;
+  }
+
+  console.log('');
+  for (const diff of evo.diffs) {
+    const icon = diff.type === 'added'    ? `${GREEN}+${RESET}` :
+                 diff.type === 'removed'  ? `${RED}-${RESET}`   : `${YELLOW}~${RESET}`;
+    console.log(`  ${icon} ${BOLD}${diff.entity}${RESET} (${diff.table})`);
+    diff.changes.forEach(c => {
+      const c_icon = c.severity === 'breaking' ? RED : c.severity === 'warn' ? YELLOW : GREEN;
+      console.log(`    ${c_icon}${c.type}${RESET}  ${c.attribute ?? ''}`);
+    });
+    diff.warnings.forEach(w => console.log(`    ${GRAY}⚠ ${w}${RESET}`));
+  }
+
+  if (!dryRun) {
+    const outPath = outArg ?? path.join(root, '.idd', 'domain', 'evolution.sql');
+    if (outArg || true) {
+      writeOutput(outPath, evo.sql);
+      console.log('');
+      success(`Migração gerada: ${outPath}`);
+    }
+  } else {
+    console.log('\n' + evo.sql.split('\n').map(l => '  ' + l).join('\n'));
+  }
+
+  footer([
+    '"idd domain evolve v1.mmd v2.mmd --dry-run"      → mostrar SQL sem salvar',
+    '"idd domain evolve v1.mmd v2.mmd --out=migr.sql"  → salvar em arquivo específico',
+  ].join('\n  '));
+}
+
+
 // ── Router ────────────────────────────────────────────────────────
 
 export async function cmdDomain(args: string[]): Promise<void> {
@@ -450,6 +519,7 @@ export async function cmdDomain(args: string[]): Promise<void> {
     case 'normalize': return domainNormalize(args.slice(1));
     case 'compile':   return domainCompile(args.slice(1));
     case 'verify':    return domainVerify(args.slice(1));
+    case 'evolve':   return domainEvolve(args.slice(1));
     default:          return domainHelp();
   }
 }
