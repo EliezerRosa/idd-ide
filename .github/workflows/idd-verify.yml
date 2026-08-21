@@ -28,9 +28,14 @@ jobs:
         run: cd cli && npm ci --ignore-scripts
 
       - name: Compilar IDD CLI
-        run: cd cli && npm run build
+        run: |
+          cd cli
+          npx esbuild src/index.ts --bundle --platform=node --target=node20 \
+            --format=esm --outfile=dist/index.js --external:better-sqlite3
+          sed -i '2{/^#!/d}' dist/index.js
+          chmod +x dist/index.js
 
-      - name: Executar testes (197+ testes)
+      - name: Executar testes
         run: cd cli && npm test
 
       - name: Verificar alinhamento (análise estática)

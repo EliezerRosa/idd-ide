@@ -132,3 +132,18 @@ Exemplo de saída no log do CI:
   │ db/connection   │ 100%│ 100%│ 100% │ → estável │ ████████████   │ 1v      │
   └─────────────────┴─────┴─────┴──────┴───────────┴────────────────┴─────────┘
 ```
+
+## Auditoria de dependências
+
+`npm audit` reporta 8 vulnerabilidades nas dependências do CLI. Análise:
+
+| Pacote | Severidade | Onde | Explorável neste código? |
+|---|---|---|---|
+| `nanoid` | high | transitiva via `vitest` → `vite` (dev-only) | Não — nunca entra no bundle esbuild de produção |
+| `postcss` | high/critical | transitiva via `vitest` → `vite` (dev-only) | Não — mesma razão acima |
+| `uuid@9.0.1` | moderate | direta, em `extensions/idd-core` | Não — a CVE (GHSA-w5hq-g745-h8pq) exige que um parâmetro `buf` seja passado ao gerador; todos os 4 usos no código chamam `uuid()` sem argumentos |
+
+Nenhuma das vulnerabilidades reportadas é explorável no código de produção deste
+projeto, mas `npm audit fix` pode ser executado com segurança para as transitivas
+de dev. Atualizar `uuid` para v11+ é uma mudança de major version — avaliar
+separadamente por não ser urgente do ponto de vista de segurança.

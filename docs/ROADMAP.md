@@ -87,37 +87,58 @@ CI/CD no PR                Score 0-100% por entidade · Comentário automático
 
 ---
 
-## 🔄 Fase 6 — Inteligência e Observabilidade (planejada)
+## ✅ Fase 6 — Inteligência e Observabilidade (concluída)
 
-| Issue | Feature | Descrição |
+O projeto passa a se auto-monitorar e se auto-analisar continuamente.
+
+| Issue | Feature | Status |
 |---|---|---|
-| #21 | `idd drift watch` — daemon de monitoramento contínuo | Escuta mudanças no filesystem e verifica drift em tempo real sem depender do git hook |
-| #22 | `idd analytics` — painel de saúde do projeto | Evolução histórica de alignment scores, módulos mais instáveis, contribuidores por drift |
-| #23 | Domain Model Evolution — migrações geradas automaticamente | Detecta diff entre versões do domain model e gera SQL de migração (ALTER TABLE, ADD COLUMN) |
-| #24 | `idd suggest` — sugestões proativas de melhoria | LLM analisa o grafo de intenções e sugere refatorações, decomposições ou consolidações |
+| #21 | `idd drift watch` — daemon de monitoramento contínuo (fs.watch, debounce, status em tempo real) | ✅ |
+| #22 | `idd analytics` — sparklines de alignment score, módulos instáveis, velocity | ✅ |
+| #23 | `idd domain evolve` — diff entre domain models, SQL de migração classificado safe/warn/breaking | ✅ |
+| #24 | `idd suggest` — análise estática do grafo (circular, ghost, orphan, overspecified) + LLM opcional | ✅ |
+
+**Release:** v0.4.0 · 766 testes
 
 ---
 
-## 🔮 Fase 7 — Multi-repo e Federação (visão)
+## ✅ Fase 7 — Multi-repo e Federação (concluída)
+
+| Issue | Feature | Status |
+|---|---|---|
+| #25 | `idd api` — geração de OpenAPI 3.1 a partir de .intent.yaml, com verificação de drift | ✅ |
+| #26 | Team Playbooks — constraints obrigatórias e lint rules por organização | ✅ |
+| #27 | IDD Registry — push/pull/search de templates, domain models e playbooks | ✅ |
+| #28 | `idd migrate` — inferência de intenções a partir de codebase existente via LLM | ✅ |
+
+**Release:** v0.5.0 · 830 testes
+
+---
+
+## 🔄 Fase 8 — Dogfooding e Maturidade (proposta)
+
+Antes de expandir mais o escopo, o próximo passo natural é o projeto praticar
+o próprio paradigma e amadurecer a base existente.
 
 | Feature | Descrição |
 |---|---|
-| IDD Registry | Servidor central para compartilhar templates e domain models entre projetos |
-| Cross-repo Context | Resolver `depends_on` de módulos em repositórios diferentes via IDD Registry |
-| Team Playbooks | Skills pré-configuradas por organização (padrões de código, constraints corporativas) |
-| IDD for APIs | `.intent.yaml` para contratos OpenAPI — gera, verifica e versiona specs REST/gRPC |
+| Dogfooding do CLI | Criar `.intent.yaml` para os próprios comandos do IDD CLI (30+ módulos) |
+| Publicação real no Open VSX | `vsce package && npx ovsx publish` — hoje documentado mas nunca executado |
+| Prebuilds de `better-sqlite3` | Empacotar binários nativos pré-compilados por plataforma no release, evitando build-from-source |
+| Auditoria de segurança | `npm audit fix` nas 8 vulnerabilidades conhecidas nas dependências |
+| Testes de integração real | Testes que rodam o binário compilado de ponta a ponta, não apenas lógica mockada |
 
 ---
 
 ## Números cumulativos
 
-| Métrica | v0.1.0 | v0.2.0 | v0.3.0 |
-|---|---|---|---|
-| Fases completas | 2, 3 | 4 | 5 |
-| Issues fechadas | 12 | 16 | 20 |
-| Testes passando | 544 | 669 | **730** |
-| Suítes de teste | 17 | 21 | **22** |
-| Comandos CLI | 11 | 15 | **16** (`idd domain`) |
+| Métrica | v0.1.0 | v0.2.0 | v0.3.0 | v0.4.0 | v0.5.0 |
+|---|---|---|---|---|---|
+| Fases completas | 2, 3 | 4 | 5 | 6 | 7 |
+| Issues fechadas | 12 | 16 | 20 | 24 | **28** |
+| Testes passando | 544 | 669 | 730 | 766 | **830** |
+| Suítes de teste | 17 | 21 | 22 | 23 | **24** |
+| Comandos CLI | 11 | 15 | 16 | 20 | **24** |
 
 ---
 
@@ -128,3 +149,13 @@ CI/CD no PR                Score 0-100% por entidade · Comentário automático
 3. **Zero lock-in** — tudo é texto/YAML/SQL, sem banco proprietário ou serviço obrigatório
 4. **Offline-first** — o CLI funciona 100% sem API key (modo estático)
 5. **Composable** — cada componente é independente e testável isoladamente
+
+## Limitações conhecidas
+
+- `better-sqlite3` requer compilação nativa (node-gyp) — ambientes sem toolchain de
+  build (gcc/Xcode/MSVC) ou sem acesso à rede para baixar headers do Node.js
+  falharão na instalação. Prebuilds por plataforma estão na Fase 8.
+- O próprio projeto IDD IDE ainda não pratica seu paradigma sobre si mesmo —
+  não há `.intent.yaml` para os comandos do CLI. Isso está na Fase 8.
+- A extensão VS Code nunca foi publicada no Open VSX Registry — apenas
+  documentada e testada localmente via `tsc -p ./`.
