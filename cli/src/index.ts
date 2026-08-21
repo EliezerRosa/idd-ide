@@ -19,6 +19,10 @@ import { cmdDomain }    from './commands/domain.ts';
 import { cmdWatch }     from './commands/watch.ts';
 import { cmdAnalytics } from './commands/analytics.ts';
 import { cmdSuggest }   from './commands/suggest.ts';
+import { cmdApi }       from './commands/api.ts';
+import { cmdPlaybook }  from './commands/playbook.ts';
+import { cmdRegistry }  from './commands/registry.ts';
+import { cmdMigrate }   from './commands/migrate.ts';
 import { BOLD, RESET, PURPLE, GRAY, CYAN, GREEN } from './lib/ui.ts';
 
 const args    = process.argv.slice(2);
@@ -49,6 +53,10 @@ async function main(): Promise<void> {
     case 'watch':    return cmdWatch(rest);
     case 'analytics':return cmdAnalytics(rest);
     case 'suggest':  return cmdSuggest(rest);
+    case 'api':      return cmdApi(rest);
+    case 'playbook': return cmdPlaybook(rest);
+    case 'registry': return cmdRegistry(rest);
+    case 'migrate':  return cmdMigrate(rest);
     case 'version':
     case '--version':
     case '-v':       return printVersion();
