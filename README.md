@@ -161,9 +161,16 @@ idd-ide/
 git clone https://github.com/EliezerRosa/idd-ide.git
 cd idd-ide/cli
 npm install
-npm run build
+npx esbuild src/index.ts --bundle --platform=node --target=node20 \
+  --format=esm --outfile=dist/index.js --external:better-sqlite3
+sed -i '2{/^#!/d}' dist/index.js  # remove shebang duplicado (macOS: sed -i '' em vez de sed -i)
+chmod +x dist/index.js
 npm link   # disponibiliza o comando `idd` globalmente
 ```
+
+> **Nota:** `better-sqlite3` requer compilação nativa (node-gyp). Se `npm install`
+> falhar por falta de toolchain de build, instale `build-essential` (Linux),
+> Xcode Command Line Tools (macOS), ou `windows-build-tools` (Windows).
 
 ### Primeiro uso
 

@@ -7,7 +7,8 @@ O `idd` é a interface de linha de comando do IDD IDE. Funciona de forma indepen
 ```bash
 cd idd-ide/cli
 npm install
-npm run build
+npx esbuild src/index.ts --bundle --platform=node --target=node20 \
+  --format=esm --outfile=dist/index.js --external:better-sqlite3
 npm link
 ```
 
@@ -244,7 +245,8 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with: { node-version: '20' }
-      - run: npm install && npm run build
+      - run: npm install
+          npx esbuild src/index.ts --bundle --platform=node --target=node20 --format=esm --outfile=dist/index.js --external:better-sqlite3
         working-directory: ./cli
       - run: npm link
         working-directory: ./cli

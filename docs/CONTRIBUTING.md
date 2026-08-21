@@ -9,7 +9,7 @@ git clone https://github.com/EliezerRosa/idd-ide.git
 cd idd-ide
 
 # CLI
-cd cli && npm install && npm run build && cd ..
+cd cli && npm install && npx esbuild src/index.ts --bundle --platform=node --target=node20 --format=esm --outfile=dist/index.js --external:better-sqlite3 && cd ..
 
 # Extensão VS Code
 cd extensions/idd-core && npm install && npm run compile && cd ../..

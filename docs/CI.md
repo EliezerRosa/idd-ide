@@ -31,7 +31,7 @@ jobs:
       - name: Instalar IDD CLI
         run: |
           cd cli && npm ci --ignore-scripts
-          npm run build && npm link
+          npx esbuild src/index.ts --bundle --platform=node --target=node20 --format=esm --outfile=dist/index.js --external:better-sqlite3 && npm link
 
       - name: Verificar alinhamento (estático)
         run: idd verify --fail-on=critical
