@@ -16,8 +16,23 @@ npm link
 
 | Variável | Obrigatória | Descrição |
 |---|---|---|
-| `ANTHROPIC_API_KEY` | Para `generate`, `verify --semantic` | Chave de API Anthropic |
+| `ANTHROPIC_API_KEY` | Para `generate`, `verify --semantic`, `capture`, `review --semantic`, `migrate infer` | Chave de API Anthropic |
 | `IDD_MODEL` | Não | Modelo Claude (padrão: `claude-sonnet-4-20250514`) |
+| `IDD_SERVER_TOKEN` | Não | Bearer token para autenticação no IDD Server |
+
+## Índice de Comandos
+
+**Núcleo:** [`init`](#idd-init) · [`new`](#idd-new-modulosub) · [`generate`](#idd-generate-modulosub) · [`verify`](#idd-verify-modulosub-flags) · [`diff`](#idd-diff-modulosub-flags) · [`graph`](#idd-graph-flags) · [`store`](#idd-store)
+
+**Produtividade:** [`capture`](#idd-capture-descrição-livre) · [`blame`](#idd-blame-modulosub) · [`export`](#idd-export-flags) · [`template`](#idd-template-sub) · [`stats`](#idd-stats-modulosub)
+
+**Equipe:** [`review`](#idd-review-flags) · [`server` / `push` / `pull`](#idd-server--idd-push--idd-pull)
+
+**Observabilidade:** [`drift watch`](#idd-drift-watch-flags) · [`analytics`](#idd-analytics-flags) · [`suggest`](#idd-suggest-flags)
+
+**Modelo de negócio:** [`domain`](#idd-domain-subcomando) · [`api`](#idd-api-subcomando)
+
+**Organização:** [`playbook`](#idd-playbook-subcomando) · [`registry`](#idd-registry-subcomando) · [`migrate`](#idd-migrate-subcomando)
 
 ---
 
@@ -230,7 +245,202 @@ idd store reset [--force]             # apaga o store (cria backup)
 
 ---
 
-## Uso em CI/CD
+## `idd capture "descrição livre"`
+
+Expande uma frase solta em `.intent.yaml` completo via LLM — sem wizard interativo.
+
+```bash
+idd capture "autenticar usuário com email e senha, JWT 24h"
+idd capture "listar pedidos paginados" --module=orders/list
+idd capture "..." --dry-run    # mostra preview sem escrever nada
+idd capture "..." --yes        # pula confirmação interativa
+```
+
+Sempre pede confirmação antes de escrever o arquivo, a menos que `--yes` seja passado.
+
+---
+
+## `idd blame <modulo/sub>` / `idd blame --all`
+
+Histórico de autoria de uma intenção, combinando Intent Store e `git log`.
+
+```bash
+idd blame auth/login     # versões, autor, data, commits do arquivo
+idd blame --all          # resumo de todas as intenções por autor
+```
+
+---
+
+## `idd export [flags]`
+
+Exporta o grafo de intenções como documentação de arquitetura.
+
+```bash
+idd export --format=md                      # Markdown (padrão)
+idd export --format=json                    # JSON completo do grafo
+idd export --format=mermaid                 # diagrama Mermaid (renderiza no GitHub)
+idd export --format=dot                     # Graphviz DOT
+idd export --format=mermaid --out=arch.md   # salva em arquivo
+```
+
+---
+
+## `idd template <sub>`
+
+Templates de intenção reutilizáveis (crud, auth-jwt, auth-oauth, webhook, email, health-check, pagination).
+
+```bash
+idd template list                        # lista built-ins + locais
+idd template apply crud users/crud       # cria .intent.yaml do template
+idd template new meu-padrao auth/login   # cria template a partir de intenção existente
+idd template publish meu-padrao          # persiste em .idd/templates/
+```
+
+---
+
+## `idd stats [modulo/sub]`
+
+Histórico de alignment score com sparklines no terminal.
+
+```bash
+idd stats                # todos os módulos
+idd stats auth/login     # módulo específico
+```
+
+---
+
+## `idd review [flags]`
+
+Analisa um PR verificando se o código respeita as intenções declaradas nos módulos afetados pelo diff.
+
+```bash
+idd review                                          # HEAD~1 vs HEAD (local)
+idd review --base=main --head=feature/x --pr=42     # PR específico
+idd review --semantic                               # inclui análise LLM
+idd review --out=review.md --ci                     # gera comentário Markdown para CI
+idd review --fail-on=warn                           # bloqueia também em avisos
+```
+
+Também disponível como GitHub Action reutilizável: `.github/workflows/idd-review.yml`.
+
+---
+
+## `idd server` / `idd push` / `idd pull`
+
+IDD Server HTTP para sincronizar o Intent Store entre membros de uma equipe.
+
+```bash
+idd server start [--port=4999] [--daemon]   # inicia servidor local
+idd server stop                              # para o servidor
+idd server status                            # status, porta, contagem de intenções
+
+idd push    # envia intenções locais para o servidor
+idd pull    # recebe intenções do servidor (last-write-wins)
+```
+
+---
+
+## `idd drift watch [flags]`
+
+Daemon de monitoramento contínuo — detecta drift em tempo real sem depender do git hook.
+
+```bash
+idd drift watch                  # monitoramento contínuo
+idd drift watch --once           # scan único (modo CI)
+idd drift watch --verbose        # detalhes de cada violação
+idd drift watch --interval=1000  # polling a cada 1s (sistemas sem inotify)
+```
+
+---
+
+## `idd analytics [flags]`
+
+Painel de saúde do projeto: evolução de scores, módulos instáveis, velocidade.
+
+```bash
+idd analytics                  # últimos 30 dias (padrão)
+idd analytics --since=7d       # últimos 7 dias
+idd analytics --top=5          # limita a 5 módulos exibidos
+idd analytics --format=md      # exporta para .idd/analytics.md
+```
+
+---
+
+## `idd suggest [flags]`
+
+Análise proativa do grafo de intenções: dependências circulares, módulos órfãos/fantasma, sobre-especificação.
+
+```bash
+idd suggest                # análise estática (sem custo de API)
+idd suggest --semantic     # inclui sugestões arquiteturais via LLM
+idd suggest --out=report.md
+```
+
+---
+
+## `idd domain <subcomando>`
+
+Camada de intenções do modelo de negócio — UML de domínio verificável até o schema SQL.
+
+```bash
+idd domain init                             # cria domain.mmd de exemplo + CI workflow
+idd domain parse domain.mmd                 # UML → Domain Model AST
+idd domain normalize --target=3NF           # verifica formas normais (1NF→DKNF)
+idd domain compile                          # gera YAML + JSONB Schema + SQL + erDiagram
+idd domain verify                           # compara migrations reais vs domain model
+idd domain evolve v1.mmd v2.mmd             # gera SQL de migração entre versões do model
+```
+
+Documentação completa: [`docs/DOMAIN.md`](./DOMAIN.md).
+
+---
+
+## `idd api <subcomando>`
+
+Gera especificações OpenAPI 3.1 a partir de `.intent.yaml`.
+
+```bash
+idd api generate auth/login    # spec de um único endpoint
+idd api build                  # agrega todos os .intent.yaml num openapi.yaml
+idd api verify                 # detecta drift entre spec existente e intenções atuais
+```
+
+---
+
+## `idd playbook <subcomando>`
+
+Constraints e regras de lint obrigatórias por organização/equipe.
+
+```bash
+idd playbook init --template=startup        # ou enterprise, microservices
+idd playbook check --fail-on=error          # verifica todas as intenções contra o playbook
+```
+
+---
+
+## `idd registry <subcomando>`
+
+Compartilha templates, domain models e playbooks entre projetos.
+
+```bash
+idd registry push meu-template --type=template
+idd registry pull auth-jwt@2.0.0
+idd registry search crud --type=template
+```
+
+---
+
+## `idd migrate <subcomando>`
+
+Assistente para adotar o IDD em um codebase já existente.
+
+```bash
+idd migrate scan                        # detecta módulos sem intenção declarada
+idd migrate infer src/auth/login.ts     # LLM infere a intenção original do código
+idd migrate report                      # cobertura IDD por domínio
+```
+
+
 
 ```yaml
 # .github/workflows/idd.yml
@@ -245,11 +455,13 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with: { node-version: '20' }
-      - run: npm install
-          npx esbuild src/index.ts --bundle --platform=node --target=node20 --format=esm --outfile=dist/index.js --external:better-sqlite3
+      - name: Build IDD CLI
         working-directory: ./cli
-      - run: npm link
-        working-directory: ./cli
+        run: |
+          npm install
+          npx esbuild src/index.ts --bundle --platform=node --target=node20 \
+            --format=esm --outfile=dist/index.js --external:better-sqlite3
+          npm link
       - run: idd verify --fail-on=critical
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
