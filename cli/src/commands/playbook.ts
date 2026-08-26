@@ -209,12 +209,17 @@ async function playbookCheck(args: string[]): Promise<void> {
 
   // Find all .intent.yaml
   const intentFiles: string[] = [];
+  const seenFiles = new Set<string>();
   function walk(dir: string): void {
     if (!fs.existsSync(dir)) return;
     for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
       const full = path.join(dir, entry.name);
       if (entry.isDirectory() && !['node_modules','.git','dist'].includes(entry.name)) walk(full);
-      else if (entry.isFile() && entry.name.endsWith('.intent.yaml')) intentFiles.push(full);
+      else if (entry.isFile() && entry.name.endsWith('.intent.yaml')) {
+        if (seenFiles.has(full)) continue; // evita duplicatas quando src/ é percorrido mais de uma vez
+        seenFiles.add(full);
+        intentFiles.push(full);
+      }
     }
   }
   walk(path.join(root, 'src'));

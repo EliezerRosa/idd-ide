@@ -14,12 +14,15 @@ import {
 
 function findAllIntents(root: string): Array<{ path: string; intent: IntentYaml }> {
   const results: Array<{ path: string; intent: IntentYaml }> = [];
+  const seen = new Set<string>();
   function walk(dir: string): void {
     if (!fs.existsSync(dir)) return;
     for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
       const full = path.join(dir, entry.name);
       if (entry.isDirectory() && !['node_modules','.git','dist','out'].includes(entry.name)) walk(full);
       else if (entry.isFile() && entry.name.endsWith('.intent.yaml')) {
+        if (seen.has(full)) continue; // evita duplicatas quando src/ é percorrido mais de uma vez
+        seen.add(full);
         try {
           const parsed = yaml.load(fs.readFileSync(full, 'utf8')) as IntentYaml;
           if (parsed?.intent && parsed?.module) results.push({ path: full, intent: parsed });

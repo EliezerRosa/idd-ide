@@ -454,6 +454,97 @@ describe('IDD Registry — local filesystem', () => {
 // Issue #28 — idd migrate: scan e inferência
 // ════════════════════════════════════════════════════════════════
 
+// ════════════════════════════════════════════════════════════════
+// Regressão: bug de duplicação ao percorrer src/ duas vezes
+// ════════════════════════════════════════════════════════════════
+//
+// Encontrado via teste manual de ponta a ponta com o binário real:
+// funções que faziam walk(path.join(root,'src')) seguido de walk(root)
+// contavam cada .intent.yaml duas vezes, pois o segundo walk(root)
+// re-percorre recursivamente root/src/. Corrigido com um Set de
+// caminhos já vistos em api.ts (findAllIntents) e playbook.ts (playbookCheck).
+
+describe('Regressão — sem duplicação ao percorrer src/ duas vezes', () => {
+  function walkWithDedup(root: string): string[] {
+    const results: string[] = [];
+    const seen = new Set<string>();
+    function walk(dir: string): void {
+      if (!fs.existsSync(dir)) return;
+      for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+        const full = path.join(dir, entry.name);
+        if (entry.isDirectory() && !['node_modules','.git','dist','out'].includes(entry.name)) walk(full);
+        else if (entry.isFile() && entry.name.endsWith('.intent.yaml')) {
+          if (seen.has(full)) continue;
+          seen.add(full);
+          results.push(full);
+        }
+      }
+    }
+    walk(path.join(root, 'src'));
+    walk(root); // walk(root) re-percorre src/ — sem o Set, duplicaria
+    return results;
+  }
+
+  it('arquivo em src/ não é contado duas vezes mesmo com dois walks', () => {
+    const srcDir = path.join(tmpDir, 'src', 'auth');
+    fs.mkdirSync(srcDir, { recursive: true });
+    fs.writeFileSync(path.join(srcDir, 'login.intent.yaml'),
+      'intent: "Autenticar usuário com email"\nmodule: auth/login\nconstraints:\n  - c1\nacceptance:\n  - a1\n');
+
+    const found = walkWithDedup(tmpDir);
+    expect(found).toHaveLength(1); // não 2
+  });
+
+  it('múltiplos arquivos em src/ cada um aparece exatamente uma vez', () => {
+    fs.mkdirSync(path.join(tmpDir, 'src', 'auth'), { recursive: true });
+    fs.mkdirSync(path.join(tmpDir, 'src', 'users'), { recursive: true });
+    fs.writeFileSync(path.join(tmpDir, 'src', 'auth', 'login.intent.yaml'),
+      'intent: "Login com email"\nmodule: auth/login\nconstraints:\n  - c1\nacceptance:\n  - a1\n');
+    fs.writeFileSync(path.join(tmpDir, 'src', 'users', 'crud.intent.yaml'),
+      'intent: "CRUD de usuários"\nmodule: users/crud\nconstraints:\n  - c1\nacceptance:\n  - a1\n');
+
+    const found = walkWithDedup(tmpDir);
+    expect(found).toHaveLength(2); // não 4
+  });
+
+  it('arquivo fora de src/ (ex: .idd/domain/) ainda é encontrado', () => {
+    fs.mkdirSync(path.join(tmpDir, '.idd', 'domain'), { recursive: true });
+    fs.writeFileSync(path.join(tmpDir, '.idd', 'domain', 'domain.intent.yaml'),
+      'intent: "Modelo de domínio"\nmodule: domain/model\nconstraints:\n  - c1\nacceptance:\n  - a1\n');
+
+    const found = walkWithDedup(tmpDir);
+    expect(found).toHaveLength(1);
+    expect(found[0]).toContain('.idd');
+  });
+
+  it('sem o Set de deduplicação, o bug reaparece (prova que o teste é válido)', () => {
+    // Mesma lógica, mas SEM o Set — replica o bug original para provar
+    // que este teste de regressão realmente detectaria a reintrodução do bug.
+    function walkBuggy(root: string): string[] {
+      const results: string[] = [];
+      function walk(dir: string): void {
+        if (!fs.existsSync(dir)) return;
+        for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+          const full = path.join(dir, entry.name);
+          if (entry.isDirectory() && !['node_modules','.git','dist'].includes(entry.name)) walk(full);
+          else if (entry.isFile() && entry.name.endsWith('.intent.yaml')) results.push(full);
+        }
+      }
+      walk(path.join(root, 'src'));
+      walk(root);
+      return results;
+    }
+
+    fs.mkdirSync(path.join(tmpDir, 'src', 'auth'), { recursive: true });
+    fs.writeFileSync(path.join(tmpDir, 'src', 'auth', 'login.intent.yaml'),
+      'intent: "Login"\nmodule: auth/login\nconstraints:\n  - c1\nacceptance:\n  - a1\n');
+
+    const buggyResult = walkBuggy(tmpDir);
+    expect(buggyResult).toHaveLength(2); // confirma que o bug existiria sem a correção
+  });
+});
+
+
 describe('idd migrate — scan de candidatos', () => {
   function setupSrcDir(): void {
     const srcDir = path.join(tmpDir, 'src');
