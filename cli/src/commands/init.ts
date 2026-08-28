@@ -88,7 +88,7 @@ export async function cmdInit(args: string[]): Promise<void> {
     fs.writeFileSync(envExample,
       '# IDD IDE — copie para .idd/.env e preencha\n' +
       'ANTHROPIC_API_KEY=sk-ant-...\n' +
-      'IDD_MODEL=claude-sonnet-4-20250514\n', 'utf8');
+      'IDD_MODEL=claude-sonnet-5\n', 'utf8');
     success('.idd/.env.example criado (copie para .idd/.env e preencha)');
   }
 

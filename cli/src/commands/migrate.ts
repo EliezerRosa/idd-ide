@@ -179,7 +179,7 @@ async function migrateInfer(args: string[]): Promise<void> {
   }
 
   const code  = fs.readFileSync(filePath, 'utf8');
-  const model = process.env.IDD_MODEL ?? 'claude-sonnet-4-20250514';
+  const model = process.env.IDD_MODEL ?? 'claude-sonnet-5';
   const spin  = spinner('Inferindo intenção via LLM...');
 
   const inferred = await inferIntentFromCode(code, path.relative(root, filePath), apiKey, model);

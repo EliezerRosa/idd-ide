@@ -247,7 +247,7 @@ export async function cmdSuggest(args: string[]): Promise<void> {
         if (!rl.allowed) {
           warn(`Rate limit atingido (${rl.callsUsed}/${rl.callsLimit}). Tente novamente em ${rl.resetInSecs}s.`);
         } else {
-          const model = process.env.IDD_MODEL ?? 'claude-sonnet-4-20250514';
+          const model = process.env.IDD_MODEL ?? 'claude-sonnet-5';
           const spin2 = spinner('Analisando arquitetura via LLM...');
           try {
             llmSuggestions = await semanticSuggest(store, apiKey, model);

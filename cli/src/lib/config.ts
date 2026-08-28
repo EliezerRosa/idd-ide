@@ -23,7 +23,7 @@ const DEFAULTS: IddConfig = {
   fail_on:                'critical',
   context_max_depth:      3,
   context_cache_ttl_min:  5,
-  model:                  'claude-sonnet-4-20250514',
+  model:                  'claude-sonnet-5',
   max_tokens:             4096,
   stats_history_limit:    30,
 };
@@ -75,7 +75,7 @@ export function writeDefaultConfig(projectRoot: string): void {
     'context_cache_ttl_min: 5     # tempo de vida do cache em minutos',
     '',
     '# Intent Engine',
-    'model: claude-sonnet-4-20250514',
+    'model: claude-sonnet-5',
     'max_tokens: 4096',
     '',
     '# Stats',

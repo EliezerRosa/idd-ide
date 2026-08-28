@@ -160,7 +160,7 @@ export async function cmdVerify(args: string[]): Promise<void> {
   store.open();
 
   const apiKey = process.env.ANTHROPIC_API_KEY ?? '';
-  const model  = process.env.IDD_MODEL ?? 'claude-sonnet-4-20250514';
+  const model  = process.env.IDD_MODEL ?? 'claude-sonnet-5';
 
   // Coletar arquivos .intent.yaml
   const yamlFiles = collectYamlFiles(root, target);

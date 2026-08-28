@@ -246,7 +246,7 @@ async function llmDiff(intent: IntentYaml, code: string): Promise<{
   changes:    Array<{ line: number; issue: string; kind: 'drift' | 'warn' }>;
 }> {
   const apiKey = process.env.ANTHROPIC_API_KEY ?? '';
-  const model  = process.env.IDD_MODEL ?? 'claude-sonnet-4-20250514';
+  const model  = process.env.IDD_MODEL ?? 'claude-sonnet-5';
   if (!apiKey) return { summary: '', changes: [] };
 
   const res = await fetch('https://api.anthropic.com/v1/messages', {

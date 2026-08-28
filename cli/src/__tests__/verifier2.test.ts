@@ -39,7 +39,7 @@ describe('loadConfig', () => {
     expect(cfg.semantic_debounce_ms).toBe(30_000);
     expect(cfg.fail_on).toBe('critical');
     expect(cfg.context_max_depth).toBe(3);
-    expect(cfg.model).toBe('claude-sonnet-4-20250514');
+    expect(cfg.model).toBe('claude-sonnet-5');
   });
 
   it('sobrescreve campos com valores do arquivo', () => {
@@ -63,7 +63,7 @@ describe('loadConfig', () => {
     fs.writeFileSync(path.join(iddDir, 'config.yaml'), 'drift_threshold: 70\n');
     const cfg = loadConfig(tmpDir);
     expect(cfg.drift_threshold).toBe(70);
-    expect(cfg.model).toBe('claude-sonnet-4-20250514'); // default mantido
+    expect(cfg.model).toBe('claude-sonnet-5'); // default mantido
   });
 
   it('ignora YAML inválido e usa defaults', () => {
@@ -100,7 +100,7 @@ describe('writeDefaultConfig', () => {
     expect(content).toContain('drift_threshold: 80');
     expect(content).toContain('auto_semantic_verify: false');
     expect(content).toContain('context_max_depth: 3');
-    expect(content).toContain('model: claude-sonnet-4-20250514');
+    expect(content).toContain('model: claude-sonnet-5');
   });
 
   it('não sobrescreve arquivo existente', () => {

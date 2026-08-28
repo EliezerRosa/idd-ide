@@ -139,7 +139,7 @@ export async function cmdCapture(args: string[]): Promise<void> {
   }
 
   const apiKey = getApiKey();
-  const model  = process.env.IDD_MODEL ?? 'claude-sonnet-4-20250514';
+  const model  = process.env.IDD_MODEL ?? 'claude-sonnet-5';
 
   if (!apiKey) {
     error('ANTHROPIC_API_KEY não definida.');

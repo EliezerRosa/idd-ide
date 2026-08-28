@@ -136,7 +136,7 @@ function printHelp(): void {
   ${BOLD}Variáveis de ambiente${RESET}
 
     ${GRAY}ANTHROPIC_API_KEY${RESET}   chave de API (obrigatória para generate/verify --semantic)
-    ${GRAY}IDD_MODEL${RESET}           modelo Claude (padrão: claude-sonnet-4-20250514)
+    ${GRAY}IDD_MODEL${RESET}           modelo Claude (padrão: claude-sonnet-5)
 
   ${BOLD}Exemplos${RESET}
 

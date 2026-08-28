@@ -122,7 +122,7 @@ export async function cmdGenerate(args: string[]): Promise<void> {
   header('generate');
 
   const apiKey = getApiKey();
-  const model  = process.env.IDD_MODEL ?? 'claude-sonnet-4-20250514';
+  const model  = process.env.IDD_MODEL ?? 'claude-sonnet-5';
   const dryRun = args.includes('--dry-run') || args.includes('--dry');
   const noLimit = args.includes('--no-rate-limit');
 

@@ -330,7 +330,7 @@ export async function cmdReview(args: string[]): Promise<void> {
   const root   = findProjectRoot() ?? process.cwd();
   const store  = new Store(root);
   const apiKey = getApiKey();
-  const model  = process.env.IDD_MODEL ?? 'claude-sonnet-4-20250514';
+  const model  = process.env.IDD_MODEL ?? 'claude-sonnet-5';
   store.open();
 
   // Parse changes
