@@ -1,0 +1,19 @@
+intent: "Analisa diff de PR verificando aderência às intenções declaradas"
+module: commands/review
+
+constraints:
+  - "Deve identificar arquivos alterados entre base e head via git diff"
+  - "Cada módulo revisado deve ter status classificado (ok, warn, drift, no-intent)"
+  - "Deve detectar violações e testes ausentes por módulo"
+  - "Deve sugerir revisores relevantes por módulo alterado"
+  - "Resultado deve contabilizar total de blockers e warnings"
+
+acceptance:
+  - "Dado um range base/head, retorna lista de FileChange com status correto (added/modified/deleted/renamed)"
+  - "Um módulo sem intent declarado deve ser marcado como 'no-intent'"
+  - "Um módulo com violações críticas deve contar como blocker"
+  - "O resultado final deve conter summary, totalFiles e lista de módulos revisados"
+  - "Deve funcionar tanto em modo local quanto em modo --ci"
+
+language: typescript
+version: "0.0.0"

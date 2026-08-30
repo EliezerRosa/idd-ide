@@ -1,0 +1,19 @@
+intent: "Compara snapshots de Domain Model e gera SQL de migração classificado por severidade"
+module: domain/evolver
+
+constraints:
+  - "Cada diferença de entidade ou atributo deve ser classificada como 'safe', 'warn' ou 'breaking'"
+  - "Mudanças de tipo entre tipos incompatíveis exigem cast manual explícito no SQL gerado"
+  - "Tipos de dados do domínio devem ser mapeados para tipos SQL válidos (ex: uuid -> UUID, string -> VARCHAR(255))"
+  - "A evolução deve indicar se a migração requer downtime com base na severidade das mudanças"
+  - "O resultado deve contabilizar separadamente quantas mudanças são safe, warn e breaking"
+
+acceptance:
+  - "Dado dois snapshots idênticos, o diff não deve gerar mudanças (diffs vazio)"
+  - "Dado uma nova entidade adicionada, o diff deve classificá-la como 'added' com severidade apropriada"
+  - "Dado uma mudança de tipo de 'integer' para 'bigint', o SQL gerado deve conter um cast seguro sem aviso"
+  - "Dado uma mudança de tipo incompatível (ex: string para integer), o SQL deve conter aviso de cast manual necessário"
+  - "Dado uma entidade removida, o diff deve marcar severidade 'breaking' e requiresDowntime true"
+
+language: typescript
+version: "0.0.0"

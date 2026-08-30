@@ -1,0 +1,18 @@
+intent: "Analisa grafo de intents e sugere melhorias, com modo estático padrão e análise LLM opcional"
+module: commands/suggest
+
+constraints:
+  - "Detecta dependências circulares entre módulos via depends_on"
+  - "Classifica problemas por severidade: critical, warn, info"
+  - "Extrai dependências do snapshot YAML da versão mais recente do intent"
+  - "Cada issue deve conter tipo, módulo afetado, mensagem e sugestão de correção"
+  - "Ignora snapshots inválidos ou malformados sem interromper análise"
+
+acceptance:
+  - "Dado dois intents que dependem um do outro, retorna issue do tipo 'circular' com severidade 'critical'"
+  - "Dado um intent sem depends_on, não gera falso positivo de ciclo"
+  - "Dado um yaml_snapshot corrompido, a análise continua sem lançar exceção"
+  - "Cada GraphIssue retornado possui module correspondente a um par module/sub válido"
+
+language: typescript
+version: "0.0.0"

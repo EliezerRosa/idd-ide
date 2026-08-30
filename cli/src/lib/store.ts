@@ -2,9 +2,19 @@
 import * as path from 'node:path';
 import * as fs   from 'node:fs';
 import { createHash } from 'node:crypto';
+import { createRequire } from 'node:module';
 
 let Database: any;
-try { const m = require('better-sqlite3'); Database = m.default ?? m; } catch { Database = null; }
+try {
+  // O bundle é compilado como ESM (necessário para import.meta.dirname em init.ts),
+  // e ESM não tem `require` global — o shim que o esbuild injeta para require()
+  // solto lança "Dynamic require ... is not supported" nesse formato. createRequire
+  // funciona corretamente tanto em ESM real quanto quando bundlado, pois resolve
+  // relativo à URL do módulo em vez de depender de um `require` ambiente.
+  const req = createRequire(import.meta.url);
+  const m = req('better-sqlite3');
+  Database = m.default ?? m;
+} catch { Database = null; }
 
 // Injectable for testing
 export function __setDatabaseConstructor(ctor: any): void { Database = ctor; }

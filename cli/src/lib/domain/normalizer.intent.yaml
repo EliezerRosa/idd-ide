@@ -1,0 +1,19 @@
+intent: "Verifica violações de formas normais (1NF+) em entidades de domínio"
+module: domain/normalizer
+
+constraints:
+  - "Atributos do tipo array violam 1NF por não serem atômicos"
+  - "Atributos JSON/JSONB sem schema declarado ou constraints geram violação de 1NF"
+  - "Nomes de atributos pluralizados (exceto terminados em 'status') sugerem lista embutida e violam 1NF"
+  - "Formas normais devem ser avaliadas na ordem 1NF→2NF→3NF→BCNF→4NF→5NF→DKNF"
+  - "Cada violação deve conter forma normal, entidade, atributo, mensagem e sugestão de correção"
+
+acceptance:
+  - "Atributo tipo array gera violação 1NF com sugestão de tabela separada"
+  - "Atributo JSONB sem 'schema' na descrição e sem constraints gera violação 1NF"
+  - "Atributo string com nome terminado em 's' (não 'status') gera violação 1NF"
+  - "Atributo string terminado em 'status' não gera violação de pluralização"
+  - "JSONB com schema documentado ou constraints não gera violação"
+
+language: typescript
+version: "0.0.0"

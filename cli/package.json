@@ -13,7 +13,7 @@
     "test": "vitest run"
   },
   "dependencies": {
-    "better-sqlite3": "^9.6.0",
+    "better-sqlite3": "^13.0.3",
     "chalk": "^5.3.0",
     "js-yaml": "^4.1.0",
     "uuid": "^9.0.0"

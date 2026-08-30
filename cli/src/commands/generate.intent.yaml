@@ -1,0 +1,18 @@
+intent: "Gera código, testes e docs a partir de um intent YAML usando LLM"
+module: commands/generate
+
+constraints:
+  - "Deve respeitar todas as constraints declaradas no intent sem exceção"
+  - "Deve gerar um teste unitário por acceptance criterion"
+  - "Resposta do LLM deve ser JSON puro sem blocos markdown"
+  - "Deve resolver e incluir contexto de dependências (depends_on) no prompt"
+  - "Deve validar intent e verificar rate limit antes de chamar a API"
+
+acceptance:
+  - "Dado um intent.yaml válido, gera code, tests e docs correspondentes"
+  - "Prompt inclui linguagem e framework detectados ou especificados"
+  - "Chamada é bloqueada se rate limit for excedido"
+  - "Dependências declaradas em depends_on são incluídas no contexto do prompt"
+
+language: typescript
+version: "0.0.0"
