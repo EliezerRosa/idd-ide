@@ -115,18 +115,33 @@ O projeto passa a se auto-monitorar e se auto-analisar continuamente.
 
 ---
 
-## 🔄 Fase 8 — Dogfooding e Maturidade (proposta)
+## 🔄 Fase 8 — Dogfooding e Maturidade (em andamento)
 
-Antes de expandir mais o escopo, o próximo passo natural é o projeto praticar
-o próprio paradigma e amadurecer a base existente.
+Uma sessão real de dogfooding — rodando o binário compilado com uma chave de
+API real contra o próprio código do IDD IDE — já aconteceu e encontrou (e
+corrigiu) 4 bugs reais de infraestrutura, além de gerar 5 `.intent.yaml`
+retroativos para módulos centrais do CLI.
 
-| Feature | Descrição |
+### Concluído via dogfooding real
+
+| Item | Resultado |
 |---|---|
-| Dogfooding do CLI | Criar `.intent.yaml` para os próprios comandos do IDD CLI (30+ módulos) |
-| Publicação real no Open VSX | `vsce package && npx ovsx publish` — hoje documentado mas nunca executado |
-| Prebuilds de `better-sqlite3` | Empacotar binários nativos pré-compilados por plataforma no release, evitando build-from-source |
-| Auditoria de segurança | `npm audit fix` nas 8 vulnerabilidades conhecidas nas dependências |
-| Testes de integração real | Testes que rodam o binário compilado de ponta a ponta, não apenas lógica mockada |
+| Testes de integração com binário real (não só lógica mockada) | ✅ Feito — expôs bugs que 834 testes mockados nunca pegariam |
+| Corrigir `require('better-sqlite3')` incompatível com builds ESM | ✅ Corrigido (`createRequire`) — Store nunca funcionava em nenhum build documentado até este fix |
+| Atualizar `better-sqlite3` para versão com prebuild em Node 22 | ✅ Corrigido — 9.6.0 → 13.0.3 |
+| Corrigir modelo default inexistente (`claude-sonnet-4-20250514`) | ✅ Corrigido em 11 arquivos → `claude-sonnet-5` |
+| Dogfooding do CLI — `.intent.yaml` para módulos reais | 🔶 Parcial — 5 módulos centrais feitos (`review`, `evolver`, `generate`, `suggest`, `normalizer`), faltam ~25 |
+
+### Aberto
+
+| Issue | Descrição |
+|---|---|
+| [#29](https://github.com/EliezerRosa/idd-ide/issues/29) | `idd migrate scan/report` e 2 manifestações adicionais (module derivation em `infer`, targeting em `verify --semantic`) não suportam monorepos |
+| [#30](https://github.com/EliezerRosa/idd-ide/issues/30) | `idd verify --semantic` tem limite de profundidade de raciocínio, não só de contexto — confirmado com caso real (`evolver.ts`) que não foi pego mesmo com arquivo inteiro visível |
+| — | Publicação real no Open VSX — `vsce package && npx ovsx publish`, hoje documentado mas nunca executado |
+| — | Prebuilds de `better-sqlite3` empacotados no release, evitando depender de build-from-source ou de rede externa na instalação |
+| — | Auditoria de segurança — `npm audit fix` nas 8 vulnerabilidades conhecidas (análise já feita em `docs/CI.md`: nenhuma explorável no código atual) |
+| — | Completar dogfooding — `.intent.yaml` para os ~25 módulos restantes do CLI |
 
 ---
 
@@ -152,10 +167,23 @@ o próprio paradigma e amadurecer a base existente.
 
 ## Limitações conhecidas
 
-- `better-sqlite3` requer compilação nativa (node-gyp) — ambientes sem toolchain de
-  build (gcc/Xcode/MSVC) ou sem acesso à rede para baixar headers do Node.js
-  falharão na instalação. Prebuilds por plataforma estão na Fase 8.
-- O próprio projeto IDD IDE ainda não pratica seu paradigma sobre si mesmo —
-  não há `.intent.yaml` para os comandos do CLI. Isso está na Fase 8.
+- `better-sqlite3` requer compilação nativa (node-gyp) em versões antigas;
+  a partir da v13.0.3 (usada desde a correção de dogfooding) há prebuilds
+  para Node 18-22, reduzindo bastante o problema. Ambientes sem rede
+  externa na instalação ainda dependem de build-from-source. Empacotar
+  prebuilds no próprio release do IDD IDE está listado na Fase 8.
+- O IDD IDE começou a praticar seu próprio paradigma: 5 módulos centrais
+  do CLI têm `.intent.yaml` retroativo (`review`, `evolver`, `generate`,
+  `suggest`, `normalizer`), gerados via `idd migrate infer` e verificados
+  com `idd verify --semantic` contra código real. Faltam ~25 módulos —
+  ver Fase 8.
 - A extensão VS Code nunca foi publicada no Open VSX Registry — apenas
   documentada e testada localmente via `tsc -p ./`.
+- `idd verify --semantic` tem limite de profundidade de raciocínio real,
+  confirmado empiricamente: não detectou uma divergência lógica genuína
+  em `evolver.ts` mesmo com o arquivo inteiro visível ao LLM. Ver issue
+  [#30](https://github.com/EliezerRosa/idd-ide/issues/30).
+- Comandos que resolvem caminhos relativos à raiz do projeto
+  (`migrate scan/report/infer`, `verify --semantic <módulo>`) assumem
+  um único `src/` na raiz do git — quebram em monorepos como o próprio
+  idd-ide. Ver issue [#29](https://github.com/EliezerRosa/idd-ide/issues/29).
