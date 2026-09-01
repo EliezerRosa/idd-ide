@@ -125,7 +125,8 @@ async function verifySemantic(
           content: [
             `INTENÇÃO: ${intent.intent}`,
             `CONSTRAINTS: ${intent.constraints.join('; ')}`,
-            `CÓDIGO (primeiros 1500 chars):\n\`\`\`\n${code.slice(0, 1500)}\n\`\`\``,
+            `ACCEPTANCE: ${intent.acceptance.join('; ')}`,
+            `CÓDIGO (até 16000 chars — arquivos maiores são truncados):\n\`\`\`\n${code.slice(0, 16000)}\n\`\`\``,
           ].join('\n'),
         }],
       }),
