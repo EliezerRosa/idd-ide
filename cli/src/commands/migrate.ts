@@ -22,8 +22,50 @@ interface CandidateModule {
   linesOfCode: number;
 }
 
-function scanCandidates(root: string): CandidateModule[] {
-  const srcDir = path.join(root, 'src');
+const IGNORED_DIRS = ['node_modules', '.git', 'dist', 'out', 'build', '.idd'];
+
+/**
+ * Descobre todos os diretórios chamados 'src' sob root, suportando monorepos
+ * onde cada subpacote (ex: cli/src, extensions/idd-core/src) tem sua própria
+ * raiz de código — em vez de assumir um único <root>/src fixo.
+ * Issue #29.
+ */
+function findAllSrcRoots(root: string, maxDepth = 4): string[] {
+  const found: string[] = [];
+  function walk(dir: string, depth: number): void {
+    if (depth > maxDepth || !fs.existsSync(dir)) return;
+    let entries: fs.Dirent[];
+    try { entries = fs.readdirSync(dir, { withFileTypes: true }); } catch { return; }
+    for (const entry of entries) {
+      if (!entry.isDirectory() || IGNORED_DIRS.includes(entry.name)) continue;
+      const full = path.join(dir, entry.name);
+      if (entry.name === 'src') {
+        found.push(full);
+        continue; // não desce dentro de src/ procurando outro src/ aninhado
+      }
+      walk(full, depth + 1);
+    }
+  }
+  walk(root, 0);
+  return found;
+}
+
+/**
+ * Encontra a raiz 'src/' mais próxima (ancestral direto) de um arquivo dado,
+ * em vez de assumir <projectRoot>/src. Usado para derivar corretamente o
+ * nome do módulo em migrate infer. Issue #29.
+ */
+function findNearestSrcRoot(filePath: string): string | null {
+  let dir = path.dirname(filePath);
+  while (true) {
+    if (path.basename(dir) === 'src') return dir;
+    const parent = path.dirname(dir);
+    if (parent === dir) return null; // chegou na raiz do filesystem
+    dir = parent;
+  }
+}
+
+function scanCandidatesInSrc(srcDir: string, root: string): CandidateModule[] {
   if (!fs.existsSync(srcDir)) return [];
 
   const candidates: CandidateModule[] = [];
@@ -58,6 +100,19 @@ function scanCandidates(root: string): CandidateModule[] {
   }
 
   return candidates.sort((a, b) => b.linesOfCode - a.linesOfCode);
+}
+
+/**
+ * Descobre e varre todas as raízes 'src/' do projeto (suporta monorepos
+ * com múltiplos subpacotes, ex: cli/src + extensions/idd-core/src).
+ * Substitui a suposição anterior de um único <root>/src fixo. Issue #29.
+ */
+function scanCandidates(root: string): CandidateModule[] {
+  const srcRoots = findAllSrcRoots(root);
+  if (srcRoots.length === 0) return [];
+
+  const all = srcRoots.flatMap(srcDir => scanCandidatesInSrc(srcDir, root));
+  return all.sort((a, b) => b.linesOfCode - a.linesOfCode);
 }
 
 // ── LLM inference ────────────────────────────────────────────────
@@ -162,7 +217,14 @@ async function migrateInfer(args: string[]): Promise<void> {
     process.exit(1);
   }
 
-  const filePath = path.isAbsolute(target) ? target : path.join(root, target);
+  // Resolve relativo ao diretório atual primeiro (mais intuitivo — é de onde
+  // o usuário digitou o comando), com fallback para relativo à raiz do
+  // projeto por compatibilidade. Issue #29.
+  const filePath = path.isAbsolute(target)
+    ? target
+    : fs.existsSync(path.join(process.cwd(), target))
+      ? path.join(process.cwd(), target)
+      : path.join(root, target);
   if (!fs.existsSync(filePath)) {
     error(`Arquivo não encontrado: ${filePath}`); process.exit(1);
   }
@@ -191,8 +253,14 @@ async function migrateInfer(args: string[]): Promise<void> {
     process.exit(1);
   }
 
-  // Determine module from file path
-  const parts    = path.relative(path.join(root, 'src'), filePath).split(path.sep);
+  // Determine module from file path — usa a raiz 'src/' mais próxima do
+  // arquivo, não uma assumida fixa em <root>/src (Issue #29). Funciona
+  // corretamente em monorepos: para cli/src/commands/review.ts, a raiz
+  // mais próxima é cli/src/, então module = commands/review.
+  const nearestSrc = findNearestSrcRoot(filePath);
+  const parts    = nearestSrc
+    ? path.relative(nearestSrc, filePath).split(path.sep)
+    : path.relative(root, filePath).split(path.sep); // fallback se não achar src/ ancestral
   const modName  = parts[0] ?? 'unknown';
   const subName  = path.basename(parts[1] ?? parts[0], path.extname(parts[1] ?? parts[0]));
   const module   = `${modName}/${subName}`;

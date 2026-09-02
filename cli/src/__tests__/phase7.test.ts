@@ -657,3 +657,97 @@ describe('Pipeline e2e — Intent → OpenAPI 3.1', () => {
     expect(Object.keys(fromYaml.paths)).toEqual(Object.keys(fromJson.paths));
   });
 });
+
+// ════════════════════════════════════════════════════════════════
+// Regressão — Issue #29: monorepo (múltiplas raízes src/)
+// ════════════════════════════════════════════════════════════════
+//
+// Encontrado via dogfooding real do próprio repositório idd-ide (um
+// monorepo genuíno: cli/src/ e extensions/idd-core/src/ são raízes
+// independentes). scanCandidates()/migrateInfer() assumiam um único
+// <root>/src fixo, o que quebrava totalmente em monorepos.
+
+describe('Regressão #29 — findAllSrcRoots e findNearestSrcRoot', () => {
+  function findAllSrcRoots(root: string, maxDepth = 4): string[] {
+    const IGNORED = ['node_modules', '.git', 'dist', 'out', 'build', '.idd'];
+    const found: string[] = [];
+    function walk(dir: string, depth: number): void {
+      if (depth > maxDepth || !fs.existsSync(dir)) return;
+      let entries: fs.Dirent[];
+      try { entries = fs.readdirSync(dir, { withFileTypes: true }); } catch { return; }
+      for (const entry of entries) {
+        if (!entry.isDirectory() || IGNORED.includes(entry.name)) continue;
+        const full = path.join(dir, entry.name);
+        if (entry.name === 'src') { found.push(full); continue; }
+        walk(full, depth + 1);
+      }
+    }
+    walk(root, 0);
+    return found;
+  }
+
+  function findNearestSrcRoot(filePath: string): string | null {
+    let dir = path.dirname(filePath);
+    while (true) {
+      if (path.basename(dir) === 'src') return dir;
+      const parent = path.dirname(dir);
+      if (parent === dir) return null;
+      dir = parent;
+    }
+  }
+
+  it('encontra src/ único em projeto de pacote simples (comportamento anterior preservado)', () => {
+    fs.mkdirSync(path.join(tmpDir, 'src', 'auth'), { recursive: true });
+    const roots = findAllSrcRoots(tmpDir);
+    expect(roots).toHaveLength(1);
+    expect(roots[0]).toBe(path.join(tmpDir, 'src'));
+  });
+
+  it('encontra múltiplas raízes src/ em monorepo (cli/src + extensions/pkg/src)', () => {
+    fs.mkdirSync(path.join(tmpDir, 'cli', 'src', 'commands'), { recursive: true });
+    fs.mkdirSync(path.join(tmpDir, 'extensions', 'pkg', 'src', 'lib'), { recursive: true });
+    const roots = findAllSrcRoots(tmpDir);
+    expect(roots).toHaveLength(2);
+    expect(roots).toContain(path.join(tmpDir, 'cli', 'src'));
+    expect(roots).toContain(path.join(tmpDir, 'extensions', 'pkg', 'src'));
+  });
+
+  it('ignora node_modules mesmo que contenha uma pasta chamada src', () => {
+    fs.mkdirSync(path.join(tmpDir, 'src'), { recursive: true });
+    fs.mkdirSync(path.join(tmpDir, 'node_modules', 'algum-pkg', 'src'), { recursive: true });
+    const roots = findAllSrcRoots(tmpDir);
+    expect(roots).toHaveLength(1);
+    expect(roots[0]).not.toContain('node_modules');
+  });
+
+  it('não desce dentro de um src/ já encontrado procurando outro aninhado', () => {
+    fs.mkdirSync(path.join(tmpDir, 'src', 'vendor', 'src'), { recursive: true }); // caso patológico
+    const roots = findAllSrcRoots(tmpDir);
+    expect(roots).toHaveLength(1); // só o primeiro src/ encontrado, não desce dentro dele
+  });
+
+  it('findNearestSrcRoot acha a raiz correta para arquivo em monorepo', () => {
+    const filePath = path.join(tmpDir, 'cli', 'src', 'commands', 'review.ts');
+    fs.mkdirSync(path.dirname(filePath), { recursive: true });
+    fs.writeFileSync(filePath, '// código');
+    const nearest = findNearestSrcRoot(filePath);
+    expect(nearest).toBe(path.join(tmpDir, 'cli', 'src'));
+  });
+
+  it('findNearestSrcRoot retorna null se não há src/ ancestral', () => {
+    const filePath = path.join(tmpDir, 'lib', 'code.ts');
+    fs.mkdirSync(path.dirname(filePath), { recursive: true });
+    fs.writeFileSync(filePath, '// código');
+    expect(findNearestSrcRoot(filePath)).toBeNull();
+  });
+
+  it('derivação de módulo usando findNearestSrcRoot produz nome correto (não mais "../cli")', () => {
+    const filePath = path.join(tmpDir, 'cli', 'src', 'commands', 'review.ts');
+    fs.mkdirSync(path.dirname(filePath), { recursive: true });
+    const nearest = findNearestSrcRoot(filePath)!;
+    const parts   = path.relative(nearest, filePath).split(path.sep);
+    const modName = parts[0];
+    const subName = path.basename(parts[1] ?? parts[0], path.extname(parts[1] ?? parts[0]));
+    expect(`${modName}/${subName}`).toBe('commands/review');
+  });
+});
