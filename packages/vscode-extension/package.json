@@ -1,0 +1,42 @@
+{
+  "name": "idd-vscode-extension",
+  "displayName": "IDD IDE",
+  "version": "0.1.0",
+  "private": true,
+  "publisher": "idd-ide",
+  "engines": { "vscode": "^1.85.0" },
+  "main": "./out/extension.js",
+  "activationEvents": ["onStartupFinished"],
+  "contributes": {
+    "commands": [
+      { "command": "iddUi.openContract", "title": "IDD: Open Contract Detail" },
+      { "command": "iddUi.refreshIntentTree", "title": "IDD: Refresh Intent Navigator" }
+    ],
+    "viewsContainers": {
+      "activitybar": [{ "id": "idd.intent", "title": "IDD", "icon": "resources/intent.svg" }]
+    },
+    "views": {
+      "idd.intent": [{ "id": "idd.intentNavigator", "name": "Intent Navigator", "type": "tree" }]
+    }
+  },
+  "scripts": {
+    "compile": "tsc -p .",
+    "build:webview": "esbuild src/webview/ContractDetailPanel.tsx --bundle --outfile=media/contract-detail.js --format=iife --platform=browser --jsx=automatic && tailwindcss -i src/webview/tailwind.css -o media/contract-detail.css --minify",
+    "build": "npm run compile && npm run build:webview"
+  },
+  "dependencies": {
+    "js-yaml": "^4.1.0",
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1"
+  },
+  "devDependencies": {
+    "@types/js-yaml": "^4.0.9",
+    "@types/node": "^20.19.41",
+    "@types/react": "^19.1.13",
+    "@types/react-dom": "^19.1.9",
+    "@types/vscode": "^1.85.0",
+    "esbuild": "^0.25.9",
+    "tailwindcss": "^3.4.17",
+    "typescript": "^5.9.3"
+  }
+}

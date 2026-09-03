@@ -1,0 +1,8 @@
+id: registerFailedLoginAttempt
+bounded_context: Identity
+state_mutation:
+  allowed_fields:
+    - failedLoginCount
+    - lastFailedLoginAt
+read_only_fields:
+  - email

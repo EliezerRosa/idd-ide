@@ -1,0 +1,13 @@
+bounded_contexts:
+  - name: Identity
+    status: aligned
+    aggregates:
+      - name: Account
+        status: aligned
+        entities:
+          - name: UserAccount
+            status: advisory
+            methods:
+              - name: registerFailedLoginAttempt
+                intent: registerFailedLoginAttempt
+                status: aligned

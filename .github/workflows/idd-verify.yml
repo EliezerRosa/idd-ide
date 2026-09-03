@@ -71,3 +71,7 @@ jobs:
       - run: cd cli && npx tsc --noEmit
       - run: cd extensions/idd-core && npm ci --ignore-scripts
       - run: cd extensions/idd-core && npx tsc --noEmit
+      - run: cd packages/vscode-extension && npm ci --ignore-scripts
+      - run: cd packages/vscode-extension && npm run build
+      - run: cd packages/idd-ui-pwa && npm ci --ignore-scripts
+      - run: cd packages/idd-ui-pwa && npm run build

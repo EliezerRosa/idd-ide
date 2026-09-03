@@ -1,0 +1,35 @@
+name: Bug report
+description: Report reproducible behavior that differs from an IDD contract or documented behavior.
+title: "bug: "
+labels: ["bug", "triage"]
+body:
+  - type: markdown
+    attributes:
+      value: "Thank you for helping improve IDD IDE. Do not include credentials, tokens, or private source code."
+  - type: input
+    id: version
+    attributes:
+      label: Version or commit
+      placeholder: "For example: 0.1.0 or aad2846"
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behavior
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Minimal reproduction
+      description: Include the command, intent contract, and redacted output when applicable.
+      placeholder: "1. ...\n2. ...\n3. ..."
+    validations:
+      required: true
