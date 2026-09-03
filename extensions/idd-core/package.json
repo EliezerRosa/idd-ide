@@ -163,10 +163,9 @@
     "@types/js-yaml": "^4.0.9",
     "@types/node": "^20.19.41",
     "@types/uuid": "^9.0.7",
-    "@types/vscode": "^1.120.0",
+    "@types/vscode": "1.85.0",
     "typescript": "^5.9.3"
   },
-  "icon": "resources/idd-icon-128.png",
   "repository": {
     "type": "git",
     "url": "https://github.com/EliezerRosa/idd-ide.git"
