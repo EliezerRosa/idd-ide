@@ -13,6 +13,8 @@ export async function activate(context: vscode.ExtensionContext) {
   const workspaceRoot = vscode.workspace.workspaceFolders?.[0]?.uri.fsPath;
   if (!workspaceRoot) return;
 
+  startLanguageClient(context);
+
   // ── Serviços core ──────────────────────────────────────────────
   const store    = new IntentStore(workspaceRoot);
   const engine   = new IntentEngine(context);
@@ -95,4 +97,6 @@ export async function activate(context: vscode.ExtensionContext) {
   vscode.window.setStatusBarMessage('$(check) IDD IDE ativo', 3000);
 }
 
-export function deactivate() {}
+export async function deactivate(): Promise<void> {
+  await stopLanguageClient();
+}
