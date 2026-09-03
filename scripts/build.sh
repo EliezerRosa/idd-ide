@@ -36,8 +36,8 @@ echo ""
 echo "→ Compilando extensão idd-core..."
 cd "$ROOT_DIR/extensions/idd-core"
 npm ci --ignore-scripts
-npm run compile
-echo "  ✓ Extensão compilada em extensions/idd-core/out/"
+npm run build
+echo "  ✓ Extensão compilada e empacotada em extensions/idd-core/dist/"
 
 # ── 3. Empacotar extensão como .vsix ─────────────────────────────
 echo ""

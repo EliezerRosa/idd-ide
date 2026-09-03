@@ -2,6 +2,7 @@
 .vscodeignore
 src/**
 node_modules/**
+out/**
 **/*.ts
 **/*.map
 tsconfig.json

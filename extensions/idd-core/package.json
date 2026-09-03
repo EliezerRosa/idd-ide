@@ -13,7 +13,7 @@
   "activationEvents": [
     "onStartupFinished"
   ],
-  "main": "./out/extension.js",
+  "main": "./dist/extension.js",
   "contributes": {
     "commands": [
       {
@@ -146,6 +146,8 @@
   },
   "scripts": {
     "compile": "tsc -p ./",
+    "bundle": "esbuild src/extension.ts --bundle --platform=node --target=node20 --format=cjs --outfile=dist/extension.js --external:vscode --external:better-sqlite3 && esbuild src/lsp/server.ts --bundle --platform=node --target=node20 --format=cjs --outfile=dist/lsp/server.js --external:better-sqlite3",
+    "build": "npm run compile && npm run bundle",
     "watch": "tsc -watch -p ./",
     "lint": "eslint src --ext ts",
     "test": "node ./out/test/runTest.js"
@@ -164,6 +166,7 @@
     "@types/node": "^20.19.41",
     "@types/uuid": "^9.0.7",
     "@types/vscode": "1.85.0",
+    "esbuild": "^0.25.9",
     "typescript": "^5.9.3"
   },
   "repository": {

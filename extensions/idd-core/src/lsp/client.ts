@@ -14,7 +14,7 @@ let client: LanguageClient | null = null;
 
 export function startLanguageClient(context: vscode.ExtensionContext): void {
   const serverModule = context.asAbsolutePath(
-    path.join('out', 'lsp', 'server.js')
+    path.join('dist', 'lsp', 'server.js')
   );
 
   // Opções do servidor: roda em um processo filho via Node.js
