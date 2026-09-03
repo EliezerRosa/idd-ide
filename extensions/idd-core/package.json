@@ -35,6 +35,10 @@
       {
         "command": "idd.openCapture",
         "title": "IDD: Abrir Painel de Captura"
+      },
+      {
+        "command": "idd.openIntentWorkspace",
+        "title": "IDD: Abrir Intent Workspace"
       }
     ],
     "viewsContainers": {
@@ -57,6 +61,15 @@
           "id": "idd.driftPanel",
           "name": "Drift Ativo",
           "type": "tree"
+        }
+      ]
+    },
+    "menus": {
+      "view/title": [
+        {
+          "command": "idd.openIntentWorkspace",
+          "when": "view == idd.intentTree",
+          "group": "navigation@1"
         }
       ]
     },

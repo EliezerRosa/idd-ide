@@ -6,6 +6,7 @@ import { IntentEngine }       from './engine/IntentEngine';
 import { IntentStore }        from './store/IntentStore';
 import { IntentVerifier }     from './verifier/IntentVerifier';
 import { IntentTreeProvider } from './capture/IntentTreeProvider';
+import { IntentWorkspacePanel } from './capture/IntentWorkspacePanel';
 import { installGitHooks }    from './cli/gitHooks';
 
 export async function activate(context: vscode.ExtensionContext) {
@@ -38,6 +39,10 @@ export async function activate(context: vscode.ExtensionContext) {
 
     vscode.commands.registerCommand('idd.openCapture', () => {
       IntentCapturePanel.create(context, store, engine);
+    }),
+
+    vscode.commands.registerCommand('idd.openIntentWorkspace', (module?: string) => {
+      IntentWorkspacePanel.show(context, store, module);
     }),
 
     vscode.commands.registerCommand('idd.generateCode', async () => {

@@ -24,7 +24,7 @@ export class IntentTreeItem extends vscode.TreeItem {
     );
     this.contextValue = `intent.${intent.status}`;
     this.command = {
-      command:   'idd.openCapture',
+      command:   'idd.openIntentWorkspace',
       title:     'Abrir intenção',
       arguments: [`${intent.module}/${intent.sub}`]
     };
