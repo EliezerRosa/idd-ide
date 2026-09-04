@@ -1,6 +1,7 @@
 import * as path from 'path';
 import * as vscode from 'vscode';
 import * as yaml from 'js-yaml';
+import * as fs from 'fs';
 
 export type IntentStatus = 'aligned' | 'advisory' | 'critical';
 
@@ -15,6 +16,8 @@ export interface WorkspaceIntent {
   language: string;
   status: IntentStatus;
   fsPath: string;
+  implementationPath?: string;
+  implementationLine?: number;
 }
 
 interface ContractDocument {
@@ -73,6 +76,7 @@ async function readContract(
 
   const module = asString(contract.module) ?? deriveModule(uri);
   const [boundedContext, name] = splitModule(module);
+  const implementationPath = findImplementation(uri.fsPath, name, contract.language);
 
   return {
     id: uri.fsPath,
@@ -84,8 +88,25 @@ async function readContract(
     acceptance: asStringArray(contract.acceptance),
     language: asString(contract.language) ?? 'typescript',
     status: declaredStatus.get(boundedContext.toLowerCase()) ?? 'aligned',
-    fsPath: uri.fsPath
+    fsPath: uri.fsPath,
+    implementationPath,
+    implementationLine: implementationPath ? findIntentLine(implementationPath, name) : undefined
   };
+}
+
+function findImplementation(contractPath: string, name: string, language: unknown): string | undefined {
+  const extension = language === 'python' ? '.py' : '.ts';
+  const candidate = path.join(path.dirname(contractPath), `${name}${extension}`);
+  return fs.existsSync(candidate) ? candidate : undefined;
+}
+
+function findIntentLine(filePath: string, name: string): number {
+  try {
+    const line = fs.readFileSync(filePath, 'utf8').split(/\r?\n/).findIndex(value => value.includes(`@intent('${name}')`) || value.includes(`@intent("${name}")`));
+    return line >= 0 ? line : 0;
+  } catch {
+    return 0;
+  }
 }
 
 async function parseYaml<T>(uri: vscode.Uri): Promise<T | undefined> {

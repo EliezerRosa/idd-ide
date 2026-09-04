@@ -32,6 +32,7 @@ export function startLanguageClient(context: vscode.ExtensionContext): void {
     documentSelector: [
       { scheme: 'file', language: 'yaml', pattern: '**/*.intent.yaml' },
       { scheme: 'file', pattern: '**/*.intent.yaml' },
+      { scheme: 'file', language: 'typescript', pattern: '**/*.ts' },
     ],
     synchronize: {
       // Notifica o servidor quando arquivos .intent.yaml mudam no workspace

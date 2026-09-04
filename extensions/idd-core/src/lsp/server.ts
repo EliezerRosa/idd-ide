@@ -27,8 +27,11 @@ import {
   TextEdit,
   PrepareRenameParams,
   RenameFile,
+  CodeLens,
+  CodeLensParams,
 } from 'vscode-languageserver/node';
 import { TextDocument } from 'vscode-languageserver-textdocument';
+import * as ts from 'typescript';
 import * as path from 'node:path';
 import * as fs   from 'node:fs';
 import * as yaml from 'js-yaml';
@@ -41,6 +44,12 @@ const VALID_FIELDS    = new Set([
   'intent', 'module', 'constraints', 'acceptance',
   'depends_on', 'used_by', 'language', 'framework', 'tags', 'version',
 ]);
+
+interface IntentContract {
+  id: string;
+  module?: string;
+  allowedFields: Set<string>;
+}
 
 // ── Conexão LSP ───────────────────────────────────────────────────
 
@@ -65,6 +74,7 @@ connection.onInitialize((params: InitializeParams): InitializeResult => {
       hoverProvider:        true,
       definitionProvider:   true,
       renameProvider:       { prepareProvider: true },
+      codeLensProvider:     { resolveProvider: false },
     },
   };
 });
@@ -208,9 +218,135 @@ function validateDocument(doc: TextDocument): Diagnostic[] {
   return diagnostics;
 }
 
+function validateTypeScriptDocument(doc: TextDocument): Diagnostic[] {
+  const source = ts.createSourceFile(doc.uri, doc.getText(), ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
+  const diagnostics: Diagnostic[] = [];
+
+  function visit(node: ts.Node): void {
+    if (ts.isMethodDeclaration(node)) {
+      const intentId = getIntentDecoratorId(node);
+      if (intentId) {
+        const contract = findIntentContract(intentId);
+        if (contract) {
+          node.forEachChild(child => visitMutation(child, contract));
+        }
+      }
+    }
+    ts.forEachChild(node, visit);
+  }
+
+  function visitMutation(node: ts.Node, contract: IntentContract): void {
+    if (ts.isPropertyAccessExpression(node.parent) && node.parent.expression === node && isMutation(node.parent.parent)) {
+      const property = node.parent;
+      const field = property.name.text;
+      if (!contract.allowedFields.has(field)) {
+        const start = property.name.getStart(source);
+        diagnostics.push({
+          severity: DiagnosticSeverity.Error,
+          range: toRange(source, property.name.getStart(source), property.name.getEnd()),
+          message: `Atributo '${field}' não é autorizado pelo contrato '${contract.id}' (INV-UI-04).`,
+          source: 'idd-lsp',
+          code: 'idd.unauthorized-state-mutation',
+          data: { field, contractId: contract.id, start },
+        });
+      }
+    }
+    ts.forEachChild(node, child => visitMutation(child, contract));
+  }
+
+  visit(source);
+  return diagnostics;
+}
+
+function getIntentDecoratorId(node: ts.MethodDeclaration): string | undefined {
+  for (const modifier of node.modifiers ?? []) {
+    if (!ts.isDecorator(modifier)) continue;
+    const expression = modifier.expression;
+    if (!ts.isCallExpression(expression) || expression.arguments.length === 0) continue;
+    const argument = expression.arguments[0];
+    if (ts.isStringLiteral(argument)) return argument.text;
+  }
+  return undefined;
+}
+
+function isMutation(node: ts.Node | undefined): boolean {
+  if (!node) return false;
+  if (ts.isBinaryExpression(node)) {
+    return node.operatorToken.kind >= ts.SyntaxKind.FirstAssignment && node.operatorToken.kind <= ts.SyntaxKind.LastAssignment;
+  }
+  return ts.isPrefixUnaryExpression(node) || ts.isPostfixUnaryExpression(node);
+}
+
+function toRange(source: ts.SourceFile, start: number, end: number): Range {
+  const from = source.getLineAndCharacterOfPosition(start);
+  const to = source.getLineAndCharacterOfPosition(end);
+  return { start: { line: from.line, character: from.character }, end: { line: to.line, character: to.character } };
+}
+
+function findIntentContract(intentId: string): IntentContract | undefined {
+  if (!workspaceRoot) return undefined;
+  const files = findAllIntentFiles(workspaceRoot);
+  for (const file of files) {
+    try {
+      const parsed = yaml.load(fs.readFileSync(file, 'utf8')) as Record<string, unknown>;
+      const module = typeof parsed.module === 'string' ? parsed.module : undefined;
+      const name = module?.split('/').pop();
+      if (intentId !== module && intentId !== name && intentId !== path.basename(file, '.intent.yaml')) continue;
+      const stateMutation = parsed.state_mutation as { allowed_fields?: unknown } | undefined;
+      const allowedFields = Array.isArray(stateMutation?.allowed_fields)
+        ? new Set(stateMutation.allowed_fields.filter((field): field is string => typeof field === 'string'))
+        : new Set<string>();
+      return { id: intentId, module, allowedFields };
+    } catch { /* invalid contracts are reported by the YAML diagnostics */ }
+  }
+  return undefined;
+}
+
 documents.onDidChangeContent(change => {
-  const diags = validateDocument(change.document);
-  connection.sendDiagnostics({ uri: change.document.uri, diagnostics: diags });
+  const document: TextDocument = change.document;
+  const diags = document.uri.endsWith('.ts')
+    ? validateTypeScriptDocument(document)
+    : validateDocument(document);
+  connection.sendDiagnostics({ uri: document.uri, diagnostics: diags });
+});
+
+documents.onDidOpen(document => {
+  const textDocument = document.document;
+  const diags = textDocument.uri.endsWith('.ts')
+    ? validateTypeScriptDocument(textDocument)
+    : validateDocument(textDocument);
+  connection.sendDiagnostics({ uri: textDocument.uri, diagnostics: diags });
+});
+
+connection.onCodeLens((params: CodeLensParams): CodeLens[] => {
+  const doc = documents.get(params.textDocument.uri);
+  if (!doc || !doc.uri.endsWith('.ts')) return [];
+  const document: TextDocument = doc;
+  const source = ts.createSourceFile(document.uri, document.getText(), ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
+  const lenses: CodeLens[] = [];
+  function visit(node: ts.Node): void {
+    if (ts.isMethodDeclaration(node)) {
+      const intentId = getIntentDecoratorId(node);
+      if (intentId) {
+        const contract = findIntentContract(intentId);
+        const hasDrift = contract
+          ? validateTypeScriptDocument(document).some(diagnostic => diagnostic.message.includes(`'${intentId}'`))
+          : false;
+        const position = source.getLineAndCharacterOfPosition(node.getStart(source));
+        lenses.push({
+          range: { start: { line: position.line, character: 0 }, end: { line: position.line, character: 0 } },
+          command: {
+            title: contract && !hasDrift ? 'IDD: Conforme · Abrir Intent Workspace' : 'IDD: Drift crítico · Abrir Intent Workspace',
+            command: 'idd.openIntentWorkspace',
+            arguments: [contract?.module ?? intentId],
+          },
+        });
+      }
+    }
+    ts.forEachChild(node, visit);
+  }
+  visit(source);
+  return lenses;
 });
 
 // ── Hover ─────────────────────────────────────────────────────────

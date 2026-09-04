@@ -3,9 +3,10 @@ import { IntentStore } from '../store/IntentStore';
 import { scanWorkspaceIntents } from './IntentWorkspaceScanner';
 
 interface InboundMessage {
-  command?: 'ready' | 'newIntent' | 'openContract';
+  command?: 'ready' | 'newIntent' | 'openContract' | 'openFile';
   module?: string;
   fsPath?: string;
+  line?: number;
 }
 
 export class IntentWorkspacePanel {
@@ -32,6 +33,7 @@ export class IntentWorkspacePanel {
       if (message.command === 'ready') await this.publish(selectedModule);
       if (message.command === 'newIntent') await vscode.commands.executeCommand('idd.newIntent', message.module);
       if (message.command === 'openContract' && message.fsPath) await this.openContract(message.fsPath);
+      if (message.command === 'openFile' && message.fsPath) await this.openFile(message.fsPath, message.line ?? 0);
     }, undefined, this.disposables);
 
     const watcher = vscode.workspace.createFileSystemWatcher('**/*.intent.yaml');
@@ -50,9 +52,16 @@ export class IntentWorkspacePanel {
   }
 
   private async openContract(fsPath: string): Promise<void> {
+    await this.openFile(fsPath, 0);
+  }
+
+  private async openFile(fsPath: string, line: number): Promise<void> {
     try {
       const document = await vscode.workspace.openTextDocument(vscode.Uri.file(fsPath));
-      await vscode.window.showTextDocument(document, vscode.ViewColumn.One);
+      const editor = await vscode.window.showTextDocument(document, vscode.ViewColumn.One);
+      const position = new vscode.Position(Math.max(0, Math.min(line, document.lineCount - 1)), 0);
+      editor.selection = new vscode.Selection(position, position);
+      editor.revealRange(new vscode.Range(position, position), vscode.TextEditorRevealType.InCenterIfOutsideViewport);
     } catch {
       vscode.window.showWarningMessage(`Contrato indisponível: ${fsPath}`);
     }
@@ -86,6 +95,10 @@ export class IntentWorkspacePanel {
       .explain{margin:0;color:var(--vscode-descriptionForeground);line-height:1.6}
       .panels{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;margin-top:24px}
       .panel{padding:14px 16px;border-left:2px solid var(--vscode-focusBorder);background:var(--vscode-textBlockQuote-background)}
+      .impact{margin-top:16px;padding:14px 16px;border:1px solid var(--vscode-panel-border);background:var(--vscode-editor-inactiveSelectionBackground)}
+      .impact h3{margin:0 0 10px;font-size:11px;text-transform:uppercase;letter-spacing:.07em}
+      .impact button{display:block;width:100%;padding:7px 0;border:0;background:transparent;color:var(--vscode-textLink-foreground);text-align:left;cursor:pointer}
+      .impact button:hover{text-decoration:underline}
       .panel h3{margin:0 0 10px;font-size:11px;text-transform:uppercase;letter-spacing:.07em}
       .panel ul{margin:0;padding-left:16px}
       .panel li{margin-bottom:6px;line-height:1.5}
@@ -159,10 +172,14 @@ export class IntentWorkspacePanel {
               (intent.acceptance.length ? '<ul>' + listItems(intent.acceptance) + '</ul>' : '<p>Nenhum critério declarado.</p>') +
             '</div>' +
           '</div>' +
+          '<div class="impact"><h3>Impacto</h3><button id="impact-contract">' + esc(intent.module) + ' · contrato YAML</button>' +
+          (intent.implementationPath ? '<button id="impact-implementation">' + esc(intent.name) + ' · implementação</button>' : '') + '</div>' +
           '<p class="meta">' + esc(intent.module) + ' · ' + esc(intent.language) + '</p>' +
           '<div class="actions"><button class="action" id="yaml">Abrir contrato YAML</button>' +
           '<button class="action secondary" id="new">Nova intenção</button></div>';
         document.getElementById('yaml').onclick = () => vscode.postMessage({ command: 'openContract', fsPath: intent.fsPath });
+        document.getElementById('impact-contract').onclick = () => vscode.postMessage({ command: 'openFile', fsPath: intent.fsPath, line: 0 });
+        if (intent.implementationPath) document.getElementById('impact-implementation').onclick = () => vscode.postMessage({ command: 'openFile', fsPath: intent.implementationPath, line: intent.implementationLine ?? 0 });
         document.getElementById('new').onclick = () => vscode.postMessage({ command: 'newIntent', module: intent.module });
       }
 
