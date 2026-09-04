@@ -67,7 +67,7 @@ const FIELD_RULES: Record<string, {
 };
 
 const VALID_LANGUAGES = ['typescript','javascript','python','go','rust','java'];
-const VALID_FIELD_NAMES = new Set(Object.keys(FIELD_RULES).concat(REQUIRED_FIELDS as unknown as string[]));
+const VALID_FIELD_NAMES = new Set(Object.keys(FIELD_RULES).concat(REQUIRED_FIELDS as unknown as string[], 'state_mutation'));
 
 export function validateIntent(obj: unknown): ValidationResult {
   const errors: ValidationError[] = [];
@@ -82,6 +82,38 @@ export function validateIntent(obj: unknown): ValidationResult {
   }
 
   const data = obj as Record<string, unknown>;
+
+  if ('state_mutation' in data) {
+    const stateMutation = data.state_mutation;
+    if (typeof stateMutation !== 'object' || stateMutation === null || Array.isArray(stateMutation)) {
+      errors.push({
+        field: 'state_mutation',
+        message: '"state_mutation" deve ser um objeto',
+        value: stateMutation,
+        example: 'state_mutation:\n  allowed_fields: ["fieldName"]',
+      });
+    } else {
+      const allowedFields = (stateMutation as Record<string, unknown>).allowed_fields;
+      if (allowedFields !== undefined && (!Array.isArray(allowedFields) || allowedFields.some(field => typeof field !== 'string' || field.trim().length === 0))) {
+        errors.push({
+          field: 'state_mutation.allowed_fields',
+          message: '"allowed_fields" deve ser uma lista de strings não vazias',
+          value: allowedFields,
+          example: 'state_mutation:\n  allowed_fields:\n    - failedLoginCount',
+        });
+      }
+      for (const key of Object.keys(stateMutation as object)) {
+        if (key !== 'allowed_fields') {
+          errors.push({
+            field: `state_mutation.${key}`,
+            message: `Campo desconhecido "${key}" em state_mutation`,
+            value: (stateMutation as Record<string, unknown>)[key],
+            example: 'Use apenas state_mutation.allowed_fields',
+          });
+        }
+      }
+    }
+  }
 
   // 1. Campos obrigatórios
   for (const field of REQUIRED_FIELDS) {

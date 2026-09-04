@@ -43,6 +43,7 @@ const VALID_LANGUAGES = ['typescript', 'javascript', 'python', 'go', 'rust', 'ja
 const VALID_FIELDS    = new Set([
   'intent', 'module', 'constraints', 'acceptance',
   'depends_on', 'used_by', 'language', 'framework', 'tags', 'version',
+  'state_mutation',
 ]);
 
 interface IntentContract {

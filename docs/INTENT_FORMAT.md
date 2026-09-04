@@ -55,6 +55,11 @@ tags: string[]
 version: semver
   # Versão semântica — gerenciada automaticamente pelo Intent Store.
   # Não edite manualmente: o store incrementa o patch a cada geração.
+
+state_mutation: object
+  # Política determinística de mutação de estado.
+  # Campos fora de allowed_fields geram hard gate no editor e no LSP.
+  # Exemplo: { allowed_fields: ["failedLoginCount"] }
 ```
 
 ## Exemplo Completo

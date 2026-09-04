@@ -61,6 +61,7 @@ export function statusBadge(status: string): string {
     case 'ok':       return `${GREEN}${BOLD}ok${RESET}`;
     case 'drift':    return `${RED}${BOLD}drift${RESET}`;
     case 'warn':     return `${YELLOW}${BOLD}aviso${RESET}`;
+    case 'unknown':  return `${YELLOW}${BOLD}inconclusivo${RESET}`;
     case 'orphan':   return `${GRAY}${BOLD}órfã${RESET}`;
     default:         return `${GRAY}${status}${RESET}`;
   }

@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "https://idd-ide.dev/schemas/intent.schema.json",
   "title": "IDD Intent",
-  "description": "Schema de um arquivo .intent.yaml do paradigma Intent Driven Development",
+  "description": "Schema canônico de um arquivo .intent.yaml do paradigma Intent Driven Development",
   "type": "object",
   "required": ["intent", "module", "constraints", "acceptance"],
   "additionalProperties": false,
@@ -57,6 +57,18 @@
       "type": "string",
       "pattern": "^\\d+\\.\\d+\\.\\d+$",
       "description": "Versão semântica — gerenciada automaticamente pelo Intent Store"
+    },
+    "state_mutation": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "allowed_fields": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 },
+          "description": "Campos de estado que o contrato autoriza a mutar"
+        }
+      },
+      "description": "Política determinística de mutação de estado do contrato"
     }
   }
 }

@@ -420,6 +420,30 @@ describe('--dry-run flag', () => {
 // ════════════════════════════════════════════════════════════════
 
 describe('Integração: validação + rate limit pipeline', () => {
+  it('aceita state_mutation.allowed_fields como política de contrato', () => {
+    const valid = {
+      intent: 'Registrar tentativa de login malsucedida',
+      module: 'auth/login',
+      constraints: ['email permanece somente leitura'],
+      acceptance: ['incrementa o contador de falhas'],
+      state_mutation: { allowed_fields: ['failedLoginCount'] },
+    };
+    expect(validateIntent(valid).valid).toBe(true);
+  });
+
+  it('rejeita state_mutation com campos desconhecidos', () => {
+    const invalid = {
+      intent: 'Registrar tentativa de login malsucedida',
+      module: 'auth/login',
+      constraints: ['email permanece somente leitura'],
+      acceptance: ['incrementa o contador de falhas'],
+      state_mutation: { forbidden_fields: ['email'] },
+    };
+    const result = validateIntent(invalid);
+    expect(result.valid).toBe(false);
+    expect(result.errors.some(error => error.field === 'state_mutation.forbidden_fields')).toBe(true);
+  });
+
   it('intent inválida bloqueia antes do rate limit ser checado', () => {
     const invalid = { module: 'x', constraints: ['c'], acceptance: ['a'] }; // falta intent
     const validation = validateIntent(invalid);

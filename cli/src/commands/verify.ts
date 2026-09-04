@@ -15,11 +15,12 @@ interface IntentYaml {
   acceptance:  string[];
   depends_on?: string[];
   language?:   string;
+  state_mutation?: { allowed_fields?: string[] };
 }
 
 interface VerifyResult {
   module:      string;
-  status:      'ok' | 'warn' | 'drift';
+  status:      'ok' | 'warn' | 'drift' | 'unknown';
   score:       number;
   violations:  string[];
   missingTests: string[];
@@ -102,8 +103,8 @@ function checkTests(testFilePath: string, acceptance: string[]): string[] {
 
 async function verifySemantic(
   intent: IntentYaml, code: string, apiKey: string, model: string
-): Promise<{ score: number; violations: string[] }> {
-  if (!apiKey) return { score: 100, violations: [] };
+): Promise<{ score: number; violations: string[]; status: 'ok' | 'warn' | 'drift' | 'unknown'; error?: string }> {
+  if (!apiKey) return { score: 0, violations: ['Análise semântica indisponível: ANTHROPIC_API_KEY não configurada.'], status: 'unknown' };
 
   try {
     const res = await fetch('https://api.anthropic.com/v1/messages', {
@@ -116,10 +117,14 @@ async function verifySemantic(
       body: JSON.stringify({
         model,
         max_tokens: 512,
-        system: [
-          'Analise o alinhamento entre intenção e código.',
-          'Retorne APENAS JSON: { "score": 0-100, "violations": string[], "status": "ok"|"warn"|"drift" }',
-        ].join('\n'),
+        system: [{
+          type: 'text',
+          text: [
+            'Analise o alinhamento entre intenção e código.',
+            'Retorne APENAS JSON: { "score": 0-100, "violations": string[], "status": "ok"|"warn"|"drift" }',
+          ].join('\n'),
+          cache_control: { type: 'ephemeral' },
+        }],
         messages: [{
           role: 'user',
           content: [
@@ -132,15 +137,17 @@ async function verifySemantic(
       }),
     });
 
-    if (!res.ok) return { score: 100, violations: [] };
+    if (!res.ok) return { score: 0, violations: [`Análise semântica indisponível: Claude API retornou HTTP ${res.status}.`], status: 'unknown' };
 
     const data = await res.json() as { content: Array<{ type: string; text: string }> };
     const text = data.content.find(b => b.type === 'text')?.text ?? '{}';
     const clean = text.replace(/```json\n?/g, '').replace(/```\n?/g, '').trim();
     const parsed = JSON.parse(clean);
-    return { score: parsed.score ?? 100, violations: parsed.violations ?? [] };
-  } catch {
-    return { score: 100, violations: [] };
+    const score = typeof parsed.score === 'number' ? parsed.score : 0;
+    const status = parsed.status === 'drift' || parsed.status === 'warn' || parsed.status === 'ok' ? parsed.status : score < 50 ? 'drift' : score < 80 ? 'warn' : 'ok';
+    return { score, violations: Array.isArray(parsed.violations) ? parsed.violations : [], status };
+  } catch (error) {
+    return { score: 0, violations: [`Análise semântica indisponível: ${error instanceof Error ? error.message : 'erro desconhecido'}.`], status: 'unknown' };
   }
 }
 
@@ -151,6 +158,7 @@ export async function cmdVerify(args: string[]): Promise<void> {
   const failOnCritical = args.includes('--fail-on=critical') || cfg.fail_on === 'critical';
   const threshold      = Number(args.find(a => a.startsWith('--threshold='))?.split('=')[1] ?? cfg.drift_threshold);
   const semantic       = args.includes('--semantic');
+  const semanticRequired = args.includes('--semantic-required');
   const stagedOnly     = args.includes('--staged');
   const target         = args.find(a => !a.startsWith('--'));
 
@@ -208,11 +216,12 @@ export async function cmdVerify(args: string[]): Promise<void> {
     // Análise semântica (opcional, mais lenta)
     let semanticScore  = 100;
     let semanticViol:  string[] = [];
+    let semanticStatus: 'ok' | 'warn' | 'drift' | 'unknown' = 'ok';
 
-    if (semantic && apiKey) {
+    if (semantic) {
       const spin = spinner(`${intent.module} — análise semântica...`);
-      ({ score: semanticScore, violations: semanticViol } = await verifySemantic(intent, code, apiKey, model));
-      spin.stop(semanticScore >= 80);
+      ({ score: semanticScore, violations: semanticViol, status: semanticStatus } = await verifySemantic(intent, code, apiKey, model));
+      spin.stop(semanticStatus !== 'unknown' && semanticScore >= 80);
     }
 
     const allViolations = [...staticViol, ...semanticViol];
@@ -220,7 +229,8 @@ export async function cmdVerify(args: string[]): Promise<void> {
       ? Math.min(semanticScore, critical ? 30 : staticViol.length > 0 ? 70 : 100)
       : critical ? 30 : staticViol.length > 0 ? 70 : 100;
 
-    const status: 'ok' | 'warn' | 'drift' =
+    const status: 'ok' | 'warn' | 'drift' | 'unknown' =
+      semantic && semanticStatus === 'unknown' ? 'unknown' :
       critical || (semantic && semanticScore < threshold / 2) ? 'drift' :
       allViolations.length > 0 || missingTests.length > 0 || (semantic && semanticScore < threshold) ? 'warn' : 'ok';
 
@@ -273,23 +283,28 @@ export async function cmdVerify(args: string[]): Promise<void> {
   const ok    = results.filter(r => r.status === 'ok').length;
   const drifts = results.filter(r => r.status === 'drift').length;
   const warns  = results.filter(r => r.status === 'warn').length;
+  const unknowns = results.filter(r => r.status === 'unknown').length;
 
   console.log('');
   row('alinhadas',   `${GREEN}${ok}${RESET}`);
   if (warns)  row('avisos',   `${YELLOW}${warns}${RESET}`);
   if (drifts) row('drift',    `${RED}${drifts}${RESET}`);
+  if (unknowns) row('inconclusivos', `${YELLOW}${unknowns}${RESET}`);
 
   store.close();
 
   const hasCritical = results.some(r => r.status === 'drift');
-  footer(hasCritical
+  const hasUnknown = results.some(r => r.status === 'unknown');
+  footer(hasUnknown
+    ? 'Análise semântica inconclusiva — nenhuma conclusão de alinhamento foi emitida.'
+    : hasCritical
     ? 'Corrija os drifts críticos antes de fazer commit.'
     : warns > 0
     ? 'Revise os avisos — podem virar drift em breve.'
     : 'Todas as intenções estão alinhadas. ✓'
   );
 
-  if (failOnCritical && hasCritical) process.exit(1);
+  if ((failOnCritical && hasCritical) || (semanticRequired && hasUnknown)) process.exit(1);
 }
 
 // ── Helpers ──────────────────────────────────────────────────────
