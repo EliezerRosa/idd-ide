@@ -2,228 +2,23 @@
 import * as fs   from 'node:fs';
 import * as path from 'node:path';
 import { findProjectRoot } from './store.ts';
+import { parseContract, type ContractIssue, type IntentContract } from '@idd/core';
 
-// ── JSON Schema validator (sem dependência externa) ──────────────
+// ── Validação de contrato (delegada ao parser canônico @idd/core) ──
 
-export interface ValidationError {
-  field:   string;
-  message: string;
-  value?:  unknown;
-  example: string;
-}
+export type ValidationError = ContractIssue;
 
 export interface ValidationResult {
-  valid:  boolean;
-  errors: ValidationError[];
+  valid:     boolean;
+  errors:    ValidationError[];
+  contract?: IntentContract;
 }
 
-// Regras inline derivadas do JSON Schema em schemas/intent.schema.json
-const REQUIRED_FIELDS = ['intent', 'module', 'constraints', 'acceptance'] as const;
-
-const FIELD_RULES: Record<string, {
-  type:       string;
-  minLength?: number;
-  minItems?:  number;
-  pattern?:   RegExp;
-  itemType?:  string;
-  example:    string;
-}> = {
-  intent: {
-    type: 'string', minLength: 10,
-    example: '"Autenticar usuário com e-mail e senha, retornando JWT válido por 24h"',
-  },
-  module: {
-    type: 'string', pattern: /^[a-z0-9-]+\/[a-z0-9-]+$/,
-    example: '"auth/login"  (formato: dominio/funcionalidade)',
-  },
-  constraints: {
-    type: 'array', minItems: 1, itemType: 'string',
-    example: '["senha >= 8 caracteres", "bloquear após 5 tentativas"]',
-  },
-  acceptance: {
-    type: 'array', minItems: 1, itemType: 'string',
-    example: '["login válido retorna JWT", "senha errada retorna 401"]',
-  },
-  language: {
-    type: 'string',
-    example: '"typescript"  (opções: typescript, python, go, javascript, rust, java)',
-  },
-  framework: {
-    type: 'string',
-    example: '"express"',
-  },
-  depends_on: {
-    type: 'array', itemType: 'string',
-    example: '["users/crud", "db/connection"]',
-  },
-  used_by: {
-    type: 'array', itemType: 'string',
-    example: '["dashboard/access"]',
-  },
-  version: {
-    type: 'string', pattern: /^\d+\.\d+\.\d+$/,
-    example: '"1.0.0"',
-  },
-};
-
-const VALID_LANGUAGES = ['typescript','javascript','python','go','rust','java'];
-const VALID_FIELD_NAMES = new Set(Object.keys(FIELD_RULES).concat(REQUIRED_FIELDS as unknown as string[], 'state_mutation'));
-
 export function validateIntent(obj: unknown): ValidationResult {
-  const errors: ValidationError[] = [];
-
-  if (typeof obj !== 'object' || obj === null || Array.isArray(obj)) {
-    errors.push({
-      field:   '(root)',
-      message: 'O arquivo .intent.yaml deve ser um objeto YAML, não uma lista ou valor primitivo',
-      example: 'intent: "Minha intenção"\nmodule: auth/login',
-    });
-    return { valid: false, errors };
-  }
-
-  const data = obj as Record<string, unknown>;
-
-  if ('state_mutation' in data) {
-    const stateMutation = data.state_mutation;
-    if (typeof stateMutation !== 'object' || stateMutation === null || Array.isArray(stateMutation)) {
-      errors.push({
-        field: 'state_mutation',
-        message: '"state_mutation" deve ser um objeto',
-        value: stateMutation,
-        example: 'state_mutation:\n  allowed_fields: ["fieldName"]',
-      });
-    } else {
-      const allowedFields = (stateMutation as Record<string, unknown>).allowed_fields;
-      if (allowedFields !== undefined && (!Array.isArray(allowedFields) || allowedFields.some(field => typeof field !== 'string' || field.trim().length === 0))) {
-        errors.push({
-          field: 'state_mutation.allowed_fields',
-          message: '"allowed_fields" deve ser uma lista de strings não vazias',
-          value: allowedFields,
-          example: 'state_mutation:\n  allowed_fields:\n    - failedLoginCount',
-        });
-      }
-      for (const key of Object.keys(stateMutation as object)) {
-        if (key !== 'allowed_fields') {
-          errors.push({
-            field: `state_mutation.${key}`,
-            message: `Campo desconhecido "${key}" em state_mutation`,
-            value: (stateMutation as Record<string, unknown>)[key],
-            example: 'Use apenas state_mutation.allowed_fields',
-          });
-        }
-      }
-    }
-  }
-
-  // 1. Campos obrigatórios
-  for (const field of REQUIRED_FIELDS) {
-    if (!(field in data) || data[field] === undefined || data[field] === null) {
-      errors.push({
-        field,
-        message: `Campo obrigatório "${field}" está ausente`,
-        example: `${field}: ${FIELD_RULES[field]?.example ?? '...'}`,
-      });
-    }
-  }
-
-  // 2. Campos extras não permitidos
-  for (const key of Object.keys(data)) {
-    if (!VALID_FIELD_NAMES.has(key)) {
-      errors.push({
-        field:   key,
-        message: `Campo desconhecido "${key}" — não permitido pelo schema`,
-        value:   data[key],
-        example: `Remova o campo "${key}" ou verifique o nome correto`,
-      });
-    }
-  }
-
-  // 3. Validação de tipo e regras de cada campo
-  for (const [field, rules] of Object.entries(FIELD_RULES)) {
-    if (!(field in data)) continue;
-    const val = data[field];
-
-    if (rules.type === 'string') {
-      if (typeof val !== 'string') {
-        errors.push({ field, message: `"${field}" deve ser uma string`, value: val, example: `${field}: ${rules.example}` });
-        continue;
-      }
-      if (rules.minLength && val.length < rules.minLength) {
-        errors.push({
-          field,
-          message: `"${field}" muito curto (mínimo ${rules.minLength} caracteres, atual: ${val.length})`,
-          value: val,
-          example: `${field}: ${rules.example}`,
-        });
-      }
-      if (rules.pattern && !rules.pattern.test(val)) {
-        errors.push({
-          field,
-          message: `"${field}" tem formato inválido`,
-          value: val,
-          example: `${field}: ${rules.example}`,
-        });
-      }
-      // language validation
-      if (field === 'language' && !VALID_LANGUAGES.includes(val)) {
-        errors.push({
-          field,
-          message: `"language" deve ser um de: ${VALID_LANGUAGES.join(', ')}`,
-          value: val,
-          example: `language: ${rules.example}`,
-        });
-      }
-    }
-
-    if (rules.type === 'array') {
-      if (!Array.isArray(val)) {
-        errors.push({ field, message: `"${field}" deve ser uma lista YAML`, value: val, example: `${field}:\n  - ${rules.example?.replace(/[\[\]"]/g, '').split(',')[0].trim()}` });
-        continue;
-      }
-      if (rules.minItems && val.length < rules.minItems) {
-        errors.push({
-          field,
-          message: `"${field}" precisa de ao menos ${rules.minItems} item(ns) (atual: ${val.length})`,
-          value: val,
-          example: `${field}:\n  ${rules.example}`,
-        });
-      }
-      if (rules.itemType === 'string') {
-        val.forEach((item, i) => {
-          if (typeof item !== 'string') {
-            errors.push({
-              field: `${field}[${i}]`,
-              message: `Item ${i} de "${field}" deve ser uma string`,
-              value: item,
-              example: `${field}:\n  - "texto descritivo"`,
-            });
-          } else if (item.trim().length === 0) {
-            errors.push({
-              field: `${field}[${i}]`,
-              message: `Item ${i} de "${field}" não pode ser vazio`,
-              value: item,
-              example: `${field}:\n  - "descrição clara"`,
-            });
-          }
-        });
-        // module pattern check for depends_on / used_by
-        if (field === 'depends_on' || field === 'used_by') {
-          (val as string[]).forEach((item, i) => {
-            if (typeof item === 'string' && !/^[a-z0-9-]+\/[a-z0-9-]+$/.test(item)) {
-              errors.push({
-                field: `${field}[${i}]`,
-                message: `"${item}" tem formato inválido (esperado: modulo/sub)`,
-                value: item,
-                example: `${field}:\n  - users/crud`,
-              });
-            }
-          });
-        }
-      }
-    }
-  }
-
-  return { valid: errors.length === 0, errors };
+  const result = parseContract(obj);
+  return result.ok
+    ? { valid: true, errors: [], contract: result.contract }
+    : { valid: false, errors: result.issues };
 }
 
 // ── .idd/.env loader ─────────────────────────────────────────────

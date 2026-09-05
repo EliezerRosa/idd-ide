@@ -444,6 +444,98 @@ describe('Integração: validação + rate limit pipeline', () => {
     expect(result.errors.some(error => error.field === 'state_mutation.forbidden_fields')).toBe(true);
   });
 
+  // ── Contrato v2: circunscrição a método (Fase 0) ───────────────
+
+  const V2_BASE = {
+    version: '2.0',
+    intent: 'Registrar tentativa incorreta de senha e bloquear ao atingir o limite',
+    module: 'auth/user-account',
+    target_class: 'Domain.Auth.UserAccount',
+    target_method: 'registerFailedLoginAttempt',
+    behavioral_contract: {
+      visibility: 'public',
+      state_mutation: {
+        allowed_fields: ['failedAttemptsCount', 'accountStatus'],
+        read_only_fields: ['id', 'email', 'passwordHash'],
+      },
+    },
+    constraints: [
+      { id: 'C-METH-01', type: 'invariant', severity: 'critical', description: 'Transição para BLOCKED só se failedAttemptsCount >= 5' },
+    ],
+    acceptance: [
+      { id: 'A-01', given: 'conta com 4 falhas', when: 'método executado', then: 'failedAttemptsCount = 5 e status BLOCKED' },
+    ],
+    ethics: { impacted: ['usuários legítimos'], risks: ['bloqueio indevido por ataque de negação'] },
+  };
+
+  it('v2: aceita contrato circunscrito completo e normaliza para IntentContract', () => {
+    const result = validateIntent(V2_BASE);
+    expect(result.valid).toBe(true);
+    expect(result.contract?.version).toBe('2.0');
+    expect(result.contract?.targetClass).toBe('Domain.Auth.UserAccount');
+    expect(result.contract?.targetMethod).toBe('registerFailedLoginAttempt');
+    expect(result.contract?.behavioralContract.stateMutation.readOnlyFields).toContain('email');
+    expect(result.contract?.constraints[0]).toMatchObject({ id: 'C-METH-01', type: 'invariant', severity: 'critical' });
+    expect(result.contract?.acceptance[0]).toMatchObject({ given: 'conta com 4 falhas', then: 'failedAttemptsCount = 5 e status BLOCKED' });
+    expect(result.contract?.ethics?.risks).toHaveLength(1);
+  });
+
+  it('v1: contrato legado normaliza constraints/acceptance de string para objeto', () => {
+    const v1 = {
+      intent: 'Autenticar usuário com e-mail e senha retornando JWT',
+      module: 'auth/login',
+      constraints: ['senha >= 8 caracteres'],
+      acceptance: ['login válido retorna JWT'],
+    };
+    const result = validateIntent(v1);
+    expect(result.valid).toBe(true);
+    expect(result.contract?.version).toBe('1.0');
+    expect(result.contract?.constraints[0]).toMatchObject({ id: 'C-01', type: 'business', severity: 'critical', description: 'senha >= 8 caracteres' });
+    expect(result.contract?.acceptance[0]).toMatchObject({ id: 'A-01', then: 'login válido retorna JWT' });
+    expect(result.contract?.behavioralContract.stateMutation.allowedFields).toEqual([]);
+  });
+
+  it('v2: target_class sem target_method é rejeitado', () => {
+    const { target_method: _omit, ...partial } = V2_BASE;
+    const result = validateIntent(partial);
+    expect(result.valid).toBe(false);
+    expect(result.errors.some(e => e.field === 'target_class' && e.message.includes('juntos'))).toBe(true);
+  });
+
+  it('v2: campo simultaneamente em allowed_fields e read_only_fields é rejeitado', () => {
+    const conflict = {
+      ...V2_BASE,
+      behavioral_contract: {
+        visibility: 'public',
+        state_mutation: { allowed_fields: ['email'], read_only_fields: ['email'] },
+      },
+    };
+    const result = validateIntent(conflict);
+    expect(result.valid).toBe(false);
+    expect(result.errors.some(e => e.message.includes('simultaneamente'))).toBe(true);
+  });
+
+  it('v2: state_mutation (v1) e behavioral_contract (v2) juntos são rejeitados', () => {
+    const mixed = { ...V2_BASE, state_mutation: { allowed_fields: ['x'] } };
+    const result = validateIntent(mixed);
+    expect(result.valid).toBe(false);
+    expect(result.errors.some(e => e.message.includes('não ambos'))).toBe(true);
+  });
+
+  it('v2: constraint com type desconhecido é rejeitada', () => {
+    const bad = { ...V2_BASE, constraints: [{ type: 'magic', description: 'algo suficientemente longo' }] };
+    const result = validateIntent(bad);
+    expect(result.valid).toBe(false);
+    expect(result.errors.some(e => e.field === 'constraints[0].type')).toBe(true);
+  });
+
+  it('v2: target_class fora do padrão PascalCase.Path é rejeitado', () => {
+    const bad = { ...V2_BASE, target_class: 'domain.auth.userAccount' };
+    const result = validateIntent(bad);
+    expect(result.valid).toBe(false);
+    expect(result.errors.some(e => e.field === 'target_class')).toBe(true);
+  });
+
   it('intent inválida bloqueia antes do rate limit ser checado', () => {
     const invalid = { module: 'x', constraints: ['c'], acceptance: ['a'] }; // falta intent
     const validation = validateIntent(invalid);

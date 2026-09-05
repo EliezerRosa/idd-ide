@@ -1,0 +1,64 @@
+# Camada 1 — o repositório idd-ide governa a si mesmo (dogfooding).
+# Verificado por: idd verify --project
+version: "2.0"
+name: idd-ide
+
+lifecycle_status:
+  phase: exploratory
+  # Tetos ratificados em 2026-09-04: waiver 30/14/7 dias; anemic model warn/critical/critical.
+  phase_policies:
+    exploratory:   { max_waiver_duration_days: 30, anemic_model_severity: warn }
+    consolidation: { max_waiver_duration_days: 14, anemic_model_severity: critical }
+    production:    { max_waiver_duration_days: 7,  anemic_model_severity: critical }
+
+governance:
+  roles:
+    - name: architect
+      can_approve_waivers: true
+      can_change_phase: true
+    - name: developer
+      can_approve_waivers: false
+      can_change_phase: false
+  waiver_policy:
+    requires_approval_from: [architect]
+
+global_constraints:
+  - id: G-ARCH-01
+    type: invariant
+    severity: critical
+    description: "Um único parser de contrato (@idd/core) é consumido por CLI, LSP e UI; nenhum consumidor reimplementa validação de .intent.yaml."
+  - id: G-ARCH-02
+    type: encapsulation
+    severity: critical
+    description: "Importações entre contextos só ocorrem via allowed_dependencies; violação bloqueia merge."
+  - id: G-SEC-01
+    type: security
+    severity: critical
+    description: "Segredos nunca são ecoados em logs, memória ou saída da CLI."
+
+bounded_contexts:
+  - name: core
+    status: aligned
+    path: packages/core/src
+    package: "@idd/core"
+    allowed_dependencies: []
+
+  - name: cli
+    status: aligned
+    path: cli/src
+    allowed_dependencies: [core]
+
+  - name: extension
+    status: aligned
+    path: extensions/idd-core/src
+    allowed_dependencies: [core]
+
+  - name: ui-extension
+    status: advisory
+    path: packages/vscode-extension/src
+    allowed_dependencies: []
+
+  - name: pwa
+    status: advisory
+    path: packages/idd-ui-pwa/src
+    allowed_dependencies: []

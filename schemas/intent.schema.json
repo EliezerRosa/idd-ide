@@ -2,11 +2,23 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "https://idd-ide.dev/schemas/intent.schema.json",
   "title": "IDD Intent",
-  "description": "Schema canônico de um arquivo .intent.yaml do paradigma Intent Driven Development",
+  "description": "Schema canônico de um arquivo .intent.yaml do paradigma Intent Driven Development. Aceita v1 (module-scoped) e v2 (method-circumscribed).",
   "type": "object",
   "required": ["intent", "module", "constraints", "acceptance"],
   "additionalProperties": false,
+  "dependencies": {
+    "target_class": ["target_method"],
+    "target_method": ["target_class"]
+  },
+  "not": {
+    "required": ["state_mutation", "behavioral_contract"]
+  },
   "properties": {
+    "version": {
+      "type": "string",
+      "pattern": "^(2\\.0|\\d+\\.\\d+\\.\\d+)$",
+      "description": "\"2.0\" marca contrato circunscrito; semver é gerenciado pelo Intent Store"
+    },
     "intent": {
       "type": "string",
       "minLength": 10,
@@ -17,17 +29,79 @@
       "pattern": "^[a-z0-9-]+/[a-z0-9-]+$",
       "description": "Caminho do módulo no formato 'dominio/funcionalidade' (ex: auth/login)"
     },
+    "target_class": {
+      "type": "string",
+      "pattern": "^[A-Z][A-Za-z0-9_]*(\\.[A-Z][A-Za-z0-9_]*)*$",
+      "description": "Classe de negócio circunscrita (ex: Domain.Auth.UserAccount). v2."
+    },
+    "target_method": {
+      "type": "string",
+      "pattern": "^[a-z_][A-Za-z0-9_]*$",
+      "description": "Método comportamental que encapsula a intenção. v2."
+    },
     "constraints": {
       "type": "array",
       "minItems": 1,
-      "items": { "type": "string", "minLength": 5 },
-      "description": "Regras de negócio e limites que o código DEVE respeitar obrigatoriamente"
+      "items": {
+        "oneOf": [
+          { "type": "string", "minLength": 5 },
+          {
+            "type": "object",
+            "required": ["description"],
+            "additionalProperties": false,
+            "properties": {
+              "id": { "type": "string", "pattern": "^[A-Z]+(-[A-Z0-9]+)+$" },
+              "type": { "type": "string", "enum": ["invariant", "encapsulation", "security", "performance", "business"] },
+              "severity": { "type": "string", "enum": ["critical", "warn"] },
+              "description": { "type": "string", "minLength": 5 }
+            }
+          }
+        ]
+      },
+      "description": "Regras de negócio e limites que o código DEVE respeitar. String (v1) ou objeto com id/type/severity (v2)."
     },
     "acceptance": {
       "type": "array",
       "minItems": 1,
-      "items": { "type": "string", "minLength": 5 },
-      "description": "Critérios de aceite — cada item vira um teste automaticamente"
+      "items": {
+        "oneOf": [
+          { "type": "string", "minLength": 5 },
+          {
+            "type": "object",
+            "required": ["then"],
+            "additionalProperties": false,
+            "properties": {
+              "id": { "type": "string" },
+              "given": { "type": "string" },
+              "when": { "type": "string" },
+              "then": { "type": "string", "minLength": 1 }
+            }
+          }
+        ]
+      },
+      "description": "Critérios de aceite. String (v1) ou Given/When/Then estruturado (v2). Cada item vira um teste."
+    },
+    "behavioral_contract": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "visibility": { "type": "string", "enum": ["public", "protected", "private", "internal"] },
+        "state_mutation": { "$ref": "#/definitions/stateMutation" }
+      },
+      "description": "Contrato comportamental do método circunscrito (Design by Contract). v2."
+    },
+    "state_mutation": {
+      "$ref": "#/definitions/stateMutation",
+      "description": "Forma abreviada v1 de behavioral_contract.state_mutation. Não usar junto com behavioral_contract."
+    },
+    "ethics": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "impacted": { "type": "array", "items": { "type": "string", "minLength": 1 } },
+        "risks": { "type": "array", "items": { "type": "string", "minLength": 1 } }
+      },
+      "description": "Elemento 6 de Stockley: quem é impactado e quais danos podem surgir."
     },
     "depends_on": {
       "type": "array",
@@ -52,23 +126,24 @@
       "type": "array",
       "items": { "type": "string" },
       "description": "Tags para organização e filtragem no Intent Graph"
-    },
-    "version": {
-      "type": "string",
-      "pattern": "^\\d+\\.\\d+\\.\\d+$",
-      "description": "Versão semântica — gerenciada automaticamente pelo Intent Store"
-    },
-    "state_mutation": {
+    }
+  },
+  "definitions": {
+    "stateMutation": {
       "type": "object",
       "additionalProperties": false,
       "properties": {
         "allowed_fields": {
           "type": "array",
           "items": { "type": "string", "minLength": 1 },
-          "description": "Campos de estado que o contrato autoriza a mutar"
+          "description": "Campos que o método está autorizado a mutar"
+        },
+        "read_only_fields": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 },
+          "description": "Campos que o método nunca pode mutar (hard gate no LSP)"
         }
-      },
-      "description": "Política determinística de mutação de estado do contrato"
+      }
     }
   }
 }

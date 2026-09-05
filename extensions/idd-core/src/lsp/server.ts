@@ -35,21 +35,17 @@ import * as ts from 'typescript';
 import * as path from 'node:path';
 import * as fs   from 'node:fs';
 import * as yaml from 'js-yaml';
+import { parseContract, matchesIntentId, circumscriptionId, LANGUAGES, type IntentContract as CanonicalContract } from '@idd/core';
 
-// ── Schema válido ─────────────────────────────────────────────────
+// ── Schema válido (fonte única: @idd/core) ────────────────────────
 
-const REQUIRED_FIELDS = ['intent', 'module', 'constraints', 'acceptance'] as const;
-const VALID_LANGUAGES = ['typescript', 'javascript', 'python', 'go', 'rust', 'java'];
-const VALID_FIELDS    = new Set([
-  'intent', 'module', 'constraints', 'acceptance',
-  'depends_on', 'used_by', 'language', 'framework', 'tags', 'version',
-  'state_mutation',
-]);
+const VALID_LANGUAGES: readonly string[] = LANGUAGES;
 
 interface IntentContract {
   id: string;
   module?: string;
   allowedFields: Set<string>;
+  readOnlyFields: Set<string>;
 }
 
 // ── Conexão LSP ───────────────────────────────────────────────────
@@ -118,102 +114,21 @@ function validateDocument(doc: TextDocument): Diagnostic[] {
     return diagnostics;
   }
 
-  // Campos obrigatórios
-  for (const field of REQUIRED_FIELDS) {
-    if (!(field in parsed) || parsed[field] === null || parsed[field] === undefined) {
-      const line = findFieldLine(text, field);
-      diagnostics.push({
-        severity:  DiagnosticSeverity.Error,
-        range:     lineRange(line),
-        message:   `Campo obrigatório "${field}" está ausente.`,
-        source:    'idd-lsp',
-        code:      `idd.missing.${field}`,
-      });
-    }
-  }
-
-  // intent: string >= 10 chars
-  if (typeof parsed.intent === 'string' && parsed.intent.length < 10) {
-    const line = findFieldLine(text, 'intent');
+  // Validação delegada ao parser canônico; o LSP só posiciona os diagnósticos.
+  const result = parseContract(parsed);
+  for (const issue of result.issues) {
+    const topLevel = issue.field.split(/[.\[]/)[0];
+    const line = findFieldLine(text, topLevel);
+    const isMissing = issue.message.startsWith('Campo obrigatório');
+    const isUnknown = issue.message.startsWith('Campo desconhecido');
+    const isShort = issue.message.includes('muito curto');
     diagnostics.push({
-      severity: DiagnosticSeverity.Warning,
+      severity: (isUnknown || isShort) ? DiagnosticSeverity.Warning : DiagnosticSeverity.Error,
       range:    lineRange(line),
-      message:  `"intent" deve ter ao menos 10 caracteres (atual: ${parsed.intent.length}).`,
+      message:  `${issue.message}.`,
       source:   'idd-lsp',
+      code:     isMissing ? `idd.missing.${topLevel}` : `idd.contract.${topLevel}`,
     });
-  }
-
-  // module: padrão dominio/sub
-  if (typeof parsed.module === 'string' && !/^[a-z0-9-]+\/[a-z0-9-]+$/.test(parsed.module)) {
-    const line = findFieldLine(text, 'module');
-    diagnostics.push({
-      severity: DiagnosticSeverity.Error,
-      range:    lineRange(line),
-      message:  `"module" deve seguir o formato "dominio/funcionalidade" em minúsculas (ex: auth/login).`,
-      source:   'idd-lsp',
-    });
-  }
-
-  // constraints/acceptance: array não vazio
-  for (const field of ['constraints', 'acceptance'] as const) {
-    if (field in parsed) {
-      if (!Array.isArray(parsed[field])) {
-        const line = findFieldLine(text, field);
-        diagnostics.push({
-          severity: DiagnosticSeverity.Error,
-          range:    lineRange(line),
-          message:  `"${field}" deve ser uma lista YAML (array).`,
-          source:   'idd-lsp',
-        });
-      } else if ((parsed[field] as unknown[]).length === 0) {
-        const line = findFieldLine(text, field);
-        diagnostics.push({
-          severity: DiagnosticSeverity.Warning,
-          range:    lineRange(line),
-          message:  `"${field}" está vazio — adicione ao menos um item.`,
-          source:   'idd-lsp',
-        });
-      }
-    }
-  }
-
-  // language: enum
-  if (typeof parsed.language === 'string' && !VALID_LANGUAGES.includes(parsed.language)) {
-    const line = findFieldLine(text, 'language');
-    diagnostics.push({
-      severity: DiagnosticSeverity.Error,
-      range:    lineRange(line),
-      message:  `Linguagem inválida: "${parsed.language}". Opções: ${VALID_LANGUAGES.join(', ')}.`,
-      source:   'idd-lsp',
-    });
-  }
-
-  // depends_on: formato modulo/sub
-  if (Array.isArray(parsed.depends_on)) {
-    (parsed.depends_on as unknown[]).forEach((dep, i) => {
-      if (typeof dep === 'string' && !/^[a-z0-9-]+\/[a-z0-9-]+$/.test(dep)) {
-        const line = findFieldLine(text, 'depends_on');
-        diagnostics.push({
-          severity: DiagnosticSeverity.Error,
-          range:    lineRange(line + i + 1),
-          message:  `"${dep}" tem formato inválido (esperado: modulo/sub).`,
-          source:   'idd-lsp',
-        });
-      }
-    });
-  }
-
-  // Campos desconhecidos
-  for (const key of Object.keys(parsed)) {
-    if (!VALID_FIELDS.has(key)) {
-      const line = findFieldLine(text, key);
-      diagnostics.push({
-        severity: DiagnosticSeverity.Warning,
-        range:    lineRange(line),
-        message:  `Campo desconhecido "${key}" — verifique o schema .intent.yaml.`,
-        source:   'idd-lsp',
-      });
-    }
   }
 
   return diagnostics;
@@ -240,14 +155,18 @@ function validateTypeScriptDocument(doc: TextDocument): Diagnostic[] {
     if (ts.isPropertyAccessExpression(node.parent) && node.parent.expression === node && isMutation(node.parent.parent)) {
       const property = node.parent;
       const field = property.name.text;
-      if (!contract.allowedFields.has(field)) {
+      const isReadOnly = contract.readOnlyFields.has(field);
+      const isAllowed = contract.allowedFields.has(field);
+      if (isReadOnly || (!isAllowed && contract.allowedFields.size > 0)) {
         const start = property.name.getStart(source);
         diagnostics.push({
           severity: DiagnosticSeverity.Error,
           range: toRange(source, property.name.getStart(source), property.name.getEnd()),
-          message: `Atributo '${field}' não é autorizado pelo contrato '${contract.id}' (INV-UI-04).`,
+          message: isReadOnly
+            ? `Atributo '${field}' é read-only no contrato '${contract.id}' (INV-ENCAP-01).`
+            : `Atributo '${field}' não é autorizado pelo contrato '${contract.id}' (INV-UI-04).`,
           source: 'idd-lsp',
-          code: 'idd.unauthorized-state-mutation',
+          code: isReadOnly ? 'idd.readonly-mutation' : 'idd.unauthorized-state-mutation',
           data: { field, contractId: contract.id, start },
         });
       }
@@ -289,15 +208,16 @@ function findIntentContract(intentId: string): IntentContract | undefined {
   const files = findAllIntentFiles(workspaceRoot);
   for (const file of files) {
     try {
-      const parsed = yaml.load(fs.readFileSync(file, 'utf8')) as Record<string, unknown>;
-      const module = typeof parsed.module === 'string' ? parsed.module : undefined;
-      const name = module?.split('/').pop();
-      if (intentId !== module && intentId !== name && intentId !== path.basename(file, '.intent.yaml')) continue;
-      const stateMutation = parsed.state_mutation as { allowed_fields?: unknown } | undefined;
-      const allowedFields = Array.isArray(stateMutation?.allowed_fields)
-        ? new Set(stateMutation.allowed_fields.filter((field): field is string => typeof field === 'string'))
-        : new Set<string>();
-      return { id: intentId, module, allowedFields };
+      const result = parseContract(yaml.load(fs.readFileSync(file, 'utf8')));
+      if (!result.ok) continue;
+      const contract: CanonicalContract = result.contract;
+      if (!matchesIntentId(contract, intentId, path.basename(file, '.intent.yaml'))) continue;
+      return {
+        id: circumscriptionId(contract),
+        module: contract.module,
+        allowedFields: new Set(contract.behavioralContract.stateMutation.allowedFields),
+        readOnlyFields: new Set(contract.behavioralContract.stateMutation.readOnlyFields),
+      };
     } catch { /* invalid contracts are reported by the YAML diagnostics */ }
   }
   return undefined;

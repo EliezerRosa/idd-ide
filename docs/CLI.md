@@ -111,6 +111,7 @@ idd verify auth/login               # módulo específico
 idd verify --fail-on=critical       # exit 1 se houver drift crítico
 idd verify --semantic               # inclui análise LLM (mais lenta)
 idd verify --staged                 # apenas arquivos staged (para pre-commit)
+idd verify --project                # governança de contextos (project.intent.yaml)
 ```
 
 **Análises realizadas:**
@@ -118,6 +119,8 @@ idd verify --staged                 # apenas arquivos staged (para pre-commit)
 2. **Constraints:** verifica se funções-chave das constraints estão no código
 3. **Testes:** verifica se critérios de aceite têm testes correspondentes
 4. **Semântica** (com `--semantic`): chama LLM para análise de alinhamento
+
+**`--project` (Camada 1):** lê `project.intent.yaml` na raiz (busca ascendente a partir do cwd), valida `lifecycle_status`, `governance`, `global_constraints` e `bounded_contexts`, e varre os `path` de cada contexto: qualquer `import`/`require` que cruze para outro contexto não listado em `allowed_dependencies` é uma **importação ilegal** (critical, exit 1). Aliases de pacote são mapeados por `package` (ex.: `@idd/core`). Schema: [`schemas/project.intent.schema.json`](../schemas/project.intent.schema.json).
 
 **Saída exemplo:**
 ```

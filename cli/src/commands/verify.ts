@@ -7,6 +7,7 @@ import { header, success, error, info, warn, row, table, footer, spinner,
 import { Store, findProjectRoot } from '../lib/store.ts';
 import { loadConfig } from '../lib/config.ts';
 import { runStaticChecks, detectLanguage, autoDetectLanguage, Language } from '../lib/lang.ts';
+import { parseProject, checkFileImports, normalizeRel, type ImportViolation, type ProjectIntent } from '@idd/core';
 
 interface IntentYaml {
   intent:      string;
@@ -154,6 +155,8 @@ async function verifySemantic(
 // ── Comando principal ────────────────────────────────────────────
 
 export async function cmdVerify(args: string[]): Promise<void> {
+  if (args.includes('--project')) return cmdVerifyProject(args);
+
   const cfg            = loadConfig();
   const failOnCritical = args.includes('--fail-on=critical') || cfg.fail_on === 'critical';
   const threshold      = Number(args.find(a => a.startsWith('--threshold='))?.split('=')[1] ?? cfg.drift_threshold);
@@ -306,7 +309,113 @@ export async function cmdVerify(args: string[]): Promise<void> {
 
   if ((failOnCritical && hasCritical) || (semanticRequired && hasUnknown)) process.exit(1);
 }
+// ── idd verify --project ── governança de contextos (Camada 1) ──────
 
+const SOURCE_EXT = new Set(['.ts', '.tsx', '.mts', '.cts', '.js', '.jsx', '.mjs', '.cjs']);
+const RESOLVE_EXT = ['.ts', '.tsx', '.mts', '.js', '.jsx', '.mjs', '.cjs'];
+
+export function findProjectFile(startDir = process.cwd()): string | null {
+  let dir = startDir;
+  while (true) {
+    const candidate = path.join(dir, 'project.intent.yaml');
+    if (fs.existsSync(candidate)) return candidate;
+    const parent = path.dirname(dir);
+    if (parent === dir) return null;
+    dir = parent;
+  }
+}
+
+export function verifyProjectImports(root: string, project: ProjectIntent): { files: number; violations: ImportViolation[] } {
+  const violations: ImportViolation[] = [];
+  let files = 0;
+  const resolveRelative = (fromFile: string, spec: string): string | undefined => {
+    const base = path.posix.join(path.posix.dirname(fromFile), spec);
+    const abs = path.join(root, base);
+    const candidates = [abs, ...RESOLVE_EXT.map(e => abs + e), ...RESOLVE_EXT.map(e => path.join(abs, 'index' + e))];
+    // NodeNext idiom: ./x.js may point to ./x.ts on disk.
+    if (/\.[cm]?js$/.test(abs)) candidates.push(abs.replace(/\.[cm]?js$/, '.ts'), abs.replace(/\.js$/, '.tsx'));
+    const hit = candidates.find(c => fs.existsSync(c) && fs.statSync(c).isFile());
+    return hit ? normalizeRel(path.relative(root, hit)) : normalizeRel(base);
+  };
+  for (const ctx of project.boundedContexts) {
+    for (const rel of ctx.paths) {
+      const dir = path.join(root, rel);
+      if (!fs.existsSync(dir)) continue;
+      for (const file of walkSources(dir)) {
+        files++;
+        const relFile = normalizeRel(path.relative(root, file));
+        violations.push(...checkFileImports(project, relFile, fs.readFileSync(file, 'utf8'), resolveRelative));
+      }
+    }
+  }
+  return { files, violations };
+}
+
+function walkSources(dir: string): string[] {
+  const out: string[] = [];
+  for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+    if (entry.name.startsWith('.') || entry.name === 'node_modules' || entry.name === 'dist' || entry.name === 'out') continue;
+    const full = path.join(dir, entry.name);
+    if (entry.isDirectory()) out.push(...walkSources(full));
+    else if (SOURCE_EXT.has(path.extname(entry.name))) out.push(full);
+  }
+  return out;
+}
+
+async function cmdVerifyProject(args: string[]): Promise<void> {
+  header('verify --project');
+  const explicit = args.find(a => !a.startsWith('--'));
+  const projectFile = explicit ? path.resolve(explicit) : findProjectFile();
+  if (!projectFile || !fs.existsSync(projectFile)) {
+    error('project.intent.yaml não encontrado. Crie-o na raiz do repositório com bounded_contexts[].path e allowed_dependencies.');
+    process.exit(1);
+  }
+  const root = path.dirname(projectFile);
+
+  let rawDoc: unknown;
+  try {
+    rawDoc = yaml.load(fs.readFileSync(projectFile, 'utf8'));
+  } catch (e) {
+    error(`YAML inválido em ${projectFile}: ${e instanceof Error ? e.message : String(e)}`);
+    process.exit(1);
+  }
+  const parsed = parseProject(rawDoc);
+  if (!parsed.ok) {
+    error(`project.intent.yaml inválido (${parsed.issues.length} problema(s)):`);
+    for (const issue of parsed.issues) console.log(`    ${RED}✗${RESET}  ${BOLD}${issue.field}${RESET}: ${issue.message}`);
+    footer('Corrija o project.intent.yaml antes de verificar as importações.');
+    process.exit(1);
+  }
+  const project = parsed.project;
+  info(`Fase: ${project.lifecycle.phase} — ${project.boundedContexts.length} contexto(s) declarado(s)\n`);
+
+  const { files, violations } = verifyProjectImports(root, project);
+
+  table(
+    ['contexto', 'paths', 'allowed_dependencies', 'violações'],
+    project.boundedContexts.map(ctx => [
+      ctx.name,
+      ctx.paths.join(', ') || `${GRAY}—${RESET}`,
+      ctx.allowedDependencies.join(', ') || `${GRAY}—${RESET}`,
+      String(violations.filter(v => v.fromContext === ctx.name).length),
+    ]),
+  );
+
+  if (violations.length > 0) {
+    console.log('');
+    for (const v of violations) {
+      console.log(`  ${RED}✗${RESET}  ${v.file}:${v.line}  ${BOLD}${v.fromContext}${RESET} → ${BOLD}${v.toContext}${RESET}  (${GRAY}${v.specifier}${RESET})`);
+    }
+  }
+
+  console.log('');
+  row('arquivos analisados', String(files));
+  row('importações ilegais', violations.length ? `${RED}${violations.length}${RESET}` : `${GREEN}0${RESET}`);
+  footer(violations.length
+    ? 'Importações ilegais entre contextos bloqueiam o merge. Declare a dependência em allowed_dependencies ou remova o acoplamento.'
+    : 'Todos os contextos respeitam as dependências declaradas. ✓');
+  if (violations.length > 0) process.exit(1);
+}
 // ── Helpers ──────────────────────────────────────────────────────
 
 function collectYamlFiles(root: string, target?: string): string[] {

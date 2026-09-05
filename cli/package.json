@@ -13,6 +13,7 @@
     "test": "vitest run"
   },
   "dependencies": {
+    "@idd/core": "file:../packages/core",
     "better-sqlite3": "^13.0.3",
     "chalk": "^5.3.0",
     "js-yaml": "^4.1.0",

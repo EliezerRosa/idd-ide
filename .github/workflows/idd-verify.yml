@@ -38,6 +38,9 @@ jobs:
       - name: Executar testes
         run: cd cli && npm test
 
+      - name: Governança de contextos (project.intent.yaml — hard gate)
+        run: cd cli && node dist/index.js verify --project
+
       - name: Verificar alinhamento (análise estática)
         run: |
           cd cli

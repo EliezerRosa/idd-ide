@@ -1,0 +1,110 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://idd-ide.dev/schemas/project.intent.schema.json",
+  "title": "IDD Project Intent",
+  "description": "Camada 1 do IDD: project.intent.yaml declara bounded contexts, dependências permitidas, fase de ciclo de vida, governança e constraints globais. Parser canônico em @idd/core (packages/core/src/project.ts).",
+  "type": "object",
+  "required": ["bounded_contexts"],
+  "additionalProperties": false,
+  "properties": {
+    "version": { "type": "string" },
+    "name": { "type": "string" },
+    "lifecycle_status": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "phase": { "type": "string", "enum": ["exploratory", "consolidation", "production"] },
+        "phase_policies": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "exploratory":   { "$ref": "#/definitions/phasePolicy" },
+            "consolidation": { "$ref": "#/definitions/phasePolicy" },
+            "production":    { "$ref": "#/definitions/phasePolicy" }
+          },
+          "description": "Tetos ratificados (2026-09-04): waiver 30/14/7 dias; anemic model warn/critical/critical. Valores só podem ser mais restritivos que o teto."
+        }
+      }
+    },
+    "governance": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "roles": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["name"],
+            "additionalProperties": false,
+            "properties": {
+              "name": { "type": "string" },
+              "can_approve_waivers": { "type": "boolean" },
+              "can_change_phase": { "type": "boolean" }
+            }
+          }
+        },
+        "waiver_policy": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "requires_approval_from": { "type": "array", "items": { "type": "string" }, "description": "Papéis declarados em roles com can_approve_waivers: true" },
+            "max_duration_days": { "type": "integer", "minimum": 1 }
+          }
+        }
+      }
+    },
+    "global_constraints": {
+      "type": "array",
+      "items": {
+        "oneOf": [
+          { "type": "string", "minLength": 5 },
+          {
+            "type": "object",
+            "required": ["description"],
+            "additionalProperties": false,
+            "properties": {
+              "id": { "type": "string" },
+              "type": { "type": "string", "enum": ["invariant", "encapsulation", "security", "performance", "business"] },
+              "severity": { "type": "string", "enum": ["critical", "warn"] },
+              "description": { "type": "string", "minLength": 5 }
+            }
+          }
+        ]
+      }
+    },
+    "bounded_contexts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["name"],
+        "additionalProperties": false,
+        "properties": {
+          "name": { "type": "string", "pattern": "^[a-z0-9][a-z0-9-]*$" },
+          "status": { "type": "string" },
+          "path": { "$ref": "#/definitions/stringOrList", "description": "Diretório(s) do contexto relativo(s) à raiz; define a propriedade de arquivos para verify --project" },
+          "paths": { "$ref": "#/definitions/stringOrList" },
+          "package": { "$ref": "#/definitions/stringOrList", "description": "Nome(s) de pacote pelos quais o contexto é importado (ex: @idd/core)" },
+          "packages": { "$ref": "#/definitions/stringOrList" },
+          "allowed_dependencies": { "type": "array", "items": { "type": "string" }, "description": "Contextos que este contexto pode importar. Qualquer outro cruzamento é importação ilegal (critical)." },
+          "aggregates": { "type": "array", "description": "Hierarquia agregado/entidade/método usada pela Webview; passthrough." }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "stringOrList": {
+      "oneOf": [
+        { "type": "string", "minLength": 1 },
+        { "type": "array", "items": { "type": "string", "minLength": 1 } }
+      ]
+    },
+    "phasePolicy": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "max_waiver_duration_days": { "type": "integer", "minimum": 1 },
+        "anemic_model_severity": { "type": "string", "enum": ["warn", "critical", "off"] }
+      }
+    }
+  }
+}
