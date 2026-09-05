@@ -22,7 +22,7 @@
   "devDependencies": {
     "@types/better-sqlite3": "^7.6.8",
     "@types/js-yaml": "^4.0.9",
-    "@types/node": "^20.19.41",
+    "@types/node": "^26.4.1",
     "@types/sql.js": "^1.4.11",
     "@types/uuid": "^9.0.7",
     "sql.js": "^1.14.1",
