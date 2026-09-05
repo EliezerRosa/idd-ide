@@ -132,15 +132,19 @@ async function inferIntentFromCode(
     body: JSON.stringify({
       model,
       max_tokens: 600,
-      system: [
-        'Você é um engenheiro de software especializado em Intent Driven Development (IDD).',
-        'Analise o código fornecido e infira a intenção original — o QUÊ ele faz, não o COMO.',
-        'Extraia constraints (regras de negócio verificáveis) e acceptance criteria (casos de teste).',
-        'Retorne APENAS JSON: {"intent":"string","constraints":["string"],"acceptance":["string"]}',
-        'intent: descrição clara em português do que o código faz (15-100 chars)',
-        'constraints: 2-5 regras de negócio verificáveis (não detalhes de implementação)',
-        'acceptance: 2-5 critérios testáveis derivados do comportamento do código',
-      ].join('\n'),
+      system: [{
+        type: 'text',
+        text: [
+          'Você é um engenheiro de software especializado em Intent Driven Development (IDD).',
+          'Analise o código fornecido e infira a intenção original — o QUÊ ele faz, não o COMO.',
+          'Extraia constraints (regras de negócio verificáveis) e acceptance criteria (casos de teste).',
+          'Retorne APENAS JSON: {"intent":"string","constraints":["string"],"acceptance":["string"]}',
+          'intent: descrição clara em português do que o código faz (15-100 chars)',
+          'constraints: 2-5 regras de negócio verificáveis (não detalhes de implementação)',
+          'acceptance: 2-5 critérios testáveis derivados do comportamento do código',
+        ].join('\n'),
+        cache_control: { type: 'ephemeral' },
+      }],
       messages: [{
         role: 'user',
         content: `Arquivo: ${filePath}\n\n\`\`\`\n${code.slice(0, 2000)}\n\`\`\``,

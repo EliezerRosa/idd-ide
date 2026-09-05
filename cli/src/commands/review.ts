@@ -131,12 +131,16 @@ async function semanticCheck(
   const body = JSON.stringify({
     model,
     max_tokens: 512,
-    system: [
-      'Você é um revisor de código especializado em Intent Driven Development.',
-      'Analise se o código respeita a intenção e todas as constraints declaradas.',
-      'Retorne APENAS JSON: {"score":0-100,"violations":["string"]}',
-      'score 100 = totalmente alinhado, 0 = completamente desalinhado.',
-    ].join('\n'),
+    system: [{
+      type: 'text',
+      text: [
+        'Você é um revisor de código especializado em Intent Driven Development.',
+        'Analise se o código respeita a intenção e todas as constraints declaradas.',
+        'Retorne APENAS JSON: {"score":0-100,"violations":["string"]}',
+        'score 100 = totalmente alinhado, 0 = completamente desalinhado.',
+      ].join('\n'),
+      cache_control: { type: 'ephemeral' },
+    }],
     messages: [{
       role: 'user',
       content: `INTENÇÃO: ${intent.statement}\n\nCONSTRAINTS:\n${intent.constraints.map((c, i) => `${i + 1}. ${c}`).join('\n')}\n\nCÓDIGO MODIFICADO:\n\`\`\`\n${code.slice(0, 3000)}\n\`\`\``,

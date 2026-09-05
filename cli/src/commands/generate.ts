@@ -82,7 +82,7 @@ async function callClaude(system: string, user: string, apiKey: string, model: s
     body: JSON.stringify({
       model,
       max_tokens: 4096,
-      system,
+      system: [{ type: 'text', text: system, cache_control: { type: 'ephemeral' } }],
       messages: [{ role: 'user', content: user }],
     }),
   });

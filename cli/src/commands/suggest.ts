@@ -164,12 +164,16 @@ async function semanticSuggest(
     body: JSON.stringify({
       model,
       max_tokens: 800,
-      system: [
-        'Você é um arquiteto de software especializado em design de módulos e microserviços.',
-        'Analise o grafo de intenções IDD e forneça sugestões de melhoria arquitetural.',
-        'Seja conciso e prático. Foque em padrões de refatoração concretos.',
-        'Retorne APENAS JSON: {"suggestions": ["string", ...]} (máximo 5 sugestões)',
-      ].join('\n'),
+      system: [{
+        type: 'text',
+        text: [
+          'Você é um arquiteto de software especializado em design de módulos e microserviços.',
+          'Analise o grafo de intenções IDD e forneça sugestões de melhoria arquitetural.',
+          'Seja conciso e prático. Foque em padrões de refatoração concretos.',
+          'Retorne APENAS JSON: {"suggestions": ["string", ...]} (máximo 5 sugestões)',
+        ].join('\n'),
+        cache_control: { type: 'ephemeral' },
+      }],
       messages: [{
         role: 'user',
         content: `Grafo de intenções do projeto:\n\n${summary}\n\nForneça sugestões arquiteturais para melhorar coesão, reduzir acoplamento e identificar oportunidades de refatoração.`,

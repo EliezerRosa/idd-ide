@@ -259,11 +259,15 @@ async function llmDiff(intent: IntentYaml, code: string): Promise<{
     body: JSON.stringify({
       model,
       max_tokens: 512,
-      system: [
-        'Analise desvios entre intenção e código.',
-        'Retorne APENAS JSON: { "summary": string, "changes": [{line: number, issue: string, kind: "drift"|"warn"}] }',
-        'Foque em desvios semânticos que análise estática não detecta.',
-      ].join('\n'),
+      system: [{
+        type: 'text',
+        text: [
+          'Analise desvios entre intenção e código.',
+          'Retorne APENAS JSON: { "summary": string, "changes": [{line: number, issue: string, kind: "drift"|"warn"}] }',
+          'Foque em desvios semânticos que análise estática não detecta.',
+        ].join('\n'),
+        cache_control: { type: 'ephemeral' },
+      }],
       messages: [{
         role: 'user',
         content: [

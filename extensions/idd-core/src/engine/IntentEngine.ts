@@ -122,7 +122,7 @@ export class IntentEngine {
       body: JSON.stringify({
         model:      this.getModel(),
         max_tokens: 4096,
-        system,
+        system: [{ type: 'text', text: system, cache_control: { type: 'ephemeral' } }],
         messages: [{ role: 'user', content: user }]
       })
     });
