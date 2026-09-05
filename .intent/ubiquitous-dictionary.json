@@ -1,0 +1,182 @@
+{
+  "version": "1.0",
+  "terms": [
+    {
+      "term": "AcceptanceCriterion",
+      "definition": "Critério Given/When/Then de um IntentContract; cada um vira um teste na Sombra",
+      "kind": "value-object",
+      "aliases": [
+        "Acceptance"
+      ],
+      "forbidden": []
+    },
+    {
+      "term": "BoundedContext",
+      "definition": "Fronteira de linguagem e propriedade de código declarada em project.intent.yaml; só importa de allowed_dependencies",
+      "kind": "aggregate",
+      "aliases": [
+        "Contexto"
+      ],
+      "forbidden": [
+        "módulo de domínio",
+        "pacote de domínio"
+      ]
+    },
+    {
+      "term": "Circumscription",
+      "definition": "Identidade estável de uma intenção: target_class.target_method (v2) ou module (v1); sobrevive a refactoring de arquivos",
+      "kind": "value-object",
+      "aliases": [
+        "Circunscrição"
+      ],
+      "forbidden": []
+    },
+    {
+      "term": "CognitiveTrack",
+      "definition": "Artefato .intent.md escrito pelo humano em linguagem natural; única fonte que o humano edita",
+      "kind": "concept",
+      "aliases": [
+        "TrackCognitivo"
+      ],
+      "forbidden": [
+        "spec",
+        "documento de requisitos"
+      ]
+    },
+    {
+      "term": "Constraint",
+      "definition": "Regra que o código DEVE respeitar, com id, type e severity; critical bloqueia merge",
+      "kind": "value-object",
+      "aliases": [
+        "Invariante"
+      ],
+      "forbidden": [
+        "regra de negócio solta",
+        "requisito"
+      ]
+    },
+    {
+      "term": "Drift",
+      "definition": "Desalinhamento detectado entre um IntentContract e o código que o implementa",
+      "kind": "event",
+      "aliases": [],
+      "forbidden": [
+        "bug de spec",
+        "divergência"
+      ]
+    },
+    {
+      "term": "EpistemicCommand",
+      "definition": "Autoridade sobre o quê e o porquê (intenção, invariantes, autorização); permanece sempre com o humano",
+      "kind": "concept",
+      "aliases": [
+        "ComandoEpistêmico"
+      ],
+      "forbidden": []
+    },
+    {
+      "term": "FileChange",
+      "definition": "Alteração de arquivo detectada pelo git (staged ou no diff) que idd review associa a um IntentContract",
+      "kind": "value-object",
+      "context": "cli",
+      "aliases": [],
+      "forbidden": []
+    },
+    {
+      "term": "GraphIssue",
+      "definition": "Problema estrutural detectado no grafo de intenções (ciclo, dependência órfã, acoplamento) que idd suggest reporta",
+      "kind": "value-object",
+      "context": "cli",
+      "aliases": [],
+      "forbidden": []
+    },
+    {
+      "term": "HardGate",
+      "definition": "Verificação determinística que bloqueia o fluxo (exit 1) quando falha; nunca depende de LLM",
+      "kind": "concept",
+      "aliases": [],
+      "forbidden": []
+    },
+    {
+      "term": "IntentContract",
+      "definition": "Contrato compilado (.intent.yaml) com intent, module/circunscrição, behavioral_contract, constraints, acceptance e ethics",
+      "kind": "aggregate",
+      "aliases": [
+        "Contrato",
+        "Intent"
+      ],
+      "forbidden": [
+        "ticket",
+        "user story"
+      ]
+    },
+    {
+      "term": "IntentStore",
+      "definition": "Banco local (.idd/store.db) que versiona contratos, scores de alinhamento e eventos de Drift",
+      "kind": "service",
+      "aliases": [
+        "Store"
+      ],
+      "forbidden": []
+    },
+    {
+      "term": "LifecyclePhase",
+      "definition": "Fase do projeto (exploratory, consolidation, production) que determina tetos de Waiver e severidade de anemic model",
+      "kind": "value-object",
+      "aliases": [
+        "Fase"
+      ],
+      "forbidden": []
+    },
+    {
+      "term": "OperationalCommand",
+      "definition": "Autoridade sobre o como (ferramentas, sequência, sintaxe); delegável ao agente sob confirm-once",
+      "kind": "concept",
+      "aliases": [
+        "ComandoOperacional"
+      ],
+      "forbidden": []
+    },
+    {
+      "term": "Shadow",
+      "definition": "Código gerado de forma determinística a partir do IntentContract; vive em shadow/main e o humano não o edita",
+      "kind": "concept",
+      "aliases": [
+        "Sombra"
+      ],
+      "forbidden": [
+        "código gerado",
+        "output"
+      ]
+    },
+    {
+      "term": "SoftGate",
+      "definition": "Verificação que emite laudo/aviso sem bloquear o fluxo; pode envolver LLM ou VLM",
+      "kind": "concept",
+      "aliases": [],
+      "forbidden": []
+    },
+    {
+      "term": "UbiquitousDictionary",
+      "definition": "Vocabulário curado pelo humano em .intent/ubiquitous-dictionary.json; termo fora dele é ambiguidade latente",
+      "kind": "aggregate",
+      "aliases": [
+        "Dicionário",
+        "DicionárioUbíquo"
+      ],
+      "forbidden": [
+        "glossário"
+      ]
+    },
+    {
+      "term": "Waiver",
+      "definition": "Exceção temporária e aprovada a uma Constraint; expira conforme a LifecyclePhase (30/14/7 dias)",
+      "kind": "entity",
+      "aliases": [],
+      "forbidden": [
+        "exceção permanente",
+        "ignore"
+      ]
+    }
+  ]
+}

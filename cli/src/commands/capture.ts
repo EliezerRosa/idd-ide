@@ -5,6 +5,7 @@ import * as readline from 'node:readline';
 import { findProjectRoot } from '../lib/store.ts';
 import { getApiKey, checkRateLimit, recordCall, validateIntent } from '../lib/security.ts';
 import { autoDetectLanguage } from '../lib/lang.ts';
+import { checkIntentAgainstDictionary, printTermWarnings } from './dictionary.ts';
 import {
   header, footer, success, error, info, warn, row, spinner,
   BOLD, RESET, CYAN, GRAY, GREEN, YELLOW,
@@ -187,6 +188,18 @@ export async function cmdCapture(args: string[]): Promise<void> {
     validation.errors.forEach(e => console.log(`    ${e.field}: ${e.message}`));
     console.log('');
     info('Ajuste manualmente após salvar, ou refine a descrição e tente novamente.');
+  }
+
+  // ── Dicionário Ubíquo (offline, determinístico; silencioso sem dicionário) ──
+  try {
+    const termWarnings = checkIntentAgainstDictionary(root, parsed);
+    if (termWarnings.length > 0) {
+      console.log('');
+      warn(`${termWarnings.length} termo(s) fora do Dicionário Ubíquo:`);
+      printTermWarnings(termWarnings);
+    }
+  } catch (err: any) {
+    warn(err.message);
   }
 
   // ── Dry-run: para por aqui ──────────────────────────────────────

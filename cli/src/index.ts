@@ -23,6 +23,7 @@ import { cmdApi }       from './commands/api.ts';
 import { cmdPlaybook }  from './commands/playbook.ts';
 import { cmdRegistry }  from './commands/registry.ts';
 import { cmdMigrate }   from './commands/migrate.ts';
+import { cmdDictionary } from './commands/dictionary.ts';
 import { BOLD, RESET, PURPLE, GRAY, CYAN, GREEN } from './lib/ui.ts';
 
 const args    = process.argv.slice(2);
@@ -57,6 +58,8 @@ async function main(): Promise<void> {
     case 'playbook': return cmdPlaybook(rest);
     case 'registry': return cmdRegistry(rest);
     case 'migrate':  return cmdMigrate(rest);
+    case 'dictionary':
+    case 'dict':     return cmdDictionary(rest);
     case 'version':
     case '--version':
     case '-v':       return printVersion();
@@ -104,6 +107,12 @@ function printHelp(): void {
       ${GRAY}--fail-on=critical${RESET}  sai com erro se houver drift crítico
       ${GRAY}--semantic${RESET}          inclui análise via LLM (mais lenta)
       ${GRAY}--staged${RESET}            verifica apenas arquivos staged (git)
+      ${GRAY}--project${RESET}           governança de contextos (project.intent.yaml)
+
+    ${CYAN}idd dictionary [init|list|show|add|remove|check]${RESET}
+      Dicionário Ubíquo em .intent/ubiquitous-dictionary.json (offline, sem LLM).
+      ${GRAY}add <Termo> "definição" --kind=entity --alias=a,b --forbid=x,y${RESET}
+      ${GRAY}check [--strict]${RESET}    termos fora do dicionário nas intenções
 
     ${CYAN}idd diff [modulo/sub] [flags]${RESET}
       Mostra diff lado a lado: intenção vs código atual.

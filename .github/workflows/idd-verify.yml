@@ -41,6 +41,9 @@ jobs:
       - name: Governança de contextos (project.intent.yaml — hard gate)
         run: cd cli && node dist/index.js verify --project
 
+      - name: Dicionário Ubíquo (termos fora do dicionário — hard gate)
+        run: cd cli && node dist/index.js dictionary check --strict
+
       - name: Verificar alinhamento (análise estática)
         run: |
           cd cli

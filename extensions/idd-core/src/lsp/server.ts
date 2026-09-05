@@ -35,7 +35,9 @@ import * as ts from 'typescript';
 import * as path from 'node:path';
 import * as fs   from 'node:fs';
 import * as yaml from 'js-yaml';
-import { parseContract, matchesIntentId, circumscriptionId, LANGUAGES, type IntentContract as CanonicalContract } from '@idd/core';
+import { parseContract, matchesIntentId, circumscriptionId, LANGUAGES, parseDictionary, checkContractTerms, DICTIONARY_PATH,
+         type IntentContract as CanonicalContract, type UbiquitousDictionary } from '@idd/core';
+import { fileURLToPath } from 'node:url';
 
 // ── Schema válido (fonte única: @idd/core) ────────────────────────
 
@@ -131,7 +133,62 @@ function validateDocument(doc: TextDocument): Diagnostic[] {
     });
   }
 
+  // Dicionário Ubíquo: termo fora do dicionário é warning offline (DAV Layer 0), sem LLM.
+  if (result.ok) {
+    const dict = loadDictionaryFor(doc.uri);
+    if (dict) {
+      for (const w of checkContractTerms(dict, result.contract)) {
+        const range = findTermRange(text, w.term) ?? lineRange(findFieldLine(text, w.field.split(/[.\[]/)[0]));
+        diagnostics.push({
+          severity: DiagnosticSeverity.Warning,
+          range,
+          message:  `${w.message}.`,
+          source:   'idd-dictionary',
+          code:     w.kind === 'forbidden' ? 'idd.dictionary.forbidden' : 'idd.dictionary.unknown',
+          data:     { term: w.term, suggestion: w.suggestion },
+        });
+      }
+    }
+  }
+
   return diagnostics;
+}
+
+// ── Dicionário Ubíquo (cache por raiz + mtime) ───────────────────────────
+
+const dictionaryCache = new Map<string, { mtimeMs: number; dict: UbiquitousDictionary | null }>();
+
+function loadDictionaryFor(uri: string): UbiquitousDictionary | undefined {
+  let dir: string;
+  try { dir = path.dirname(fileURLToPath(uri)); } catch { return undefined; }
+  while (true) {
+    const file = path.join(dir, DICTIONARY_PATH);
+    if (fs.existsSync(file)) {
+      const mtimeMs = fs.statSync(file).mtimeMs;
+      const cached = dictionaryCache.get(file);
+      if (cached && cached.mtimeMs === mtimeMs) return cached.dict ?? undefined;
+      let dict: UbiquitousDictionary | null = null;
+      try {
+        const parsed = parseDictionary(JSON.parse(fs.readFileSync(file, 'utf8')));
+        dict = parsed.ok ? parsed.dictionary : null;
+      } catch { dict = null; }
+      dictionaryCache.set(file, { mtimeMs, dict });
+      return dict ?? undefined;
+    }
+    const parent = path.dirname(dir);
+    if (parent === dir) return undefined;
+    dir = parent;
+  }
+}
+
+function findTermRange(text: string, term: string): Range | undefined {
+  const lines = text.split('\n');
+  const re = new RegExp(`(?<![\\p{L}\\p{N}_])${term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}(?![\\p{L}\\p{N}_])`, 'iu');
+  for (let i = 0; i < lines.length; i++) {
+    const m = re.exec(lines[i]);
+    if (m) return { start: { line: i, character: m.index }, end: { line: i, character: m.index + term.length } };
+  }
+  return undefined;
 }
 
 function validateTypeScriptDocument(doc: TextDocument): Diagnostic[] {

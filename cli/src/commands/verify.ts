@@ -8,6 +8,7 @@ import { Store, findProjectRoot } from '../lib/store.ts';
 import { loadConfig } from '../lib/config.ts';
 import { runStaticChecks, detectLanguage, autoDetectLanguage, Language } from '../lib/lang.ts';
 import { parseProject, checkFileImports, normalizeRel, type ImportViolation, type ProjectIntent } from '@idd/core';
+import { checkIntentAgainstDictionary } from './dictionary.ts';
 
 interface IntentYaml {
   intent:      string;
@@ -213,6 +214,12 @@ export async function cmdVerify(args: string[]): Promise<void> {
     // Análise estática
     const { violations: staticViol, critical } = analyzeStatic(code, intent);
 
+    // Dicionário Ubíquo (warn, nunca drift): linguagem fora do dicionário é ambiguidade latente
+    let termViol: string[] = [];
+    try {
+      termViol = checkIntentAgainstDictionary(root, intent).map(w => `Dicionário: ${w.message}`);
+    } catch { /* dicionário inválido é reportado por idd dictionary check */ }
+
     // Verificação de testes
     const missingTests = checkTests(testFile, intent.acceptance);
 
@@ -227,7 +234,7 @@ export async function cmdVerify(args: string[]): Promise<void> {
       spin.stop(semanticStatus !== 'unknown' && semanticScore >= 80);
     }
 
-    const allViolations = [...staticViol, ...semanticViol];
+    const allViolations = [...staticViol, ...termViol, ...semanticViol];
     const score = semantic
       ? Math.min(semanticScore, critical ? 30 : staticViol.length > 0 ? 70 : 100)
       : critical ? 30 : staticViol.length > 0 ? 70 : 100;

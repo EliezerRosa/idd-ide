@@ -142,6 +142,30 @@ idd verify --project                # governança de contextos (project.intent.y
 
 ---
 
+## `idd dictionary [init|list|show|add|remove|check]`
+
+Dicionário Ubíquo (DAV Layer 0) em `.intent/ubiquitous-dictionary.json`. Curadoria **humana**, consulta **offline e determinística** — nenhum LLM participa. Um termo está no dicionário ou é apontado como ambiguidade latente.
+
+```bash
+idd dictionary init                                   # cria o arquivo vazio
+idd dictionary add UserAccount "Conta de acesso..." \
+  --kind=entity --context=auth --alias=Conta --forbid=user,usuario
+idd dictionary list [--context=auth]
+idd dictionary show UserAccount
+idd dictionary remove UserAccount
+idd dictionary check [arquivo.intent.yaml] [--strict]  # --strict: exit 1 se houver avisos
+```
+
+**Modelo do termo:** `term` (PascalCase, único), `definition` (≥ 10 chars — termo sem definição é string mágica), `kind` (`entity | aggregate | value-object | event | role | service | concept`), `context`, `aliases` (sinônimos aceitos), `forbidden` (sinônimos que a equipe decidiu **não** usar). O parser rejeita ambiguidade estrutural: mesmo termo duplicado, palavra proibida em um termo e aceita em outro, alias que também é proibido.
+
+**O que `check` aponta em cada `.intent.yaml`** (`intent`, `constraints[].description`, `acceptance[]`, segmentos de `target_class`):
+- `unknown` — token PascalCase (conceito de domínio) ausente do dicionário;
+- `forbidden` — ocorrência de sinônimo proibido, com sugestão do termo canônico.
+
+**Onde mais o dicionário é consultado:** `idd capture` (aviso antes de gravar), `idd verify` (vira `warn`, nunca `drift`) e o LSP (diagnósticos `idd.dictionary.unknown` / `idd.dictionary.forbidden` como Warning, posicionados no termo). Sem dicionário no projeto, tudo é silencioso.
+
+---
+
 ## `idd diff [modulo/sub] [flags]`
 
 Mostra diferença visual entre a intenção e o código atual.
