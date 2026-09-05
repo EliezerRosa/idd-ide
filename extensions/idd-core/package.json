@@ -156,7 +156,7 @@
     "better-sqlite3": "^9.4.3",
     "js-yaml": "^4.1.0",
     "uuid": "^9.0.0",
-    "vscode-languageclient": "^9.0.1",
+    "vscode-languageclient": "^10.1.1",
     "vscode-languageserver": "^9.0.1",
     "vscode-languageserver-textdocument": "^1.0.11"
   },
