@@ -145,15 +145,44 @@ retroativos para módulos centrais do CLI.
 
 ---
 
+## 🔄 Fase 9 — Paradigma IDD-IDE: núcleo único e governança (em andamento)
+
+Sequência ratificada em [`VEREDITO-CONTRAPROPOSTAS-2026-09-04.md`](VEREDITO-CONTRAPROPOSTAS-2026-09-04.md) §2,
+derivada do [`PARECER-E-PROPOSTA-2026-09-04.md`](PARECER-E-PROPOSTA-2026-09-04.md). Cada item tem
+**gate de saída** determinístico; o agente executa sob *confirm-once*, o comando epistêmico
+permanece com o arquiteto.
+
+| # | Entrega | Gate de saída | Status | Commit |
+|---|---|---|---|---|
+| 1 | **Fase 0** — Contrato v2 em `@idd/core` (`target_class/method`, `behavioral_contract`, constraints/acceptance estruturados, `ethics`) + `project.intent.yaml` completo + `idd verify --project` | 1 parser consumido por CLI e LSP; v1 válido; importação ilegal entre contextos bloqueada (exit 1) | ✅ | `d923f51` |
+| 2 | **Dicionário Ubíquo manual** (DAV Layer 0) — `.intent/ubiquitous-dictionary.json`, `idd dictionary`, aviso em `capture`/`verify`/LSP | Termo fora do dicionário gera warning offline, sem LLM | ✅ | `0611645` |
+| 3 | **Fase 1** — Track Cognitivo `.intent.md` (`<ctx>/<Classe>.<metodo>.intent.md`; frontmatter só `authorization` + `lifecycle_min_phase`; corpo LN + gherkin) + `idd compile` + branch `shadow/main` protegida + `pre-push` + `idd rollback/refine/recompile` | Push humano em `shadow/*` rejeitado pelo remoto; compilador falha se frontmatter duplicar chave do YAML | ⏳ próximo | — |
+| 4 | **Fase 3** — AST verifier (visibilidade, LCOM4, CBO/Demeter, Liskov, string mágica, anemic model) | Hard gate < 100 ms | ⬜ | — |
+| 5 | **Fase 4** — waivers por fase (30/14/7 d), `idd waiver audit`, Risk Dials evidence-gated, Intent Fidelity | Dial só relaxa com ≥ 95 % em 50 verificações | ⬜ | — |
+| 6 | **Fase 6** — HUD 4 regiões + sparkline de fidelity + elegibilidade de dial | Ciclo completo na UI | ⬜ | — |
+| 7 | **Fase 2** — SHALA para termos ausentes do dicionário (LLM propõe, humano decide) | Ep. "Compilar LN sem ambiguidade" gravável | ⬜ | — |
+| 8 | **Alvo B** — submodule Code-OSS + 6 patches com README | Instalador 3 plataformas | ⬜ | — |
+| 9 | **Fase 5** — Armstrong closure, Excalidraw + VLM, Traceback Visual | Soft gate | ⬜ | — |
+
+### Estado em 2026-09-06
+
+- `packages/core` (`@idd/core`) é a única fonte de parsing: `contract.ts`, `project.ts`, `dictionary.ts`. CLI e extensão consomem via dependência `file:`.
+- O repositório governa a si mesmo: [`project.intent.yaml`](../project.intent.yaml) declara 5 bounded contexts (`core`, `cli→core`, `extension→core`, `ui-extension`, `pwa`) — 88 arquivos, 0 importações ilegais; [`.intent/ubiquitous-dictionary.json`](../.intent/ubiquitous-dictionary.json) fixa 18 termos da linguagem do IDD — 0 termos fora do dicionário.
+- CI ([`idd-verify.yml`](../.github/workflows/idd-verify.yml)) executa `verify --project` e `dictionary check --strict` como hard gates.
+- Testes: **26 suítes / 901** (CLI). Build da extensão (`tsc` + esbuild) verde.
+- Decisão pendente para o item 3: branch protection remota de `shadow/main` (via `gh api` ou manual pelo owner).
+
+---
+
 ## Números cumulativos
 
-| Métrica | v0.1.0 | v0.2.0 | v0.3.0 | v0.4.0 | v0.5.0 |
-|---|---|---|---|---|---|
-| Fases completas | 2, 3 | 4 | 5 | 6 | 7 |
-| Issues fechadas | 12 | 16 | 20 | 24 | **28** |
-| Testes passando | 544 | 669 | 730 | 766 | **830** |
-| Suítes de teste | 17 | 21 | 22 | 23 | **24** |
-| Comandos CLI | 11 | 15 | 16 | 20 | **24** |
+| Métrica | v0.1.0 | v0.2.0 | v0.3.0 | v0.4.0 | v0.5.0 | main (2026-09-06) |
+|---|---|---|---|---|---|---|
+| Fases completas | 2, 3 | 4 | 5 | 6 | 7 | 7 + Fase 9 itens 1–2 |
+| Issues fechadas | 12 | 16 | 20 | 24 | **28** | 28 |
+| Testes passando | 544 | 669 | 730 | 766 | **830** | **901** |
+| Suítes de teste | 17 | 21 | 22 | 23 | **24** | **26** |
+| Comandos CLI | 11 | 15 | 16 | 20 | **24** | **25** (`dictionary`) |
 
 ---
 
