@@ -37,6 +37,8 @@ function writeWorkflow(cwd: string): boolean {
     'jobs:',
     '  verify:',
     '    runs-on: ubuntu-latest',
+    '    env:',
+    "      HAS_ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY != '' }}",
     '    steps:',
     '      - uses: actions/checkout@v4',
     '      - uses: actions/setup-node@v4',
@@ -46,7 +48,7 @@ function writeWorkflow(cwd: string): boolean {
     '      - name: Verificar alinhamento (estático)',
     '        run: idd verify --fail-on=critical',
     '      - name: Verificar alinhamento (semântico)',
-    "        if: ${{ secrets.ANTHROPIC_API_KEY != '' }}",
+    "        if: ${{ env.HAS_ANTHROPIC_API_KEY == 'true' }}",
     '        run: idd verify --semantic --fail-on=critical',
     '        env:',
     '          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}',
@@ -123,6 +125,8 @@ describe('writeWorkflow', () => {
     );
     expect(content).toContain('--semantic');
     expect(content).toContain('ANTHROPIC_API_KEY');
+    expect(content).toContain("if: ${{ env.HAS_ANTHROPIC_API_KEY == 'true' }}");
+    expect(content).not.toContain("if: ${{ secrets.ANTHROPIC_API_KEY");
   });
 
   it('workflow contém idd stats com if: always()', () => {

@@ -19,7 +19,8 @@ jobs:
   verify:
     name: Verificar alinhamento de intenções
     runs-on: ubuntu-latest
-
+    env:
+      HAS_ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY != '' }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -37,7 +38,7 @@ jobs:
         run: idd verify --fail-on=critical
 
       - name: Verificar alinhamento (semântico)
-        if: ${{ secrets.ANTHROPIC_API_KEY != '' }}
+        if: ${{ env.HAS_ANTHROPIC_API_KEY == 'true' }}
         run: idd verify --semantic --fail-on=critical
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
