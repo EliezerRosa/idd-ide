@@ -151,7 +151,7 @@ idd-ide/
 
 ### Pré-requisitos
 
-- Node.js 20+
+- Node.js 22+
 - Git 2.40+
 - Chave de API Anthropic
 
@@ -161,7 +161,7 @@ idd-ide/
 git clone https://github.com/EliezerRosa/idd-ide.git
 cd idd-ide/cli
 npm install
-npx esbuild src/index.ts --bundle --platform=node --target=node20 \
+npx esbuild src/index.ts --bundle --platform=node --target=node22 \
   --format=esm --outfile=dist/index.js --external:better-sqlite3
 sed -i '2{/^#!/d}' dist/index.js  # remove shebang duplicado (macOS: sed -i '' em vez de sed -i)
 chmod +x dist/index.js

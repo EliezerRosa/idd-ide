@@ -20,17 +20,17 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: "20"
+          node-version: "22"
           cache: "npm"
           cache-dependency-path: "cli/package-lock.json"
 
       - name: Instalar dependências do CLI
-        run: cd cli && npm ci --ignore-scripts
+        run: cd cli && npm ci
 
       - name: Compilar IDD CLI
         run: |
           cd cli
-          npx esbuild src/index.ts --bundle --platform=node --target=node20 \
+          npx esbuild src/index.ts --bundle --platform=node --target=node22 \
             --format=esm --outfile=dist/index.js --external:better-sqlite3
           sed -i '2{/^#!/d}' dist/index.js
           chmod +x dist/index.js
@@ -70,10 +70,10 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: "20"
+          node-version: "22"
           cache: "npm"
           cache-dependency-path: "cli/package-lock.json"
-      - run: cd cli && npm ci --ignore-scripts
+      - run: cd cli && npm ci
       - run: cd cli && npx tsc --noEmit
       - run: cd extensions/idd-core && npm ci --ignore-scripts
       - run: cd extensions/idd-core && npm run build

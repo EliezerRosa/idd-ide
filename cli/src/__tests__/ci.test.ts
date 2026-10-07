@@ -40,9 +40,9 @@ function writeWorkflow(cwd: string): boolean {
     '    steps:',
     '      - uses: actions/checkout@v4',
     '      - uses: actions/setup-node@v4',
-    '        with: { node-version: "20" }',
+    '        with: { node-version: "22" }',
     '      - name: Instalar IDD CLI',
-    '        run: cd cli && npm ci --ignore-scripts && npm run build && npm link',
+    '        run: cd cli && npm ci && npm run build && npm link',
     '      - name: Verificar alinhamento (estático)',
     '        run: idd verify --fail-on=critical',
     '      - name: Verificar alinhamento (semântico)',
@@ -150,6 +150,16 @@ describe('writeWorkflow', () => {
     );
     expect(content).toContain('actions/checkout@v4');
     expect(content).toContain('actions/setup-node@v4');
+  });
+
+  it('workflow usa Node.js 22 e executa scripts nativos das dependências', () => {
+    writeWorkflow(tmpDir);
+    const content = fs.readFileSync(
+      path.join(tmpDir, '.github', 'workflows', 'idd-verify.yml'), 'utf8'
+    );
+    expect(content).toContain('node-version: "22"');
+    expect(content).toContain('npm ci');
+    expect(content).not.toContain('--ignore-scripts');
   });
 
   it('cria diretório .github/workflows/ se não existir', () => {

@@ -55,7 +55,7 @@ A extensão `idd-core` é registrada como **built-in** — vem pré-instalada e 
 
 ### Pré-requisitos
 
-- Node.js 20+
+- Node.js 22+
 - npm
 - (opcional) [`@vscode/vsce`](https://www.npmjs.com/package/@vscode/vsce) para empacotar `.vsix`
 
