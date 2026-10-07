@@ -3,6 +3,7 @@ dist/
 out/
 *.js.map
 *.d.ts
+!packages/idd-ui-pwa/src/vite-env.d.ts
 coverage/
 .idd/store.db
 .idd/snapshots/
