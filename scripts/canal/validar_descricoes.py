@@ -1,6 +1,6 @@
 """Valida um rascunho de descrições contra o GUIA-REDACAO.md e o estado atual do canal.
 
-Uso: python -I scripts/canal/validar_descricoes.py <rascunho.json> [ids esperados separados por vírgula]
+Uso: python -I scripts/canal/validar_descricoes.py <rascunho.json> [ids esperados separados por vírgula] [estado_atual.json]
 Sai com código 1 se houver erro.
 """
 
@@ -19,8 +19,9 @@ TS = re.compile(r"^\s*(\d{1,2}:)?\d{1,2}:\d{2}\b", re.M)
 
 def main() -> int:
     draft = json.loads(Path(sys.argv[1]).read_text(encoding="utf-8"))
-    atual = {v["id"]: v for v in json.loads(ATUAL.read_text(encoding="utf-8"))["videos"]}
-    esperados = set(sys.argv[2].split(",")) if len(sys.argv) > 2 else set()
+    fonte = Path(sys.argv[3]) if len(sys.argv) > 3 else ATUAL
+    atual = {v["id"]: v for v in json.loads(fonte.read_text(encoding="utf-8"))["videos"]}
+    esperados = set(sys.argv[2].split(",")) - {""} if len(sys.argv) > 2 else set()
     errs = []
     ids = {v["id"] for v in draft}
     if esperados - ids:

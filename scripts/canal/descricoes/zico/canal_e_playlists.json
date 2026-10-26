@@ -1,0 +1,10 @@
+{
+  "playlists": [
+    {
+      "id": "PLMWN1EWhq5tM",
+      "title": "IDD na Prática - Leigos",
+      "description": "Casos do método IDD — Intent-Driven Development, na formulação de Eliézer Rosa, pensados para quem não programa.\n\n✅ Caso real: Melissa, sem formação em programação, construiu com IA o NexusLog CRM (React + Supabase).\n🧪 Demonstração didática: série Refrigeração (HVAC-R / PMOC), Ep. 1–4. A série tem especificação de domínio, MER e UML reais; o app, os terminais, as migrations, o deploy e os laudos mostrados nos vídeos são encenações para ensinar o método. Não há sistema de refrigeração em produção.\n\nSelos: ✅ implementado · 🧪 demonstração · 🔭 proposta — Cânone v1.0-rc1\nRepositório: https://github.com/EliezerRosa/idd-ide\n\n#IDD #IntentDrivenDevelopment #Refrigeracao #PMOC #IAParaLeigos",
+      "nota": "Descrição no estilo das playlists do canal principal: Melissa ✅ e série Refrigeração 🧪; canal Zico pessoal, sem alteração da descrição do canal."
+    }
+  ]
+}

@@ -1,4 +1,4 @@
-"""Publica no YouTube as descrições/títulos/tags revisados em scripts/canal/descricoes/*.json.
+"""Publica no YouTube as descrições/títulos/tags revisados em scripts/canal/descricoes/<canal>/*.json.
 
 Padrão = PRÉVIA: gera um relatório de revisão (antes → depois) e não altera nada.
 Com --aplicar: faz backup do estado atual (JSON) e atualiza vídeos, playlists e canal.
@@ -6,7 +6,7 @@ Com --reverter <backup.json>: restaura títulos/descrições/tags do backup.
 
 Uso (venv da produção, que tem google-api-python-client):
     PY="C:\\Antigravity - IDD Refrigeração\\producao_yt\\.venv\\Scripts\\python.exe"
-    $PY scripts/canal/yt_publicar.py <token.json> [--aplicar | --reverter backup.json]
+    $PY scripts/canal/yt_publicar.py <token.json> <pasta-do-canal> [--aplicar | --reverter backup.json]
 """
 
 import argparse
@@ -20,7 +20,6 @@ from google.oauth2.credentials import Credentials
 from googleapiclient.discovery import build
 
 HERE = Path(__file__).resolve().parent
-DESC_DIR = HERE / "descricoes"
 LOCAL = HERE.parents[1] / "paradigma" / "_local"
 sys.stdout.reconfigure(encoding="utf-8")
 
@@ -36,9 +35,9 @@ def validate(title: str, desc: str, where: str) -> list[str]:
     return errs
 
 
-def load_drafts():
+def load_drafts(desc_dir: Path):
     videos, extra = {}, None
-    for f in sorted(DESC_DIR.glob("*.json")):
+    for f in sorted(desc_dir.glob("*.json")):
         data = json.loads(f.read_text(encoding="utf-8"))
         if isinstance(data, dict):
             extra = data
@@ -59,6 +58,7 @@ def fetch_videos(yt, ids):
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("token")
+    ap.add_argument("pasta", nargs="?", help="pasta de rascunhos do canal, ex.: scripts/canal/descricoes/eliezer")
     g = ap.add_mutually_exclusive_group()
     g.add_argument("--aplicar", action="store_true")
     g.add_argument("--reverter")
@@ -80,7 +80,9 @@ def main() -> int:
         print(f"Revertido a partir de {a.reverter}")
         return 0
 
-    drafts, extra = load_drafts()
+    if not a.pasta:
+        ap.error("informe a pasta de rascunhos do canal")
+    drafts, extra = load_drafts(Path(a.pasta))
     current = fetch_videos(yt, list(drafts))
     missing = [i for i in drafts if i not in current]
     errs = [e for v in drafts.values() for e in validate(v["title"], v["description"], v["id"])]
@@ -153,7 +155,7 @@ def main() -> int:
         bs = channel["brandingSettings"]
         bs["channel"]["description"] = extra["channel"]["description"]
         yt.channels().update(part="brandingSettings", body={"id": channel["id"], "brandingSettings": bs}).execute()
-    print(f"Publicado: {ok} vídeos, {len(cur_pls)} playlists, canal={'sim' if extra else 'não'}. "
+    print(f"Publicado: {ok} vídeos, {len(cur_pls)} playlists, canal={'sim' if extra and extra.get('channel') else 'não'}. "
           f"Para desfazer: --reverter {bk}")
     return 0
 

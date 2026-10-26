@@ -1,0 +1,195 @@
+[
+ {
+  "id": "LSeoDp7cOno",
+  "title": "Construindo App de Refrigeração do Zero com IA - Ep. 1: Domínio e Intenção | IDD na Prática",
+  "title_changed": false,
+  "description": "🧪 DEMONSTRAÇÃO — protótipo didático; não existe app de refrigeração implementado. Terminais, testes, migrations, deploy e laudos exibidos no vídeo são ilustrativos.\n\nIDD na Prática — Refrigeração | Episódio 1: Domínio, Intenção e Escopo (HVAC-R e PMOC)\n\nComo alguém que conhece o negócio, mas não programa, pode conduzir a especificação de um software de manutenção em refrigeração alinhado à Lei 13.589/2018 (PMOC)? Este episódio mostra o primeiro passo do método IDD: escrever a intenção, delimitar o domínio e deixar a IA levantar dúvidas antes de gerar qualquer código.\n\nO que você vai ver:\n• A primeira apresentação do projeto de Refrigeração (ciclo termodinâmico e PMOC)\n• Por que softwares genéricos falham em câmaras frigoríficas e chillers\n• Conceitos de domínio: pressão de sucção e descarga, superaquecimento\n• PMOC e a responsabilidade técnica (CREA/CFT) como requisitos do sistema\n• Confirm-Once: a IA pergunta sobre regras de domínio antes de prosseguir\n• Invariantes como regras declaradas que o código gerado não pode violar\n\n⚠️ O que é real e o que é ilustrativo\n• ✅ Real: a especificação de domínio HVAC-R/PMOC, o MER e o UML existem como artefatos de especificação no repositório (documentos e visualizadores HTML).\n• 🧪 Ilustrativo: não há aplicativo de refrigeração implementado. Telas do app, terminais da IA e mensagens de compilação são encenação didática.\n• 🧪 Ilustrativo: o \"bloqueio automático de código defeituoso\" aparece como cena; no método, a verificação de invariantes depende de gates concretos (schema, testes, constraints).\n\n⏱️ Capítulos:\n00:00 - Introdução: O Desafio da Manutenção em Refrigeração Industrial\n01:02 - O IDD: A Intenção Humana como Artefato de Mais Alta Ordem\n02:42 - Aumentar a Capacidade Humana vs. Automatizar Cegamente\n05:30 - As Regras de Negócio do PMOC e Termodinâmica\n12:15 - Modelagem de Domínio: Chillers, Câmaras Frigoríficas e Pressões\n25:40 - A IA em Ação: Estrutura Guiada por Intenção (cena didática)\n45:10 - Do Caos do Código à Arquitetura Dirigida por Intenção\n01:05:00 - Conclusão do Episódio 1 e Próximos Passos\n\n📺 Playlist \"IDD na Prática - Leigos\":\nhttps://www.youtube.com/playlist?list=PLMWN1EWhq5tM\n\nIDD — Intent-Driven Development, na formulação de Eliézer Rosa.\nSelos: ✅ implementado · 🧪 demonstração · 🔭 proposta — Cânone v1.0-rc1\nRepositório: https://github.com/EliezerRosa/idd-ide\n\n#IDD #IntentDrivenDevelopment #Refrigeracao #PMOC #HVACR #EngenhariaDeSoftware #IA #TechParaLeigos",
+  "tags": [
+   "Desenvolvimento Orientado a Intencao",
+   "Eliezer Rosa",
+   "EliezerJPRosa",
+   "Engenharia de Software",
+   "HVAC-R",
+   "IA",
+   "IDD",
+   "Inteligencia Artificial",
+   "Intent-Driven Development",
+   "Lei 13589",
+   "PMOC",
+   "Refrigeracao Industrial"
+  ],
+  "selo": "🧪",
+  "nota": "Texto do episódio equivalente do canal principal; capítulos do vídeo do Zico com títulos neutralizados (encenação rotulada); playlist do Zico; selo 🧪."
+ },
+ {
+  "id": "7SUj0N_hNqI",
+  "title": "Construindo App de Refrigeração do Zero com IA - Ep. 2: Arquitetura e Regras | IDD na Prática",
+  "title_changed": false,
+  "description": "🧪 DEMONSTRAÇÃO — protótipo didático; não existe app de refrigeração implementado. Terminais, testes, migrations, deploy e laudos exibidos no vídeo são ilustrativos.\n\nIDD na Prática — Refrigeração | Episódio 2: Arquitetura, Bounded Contexts e MER\n\nComo organizar dados e regras de um sistema HVAC-R para que clientes diferentes não misturem informações e para que medições críticas não sejam puladas em campo? O episódio mostra a passagem da intenção para o Modelo Entidade-Relacionamento (MER): fronteiras de contexto, isolamento por tenant e invariantes expressas como constraints de banco.\n\nO que você vai ver:\n• Bounded contexts e isolamento por tenant com Row Level Security (RLS)\n• Prontuário do equipamento identificado por QR Code\n• Por que o fluido refrigerante (R-410A, R-22) muda as faixas de pressão esperadas\n• Invariante de domínio como constraint CHECK (pressão de descarga maior que a de sucção)\n• Confirm-Once: a IA leva ambiguidades à decisão humana\n\n⚠️ O que é real e o que é ilustrativo\n• ✅ Real: a especificação de domínio HVAC-R/PMOC, o MER e o UML existem como artefatos de especificação no repositório (documentos e visualizadores HTML).\n• 🧪 Ilustrativo: o terminal da IA e a \"compilação com sucesso\" do esquema PostgreSQL são encenados; não há banco implantado.\n• 🔭 Proposta: a operação offline-first (banco local, IndexedDB/SQLite, sincronização por CRDT) é direção de projeto; não há implementação.\n• 🧪 Ilustrativo: \"laudo PMOC via WhatsApp em menos de 90 s\" é cenário de uso, não medição.\n\n⏱️ Capítulos:\n00:00 - Recapitulação e Objetivos do Episódio 2\n00:40 - O Regime de Pré-Intenção: Como Alimentar a Memória da IA\n03:15 - Modelagem do Domínio Físico: Superaquecimento, Sub-resfriamento e Pressões\n10:50 - Arquitetura de Software: Bounded Contexts e Regras do PMOC\n22:30 - O Confirm-Once Pattern: Autonomia da IA com Controle Humano nas Decisões Críticas\n38:40 - Estruturação de Entidades e Contratos de Dados\n52:10 - Síntese Arquitetural e Preparação para o Banco de Dados\n\n📺 Playlist \"IDD na Prática - Leigos\":\nhttps://www.youtube.com/playlist?list=PLMWN1EWhq5tM\n\nIDD — Intent-Driven Development, na formulação de Eliézer Rosa.\nSelos: ✅ implementado · 🧪 demonstração · 🔭 proposta — Cânone v1.0-rc1\nRepositório: https://github.com/EliezerRosa/idd-ide\n\n#IDD #IntentDrivenDevelopment #MER #BancoDeDados #PostgreSQL #Refrigeracao #PMOC #HVACR",
+  "tags": [
+   "Eliezer Rosa",
+   "EliezerJPRosa",
+   "Engenharia de Software",
+   "HVAC-R",
+   "IA",
+   "IDD",
+   "Inteligencia Artificial",
+   "Intent-Driven Development",
+   "Lei 13589",
+   "MER",
+   "Modelo Entidade Relacionamento",
+   "Multitenancy",
+   "PMOC",
+   "PostgreSQL",
+   "Refrigeracao Industrial"
+  ],
+  "selo": "🧪",
+  "nota": "Texto do episódio equivalente do canal principal; capítulos do vídeo do Zico com títulos neutralizados (encenação rotulada); playlist do Zico; selo 🧪."
+ },
+ {
+  "id": "rUaJn-r-p8I",
+  "title": "Construindo App de Refrigeração do Zero com IA - Ep. 3: Implementação e Dados | IDD na Prática",
+  "title_changed": false,
+  "description": "🧪 DEMONSTRAÇÃO — protótipo didático; não existe app de refrigeração implementado. Terminais, testes, migrations, deploy e laudos exibidos no vídeo são ilustrativos.\n\nIDD na Prática — Refrigeração | Episódio 3: Do Modelo ao Banco (PostgreSQL, RLS e a proposta Offline-First)\n\nComo passar da modelagem conceitual para tabelas, chaves e políticas de segurança? O episódio encena a IA traduzindo o modelo em migrations PostgreSQL (Supabase), políticas de Row Level Security e telas de campo, e discute o desafio de operar sem sinal em subsolos e câmaras frias.\n\nO que você vai ver:\n• Chaves UUID e políticas RLS para isolar dados entre empresas (tenants)\n• Telas de campo: máscaras de pressão em PSI e cálculo de Delta T\n• O problema da conectividade em subsolos, câmaras frias e casas de máquinas\n• Confirm-Once: a IA pergunta sobre expiração de credenciais offline e o humano decide (tolerância de 48 h)\n• QR Code como chave de acesso ao prontuário do equipamento\n\n⚠️ O que é real e o que é ilustrativo\n• ✅ Real: a especificação de domínio HVAC-R/PMOC, o MER e o UML existem como artefatos de especificação no repositório (documentos e visualizadores HTML).\n• 🧪 Ilustrativo: as migrations exibidas como \"aplicadas\", as telas e os tempos (ex.: \"menos de 50 ms\") são encenação; não há banco nem app implantados.\n• 🔭 Proposta: a operação offline-first (banco local, IndexedDB/SQLite, sincronização por CRDT) é direção de projeto; não há implementação.\n\n⏱️ Capítulos:\n00:00 - Introdução: Do Diagrama ao Banco de Dados (cena didática)\n00:54 - Aplicação dos Princípios do IDD no Terminal (ilustrativo)\n04:20 - Modelagem Entidade-Relacionamento (MER): Clientes, Contratos e Ativos\n12:30 - Supabase e PostgreSQL: Tabelas e Chaves Estrangeiras (encenado)\n24:15 - Segurança Multitenant: Row Level Security (RLS) para Isolamento entre Tenants\n38:00 - Geração de QR Codes Únicos para Identificação de Chillers em Campo\n50:40 - Integração entre Frontend e API com Validação de Tipos\n\n📺 Playlist \"IDD na Prática - Leigos\":\nhttps://www.youtube.com/playlist?list=PLMWN1EWhq5tM\n\nIDD — Intent-Driven Development, na formulação de Eliézer Rosa.\nSelos: ✅ implementado · 🧪 demonstração · 🔭 proposta — Cânone v1.0-rc1\nRepositório: https://github.com/EliezerRosa/idd-ide\n\n#IDD #IntentDrivenDevelopment #PostgreSQL #Supabase #RLS #Refrigeracao #PMOC #HVACR",
+  "tags": [
+   "Banco de Dados",
+   "Eliezer Rosa",
+   "EliezerJPRosa",
+   "Engenharia de Software",
+   "HVAC-R",
+   "IA",
+   "IDD",
+   "Inteligencia Artificial",
+   "Intent-Driven Development",
+   "Offline-First",
+   "PMOC",
+   "PostgreSQL",
+   "RLS",
+   "Refrigeracao Industrial",
+   "Row Level Security"
+  ],
+  "selo": "🧪",
+  "nota": "Texto do episódio equivalente do canal principal; capítulos do vídeo do Zico com títulos neutralizados (encenação rotulada); playlist do Zico; selo 🧪."
+ },
+ {
+  "id": "2iFSnsmjT00",
+  "title": "Construindo App de Refrigeração com IA - Ep. 4: Validação e Entrega (Demonstração) | IDD na Prática",
+  "title_changed": true,
+  "description": "🧪 DEMONSTRAÇÃO — protótipo didático; não existe app de refrigeração implementado. Terminais, testes, migrations, deploy e laudos exibidos no vídeo são ilustrativos.\n\nIDD na Prática — Refrigeração | Episódio 4 (final da série): Validar pela Experiência\n\nComo alguém que não lê código valida um sistema? O episódio final apresenta o princípio de validar pela experiência: percorrer o fluxo real de trabalho (ordem de serviço, QR Code, medições) e ajustar a intenção em linguagem natural, enquanto a verificação automática cuida das regras declaradas. A entrega em produção mostrada no vídeo é uma encenação do ciclo completo, não um sistema publicado.\n\nO que você vai ver:\n• Validar pela experiência: o fluxo de trabalho como critério de aceite\n• Ciclo de feedback: ajustes de intenção em linguagem natural\n• Simulação de campo: QR Code, medições de manifold e registro de evidências\n• PMOC (Lei 13.589/2018) como requisito do laudo\n• Confirm-Once: a IA pede autorização antes de publicar\n• Síntese do ciclo do método IDD\n\n⚠️ O que é real e o que é ilustrativo\n• ✅ Real: a especificação de domínio HVAC-R/PMOC, o MER e o UML existem como artefatos de especificação no repositório (documentos e visualizadores HTML).\n• 🧪 Ilustrativo: \"240 testes\", \"100% de cobertura\" e \"deploy em 4 segundos\" são terminais encenados; essas suítes e esse pipeline não existem.\n• 🧪 Ilustrativo: o laudo PMOC \"assinado\" (CREA/CFT), o hash e o PDF mostrados são elementos cênicos, não um documento técnico real.\n• ✅ Real: o princípio de validar pela experiência e o padrão Confirm-Once fazem parte do método IDD.\n\n⏱️ Capítulos:\n00:00 - Introdução ao Episódio Final: Fechando o Ciclo do IDD\n00:12 - O Princípio da Validação pela Experiência: Usar em vez de apenas Ler Código\n05:30 - Teste Ponta a Ponta: Abertura e Conclusão de Ordem de Serviço\n14:20 - Relatórios em PDF e Laudo Técnico do PMOC (encenados, ilustrativo)\n25:00 - Painel Operacional e Gestão de Alertas Críticos (ilustrativo)\n39:40 - Deploy em Nuvem e Entrega (encenados, ilustrativo)\n51:00 - Síntese Geral da Série: O Ciclo do Método IDD\n\n📺 Playlist \"IDD na Prática - Leigos\":\nhttps://www.youtube.com/playlist?list=PLMWN1EWhq5tM\n\nIDD — Intent-Driven Development, na formulação de Eliézer Rosa.\nSelos: ✅ implementado · 🧪 demonstração · 🔭 proposta — Cânone v1.0-rc1\nRepositório: https://github.com/EliezerRosa/idd-ide\n\n#IDD #IntentDrivenDevelopment #PMOC #Refrigeracao #HVACR #EngenhariaDeSoftware #Testes #IA",
+  "tags": [
+   "Deploy",
+   "Eliezer Rosa",
+   "EliezerJPRosa",
+   "IA",
+   "IDD",
+   "Inteligencia Artificial",
+   "Intent-Driven Development",
+   "Laudo Tecnico",
+   "Lei 13589",
+   "PMOC",
+   "PostgreSQL",
+   "Refrigeracao Industrial",
+   "Supabase",
+   "Testes Automatizados",
+   "Validacao"
+  ],
+  "selo": "🧪",
+  "nota": "Texto do episódio equivalente do canal principal; capítulos do vídeo do Zico com títulos neutralizados (encenação rotulada); playlist do Zico; selo 🧪. Título: acrescentado \"(Demonstração)\" como no modelo. Título encurtado (sem \"do Zero\") para caber em 100 caracteres, igual ao modelo."
+ },
+ {
+  "id": "l_ttXQbvTzE",
+  "title": "Por que softwares de manutenção falham na Refrigeração? #Shorts #IDD",
+  "title_changed": false,
+  "description": "✅ CONCEITO — ideia e método de trabalho; sem promessas técnicas.\n\nPor que softwares genéricos de manutenção falham na Refrigeração Industrial? O short aponta a importância de levar o domínio termodinâmico (pressões, superaquecimento, PMOC) para dentro da especificação, uma ideia central do método IDD.\n\nO que você aprende:\n• Por que o conhecimento do domínio físico importa na especificação\n• Como o IDD parte do vocabulário e das regras do negócio\n\n📺 Playlist \"IDD na Prática - Leigos\":\nhttps://www.youtube.com/playlist?list=PLMWN1EWhq5tM\n\nIDD — Intent-Driven Development, na formulação de Eliézer Rosa.\nSelos: ✅ implementado · 🧪 demonstração · 🔭 proposta — Cânone v1.0-rc1\nRepositório: https://github.com/EliezerRosa/idd-ide\n\n#IDD #IntentDrivenDevelopment #Refrigeracao #PMOC #EngenhariaDeSoftware #Shorts",
+  "tags": [
+   "IDD",
+   "Intent-Driven Development",
+   "Eliezer Rosa",
+   "EliezerJPRosa",
+   "Engenharia de Software",
+   "IA",
+   "Shorts",
+   "Refrigeracao",
+   "PMOC",
+   "Manutencao"
+  ],
+  "selo": "✅",
+  "nota": "Selo ✅ conceito; texto resumido, sem promessas."
+ },
+ {
+  "id": "3YAxKOKE4vU",
+  "title": "A Intenção Humana é o Artefato de Mais Alta Ordem #Shorts #IDD",
+  "title_changed": false,
+  "description": "✅ CONCEITO — ideia e método de trabalho; sem promessas técnicas.\n\nPara o IDD, o código é um detalhe de implementação, e a intenção humana é o artefato de mais alta ordem: é ela que declara o que o sistema deve fazer e por quê, e contra ela o resultado é conferido. Esta é a tese do método, apresentada de forma breve.\n\nO que você aprende:\n• A intenção como ponto de partida do método\n• Código como implementação, intenção como referência\n\n📺 Playlist \"IDD na Prática - Leigos\":\nhttps://www.youtube.com/playlist?list=PLMWN1EWhq5tM\n\nIDD — Intent-Driven Development, na formulação de Eliézer Rosa.\nSelos: ✅ implementado · 🧪 demonstração · 🔭 proposta — Cânone v1.0-rc1\nRepositório: https://github.com/EliezerRosa/idd-ide\n\n#IDD #IntentDrivenDevelopment #IA #EngenhariaDeSoftware #Shorts",
+  "tags": [
+   "IDD",
+   "Intent-Driven Development",
+   "Eliezer Rosa",
+   "EliezerJPRosa",
+   "Engenharia de Software",
+   "IA",
+   "Shorts",
+   "Intencao"
+  ],
+  "selo": "✅",
+  "nota": "Selo ✅ conceito; \"código efêmero\" apresentado como tese do método."
+ },
+ {
+  "id": "uvUW6E5lSdA",
+  "title": "Aumentar, NÃO Automatizar: O Papel Humano com IA #Shorts #IA #IDD",
+  "title_changed": false,
+  "description": "✅ CONCEITO — ideia e método de trabalho; sem promessas técnicas.\n\nAugmenting amplia a capacidade do especialista sem substituir o seu julgamento; automating transfere a própria decisão ao sistema. O short resume a distinção, inspirada em Douglas Engelbart, e o que ela significa para quem trabalha com agentes de IA.\n\nO que você aprende:\n• Augmenting vs Automating\n• Onde fica o julgamento humano em cada abordagem\n\n📺 Playlist \"IDD na Prática - Leigos\":\nhttps://www.youtube.com/playlist?list=PLMWN1EWhq5tM\n\nIDD — Intent-Driven Development, na formulação de Eliézer Rosa.\nSelos: ✅ implementado · 🧪 demonstração · 🔭 proposta — Cânone v1.0-rc1\nRepositório: https://github.com/EliezerRosa/idd-ide\n\n#IDD #IntentDrivenDevelopment #AgenticAI #IA #FuturoDoTrabalho #Shorts",
+  "tags": [
+   "IDD",
+   "Intent-Driven Development",
+   "Eliezer Rosa",
+   "EliezerJPRosa",
+   "Engenharia de Software",
+   "IA",
+   "Shorts",
+   "Agentic AI",
+   "Augmenting"
+  ],
+  "selo": "✅",
+  "nota": "Selo ✅ conceito; texto resumido; hashtags reduzidas."
+ },
+ {
+  "id": "mNrZzHGS5og",
+  "title": "A Regra de Negócio do PMOC e a Termodinâmica #Shorts #Engenharia #IDD",
+  "title_changed": true,
+  "description": "🧪 DEMONSTRAÇÃO — protótipo didático; não existe app de refrigeração implementado. Terminais, testes, migrations, deploy e laudos exibidos no vídeo são ilustrativos.\n\nComo uma regra de domínio do PMOC (conformidade térmica) pode ser declarada como invariante, e por que as leis da termodinâmica entram na especificação como restrições do negócio. O short usa o caso de refrigeração encenado na série.\n\nO que você aprende:\n• Regra de negócio do PMOC (Lei 13.589/2018) como invariante declarada\n• Restrições físicas (pressão de descarga maior que a de sucção) na especificação\n\n⚠️ O que é real e o que é ilustrativo\n• ✅ Real: a especificação de domínio HVAC-R/PMOC, o MER e o UML existem como artefatos no repositório.\n• 🧪 Ilustrativo: não há app de refrigeração; cenas, terminais e verificações mostradas são encenação didática.\n\n📺 Playlist \"IDD na Prática - Leigos\":\nhttps://www.youtube.com/playlist?list=PLMWN1EWhq5tM\n\nIDD — Intent-Driven Development, na formulação de Eliézer Rosa.\nSelos: ✅ implementado · 🧪 demonstração · 🔭 proposta — Cânone v1.0-rc1\nRepositório: https://github.com/EliezerRosa/idd-ide\n\n#IDD #IntentDrivenDevelopment #PMOC #Refrigeracao #Termodinamica #Shorts",
+  "tags": [
+   "IDD",
+   "Intent-Driven Development",
+   "Eliezer Rosa",
+   "EliezerJPRosa",
+   "Engenharia de Software",
+   "IA",
+   "Shorts",
+   "PMOC",
+   "Termodinamica",
+   "Refrigeracao",
+   "Compliance"
+  ],
+  "selo": "🧪",
+  "nota": "Selo 🧪 (caso de refrigeração encenado). Título: \"Regra Inviolável\" trocado por \"Regra de Negócio do PMOC\"."
+ },
+ {
+  "id": "85FmEz8SP88",
+  "title": "Como uma Leiga Criou um CRM Completo com IA sem Programar #Shorts #IDD",
+  "title_changed": false,
+  "description": "✅ IMPLEMENTADO — caso real; o código React/Supabase do NexusLog CRM está no repositório do projeto (pasta 40-evidencias/nexuslog-crm-melissa).\n\nMelissa, sem experiência em programação, conduziu com um agente de IA, usando o método IDD, a criação do NexusLog, um CRM de 8 telas. O short resume o caso; a conversa completa com Eliézer Rosa está no vídeo indicado abaixo.\n\nO que você aprende:\n• Como alguém sem formação em programação descreveu o problema à IA\n• O papel da intenção declarada no resultado\n\n📺 Playlist \"IDD na Prática - Leigos\":\nhttps://www.youtube.com/playlist?list=PLMWN1EWhq5tM\n\n▶ Caso completo: https://www.youtube.com/watch?v=7LB4MYBPu1M\n\nIDD — Intent-Driven Development, na formulação de Eliézer Rosa.\nSelos: ✅ implementado · 🧪 demonstração · 🔭 proposta — Cânone v1.0-rc1\nRepositório: https://github.com/EliezerRosa/idd-ide\n\n#IDD #IntentDrivenDevelopment #NexusLog #CRM #IAParaLeigos #Shorts",
+  "tags": [
+   "IDD",
+   "Intent-Driven Development",
+   "Eliezer Rosa",
+   "EliezerJPRosa",
+   "NexusLog",
+   "CRM",
+   "IA para leigos",
+   "Shorts"
+  ],
+  "selo": "✅",
+  "nota": "Selo ✅ implementado (A6); removidos \"no ar\", \"corporativo\" e \"Paradigma\" como promessa."
+ }
+]
