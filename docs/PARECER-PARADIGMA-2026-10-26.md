@@ -71,8 +71,9 @@ vocabulário próprio:
 - **Sigla:** SHALA (specs) *vs.* SHADA (ciclo de vida, Fase 0).
 - **Contagens que não batem:** 6 propriedades · 5 princípios · 5 pilares · 7 perspectivas ·
   ciclo de 8 / 5 / 4 etapas · 5 níveis de maturidade *vs.* "Nível 6" · 2 *vs.* 3 camadas.
-- **Biografia divergente** entre episódios: início da carreira em 1976 vs. 1982; 2PC nos anos
-  80 vs. 90.
+- **Biografia divergente** entre episódios: o 2PC aparece nos anos 80 (Ep03) e nos anos 90
+  (Ep01/Ep02). *Resolvido no Cânone §7, pelo perfil ratificado: carreira desde 1976 e 2PC nos
+  anos 90. O "1982" do Ep01 é um relato específico e não contradiz essa linha do tempo.*
 - **AEON** era o centro em mai/26 e desaparece em out/26. O "Ep04 — Runbooks" anunciado virou
   "Neuro-Simbólico".
 

@@ -1,7 +1,7 @@
-# Cânone do Paradigma IDD — v1.0-rc1
+# Cânone do Paradigma IDD — v1.0-rc1 (ratificado)
 
-> **Status: RASCUNHO para ratificação de Eliézer Rosa.** Proposto em 2026-10-26 a partir do
-> [parecer](../../docs/PARECER-PARADIGMA-2026-10-26.md). Vale como referência quando ratificado.
+> **Status: ✅ RATIFICADO por Eliézer Rosa em 2026-10-26** (identificador v1.0-rc1 mantido,
+> pois já é citado nas peças publicadas). Origem: [parecer](../../docs/PARECER-PARADIGMA-2026-10-26.md).
 > Todo vídeo, apresentação e documento deve citar a versão do cânone em que se baseia.
 
 ## 1. Definição
@@ -108,8 +108,11 @@ A matriz de cada afirmação está em [AFIRMACOES.md](AFIRMACOES.md) e o vocabul
   Intenção*. Não usar "Intention-Driven", "Dirigido por" nem "Guiado por".
 - **Autoria:** "IDD na formulação de Eliézer Rosa". Não usar "criador do paradigma" nem
   "paradigma cunhado por": o nome tem uso anterior e paralelo.
-- **Datas biográficas:** a fixar pelo autor e usar de forma idêntica em todas as peças
-  (pendência: início da carreira em 1976 vs. 1982; 2PC nos anos 80 vs. 90).
+- **Datas biográficas (fixadas, conforme o perfil ratificado do autor):** início da carreira em
+  **1976** (treinamento IBM Brasil em RPG II); **2PC customizado no Grupo Paes Mendonça nos
+  anos 90** (DBA no ecossistema UNISYS/DASL, com DCAlgol e Cobol). O relato de 1982 (sistema de
+  estoque em COBOL num mainframe IBM) é compatível com essa linha do tempo. Divergência a corrigir
+  na próxima revisão: o Ep03 situa o 2PC nos "anos 80".
 
 ## 8. Procedência da sigla
 
