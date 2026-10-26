@@ -10,6 +10,8 @@ decide o status.
 - `🧪 DEMONSTRAÇÃO`: protótipo didático. Terminais, contagens de testes, tempos de deploy,
   migrations "APLICADO" e laudos são ilustrativos.
 - `🔭 PROPOSTA`: direção de projeto ou pesquisa, ainda não implementada.
+- `✅ CONCEITO`: variante do ✅ para peças conceituais (filosofia, método, genealogia), cujo
+  conteúdo é prática documentada e não software.
 
 ## Status por série (padrão; a matriz pode refinar item a item)
 

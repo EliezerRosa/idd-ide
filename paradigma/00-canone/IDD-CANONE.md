@@ -97,6 +97,7 @@ comunicadas com o selo 🔭:
 | ✅ **IMPLEMENTADO** | Existe, funciona e tem evidência verificável (código, testes, produção) |
 | 🧪 **DEMONSTRAÇÃO** | Protótipo didático. Terminais, contagens de testes, tempos de deploy e laudos são **ilustrativos** |
 | 🔭 **PROPOSTA** | Projeto ou pesquisa; ainda não implementado |
+| ✅ **CONCEITO** | Variante do ✅ para peças de filosofia, método e genealogia (prática documentada, não software) |
 
 A matriz de cada afirmação está em [AFIRMACOES.md](AFIRMACOES.md) e o vocabulário em
 [glossario.json](glossario.json).
