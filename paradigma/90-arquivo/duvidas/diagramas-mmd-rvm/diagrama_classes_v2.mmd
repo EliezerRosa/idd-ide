@@ -1,0 +1,122 @@
+classDiagram
+    direction TB
+    
+    class Apostila {
+        +String id
+        +String codigo
+        +Date mesInicio
+        +Date mesFim
+        +String idioma
+    }
+    
+    class Semana {
+        +String id
+        +String apostilaId
+        +String titulo
+        +Date dataInicio
+        +Date dataFim
+        +String leituraBiblica
+        +int canticos
+    }
+    
+    class Secao {
+        +String id
+        +String semanaId
+        +TipoSecao tipo
+        +String cor
+        +int ordem
+    }
+    
+    class Parte {
+        +String id
+        +String secaoId
+        +String tipoParteId
+        +String titulo
+        +int duracao
+        +int ordem
+        +String indicadoPor
+    }
+    
+    class TipoParte {
+        +String id
+        +String codigo
+        +String nome
+        +TipoSecao secaoPadrao
+        +PublicoAlvo publicoAlvo
+        +Genero generosPermitidos
+        +Privilegio privilegioMinimo
+        +Capacitacao capacitacoesReq
+        +int idadeMinima
+        +TipoConteudo tipoConteudo
+        +boolean requerAjudante
+        +boolean ajudanteMesmoGenero
+        +boolean temSalaB
+        +Cenario cenariosPermitidos
+        +boolean geraS89
+    }
+    
+    class Evento {
+        +String id
+        +String semanaId
+        +TipoEvento tipo
+        +OrigemEvento origem
+        +String descricao
+        +ImpactoEvento impacto
+        +boolean substitui
+        +String tipoParteSubstituido
+    }
+    
+    class Publicador {
+        +String id
+        +String nome
+        +Genero genero
+        +Date dataNascimento
+        +Privilegio privilegio
+        +Capacitacao capacitacoes
+        +Categoria categoria
+        +Date datasIndisponiveis
+        +TipoExclusao tipoExclusao
+    }
+    
+    class TipoSecao {
+        TESOUROS
+        MINISTERIO
+        VIDA_CRISTA
+        EBC
+    }
+    
+    class TipoEvento {
+        MEMORIAL
+        ASSEMBLEIA_CIRCUITO
+        CONGRESSO_REGIONAL
+        VISITA_SC
+        BOLETIM_CG
+        NECESSIDADES_LOCAIS
+    }
+    
+    class OrigemEvento {
+        APOSTILA
+        ESCRITORIO
+        CONGREGACIONAL
+    }
+    
+    class Privilegio {
+        PNB
+        PUB
+        SM
+        A
+    }
+    
+    Apostila "1" *-- "8..9" Semana : contem
+    Semana "1" *-- "4" Secao : contem
+    Secao "1" *-- "1..*" Parte : contem
+    
+    Parte "*" --> "1" TipoParte : e do tipo
+    TipoParte --> TipoSecao : pertence a
+    
+    Semana "1" o-- "0..*" Evento : pode ter
+    Evento --> TipoEvento
+    Evento --> OrigemEvento
+    Evento ..> TipoParte : pode substituir
+    
+    Publicador "*" ..> "*" TipoParte : e elegivel para

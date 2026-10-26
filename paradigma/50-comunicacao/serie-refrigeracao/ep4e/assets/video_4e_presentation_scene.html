@@ -1,0 +1,932 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=1920, height=1080, initial-scale=1.0">
+  <title>Episódio 4E — Metodologia IDD: Ergonomia Industrial & Multimodalidade em Campo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-dark: #050811;
+      --bg-card: rgba(11, 20, 38, 0.90);
+      --bg-card-border: rgba(56, 189, 248, 0.25);
+      --cyan-frost: #38bdf8;
+      --cyan-glow: rgba(56, 189, 248, 0.45);
+      --ice-blue: #0284c7;
+      --emerald-ok: #10b981;
+      --amber-alert: #f59e0b;
+      --purple-tech: #a855f7;
+      --orange-field: #f97316;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      width: 1920px;
+      height: 1080px;
+      overflow: hidden;
+      background: #050811;
+      color: var(--text-main);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      position: relative;
+    }
+
+    #bg-canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 1920px;
+      height: 1080px;
+      z-index: 1;
+    }
+
+    .app-container {
+      position: relative;
+      z-index: 10;
+      width: 1920px;
+      height: 1080px;
+      display: flex;
+      flex-direction: column;
+      padding: 30px 45px;
+      justify-content: space-between;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 18px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .brand-wrap {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .brand-logo {
+      width: 50px;
+      height: 50px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #f97316, #0284c7);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 26px;
+      box-shadow: 0 0 20px rgba(249, 115, 22, 0.5);
+    }
+    .brand-text h1 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 22px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      color: #fff;
+    }
+    .brand-text span {
+      font-size: 13px;
+      color: #f97316;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+    }
+
+    .header-badges {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .h-badge {
+      padding: 8px 18px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      background: rgba(249, 115, 22, 0.15);
+      border: 1px solid rgba(249, 115, 22, 0.35);
+      color: #fb923c;
+    }
+    .h-badge.live {
+      background: rgba(16, 185, 129, 0.15);
+      border-color: rgba(16, 185, 129, 0.4);
+      color: #34d399;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .pulse-dot {
+      width: 10px;
+      height: 10px;
+      background: #10b981;
+      border-radius: 50%;
+      animation: pulse 1.8s infinite;
+    }
+    @keyframes pulse {
+      0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+      70% { transform: scale(1.15); box-shadow: 0 0 0 10px rgba(16, 185, 129, 0); }
+      100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+    }
+
+    main {
+      flex: 1;
+      display: grid;
+      grid-template-columns: 1fr 340px;
+      gap: 30px;
+      padding: 24px 0;
+      min-height: 0;
+    }
+
+    .slide-stage {
+      background: var(--bg-card);
+      border: 1px solid var(--bg-card-border);
+      border-radius: 20px;
+      padding: 30px 40px;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      box-shadow: 0 20px 45px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(16px);
+      overflow: hidden;
+    }
+
+    .slide-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 24px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      padding-bottom: 16px;
+    }
+    .slide-title-area h2 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 32px;
+      font-weight: 800;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .slide-title-area h2 span {
+      color: #f97316;
+    }
+    .slide-title-area p {
+      color: var(--text-muted);
+      font-size: 15px;
+      margin-top: 6px;
+    }
+    .slide-num-tag {
+      background: rgba(249, 115, 22, 0.15);
+      border: 1px solid #f97316;
+      color: #fb923c;
+      padding: 6px 16px;
+      border-radius: 12px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .slide-content-viewport {
+      flex: 1;
+      position: relative;
+      min-height: 0;
+    }
+    .slide-view {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.4s ease, transform 0.4s ease;
+      transform: translateY(10px);
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .slide-view.active {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0);
+    }
+
+    /* SLIDE 1: O CHOQUE DE REALIDADE */
+    .field-contrast-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      flex: 1;
+    }
+    .field-card {
+      background: rgba(15, 23, 42, 0.7);
+      border-radius: 16px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .field-card.bad {
+      border-color: rgba(244, 63, 94, 0.4);
+      background: radial-gradient(circle at top right, rgba(244, 63, 94, 0.12), transparent 70%), rgba(15, 23, 42, 0.8);
+    }
+    .field-card.good {
+      border-color: rgba(249, 115, 22, 0.4);
+      background: radial-gradient(circle at top right, rgba(249, 115, 22, 0.12), transparent 70%), rgba(15, 23, 42, 0.8);
+    }
+    .f-head {
+      font-family: 'Outfit', sans-serif;
+      font-size: 19px;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .f-head.bad { color: #fb7185; }
+    .f-head.good { color: #fb923c; }
+    .f-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      font-size: 14px;
+      line-height: 1.5;
+      color: #cbd5e1;
+    }
+    .f-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      margin-top: 6px;
+      flex-shrink: 0;
+    }
+    .f-dot.red { background: #f43f5e; box-shadow: 0 0 8px rgba(244, 63, 94, 0.6); }
+    .f-dot.orange { background: #f97316; box-shadow: 0 0 8px rgba(249, 115, 22, 0.6); }
+
+    .field-alert {
+      background: rgba(249, 115, 22, 0.1);
+      border: 1px solid rgba(249, 115, 22, 0.35);
+      border-radius: 14px;
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      color: #ffedd5;
+      font-size: 15px;
+    }
+
+    /* SLIDE 2: TOUCH TARGETS & QR */
+    .targets-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      flex: 1;
+    }
+    .target-box {
+      background: rgba(15, 23, 42, 0.75);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      padding: 22px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .target-box.t1 { border-color: rgba(56, 189, 248, 0.4); }
+    .target-box.t2 { border-color: rgba(249, 115, 22, 0.4); }
+    .target-box.t3 { border-color: rgba(16, 185, 129, 0.4); }
+    .tb-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 17px;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .target-box.t1 .tb-title { color: #38bdf8; }
+    .target-box.t2 .tb-title { color: #fb923c; }
+    .target-box.t3 .tb-title { color: #34d399; }
+    .tb-desc {
+      font-size: 13px;
+      color: #94a3b8;
+      line-height: 1.55;
+    }
+    .tb-mock {
+      background: #030712;
+      border-radius: 10px;
+      padding: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      font-weight: 700;
+      color: #38bdf8;
+      border: 1px dashed rgba(56, 189, 248, 0.4);
+      height: 60px;
+    }
+
+    /* SLIDE 3: MULTIMODALIDADE VOZ & OCR */
+    .multimodal-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 24px;
+      flex: 1;
+    }
+    .voice-mock-card {
+      background: #030712;
+      border: 1px solid rgba(56, 189, 248, 0.35);
+      border-radius: 16px;
+      padding: 22px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .voice-bubble {
+      background: rgba(56, 189, 248, 0.1);
+      border-left: 3px solid #38bdf8;
+      padding: 12px 16px;
+      border-radius: 0 10px 10px 0;
+      font-size: 14px;
+      color: #e0f2fe;
+      font-style: italic;
+    }
+    .ai-extracted-box {
+      background: rgba(16, 185, 129, 0.1);
+      border: 1px solid rgba(16, 185, 129, 0.35);
+      border-radius: 10px;
+      padding: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+    }
+    .ocr-card {
+      background: radial-gradient(circle at center, rgba(249, 115, 22, 0.15), transparent 70%), rgba(15, 23, 42, 0.8);
+      border: 1px solid rgba(249, 115, 22, 0.35);
+      border-radius: 16px;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      gap: 16px;
+    }
+    .ocr-icon {
+      font-size: 52px;
+      filter: drop-shadow(0 0 15px rgba(249, 115, 22, 0.6));
+    }
+
+    /* SLIDE 4: REDUÇÃO DE ATRITO */
+    .metric-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      flex: 1;
+    }
+    .m-card {
+      background: rgba(15, 23, 42, 0.7);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      padding: 22px 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      text-align: center;
+    }
+    .m-card.spotlight {
+      border-color: #f97316;
+      background: radial-gradient(circle at top center, rgba(249, 115, 22, 0.18), transparent 75%), rgba(15, 23, 42, 0.9);
+      box-shadow: 0 0 25px rgba(249, 115, 22, 0.25);
+    }
+    .m-num {
+      font-family: 'Outfit', sans-serif;
+      font-size: 38px;
+      font-weight: 900;
+      color: #fb923c;
+    }
+    .m-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 16px;
+      font-weight: 800;
+      color: #fff;
+    }
+    .m-desc {
+      font-size: 13px;
+      color: #94a3b8;
+      line-height: 1.5;
+    }
+
+    /* PRESENTER CARDS */
+    .presenters-col {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .actor-card {
+      flex: 1;
+      background: var(--bg-card);
+      border: 1px solid var(--bg-card-border);
+      border-radius: 20px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      position: relative;
+      transition: all 0.3s ease;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+    }
+    .actor-card.talking {
+      border-color: #f97316;
+      box-shadow: 0 0 30px rgba(249, 115, 22, 0.45), inset 0 0 20px rgba(249, 115, 22, 0.15);
+      transform: scale(1.02);
+    }
+    .actor-avatar-wrap {
+      position: relative;
+      width: 100px;
+      height: 100px;
+      margin-bottom: 14px;
+    }
+    .actor-img {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      border: 3px solid rgba(255, 255, 255, 0.2);
+      object-fit: cover;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+    }
+    .actor-card.talking .actor-img {
+      border-color: #f97316;
+    }
+    .talking-halo {
+      position: absolute;
+      top: -8px; left: -8px; right: -8px; bottom: -8px;
+      border-radius: 50%;
+      border: 2px dashed #f97316;
+      opacity: 0;
+      animation: rotateHalo 6s linear infinite;
+    }
+    .actor-card.talking .talking-halo {
+      opacity: 1;
+    }
+    @keyframes rotateHalo {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+    .actor-name {
+      font-family: 'Outfit', sans-serif;
+      font-size: 18px;
+      font-weight: 800;
+      color: #fff;
+    }
+    .actor-role {
+      font-size: 12px;
+      color: #fb923c;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-top: 4px;
+    }
+
+    /* FOOTER */
+    footer {
+      height: 135px;
+      background: var(--bg-card);
+      border: 1px solid var(--bg-card-border);
+      border-radius: 18px;
+      padding: 16px 28px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+    }
+    .sub-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .spk-pill {
+      font-size: 12px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      padding: 4px 12px;
+      border-radius: 999px;
+    }
+    .spk-pill.eliezer { background: rgba(56, 189, 248, 0.2); color: #38bdf8; border: 1px solid #38bdf8; }
+    .spk-pill.leigo { background: rgba(249, 115, 22, 0.2); color: #fb923c; border: 1px solid #f97316; }
+
+    .time-readout {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+    .speech-box {
+      font-size: 18px;
+      line-height: 1.45;
+      font-weight: 600;
+      color: #f1f5f9;
+      display: flex;
+      align-items: center;
+      min-height: 52px;
+    }
+    .wave-bars {
+      display: flex;
+      align-items: center;
+      gap: 3px;
+      height: 16px;
+      opacity: 0;
+    }
+    .wave-bars.active { opacity: 1; }
+    .bar {
+      width: 3px;
+      height: 100%;
+      background: #f97316;
+      border-radius: 2px;
+      animation: soundWave 0.8s ease-in-out infinite alternate;
+    }
+    .bar:nth-child(2) { animation-delay: 0.15s; }
+    .bar:nth-child(3) { animation-delay: 0.3s; }
+    .bar:nth-child(4) { animation-delay: 0.45s; }
+    @keyframes soundWave {
+      0% { height: 4px; }
+      100% { height: 16px; }
+    }
+
+    #sync-curtain {
+      position: absolute;
+      top: 0; left: 0; width: 1920px; height: 1080px;
+      background: #050811;
+      z-index: 999;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+    }
+    .spinner {
+      width: 50px;
+      height: 50px;
+      border: 4px solid rgba(249, 115, 22, 0.2);
+      border-top-color: #f97316;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+  </style>
+</head>
+<body>
+  <div id="sync-curtain">
+    <div class="spinner"></div>
+    <div style="font-family:'Outfit',sans-serif; font-size:22px; font-weight:700; color:#fb923c;">
+      Carregando Ep. 4E: Ergonomia Industrial & Multimodalidade em Campo...
+    </div>
+  </div>
+
+  <canvas id="bg-canvas"></canvas>
+
+  <div class="app-container">
+    <header>
+      <div class="brand-wrap">
+        <div class="brand-logo">🛠️</div>
+        <div class="brand-text">
+          <h1>Paradigma IDD &mdash; Intent-Driven Development</h1>
+          <span>Episódio 4E &bull; Ergonomia Industrial & Multimodalidade em Campo</span>
+        </div>
+      </div>
+      <div class="header-badges">
+        <div class="h-badge">Touch com Luvas</div>
+        <div class="h-badge">Laudo por Voz</div>
+        <div class="h-badge live">
+          <div class="pulse-dot"></div>
+          Ergonomia Real
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section class="slide-stage">
+        <div class="slide-header">
+          <div class="slide-title-area">
+            <h2 id="mainSlideTitle"><span>🛠️</span> O Choque de Realidade: A Vida Real no Campo</h2>
+            <p id="mainSlideSubtitle">Por que formulários convencionais desenhados no ar-condicionado falham no telhado quente.</p>
+          </div>
+          <div class="slide-num-tag">SLIDE <span id="slideIndicator">1</span> / 4</div>
+        </div>
+
+        <div class="slide-content-viewport">
+          <!-- SLIDE 1: O CHOQUE DE REALIDADE -->
+          <div class="slide-view active" id="view-slide-1">
+            <div class="field-contrast-grid">
+              <div class="field-card bad">
+                <div class="f-head bad">
+                  <span>❌</span> O Fracasso do Software Tradicional
+                </div>
+                <div class="f-item">
+                  <div class="f-dot red"></div>
+                  <div>Formulários web com 30 campos de texto minúsculos que exigem digitação contínua.</div>
+                </div>
+                <div class="f-item">
+                  <div class="f-dot red"></div>
+                  <div>Menus suspensos (selects) de difícil rolagem para quem está com luvas de vaqueta sujas de graxa.</div>
+                </div>
+                <div class="f-item">
+                  <div class="f-dot red"></div>
+                  <div>Telas com baixo contraste que ficam ilegíveis sob luz solar direta em cima de telhados.</div>
+                </div>
+              </div>
+
+              <div class="field-card good">
+                <div class="f-head good">
+                  <span>🛡️</span> A Resposta Ergonômica do IDD
+                </div>
+                <div class="f-item">
+                  <div class="f-dot orange"></div>
+                  <div>Intenção Operacional Humana: o software se adapta às condições físicas extremas do trabalho.</div>
+                </div>
+                <div class="f-item">
+                  <div class="f-dot orange"></div>
+                  <div>Invariantes de Interface: botões táteis sobredimensionados e contraste industrial High-Vis.</div>
+                </div>
+                <div class="f-item">
+                  <div class="f-dot orange"></div>
+                  <div>Zero digitação manual acidental: o operador apenas valida dados capturados por hardware e IA.</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="field-alert">
+              <div style="font-size: 26px;">⚠️</div>
+              <div>
+                <strong>Lei da Realidade de Campo:</strong> Se o aplicativo exige que o mecânico tire as luvas de proteção para preencher um formulário, ele simplesmente não usará o sistema.
+              </div>
+            </div>
+          </div>
+
+          <!-- SLIDE 2: TOUCH TARGETS & QR -->
+          <div class="slide-view" id="view-slide-2">
+            <div class="targets-row">
+              <div class="target-box t1">
+                <div class="tb-title"><span>📱</span> Touch Targets 80px</div>
+                <div class="tb-desc">Botões de ação com alvos de toque generosos de 64 a 80 pixels. Acionamento confiável mesmo com luvas de vaqueta ou dedos com óleo.</div>
+                <div class="tb-mock">TOUCH TARGET: 80x80px</div>
+              </div>
+
+              <div class="target-box t2">
+                <div class="tb-title"><span>🏷️</span> Identificação em 1s</div>
+                <div class="tb-desc">Leitura óptica imediata de QR Code ou RFID no ativo. Carrega automaticamente todo o prontuário sem busca textual manual.</div>
+                <div class="tb-mock" style="color:#fb923c; border-color:rgba(249,115,22,0.4);">TAG: CHILLER-COND-02</div>
+              </div>
+
+              <div class="target-box t3">
+                <div class="tb-title"><span>☀️</span> Modo High-Vis Outdoor</div>
+                <div class="tb-desc">Tipografia e elementos de alto contraste para visibilidade nítida sob o sol do meio-dia ou penumbra de casas de máquinas.</div>
+                <div class="tb-mock" style="color:#34d399; border-color:rgba(16,185,129,0.4);">CONTRASTE: 7:1 RATIO</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- SLIDE 3: MULTIMODALIDADE VOZ & OCR -->
+          <div class="slide-view" id="view-slide-3">
+            <div class="multimodal-grid">
+              <div class="voice-mock-card">
+                <div style="display:flex; justify-content:space-between; align-items:center;">
+                  <span style="font-size:14px; font-weight:700; color:#38bdf8;">🎙️ Laudo Ditado por Voz (Push-to-Talk)</span>
+                  <span style="font-size:12px; background:rgba(56,189,248,0.2); color:#38bdf8; padding:3px 8px; border-radius:6px;">ÁUDIO 10s</span>
+                </div>
+                <div class="voice-bubble">
+                  "Substituído o contator da condensadora dois e injetado um vírgula dois quilos de R-410A por vazamento na flange da linha de sucção."
+                </div>
+                <div class="ai-extracted-box">
+                  <div style="color:#34d399; font-weight:700;">✨ IA Semântica Estruturando para o MER:</div>
+                  <div>• Peça Baixada: <code>Contator Trifásico 32A</code></div>
+                  <div>• Carga Fluido: <code>1.20 kg R-410A</code></div>
+                  <div>• Causa Falha: <code>Vazamento Flange Sucção</code></div>
+                </div>
+              </div>
+
+              <div class="ocr-card">
+                <div class="ocr-icon">📷</div>
+                <div style="font-family:'Outfit',sans-serif; font-size:19px; font-weight:800; color:#fb923c;">OCR de Instrumentos</div>
+                <div style="font-size:13px; color:#cbd5e1; line-height:1.6;">
+                  Foto da escala do manifold ou da plaqueta do compressor: a IA extrai pressões de sucção/descarga e sub-resfriamento sem digitação manual.
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- SLIDE 4: REDUÇÃO DE ATRITO -->
+          <div class="slide-view" id="view-slide-4">
+            <div class="metric-row">
+              <div class="m-card spotlight">
+                <div class="m-num">45s</div>
+                <div class="m-title">Tempo de Fechamento</div>
+                <div class="m-desc">Redução brutal de 15 minutos de burocracia para menos de 1 minuto em campo.</div>
+              </div>
+
+              <div class="m-card">
+                <div class="m-num" style="color:#38bdf8;">3</div>
+                <div class="m-title">Toques de Confirmação</div>
+                <div class="m-desc">Leitura do QR Code, fala do laudo por voz e clique em 'Confirmar'.</div>
+              </div>
+
+              <div class="m-card">
+                <div class="m-num" style="color:#34d399;">0%</div>
+                <div class="m-title">Erros de Digitação</div>
+                <div class="m-desc">Invariantes do MER validam limites antes da gravação final.</div>
+              </div>
+
+              <div class="m-card">
+                <div class="m-num" style="color:#a855f7;">Ep. 4F</div>
+                <div class="m-title">Próximo Desafio</div>
+                <div class="m-desc">Offline-First e sincronização resiliente sem internet.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <aside class="presenters-col">
+        <div class="actor-card" id="card-eliezer">
+          <div class="talking-halo"></div>
+          <div class="actor-avatar-wrap">
+            <img class="actor-img" src="../avatares/eliezer.png" alt="Eliézer Rosa">
+          </div>
+          <div class="actor-name">Eliézer Rosa</div>
+          <div class="actor-role">Autor do Paradigma IDD</div>
+        </div>
+
+        <div class="actor-card" id="card-leigo">
+          <div class="talking-halo"></div>
+          <div class="actor-avatar-wrap">
+            <img class="actor-img" src="../avatares/leigo.png" alt="Usuária Leiga">
+          </div>
+          <div class="actor-name">Usuária Leiga</div>
+          <div class="actor-role">Engenheira de Negócio</div>
+        </div>
+      </aside>
+    </main>
+
+    <footer>
+      <div class="sub-meta">
+        <div style="display:flex; align-items:center; gap:12px;">
+          <div class="spk-pill" id="speakerPill">USUÁRIA LEIGA</div>
+          <span style="font-size:13px; font-weight:700; color:#94a3b8;" id="speakerName">Usuária Leiga</span>
+          <div class="wave-bars" id="waveBars">
+            <div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div>
+          </div>
+        </div>
+        <div class="time-readout" id="timeReadout">00:00 / 02:08</div>
+      </div>
+      <div class="speech-box" id="speechContent">
+        "Carregando narrativa..."
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    const canvas = document.getElementById('bg-canvas');
+    const ctx = canvas.getContext('2d');
+    canvas.width = 1920;
+    canvas.height = 1080;
+
+    const particles = [];
+    for (let i = 0; i < 70; i++) {
+      particles.push({
+        x: Math.random() * 1920,
+        y: Math.random() * 1080,
+        radius: Math.random() * 2 + 0.5,
+        speedX: (Math.random() - 0.5) * 0.3,
+        speedY: (Math.random() - 0.5) * 0.3,
+        color: Math.random() > 0.5 ? '#f97316' : '#38bdf8',
+        alpha: Math.random() * 0.4 + 0.1
+      });
+    }
+
+    function animateBg() {
+      ctx.fillStyle = '#050811';
+      ctx.fillRect(0, 0, 1920, 1080);
+      particles.forEach(p => {
+        p.x += p.speedX; p.y += p.speedY;
+        if (p.y < 0) p.y = 1080;
+        if (p.x < 0) p.x = 1920;
+        if (p.x > 1920) p.x = 0;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+        ctx.fillStyle = p.color;
+        ctx.globalAlpha = p.alpha;
+        ctx.fill();
+      });
+      requestAnimationFrame(animateBg);
+    }
+    requestAnimationFrame(animateBg);
+
+    window.timelineItems = [
+      {
+        "index": 0, "id": "seg_00_leigo", "who": "leigo", "actor": "Usuária Leiga",
+        "slide": 1, "startSec": 0.5, "durSec": 15.0, "endSec": 15.5,
+        "text": "Eliézer, nós desenhamos uma arquitetura impecável com regras matemáticas e evolução contínua. Mas me diga uma coisa: e quando esse software chega lá na ponta, na mão do mecânico em cima de um telhado quente, de luva e cheio de graxa?"
+      },
+      {
+        "index": 1, "id": "seg_01_eliezer", "who": "eliezer", "actor": "Eliézer Rosa",
+        "slide": 1, "startSec": 16.15, "durSec": 20.0, "endSec": 36.15,
+        "text": "Você tocou no ponto mais crítico de toda a engenharia de software! Um sistema desenvolvido no ar-condicionado de um escritório falha miseravelmente no campo se não respeitar a realidade física do operador. No IDD, a ergonomia não é estética decorativa: ela é tratada como Intenção Operacional Humana e Invariantes de Atrito."
+      },
+      {
+        "index": 2, "id": "seg_02_leigo", "who": "leigo", "actor": "Usuária Leiga",
+        "slide": 2, "startSec": 36.8, "durSec": 14.0, "endSec": 50.8,
+        "text": "Veja no Slide dois o que muda na prática! Em vez daqueles botões minúsculos e formulários de trinta campos, o IDD impõe alvos de toque industriais de até oitenta pixels e paleta de alto contraste para sol direto!"
+      },
+      {
+        "index": 3, "id": "seg_03_eliezer", "who": "eliezer", "actor": "Eliézer Rosa",
+        "slide": 2, "startSec": 51.45, "durSec": 15.0, "endSec": 66.45,
+        "text": "Com certeza! O técnico de campo nunca deve ser transformado em um digitador de dados. O ativo é identificado em um segundo pelo QR Code, e as escolhas são feitas com cartões de toque único, sem menus suspensos infinitos."
+      },
+      {
+        "index": 4, "id": "seg_04_leigo", "who": "leigo", "actor": "Usuária Leiga",
+        "slide": 3, "startSec": 67.1, "durSec": 14.0, "endSec": 81.1,
+        "text": "E no Slide três entra a inteligência artificial multimodal! O mecânico simplesmente aperta o botão de voz e fala o que fez. A IA transcreve, extrai as peças e as quantidades de gás e preenche o modelo do banco automaticamente!"
+      },
+      {
+        "index": 5, "id": "seg_05_eliezer", "who": "eliezer", "actor": "Eliézer Rosa",
+        "slide": 3, "startSec": 81.75, "durSec": 19.0, "endSec": 100.75,
+        "text": "Exatamente! Ele dita o laudo em dez segundos, a IA mapeia para os métodos atômicos do MER e o mecânico apenas clica em confirmar. E com a visão computacional, uma foto do manifold ou da plaqueta já extrai as pressões e superaquecimento sem digitar um único número."
+      },
+      {
+        "index": 6, "id": "seg_06_leigo", "who": "leigo", "actor": "Usuária Leiga",
+        "slide": 4, "startSec": 101.4, "durSec": 13.0, "endSec": 114.4,
+        "text": "Isso reduz o tempo de fechamento da ordem de serviço de quinze minutos para menos de um minuto! Mas Eliézer, e quando o mecânico entra numa câmara frigorífica ou subsolo sem sinal nenhum de internet?"
+      },
+      {
+        "index": 7, "id": "seg_07_eliezer", "who": "eliezer", "actor": "Eliézer Rosa",
+        "slide": 4, "startSec": 115.05, "durSec": 13.0, "endSec": 128.05,
+        "text": "Esse é o tema do nosso episódio quatro F: a arquitetura Offline-First, gaiolas de Faraday e a sincronização resiliente sem perda de dados. Nos vemos lá!"
+      }
+    ];
+
+    window.setTimeline = function(items) {
+      if (items && items.length > 0) window.timelineItems = items;
+    };
+
+    const slideTitles = [
+      { t: "O Choque de Realidade: A Vida Real no Campo", s: "Por que formulários convencionais desenhados no ar-condicionado falham no telhado quente." },
+      { t: "Invariantes Ergonômicas & Touch Targets Industriais", s: "Botões de 80px para uso com luvas, contraste extremo ao sol e QR Code instantâneo." },
+      { t: "Multimodalidade com IA: Laudo por Voz & Visão", s: "Push-to-Talk para laudos orais estruturados no MER e OCR de instrumentos sem digitação." },
+      { t: "Redução do Esforço Cognitivo & Transição para o Ep. 4F", s: "Fechamento de OS em 45 segundos e chamada para a arquitetura Offline-First." }
+    ];
+
+    window.updateFrameAtTime = function(timeSec) {
+      const curtain = document.getElementById('sync-curtain');
+      if (curtain && curtain.style.display !== 'none') curtain.style.display = 'none';
+
+      const m = Math.floor(timeSec / 60);
+      const s = Math.floor(timeSec % 60);
+      const timeStr = `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+      const timeEl = document.getElementById('timeReadout');
+      if (timeEl) timeEl.innerText = `${timeStr} / 02:08`;
+
+      if (!window.timelineItems || window.timelineItems.length === 0) return;
+
+      const currentSeg = window.timelineItems.find(it => timeSec >= it.startSec && timeSec <= it.endSec)
+        || window.timelineItems.filter(it => it.startSec <= timeSec).pop()
+        || window.timelineItems[0];
+
+      const speakingSeg = window.timelineItems.find(it => timeSec >= it.startSec && timeSec <= it.endSec);
+
+      document.querySelectorAll('.slide-view').forEach(sv => sv.classList.remove('active'));
+      const activeView = document.getElementById(`view-slide-${currentSeg.slide}`);
+      if (activeView) activeView.classList.add('active');
+
+      document.getElementById('slideIndicator').innerText = currentSeg.slide;
+      const tInfo = slideTitles[currentSeg.slide - 1];
+      if (tInfo) {
+        document.getElementById('mainSlideTitle').innerHTML = `<span>🛠️</span> ${tInfo.t}`;
+        document.getElementById('mainSlideSubtitle').innerText = tInfo.s;
+      }
+
+      document.getElementById('speechContent').innerText = `"${currentSeg.text}"`;
+      document.getElementById('speakerName').innerText = currentSeg.actor;
+      const pill = document.getElementById('speakerPill');
+      pill.className = `spk-pill ${currentSeg.who}`;
+
+      const cardEliezer = document.getElementById('card-eliezer');
+      const cardLeigo = document.getElementById('card-leigo');
+      const waveBars = document.getElementById('waveBars');
+
+      if (speakingSeg) {
+        cardEliezer.classList.toggle('talking', speakingSeg.who === 'eliezer');
+        cardLeigo.classList.toggle('talking', speakingSeg.who === 'leigo');
+        waveBars.classList.add('active');
+      } else {
+        cardEliezer.classList.remove('talking');
+        cardLeigo.classList.remove('talking');
+        waveBars.classList.remove('active');
+      }
+    };
+  </script>
+</body>
+</html>

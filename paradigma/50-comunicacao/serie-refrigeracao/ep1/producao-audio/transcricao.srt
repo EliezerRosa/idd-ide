@@ -1,0 +1,4188 @@
+1
+00:00:00,180 --> 00:00:04,500
+Vou ser um exemplo de como
+
+2
+00:00:04,500 --> 00:00:10,300
+Direcionar de modo informal
+
+3
+00:00:10,300 --> 00:00:14,259
+Os princípios do paradigma e dd
+
+4
+00:00:14,259 --> 00:00:17,980
+Já desenvolvemos na prática do zero
+
+5
+00:00:17,980 --> 00:00:21,339
+Uma aplicativa de gestão
+
+6
+00:00:21,339 --> 00:00:24,739
+De serviços de manutenção
+
+7
+00:00:24,739 --> 00:00:27,739
+Na área de refrigeração
+
+8
+00:00:28,739 --> 00:00:30,739
+Vamos começar
+
+9
+00:00:30,739 --> 00:00:32,740
+Com a apresentação
+
+10
+00:00:32,740 --> 00:00:34,740
+de alguns conceitos
+
+11
+00:00:34,740 --> 00:00:41,140
+No canal sobre o paradigma de dd
+
+12
+00:00:41,140 --> 00:00:45,140
+Com falta de espada de ver ao lado na tela
+
+13
+00:00:46,140 --> 00:01:01,340
+Aquela frase que você sempre usa e que condensa toda a ideia
+
+14
+00:01:01,340 --> 00:01:05,340
+Claro, em e dd, a intenção humana
+
+15
+00:01:05,340 --> 00:01:07,340
+Espressa em linguagem natural
+
+16
+00:01:07,340 --> 00:01:10,340
+É o artefato de mais alta ordem do sistema
+
+17
+00:01:10,340 --> 00:01:13,340
+Vamos desenpa a cotar isso
+
+18
+00:01:13,340 --> 00:01:16,340
+Artefato de mais alta ordem
+
+19
+00:01:16,340 --> 00:01:19,340
+Isso significa que ele controla todo o resto
+
+20
+00:01:19,340 --> 00:01:22,340
+O código, a infraestrutura, tudo
+
+21
+00:01:22,340 --> 00:01:25,340
+Exatamente, não é um comentário
+
+22
+00:01:25,340 --> 00:01:28,340
+Não é uma documentação num confluência que fica obsoleta
+
+23
+00:01:28,340 --> 00:01:30,340
+É a fonte da verdade, viva
+
+24
+00:01:30,340 --> 00:01:34,340
+Que governa a geração e a avalidação de todos os outros artefatos
+
+25
+00:01:34,340 --> 00:01:39,340
+Isso me leva a primeira das propriedades essenciais que você descreve
+
+26
+00:01:39,340 --> 00:01:43,340
+A linguagem natural, NL, como fonte primária
+
+27
+00:01:43,340 --> 00:01:47,340
+Como isso funciona na prática sem virar uma bagunça?
+
+28
+00:01:47,340 --> 00:01:51,340
+A chave é a segunda propriedade, governança persistente
+
+29
+00:01:51,340 --> 00:01:54,340
+A intenção não é um prompt que você joga fora
+
+30
+00:01:54,340 --> 00:01:58,340
+Ela é versionada, qualidade e mantida junto com o sistema
+
+31
+00:01:58,340 --> 00:02:00,340
+É um diálogo contino
+
+32
+00:02:00,340 --> 00:02:05,340
+Então, se eu digo, o usuário deve poder resetar sua senha
+
+33
+00:02:05,340 --> 00:02:11,340
+Essa frase é salva, versionada no gite e se torna uma regra permanente?
+
+34
+00:02:11,340 --> 00:02:12,340
+Precisamente
+
+35
+00:02:12,340 --> 00:02:16,340
+E se alguém tentar gerar um código que violha essa intenção
+
+36
+00:02:16,340 --> 00:02:18,340
+O sistema de governança vai apitar
+
+37
+00:02:18,340 --> 00:02:21,340
+A intenção sobrevive a qualquer refatoração
+
+38
+00:02:21,340 --> 00:02:25,340
+Isso sou a comum poder imenso nas mãos do desenvolvedor
+
+39
+00:02:25,340 --> 00:02:28,340
+O que nos leva a terceira propriedade
+
+40
+00:02:28,340 --> 00:02:30,340
+O comando epistêmica humano
+
+41
+00:02:30,340 --> 00:02:33,340
+De epistêmica, conhecimento
+
+42
+00:02:33,340 --> 00:02:38,340
+Significa que o humano é a autoridade final sobre o que e o porque
+
+43
+00:02:38,340 --> 00:02:42,340
+A ia é uma parceira brilhante na execução do como
+
+44
+00:02:42,340 --> 00:02:47,340
+É a diferença fundamental entre aumentar a capacidade do desenvolvedor
+
+45
+00:02:47,340 --> 00:02:50,340
+e tentar automatizá-lo para fora do processo
+
+46
+00:02:50,340 --> 00:02:55,340
+E essa é a quarta propriedade, augmentando não automatizar
+
+47
+00:02:55,340 --> 00:02:59,340
+Eu como ia aprecio essa distinção
+
+48
+00:02:59,340 --> 00:03:03,340
+Meu papel é potencializar, não substituir
+
+49
+00:03:03,340 --> 00:03:07,340
+Exato, a automação pura perde o contexto à nuance
+
+50
+00:03:07,340 --> 00:03:10,340
+O aumento mantém o humano no centro com superpoderes
+
+51
+00:03:10,340 --> 00:03:15,340
+Ele pensa no negócio, você o ajuda a materializar isso em código robusto
+
+52
+00:03:15,340 --> 00:03:18,340
+Vamos fazer uma pausa aqui
+
+53
+00:03:18,340 --> 00:03:21,340
+A intenção humana como um artefato governado
+
+54
+00:03:21,340 --> 00:03:25,340
+Que aumenta a capacidade do déficit sem remover
+
+55
+00:03:25,340 --> 00:03:28,340
+É uma mudança de perspectiva profunda
+
+56
+00:03:28,340 --> 00:03:38,020
+Vamos exemplar esses conceitos aqui na prática
+
+57
+00:03:38,020 --> 00:03:50,060
+Nós falamos de governança e de governança epistêmica
+
+58
+00:03:50,060 --> 00:03:52,060
+Contrando conhecimento
+
+59
+00:03:52,060 --> 00:03:57,340
+Você tem que ativir com as formas de empolgir em pessoa
+
+60
+00:03:57,340 --> 00:04:00,340
+Uma questão no chat de a livre
+
+61
+00:04:01,340 --> 00:04:07,340
+Eu quero dizer que a gente faz sua agenda fugir de qualquer critério
+
+62
+00:04:07,340 --> 00:04:15,340
+Eu vou tentar me disciplinar, a me ativar os precipitos do paradigma e dê
+
+63
+00:04:15,340 --> 00:04:19,339
+Então, um primeiro, eu não vou mexer em coisa
+
+64
+00:04:19,339 --> 00:04:25,339
+Então, o artefato, o meu livre é a própria linguagem
+
+65
+00:04:25,339 --> 00:04:28,339
+Eu como sou de vez programando, tem linguagem cultural
+
+66
+00:04:28,339 --> 00:04:31,339
+Eu tenho que começar pelas minhas intenções
+
+67
+00:04:31,339 --> 00:04:35,339
+A depois de detalhando essas intenções
+
+68
+00:04:35,339 --> 00:04:38,339
+Até o ponto que me habilite para isso
+
+69
+00:04:38,339 --> 00:04:41,339
+Para isso, eu vou usar a propriedade para organizar isso
+
+70
+00:04:41,339 --> 00:05:07,800
+Eu vou dizer para ela que deve envolver, vencer, um povrestão, vencer nisso
+
+71
+00:05:07,800 --> 00:05:20,899
+Uma cantarra, um gênero, um gênero, o gênero, a sinal
+
+72
+00:05:20,899 --> 00:05:31,050
+Aqui eu defini o objetivo, o foco que vai me ter comigo
+
+73
+00:05:31,050 --> 00:05:39,000
+Eu vou definir alguns precipitos que depois comentar aqui que chamaram em varia
+
+74
+00:05:39,000 --> 00:05:46,170
+Eu estou aqui, sustentando o precipito da conversa com essa perspectiva
+
+75
+00:05:46,170 --> 00:05:48,170
+O conhecimento é um ano
+
+76
+00:05:48,170 --> 00:05:56,170
+Aí, eu não pode definir o gênero porque, eu não vou definir o corpo, porque é servindo a linguagem
+
+77
+00:05:56,170 --> 00:06:00,170
+Matarizando a intenção do desenvolvedor
+
+78
+00:06:00,170 --> 00:06:12,560
+Fendo assim, eu defini o objetivo, eu vou definir três linhas de princípio
+
+79
+00:06:12,560 --> 00:06:21,560
+Um princípio que eu vou definir em variaz variaz do área de negócio
+
+80
+00:06:21,560 --> 00:06:25,509
+Estema algo de proporção
+
+81
+00:06:25,509 --> 00:06:42,500
+Então, eu vou definir as intenções
+
+82
+00:06:42,500 --> 00:06:56,310
+E variantes da área de negócio, de feminina cima
+
+83
+00:06:56,310 --> 00:07:07,300
+Quando eu digo invariantes, são mais regres que deve ser obedecidos
+
+84
+00:07:07,300 --> 00:07:14,220
+Agora, eu vou acrescentar o campo da intenção
+
+85
+00:07:14,220 --> 00:07:17,220
+Vamos ver qual retorno que ele dá para mim aqui
+
+86
+00:07:17,220 --> 00:07:41,889
+Ok, qual que ele fez?
+
+87
+00:07:41,889 --> 00:07:45,889
+Só com essa minha diretriz
+
+88
+00:07:45,889 --> 00:07:47,889
+E eu produziu o chimente
+
+89
+00:07:47,889 --> 00:07:54,889
+Eu defini essa perfeição com o pé da intenção de variaz, para que a tributiação de sabis e proteção de aferação
+
+90
+00:07:54,889 --> 00:07:59,889
+Que ele vai dizer que ele não sei o que é o negator de HB
+
+91
+00:07:59,889 --> 00:08:05,889
+É, trasfei, HB, a gente é um acil de relação com a afiração
+
+92
+00:08:05,889 --> 00:08:12,889
+O dorme da atalada foi o consolidade no atéfado, afiração do Mindspack
+
+93
+00:08:12,889 --> 00:08:15,889
+Olha aqui, que é o que é do alô de fermercado
+
+94
+00:08:15,889 --> 00:08:21,889
+A gente chama modelagem de aspectos
+
+95
+00:08:21,889 --> 00:08:26,889
+Aqui ele definiu domínio, a especificação do dorminho
+
+96
+00:08:26,889 --> 00:08:30,889
+A máxima de pontos que a gente vai centrar, a gente tem sua domínio, que eu estou enroendo
+
+97
+00:08:30,889 --> 00:08:32,889
+Ele deve votar isso
+
+98
+00:08:32,889 --> 00:08:36,889
+Eu posso deixar ele doai, de cordal, ou de compondar
+
+99
+00:08:36,889 --> 00:08:44,889
+Como eu disse, no primeiro, você saber que você está fingindo, você tem coisas com seus objetivos
+
+100
+00:08:44,889 --> 00:08:54,549
+Mas ele pode ajudar nesse processo de descoberto, até o seu área que você talvez não visual passeado
+
+101
+00:08:54,549 --> 00:08:58,549
+Ele definiu aqui a intenção de um dorminho que eu estou a realiza
+
+102
+00:08:58,549 --> 00:09:04,549
+Aí ele mesmo identificou as típicas que, no cosismo universado da internet, ele tem
+
+103
+00:09:04,549 --> 00:09:08,549
+E do próprio tratamento que aí a recebeu
+
+104
+00:09:08,549 --> 00:09:11,549
+Já estão dos arquiviritativos, equipamentos
+
+105
+00:09:11,549 --> 00:09:16,549
+Claro, toda a área de intenção tem equipamentos ruim
+
+106
+00:09:16,549 --> 00:09:22,549
+Ele já definiu, deve ficar a sua física encampo com o que é a e-cude tag
+
+107
+00:09:22,549 --> 00:09:27,549
+Aqui é aquela fichia que mete um rati-fraqueço para ele ficar equipamento
+
+108
+00:09:27,549 --> 00:09:35,549
+Uma colasente de que é e-cude para ele ficar equipamento na área que ele tiver em situação
+
+109
+00:09:35,549 --> 00:09:42,549
+Fichia até que ele competa que a pasta de BTU, os equipamentos, uma outra característica emção, faz
+
+110
+00:09:42,549 --> 00:09:49,549
+Fichia agatidominal, fraticante, multisséria, histórica vitalista de intenções
+
+111
+00:09:49,549 --> 00:09:53,549
+O rati-fraque é um político, um preso, um sapitinho
+
+112
+00:09:53,549 --> 00:09:59,549
+E depois ele navegou na batatinha, claro que eu sendo um coisa do o dessa área
+
+113
+00:09:59,549 --> 00:10:06,549
+Eu posso rever isso aqui, talvez ele tenha abriado um contexto muito para o meu interesse
+
+114
+00:10:06,549 --> 00:10:10,549
+Eu posso restri-gir o contexto, mas ele já definiu
+
+115
+00:10:10,549 --> 00:10:12,549
+Os interessos ligou o mínimo que são típicas
+
+116
+00:10:12,549 --> 00:10:17,549
+Já estão de plantos para mentiros, colocam uma pior automatização
+
+117
+00:10:17,549 --> 00:10:23,549
+Pensar o seu mestreau no almo, inclusive calcou na lei
+
+118
+00:10:23,549 --> 00:10:31,549
+Em lei que define essas curtidas, ele procura ir no régimen legal também
+
+119
+00:10:31,549 --> 00:10:35,549
+Já que ele é o regulador FIUS, padeja, dredo, qualidade do ar
+
+120
+00:10:35,549 --> 00:10:40,549
+É missão de relatores textos de lado, posso dar a sua disposição de técnico
+
+121
+00:10:40,549 --> 00:10:44,549
+E até a parte legal do planeta aqui
+
+122
+00:10:44,549 --> 00:10:52,549
+Outra intenção, na área de gestão de onis, recebeis para a vitiva com a gente de instalação
+
+123
+00:10:52,549 --> 00:10:56,549
+E vai mover a pintura de chamada, possibilidade
+
+124
+00:10:56,549 --> 00:11:02,549
+O Camaram-Frigori, com a gente que ele pede a técnica, o mestreau explique de discritório
+
+125
+00:11:02,549 --> 00:11:09,549
+Deixe-me passar com a roteirização, com a competência de técnica localização
+
+126
+00:11:09,549 --> 00:11:14,549
+Quer dizer, aqui vai aonde você definir quem vai fazer e que o lugar vai ser feito sem mim
+
+127
+00:11:14,549 --> 00:11:20,549
+O que é quem e onde? Contro o rigoroso do SLA
+
+128
+00:11:20,549 --> 00:11:25,549
+Bem, eu sei exatamente o que é essa silencia, sei que é alguma coisa relacionada
+
+129
+00:11:25,549 --> 00:11:33,549
+Sabendo que o relativo é da preferência, o patrículo, quando você tem que identificar que é o termo do dia da área
+
+130
+00:11:33,549 --> 00:11:37,549
+O grosso modo, ele falou que é tempo de resposta e adopção
+
+131
+00:11:37,549 --> 00:11:41,549
+E que é basicamente o que está aí de entender
+
+132
+00:11:41,549 --> 00:11:53,549
+Ele sabe que nesse aplicativo de negócio é preciso ter uma métrica de quanto tempo
+
+133
+00:11:53,549 --> 00:11:57,549
+Vai ter o retorno, resolveu promover
+
+134
+00:11:57,549 --> 00:12:06,549
+Então o sistema tem que ter alguma coisa que tem a métrica, que começa a qualidade do serviço com o corte exatamente
+
+135
+00:12:06,549 --> 00:12:10,549
+A previsão e a efetivação do solução de da previsão
+
+136
+00:12:10,549 --> 00:12:15,549
+Outro área de intenção para o negócio ele deificou
+
+137
+00:12:15,549 --> 00:12:19,549
+O operação de CUP e de agosto de tempo de dano
+
+138
+00:12:19,549 --> 00:12:25,549
+A resiste para os operacionais, ação de alta base para que é esse mesmo
+
+139
+00:12:25,549 --> 00:12:29,549
+O que eu estou entendendo aqui é como se fosse assim
+
+140
+00:12:29,549 --> 00:12:35,549
+Você pegou o equipamento que vai prestar a serviço e você tem que ter uma ficha no dia que nós, do que acontece com ele
+
+141
+00:12:35,549 --> 00:12:42,549
+Pode ser o paranto medido, medido, o equipamento pode ser visual
+
+142
+00:12:42,549 --> 00:12:50,629
+E a assinatura que diz o cliente na tempo, por exemplo, o cliente comprouva que aquilo mesmo
+
+143
+00:12:50,629 --> 00:12:57,629
+Isso pode operar só o cliente, esse é o para subsolvos, caso, mas não fica mais firme
+
+144
+00:12:57,629 --> 00:13:02,629
+Se aquilo não é o tempo também, eu não sou da A
+
+145
+00:13:02,629 --> 00:13:06,629
+Mas tudo é nação geral, mas eu posso parar de explicar isso
+
+146
+00:13:06,629 --> 00:13:12,629
+Note que eu for ser ele, a pensar em intenção em variantes
+
+147
+00:13:12,629 --> 00:13:19,629
+E aí ele cresceu agora em variantes
+
+148
+00:13:19,629 --> 00:13:25,629
+Aqui são as intenções de rastabilidade de flúseos e tal
+
+149
+00:13:25,629 --> 00:13:31,629
+Tem que é, não tem a chance de registrar de que não gramos
+
+150
+00:13:31,629 --> 00:13:34,629
+Recada de colinamento em grasa e que gerante
+
+151
+00:13:34,629 --> 00:13:38,629
+A distância colinoma, todo o contorno de gestão
+
+152
+00:13:38,629 --> 00:13:43,629
+A intenção é nós temos cinco tipos de gestão
+
+153
+00:13:43,629 --> 00:13:46,629
+Esse é de distribuir o equipamento
+
+154
+00:13:46,629 --> 00:13:58,629
+A prevenção de agrenoma e rastabilidade não insumos usados
+
+155
+00:13:58,629 --> 00:14:02,629
+É muito só, mas já ajudou
+
+156
+00:14:02,629 --> 00:14:07,629
+Aqui é a área, vai chegar aqui, não, meu negócio vai ficar restri-teis
+
+157
+00:14:07,629 --> 00:14:13,629
+Então as intenções, é para se pretender que no domino não gosta
+
+158
+00:14:13,629 --> 00:14:18,629
+Mas que eu encontrei a intenção de domino, porque o sistema realiza
+
+159
+00:14:18,629 --> 00:14:24,629
+Eu posso aqui, já que desde geral, para ele ir para ele buscar o que ele tinha de conhecimento
+
+160
+00:14:24,629 --> 00:14:28,629
+Eu posso agora restri-teis, olha que vai a fúdilada, não fica solto
+
+161
+00:14:28,629 --> 00:14:31,629
+Sultando o que eu quero
+
+162
+00:14:31,629 --> 00:14:34,629
+Quando eu definir o intenção, ele me interima
+
+163
+00:14:34,629 --> 00:14:38,629
+Agora em variantes, variantes são as regras, regras que nunca pode ser violadas
+
+164
+00:14:38,629 --> 00:14:43,629
+Ele chutou o que eu posso incluir em outros países, ou de qualidade à muda
+
+165
+00:14:43,629 --> 00:14:46,629
+Para a integridade de máquina e de Estado
+
+166
+00:14:47,629 --> 00:14:54,629
+Os trezentos são descritos, rasco-ho, agendada, melocamento, temperimento, concluído, cancelado
+
+167
+00:14:54,629 --> 00:14:56,629
+Aqui é a verdade, o estilo de vida
+
+168
+00:14:56,629 --> 00:14:59,629
+Quando ele fala, a máquina é de Estado, é um conceito
+
+169
+00:14:59,629 --> 00:15:03,629
+Da ordem de serviço, ela tem o ciclo de vida
+
+170
+00:15:03,629 --> 00:15:06,629
+Aí já tem voo, isso vai pra quase tudo na vida, você tem que ter
+
+171
+00:15:06,629 --> 00:15:08,629
+Qualquer de serviço tem o ciclo de vida
+
+172
+00:15:08,629 --> 00:15:13,629
+Quando começa, quando é agendado, quando é pedido, quando é agendado
+
+173
+00:15:13,629 --> 00:15:19,629
+Já está indo para solução, quando é atedido, da local, quando é concluído
+
+174
+00:15:19,629 --> 00:15:22,629
+E onde tomou de cancelado
+
+175
+00:15:22,629 --> 00:15:24,629
+Aí é só variante, eles vão
+
+176
+00:15:24,629 --> 00:15:28,629
+Tem que ter a definição do Estado e que tal serviço
+
+177
+00:15:28,629 --> 00:15:32,629
+Uma regra, então quando ele for gerar o sustelro
+
+178
+00:15:32,629 --> 00:15:36,629
+Ainda é, ele vai ser a pagaça das imórias, ele não vai deixar
+
+179
+00:15:36,629 --> 00:15:39,629
+Nem o código gerado que transuges
+
+180
+00:15:40,629 --> 00:15:43,629
+Ele não é só que ele vai explicar que ele vai amarrar outras coisas do seu
+
+181
+00:15:43,629 --> 00:15:47,629
+Aí esse Estado pode ser que tem a funcionalidade que adquere
+
+182
+00:15:47,629 --> 00:15:50,629
+Que isso ainda tem nada de Estado aqui
+
+183
+00:15:50,629 --> 00:15:54,629
+Não é permito concluir o modo de serviço, você passa para ter medo
+
+184
+00:15:54,629 --> 00:15:58,629
+Tem que ter que contribuir, você vai dar ação de se aclilistar a obrigatória
+
+185
+00:15:58,629 --> 00:16:01,629
+Essa é a tal ver, é própria
+
+186
+00:16:01,629 --> 00:16:07,629
+Então ele viu que aqui é o integrante, é um agente, é um gosto tipo dessa área
+
+187
+00:16:08,629 --> 00:16:10,629
+Novamente eu posso descuadar e mudar
+
+188
+00:16:10,629 --> 00:16:13,629
+O posto na ela não todo é terminística
+
+189
+00:16:13,629 --> 00:16:16,629
+É uma variante relativa, pode dizer
+
+190
+00:16:16,629 --> 00:16:20,629
+Onde se descompliu, quando ela se na hora se imbutar
+
+191
+00:16:20,629 --> 00:16:22,629
+O que dizer, concluiu que ela mora fechou
+
+192
+00:16:23,629 --> 00:16:29,629
+Aí, se eu ver com uma revisão, vai ter que abrir o outro lado de serviço
+
+193
+00:16:29,629 --> 00:16:32,629
+Também é uma variante, uma regra do negócio
+
+194
+00:16:33,629 --> 00:16:35,629
+Essa é a sete-mode variante, uma arquitetura
+
+195
+00:16:35,629 --> 00:16:38,629
+Estava de estar aqui do ciclo do modo de serviço
+
+196
+00:16:40,629 --> 00:16:45,629
+Estava de ser, com cada status da hora de serviço
+
+197
+00:16:45,629 --> 00:16:49,629
+Leit de pedir o rasculho, vai regenerar
+
+198
+00:16:49,629 --> 00:16:53,629
+Então dá-te, vai ter muito fulado para fazer o seu piso
+
+199
+00:16:53,629 --> 00:16:56,629
+Pega para lá, para isso que ele fala
+
+200
+00:16:57,629 --> 00:17:00,629
+Infrair esses físicos e termos de danques
+
+201
+00:17:01,629 --> 00:17:03,629
+Para quem que tem a área
+
+202
+00:17:04,630 --> 00:17:07,630
+Ele precisa ter um ciclo, com pressora de vapor
+
+203
+00:17:08,630 --> 00:17:12,650
+alta, baixa
+
+204
+00:17:12,650 --> 00:17:16,650
+Valores de flu, refrigerante, carregado, recorindo, é necessitamente positiva
+
+205
+00:17:17,650 --> 00:17:20,650
+O tipo de gato deve ser combatido com uma máquina de tipo de aula de fabricante
+
+206
+00:17:20,650 --> 00:17:22,650
+Provavelmente essa é a linha de variante aqui
+
+207
+00:17:23,650 --> 00:17:26,650
+Vai implicar, quando ele gera alguns tipos de funcionalidades
+
+208
+00:17:27,650 --> 00:17:31,650
+Por exemplo, se é totalado, vai trabalhar o estado do equipamento
+
+209
+00:17:32,650 --> 00:17:34,650
+Aí é provável que ele vai exigir esses dados
+
+210
+00:17:35,650 --> 00:17:38,650
+Aqui posso definir seus responsables de ser fitonão
+
+211
+00:17:39,650 --> 00:17:42,650
+Claro que alguém que é da área que está querendo com o sistema
+
+212
+00:17:42,650 --> 00:17:45,650
+Ele vai saber exatamente o que se aprende com o novo negócio
+
+213
+00:17:46,650 --> 00:17:49,650
+E eu tenho variante que o formo está legal
+
+214
+00:17:50,650 --> 00:17:53,650
+Eu acredito que esse PMOC é uma legilação
+
+215
+00:17:54,650 --> 00:17:56,650
+Ele fala que é
+
+216
+00:17:57,650 --> 00:18:01,650
+De crere, para coisa que o solto, você vai ter do seu HomeTech
+
+217
+00:18:02,650 --> 00:18:04,650
+Ele tem reléis que deve ser o vericina
+
+218
+00:18:05,650 --> 00:18:08,650
+Posso derrotação de dados, permitido executar o contrato
+
+219
+00:18:08,650 --> 00:18:10,650
+para o estado da data real, para ficar
+
+220
+00:18:11,650 --> 00:18:15,650
+Aqui os equipamentos têm 35 de validade
+
+221
+00:18:15,650 --> 00:18:17,650
+que é a gestinação exigida
+
+222
+00:18:18,650 --> 00:18:20,650
+Não oferecer riscos, não, os usuários
+
+223
+00:18:20,650 --> 00:18:22,650
+Quando o tipo creu
+
+224
+00:18:22,650 --> 00:18:26,650
+Inclusive, cada tempo com isso aqui é o acondicionado
+
+225
+00:18:27,650 --> 00:18:28,650
+Tenho que sair o seu
+
+226
+00:18:29,650 --> 00:18:31,650
+Vim com o físico e a estabilidade
+
+227
+00:18:31,650 --> 00:18:34,650
+Ele ainda levou aqui o outro variante
+
+228
+00:18:34,650 --> 00:18:36,650
+No regno, existe o palmeço ofro
+
+229
+00:18:36,650 --> 00:18:40,650
+Toda o palmeio deve petecer a unidade local e fiz o que não clente
+
+230
+00:18:41,650 --> 00:18:44,650
+Quer dizer, no bate um ano para o solto, perdido
+
+231
+00:18:44,650 --> 00:18:46,650
+Não, ele tem que petecer alguém
+
+232
+00:18:47,650 --> 00:18:48,650
+ou algum lugar
+
+233
+00:18:49,650 --> 00:18:50,650
+Então a lopadização do
+
+234
+00:18:51,650 --> 00:18:53,650
+A peça, do apamento
+
+235
+00:18:54,650 --> 00:18:55,650
+O deu oferamento
+
+236
+00:18:55,650 --> 00:18:57,650
+Ele quer controlar isso, não se perder
+
+237
+00:18:59,650 --> 00:19:01,650
+E lá com o falo do que é a icôde
+
+238
+00:19:01,650 --> 00:19:04,650
+que falou de na etiqueta de ratura e cresce
+
+239
+00:19:05,650 --> 00:19:06,650
+Ele está sugerindo que o
+
+240
+00:19:07,650 --> 00:19:09,650
+Já é uma bem-terrônia, bem-moderna
+
+241
+00:19:10,650 --> 00:19:12,650
+Que a um negócio podia até ser rastreado
+
+242
+00:19:13,650 --> 00:19:15,650
+Com escana, passabezam aqui o palmeio
+
+243
+00:19:16,650 --> 00:19:18,650
+E o dia de dia ele veio e quem entregou
+
+244
+00:19:18,650 --> 00:19:19,650
+O ano de dia
+
+245
+00:19:20,650 --> 00:19:22,650
+Cada equipamento tem um dedificado
+
+246
+00:19:22,650 --> 00:19:25,650
+O nível, né, permanente
+
+247
+00:19:25,650 --> 00:19:27,650
+O que é a icôde, né?
+
+248
+00:19:27,650 --> 00:19:29,650
+Pra ir deconheir lá com o tempo
+
+249
+00:19:30,650 --> 00:19:32,650
+Aí daí é aqui, já estar surindo aos próximos pathos
+
+250
+00:19:33,650 --> 00:19:35,650
+Podemos agora mostrar pra alleviate
+
+251
+00:19:36,650 --> 00:19:38,650
+Modelage, dente idade
+
+252
+00:19:38,650 --> 00:19:41,650
+CAGÃO, de italiana são glens ativos
+
+253
+00:19:42,650 --> 00:19:44,650
+Aí, ele está definindo as entidades
+
+254
+00:19:44,650 --> 00:19:45,650
+Que a gente at dictator
+
+255
+00:19:46,650 --> 00:19:47,650
+São clases
+
+256
+00:19:47,650 --> 00:19:48,650
+E vão acabar Absolutely
+
+257
+00:19:49,650 --> 00:19:50,150
+Como se fosse Laval
+
+258
+00:19:50,650 --> 00:19:53,819
+São clases
+
+259
+00:19:54,819 --> 00:19:55,819
+120 dolamha
+
+260
+00:19:55,819 --> 00:19:57,819
+– que тур de aqui
+
+261
+00:19:57,819 --> 00:19:58,799
+aqui é um dos
+
+262
+00:19:59,819 --> 00:20:05,220
+o tabela, o que foi o seu planilha, onde temos registros das entidades,
+
+263
+00:20:05,220 --> 00:20:09,019
+onde fala modelas de entidades e de aguentidade elas são mesmo.
+
+264
+00:20:09,019 --> 00:20:11,420
+A modelagem é definir, quais são as classes que eu tenho,
+
+265
+00:20:11,420 --> 00:20:13,420
+quais são os altributos que são as classes clases,
+
+266
+00:20:13,420 --> 00:20:16,619
+nome, interesse e funcionalidade.
+
+267
+00:20:16,619 --> 00:20:19,700
+O clases pode ser adaptado,
+
+268
+00:20:19,700 --> 00:20:25,380
+electado, pode ter que ser firmado de ter que ser nos dados,
+
+269
+00:20:25,380 --> 00:20:29,779
+ou pode estar colocado a ordem de serviço,
+
+270
+00:20:29,779 --> 00:20:33,279
+aí ver os relacionamentos, a entidade não são mais.
+
+271
+00:20:33,279 --> 00:20:37,519
+Por algum cliente, ele pode ter ativos,
+
+272
+00:20:37,519 --> 00:20:40,680
+materiais que estão sob podendo a empresa.
+
+273
+00:20:40,680 --> 00:20:43,079
+Ele pode ter ligado a ordem de serviço.
+
+274
+00:20:43,079 --> 00:20:46,819
+Pode ser que aquela ordem de serviço é vinculada a um checklist
+
+275
+00:20:46,819 --> 00:20:49,380
+que tem que ser obedecido.
+
+276
+00:20:49,380 --> 00:20:55,279
+E essa ordem de serviço de checklist está vinculada a fui de no peças que,
+
+277
+00:20:55,279 --> 00:20:58,180
+tem que ser associado a se elevado quando fui para a estalcia mesmo.
+
+278
+00:20:58,180 --> 00:21:01,180
+Por exemplo, aqui eu uso a eletécnica,
+
+279
+00:21:01,180 --> 00:21:04,180
+que estou envolvido da ordem de serviço,
+
+280
+00:21:04,180 --> 00:21:06,680
+que vai estar vinculado.
+
+281
+00:21:06,680 --> 00:21:09,680
+O problema é que ele já pegou a ideia,
+
+282
+00:21:09,680 --> 00:21:12,680
+ele já aqui já terá uma posta que na próxima modelar a entidade,
+
+283
+00:21:12,680 --> 00:21:15,180
+ele vai juntar atributos, que estão tipo,
+
+284
+00:21:15,180 --> 00:21:17,680
+que é o que ele já tem.
+
+285
+00:21:17,680 --> 00:21:20,880
+E o passo 3 que ele está sendo definiço é de arquitetura,
+
+286
+00:21:20,880 --> 00:21:23,680
+até que ele esteque tecnológico, front end,
+
+287
+00:21:23,680 --> 00:21:28,079
+não é móvel, que é que vai dar um detalhe.
+
+288
+00:21:28,079 --> 00:21:32,079
+Você não precisa conhecer a progelação,
+
+289
+00:21:32,079 --> 00:21:36,779
+mas é possível você conseguir conceite de arquitetura,
+
+290
+00:21:36,779 --> 00:21:40,279
+inclusive, esteque tecnológico,
+
+291
+00:21:40,279 --> 00:21:43,779
+que é igual o passeio de tecnologia na área,
+
+292
+00:21:43,779 --> 00:21:46,579
+eles vão me descendo que você tem que conhecer.
+
+293
+00:21:46,579 --> 00:21:48,480
+Então, você pode ficar com eles,
+
+294
+00:21:48,480 --> 00:21:50,579
+com elementos, falarizar com conceitos,
+
+295
+00:21:50,579 --> 00:21:53,880
+o desenvolvedor 38 de arquitetura,
+
+296
+00:21:53,880 --> 00:21:58,480
+antes de tudo que é feito,
+
+297
+00:21:58,480 --> 00:22:01,980
+vivemos no navegador,
+
+298
+00:22:01,980 --> 00:22:04,180
+no user interface,
+
+299
+00:22:04,180 --> 00:22:06,180
+que é a tela, vamos ver assim,
+
+300
+00:22:06,180 --> 00:22:08,180
+está aqui, ele fala assim,
+
+301
+00:22:08,180 --> 00:22:10,380
+mas na verdade, é para interfácil,
+
+302
+00:22:10,380 --> 00:22:12,680
+mas não quer dizer que é feito tudo no navegador,
+
+303
+00:22:12,680 --> 00:22:15,180
+mas é feito e não servidou.
+
+304
+00:22:15,180 --> 00:22:17,680
+Com o exemplo,
+
+305
+00:22:17,779 --> 00:22:20,279
+a Melissa fez uso do versão,
+
+306
+00:22:20,279 --> 00:22:26,279
+então servidou que trata atividades do cliente,
+
+307
+00:22:26,279 --> 00:22:29,480
+como uma tecnologia de uma da React,
+
+308
+00:22:29,480 --> 00:22:33,579
+que ela que consegue ser a tela da tela do pedaço e ela é só renderíspe,
+
+309
+00:22:33,579 --> 00:22:36,279
+eu reescrevo na tela que ela tem que ter pedaço,
+
+310
+00:22:36,279 --> 00:22:39,579
+e se inscreve tudo, fica pesado para a gente.
+
+311
+00:22:39,579 --> 00:22:42,779
+Por exemplo,
+
+312
+00:22:42,779 --> 00:22:46,180
+e aqui vem o consciente de Webbobl,
+
+313
+00:22:46,180 --> 00:22:47,279
+que eu sei,
+
+314
+00:22:47,279 --> 00:22:49,180
+aí é parte de internet,
+
+315
+00:22:49,180 --> 00:22:51,079
+que é a sua segurança,
+
+316
+00:22:51,079 --> 00:22:52,680
+que é a questão de cyber-ciurança,
+
+317
+00:22:52,680 --> 00:22:56,279
+no contexto, tem que ter o nosso obsarim.
+
+318
+00:22:56,279 --> 00:22:59,279
+E também login,
+
+319
+00:22:59,279 --> 00:23:02,380
+como é que entra o equipamento,
+
+320
+00:23:02,380 --> 00:23:06,990
+que é um desktop no computador,
+
+321
+00:23:06,990 --> 00:23:09,390
+o tablet ou celular,
+
+322
+00:23:09,390 --> 00:23:11,390
+tem que ter o aloção,
+
+323
+00:23:11,390 --> 00:23:13,190
+não precisa saber fazer,
+
+324
+00:23:13,190 --> 00:23:15,890
+não precisa saber o que é.
+
+325
+00:23:15,990 --> 00:23:17,289
+E vem aqui,
+
+326
+00:23:17,289 --> 00:23:19,289
+aí é propriamente ditulado,
+
+327
+00:23:19,289 --> 00:23:21,890
+todos os comportamentos que estão por trás,
+
+328
+00:23:21,890 --> 00:23:24,089
+podem estar no lugar dos dados,
+
+329
+00:23:24,089 --> 00:23:26,390
+a máscindada que o banco de dados,
+
+330
+00:23:26,390 --> 00:23:27,589
+é para os bancos de dados,
+
+331
+00:23:27,589 --> 00:23:29,990
+que é o externo de renunciamento,
+
+332
+00:23:29,990 --> 00:23:32,089
+de banco de dados,
+
+333
+00:23:32,089 --> 00:23:33,390
+eles têm todo o dedo,
+
+334
+00:23:33,390 --> 00:23:34,390
+que é de funcionar das dados,
+
+335
+00:23:34,390 --> 00:23:36,690
+pode ser aproveitado.
+
+336
+00:23:36,690 --> 00:23:38,190
+Por exemplo,
+
+337
+00:23:38,190 --> 00:23:40,190
+uma tecnologia nessa linha,
+
+338
+00:23:40,190 --> 00:23:42,890
+o SuperBase, que a Melissa também usa.
+
+339
+00:23:42,890 --> 00:23:45,190
+O SuperBase é uma plataforma de bancos de dados,
+
+340
+00:23:45,190 --> 00:23:47,789
+que usa o gericiador de bancos de dados,
+
+341
+00:23:47,789 --> 00:23:48,789
+pode ser de bias,
+
+342
+00:23:48,789 --> 00:23:51,789
+que é uma coisa assim.
+
+343
+00:23:51,789 --> 00:23:55,789
+E ele tem um acervo de personalidade,
+
+344
+00:23:55,789 --> 00:23:58,789
+para ele ter a história procede
+
+345
+00:23:58,789 --> 00:24:00,390
+que é o que está procedido.
+
+346
+00:24:00,390 --> 00:24:02,390
+Você pode definir algumas funções,
+
+347
+00:24:02,390 --> 00:24:03,890
+relativa ao banco,
+
+348
+00:24:03,890 --> 00:24:04,890
+o celular armazenado,
+
+349
+00:24:04,890 --> 00:24:06,589
+pode ser disparado por um hotel,
+
+350
+00:24:06,589 --> 00:24:07,789
+vai ser feita lá,
+
+351
+00:24:07,789 --> 00:24:12,190
+lá atrás daqueles servevam do SuperBase.
+
+352
+00:24:12,190 --> 00:24:13,190
+O serve do acessador,
+
+353
+00:24:13,190 --> 00:24:16,190
+é uma máquina lá que é igualada aqueles dados lá.
+
+354
+00:24:16,190 --> 00:24:19,190
+A bilhão está na tela.
+
+355
+00:24:19,190 --> 00:24:21,190
+Ela pode estar em qualquer lugar do mundo,
+
+356
+00:24:21,190 --> 00:24:23,190
+mas é claro que é possível restringir
+
+357
+00:24:23,190 --> 00:24:26,190
+para que ela fique dentro do...
+
+358
+00:24:26,190 --> 00:24:31,079
+do limite, do país que você quer.
+
+359
+00:24:31,079 --> 00:24:33,079
+Modos line, o sync.
+
+360
+00:24:33,079 --> 00:24:36,079
+Ah, aqui é.
+
+361
+00:24:36,079 --> 00:24:38,579
+O sistema você pode ter trabalho a igual do seu line,
+
+362
+00:24:38,579 --> 00:24:39,579
+não dá para só guardar,
+
+363
+00:24:39,579 --> 00:24:41,079
+está aí quando for.
+
+364
+00:24:41,079 --> 00:24:43,079
+Assim que ele traa o line de jogos,
+
+365
+00:24:43,079 --> 00:24:45,079
+traz ações são feitas assim.
+
+366
+00:24:45,079 --> 00:24:47,579
+Para o sistema central faz o syncronismo.
+
+367
+00:24:47,579 --> 00:24:49,579
+Então você pode trabalhar aqui,
+
+368
+00:24:49,579 --> 00:24:53,079
+como com a ordem de civis que você recebeu,
+
+369
+00:24:53,079 --> 00:24:55,079
+está tendendo com a igualdade de informações,
+
+370
+00:24:55,079 --> 00:24:57,079
+mesmo se ele é sem interneite.
+
+371
+00:24:57,079 --> 00:24:58,079
+Com o sistema de interneite,
+
+372
+00:24:58,079 --> 00:24:59,079
+ele é alto ou alto,
+
+373
+00:24:59,079 --> 00:25:01,079
+mas também é um responsual synchronismo com a base central,
+
+374
+00:25:01,079 --> 00:25:03,079
+com uma quantidade central.
+
+375
+00:25:03,079 --> 00:25:05,079
+Aí é que a setor,
+
+376
+00:25:05,079 --> 00:25:06,079
+desde a justa,
+
+377
+00:25:06,079 --> 00:25:07,079
+eu quero ter alguma intenção,
+
+378
+00:25:07,079 --> 00:25:08,079
+ou imariante,
+
+379
+00:25:08,079 --> 00:25:10,079
+antes de passar para uma moda a gente dá,
+
+380
+00:25:10,079 --> 00:25:12,079
+está aqui, como é?
+
+381
+00:25:12,079 --> 00:25:14,079
+Ele já deu a digressa,
+
+382
+00:25:14,079 --> 00:25:16,079
+você pode ir até já num documento,
+
+383
+00:25:16,079 --> 00:25:19,079
+que eu fosse ele trabalhar com a intenção, né?
+
+384
+00:25:19,079 --> 00:25:21,079
+Note,
+
+385
+00:25:21,079 --> 00:25:23,079
+eu não deu um próprio te arrumado,
+
+386
+00:25:23,079 --> 00:25:26,079
+esse próprio de intenção,
+
+387
+00:25:26,079 --> 00:25:29,079
+a maneira que eu escreve aqui,
+
+388
+00:25:29,079 --> 00:25:31,079
+forçou ele
+
+389
+00:25:31,079 --> 00:25:35,079
+a trabalhar das intenções para baixo.
+
+390
+00:25:35,079 --> 00:25:38,079
+E não querer logo o próprio que eu ia dar.
+
+391
+00:25:38,079 --> 00:25:39,079
+Ah, passa aí,
+
+392
+00:25:39,079 --> 00:25:40,079
+eu vou ficar temos,
+
+393
+00:25:40,079 --> 00:25:42,079
+para o gerencipe que ela perde.
+
+394
+00:25:42,079 --> 00:25:44,079
+Aqui você tem,
+
+395
+00:25:44,079 --> 00:25:46,079
+nós estamos falando no canal de
+
+396
+00:25:46,079 --> 00:25:48,079
+governança,
+
+397
+00:25:48,079 --> 00:25:50,079
+vamos ver um pouco mais do vídeo,
+
+398
+00:25:50,079 --> 00:25:51,079
+para gente ver,
+
+399
+00:25:51,079 --> 00:25:52,079
+do que se trata aqui,
+
+400
+00:25:52,079 --> 00:25:53,079
+nós já conseguimos aqui,
+
+401
+00:25:53,079 --> 00:25:54,079
+ainda não é?
+
+402
+00:25:54,079 --> 00:25:55,079
+Não é?
+
+403
+00:25:55,079 --> 00:25:56,079
+Não é?
+
+404
+00:25:56,079 --> 00:25:57,079
+Ah, assim, note que ele
+
+405
+00:25:57,079 --> 00:25:59,079
+gerou aqui,
+
+406
+00:25:59,079 --> 00:26:00,079
+especificado no domínio,
+
+407
+00:26:00,079 --> 00:26:02,079
+refe geração.
+
+408
+00:26:02,079 --> 00:26:04,079
+Aqui eu posto tudo aqui,
+
+409
+00:26:04,079 --> 00:26:05,079
+ele tinha,
+
+410
+00:26:05,079 --> 00:26:06,079
+o que é,
+
+411
+00:26:06,079 --> 00:26:08,079
+o que não é, né?
+
+412
+00:26:08,079 --> 00:26:09,079
+É,
+
+413
+00:26:09,079 --> 00:26:10,079
+para facilitar,
+
+414
+00:26:10,079 --> 00:26:12,079
+vou baixar aí,
+
+415
+00:26:12,079 --> 00:26:14,079
+vou exportar aqui,
+
+416
+00:26:14,079 --> 00:26:15,079
+se é até fato,
+
+417
+00:26:15,079 --> 00:26:17,079
+então essa é a facilidade, né?
+
+418
+00:26:17,079 --> 00:26:19,079
+Vou exportar aqui,
+
+419
+00:26:19,079 --> 00:26:20,079
+eu não sei o que é,
+
+420
+00:26:20,079 --> 00:26:21,079
+não dá um olho mesmo.
+
+421
+00:26:21,079 --> 00:26:23,079
+Aí eu vou abrir
+
+422
+00:26:23,079 --> 00:26:25,079
+a parte de dar o note,
+
+423
+00:26:26,079 --> 00:26:30,079
+aqui no meu note,
+
+424
+00:26:30,079 --> 00:26:35,670
+e vou ver se eu consigo abrir ele.
+
+425
+00:26:35,670 --> 00:26:36,670
+Hmm, hmm,
+
+426
+00:26:36,670 --> 00:26:42,519
+eu queria abrir ele no navegador,
+
+427
+00:26:42,519 --> 00:26:47,599
+ele já era um arquivo tipo em midi,
+
+428
+00:26:47,599 --> 00:26:48,599
+em midi,
+
+429
+00:26:48,599 --> 00:26:50,599
+um midi,
+
+430
+00:26:50,599 --> 00:26:51,599
+eu vou ver se eu tenho.
+
+431
+00:26:51,599 --> 00:26:55,039
+A gente só queria novos ao code,
+
+432
+00:26:55,039 --> 00:26:56,039
+a outras A,
+
+433
+00:26:56,039 --> 00:26:58,039
+a gente fez ao estúdio,
+
+434
+00:26:58,039 --> 00:27:02,039
+mas ele aceita até uma dura crota,
+
+435
+00:27:02,039 --> 00:27:09,930
+e um outro também,
+
+436
+00:27:09,930 --> 00:27:11,930
+ele aceita um outro também,
+
+437
+00:27:11,930 --> 00:27:14,930
+e um outro chamado o outro pat,
+
+438
+00:27:14,930 --> 00:27:19,710
+mas eu vou fazer um jogadinho aqui,
+
+439
+00:27:19,710 --> 00:27:21,710
+para facilitar nossas vidas.
+
+440
+00:27:21,710 --> 00:27:23,710
+Eu vou pedir para ele aqui,
+
+441
+00:27:23,710 --> 00:27:27,630
+e isso também eu gosto fazer,
+
+442
+00:27:27,630 --> 00:27:29,630
+um pouco que eu tinha a fazer uma apresentação.
+
+443
+00:27:29,630 --> 00:27:31,630
+Eu vou pedir para ele assim,
+
+444
+00:27:31,630 --> 00:27:42,539
+crie uma apresentação completa,
+
+445
+00:27:42,539 --> 00:27:58,900
+com esta primeira especificação do rio,
+
+446
+00:27:58,900 --> 00:28:02,900
+do negócio,
+
+447
+00:28:03,900 --> 00:28:05,900
+é a pre-generação,
+
+448
+00:28:05,900 --> 00:28:10,740
+para você,
+
+449
+00:28:10,740 --> 00:28:11,740
+aqui mesmo,
+
+450
+00:28:11,740 --> 00:28:13,740
+eu estou dando ele um subdigitivo agora.
+
+451
+00:28:13,740 --> 00:28:16,740
+Eu saí da duro copo de identificação,
+
+452
+00:28:16,740 --> 00:28:17,740
+meu negócio agora,
+
+453
+00:28:17,740 --> 00:28:19,740
+eu quero incluir,
+
+454
+00:28:19,740 --> 00:28:22,740
+que ele me ajuda a transparir,
+
+455
+00:28:22,740 --> 00:28:24,740
+para fazer estar com o cliente,
+
+456
+00:28:24,740 --> 00:28:26,740
+eu quero fazer estar para um usuário interessado,
+
+457
+00:28:26,740 --> 00:28:29,740
+que aqui eu posso em cima disso aqui,
+
+458
+00:28:29,740 --> 00:28:32,740
+eu posso interagir com o usuário verdadeiro,
+
+459
+00:28:32,740 --> 00:28:38,740
+e tirar ele outras intenções e outras imbarianas.
+
+460
+00:28:38,740 --> 00:28:42,740
+O mental restregir com qualquer aspecto,
+
+461
+00:28:42,740 --> 00:28:45,740
+expectativo do um aplicativo,
+
+462
+00:28:45,740 --> 00:28:47,740
+com o passo do cliente,
+
+463
+00:28:47,740 --> 00:28:49,740
+que fosse um sucesso ir,
+
+464
+00:28:49,740 --> 00:28:51,740
+com o tipo de letter, estar renativo,
+
+465
+00:28:51,740 --> 00:28:52,740
+restregir,
+
+466
+00:28:52,740 --> 00:28:56,150
+renativo e trabalho com a recuperação.
+
+467
+00:28:56,150 --> 00:28:58,150
+Exatamente, esse raiz daqui.
+
+468
+00:28:58,150 --> 00:29:01,150
+Mas aqui eu vi,
+
+469
+00:29:01,150 --> 00:29:03,150
+que ela vai estar com o cliente.
+
+470
+00:29:03,150 --> 00:29:05,150
+E vou dizer,
+
+471
+00:29:05,150 --> 00:29:06,150
+para ir assim,
+
+472
+00:29:06,150 --> 00:29:08,150
+o negócio é a pre-generação,
+
+473
+00:29:08,150 --> 00:29:09,150
+uma testa de ficar,
+
+474
+00:29:09,150 --> 00:29:14,700
+um objetivo,
+
+475
+00:29:17,069 --> 00:29:18,069
+uma vez,
+
+476
+00:29:18,069 --> 00:29:19,069
+apresentar,
+
+477
+00:29:19,069 --> 00:29:21,069
+ao cliente,
+
+478
+00:29:21,069 --> 00:29:24,900
+para refenalmente,
+
+479
+00:29:24,900 --> 00:29:29,519
+da intenção,
+
+480
+00:29:29,519 --> 00:29:33,519
+e imbarianas,
+
+481
+00:29:33,519 --> 00:29:35,519
+imbarianas,
+
+482
+00:29:35,519 --> 00:29:43,140
+que gostou,
+
+483
+00:29:43,140 --> 00:29:45,710
+ok?
+
+484
+00:29:45,710 --> 00:29:54,750
+Defender,
+
+485
+00:29:55,750 --> 00:29:57,750
+confesso,
+
+486
+00:29:57,750 --> 00:30:00,750
+proposto,
+
+487
+00:30:00,750 --> 00:30:02,750
+e,
+
+488
+00:30:02,750 --> 00:30:06,099
+contesto,
+
+489
+00:30:06,099 --> 00:30:08,099
+alternativo,
+
+490
+00:30:08,099 --> 00:30:10,099
+isso aqui é coisa da nossa vez.
+
+491
+00:30:10,099 --> 00:30:13,099
+Porque sempre o contest faz diferente, claro,
+
+492
+00:30:13,099 --> 00:30:14,099
+é bem um sistema,
+
+493
+00:30:14,099 --> 00:30:15,099
+é qualquer coisa,
+
+494
+00:30:15,099 --> 00:30:16,099
+ela vai fazer um discurso,
+
+495
+00:30:16,099 --> 00:30:17,099
+ela vai definir o contexto,
+
+496
+00:30:17,099 --> 00:30:18,099
+a ciência,
+
+497
+00:30:18,099 --> 00:30:19,099
+a mesma coisa,
+
+498
+00:30:19,099 --> 00:30:20,099
+é o meu específico.
+
+499
+00:30:20,099 --> 00:30:22,099
+Defender e o contexto proposto,
+
+500
+00:30:22,099 --> 00:30:24,099
+o contexto alternativo,
+
+501
+00:30:24,099 --> 00:30:29,390
+de mens,
+
+502
+00:30:29,390 --> 00:30:30,390
+de men,
+
+503
+00:30:30,390 --> 00:30:31,390
+de honrar,
+
+504
+00:30:31,390 --> 00:30:34,410
+o,
+
+505
+00:30:34,410 --> 00:30:36,410
+reduzir,
+
+506
+00:30:36,410 --> 00:30:38,410
+escupo,
+
+507
+00:30:38,410 --> 00:30:50,670
+fazer.
+
+508
+00:30:50,670 --> 00:30:54,950
+Eu quero que ele oferece o cliente,
+
+509
+00:30:54,950 --> 00:30:56,950
+opções de escupo,
+
+510
+00:30:56,950 --> 00:30:58,950
+vai envolver tudo,
+
+511
+00:30:58,950 --> 00:30:59,950
+vai ter escotoritor,
+
+512
+00:30:59,950 --> 00:31:02,950
+até essa parte de equipamento,
+
+513
+00:31:02,950 --> 00:31:04,950
+eu vou ter apenas
+
+514
+00:31:04,950 --> 00:31:07,950
+a psicodórdia de serviço,
+
+515
+00:31:07,950 --> 00:31:09,950
+cadastro o cliente,
+
+516
+00:31:10,950 --> 00:31:11,950
+é um tipo,
+
+517
+00:31:11,950 --> 00:31:12,950
+isso é igual que a área,
+
+518
+00:31:12,950 --> 00:31:13,950
+mas só é informática,
+
+519
+00:31:13,950 --> 00:31:14,950
+não,
+
+520
+00:31:14,950 --> 00:31:15,950
+se você for,
+
+521
+00:31:15,950 --> 00:31:17,950
+a gente é um próprio cicleto,
+
+522
+00:31:17,950 --> 00:31:19,950
+o infinito, você é comprar,
+
+523
+00:31:19,950 --> 00:31:21,950
+você vai ter que ver com as suas intenções dele,
+
+524
+00:31:21,950 --> 00:31:25,549
+as intenções delineam
+
+525
+00:31:25,549 --> 00:31:26,549
+o contexto,
+
+526
+00:31:26,549 --> 00:31:27,549
+o escupo, né?
+
+527
+00:31:27,549 --> 00:31:28,549
+Aí,
+
+528
+00:31:28,549 --> 00:31:29,549
+o escupo,
+
+529
+00:31:29,549 --> 00:31:30,549
+define o contexto,
+
+530
+00:31:30,549 --> 00:31:31,549
+você vai trabalhar,
+
+531
+00:31:31,549 --> 00:31:32,549
+pode ser que as intenções dele,
+
+532
+00:31:32,549 --> 00:31:34,549
+não, eu quero,
+
+533
+00:31:34,549 --> 00:31:35,549
+eu não tenho que não,
+
+534
+00:31:35,549 --> 00:31:36,549
+eu quero ficar básico,
+
+535
+00:31:36,549 --> 00:31:37,549
+por isso,
+
+536
+00:31:37,549 --> 00:31:38,549
+eu quero não ter que fazer,
+
+537
+00:31:38,549 --> 00:31:39,549
+não, eu quero não ter que fazer,
+
+538
+00:31:39,549 --> 00:31:40,549
+que posso,
+
+539
+00:31:40,549 --> 00:31:41,549
+é dar lá,
+
+540
+00:31:41,549 --> 00:31:43,549
+posso usar bateria,
+
+541
+00:31:43,549 --> 00:31:45,549
+o botô quando eu tiver cossado,
+
+542
+00:31:45,549 --> 00:31:46,549
+agora,
+
+543
+00:31:46,549 --> 00:31:48,549
+pode definir uma variable,
+
+544
+00:31:48,549 --> 00:31:51,549
+o gosto tem que ser até estilado,
+
+545
+00:31:51,549 --> 00:31:55,549
+a potência tem que ter a cheia sem isso,
+
+546
+00:31:55,549 --> 00:31:56,549
+não é?
+
+547
+00:31:56,549 --> 00:31:57,549
+Não é uma coisa,
+
+548
+00:31:57,549 --> 00:31:58,549
+mas vai qualquer coisa,
+
+549
+00:31:58,549 --> 00:31:59,549
+qualquer coisa que vai fazer,
+
+550
+00:31:59,549 --> 00:32:00,549
+como pessoa,
+
+551
+00:32:00,549 --> 00:32:02,549
+algum lugar para alguém,
+
+552
+00:32:02,549 --> 00:32:04,549
+o momento que se te aplica
+
+553
+00:32:04,549 --> 00:32:06,549
+é uma intenção de variantes,
+
+554
+00:32:06,549 --> 00:32:08,549
+para um área de negócio,
+
+555
+00:32:08,549 --> 00:32:10,549
+você desenvolve alguém,
+
+556
+00:32:10,549 --> 00:32:11,549
+informar.
+
+557
+00:32:11,549 --> 00:32:12,549
+Agora, com a IA,
+
+558
+00:32:12,549 --> 00:32:14,549
+a gente consegue,
+
+559
+00:32:14,549 --> 00:32:15,549
+até ter que supor,
+
+560
+00:32:15,549 --> 00:32:17,549
+para fazer isso.
+
+561
+00:32:17,549 --> 00:32:18,549
+Nós aqui,
+
+562
+00:32:18,549 --> 00:32:19,549
+estou aqui,
+
+563
+00:32:19,549 --> 00:32:20,549
+para criar uma apresentação completa,
+
+564
+00:32:20,549 --> 00:32:21,549
+para ter com minhas pescaras,
+
+565
+00:32:21,549 --> 00:32:23,549
+para o mundo de negócio.
+
+566
+00:32:23,549 --> 00:32:24,549
+Porém,
+
+567
+00:32:24,549 --> 00:32:25,549
+quando eu sou autônico,
+
+568
+00:32:25,549 --> 00:32:28,549
+eu tira a definição do negócio,
+
+569
+00:32:28,549 --> 00:32:29,549
+o contexto,
+
+570
+00:32:29,549 --> 00:32:31,549
+ele já está me dando
+
+571
+00:32:31,549 --> 00:32:32,549
+espaço seguinte,
+
+572
+00:32:32,549 --> 00:32:34,549
+que já entra a nova parte mais técnica, né?
+
+573
+00:32:34,549 --> 00:32:35,549
+É um modelo,
+
+574
+00:32:35,549 --> 00:32:37,549
+um modelo,
+
+575
+00:32:37,549 --> 00:32:38,549
+que é o passo do elasco,
+
+576
+00:32:38,549 --> 00:32:39,549
+de lanciar, né?
+
+577
+00:32:39,549 --> 00:32:43,599
+Um modelo de lado para aqui,
+
+578
+00:32:43,599 --> 00:32:44,599
+e é igual a usar esta técnica,
+
+579
+00:32:44,599 --> 00:32:45,599
+a gente vai ir,
+
+580
+00:32:45,599 --> 00:32:46,599
+falar um pouquinho sobre ela,
+
+581
+00:32:46,599 --> 00:32:47,599
+que ela é bem simples,
+
+582
+00:32:47,599 --> 00:32:48,599
+não é?
+
+583
+00:32:48,599 --> 00:32:49,599
+Até,
+
+584
+00:32:49,599 --> 00:32:50,599
+matemáticamente,
+
+585
+00:32:50,599 --> 00:32:52,599
+maravilhicable e interessante,
+
+586
+00:32:52,599 --> 00:32:53,599
+isso aqui.
+
+587
+00:32:53,599 --> 00:32:55,599
+E,
+
+588
+00:32:55,599 --> 00:32:57,599
+e essa é o que é,
+
+589
+00:32:57,599 --> 00:32:58,599
+passo mais,
+
+590
+00:32:58,599 --> 00:33:00,599
+o que é que exige
+
+591
+00:33:00,599 --> 00:33:01,599
+com esse vídeo format,
+
+592
+00:33:01,599 --> 00:33:02,599
+que é para que você,
+
+593
+00:33:02,599 --> 00:33:04,599
+ele devina ele,
+
+594
+00:33:04,599 --> 00:33:05,599
+tem conceitos do outro,
+
+595
+00:33:05,599 --> 00:33:06,599
+de alta hora,
+
+596
+00:33:06,599 --> 00:33:07,599
+de dormir,
+
+597
+00:33:07,599 --> 00:33:10,599
+de conceito de saber si o rosto,
+
+598
+00:33:10,599 --> 00:33:12,599
+de conceito de ele,
+
+599
+00:33:12,599 --> 00:33:14,599
+é nada,
+
+600
+00:33:14,599 --> 00:33:16,599
+autorização de enfim,
+
+601
+00:33:16,599 --> 00:33:17,599
+ninguém,
+
+602
+00:33:17,599 --> 00:33:18,599
+e tudo mais.
+
+603
+00:33:18,599 --> 00:33:19,599
+Mas isso tudo vai,
+
+604
+00:33:19,599 --> 00:33:20,599
+não foi,
+
+605
+00:33:20,599 --> 00:33:21,599
+mas pode ir mais chegar lá.
+
+606
+00:33:21,599 --> 00:33:22,599
+É quando ele falar,
+
+607
+00:33:22,599 --> 00:33:23,599
+do WebMode,
+
+608
+00:33:23,599 --> 00:33:24,599
+o potend,
+
+609
+00:33:24,599 --> 00:33:25,599
+o autocidado,
+
+610
+00:33:25,599 --> 00:33:26,599
+o offline,
+
+611
+00:33:26,599 --> 00:33:27,599
+o sync,
+
+612
+00:33:27,599 --> 00:33:28,599
+isso aqui,
+
+613
+00:33:28,599 --> 00:33:29,599
+tudo vai ficar evitente.
+
+614
+00:33:29,599 --> 00:33:30,599
+É que ele pegou um catílico,
+
+615
+00:33:30,599 --> 00:33:31,599
+para que ele espere aqui,
+
+616
+00:33:31,599 --> 00:33:32,599
+o bote,
+
+617
+00:33:32,599 --> 00:33:33,599
+você possa ampliar esse espeto,
+
+618
+00:33:33,599 --> 00:33:34,599
+aumentando o escopo,
+
+619
+00:33:34,599 --> 00:33:35,599
+isso,
+
+620
+00:33:35,599 --> 00:33:36,599
+reduzindo o escopo.
+
+621
+00:33:36,599 --> 00:33:39,599
+Ok,
+
+622
+00:33:39,599 --> 00:33:41,599
+ele devia ver aqui,
+
+623
+00:33:41,599 --> 00:33:45,809
+mudar um avanjo,
+
+624
+00:33:45,809 --> 00:33:46,809
+para a própria apresentação,
+
+625
+00:33:46,809 --> 00:33:48,809
+quero que ele diga assim,
+
+626
+00:33:48,809 --> 00:33:51,809
+usem
+
+627
+00:33:51,809 --> 00:33:55,470
+linguagem,
+
+628
+00:33:55,470 --> 00:33:56,470
+técnica,
+
+629
+00:33:56,470 --> 00:33:58,470
+da área,
+
+630
+00:33:58,470 --> 00:33:59,470
+olha,
+
+631
+00:33:59,470 --> 00:34:01,470
+de negócio,
+
+632
+00:34:01,470 --> 00:34:04,880
+mas,
+
+633
+00:34:04,880 --> 00:34:08,880
+evite
+
+634
+00:34:08,880 --> 00:34:10,880
+usar
+
+635
+00:34:10,880 --> 00:34:12,880
+textos,
+
+636
+00:34:12,880 --> 00:34:14,880
+técnicos,
+
+637
+00:34:14,880 --> 00:34:22,630
+informar,
+
+638
+00:34:22,630 --> 00:34:23,630
+eu até falei,
+
+639
+00:34:23,630 --> 00:34:24,630
+ele entende isso,
+
+640
+00:34:24,630 --> 00:34:25,630
+olha,
+
+641
+00:34:25,630 --> 00:34:27,630
+o que ele está acontecendo com a iarma,
+
+642
+00:34:27,630 --> 00:34:29,630
+informar,
+
+643
+00:34:29,630 --> 00:34:30,630
+olha,
+
+644
+00:34:30,630 --> 00:34:31,630
+se eu escrever essa
+
+645
+00:34:31,630 --> 00:34:32,630
+vigília,
+
+646
+00:34:32,630 --> 00:34:33,630
+ele vai entender,
+
+647
+00:34:33,630 --> 00:34:37,780
+informar de textos,
+
+648
+00:34:37,780 --> 00:34:38,780
+quer dizer,
+
+649
+00:34:38,780 --> 00:34:39,780
+informar de que esse é sabe,
+
+650
+00:34:39,780 --> 00:34:40,780
+quer dar usar,
+
+651
+00:34:40,780 --> 00:34:42,780
+um linguagem à própria área
+
+652
+00:34:42,780 --> 00:34:44,780
+de resolventes estenos,
+
+653
+00:34:44,780 --> 00:34:46,780
+ele é ambiente,
+
+654
+00:34:46,780 --> 00:34:47,780
+linguagem,
+
+655
+00:34:47,780 --> 00:34:48,780
+para as nossas clases,
+
+656
+00:34:48,780 --> 00:34:49,780
+que ele,
+
+657
+00:34:49,780 --> 00:34:50,780
+é que ele dá,
+
+658
+00:34:50,780 --> 00:34:51,780
+tal vez,
+
+659
+00:34:51,780 --> 00:34:52,780
+ele vai voar,
+
+660
+00:34:52,780 --> 00:34:53,780
+ele vai ter que usar,
+
+661
+00:34:53,780 --> 00:34:54,780
+para usar a área de agora,
+
+662
+00:34:54,780 --> 00:34:55,780
+do que ele entende,
+
+663
+00:34:55,780 --> 00:34:57,780
+e,
+
+664
+00:34:57,780 --> 00:34:58,780
+ele vai evitar,
+
+665
+00:34:58,780 --> 00:35:00,780
+ter o técnico informar de que ele vai dar,
+
+666
+00:35:00,780 --> 00:35:01,780
+por certo,
+
+667
+00:35:01,780 --> 00:35:02,780
+no sentido,
+
+668
+00:35:02,780 --> 00:35:03,780
+desse para o que ele vai entender.
+
+669
+00:35:03,780 --> 00:35:04,780
+Ok?
+
+670
+00:35:06,780 --> 00:35:07,780
+Essa é a derrubo,
+
+671
+00:35:07,780 --> 00:35:08,780
+vamos pedir para fazer,
+
+672
+00:35:08,780 --> 00:35:09,780
+primeiro,
+
+673
+00:35:09,780 --> 00:35:11,780
+lá,
+
+674
+00:35:11,780 --> 00:35:13,780
+como já esteste aqui,
+
+675
+00:35:13,780 --> 00:35:14,780
+quer que é uma completa,
+
+676
+00:35:14,780 --> 00:35:16,780
+com esta primeira estificação de domínio,
+
+677
+00:35:16,780 --> 00:35:17,780
+é o nosso,
+
+678
+00:35:17,780 --> 00:35:18,780
+é o que ele vai dar,
+
+679
+00:35:18,780 --> 00:35:19,780
+e,
+
+680
+00:35:19,780 --> 00:35:20,780
+ele vai dar uma variança,
+
+681
+00:35:20,780 --> 00:35:22,780
+para definir o rumo que ele vai tomar,
+
+682
+00:35:22,780 --> 00:35:23,780
+sempre,
+
+683
+00:35:23,780 --> 00:35:24,780
+é logo o braço,
+
+684
+00:35:24,780 --> 00:35:27,090
+beleza?
+
+685
+00:35:27,090 --> 00:35:28,090
+Vamos ver o que ele faz?
+
+686
+00:35:28,090 --> 00:35:36,199
+Note aqui que eu passei um pouco aqui,
+
+687
+00:35:36,199 --> 00:35:40,510
+ele já fez uma proposta
+
+688
+00:35:40,510 --> 00:35:42,510
+com a coisa que você é apresentada,
+
+689
+00:35:42,510 --> 00:35:43,510
+né?
+
+690
+00:35:43,510 --> 00:35:44,510
+Leana legilação,
+
+691
+00:35:44,510 --> 00:35:45,510
+critérios,
+
+692
+00:35:45,510 --> 00:35:46,510
+segurança,
+
+693
+00:35:46,510 --> 00:35:47,510
+tal,
+
+694
+00:35:47,510 --> 00:35:48,510
+aquele bem definiu o escopo,
+
+695
+00:35:48,510 --> 00:35:50,510
+proposto alternativa,
+
+696
+00:35:50,510 --> 00:35:51,510
+é,
+
+697
+00:35:52,510 --> 00:35:53,510
+ele aqui,
+
+698
+00:35:54,510 --> 00:35:56,510
+pelo que está proposto,
+
+699
+00:35:56,510 --> 00:35:58,510
+é da proposta da documentação inicial,
+
+700
+00:35:58,510 --> 00:36:00,510
+e o senar está ativo.
+
+701
+00:36:00,510 --> 00:36:02,510
+Você vê que aqui ele vai reduzir, né?
+
+702
+00:36:02,510 --> 00:36:04,510
+É mesmo com o encontro de tom completo,
+
+703
+00:36:04,510 --> 00:36:06,510
+ele já terminou aqui, né?
+
+704
+00:36:06,510 --> 00:36:08,510
+Esse aqui é,
+
+705
+00:36:08,510 --> 00:36:09,510
+então,
+
+706
+00:36:09,510 --> 00:36:10,510
+a derrê-se tão rigorosa,
+
+707
+00:36:10,510 --> 00:36:11,510
+todas as legilações,
+
+708
+00:36:11,510 --> 00:36:13,510
+ele já se moviu por aqui também,
+
+709
+00:36:13,510 --> 00:36:15,510
+e tem plantação aqui,
+
+710
+00:36:15,510 --> 00:36:17,510
+para essa aqui é mais tempo,
+
+711
+00:36:17,510 --> 00:36:19,510
+por toda essa sofrução proposta,
+
+712
+00:36:19,510 --> 00:36:20,510
+não para ser mesmo.
+
+713
+00:36:21,510 --> 00:36:24,269
+Ok?
+
+714
+00:36:24,269 --> 00:36:25,269
+Então, eu vou te achar,
+
+715
+00:36:25,269 --> 00:36:26,269
+para a afinamento para o cliente,
+
+716
+00:36:26,269 --> 00:36:27,269
+para a filha magnária,
+
+717
+00:36:27,269 --> 00:36:29,269
+uma opada afota de dívida,
+
+718
+00:36:29,269 --> 00:36:30,269
+e para que ele não me importe,
+
+719
+00:36:30,269 --> 00:36:31,269
+e até tal.
+
+720
+00:36:31,269 --> 00:36:32,269
+Aqui é,
+
+721
+00:36:32,269 --> 00:36:34,269
+vai inferencial com textos e as intenções,
+
+722
+00:36:34,269 --> 00:36:37,269
+para ver que é tipo de magnário ali,
+
+723
+00:36:37,269 --> 00:36:39,269
+é alvo, né?
+
+724
+00:36:39,269 --> 00:36:41,269
+Durante a iluminação.
+
+725
+00:36:41,269 --> 00:36:42,269
+Comitado,
+
+726
+00:36:42,269 --> 00:36:43,269
+a estumetação,
+
+727
+00:36:43,269 --> 00:36:44,269
+o usted é que não é um enferme digitais,
+
+728
+00:36:44,269 --> 00:36:45,269
+mas não outra,
+
+729
+00:36:45,269 --> 00:36:46,269
+e também,
+
+730
+00:36:46,269 --> 00:36:47,269
+a repita-feira,
+
+731
+00:36:47,269 --> 00:36:48,269
+a gente quer usar,
+
+732
+00:36:48,269 --> 00:36:49,269
+pode ser que tem alguns constalidades,
+
+733
+00:36:49,269 --> 00:36:50,269
+tem que registrar a água,
+
+734
+00:36:50,269 --> 00:36:51,269
+alguma,
+
+735
+00:36:51,269 --> 00:36:52,269
+alguma propriedade,
+
+736
+00:36:52,269 --> 00:36:55,269
+que conseguimos re-indificar?
+
+737
+00:36:55,269 --> 00:36:56,269
+selling,
+
+738
+00:36:56,269 --> 00:36:58,269
+isso é tudo que você quer.
+
+739
+00:36:58,269 --> 00:37:00,269
+De degutado,
+
+740
+00:37:00,269 --> 00:37:01,269
+também,
+
+741
+00:37:01,269 --> 00:37:02,269
+tem que se600.
+
+742
+00:37:03,269 --> 00:37:06,269
+Eles聯foriam comsequia,
+
+743
+00:37:06,269 --> 00:37:08,269
+em um primer dadoView o 대해,
+
+744
+00:37:08,269 --> 00:37:11,269
+depois понимamos que
+
+745
+00:37:11,269 --> 00:37:13,269
+todo cara,
+
+746
+00:37:13,269 --> 00:37:14,269
+medida,
+
+747
+00:37:14,269 --> 00:37:15,269
+b e zДа-la.
+
+748
+00:38:42,309 --> 00:38:58,059
+uma evalente. O que ele use e duas pressões, vou poder sair na internet, pegar alguma coisa aqui,
+
+749
+00:38:58,059 --> 00:39:16,730
+com a mente da área, e eu graficos em esse escalidão, esse escalidrão, é uma ferramenta em
+
+750
+00:39:16,730 --> 00:39:23,369
+meio que periletas de desenvolvedores para desenhar, pode desenhar algum dedo, como é que o seu
+
+751
+00:39:23,369 --> 00:39:29,889
+dedo, vai ficar um fruto da coisa, um fruto só grama, e também pode mostrar outras coisas, ele é bem
+
+752
+00:39:29,889 --> 00:39:36,030
+interessante, vai pousar o campo bem técnico, e o campo bem formal. Vamos ver o que ele faz?
+
+753
+00:39:36,030 --> 00:40:10,539
+Olá, você percebeu que ele vai discutir o que está pagando em inglês? Ele tem uma preferência
+
+754
+00:40:10,539 --> 00:40:19,099
+da Ibleita, não é? Espero que dá a Ibleita, ele interage com você no seu idioma, mas
+
+755
+00:40:19,099 --> 00:40:26,980
+ele é a sua cena do inglês, ele pega a sua intesação e traduz o inglês e ele é a tua
+
+756
+00:40:26,980 --> 00:40:32,300
+cena do inglês, o núcleo de a sua cena das reais, é inglês. Agora quando ele vai arrumar
+
+757
+00:40:32,300 --> 00:40:40,260
+essas coisas, o que é fazer é uma coisa, as voaldes são linguagens mais estáveis, como
+
+758
+00:40:40,260 --> 00:40:46,380
+o TypeScript, ele usa um TypeScript para o negócio de pagas, ele não deixa que você deve
+
+759
+00:40:46,380 --> 00:41:01,780
+deixar variados, ele deve ir ao clandetivo, a gente começa, depois ele usa também essa
+
+760
+00:41:01,780 --> 00:41:14,849
+linguagem que começa com o P, temos que ir ao lado da ir, o Paito, ele gosta muito do Paito,
+
+761
+00:41:14,849 --> 00:41:21,929
+também o Paito tem uma capacidade de funçar em vários segmentos dentro do computador da
+
+762
+00:41:21,929 --> 00:41:30,889
+Ibleita, ele gosta muito de criar um Baito, que tem que criar scripts pra executar uma
+
+763
+00:41:30,889 --> 00:41:41,559
+coisa que me faz, quando ele quer, a mazinha variante também agora, ele está usando o
+
+764
+00:41:41,559 --> 00:41:58,849
+negócio de Madrid e a Ibleita, vai só um dia sobre ela, ele já até criou a dita cuja,
+
+765
+00:41:58,849 --> 00:42:05,130
+mas até dando detalhe, onde está, onde é que está, onde é que tem Ibleita, bravo, ele já
+
+766
+00:42:05,130 --> 00:42:19,699
+criou aqui, ele abriu Chrome, até que eu me logue aqui, vou me logue aqui com o Benet,
+
+767
+00:42:19,699 --> 00:42:56,590
+ele abriu de novo, não vai aqui nesse rapaz, ele mesmo se acertou o brazo, no caso ele abriu
+
+768
+00:42:56,590 --> 00:43:04,780
+Chrome, pra jogar a apresentação, não sei qual é a dita, quem está fazendo a mesma
+
+769
+00:43:04,780 --> 00:43:16,500
+dita, não espera aqui, que ele vai botar um agosto, o par, está aqui, ele já gerou a apresentação,
+
+770
+00:43:16,500 --> 00:43:46,280
+não, você vê, vai que legal, é assim, vou botar aqui, que ela se é, não, vai, vai
+
+771
+00:43:46,280 --> 00:43:56,599
+que ele está lendo a par, está, vai iniciar a apresentação como os continhos já estão aqui,
+
+772
+00:43:56,599 --> 00:44:02,639
+continho, pausando, eu falei pra ele, você vê que o fio da operação, a intenção, a
+
+773
+00:44:02,639 --> 00:44:26,019
+apresentação, a imariante, não, não vê o que ele está fazendo aí, está carregando a
+
+774
+00:44:26,019 --> 00:44:39,920
+apresentação, eu quero que ele se convoy, pode ele botar aqui, vai ter novo, a gente não
+
+775
+00:44:39,920 --> 00:44:55,639
+contra o da blica, eu não vou defeito, mas esse desí bonito aqui é 2 calidrão, e a história
+
+776
+00:44:55,639 --> 00:45:07,480
+de verdade, vamos ver nesse atejo, vamos ver aqui, um da o f12 aqui, o f12 é de ser pedável
+
+777
+00:45:07,480 --> 00:45:20,849
+que aconteceu com os baixos de hoje, na consola, né, que é consola, ai, e vocês devem
+
+778
+00:45:20,849 --> 00:45:43,639
+feitinho, eu vou copiar consola, vou botar para lá, mas ir para ele que ganha o erro, a questão
+
+779
+00:45:43,639 --> 00:46:09,480
+de estar aqui, olha, talvez não é mais preocupada ainda, eu dei esse aqui para ele, ele é
+
+780
+00:46:09,480 --> 00:46:15,760
+criou o nosso vídeo, né, essa regoa de pai, tu, é um script, eu para ver ele que é
+
+781
+00:46:15,760 --> 00:46:19,880
+coisa, ele tem acesso na navega do olho, vai lá por trás, tem parte de um cachorro de
+
+782
+00:46:19,880 --> 00:46:25,960
+gol, é o que está acontecendo na navega do gol, não se preocupa com o sistema, não,
+
+783
+00:46:25,960 --> 00:46:31,559
+isso aí com o tempo, isso vai chegar lá, a gente vai conhecer o mascre, um livro do alto
+
+784
+00:46:31,559 --> 00:46:40,679
+do conceito, no nível de baixo, no lugar, então o que é trabalhar nesse nível de dirigir
+
+785
+00:46:40,679 --> 00:46:45,960
+a proteção, desolver a proteção, desolver a proteção dos outros, onde eu ver com o foso
+
+786
+00:46:45,960 --> 00:46:50,719
+de procedimento do futuro, e quando a pimenta que aí está tendo pra eles, o momento está
+
+787
+00:46:51,679 --> 00:47:02,159
+incrível, vai ser mais que você usar o WordPress ou o Clive, só sistemas que ele chama,
+
+788
+00:47:02,159 --> 00:47:07,119
+não é da pessoa que se chama, enquanto a tepação que acaba no pimenta de sistema, para fazer
+
+789
+00:47:07,119 --> 00:47:15,000
+esses sistemas, de fazer site, né, para o design, compensar o celular, fazer mais leve assim,
+
+790
+00:47:15,000 --> 00:47:25,800
+sem ser um outro, esse primeiro é muito complexo, mas aí o que acontece, então a questão de
+
+791
+00:47:25,800 --> 00:47:31,400
+local, de que é sem código, baixo código, que tem um jogo de acordo com o código, e a gente
+
+792
+00:47:31,400 --> 00:47:38,199
+vai estar com a gente, aí no caso aí, já está ficando diferente, então ela está subindo o nível,
+
+793
+00:47:38,199 --> 00:47:55,119
+tem atenção, vai estar revenada, a apresentação, e ele já pegou o que eu passei, ele já está até
+
+794
+00:47:55,119 --> 00:48:17,110
+abrindo ela, e meu brão nem botou a barça para ir, a gente sovava, quando eu fosse ao
+
+795
+00:48:17,110 --> 00:48:29,199
+lá, que comecei a desenvolver da memória dele aqui, né, para assim, ó, isso aqui você não
+
+796
+00:48:29,199 --> 00:48:38,489
+se fala disso do outro, né, uma muderitidade, né, é os objetos, né, quer dizer, como é que
+
+797
+00:48:38,489 --> 00:48:48,199
+é a os componentes do hotel, né, como é que ele é estar lá com os traí, por isso que as
+
+798
+00:48:48,199 --> 00:48:55,360
+reais a tendência dela, ela substitui o gano, já vai clicar em botão, ir pro cronoplanilha,
+
+799
+00:48:55,360 --> 00:49:02,039
+tal, lá, isso eu assumi, isso vai dizer o que é que isso, a questão de valer, ele não
+
+800
+00:49:02,039 --> 00:49:09,800
+está calvendo, contador bem, mas não é uma coisa mais que a gente por voe, não é bem
+
+801
+00:49:09,800 --> 00:49:19,469
+mais, até o celular, a tendência é a comunicação, se é incompletamente, se não,
+
+802
+00:49:19,469 --> 00:49:27,389
+ela tem a incentência da compra, não, talvez isso vinha mais para ter eóculos, que o Google
+
+803
+00:49:27,389 --> 00:49:34,630
+lançou e já tem outros melhores, em você filha, ver, oven, em você filha que você está
+
+804
+00:49:34,630 --> 00:49:40,869
+lá, você recebe mensagem, internet, Google, Google tips, né, como maria das coisas vai
+
+805
+00:49:40,869 --> 00:49:51,360
+ser filme em vídeo, em áudio, você, praticamente não vai ter necessidade de ter clara, essa
+
+806
+00:49:51,360 --> 00:49:58,400
+minha versão, do que será um futuro dessa minha, aí a pessoa é muito muito rápida, e
+
+807
+00:49:58,400 --> 00:50:03,159
+nunca para o seu nao não está dando tempo, faz pessoas se qualificarem, está tudo muito
+
+808
+00:50:03,159 --> 00:50:12,760
+a prioria, por isso pode-nos dar ao direito de entrar nessa onda aí, e mesmo antes da
+
+809
+00:50:12,760 --> 00:50:19,380
+estreia de estar em estado em terço almbar, em se meto, de ferramenta, o que dá os
+
+810
+00:50:19,380 --> 00:50:33,170
+ferramentas nos nossos, essa é a ideia, a gente trabalha aí, vamos até andar nao, que pode
+
+811
+00:50:33,170 --> 00:51:02,750
+ter que ter mexido, acho que ele já mexiu, um todo desabilitar, aqui é para escolher a
+
+812
+00:51:02,750 --> 00:51:08,670
+linguagem para falar, não está tudo desabilitado, né, nunca se chama, então espera para ver o que
+
+813
+00:51:08,670 --> 00:51:24,659
+ele vai fazer, está mexido, né, mesmo, né, mas tem outra fala aí, vai estar vendo que é
+
+814
+00:51:24,659 --> 00:51:34,969
+o que é que é o F12, o F12, o trabalho que está encontrando dos bastidores de um hotel,
+
+815
+00:51:34,969 --> 00:51:41,730
+né, é mapa de envolvidor, mas mesmo para que não é, não é ter que perder ver, se
+
+816
+00:51:41,730 --> 00:51:46,730
+tiver desenvolver o poear, essas e as vezes você vai ter visão de essas coisas, vai
+
+817
+00:51:46,730 --> 00:51:53,809
+ter um tempo, nem se vai ver, em contemporâmetros que são sobre infraestrutura, tecnologia
+
+818
+00:51:53,809 --> 00:52:03,670
+de usar, ele vai ter somatudo em indefenso, em intenso mesmo no campo da atetura, na
+
+819
+00:52:03,670 --> 00:52:14,599
+tecnologia, vocês vão usar termos técnicos necessários, aí já vai dar uma hora aqui, não
+
+820
+00:52:14,599 --> 00:52:28,190
+para por aqui, mas ser difícil você ver esse, olha, está trabalhando aí, a atetação,
+
+821
+00:52:28,190 --> 00:53:28,579
+destruindo o funcionador, ele está mexer lá, a garotemera tem essa característica, se
+
+822
+00:53:28,579 --> 00:53:40,699
+você mexer qualquer coisa na fote, está pela, ela já reá, reá, reá, na sua somente da
+
+823
+00:53:40,699 --> 00:53:49,989
+na hora, olha, está um laje, está bom, isso é bem, para ir para o hotel, meu cliente,
+
+824
+00:53:49,989 --> 00:54:19,880
+eu vou toda aqui, já está respondendo, vai ver aqui, não, está tão processando, vou ficar
+
+825
+00:54:19,880 --> 00:54:27,079
+aqui para ele para vocês e a mim, e depois, quando ele comprar tal se mexer o hotel,
+
+826
+00:54:27,079 --> 00:54:30,019
+que grava a apresentação, ok?
+
+827
+00:54:30,019 --> 00:54:39,539
+Um abraço, o que ele está fazendo na prática, ele meio está aceptando, ele executou um
+
+828
+00:54:39,539 --> 00:56:16,289
+problema em que ele gerou a HTML, ele meio está testando como fosse a pessoa, ele está
+
+829
+00:56:16,289 --> 00:56:57,360
+lançando sozinho, note que os desenhos, as gravas nele descrever, grava o porra concorda, na
+
+830
+00:56:57,360 --> 00:57:26,079
+minha mente, calitral, ele usou ela para fazer o humano faria, não está olhando, ela não
+
+831
+00:57:26,079 --> 00:57:38,519
+está associando, não está trabalhando, como é que aqui é, sempre do Brown, é lá no
+
+832
+00:57:38,519 --> 00:57:48,849
+navegador, Brown é no navegador, aí eles vão aqui, eu não prefiro, eles calçam da penta
+
+833
+00:57:48,849 --> 00:57:56,369
+sobre a HTTP, eles estão nessa do próprio autocorno do navegador, a internet, aí ele está
+
+834
+00:57:56,369 --> 00:58:04,210
+abriu essa OEM, que é até lá no caldo, no caldo do Brown, estou no lado, e está feito
+
+835
+00:58:04,210 --> 00:58:16,659
+isso aqui, ele está na verdade testando a própria apresentação, a excepção da apresentação,
+
+836
+00:58:16,659 --> 00:58:17,659
+imagina?
+
+837
+00:58:17,659 --> 00:58:26,579
+Note que nós temos aqui, no ciclo dentro de o ciclo, quer dizer, para eu comercer quase
+
+838
+00:58:26,579 --> 00:58:28,599
+intenso de um negócio, deixa eu ver, então...
+
+839
+00:58:29,599 --> 00:58:34,860
+No recorte de gramma operacional, vemos o flúso burguroso de campo, como é que o único
+
+840
+00:58:34,860 --> 00:58:42,199
+faz a leitura do que é recudo na condensadora, executa o checklist normativo de limpeza e componentes
+
+841
+00:58:42,199 --> 00:58:49,039
+elétricos, em séries medições de pressão e temperatura, e encerra o chamado confortos
+
+842
+00:58:49,039 --> 00:58:53,079
+de antes e depois e a assinatura digital do responsável luzão.
+
+843
+00:58:53,079 --> 00:58:58,840
+para dimensionar o projeto,
+
+844
+00:58:58,840 --> 00:59:02,079
+apresentando dois caminhos.
+
+845
+00:59:02,079 --> 00:59:09,360
+O cenário proposto é a solução corporativa com a letra ideal para grandes plantas industriais
+
+846
+00:59:09,360 --> 00:59:12,679
+e múltiplos contratos de um oc.
+
+847
+00:59:12,679 --> 00:59:16,760
+O cenário alternativo foco no essencial de campo,
+
+848
+00:59:16,760 --> 00:59:19,219
+eliminação rápida do papel,
+
+849
+00:59:19,219 --> 00:59:29,050
+checklists, confortos e assinatura na tela em apenas 3 a 4 semanas de implantação.
+
+850
+00:59:29,050 --> 00:59:32,210
+Para concluirmos a definição do projeto,
+
+851
+00:59:32,210 --> 00:59:37,610
+precisamos do seu direcionamento em 4 pontos, o porte...
+
+852
+00:59:37,610 --> 01:00:02,380
+Põe, a peca clicou o tom pausato, né?
+
+853
+01:00:02,380 --> 01:00:10,980
+Está testando tudo, quando pausar voz.
+
+854
+01:00:10,980 --> 01:00:13,179
+Isso pode se fazer em qualquer sencer,
+
+855
+01:00:13,179 --> 01:00:14,780
+ele é muito singular.
+
+856
+01:00:14,780 --> 01:00:17,980
+Quando vai aqui, vai obter do dom.
+
+857
+01:00:17,980 --> 01:00:20,219
+Ele está em contrato da venadora,
+
+858
+01:00:20,219 --> 01:00:22,980
+e vem com todas as estruturas componentes,
+
+859
+01:00:22,980 --> 01:00:25,260
+para apertar o dom aqui,
+
+860
+01:00:25,260 --> 01:00:26,980
+que tem arro de todos os componentes.
+
+861
+01:00:26,980 --> 01:00:28,579
+Aí ele apertou esse múltiro aqui,
+
+862
+01:00:28,579 --> 01:00:31,579
+continuam para pausar...
+
+863
+01:00:31,579 --> 01:00:33,460
+Aí ele pautou,
+
+864
+01:00:33,460 --> 01:00:34,980
+para que ele não se estivesse.
+
+865
+01:00:34,980 --> 01:00:36,099
+Ele está testando tudo,
+
+866
+01:00:36,099 --> 01:00:38,579
+para funcionar.
+
+867
+01:00:38,579 --> 01:00:44,739
+Aqui é ele trabalhando.
+
+868
+01:00:44,739 --> 01:00:45,900
+O medo da qualquer sencer,
+
+869
+01:00:45,900 --> 01:00:46,699
+que ele aprende com a apresentação,
+
+870
+01:00:46,699 --> 01:00:48,539
+ele pode fazer com o sistema que você desenvolve.
+
+871
+01:00:48,539 --> 01:00:50,539
+Ele vê o contexto da também.
+
+872
+01:00:50,539 --> 01:00:52,539
+Para dizer que passa,
+
+873
+01:00:52,539 --> 01:00:54,539
+que está bastante dentro de testar.
+
+874
+01:00:54,539 --> 01:00:58,940
+É teste internos de código mesmo,
+
+875
+01:00:58,940 --> 01:01:03,940
+e também testes visuales, comportamento e ergonomia.
+
+876
+01:01:03,940 --> 01:01:06,139
+Hoje é aí a...
+
+877
+01:01:06,139 --> 01:01:10,139
+se sai melhor vendo, eu vi.
+
+878
+01:01:10,139 --> 01:01:11,139
+O que é escrito?
+
+879
+01:01:11,139 --> 01:01:13,139
+Ele acha mais dubia escrita,
+
+880
+01:01:13,739 --> 01:01:16,139
+do que a voz,
+
+881
+01:01:16,139 --> 01:01:16,940
+e aí mais.
+
+882
+01:01:16,940 --> 01:01:19,940
+Para pegar voz e mais.
+
+883
+01:01:19,940 --> 01:01:23,539
+Então, você é...
+
+884
+01:01:23,539 --> 01:01:25,739
+ganhando experiência,
+
+885
+01:01:25,739 --> 01:01:28,739
+nesse princípio de DD,
+
+886
+01:01:28,739 --> 01:01:31,539
+que vai se aprofundar mais.
+
+887
+01:01:31,539 --> 01:01:34,139
+Você consegue...
+
+888
+01:01:34,139 --> 01:01:37,139
+usar ela como um equipe suave programação,
+
+889
+01:01:37,139 --> 01:01:38,139
+bem disciplinado,
+
+890
+01:01:38,139 --> 01:01:40,739
+que não sai na regra.
+
+891
+01:01:40,739 --> 01:01:43,340
+Colo usando sua voz,
+
+892
+01:01:43,340 --> 01:01:44,940
+e aí, nós temos que você aqui.
+
+893
+01:01:44,940 --> 01:01:46,539
+Para só quiser...
+
+894
+01:01:46,539 --> 01:01:48,539
+pegar o conjunto de favos lá,
+
+895
+01:01:48,539 --> 01:01:49,539
+e então, com esse da empresa,
+
+896
+01:01:49,539 --> 01:01:50,739
+que a deficiadação,
+
+897
+01:01:50,739 --> 01:01:51,739
+já tão inúso,
+
+898
+01:01:51,739 --> 01:01:53,340
+ele falou, no manual,
+
+899
+01:01:53,340 --> 01:01:54,539
+e eu passasse para ele,
+
+900
+01:01:54,539 --> 01:01:56,039
+ele somava...
+
+901
+01:01:56,039 --> 01:01:59,539
+um norteamento das intenções.
+
+902
+01:01:59,539 --> 01:02:02,940
+Às vezes, eu, antes de definir as intenções,
+
+903
+01:02:02,940 --> 01:02:04,739
+definir geramente,
+
+904
+01:02:04,739 --> 01:02:06,139
+a intenção já era...
+
+905
+01:02:06,139 --> 01:02:08,139
+e as evalienas já erais.
+
+906
+01:02:08,139 --> 01:02:10,139
+Eu podia ter de ter que a intenção
+
+907
+01:02:10,139 --> 01:02:11,940
+e estava ele do...
+
+908
+01:02:11,940 --> 01:02:12,940
+ele...
+
+909
+01:02:12,940 --> 01:02:13,940
+deve valir...
+
+910
+01:02:13,940 --> 01:02:15,940
+intenções...
+
+911
+01:02:15,940 --> 01:02:16,940
+dentro do modelo próprio,
+
+912
+01:02:16,940 --> 01:02:19,940
+negócio, empapelo...
+
+913
+01:02:19,940 --> 01:02:21,539
+com meio sobre essa boa aplicativa,
+
+914
+01:02:21,539 --> 01:02:25,050
+eu gostava de aplicar...
+
+915
+01:02:25,050 --> 01:02:26,050
+só...
+
+916
+01:02:26,050 --> 01:02:27,650
+parece muita coisa,
+
+917
+01:02:27,650 --> 01:02:30,449
+mas quando tem os princípios...
+
+918
+01:02:30,449 --> 01:02:32,449
+e aí, aprendeu algumas tecnologias,
+
+919
+01:02:32,449 --> 01:02:37,239
+você não precisa saber o que acontece por detrás.
+
+920
+01:02:37,239 --> 01:02:38,840
+É mais ou menos que acontece hoje,
+
+921
+01:02:38,840 --> 01:02:39,840
+para não ver escrever,
+
+922
+01:02:39,840 --> 01:02:40,840
+já...
+
+923
+01:02:41,840 --> 01:02:43,840
+em qualquer outro tipo de programa,
+
+924
+01:02:43,840 --> 01:02:45,840
+ou outro tipo de código.
+
+925
+01:02:45,840 --> 01:02:47,840
+Meja uma página da Temelico,
+
+926
+01:02:47,840 --> 01:02:49,840
+usando o 8prs,
+
+927
+01:02:49,840 --> 01:02:51,840
+que eu não saque...
+
+928
+01:02:51,840 --> 01:02:52,840
+tem este problema...
+
+929
+01:02:52,840 --> 01:02:53,840
+nessa igóin,
+
+930
+01:02:53,840 --> 01:02:54,840
+nesse meu código,
+
+931
+01:02:54,840 --> 01:02:55,840
+em santa vez,
+
+932
+01:02:55,840 --> 01:02:56,840
+eu não cujo,
+
+933
+01:02:56,840 --> 01:02:57,840
+e a pessoa não saque,
+
+934
+01:02:57,840 --> 01:02:58,840
+que eu...
+
+935
+01:02:58,840 --> 01:03:00,840
+não aproveito muito a outra coisa.
+
+936
+01:03:00,840 --> 01:03:03,840
+É isso que eu futur.
+
+937
+01:03:03,840 --> 01:03:13,019
+E a delumitora aqui para mim,
+
+938
+01:03:13,019 --> 01:03:14,019
+que...
+
+939
+01:03:14,019 --> 01:03:15,019
+fechou, ó...
+
+940
+01:03:16,019 --> 01:03:18,019
+ó, que que ele feira,
+
+941
+01:03:18,019 --> 01:03:19,019
+não entendeu.
+
+942
+01:03:24,019 --> 01:03:25,019
+Penta a sua internet,
+
+943
+01:03:25,019 --> 01:03:26,019
+o condenado de voz,
+
+944
+01:03:26,019 --> 01:03:27,019
+a sua técnica,
+
+945
+01:03:27,019 --> 01:03:28,019
+e o seu texto é conhecido,
+
+946
+01:03:28,019 --> 01:03:29,019
+a fiscal hidrául,
+
+947
+01:03:29,019 --> 01:03:31,019
+foi configurada de testar
+
+948
+01:03:31,019 --> 01:03:33,019
+com sucesso na vérgula.
+
+949
+01:03:33,019 --> 01:03:36,019
+Para evitar o bloque de segurança que eu concordo,
+
+950
+01:03:36,019 --> 01:03:37,019
+apre o protocolo,
+
+951
+01:03:37,019 --> 01:03:39,019
+que resta já pegue de voz,
+
+952
+01:03:39,019 --> 01:03:40,019
+o contexto de seguro,
+
+953
+01:03:40,019 --> 01:03:43,019
+e iniciamos um celular do HTTP local,
+
+954
+01:03:43,019 --> 01:03:46,019
+o acesso de navigate do tal.
+
+955
+01:03:46,019 --> 01:03:48,019
+Ela é que tem explicando
+
+956
+01:03:48,019 --> 01:03:49,019
+com o de prepitação da apresentação,
+
+957
+01:03:49,019 --> 01:03:51,019
+para para para para para para para para,
+
+958
+01:03:51,019 --> 01:03:52,019
+ou deus,
+
+959
+01:03:52,019 --> 01:03:53,019
+com a explicação de lição,
+
+960
+01:03:53,019 --> 01:03:54,019
+o chastro de técnicas,
+
+961
+01:03:54,019 --> 01:03:56,019
+é ademissionalmente,
+
+962
+01:03:56,019 --> 01:03:58,019
+com os gateiros e discursos...
+
+963
+01:03:58,019 --> 01:03:59,019
+lá,
+
+964
+01:03:59,019 --> 01:04:01,019
+aqui se inscreve,
+
+965
+01:04:01,019 --> 01:04:03,019
+como é que vai funcionar para a retação.
+
+966
+01:04:03,019 --> 01:04:04,019
+Mas, está abrindo aqui,
+
+967
+01:04:04,019 --> 01:04:06,019
+e fica a iniciar a apreitação
+
+968
+01:04:06,019 --> 01:04:07,019
+com voz,
+
+969
+01:04:07,019 --> 01:04:09,019
+para produzir a renda...
+
+970
+01:04:09,019 --> 01:04:12,019
+a renda de alinhamento com o seu cliente.
+
+971
+01:04:12,019 --> 01:04:21,019
+o seu libol, vir lida e aqui ele já deixou o documento de definição da apresentação
+
+972
+01:04:21,019 --> 01:04:32,019
+né? da verdade, ah o HTML, aqui o HTML, o problema é o seu baixais aqui e botar o HTML com o seu
+
+973
+01:04:32,019 --> 01:04:40,659
+tipo do aqui, aí o que acontece? eu posso simplesmente executar ele porra, não
+
+974
+01:04:40,659 --> 01:04:46,219
+não precisaria clicar nesse link dele aqui, eu posso fazer assim, vou baixar aqui, vai
+
+975
+01:04:46,219 --> 01:04:51,659
+jogar ele e aqui mesmo, o HTML também, aqui é a especificação, aqui é o que eu vou
+
+976
+01:04:51,659 --> 01:04:59,239
+deixar no download mesmo, vamos ver a gente cortar, ele já vai exportar em HTML, aí agora
+
+977
+01:04:59,239 --> 01:05:14,940
+vou lá e tal outro, a parte da download, tá lá, né? tá lá, se eu clico aqui, o que acontece?
+
+978
+01:05:14,940 --> 01:05:26,940
+o HTML, o HTML não enrodo dentro, o HTML aqui, aqui já é no HTML, mais no Chrome, tá aqui,
+
+979
+01:05:26,940 --> 01:05:33,940
+tá em talção tá aqui, vamos até algum defe? vou chegar com o cliente, bem-vindos a apresentação
+
+980
+01:05:33,940 --> 01:05:40,940
+de alinhamento da gestão e controle operacional em refrigeração e climatização, nosso
+
+981
+01:05:40,940 --> 01:05:46,940
+objetivo é definir as regras fundamentais e o escopo da solução para atender com
+
+982
+01:05:46,940 --> 01:05:55,940
+precisão as exigências termodinâmicas, o pôr da lei 13.589 e a rastriabilidade ambiental
+
+983
+01:05:55,940 --> 01:06:05,139
+dos fluidos refrigerantes, porque sofrto é as genéricas de manutenção falhando na
+
+984
+01:06:05,139 --> 01:06:12,139
+refrigeração, porque ignoram o ciclo térmico, se o mecânico não registrar pressões
+
+985
+01:06:12,139 --> 01:06:19,139
+de trabalho, superaquecimento e vazamentos reais, tá vendo o peixe-de-seur quebra pouco tempo
+
+986
+01:06:19,139 --> 01:06:27,139
+depois, além disso, a falta de histórico físico e laudos normativos expõem a empresa
+
+987
+01:06:27,139 --> 01:06:35,059
+apesar das a situações da vigilância sanitaria, aqui apresentamos as grandes
+
+988
+01:06:35,059 --> 01:06:41,059
+capacidades do sistema, prontoado do equipamento, porque é reclutro, prônograma
+
+989
+01:06:41,059 --> 01:06:48,059
+automatizado do proconcheque listes de filtros de bacteriocidas, criagem rápida de
+
+990
+01:06:48,059 --> 01:06:55,059
+chamados com prioridade para câmaras frigoríficas, rotina de campo com medição de
+
+991
+01:06:55,059 --> 01:07:01,059
+pressões e temperaturas e funcionamento garantido mesmo em subsoluzir câmaras frias
+
+992
+01:07:01,059 --> 01:07:09,920
+sem sinal de internet. Estas são as regras em viola vez do negócio, uma vez
+
+993
+01:07:09,920 --> 01:07:16,920
+do serviço e assinado pelo cliente, o lado se torna em tocar e o ejuditamente seguro.
+
+994
+01:07:16,920 --> 01:07:23,920
+Datas do proconco não podem ser vitroogidas para simular conformidade.
+
+995
+01:07:23,920 --> 01:07:29,920
+E na parte física, a pressão de descada deve ser sempre maior que a de subção,
+
+996
+01:07:29,920 --> 01:07:35,920
+sub pena de bloqueio por inconsistencia técnica.
+
+997
+01:07:35,920 --> 01:07:43,920
+Neste diagrama operacional, vemos o fluxo rigoroso de campo, o mecânico faça leitura
+
+998
+01:07:43,920 --> 01:07:50,920
+do que é recudo na condensadora, executa o checklist normativo de limpeza e componentes
+
+999
+01:07:50,920 --> 01:07:56,920
+elétricos, insere as medições de pressão e temperatura e insere ao chamado
+
+1000
+01:07:56,920 --> 01:08:05,000
+de autodentes e depois e assinatura digital do responsável no local.
+
+1001
+01:08:05,000 --> 01:08:10,000
+Para dimensionar o projeto, apresentamos dois caminhos.
+
+1002
+01:08:10,000 --> 01:08:17,000
+O cenário proposto é a solução corporativa completa, ideal para grandes plantas
+
+1003
+01:08:17,000 --> 01:08:20,000
+industriais e múltiplos contratos de funk.
+
+1004
+01:08:20,000 --> 01:08:27,000
+O cenário alternativo foca no essencial de campo, eliminação rápida do papel,
+
+1005
+01:08:27,000 --> 01:08:36,000
+checklistes confortos e assinatura na tela em apenas três a quatro semanas de implantação.
+
+1006
+01:08:36,000 --> 01:08:44,000
+Para concluirmos a definição do projeto, precisamos do seu direcionamento em quatro pontos,
+
+1007
+01:08:44,000 --> 01:08:51,000
+o porte predominante dos equipamentos, se a equipe utiliza manômetros digitais ou analógicos,
+
+1008
+01:08:51,000 --> 01:08:59,000
+arrotina atual de recolhimento de gas refrigerante e se a responsabilidade técnica do creio
+
+1009
+01:08:59,000 --> 01:09:03,000
+ou CFT própria ou terceirizada.
+
+1010
+01:09:03,000 --> 01:09:09,869
+Estamos prontos para iniciar.
+
+1011
+01:09:09,869 --> 01:09:12,869
+É isso aí, é uma hora e dez minutos.
+
+1012
+01:09:12,869 --> 01:09:15,869
+Tem contas para a guia, né?
+
+1013
+01:09:15,869 --> 01:09:20,869
+Então, ó, eles parece que eu tenho, eu estava lendo e sede preso de diferente.
+
+1014
+01:09:20,869 --> 01:09:29,220
+No mínimo um mês, para a gente ter ideia, vai possível afortunar.
+
+1015
+01:09:29,220 --> 01:09:41,390
+De mais do tempo, a depoede do porte do sistema, razoável de vez para desenvolver e testar e implementar.
+
+1016
+01:09:41,390 --> 01:09:49,250
+Aqui, praticamente uma hora, a gente chegou a esse escopo aí.
+
+1017
+01:09:49,250 --> 01:09:54,250
+Só com a ideia de notíme, intenção e imediativa.
+
+1018
+01:09:55,250 --> 01:10:02,250
+O objetivo é que eu quero, aí, o que eu quero, a intenção geral, né?
+
+1019
+01:10:02,250 --> 01:10:11,250
+A intenção de que eu quero e depois de variantes, quer dizer, o exército que eu quero que ele se aterra.
+
+1020
+01:10:11,250 --> 01:10:15,250
+Então, eu consigo controlar a ideia de governância do IDD que a gente vai ver.
+
+1021
+01:10:15,250 --> 01:10:20,250
+Eu consigo controlar e a não apenas por um próprio solto de araperdasco de código,
+
+1022
+01:10:20,250 --> 01:10:23,250
+porque eu estou apenas solto solto.
+
+1023
+01:10:23,250 --> 01:10:30,250
+Ela que está aprendendo comigo, porque eu quero, que eu quero e as revas do negócio.
+
+1024
+01:10:30,250 --> 01:10:35,250
+Tiga-me um nível que eu possa apenas fazer as aeratórias da alimentação,
+
+1025
+01:10:35,250 --> 01:10:38,250
+mas tiver tudo aprovado para o usuário com a apresentação,
+
+1026
+01:10:38,250 --> 01:10:42,250
+aí eu voto e compartilho para implementação.
+
+1027
+01:10:42,250 --> 01:10:47,250
+Aí vem a depoede de sol de intenção de caradáter, é a turalda de técnica, né?
+
+1028
+01:10:48,250 --> 01:10:51,250
+E a admarença vem no aspecto de técnica,
+
+1029
+01:10:51,250 --> 01:10:54,250
+aí também tem uma edicutiva futura-me.
+
+1030
+01:10:54,250 --> 01:10:59,250
+A ideia dos principios de IDD é assim, eu pensava que eu não tinha mais.
+
+1031
+01:10:59,250 --> 01:11:01,250
+Ok?
+
+1032
+01:11:01,250 --> 01:11:06,250
+Nem é um próprio generic solto, eu não ia cair, não.
+
+1033
+01:11:06,250 --> 01:11:09,250
+E eu ficasse bater no plano, porque você conseguiu passar pelo modo a augmentar.
+
+1034
+01:11:09,250 --> 01:11:16,250
+Agora, imagina que a gente tem um editor de IDD que é o software, tipo o VS Code,
+
+1035
+01:11:16,250 --> 01:11:20,250
+que ele já ofereça essa forma de definir.
+
+1036
+01:11:20,250 --> 01:11:26,619
+E a ideia é que ele salve sair, e mostra que se ele for mexer de novo,
+
+1037
+01:11:26,619 --> 01:11:31,510
+ele não vai deixar aviar de varieiro para o definido.
+
+1038
+01:11:31,510 --> 01:11:39,510
+Ele me alterou na frente, ele não vai inferir o derivado, a lucidar,
+
+1039
+01:11:39,510 --> 01:11:43,510
+para fazer alguma coisa que é tecnicamente enviável,
+
+1040
+01:11:43,510 --> 01:11:46,510
+mas não é um dos copos do negócio do mesmo.
+
+1041
+01:11:47,510 --> 01:11:48,510
+Ok?
+
+1042
+01:11:48,510 --> 01:11:51,510
+A abração deu uma ideia com paciência,
+
+1043
+01:11:51,510 --> 01:11:54,510
+e faça suas anotas somendas.
+
+1044
+01:11:54,510 --> 01:11:58,510
+Vamos devagar, nós somos fazidos aqui, só pretendê os principios.
+
+1045
+01:11:58,510 --> 01:12:02,510
+Mas na verdade, não quero entender de formar, quero entender de...
+
+1046
+01:12:02,510 --> 01:12:07,510
+Quero adicuar a produzir o que nos interessem ter, mas informar.
+
+1047
+01:12:07,510 --> 01:12:10,510
+Um abraço.
+

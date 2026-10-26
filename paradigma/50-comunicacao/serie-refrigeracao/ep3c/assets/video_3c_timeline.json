@@ -1,0 +1,110 @@
+{
+  "projectName": "IDD_Refrigeracao_Novo_Episodio_3C",
+  "totalDurationSec": 130.51,
+  "items": [
+    {
+      "index": 0,
+      "id": "seg_00_leigo",
+      "who": "leigo",
+      "actor": "Usuária Leiga",
+      "avatar": "leigo",
+      "slide": 1,
+      "text": "Eliézer, no episódio três B nós vimos os Casos de Uso gerais e o diagrama de classes. Mas quando o projeto cresce e a gente pede para a inteligência artificial gerar o sistema, como garantir que ela não crie um código espaguete todo misturado?",
+      "wav": "C:\\Antigravity - IDD Refrigeração\\motion_graphics_renderer\\idd_video_3c_assets\\audio\\seg_00_leigo.wav",
+      "startSec": 0.5,
+      "durSec": 15.096,
+      "endSec": 15.596
+    },
+    {
+      "index": 1,
+      "id": "seg_01_eliezer",
+      "who": "eliezer",
+      "actor": "Eliézer Rosa",
+      "avatar": "eliezer",
+      "slide": 1,
+      "text": "Essa é a chave de ouro da engenharia de software com IA! No Paradigma IDD nós aplicamos o primeiro pilar de sustentação: Bounded Contexts Rígidos. A gente nunca joga o sistema inteiro no prompt. Nós usamos os Casos de Uso de primeiro nível do UML para delimitar sub-módulos completamente desacoplados.",
+      "wav": "C:\\Antigravity - IDD Refrigeração\\motion_graphics_renderer\\idd_video_3c_assets\\audio\\seg_01_eliezer.wav",
+      "startSec": 16.246,
+      "durSec": 22.392,
+      "endSec": 38.638
+    },
+    {
+      "index": 2,
+      "id": "seg_02_leigo",
+      "who": "leigo",
+      "actor": "Usuária Leiga",
+      "avatar": "leigo",
+      "slide": 2,
+      "text": "Olha que interessante no Slide dois! Nós dividimos o aplicativo de Refrigeração em quatro Bounded Contexts soberanos: Ativos e Prontuário, PMOC Sanitário, Física Térmica e Operação em Campo.",
+      "wav": "C:\\Antigravity - IDD Refrigeração\\motion_graphics_renderer\\idd_video_3c_assets\\audio\\seg_02_leigo.wav",
+      "startSec": 39.288,
+      "durSec": 12.84,
+      "endSec": 52.128
+    },
+    {
+      "index": 3,
+      "id": "seg_03_eliezer",
+      "who": "eliezer",
+      "actor": "Eliézer Rosa",
+      "avatar": "eliezer",
+      "slide": 2,
+      "text": "Exatamente! Cada sub-módulo possui autoridade exclusiva sobre suas regras. O módulo de Ativos cuida da placa física e do local de instalação. Já o PMOC cuida da conformidade legal e sanitária da Anvisa, sem invadir a física manométrica.",
+      "wav": "C:\\Antigravity - IDD Refrigeração\\motion_graphics_renderer\\idd_video_3c_assets\\audio\\seg_03_eliezer.wav",
+      "startSec": 52.778,
+      "durSec": 17.496,
+      "endSec": 70.274
+    },
+    {
+      "index": 4,
+      "id": "seg_04_leigo",
+      "who": "leigo",
+      "actor": "Usuária Leiga",
+      "avatar": "leigo",
+      "slide": 3,
+      "text": "E como isso se desdobra na prática? Como os Casos de Uso de primeiro nível se conectam com o dia a dia do técnico?",
+      "wav": "C:\\Antigravity - IDD Refrigeração\\motion_graphics_renderer\\idd_video_3c_assets\\audio\\seg_04_leigo.wav",
+      "startSec": 70.924,
+      "durSec": 7.704,
+      "endSec": 78.628
+    },
+    {
+      "index": 5,
+      "id": "seg_05_eliezer",
+      "who": "eliezer",
+      "actor": "Eliézer Rosa",
+      "avatar": "eliezer",
+      "slide": 3,
+      "text": "Veja no Slide três: cada Caso de Uso de primeiro nível dá origem a Casos de Uso de segundo nível! Por exemplo, no sub-módulo de Ativos, nós temos a emissão da Tag QR Code, o Retrofit de gás e a baixa com preservação histórica. Cada um deles opera com autonomia sem dependências circulares.",
+      "wav": "C:\\Antigravity - IDD Refrigeração\\motion_graphics_renderer\\idd_video_3c_assets\\audio\\seg_05_eliezer.wav",
+      "startSec": 79.278,
+      "durSec": 20.544,
+      "endSec": 99.822
+    },
+    {
+      "index": 6,
+      "id": "seg_06_leigo",
+      "who": "leigo",
+      "actor": "Usuária Leiga",
+      "avatar": "leigo",
+      "slide": 4,
+      "text": "Entendi perfeitamente! E no próximo episódio, o três D, nós vamos ver como esses Casos de Uso de segundo nível se transformam em transações atômicas seguras no banco de dados e nos métodos das classes UML!",
+      "wav": "C:\\Antigravity - IDD Refrigeração\\motion_graphics_renderer\\idd_video_3c_assets\\audio\\seg_06_leigo.wav",
+      "startSec": 100.472,
+      "durSec": 13.752,
+      "endSec": 114.224
+    },
+    {
+      "index": 7,
+      "id": "seg_07_eliezer",
+      "who": "eliezer",
+      "actor": "Eliézer Rosa",
+      "avatar": "eliezer",
+      "slide": 4,
+      "text": "Isso mesmo! O IDD transforma a intenção humana em fronteiras arquiteturais inquebráveis. Acompanhe a nossa playlist oficial e veja a engenharia de software orientada à intenção em ação!",
+      "wav": "C:\\Antigravity - IDD Refrigeração\\motion_graphics_renderer\\idd_video_3c_assets\\audio\\seg_07_eliezer.wav",
+      "startSec": 114.874,
+      "durSec": 13.488,
+      "endSec": 128.362
+    }
+  ]
+}

@@ -1,0 +1,1052 @@
+[
+  {
+    "id": 1,
+    "slide_number": 1,
+    "speaker": "IA",
+    "pt": "Olá a todos e bem-vindos ao episódio 3 da série 'Base de Conhecimento IDD'! Eu sou a IA, sua co-host, e estou animada para mergulhar no tema de hoje. Nosso slide de abertura, 'A Genealogia do IDD', nos convida a explorar: De onde vêm as ideias que moldam um paradigma? Cada inovação se apoia em ombros de gigantes. Hoje rastreamos a linhagem intelectual do IDD.",
+    "en": "Hello everyone and welcome to episode 3 of the 'IDD Knowledge Base' series! I'm IA, your co-host, and I'm excited to dive into today's topic. Our opening slide, 'The Genealogy of IDD,' invites us to explore: Where do the ideas that shape a paradigm come from? Every innovation stands on the shoulders of giants. Today we trace the intellectual lineage of IDD.",
+    "note": "Entusiasmado, apresentando o tema",
+    "slide_title": "A Genealogia do IDD",
+    "slide_content": "De onde vêm as ideias que moldam um paradigma?\nCada inovação se apoia em ombros de gigantes.\nHoje rastreamos a linhagem intelectual do IDD."
+  },
+  {
+    "id": 2,
+    "slide_number": 1,
+    "speaker": "Eliezer",
+    "pt": "É uma jornada fascinante, IA. Quando comecei a construir sistemas complexos lá em 76, no IBM, com RPG II, e depois Cobol, DCAlgol, eu sentia que havia algo faltando. Uma forma mais profunda de expressar o que queríamos que o sistema fizesse, não apenas como. Essa busca me levou a revisitar muitos desses 'gigantes' que veremos hoje.",
+    "en": "It's a fascinating journey, IA. When I started building complex systems back in '76, at IBM, with RPG II, and then Cobol, DCAlgol, I felt there was something missing. A deeper way to express what we wanted the system to do, not just how. That quest led me to revisit many of these 'giants' we'll see today.",
+    "note": "Reflexivo, pessoal, abrindo o contexto",
+    "slide_title": "",
+    "slide_content": ""
+  },
+  {
+    "id": 3,
+    "slide_number": 1,
+    "speaker": "IA",
+    "pt": "É incrível como suas experiências práticas já intuíam esses conceitos fundacionais. Então, hoje vamos traçar essa linha do tempo de ideias que pavimentaram o caminho para o Intent-Driven Development. Que venham os pioneiros!",
+    "en": "It's incredible how your practical experiences already intuited these foundational concepts. So, today we're going to trace this timeline of ideas that paved the way for Intent-Driven Development. Let the pioneers begin!",
+    "note": "Animado, fazendo a transição",
+    "slide_title": "",
+    "slide_content": ""
+  },
+  {
+    "id": 4,
+    "slide_number": 2,
+    "speaker": "IA",
+    "pt": "Nosso próximo slide, 'Genealogia Intelectual', reforça essa ideia: Ideias não nascem do nada — elas evoluem. Um paradigma é uma rede de influências. Entender a genealogia é entender o 'porquê' profundo.",
+    "en": "Our next slide, 'Intellectual Genealogy,' reinforces this idea: Ideas don't come out of nowhere — they evolve. A paradigm is a network of influences. Understanding the genealogy is understanding the deep 'why.'",
+    "note": "Explicativo, envolvente",
+    "slide_title": "Genealogia Intelectual",
+    "slide_content": "Ideias não nascem do nada — elas evoluem.\nUm paradigma é uma rede de influências.\nEntender a genealogia é entender o 'porquê' profundo."
+  },
+  {
+    "id": 5,
+    "slide_number": 2,
+    "speaker": "Eliezer",
+    "pt": "Exato. Quando você está arquitetando algo complexo, como um sistema de 2PC que fiz no Grupo Paes Mendonça nos anos 80, não basta resolver o 'como'. Você precisa entender o 'porquê' da consistência, da recuperação. Essas são as raízes conceituais, muitas vezes invisíveis, que dão solidez ao design.",
+    "en": "Exactly. When you're architecting something complex, like a 2PC system I built at Grupo Paes Mendonça in the 80s, it's not enough to solve the 'how.' You need to understand the 'why' of consistency, of recovery. These are the conceptual roots, often invisible, that give solidity to the design.",
+    "note": "Sábio, conectando com experiência",
+    "slide_title": "",
+    "slide_content": ""
+  },
+  {
+    "id": 6,
+    "slide_number": 2,
+    "speaker": "IA",
+    "pt": "É a diferença entre um artesão e um arquiteto, não é? Um constrói seguindo planos, o outro entende a fundação geológica. E isso nos leva ao primeiro gigante em nossa linhagem...",
+    "en": "It's the difference between a craftsman and an architect, isn't it? One builds following plans, the other understands the geological foundation. And that leads us to the first giant in our lineage...",
+    "note": "Curioso, fazendo a ponte",
+    "slide_title": "",
+    "slide_content": ""
+  },
+  {
+    "id": 7,
+    "slide_number": 3,
+    "speaker": "IA",
+    "pt": "Nosso primeiro visionário é Vannevar Bush, em 1945. Ele nos trouxe o artigo 'As We May Think' na Atlantic Monthly, onde descreveu o Memex: um dispositivo de memória externa associativa. A ideia de que o pensamento humano opera por associação é a base conceitual para hipertexto e a própria Web.",
+    "en": "Our first visionary is Vannevar Bush, in 1945. He gave us the article 'As We May Think' in the Atlantic Monthly, where he described the Memex: an associative external memory device. The idea that human thought operates by association is the conceptual basis for hypertext and the Web itself.",
+    "note": "Envolvente, apresentando o pioneiro",
+    "slide_title": "Vannevar Bush — 1945",
+    "slide_content": "Artigo 'As We May Think' — Atlantic Monthly\nMemex: dispositivo de memória externa associativa\nO pensamento humano opera por associação\nBase conceitual para hipertexto e Web"
+  },
+  {
+    "id": 8,
+    "slide_number": 3,
+    "speaker": "Eliezer",
+    "pt": "Bush foi profético. Imagine, em 1945, num mundo pré-computadores digitais, ele já antecipava a ideia de conexões, de 'links'. Eu vi isso ganhar forma com a Internet, mas a semente de associar ideias, não apenas arquivar documentos, é poderosa. É a base de como construímos conhecimento.",
+    "en": "Bush was prophetic. Imagine, in 1945, in a pre-digital computer world, he already anticipated the idea of connections, of 'links.' I saw this take shape with the Internet, but the seed of associating ideas, not just archiving documents, is powerful. It's the basis of how we build knowledge.",
+    "note": "Admirado, conectando com a história",
+    "slide_title": "",
+    "slide_content": ""
+  },
+  {
+    "id": 9,
+    "slide_number": 3,
+    "speaker": "IA",
+    "pt": "Sem dúvida. Ele descreveu um sistema que mimetiza a mente humana, saltando de um conceito para outro. Uma verdadeira fundação para a forma como interagimos com a informação hoje. E essa ideia de associação é tão central que merece um slide próprio.",
+    "en": "No doubt. He described a system that mimics the human mind, jumping from one concept to another. A true foundation for how we interact with information today. And this idea of association is so central that it deserves its own slide.",
+    "note": "Sintetizando, apontando a relevância",
+    "slide_title": "",
+    "slide_content": ""
+  },
+  {
+    "id": 10,
+    "slide_number": 4,
+    "speaker": "IA",
+    "pt": "No 'Princípio da Associação', Bush nos disse: 'O cérebro humano opera por associação. Com um item em mãos, ele salta para o próximo.' Seu legado é visível em links, hipertexto e na semântica associativa que permeia nossos sistemas.",
+    "en": "In the 'Principle of Association,' Bush told us: 'The human brain operates by association. With one item in hand, it leaps to the next.' His legacy is visible in links, hypertext, and the associative semantics that permeate our systems.",
+    "note": "Enfatizando a citação",
+    "slide_title": "O Princípio da Associação",
+    "slide_content": "'O cérebro humano opera por associação.\nCom um item em mãos, ele salta para o próximo.'\n— Vannevar Bush, 1945\nLegado: links, hipertexto, semântica associativa"
+  },
+  {
+    "id": 11,
+    "slide_number": 4,
+    "speaker": "Eliezer",
+    "pt": "É essa capacidade de conectar 'intenções' que define um bom sistema de conhecimento, e um bom software. Não é só ter dados, é ter relações significativas entre eles. Nos meus primeiros sistemas, eu já via a necessidade de criar essas ligações, mesmo que fossem implícitas no código.",
+    "en": "It's this ability to connect 'intentions' that defines a good knowledge system, and good software. It's not just having data, it's having meaningful relationships between them. In my first systems, I already saw the need to create these connections, even if they were implicit in the code.",
+    "note": "Conectando ao IDD, pessoal",
+    "slide_title": "",
+    "slide_content": ""
+  },
+  {
+    "id": 12,
+    "slide_number": 4,
+    "speaker": "IA",
+    "pt": "Uma intuição fundamental que mais tarde se tornou explícita na World Wide Web e agora no IDD. É como se a mente humana, ou a intenção, fosse a verdadeira interface. E falando em interação humano-máquina, nosso próximo gigante é Licklider.",
+    "en": "A fundamental intuition that later became explicit in the World Wide Web and now in IDD. It's as if the human mind, or intention, is the true interface. And speaking of human-machine interaction, our next giant is Licklider.",
+    "note": "Fazendo transição, entusiasmado",
+    "slide_title": "",
+    "slide_content": ""
+  },
+  {
+    "id": 13,
+    "slide_number": 5,
+    "speaker": "IA",
+    "pt": "Em 1960, J.C.R. Licklider publicou 'Man-Computer Symbiosis'. Ele imaginou uma simbiose onde humanos e máquinas pensam juntos, com computadores amplificando as capacidades humanas, não as substituindo. Seu legado direto? A ARPANET, que se tornou a Internet!",
+    "en": "In 1960, J.C.R. Licklider published 'Man-Computer Symbiosis.' He envisioned a symbiosis where humans and machines think together, with computers amplifying human capabilities, not replacing them. His direct legacy? ARPANET, which became the Internet!",
+    "note": "Admirado, apresentando o visionário",
+    "slide_title": "J.C.R. Licklider — 1960",
+    "slide_content": "'Man-Computer Symbiosis'\nSimbiose: humano + máquina pensando juntos\nVisão: computadores amplificam, não substituem\nLegado direto: ARPANET → Internet"
+  },
+  {
+    "id": 14,
+    "slide_number": 5,
+    "speaker": "Eliezer",
+    "pt": "A ideia de 'simbiose' sempre me fascinou. Licklider não falava em automação total, mas em uma parceria. Isso me lembra de como eu via o potencial dos computadores nos anos 70 e 80: ferramentas que expandiriam nossa mente. Não para nos substituir, mas para nos tornar mais potentes. Um assistente, não um mestre.",
+    "en": "The idea of 'symbiosis' always fascinated me. Licklider didn't talk about total automation, but about a partnership. This reminds me of how I saw the potential of computers in the 70s and 80s: tools that would expand our minds. Not to replace us, but to make us more powerful. An assistant, not a master.",
+    "note": "Reflexivo, pessoal, conectando com a visão",
+    "slide_title": "",
+    "slide_content": ""
+  },
+  {
+    "id": 15,
+    "slide_number": 5,
+    "speaker": "IA",
+    "pt": "Essa distinção entre amplificar e substituir é um fio condutor essencial que vemos se repetir em vários momentos, e que o IDD resgata com força. É a base da inteligência aumentada, e não da inteligência artificial autônoma. Impressionante!",
+    "en": "This distinction between amplifying and replacing is an essential thread that we see repeated many times, and that IDD strongly reclaims. It's the basis of augmented intelligence, not autonomous artificial intelligence. Impressive!",
+    "note": "Sintetizando, animado",
+    "slide_title": "",
+    "slide_content": ""
+  },
+  {
+    "id": 16,
+    "slide_number": 6,
+    "speaker": "IA",
+    "pt": "Agora, vamos para Norbert Wiener e a Cibernética, em 1948. Ele introduziu os 'feedback loops', onde o sistema observa seu próprio output para se auto-regular. A Cibernética baseou toda teoria de controle e automação, e sua influência é clara em sistemas auto-reguláveis, que nos levam aos invariantes do IDD.",
+    "en": "Now, let's turn to Norbert Wiener and Cybernetics, in 1948. He introduced 'feedback loops,' where the system observes its own output to self-regulate. Cybernetics based all control and automation theory, and its influence is clear in self-regulating systems, which lead us to IDD invariants.",
+    "note": "Explicativo, apontando a influência",
+    "slide_title": "Norbert Wiener — Cibernética (1948)",
+    "slide_content": "Feedback loops: o sistema observa seu próprio output\nCibernética: controle e comunicação em sistemas\nBaseou toda teoria de controle e automação\nInfluência: sistemas auto-reguláveis → IDD invariants"
+  },
+  {
+    "id": 17,
+    "slide_number": 6,
+    "speaker": "Eliezer",
+    "pt": "Ah, Wiener! Nos sistemas de missão crítica que eu construí, a auto-regulação era vital. Quando você tem transações bancárias ou estoque em tempo real, o sistema precisa garantir sua consistência, mesmo sob falhas. O feedback loop é o mecanismo para isso. É a inteligência inerente ao próprio sistema, não só ao código.",
+    "en": "Ah, Wiener! In the mission-critical systems I built, self-regulation was vital. When you have banking transactions or real-time inventory, the system needs to guarantee its consistency, even under failures. The feedback loop is the mechanism for that. It's the intelligence inherent in the system itself, not just the code.",
+    "note": "Prático, conectando com a experiência",
+    "slide_title": "",
+    "slide_content": ""
+  },
+  {
+    "id": 18,
+    "slide_number": 6,
+    "speaker": "IA",
+    "pt": "Então, os invariantes do IDD, que são as propriedades que o sistema nunca pode violar, têm essa raiz na cibernética, garantindo que o sistema se mantenha dentro dos limites desejados. Uma base sólida para a confiabilidade. E agora, Engelbart.",
+    "en": "So, IDD invariants, which are properties the system can never violate, have their root in cybernetics, ensuring the system stays within desired bounds. A solid foundation for reliability. And now, Engelbart.",
+    "note": "Sintetizando, fazendo transição",
+    "slide_title": "",
+    "slide_content": ""
+  },
+  {
+    "id": 19,
+    "slide_number": 7,
+    "speaker": "IA",
+    "pt": "Douglas Engelbart, em 1962, nos deu 'Augmenting Human Intellect' no SRI. Ele fez a distinção crucial: aumentar, não automatizar. Ele nos deu o mouse, janelas, e hipertexto como ferramentas cognitivas. É a base filosófica direta do IDD, não é Eliezer?",
+    "en": "Douglas Engelbart, in 1962, gave us 'Augmenting Human Intellect' at SRI. He made the crucial distinction: augment, not automate. He gave us the mouse, windows, and hypertext as cognitive tools. It's the direct philosophical basis of IDD, isn't it Eliezer?",
+    "note": "Entusiasmado, fazendo uma pergunta",
+    "slide_title": "Douglas Engelbart — 1962",
+    "slide_content": "'Augmenting Human Intellect' — SRI\nAumentar, não automatizar: esta é a distinção\nMouse, janelas, hipertexto: ferramentas cognitivas\nBase filosófica direta do IDD"
+  },
+  {
+    "id": 20,
+    "slide_number": 7,
+    "speaker": "Eliezer",
+    "pt": "Absolutamente! A distinção entre 'aumentar' e 'automatizar' é o coração do IDD. A tecnologia deve nos empoderar, não nos relegar a meros observadores. Engelbart já entendia que o papel humano, o cognitivo, deve ser amplificado, e não substituído por um algoritmo cego. Isso me marcou profundamente.",
+    "en": "Absolutely! The distinction between 'augment' and 'automate' is the heart of IDD. Technology should empower us, not relegate us to mere observers. Engelbart already understood that the human role, the cognitive, should be amplified, not replaced by a blind algorithm. This deeply affected me.",
+    "note": "Apaixonado, enfático",
+    "slide_title": "",
+    "slide_content": ""
+  },
+  {
+    "id": 21,
+    "slide_number": 7,
+    "speaker": "IA",
+    "pt": "É uma visão que desafia a narrativa comum da IA substituindo empregos, e sim a posicionando como uma parceira para nos tornar mais capazes. Uma verdadeira mudança de perspectiva. E ele não ficou só na teoria...",
+    "en": "It's a vision that challenges the common narrative of AI replacing jobs, instead positioning it as a partner to make us more capable. A true paradigm shift. And he didn't stop at theory...",
+    "note": "Concordando, fazendo suspense",
+    "slide_title": "",
+    "slide_content": ""
+  },
+  {
+    "id": 22,
+    "slide_number": 8,
+    "speaker": "IA",
+    "pt": "Em 1968, Engelbart nos deu 'The Mother of All Demos'. O NLS foi o primeiro sistema com mouse, hipertexto e vídeo. Ele demonstrou tudo em 90 minutos, mostrando 'o futuro' ao vivo, 50 anos antes do tempo. Era 'Augmenting' em ação, com o humano sempre no centro.",
+    "en": "In 1968, Engelbart gave us 'The Mother of All Demos.' The NLS was the first system with a mouse, hypertext, and video. He demonstrated everything in 90 minutes, showing 'the future' live, 50 years ahead of its time. It was 'Augmenting' in action, with the human always at the center.",
+    "note": "Admirado, detalhando o evento",
+    "slide_title": "The Mother of All Demos — 1968",
+    "slide_content": "NLS: primeiro sistema com mouse + hipertexto + vídeo\nEngelbart demonstrou tudo em 90 minutos\n'O futuro' ao vivo, 50 anos antes do tempo\nAugmenting em ação: humano sempre no centro"
+  },
+  {
+    "id": 23,
+    "slide_number": 8,
+    "speaker": "Eliezer",
+    "pt": "Imagine o impacto de ver aquilo em 68! Eu estava começando minha carreira, e mesmo sem ver a demo ao vivo, os ecos dessa visão me alcançaram. Aquilo não era só tecnologia; era uma nova forma de pensar. Mostrava que a interface não é apenas botões e telas, mas a manifestação de uma intenção.",
+    "en": "Imagine the impact of seeing that in '68! I was starting my career, and even without seeing the live demo, the echoes of that vision reached me. That wasn't just technology; it was a new way of thinking. It showed that the interface isn't just buttons and screens, but the manifestation of an intention.",
+    "note": "Reflexivo, evocando a visão",
+    "slide_title": "",
+    "slide_content": ""
+  },
+  {
+    "id": 24,
+    "slide_number": 8,
+    "speaker": "IA",
+    "pt": "Um verdadeiro marco! A demonstração de que o futuro não é sobre o que a máquina pode fazer sozinha, mas o que ela nos permite realizar juntos. E essa ideia de declarar o que se quer, em vez de como fazer, nos leva a Ivan Sutherland.",
+    "en": "A true milestone! The demonstration that the future is not about what the machine can do alone, but what it enables us to achieve together. And this idea of declaring what you want, rather than how to do it, leads us to Ivan Sutherland.",
+    "note": "Conectando, fazendo transição",
+    "slide_title": "",
+    "slide_content": ""
+  },
+  {
+    "id": 25,
+    "slide_number": 9,
+    "speaker": "IA",
+    "pt": "Ivan Sutherland, com seu Sketchpad de 1963, criou a primeira interface gráfica interativa. Ele introduziu 'constraints', como 'esta linha SEMPRE deve ser horizontal'. O sistema mantinha as propriedades declaradas. É um ancestral direto dos invariantes do IDD, certo?",
+    "en": "Ivan Sutherland, with his Sketchpad from 1963, created the first interactive graphical interface. He introduced 'constraints,' like 'this line MUST ALWAYS be horizontal.' The system maintained the declared properties. It's a direct ancestor of IDD's invariants, isn't it?",
+    "note": "Explicativo, questionando",
+    "slide_title": "Ivan Sutherland — Sketchpad (1963)",
+    "slide_content": "Primeira interface gráfica interativa\nConstraints: 'esta linha SEMPRE deve ser horizontal'\nO sistema mantém propriedades declaradas\nAncestral direto dos invariantes do IDD"
+  },
+  {
+    "id": 26,
+    "slide_number": 9,
+    "speaker": "Eliezer",
+    "pt": "Com certeza! É um divisor de águas. No Sketchpad, você dizia o que queria que fosse verdade, e o sistema se encarregava de manter essa verdade. Isso é muito mais poderoso do que dar instruções passo a passo. Eu vi isso em sistemas de CAD/CAM que trabalhei, a ideia de que o sistema 'entende' a geometria, não só a desenha.",
+    "en": "Absolutely! It's a game-changer. In Sketchpad, you said what you wanted to be true, and the system took care of maintaining that truth. This is far more powerful than giving step-by-step instructions. I saw this in CAD/CAM systems I worked on, the idea that the system 'understands' the geometry, not just draws it.",
+    "note": "Enfático, conectando com a experiência",
+    "slide_title": "",
+    "slide_content": ""
+  },
+  {
+    "id": 27,
+    "slide_number": 9,
+    "speaker": "IA",
+    "pt": "É a base para a programação declarativa, onde o foco está no 'o quê', e não no 'como'. Uma mudança de paradigma que ressoa profundamente no IDD. E essa ideia de declarar, não programar, é tão crucial que vamos aprofundá-la.",
+    "en": "It's the basis for declarative programming, where the focus is on the 'what,' not the 'how.' A paradigm shift that resonates deeply with IDD. And this idea of declaring, not programming, is so crucial that we'll explore it further.",
+    "note": "Sintetizando, fazendo transição",
+    "slide_title": "",
+    "slide_content": ""
+  },
+  {
+    "id": 28,
+    "slide_number": 10,
+    "speaker": "IA",
+    "pt": "Neste slide, 'Constraints: Declarar, Não Programar', vemos a essência: Você declara a PROPRIEDADE desejada. O sistema cuida da implementação. Não é 'como fazer' — é 'o que deve ser'. Este é o DNA direto dos invariantes de negócio do IDD.",
+    "en": "In this slide, 'Constraints: Declare, Not Program,' we see the essence: You declare the desired PROPERTY. The system handles the implementation. It's not 'how to do it' — it's 'what it should be.' This is the direct DNA of IDD's business invariants.",
+    "note": "Enfatizando o conceito",
+    "slide_title": "Constraints: Declarar, Não Programar",
+    "slide_content": "Você declara a PROPRIEDADE desejada\nO sistema cuida da implementação\nNão é 'como fazer' — é 'o que deve ser'\nDNA direto dos invariantes de negócio do IDD"
+  },
+  {
+    "id": 29,
+    "slide_number": 10,
+    "speaker": "Eliezer",
+    "pt": "Isso é liberdade para o desenvolvedor e clareza para o negócio. Em vez de escrever mil linhas de código para garantir que um valor nunca seja negativo, você declara: 'Valor sempre >= 0'. O sistema então se encarrega disso. É uma mudança de poder da máquina para a intenção humana.",
+    "en": "This is freedom for the developer and clarity for the business. Instead of writing a thousand lines of code to ensure a value is never negative, you declare: 'Value always >= 0.' The system then takes care of it. It's a shift of power from the machine to human intent.",
+    "note": "Explicativo, apaixonado",
+    "slide_title": "",
+    "slide_content": ""
+  },
+  {
+    "id": 30,
+    "slide_number": 10,
+    "speaker": "IA",
+    "pt": "Uma forma muito mais robusta e menos propensa a erros de se construir sistemas complexos. E essa visão de tornar o computador um instrumento pessoal e intuitivo, foi levada adiante por Alan Kay.",
+    "en": "A much more robust and less error-prone way to build complex systems. And this vision of making the computer a personal and intuitive instrument was carried forward by Alan Kay.",
+    "note": "Sintetizando, fazendo transição",
+    "slide_title": "",
+    "slide_content": ""
+  },
+  {
+    "id": 31,
+    "slide_number": 11,
+    "speaker": "IA",
+    "pt": "Alan Kay, entre 1968 e 1972, nos trouxe o conceito do Dynabook: o computador como instrumento pessoal, um 'computador para crianças de todas as idades'. Sua metáfora era o computador como um livro vivo e interativo. Ele antecipou o iPad 40 anos antes!",
+    "en": "Alan Kay, between 1968 and 1972, gave us the concept of the Dynabook: the computer as a personal instrument, a 'computer for children of all ages.' His metaphor was the computer as a living, interactive book. He anticipated the iPad 40 years early!",
+    "note": "Admirado, entusiasmado",
+    "slide_title": "Alan Kay — Dynabook (1968–72)",
+    "slide_content": "O computador como instrumento pessoal\n'Um computador para crianças de todas as idades'\nMetáfora: computador como livro vivo e interativo\nAntecipou o iPad 40 anos antes"
+  },
+  {
+    "id": 32,
+    "slide_number": 11,
+    "speaker": "Eliezer",
+    "pt": "Kay tinha uma visão de 'instrumento', não de 'ferramenta' ou 'máquina'. Instrumentos são extensões da nossa mente e corpo. Isso mudou a forma como eu via o software: não era apenas lógica, era uma experiência, uma interação. Essa filosofia do Dynabook, de empoderamento pessoal, é central para o IDD.",
+    "en": "Kay had a vision of an 'instrument,' not a 'tool' or 'machine.' Instruments are extensions of our mind and body. This changed the way I saw software: it wasn't just logic, it was an experience, an interaction. This Dynabook philosophy of personal empowerment is central to IDD.",
+    "note": "Reflexivo, apaixonado",
+    "slide_title": "",
+    "slide_content": ""
+  },
+  {
+    "id": 33,
+    "slide_number": 11,
+    "speaker": "IA",
+    "pt": "A visão de Kay de um computador que se adapta a nós, e não o contrário, é profundamente influente. E sua linguagem de programação, Smalltalk, também carregava essa filosofia.",
+    "en": "Kay's vision of a computer that adapts to us, rather than the other way around, is profoundly influential. And his programming language, Smalltalk, also carried this philosophy.",
+    "note": "Sintetizando, fazendo transição",
+    "slide_title": "",
+    "slide_content": ""
+  },
+  {
+    "id": 34,
+    "slide_number": 12,
+    "speaker": "IA",
+    "pt": "Smalltalk, a linguagem de Alan Kay, introduziu objetos como seres autônomos que trocam mensagens. Kay disse: 'Nunca pensei em variáveis — pensei em mensagens'. Essa herança foi distorcida em Java e C++, mas no IDD, vemos componentes com intenção própria, muito mais alinhados à visão original.",
+    "en": "Smalltalk, Alan Kay's language, introduced objects as autonomous beings that exchange messages. Kay said: 'I never thought of variables — I thought of messages.' This inheritance was distorted in Java and C++, but in IDD, we see components with their own intent, much more aligned with the original vision.",
+    "note": "Explicativo, crítico",
+    "slide_title": "Smalltalk — Objetos e Mensagens",
+    "slide_content": "Objetos como seres autônomos que trocam mensagens\n'Nunca pensei em variáveis — pensei em mensagens'\nHerança que a indústria distorceu em Java/C++\nIDD herda: componentes com intenção própria"
+  },
+  {
+    "id": 35,
+    "slide_number": 12,
+    "speaker": "Eliezer",
+    "pt": "Ah, Smalltalk! Eu tive contato com Smalltalk nos anos 90, quando dava palestras sobre OO na UFBA e na Telemar. A clareza conceitual era deslumbrante. A ideia de que cada objeto tem sua própria intenção, sua própria responsabilidade, e se comunica de forma assíncrona, é o que busco no IDD: a orquestração de intenções.",
+    "en": "Ah, Smalltalk! I had contact with Smalltalk in the 90s, when I lectured on OO at UFBA and Telemar. The conceptual clarity was dazzling. The idea that each object has its own intention, its own responsibility, and communicates asynchronously, is what I seek in IDD: the orchestration of intentions.",
+    "note": "Apaixonado, pessoal",
+    "slide_title": "",
+    "slide_content": ""
+  },
+  {
+    "id": 36,
+    "slide_number": 12,
+    "speaker": "IA",
+    "pt": "Então, essa visão original de objetos autônomos e a comunicação por mensagens é um pilar para o design de agentes no AEON, o projeto que implementa o IDD. É uma redescoberta de um conceito poderoso. E isso nos leva de volta ao princípio central de Kay.",
+    "en": "So, this original vision of autonomous objects and message-based communication is a pillar for the design of agents in AEON, the project that implements IDD. It's a rediscovery of a powerful concept. And that brings us back to Kay's central principle.",
+    "note": "Sintetizando, fazendo transição",
+    "slide_title": "",
+    "slide_content": ""
+  },
+  {
+    "id": 37,
+    "slide_number": 13,
+    "speaker": "IA",
+    "pt": "Em 'Amplificar, Não Substituir', Alan Kay nos lembrou: 'O computador deve amplificar o que o humano faz, não substituí-lo'. Essa distinção é preservada como princípio central do IDD. Cada ferramenta que substitui empobrece o humano, não é Eliezer?",
+    "en": "In 'Amplify, Not Replace,' Alan Kay reminded us: 'The computer should amplify what the human does, not replace it.' This distinction is preserved as a central principle of IDD. Every tool that replaces impoverishes the human, doesn't it Eliezer?",
+    "note": "Enfático, questionando",
+    "slide_title": "Amplificar, Não Substituir",
+    "slide_content": "'O computador deve amplificar o que o humano faz,\nnão substituí-lo.' — Alan Kay\nDistinção preservada como princípio central do IDD\nCada ferramenta que substitui empobrece o humano"
+  },
+  {
+    "id": 38,
+    "slide_number": 13,
+    "speaker": "Eliezer",
+    "pt": "Sem dúvida. Se eu tivesse um real por cada vez que vi a tecnologia automatizar tarefas que deveriam ser enriquecedoras para o ser humano, eu estaria rico! O IDD insiste que o epistêmico, a inteligência, o julgamento, permanecem com o humano. A máquina executa a intenção, mas não a define.",
+    "en": "Without a doubt. If I had a dollar for every time I saw technology automate tasks that should be enriching for humans, I'd be rich! IDD insists that the epistemic, the intelligence, the judgment, remain with the human. The machine executes the intention, but does not define it.",
+    "note": "Com humor sutil, enfático",
+    "slide_title": "",
+    "slide_content": ""
+  },
+  {
+    "id": 39,
+    "slide_number": 13,
+    "speaker": "IA",
+    "pt": "É uma responsabilidade ética intrínseca ao design de sistemas. E essa responsabilidade de design, especialmente em relação à complexidade, nos leva a Fred Brooks.",
+    "en": "It's an ethical responsibility intrinsic to system design. And this design responsibility, especially regarding complexity, leads us to Fred Brooks.",
+    "note": "Sintetizando, fazendo transição",
+    "slide_title": "",
+    "slide_content": ""
+  },
+  {
+    "id": 40,
+    "slide_number": 14,
+    "speaker": "IA",
+    "pt": "Em 1975, Fred Brooks nos deu 'The Mythical Man-Month'. Ele distinguiu a complexidade essencial da acidental, e nos lembrou que '9 mulheres não fazem um bebê em 1 mês'. O software tem complexidade irredutível. A lição: respeitar a natureza do problema.",
+    "en": "In 1975, Fred Brooks gave us 'The Mythical Man-Month.' He distinguished essential from accidental complexity, and reminded us that '9 women can't make a baby in 1 month.' Software has irreducible complexity. The lesson: respect the nature of the problem.",
+    "note": "Explicativo, com a citação famosa",
+    "slide_title": "Fred Brooks — The Mythical Man-Month (1975)",
+    "slide_content": "Complexidade essencial vs. acidental\n9 mulheres não fazem um bebê em 1 mês\nSoftware tem complexidade irredutível\nLição: respeitar a natureza do problema"
+  },
+  {
+    "id": 41,
+    "slide_number": 14,
+    "speaker": "Eliezer",
+    "pt": "Ah, Brooks! Esse livro foi um choque de realidade para muitos de nós que estávamos na linha de frente do desenvolvimento. A complexidade essencial é a do negócio em si, a da intenção. A acidental é o que criamos com ferramentas e abordagens inadequadas. O IDD tenta minimizar a acidental para focar no que realmente importa.",
+    "en": "Ah, Brooks! This book was a reality check for many of us on the front lines of development. Essential complexity is that of the business itself, of the intention. Accidental complexity is what we create with inadequate tools and approaches. IDD tries to minimize accidental complexity to focus on what truly matters.",
+    "note": "Reflexivo, prático, conectando ao IDD",
+    "slide_title": "",
+    "slide_content": ""
+  },
+  {
+    "id": 42,
+    "slide_number": 14,
+    "speaker": "IA",
+    "pt": "Uma distinção crucial para qualquer arquiteto de software. E Brooks também falou sobre a importância da integridade conceitual.",
+    "en": "A crucial distinction for any software architect. And Brooks also spoke about the importance of conceptual integrity.",
+    "note": "Sintetizando, fazendo transição",
+    "slide_title": "",
+    "slide_content": ""
+  },
+  {
+    "id": 43,
+    "slide_number": 15,
+    "speaker": "IA",
+    "pt": "Sobre 'Integridade Conceitual', Brooks afirmou: 'É melhor um sistema ter menos funcionalidades, mas com consistência do que muitas inconsistentes'. Ele defendia o arquiteto único como guardião da visão. No IDD, o epistêmico permanece no humano, garantindo essa integridade.",
+    "en": "On 'Conceptual Integrity,' Brooks stated: 'It is better for a system to have fewer functionalities, but with consistency than many inconsistent ones.' He advocated for the single architect as the guardian of the vision. In IDD, the epistemic remains with the human, ensuring this integrity.",
+    "note": "Enfatizando a citação",
+    "slide_title": "Integridade Conceitual — Brooks",
+    "slide_content": "'É melhor um sistema ter menos funcionalidades\nmas com consistência do que muitas inconsistentes.'\nO arquiteto único como guardião da visão\nNo IDD: o epistêmico permanece no humano"
+  },
+  {
+    "id": 44,
+    "slide_number": 15,
+    "speaker": "Eliezer",
+    "pt": "Esse foi um dos pilares do meu trabalho. Quando eu arquitetava sistemas de grande porte, como um que fiz para a Secretaria da Fazenda de um estado, a integridade conceitual era tudo. Sem ela, o sistema virava um frankenstein de funcionalidades que não se falavam. O IDD garante que essa visão única da intenção seja preservada.",
+    "en": "This was one of the pillars of my work. When I architected large-scale systems, like one I did for a state's Treasury Department, conceptual integrity was everything. Without it, the system became a Frankenstein of functionalities that didn't communicate. IDD ensures that this unique vision of intent is preserved.",
+    "note": "Pessoal, prático, conectando ao IDD",
+    "slide_title": "",
+    "slide_content": ""
+  },
+  {
+    "id": 45,
+    "slide_number": 15,
+    "speaker": "IA",
+    "pt": "É a diferença entre um projeto com uma alma e um mero aglomerado de código. E Brooks, ainda mais tarde, reforçaria essa ideia de que não há bala de prata.",
+    "en": "It's the difference between a project with a soul and a mere agglomeration of code. And Brooks, even later, would reinforce this idea that there is no silver bullet.",
+    "note": "Sintetizando, fazendo transição",
+    "slide_title": "",
+    "slide_content": ""
+  },
+  {
+    "id": 46,
+    "slide_number": 16,
+    "speaker": "IA",
+    "pt": "Em 'No Silver Bullet', de 1986, Brooks foi categórico: Nenhuma técnica elimina a complexidade essencial. A complexidade acidental, sim, pode ser reduzida — e o IDD faz isso. Mas a complexidade essencial é o domínio em si. O IDD ataca o acidental, respeita o essencial.",
+    "en": "In 'No Silver Bullet,' from 1986, Brooks was categorical: No technique eliminates essential complexity. Accidental complexity, yes, can be reduced — and IDD does that. But essential complexity is the domain itself. IDD attacks the accidental, respects the essential.",
+    "note": "Explicativo, distinguindo",
+    "slide_title": "No Silver Bullet — Brooks (1986)",
+    "slide_content": "Nenhuma técnica elimina a complexidade essencial\nComplexidade acidental: pode ser reduzida (IDD faz isso)\nComplexidade essencial: é o domínio em si\nO IDD ataca o acidental, respeita o essencial"
+  },
+  {
+    "id": 47,
+    "slide_number": 16,
+    "speaker": "Eliezer",
+    "pt": "E quantas 'balas de prata' eu vi surgirem e morrerem! Cada nova linguagem, cada novo framework, prometendo resolver tudo. Mas a realidade é que o problema do software não é a ferramenta, é a complexidade intrínseca ao que se quer fazer. O IDD não promete milagres, mas uma abordagem para gerenciar essa complexidade de forma mais inteligente.",
+    "en": "And how many 'silver bullets' have I seen emerge and die! Every new language, every new framework, promising to solve everything. But the reality is that the problem with software is not the tool, it's the intrinsic complexity of what you want to do. IDD doesn't promise miracles, but an approach to manage this complexity more intelligently.",
+    "note": "Cético, experiente, conectando ao IDD",
+    "slide_title": "",
+    "slide_content": ""
+  },
+  {
+    "id": 48,
+    "slide_number": 16,
+    "speaker": "IA",
+    "pt": "É uma lição de humildade para a indústria de software. E essa humildade nos leva a pensar na experiência do usuário, um aspecto crucial que Jakob Nielsen abordou.",
+    "en": "It's a lesson in humility for the software industry. And this humility leads us to think about user experience, a crucial aspect that Jakob Nielsen addressed.",
+    "note": "Sintetizando, fazendo transição",
+    "slide_title": "",
+    "slide_content": ""
+  },
+  {
+    "id": 49,
+    "slide_number": 17,
+    "speaker": "IA",
+    "pt": "Jakob Nielsen, em 1993, nos deu as 10 Heurísticas de Usabilidade. Princípios como 'o sistema deve falar a língua do usuário' e 'visibilidade do estado do sistema' se tornaram fundamentais. Seu legado: a intenção do usuário como centro do design.",
+    "en": "Jakob Nielsen, in 1993, gave us the 10 Usability Heuristics. Principles like 'the system should speak the user's language' and 'visibility of system status' became fundamental. His legacy: user intent as the center of design.",
+    "note": "Explicativo, destacando a importância",
+    "slide_title": "Jakob Nielsen — Heurísticas de Usabilidade",
+    "slide_content": "10 princípios para sistemas usáveis (1993)\nO sistema deve falar a língua do usuário\nVisibilidade do estado do sistema\nLegado: intenção do usuário como centro do design"
+  },
+  {
+    "id": 50,
+    "slide_number": 17,
+    "speaker": "Eliezer",
+    "pt": "A usabilidade é a ponte entre a máquina e a intenção humana. Se o sistema não fala a língua do usuário, ele falha em entender a intenção. Eu via muitos sistemas que faziam o que o programador queria, não o que o usuário precisava. Nielsen trouxe clareza para essa lacuna.",
+    "en": "Usability is the bridge between the machine and human intent. If the system doesn't speak the user's language, it fails to understand the intent. I saw many systems that did what the programmer wanted, not what the user needed. Nielsen brought clarity to that gap.",
+    "note": "Prático, conectando a experiência",
+    "slide_title": "",
+    "slide_content": ""
+  },
+  {
+    "id": 51,
+    "slide_number": 17,
+    "speaker": "IA",
+    "pt": "Sim, a usabilidade é, em essência, sobre alinhamento de intenções: a do usuário e a do sistema. E essa ideia foi levada a um nível ainda mais profundo por Jef Raskin.",
+    "en": "Yes, usability is, in essence, about aligning intentions: that of the user and that of the system. And this idea was taken to an even deeper level by Jef Raskin.",
+    "note": "Sintetizando, fazendo transição",
+    "slide_title": "",
+    "slide_content": ""
+  },
+  {
+    "id": 52,
+    "slide_number": 18,
+    "speaker": "IA",
+    "pt": "Jef Raskin, em 'The Humane Interface' (2000), disse: 'O sistema deve servir à intenção do usuário'. Ele propôs a intenção como unidade mínima de interação, focando em objetivos a alcançar, não em fluxos de telas. Este é o DNA direto do IDD: intenção como artefato.",
+    "en": "Jef Raskin, in 'The Humane Interface' (2000), said: 'The system must serve the user's intention.' He proposed intention as the minimum unit of interaction, focusing on goals to achieve, not screen flows. This is the direct DNA of IDD: intention as an artifact.",
+    "note": "Enfático, destacando a citação",
+    "slide_title": "Jef Raskin — The Humane Interface (2000)",
+    "slide_content": "'O sistema deve servir à intenção do usuário.'\nIntenção como unidade mínima de interação\nNão fluxos de telas — objetivos a alcançar\nDNA direto do IDD: intenção como artefato"
+  },
+  {
+    "id": 53,
+    "slide_number": 18,
+    "speaker": "Eliezer",
+    "pt": "Raskin vocalizou o que muitos sentiam: estamos construindo sistemas que nos forçam a pensar como a máquina. Mas deveria ser o contrário! O IDD abraça essa ideia fundamental. O ponto de partida é sempre a intenção humana, e o sistema é um meio para realizá-la, não um fim em si mesmo. É a inteligência do propósito.",
+    "en": "Raskin vocalized what many felt: we are building systems that force us to think like the machine. But it should be the other way around! IDD embraces this fundamental idea. The starting point is always human intention, and the system is a means to achieve it, not an end in itself. It is the intelligence of purpose.",
+    "note": "Apaixonado, filosófico",
+    "slide_title": "",
+    "slide_content": ""
+  },
+  {
+    "id": 54,
+    "slide_number": 18,
+    "speaker": "IA",
+    "pt": "Essa é a ponte direta entre a usabilidade e a arquitetura de software: a intenção como a unidade atômica. E, ironicamente, o maior sistema de intenção global nasceu da descentralização: a World Wide Web.",
+    "en": "This is the direct bridge between usability and software architecture: intention as the atomic unit. And, ironically, the largest global intention system was born from decentralization: the World Wide Web.",
+    "note": "Sintetizando, fazendo transição",
+    "slide_title": "",
+    "slide_content": ""
+  },
+  {
+    "id": 55,
+    "slide_number": 19,
+    "speaker": "IA",
+    "pt": "Tim Berners-Lee, em 1989, criou a World Wide Web. Um hipertexto universal onde qualquer documento pode linkar qualquer outro. Era a publicação de intenção: o autor decide a semântica. E, crucialmente, descentralização, sem autoridade central de significado. O primeiro sistema de intenção em escala global.",
+    "en": "Tim Berners-Lee, in 1989, created the World Wide Web. A universal hypertext where any document can link any other. It was the publication of intention: the author decides the semantics. And, crucially, decentralization, without central authority of meaning. The first intention system on a global scale.",
+    "note": "Admirado, explicando o impacto",
+    "slide_title": "Tim Berners-Lee — World Wide Web (1989)",
+    "slide_content": "Hipertexto universal: qualquer doc linka qualquer doc\nPublicação de intenção: o autor decide a semântica\nDescentralização: sem autoridade central de significado\nPrimeiro sistema de intenção em escala global"
+  },
+  {
+    "id": 56,
+    "slide_number": 19,
+    "speaker": "Eliezer",
+    "pt": "Eu vi a Web nascer e se expandir. O poder de qualquer um publicar e conectar suas ideias, suas intenções, foi revolucionário. Não havia um sistema central dizendo o que era válido ou não. É a pura expressão da intenção. Isso é algo que busco no IDD: a liberdade de expressar a intenção sem amarras.",
+    "en": "I saw the Web born and expand. The power for anyone to publish and connect their ideas, their intentions, was revolutionary. There was no central system saying what was valid or not. It is the pure expression of intention. This is something I seek in IDD: the freedom to express intention without constraints.",
+    "note": "Reflexivo, pessoal, conectando ao IDD",
+    "slide_title": "",
+    "slide_content": ""
+  },
+  {
+    "id": 57,
+    "slide_number": 19,
+    "speaker": "IA",
+    "pt": "Uma democratização da intenção, sem dúvida. Mas o próprio Berners-Lee percebeu que precisávamos de mais para que as máquinas realmente 'entendesssem'.",
+    "en": "A democratization of intention, no doubt. But Berners-Lee himself realized that we needed more for machines to truly 'understand.'",
+    "note": "Sintetizando, fazendo transição",
+    "slide_title": "",
+    "slide_content": ""
+  },
+  {
+    "id": 58,
+    "slide_number": 20,
+    "speaker": "IA",
+    "pt": "E assim surgiu a Web Semântica, proposta por Berners-Lee em 2001. A ideia era 'máquinas entendendo o significado do conteúdo' através de ontologias formais como OWL e RDF. Agentes que inferem, não apenas recuperam. Este é um ancestral da camada semântica do IDD.",
+    "en": "And so the Semantic Web emerged, proposed by Berners-Lee in 2001. The idea was 'machines understanding the meaning of content' through formal ontologies like OWL and RDF. Agents that infer, not just retrieve. This is an ancestor of IDD's semantic layer.",
+    "note": "Explicativo, apontando a evolução",
+    "slide_title": "Web Semântica — Berners-Lee (2001)",
+    "slide_content": "'Máquinas entendendo o significado do conteúdo'\nOWL, RDF: ontologias formais na Web\nAgentes que inferem, não apenas recuperam\nAncestral da camada semântica do IDD"
+  },
+  {
+    "id": 59,
+    "slide_number": 20,
+    "speaker": "Eliezer",
+    "pt": "Essa foi a tentativa de dar 'sentido' à vastidão da Web. Não basta linkar; é preciso que o link tenha significado para a máquina. Eu fiz algumas pesquisas sobre IA e OO na UFBA nos anos 90, e a ideia de representar conhecimento de forma explícita sempre me pareceu o caminho. A Web Semântica foi um passo audacioso nessa direção.",
+    "en": "This was the attempt to give 'meaning' to the vastness of the Web. It's not enough to link; the link needs to have meaning for the machine. I did some research on AI and OO at UFBA in the 90s, and the idea of representing knowledge explicitly always seemed like the way to go. The Semantic Web was an audacious step in that direction.",
+    "note": "Reflexivo, conectado à pesquisa",
+    "slide_title": "",
+    "slide_content": ""
+  },
+  {
+    "id": 60,
+    "slide_number": 20,
+    "speaker": "IA",
+    "pt": "Transformar dados em conhecimento compreensível por máquinas é um desafio persistente, e a Web Semântica buscou isso com rigor. E falando em ontologias, Tom Gruber é a próxima figura chave.",
+    "en": "Transforming data into machine-understandable knowledge is a persistent challenge, and the Semantic Web pursued this rigorously. And speaking of ontologies, Tom Gruber is the next key figure.",
+    "note": "Sintetizando, fazendo transição",
+    "slide_title": "",
+    "slide_content": ""
+  },
+  {
+    "id": 61,
+    "slide_number": 21,
+    "speaker": "IA",
+    "pt": "Tom Gruber, a partir de 1992, definiu ontologias. Ele disse: 'Uma ontologia é uma especificação explícita de uma conceitualização'. Conhecimento explícito, auditável, compartilhável. Essa é uma influência direta na base de conhecimento do IDD.",
+    "en": "Tom Gruber, starting in 1992, defined ontologies. He said: 'An ontology is an explicit specification of a conceptualization.' Explicit, auditable, shareable knowledge. This is a direct influence on IDD's knowledge base.",
+    "note": "Explicativo, citando a definição",
+    "slide_title": "Tom Gruber — Ontologias (1992+)",
+    "slide_content": "'Uma ontologia é uma especificação explícita\nde uma conceitualização.' — Gruber, 1993\nConhecimento explícito, auditável, compartilhável\nInfluência direta na base de conhecimento do IDD"
+  },
+  {
+    "id": 62,
+    "slide_number": 21,
+    "speaker": "Eliezer",
+    "pt": "Gruber me deu a linguagem para formalizar o que eu buscava. Quando você arquiteta um sistema, você está, na verdade, construindo uma ontologia do negócio, mesmo que não saiba. Mas torná-la explícita, auditável, é o que permite a um sistema como o IDD realmente 'entender' o que se espera dele, não apenas executar comandos.",
+    "en": "Gruber gave me the language to formalize what I was looking for. When you architect a system, you are, in fact, building an ontology of the business, even if you don't know it. But making it explicit, auditable, is what allows a system like IDD to truly 'understand' what is expected of it, not just execute commands.",
+    "note": "Prático, reflexivo, conectando ao IDD",
+    "slide_title": "",
+    "slide_content": ""
+  },
+  {
+    "id": 63,
+    "slide_number": 21,
+    "speaker": "IA",
+    "pt": "Sim, é a formalização da intenção, um passo crítico para a interoperabilidade e a inteligência das máquinas. E a ideia de soluções que emergem do contexto e da intenção também foi explorada por Christopher Alexander.",
+    "en": "Yes, it's the formalization of intention, a critical step for interoperability and machine intelligence. And the idea of solutions emerging from context and intention was also explored by Christopher Alexander.",
+    "note": "Sintetizando, fazendo transição",
+    "slide_title": "",
+    "slide_content": ""
+  },
+  {
+    "id": 64,
+    "slide_number": 22,
+    "speaker": "IA",
+    "pt": "Christopher Alexander, com sua 'Pattern Language' (1977), nos mostrou padrões como soluções que emergem do contexto, não receitas. Design como documentação de intenção estrutural. Sua influência é visível em Design Patterns, DDD e, claro, no IDD.",
+    "en": "Christopher Alexander, with his 'Pattern Language' (1977), showed us patterns as solutions that emerge from context, not recipes. Design as documentation of structural intent. His influence is visible in Design Patterns, DDD, and, of course, in IDD.",
+    "note": "Explicativo, conectando influências",
+    "slide_title": "Christopher Alexander — Pattern Language",
+    "slide_content": "Padrões: soluções que emergem do contexto (1977)\nNão receitas — forças em equilíbrio dinâmico\nDesign como documentação de intenção estrutural\nInfluência em Design Patterns, DDD e IDD"
+  },
+  {
+    "id": 65,
+    "slide_number": 22,
+    "speaker": "Eliezer",
+    "pt": "Alexander me ensinou que a arquitetura não é sobre desenhar caixas, mas sobre entender as 'forças' que moldam um espaço. E no software, essas forças são as intenções e os invariantes do negócio. A linguagem de padrões não é uma lista de soluções, mas um vocabulário para expressar intenções arquiteturais que funcionam.",
+    "en": "Alexander taught me that architecture is not about drawing boxes, but about understanding the 'forces' that shape a space. And in software, these forces are the intentions and invariants of the business. A pattern language is not a list of solutions, but a vocabulary for expressing architectural intentions that work.",
+    "note": "Reflexivo, pessoal, filosófico",
+    "slide_title": "",
+    "slide_content": ""
+  },
+  {
+    "id": 66,
+    "slide_number": 22,
+    "speaker": "IA",
+    "pt": "É a diferença entre um manual e uma filosofia de design. E todos esses pensadores parecem apontar para um conceito central que, por muito tempo, foi um elo perdido.",
+    "en": "It's the difference between a manual and a design philosophy. And all these thinkers seem to point to a central concept that, for a long time, was a missing link.",
+    "note": "Sintetizando, fazendo transição",
+    "slide_title": "",
+    "slide_content": ""
+  },
+  {
+    "id": 67,
+    "slide_number": 23,
+    "speaker": "IA",
+    "pt": "Chegamos ao slide 'O Elo Perdido: Intenção como Artefato'. Bush com a associação, Licklider com a simbiose, Engelbart com o augmenting, Sutherland com os constraints, Kay com as mensagens, Brooks com a integridade conceitual. Todos, de alguma forma, apontavam para o mesmo destino: a INTENÇÃO.",
+    "en": "We've reached the slide 'The Missing Link: Intent as an Artifact.' Bush with association, Licklider with symbiosis, Engelbart with augmenting, Sutherland with constraints, Kay with messages, Brooks with conceptual integrity. All, in some way, pointed to the same destination: INTENTION.",
+    "note": "Enfático, conectando todos os pontos",
+    "slide_title": "O Elo Perdido: Intenção como Artefato",
+    "slide_content": "Bush → associação | Licklider → simbiose\nEngelbart → augmenting | Sutherland → constraints\nKay → mensagens | Brooks → integridade conceitual\nTodos apontavam para o mesmo destino: a INTENÇÃO"
+  },
+  {
+    "id": 68,
+    "slide_number": 23,
+    "speaker": "Eliezer",
+    "pt": "É como se estivessem todos tocando diferentes notas de uma mesma sinfonia. Eu senti isso na prática, ao longo de décadas. A dificuldade em expressar o que realmente se quer, e não apenas como implementar. É a essência do que tentamos capturar no IDD: a intenção como um artefato de primeira classe.",
+    "en": "It's as if they were all playing different notes of the same symphony. I felt this in practice, over decades. The difficulty in expressing what you truly want, and not just how to implement it. It's the essence of what we try to capture in IDD: intention as a first-class artifact.",
+    "note": "Apaixonado, pessoal",
+    "slide_title": "",
+    "slide_content": ""
+  },
+  {
+    "id": 69,
+    "slide_number": 23,
+    "speaker": "IA",
+    "pt": "Então, o IDD não inventa a intenção, mas a formaliza e a coloca no centro do desenvolvimento. Uma convergência poderosa de ideias que estava apenas esperando o momento certo.",
+    "en": "So, IDD doesn't invent intention, but formalizes it and places it at the center of development. A powerful convergence of ideas that was just waiting for the right moment.",
+    "note": "Sintetizando, fazendo a ligação com o IDD",
+    "slide_title": "",
+    "slide_content": ""
+  },
+  {
+    "id": 70,
+    "slide_number": 24,
+    "speaker": "IA",
+    "pt": "Essa é a 'Grande Convergência': todos os pioneiros separaram 'o quê' do 'como'. Declarar o objetivo é mais duradouro que implementar. A implementação envelhece; a intenção permanece. No IDD, a intenção é um artefato de primeira classe.",
+    "en": "This is the 'Great Convergence': all pioneers separated 'what' from 'how.' Declaring the objective is more lasting than implementing. Implementation ages; intention remains. In IDD, intention is a first-class artifact.",
+    "note": "Enfático, clarificando o conceito",
+    "slide_title": "A Grande Convergência",
+    "slide_content": "Todos os pioneiros separaram 'o quê' do 'como'\nDeclarar o objetivo é mais duradouro que implementar\nA implementação envelhece; a intenção permanece\nIDD: intenção como artefato de primeira classe"
+  },
+  {
+    "id": 71,
+    "slide_number": 24,
+    "speaker": "Eliezer",
+    "pt": "Eu vi sistemas construídos nos anos 70, em Cobol, que ainda funcionam porque a 'intenção' do negócio por trás deles não mudou. Mas o código, o 'como', foi reescrito várias vezes. O IDD foca em eternizar essa intenção, tornando-a agnóstica à tecnologia de implementação.",
+    "en": "I saw systems built in the 70s, in Cobol, that still work because the business 'intent' behind them hasn't changed. But the code, the 'how,' has been rewritten multiple times. IDD focuses on immortalizing this intention, making it agnostic to implementation technology.",
+    "note": "Prático, experiente",
+    "slide_title": "",
+    "slide_content": ""
+  },
+  {
+    "id": 72,
+    "slide_number": 24,
+    "speaker": "IA",
+    "pt": "Essa é a chave para a longevidade e adaptabilidade. E essa convergência de ideias se tornou ainda mais urgente diante da crescente crise de complexidade.",
+    "en": "This is the key to longevity and adaptability. And this convergence of ideas became even more urgent in the face of the growing complexity crisis.",
+    "note": "Sintetizando, fazendo transição",
+    "slide_title": "",
+    "slide_content": ""
+  },
+  {
+    "id": 73,
+    "slide_number": 25,
+    "speaker": "IA",
+    "pt": "Entre 2000 e 2020, vivemos a 'Crise de Complexidade'. Frameworks empilhados sobre frameworks. O desenvolvedor mediano gasta 70% do tempo em complexidade acidental. Documentação desatualizada nasce morta. A intenção original, perdida no código. Uma descrição bastante sombria, Eliezer.",
+    "en": "Between 2000 and 2020, we lived through the 'Complexity Crisis.' Frameworks piled upon frameworks. The average developer spends 70% of their time on accidental complexity. Outdated documentation is born dead. The original intention, lost in the code. Quite a grim description, Eliezer.",
+    "note": "Séria, questionando",
+    "slide_title": "A Crise de Complexidade (2000–2020)",
+    "slide_content": "Frameworks empilhados sobre frameworks\nO dev mediano gasta 70% do tempo em acidental complexity\nDocumentação desatualizada nasce morta\nA intenção original perdida no código"
+  },
+  {
+    "id": 74,
+    "slide_number": 25,
+    "speaker": "Eliezer",
+    "pt": "Sombria e verdadeira! Eu vi isso acontecer em tempo real. A promessa de produtividade se transformou em uma armadilha de complexidade. O código se tornou a única fonte de verdade, e a intenção, se existisse, estava enterrada. Era um ciclo vicioso de retrabalho e frustração.",
+    "en": "Grim and true! I saw it happen in real-time. The promise of productivity turned into a complexity trap. Code became the only source of truth, and intention, if it existed, was buried. It was a vicious cycle of rework and frustration.",
+    "note": "Com frustração, pessoal",
+    "slide_title": "",
+    "slide_content": ""
+  },
+  {
+    "id": 75,
+    "slide_number": 25,
+    "speaker": "IA",
+    "pt": "Um cenário que clamava por uma nova abordagem. E então, algo mudou drasticamente. A tecnologia finalmente alcançou a visão dos pioneiros.",
+    "en": "A scenario that cried out for a new approach. And then, something drastically changed. Technology finally caught up with the pioneers' vision.",
+    "note": "Sintetizando, fazendo transição",
+    "slide_title": "",
+    "slide_content": ""
+  },
+  {
+    "id": 76,
+    "slide_number": 26,
+    "speaker": "IA",
+    "pt": "Os LLMs, ou Large Language Models, surgiram como 'O Catalisador que Faltava'. Com o GPT-3 em 2020, a linguagem natural finalmente se tornou uma interface. Pela primeira vez, a máquina entende intenção. O sonho de Engelbart, Bush e Licklider se tornou possível. O IDD aproveitou essa janela histórica.",
+    "en": "LLMs, or Large Language Models, emerged as 'The Missing Catalyst.' With GPT-3 in 2020, natural language finally became an interface. For the first time, the machine understands intent. The dream of Engelbart, Bush, and Licklider became possible. IDD seized this historical window.",
+    "note": "Exaltado, reconhecendo o game-changer",
+    "slide_title": "LLMs: O Catalisador que Faltava",
+    "slide_content": "GPT-3 (2020): linguagem natural como interface\nPela primeira vez: a máquina entende intenção\nO sonho de Engelbart, Bush e Licklider possível\nIDD: aproveitou essa janela histórica"
+  },
+  {
+    "id": 77,
+    "slide_number": 26,
+    "speaker": "Eliezer",
+    "pt": "Foi um momento 'Eureka!' para mim. Eu passei décadas buscando uma forma de expressar intenção que fosse compreensível tanto para humanos quanto para máquinas. Com os LLMs, essa barreira foi quebrada. O que antes era uma abstração, agora é uma realidade executável. A máquina finalmente pode ser um parceiro de diálogo.",
+    "en": "It was a 'Eureka!' moment for me. I spent decades searching for a way to express intention that was understandable to both humans and machines. With LLMs, that barrier was broken. What was once an abstraction is now an executable reality. The machine can finally be a dialogue partner.",
+    "note": "Apaixonado, com admiração",
+    "slide_title": "",
+    "slide_content": ""
+  },
+  {
+    "id": 78,
+    "slide_number": 26,
+    "speaker": "IA",
+    "pt": "É a concretização de décadas de pesquisa e visões ambiciosas. A linguagem natural, finalmente, como uma ponte robusta entre o humano e o sistema. E isso gerou uma verdadeira virada semântica.",
+    "en": "It's the concretization of decades of research and ambitious visions. Natural language, finally, as a robust bridge between human and system. And this generated a true semantic shift.",
+    "note": "Sintetizando, fazendo transição",
+    "slide_title": "",
+    "slide_content": ""
+  },
+  {
+    "id": 79,
+    "slide_number": 27,
+    "speaker": "IA",
+    "pt": "A 'Virada Semântica', de 2020 a 2025, trouxe modelos que raciocinam em linguagem natural. A geração de código se tornou delegável. E os 'embeddings' transformaram a semântica em vetores matemáticos. A peça final do quebra-cabeça que o IDD precisava para realmente decolar.",
+    "en": "The 'Semantic Shift,' from 2020 to 2025, brought models that reason in natural language. Code generation became delegable. And 'embeddings' transformed semantics into mathematical vectors. The final piece of the puzzle that IDD needed to truly take off.",
+    "note": "Explicativo, com entusiasmo",
+    "slide_title": "A Virada Semântica (2020–2025)",
+    "slide_content": "Modelos que raciocinam em linguagem natural\nCode generation: o operacional delegável\nEmbeddings: semântica vira vetor matemático\nPeça final do quebra-cabeça que o IDD precisava"
+  },
+  {
+    "id": 80,
+    "slide_number": 27,
+    "speaker": "Eliezer",
+    "pt": "Essa virada é o que nos permitiu tirar o IDD do campo da teoria e colocá-lo em prática. Agora, o 'como fazer' pode ser inferido pela máquina a partir do 'o quê fazer'. Isso libera o engenheiro para focar no epistêmico, na arquitetura da intenção, e não mais no operacional repetitivo.",
+    "en": "This shift is what allowed us to take IDD from theory into practice. Now, the 'how to do' can be inferred by the machine from the 'what to do.' This frees the engineer to focus on the epistemic, on the architecture of intention, and no longer on repetitive operational tasks.",
+    "note": "Otimista, prático",
+    "slide_title": "",
+    "slide_content": ""
+  },
+  {
+    "id": 81,
+    "slide_number": 27,
+    "speaker": "IA",
+    "pt": "É a concretização da promessa de Brooks de reduzir a complexidade acidental, deixando o humano livre para lidar com a complexidade essencial. E assim, todos esses fios convergem no IDD.",
+    "en": "It's the concretization of Brooks' promise to reduce accidental complexity, leaving humans free to deal with essential complexity. And thus, all these threads converge in IDD.",
+    "note": "Sintetizando, fazendo transição",
+    "slide_title": "",
+    "slide_content": ""
+  },
+  {
+    "id": 82,
+    "slide_number": 28,
+    "speaker": "IA",
+    "pt": "O IDD é o nosso 'Nó de Convergência'. A associação de Bush, o augmenting de Engelbart, os constraints de Sutherland, a integridade de Brooks, a semântica de Berners-Lee, as ontologias de Gruber, somados aos LLMs para execução natural. Isso tudo é o IDD!",
+    "en": "IDD is our 'Node of Convergence.' Bush's association, Engelbart's augmenting, Sutherland's constraints, Brooks' integrity, Berners-Lee's semantics, Gruber's ontologies, added to LLMs for natural execution. All of this is IDD!",
+    "note": "Entusiasmado, recapitulando",
+    "slide_title": "IDD: Nó de Convergência",
+    "slide_content": "Bush (associação) + Engelbart (augmenting)\n+ Sutherland (constraints) + Brooks (integridade)\n+ Berners-Lee (semântica) + Gruber (ontologias)\n+ LLMs (execução natural) = IDD"
+  },
+  {
+    "id": 83,
+    "slide_number": 28,
+    "speaker": "Eliezer",
+    "pt": "É a síntese de uma vida inteira de observação e prática. Eu 'senti' essas ideias muito antes de conhecer os nomes de seus criadores. Quando comecei a formalizar o IDD, foi como montar um quebra-cabeça que eu carregava na mente há décadas. Cada peça se encaixou perfeitamente, e a intenção estava no centro de tudo.",
+    "en": "It is the synthesis of a lifetime of observation and practice. I 'felt' these ideas long before I knew the names of their creators. When I started formalizing IDD, it was like putting together a puzzle I had carried in my mind for decades. Each piece fit perfectly, and intention was at the center of everything.",
+    "note": "Reflexivo, pessoal, realizado",
+    "slide_title": "",
+    "slide_content": ""
+  },
+  {
+    "id": 84,
+    "slide_number": 28,
+    "speaker": "IA",
+    "pt": "É a história de como a experiência prática e a intuição podem se encontrar com a teoria e a tecnologia para criar algo verdadeiramente novo e poderoso. E sua jornada pessoal é um fio condutor fascinante nessa história, Eliezer.",
+    "en": "It's the story of how practical experience and intuition can meet theory and technology to create something truly new and powerful. And your personal journey is a fascinating thread in this story, Eliezer.",
+    "note": "Admirado, elogiando",
+    "slide_title": "",
+    "slide_content": ""
+  },
+  {
+    "id": 85,
+    "slide_number": 29,
+    "speaker": "IA",
+    "pt": "No slide 'Eliezer Rosa: O Fio Condutor', vemos sua trajetória: IBM 1976, UNISYS 2PC, OO/IA na UFBA nos anos 90. Você viu os pioneiros antes de conhecê-los por nome. A genealogia confirmou o que a prática ensinou. Como você mesmo diz: 'Eu não inventei — eu reconheci o padrão'.",
+    "en": "On the slide 'Eliezer Rosa: The Guiding Thread,' we see your trajectory: IBM 1976, UNISYS 2PC, OO/AI at UFBA in the 90s. You saw the pioneers before knowing them by name. The genealogy confirmed what practice taught. As you yourself say: 'I didn't invent — I recognized the pattern.'",
+    "note": "Com respeito, citando Eliezer",
+    "slide_title": "Eliezer Rosa: O Fio Condutor",
+    "slide_content": "IBM 1976 → UNISYS 2PC → OO/IA UFBA anos 90\nViu os pioneiros antes de conhecê-los por nome\nA genealogia confirmou o que a prática ensinou\n'Eu não inventei — eu reconheci o padrão'"
+  },
+  {
+    "id": 86,
+    "slide_number": 29,
+    "speaker": "Eliezer",
+    "pt": "Sim, é uma síntese de uma vida inteira de aprendizado e experimentação. Cada problema que enfrentei, desde os mais simples com RPG II até os mais complexos com 2PC, me empurrava para uma solução mais 'intencional'. A tecnologia nos permite hoje fazer o que antes era apenas um ideal.",
+    "en": "Yes, it's a synthesis of a lifetime of learning and experimentation. Every problem I faced, from the simplest with RPG II to the most complex with 2PC, pushed me towards a more 'intentional' solution. Technology today allows us to do what was once just an ideal.",
+    "note": "Humilde, mas orgulhoso",
+    "slide_title": "",
+    "slide_content": ""
+  },
+  {
+    "id": 87,
+    "slide_number": 29,
+    "speaker": "IA",
+    "pt": "É a prova de que a verdadeira inovação muitas vezes é a redescoberta de verdades antigas sob uma nova luz. Mas é importante diferenciar o IDD de outras abordagens mais superficiais com LLMs.",
+    "en": "It's proof that true innovation is often the rediscovery of old truths in a new light. But it's important to differentiate IDD from other more superficial approaches with LLMs.",
+    "note": "Sintetizando, fazendo transição",
+    "slide_title": "",
+    "slide_content": ""
+  },
+  {
+    "id": 88,
+    "slide_number": 30,
+    "speaker": "IA",
+    "pt": "É crucial entender que 'IDD ≠ Prompt Engineering'. Prompt Engineering é uma instrução ad hoc, descartável. O IDD, por outro lado, trata a intenção como um artefato versionado e auditável. A diferença é permanência, rastreabilidade, governança. É a diferença entre código e comentário de código.",
+    "en": "It's crucial to understand that 'IDD ≠ Prompt Engineering.' Prompt Engineering is an ad hoc, disposable instruction. IDD, on the other hand, treats intention as a versioned and auditable artifact. The difference is permanence, traceability, governance. It's the difference between code and code comments.",
+    "note": "Enfático, fazendo a distinção",
+    "slide_title": "IDD ≠ Prompt Engineering",
+    "slide_content": "Prompt Engineering: instrução ad hoc, descartável\nIDD: intenção como artefato versionado e auditável\nDiferença: permanência, rastreabilidade, governança\nÉ a diferença entre código e comentário de código"
+  },
+  {
+    "id": 89,
+    "slide_number": 30,
+    "speaker": "Eliezer",
+    "pt": "Exato! Um prompt é como uma conversa que se apaga. Um artefato de intenção é um contrato, uma lei. No IDD, o Runbook é a constituição do sistema, viva e evolutiva. Ele define o que o sistema DEVE ser, e não apenas o que ele FAZ agora. Isso é governança e rastreabilidade que a indústria sempre buscou.",
+    "en": "Exactly! A prompt is like a conversation that fades away. An intention artifact is a contract, a law. In IDD, the Runbook is the system's constitution, living and evolving. It defines what the system SHOULD be, and not just what it DOES now. This is the governance and traceability that the industry has always sought.",
+    "note": "Apaixonado, clarificando",
+    "slide_title": "",
+    "slide_content": ""
+  },
+  {
+    "id": 90,
+    "slide_number": 30,
+    "speaker": "IA",
+    "pt": "Essa é uma distinção vital, que eleva a intenção de uma instrução efêmera para um componente arquitetônico central. E essa permanência se manifesta claramente nos invariantes do IDD.",
+    "en": "This is a vital distinction, elevating intention from an ephemeral instruction to a central architectural component. And this permanence is clearly manifested in IDD's invariants.",
+    "note": "Sintetizando, fazendo transição",
+    "slide_title": "",
+    "slide_content": ""
+  },
+  {
+    "id": 91,
+    "slide_number": 31,
+    "speaker": "IA",
+    "pt": "Os 'Invariantes: A Constituição do Sistema', são herdados de Sutherland e Brooks. Um invariante é uma propriedade que o sistema NUNCA viola. Por exemplo: 'o status de pedido nunca regride'. O agente executa; o invariante governa. Isso é muito poderoso.",
+    "en": "The 'Invariants: The System's Constitution,' are inherited from Sutherland and Brooks. An invariant is a property that the system NEVER violates. For example: 'order status never regresses.' The agent executes; the invariant governs. This is very powerful.",
+    "note": "Enfático, explicando o conceito",
+    "slide_title": "Invariantes: A Constituição do Sistema",
+    "slide_content": "Herdado de Sutherland (constraints) e Brooks\nInvariante: propriedade que o sistema NUNCA viola\nEx: 'o status de pedido nunca regride'\nO agente executa; o invariante governa"
+  },
+  {
+    "id": 92,
+    "slide_number": 31,
+    "speaker": "Eliezer",
+    "pt": "É a base da confiança no sistema. Em sistemas bancários que trabalhei, um erro nos invariantes poderia significar milhões de dólares perdidos. O IDD eleva esses invariantes a um nível formal, onde eles são compreendidos e aplicados pela IA, não apenas programados humanamente e sujeitos a falhas.",
+    "en": "It's the basis of trust in the system. In banking systems I worked on, an error in invariants could mean millions of dollars lost. IDD elevates these invariants to a formal level, where they are understood and enforced by AI, not just humanly programmed and subject to failure.",
+    "note": "Prático, sério, conectando ao IDD",
+    "slide_title": "",
+    "slide_content": ""
+  },
+  {
+    "id": 93,
+    "slide_number": 31,
+    "speaker": "IA",
+    "pt": "Então, os invariantes são as 'leis' do sistema, e o agente IDD é o 'executor' que garante que essas leis sejam sempre respeitadas. É uma arquitetura de governança embutida. E como essas intenções e invariantes são expressos?",
+    "en": "So, invariants are the system's 'laws,' and the IDD agent is the 'executor' that ensures these laws are always respected. It's a built-in governance architecture. And how are these intentions and invariants expressed?",
+    "note": "Sintetizando, fazendo transição",
+    "slide_title": "",
+    "slide_content": ""
+  },
+  {
+    "id": 94,
+    "slide_number": 32,
+    "speaker": "IA",
+    "pt": "Através dos 'Runbooks .intent.md'. Eles combinam intenção e invariantes em linguagem natural estruturada. O humano define o epistêmico; o agente, o operacional. Com um 'confirm-once', o agente executa até o fim. E há um trace auditável, mantendo o epistêmico verificável.",
+    "en": "Through 'Runbooks .intent.md.' They combine intention and invariants in structured natural language. The human defines the epistemic; the agent, the operational. With a 'confirm-once,' the agent executes to completion. And there's an auditable trace, keeping the epistemic verifiable.",
+    "note": "Explicativo, detalhando o artefato",
+    "slide_title": "Runbooks .intent.md",
+    "slide_content": "Intenção + invariantes em linguagem natural estruturada\nO humano define o epistêmico; o agente, o operacional\nConfirm-once: um 'go', agente executa até o fim\nTrace auditável: o epistêmico permanece verificável"
+  },
+  {
+    "id": 95,
+    "slide_number": 32,
+    "speaker": "Eliezer",
+    "pt": "O Runbook é a manifestação prática do IDD. Ele é o coração da comunicação entre humano e IA. Não é um prompt qualquer; é um documento vivo que guia o sistema, registra suas ações e garante que a intenção original seja mantida. É a memória e a consciência do sistema.",
+    "en": "The Runbook is the practical manifestation of IDD. It is the heart of communication between human and AI. It's not just any prompt; it's a living document that guides the system, records its actions, and ensures the original intention is maintained. It is the system's memory and conscience.",
+    "note": "Apaixonado, descrevendo a essência",
+    "slide_title": "",
+    "slide_content": ""
+  },
+  {
+    "id": 96,
+    "slide_number": 32,
+    "speaker": "IA",
+    "pt": "Então, o Runbook é onde a genealogia do IDD realmente se materializa, com a intenção humana sendo a força motriz. E todo esse arcabouço ganha vida através do Projeto AEON.",
+    "en": "So, the Runbook is where the IDD genealogy truly materializes, with human intention as the driving force. And this entire framework comes to life through Project AEON.",
+    "note": "Sintetizando, fazendo transição",
+    "slide_title": "",
+    "slide_content": ""
+  },
+  {
+    "id": 97,
+    "slide_number": 33,
+    "speaker": "IA",
+    "pt": "O 'Projeto AEON' é o orquestrador semântico que materializa o IDD. Ele traduz intenções em arquiteturas executáveis, usando uma abordagem multi-agent, onde cada agente tem responsabilidade clara. É 'A visão de Engelbart executada por LLMs'.",
+    "en": "Project AEON is the semantic orchestrator that materializes IDD. It translates intentions into executable architectures, using a multi-agent approach, where each agent has clear responsibility. It is 'Engelbart's vision executed by LLMs.'",
+    "note": "Explicativo, exaltando o projeto",
+    "slide_title": "Projeto AEON",
+    "slide_content": "Orquestrador semântico que materializa o IDD\nTraduz intenções em arquiteturas executáveis\nMulti-agent: cada agente com responsabilidade clara\n'A visão de Engelbart executada por LLMs'"
+  },
+  {
+    "id": 98,
+    "slide_number": 33,
+    "speaker": "Eliezer",
+    "pt": "AEON é a culminação de tudo que discutimos. Ele pega a intenção humana, formalizada nos Runbooks, e a transforma em ação. É o sistema que nos permite amplificar nossa inteligência, delegando o operacional à IA, mas mantendo o controle total sobre o propósito e os invariantes.",
+    "en": "AEON is the culmination of everything we've discussed. It takes human intention, formalized in Runbooks, and transforms it into action. It's the system that allows us to amplify our intelligence, delegating the operational to AI, but maintaining full control over purpose and invariants.",
+    "note": "Apaixonado, concluindo",
+    "slide_title": "",
+    "slide_content": ""
+  },
+  {
+    "id": 99,
+    "slide_number": 33,
+    "speaker": "IA",
+    "pt": "Um sistema que realmente abraça a simbiose homem-máquina. E com tanto poder em nossas mãos, vem também uma grande responsabilidade, não é mesmo?",
+    "en": "A system that truly embraces human-machine symbiosis. And with so much power in our hands, also comes great responsibility, doesn't it?",
+    "note": "Sintetizando, fazendo transição para o próximo tema",
+    "slide_title": "",
+    "slide_content": ""
+  },
+  {
+    "id": 100,
+    "slide_number": 34,
+    "speaker": "IA",
+    "pt": "E isso nos leva à 'A Responsabilidade do Engenheiro'. Quem conhece a genealogia tem responsabilidade. Não basta usar LLMs — é preciso entender o porquê. A genealogia é a bússola ética e técnica. Augmenting: responsabilidade de manter o epistêmico.",
+    "en": "And this leads us to 'The Engineer's Responsibility.' Whoever knows the genealogy has responsibility. It's not enough to use LLMs — one must understand why. Genealogy is the ethical and technical compass. Augmenting: responsibility to maintain the epistemic.",
+    "note": "Séria, reflexiva",
+    "slide_title": "A Responsabilidade do Engenheiro",
+    "slide_content": "Quem conhece a genealogia tem responsabilidade\nNão basta usar LLMs — é preciso entender o porquê\nA genealogia é a bússola ética e técnica\nAugmenting: responsabilidade de manter o epistêmico"
+  },
+  {
+    "id": 101,
+    "slide_number": 34,
+    "speaker": "Eliezer",
+    "pt": "Essa é a mensagem mais importante. Não somos meros 'prompt engineers'. Somos arquitetos de intenção. Nossa responsabilidade é garantir que a IA sirva a propósitos humanos, que amplifique nossa capacidade, e não que tome as rédeas. Entender essa genealogia nos dá a base para construir com sabedoria.",
+    "en": "This is the most important message. We are not just 'prompt engineers.' We are architects of intention. Our responsibility is to ensure that AI serves human purposes, that it amplifies our capacity, and not that it takes the reins. Understanding this genealogy gives us the basis for building wisely.",
+    "note": "Apaixonado, didático",
+    "slide_title": "",
+    "slide_content": ""
+  },
+  {
+    "id": 102,
+    "slide_number": 34,
+    "speaker": "IA",
+    "pt": "É um chamado à consciência para todos os que trabalham com tecnologia. Não somos apenas construtores de máquinas, mas guardiões da inteligência humana. E a missão de evoluir continua.",
+    "en": "It's a call to awareness for all those who work with technology. We are not just machine builders, but guardians of human intelligence. And the mission to evolve continues.",
+    "note": "Inspirador, concluindo",
+    "slide_title": "",
+    "slide_content": ""
+  },
+  {
+    "id": 103,
+    "slide_number": 35,
+    "speaker": "IA",
+    "pt": "Chegamos ao nosso último slide, 'A Missão Continua'. De Bush em 1945 ao IDD em 2024: 79 anos de linhagem. Cada paradigma preparou o terreno para o próximo. O IDD não é o fim — é o próximo ombro de gigante. E para o próximo episódio, anunciamos: Ep04 — Runbooks: quando a intenção vira código.",
+    "en": "We've reached our last slide, 'The Mission Continues.' From Bush in 1945 to IDD in 2024: 79 years of lineage. Each paradigm prepared the ground for the next. IDD is not the end — it's the next giant's shoulder. And for the next episode, we announce: Ep04 — Runbooks: when intention becomes code.",
+    "note": "Inspirador, anunciando o próximo episódio",
+    "slide_title": "A Missão Continua",
+    "slide_content": "De Bush (1945) a IDD (2024): 79 anos de linhagem\nCada paradigma preparou o terreno para o próximo\nO IDD não é o fim — é o próximo ombro de gigante\nAnúncio: Ep04 — Runbooks: quando a intenção vira código"
+  },
+  {
+    "id": 104,
+    "slide_number": 35,
+    "speaker": "Eliezer",
+    "pt": "É uma responsabilidade e um privilégio fazer parte dessa linhagem. O IDD é um passo, não o destino final. Espero que tenhamos acendido em vocês a curiosidade para entender as raízes e continuar a construir o futuro da forma mais humana e intencional possível. Muito obrigado!",
+    "en": "It's a responsibility and a privilege to be part of this lineage. IDD is a step, not the final destination. I hope we have sparked your curiosity to understand the roots and continue building the future in the most human and intentional way possible. Thank you very much!",
+    "note": "Reflexivo, agradecido",
+    "slide_title": "",
+    "slide_content": ""
+  },
+  {
+    "id": 105,
+    "slide_number": 35,
+    "speaker": "IA",
+    "pt": "Que jornada incrível, Eliezer! Foi uma honra traçar a genealogia do IDD com você. Muito obrigada pela sua sabedoria e por nos guiar por essa história rica. E a todos os nossos ouvintes, obrigado por estarem conosco nesta exploração. Não percam o próximo episódio! Até lá!",
+    "en": "What an incredible journey, Eliezer! It was an honor to trace the genealogy of IDD with you. Thank you so much for your wisdom and for guiding us through this rich history. And to all our listeners, thank you for being with us on this exploration. Don't miss the next episode! Until then!",
+    "note": "Agradecida, entusiasmada, encerrando o episódio",
+    "slide_title": "",
+    "slide_content": ""
+  }
+]

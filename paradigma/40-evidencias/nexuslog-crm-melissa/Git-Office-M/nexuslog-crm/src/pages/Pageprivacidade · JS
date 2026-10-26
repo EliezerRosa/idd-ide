@@ -1,0 +1,105 @@
+// src/pages/PagePrivacidade.js
+export default function PagePrivacidade() {
+  const hoje = new Date().toLocaleDateString('pt-BR', { day: '2-digit', month: 'long', year: 'numeric' });
+
+  return (
+    <div style={{ maxWidth: 720, margin: '0 auto', padding: '24px 16px 60px' }}>
+      <style>{`
+        .priv h1 { font-family: 'Syne', sans-serif; font-size: 26px; font-weight: 800; color: #111827; margin-bottom: 6px; }
+        .priv .sub { font-size: 13px; color: #9ca3af; margin-bottom: 32px; }
+        .priv h2 { font-family: 'Syne', sans-serif; font-size: 15px; font-weight: 700; color: #111827; margin: 28px 0 8px; }
+        .priv p  { font-size: 14px; color: #4b5563; line-height: 1.7; margin-bottom: 10px; }
+        .priv ul { padding-left: 20px; margin-bottom: 10px; }
+        .priv ul li { font-size: 14px; color: #4b5563; line-height: 1.7; margin-bottom: 4px; }
+        .priv .card { background: #fff; border: 1px solid #e5e7eb; border-radius: 12px; padding: 24px; margin-bottom: 8px; }
+        .priv .tag { display: inline-block; background: #fdecea; color: #C10A25; font-size: 11px; font-weight: 600; padding: 3px 10px; border-radius: 20px; margin-bottom: 16px; }
+        .priv .divider { height: 1px; background: #f3f4f6; margin: 8px 0; }
+        .priv a { color: #C10A25; text-decoration: none; }
+      `}</style>
+
+      <div className="priv">
+        <span className="tag">Política de Privacidade</span>
+        <h1>Nexus Log CRM</h1>
+        <p className="sub">Última atualização: {hoje}</p>
+
+        <div className="card">
+          <h2>1. Quem somos</h2>
+          <p>
+            Este aplicativo é operado pela <strong>Nexus Log</strong>, Representante Oficial HELI no Espírito Santo,
+            e destina-se exclusivamente ao uso interno da equipe comercial para gestão de propostas,
+            orçamentos e visitas a clientes.
+          </p>
+        </div>
+
+        <div className="card">
+          <h2>2. Quais dados coletamos</h2>
+          <p>Para o funcionamento do app, coletamos:</p>
+          <ul>
+            <li><strong>Dados de acesso:</strong> e-mail e senha dos usuários cadastrados (equipe interna)</li>
+            <li><strong>Dados comerciais:</strong> nome de empresas clientes, nome e telefone do contato, e-mail</li>
+            <li><strong>Dados operacionais:</strong> propostas, orçamentos, datas de visitas e anotações comerciais</li>
+          </ul>
+          <p>Não coletamos dados sensíveis como CPF, dados bancários ou informações de saúde.</p>
+        </div>
+
+        <div className="card">
+          <h2>3. Como usamos os dados</h2>
+          <p>Os dados coletados são usados exclusivamente para:</p>
+          <ul>
+            <li>Gerenciar o relacionamento comercial com clientes da Nexus Log</li>
+            <li>Organizar propostas e orçamentos de empilhadeiras HELI</li>
+            <li>Agendar e registrar visitas comerciais</li>
+            <li>Gerar relatórios internos de pipeline de vendas</li>
+          </ul>
+          <p><strong>Não vendemos, compartilhamos ou cedemos seus dados a terceiros.</strong></p>
+        </div>
+
+        <div className="card">
+          <h2>4. Onde os dados são armazenados</h2>
+          <p>
+            Os dados são armazenados de forma segura no <strong>Supabase</strong> (PostgreSQL),
+            em servidores localizados em <strong>São Paulo, Brasil</strong>, em conformidade com a LGPD.
+            O acesso é protegido por autenticação e cada usuário acessa apenas seus próprios dados.
+          </p>
+        </div>
+
+        <div className="card">
+          <h2>5. Seus direitos (LGPD)</h2>
+          <p>Conforme a Lei Geral de Proteção de Dados (Lei nº 13.709/2018), você tem direito a:</p>
+          <ul>
+            <li>Confirmar a existência de tratamento dos seus dados</li>
+            <li>Acessar, corrigir ou atualizar seus dados</li>
+            <li>Solicitar a exclusão dos seus dados</li>
+            <li>Revogar seu consentimento a qualquer momento</li>
+          </ul>
+          <p>Para exercer esses direitos, entre em contato pelo e-mail abaixo.</p>
+        </div>
+
+        <div className="card">
+          <h2>6. Segurança</h2>
+          <p>
+            Adotamos medidas técnicas de segurança incluindo criptografia de senhas,
+            controle de acesso por autenticação, conexões HTTPS e políticas de
+            segurança em nível de banco de dados (Row Level Security).
+          </p>
+        </div>
+
+        <div className="card">
+          <h2>7. Contato</h2>
+          <p>
+            Em caso de dúvidas sobre esta política ou para exercer seus direitos,
+            entre em contato com a Nexus Log:
+          </p>
+          <ul>
+            <li>Site: <a href="https://nexuslogin.com.br" target="_blank" rel="noreferrer">nexuslogin.com.br</a></li>
+            <li>Estado: Espírito Santo, Brasil</li>
+          </ul>
+        </div>
+
+        <div style={{ marginTop: 24, padding: '16px', background: '#f9fafb', borderRadius: 8, fontSize: 12, color: '#9ca3af', textAlign: 'center' }}>
+          Esta política pode ser atualizada periodicamente. A data da última atualização está indicada no topo desta página.
+        </div>
+      </div>
+    </div>
+  );
+}

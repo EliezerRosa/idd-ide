@@ -1,0 +1,1608 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>IDD · Ep03 — A Genealogia do IDD</title>
+<style>
+/* ── Reset & theme ──────────────────────────────────────────────── */
+:root {
+  --bg:       #0f172a;
+  --bg-card:  #1e293b;
+  --bg-dark:  #0a1020;
+  --fg:       #e2e8f0;
+  --muted:    #64748b;
+  --border:   #2d3f55;
+  --eliezer:  #f59e0b;
+  --eliezer-bg: rgba(245,158,11,0.10);
+  --ia:       #a78bfa;
+  --ia-bg:    rgba(167,139,250,0.10);
+  --accent2:  #34d399;
+  --warn:     #fbbf24;
+  --radius:   10px;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html, body {
+  height: 100%; overflow: hidden;
+  background: var(--bg); color: var(--fg);
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  user-select: none;
+}
+
+/* ── Layout: 3 rows ─────────────────────────────────────────────── */
+#app {
+  display: flex; flex-direction: column;
+  height: 100vh; width: 100vw;
+  overflow: hidden;
+}
+
+/* ── TOP BAR ────────────────────────────────────────────────────── */
+#top-bar {
+  flex-shrink: 0;
+  display: flex; align-items: center; gap: 10px;
+  padding: 0 20px; height: 54px;
+  background: var(--bg-dark);
+  border-bottom: 1px solid var(--border);
+}
+#top-bar .ep-badge {
+  background: var(--ia); color: var(--bg-dark);
+  font-size: 11px; font-weight: 700; letter-spacing: 1.5px;
+  padding: 3px 10px; border-radius: 20px; white-space: nowrap;
+}
+#top-bar .ep-title {
+  font-size: 14px; font-weight: 500; color: var(--fg); flex: 1;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+#slide-counter {
+  font-size: 12px; color: var(--muted); white-space: nowrap;
+}
+.btn {
+  background: var(--bg-card); border: 1px solid var(--border);
+  color: var(--fg); padding: 5px 12px; border-radius: 6px;
+  cursor: pointer; font-size: 13px; transition: all 140ms;
+  white-space: nowrap;
+}
+.btn:hover  { background: var(--ia); color: var(--bg); border-color: var(--ia); }
+.btn:active { transform: scale(0.97); }
+.btn:disabled { opacity: 0.35; cursor: not-allowed; transform: none; }
+.btn.primary {
+  background: var(--ia); color: var(--bg); border-color: var(--ia); font-weight: 600;
+}
+.btn.primary:hover { background: var(--accent2); border-color: var(--accent2); }
+.btn.stop { color: #f87171; border-color: #f87171; }
+.btn.stop:hover { background: #f87171; color: var(--bg); }
+
+/* ── MAIN CENTER ────────────────────────────────────────────────── */
+#main {
+  flex: 1; overflow: hidden;
+  display: flex; flex-direction: column;
+  justify-content: center; align-items: center;
+  padding: 16px 48px;
+  gap: 14px;
+}
+
+/* ── SLIDE CARD ─────────────────────────────────────────────────── */
+#slide-card {
+  width: 100%; max-width: 900px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 18px 24px;
+  overflow: hidden;
+}
+#slide-num-badge {
+  display: inline-block;
+  font-size: 11px; font-weight: 700; letter-spacing: 1.5px;
+  color: var(--muted);
+  margin-bottom: 6px;
+}
+#slide-title {
+  font-size: 22px; font-weight: 700;
+  color: var(--fg); line-height: 1.2;
+  margin-bottom: 10px;
+}
+#slide-content {
+  font-size: 13px; color: #94a3b8;
+  line-height: 1.5;
+  overflow: hidden;
+}
+#slide-content li {
+  margin-bottom: 3px;
+  list-style: none;
+  padding-left: 14px;
+  position: relative;
+}
+#slide-content li::before {
+  content: "›"; position: absolute; left: 0;
+  color: var(--ia);
+}
+
+/* ── DIALOGUE AREA ──────────────────────────────────────────────── */
+#dialogue-area {
+  width: 100%; max-width: 900px;
+  display: flex; flex-direction: column; align-items: center;
+  gap: 10px;
+}
+
+#speaker-bubble {
+  width: 100%;
+  background: var(--ia-bg);
+  border-left: 3px solid var(--ia);
+  border-radius: 0 var(--radius) var(--radius) 0;
+  padding: 14px 20px;
+  transition: background 300ms, border-color 300ms;
+  overflow: hidden;
+  position: relative;
+}
+#speaker-bubble.eliezer {
+  background: var(--eliezer-bg);
+  border-left-color: var(--eliezer);
+}
+#speaker-badge {
+  font-size: 11px; font-weight: 700; letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--ia);
+  margin-bottom: 6px;
+  display: flex; align-items: center; gap: 8px;
+}
+#speaker-bubble.eliezer #speaker-badge { color: var(--eliezer); }
+.speak-dot {
+  width: 7px; height: 7px; border-radius: 50%;
+  background: var(--ia);
+  display: none;
+}
+.speak-dot.active { display: inline-block; animation: blink 0.9s infinite; }
+#speaker-bubble.eliezer .speak-dot { background: var(--eliezer); }
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.2} }
+#dialogue-text {
+  font-size: 16px; line-height: 1.65; color: var(--fg);
+}
+
+/* ── LINE DOTS ──────────────────────────────────────────────────── */
+#line-dots {
+  display: flex; gap: 8px; align-items: center;
+}
+.line-dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--border);
+  transition: background 200ms, transform 200ms;
+  cursor: pointer;
+}
+.line-dot.active { background: var(--ia); transform: scale(1.3); }
+.line-dot.done   { background: var(--muted); }
+
+/* ── BOTTOM BAR ─────────────────────────────────────────────────── */
+#bottom-bar {
+  flex-shrink: 0;
+  display: flex; align-items: center; gap: 10px; flex-wrap: nowrap;
+  padding: 0 20px; height: 54px;
+  background: var(--bg-dark);
+  border-top: 1px solid var(--border);
+  overflow: hidden;
+}
+#status-dot {
+  width: 9px; height: 9px; border-radius: 50%;
+  background: var(--muted); flex-shrink: 0;
+  transition: background 200ms;
+}
+#status-dot.speaking { background: var(--accent2); animation: blink 0.9s infinite; }
+#status-text {
+  font-size: 12px; color: var(--muted); flex: 1;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+label.ctrl-label {
+  font-size: 12px; color: var(--muted);
+  display: flex; align-items: center; gap: 5px;
+  white-space: nowrap;
+}
+select.ctrl-select {
+  background: var(--bg-card); color: var(--fg);
+  border: 1px solid var(--border); padding: 4px 6px;
+  border-radius: 5px; font-size: 12px; max-width: 160px;
+}
+input[type=range] { width: 70px; vertical-align: middle; accent-color: var(--ia); }
+input[type=checkbox] { accent-color: var(--ia); }
+
+/* ── COVER OVERLAY ──────────────────────────────────────────────── */
+#cover {
+  position: fixed; inset: 0; z-index: 50;
+  background: linear-gradient(135deg, #0a0f1e 0%, #1e1b4b 50%, #0a0f1e 100%);
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 0;
+  transition: opacity 1.2s ease;
+}
+#cover.hidden { opacity: 0; pointer-events: none; }
+#cover h1 {
+  font-size: 72px; font-weight: 800; letter-spacing: 6px;
+  color: var(--ia); margin: 0;
+  text-shadow: 0 0 40px rgba(167,139,250,0.4);
+  animation: fadeUp 1.4s ease;
+}
+#cover .ep-tag {
+  font-size: 14px; letter-spacing: 4px; color: var(--muted);
+  margin-top: 6px;
+  animation: fadeUp 1.4s 0.3s ease backwards;
+}
+#cover h2 {
+  font-size: 26px; font-weight: 300; color: var(--fg);
+  margin-top: 18px;
+  animation: fadeUp 1.4s 0.5s ease backwards;
+}
+#cover p {
+  font-size: 13px; color: var(--muted); margin-top: 30px;
+  letter-spacing: 2px;
+  animation: fadeUp 1.4s 0.8s ease backwards;
+}
+@keyframes fadeUp {
+  from { opacity:0; transform:translateY(22px); }
+  to   { opacity:1; transform:none; }
+}
+
+/* ── TRANSITION ─────────────────────────────────────────────────── */
+#slide-card, #speaker-bubble {
+  animation: none;
+}
+.fade-in {
+  animation: fadeIn 350ms ease;
+}
+@keyframes fadeIn {
+  from { opacity:0; transform:translateY(8px); }
+  to   { opacity:1; transform:none; }
+}
+
+/* ── RESPONSIVE ─────────────────────────────────────────────────── */
+@media (max-width: 700px) {
+  #main { padding: 12px 16px; }
+  #slide-title { font-size: 17px; }
+  #dialogue-text { font-size: 14px; }
+  .btn { padding: 4px 8px; font-size: 12px; }
+}
+</style>
+<style id="idd-selos-style">
+/* idd- : selos de status (Cânone v1.0-rc1) */
+html body #idd-status-banner{position:fixed;bottom:2px;left:50%;transform:translateX(-50%);z-index:2147483000;max-width:94vw;margin:0;padding:2px 10px;font:500 10.5px/1.45 system-ui,-apple-system,'Segoe UI',sans-serif;letter-spacing:0;color:#e6e6ee;background:rgba(12,12,24,.82);border:1px solid rgba(255,255,255,.16);border-radius:6px;pointer-events:none;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;-webkit-text-fill-color:currentColor;text-align:center}
+html body span.idd-selo{display:inline-block;margin-left:.45em;padding:1px 7px;border-radius:4px;font:600 11px/1.5 system-ui,-apple-system,'Segoe UI',sans-serif;letter-spacing:.2px;text-transform:none;vertical-align:middle;white-space:nowrap;color:#e8e8f0;-webkit-text-fill-color:currentColor;background:rgba(255,255,255,.08);background-clip:border-box;-webkit-background-clip:border-box;border:1px solid rgba(255,255,255,.22)}
+html body span.idd-selo.idd-selo-ok{color:#7ee2b8;border-color:rgba(126,226,184,.45);background:rgba(126,226,184,.10)}
+html body span.idd-selo.idd-selo-demo{color:#ffd27a;border-color:rgba(255,210,122,.45);background:rgba(255,210,122,.10)}
+html body span.idd-selo.idd-selo-prop{color:#c4b5fd;border-color:rgba(196,181,253,.45);background:rgba(196,181,253,.10)}
+html body #idd-status-banner{bottom:auto;top:56px}
+</style>
+</head>
+<body>
+<div id="idd-status-banner" role="note">✅ CONCEITO — filosofia e método (trechos 🔭 sinalizados) · Cânone v1.0-rc1 · ✅ implementado · 🧪 demonstração · 🔭 proposta</div>
+
+<!-- COVER -->
+<div id="cover">
+  <h1>IDD</h1>
+  <div class="ep-tag">EPISÓDIO 03 · BASE DE CONHECIMENTO</div>
+  <h2>A Genealogia do IDD<span class="idd-selo idd-selo-ok">✅ CONCEITO</span></h2>
+  <p>Carregando… clique em qualquer lugar para iniciar</p>
+</div>
+
+<div id="app">
+  <!-- TOP BAR -->
+  <div id="top-bar">
+    <span class="ep-badge">EP 03</span>
+    <span class="ep-title">A Genealogia do IDD</span>
+    <button class="btn" id="btn-prev" title="Slide anterior (←)">◀</button>
+    <span id="slide-counter">Slide 1 / 35</span>
+    <button class="btn" id="btn-next" title="Próximo slide (→)">▶</button>
+    <div style="width:1px; height:28px; background:var(--border); margin:0 4px;"></div>
+    <button class="btn" id="btn-prev-line" title="Linha anterior (Shift+←)">‹ Linha</button>
+    <button class="btn" id="btn-next-line" title="Próxima linha (Shift+→)">Linha ›</button>
+  </div>
+
+  <!-- MAIN -->
+  <div id="main">
+    <div id="slide-card">
+      <div id="slide-num-badge">SLIDE 1 / 35</div>
+      <div id="slide-title"></div>
+      <ul id="slide-content"></ul>
+    </div>
+
+    <div id="dialogue-area">
+      <div id="speaker-bubble">
+        <div id="speaker-badge">
+          <span id="speaker-name">IA</span>
+          <span class="speak-dot" id="speak-dot"></span>
+        </div>
+        <div id="dialogue-text"></div>
+      </div>
+      <div id="line-dots"></div>
+    </div>
+  </div>
+
+  <!-- BOTTOM BAR -->
+  <div id="bottom-bar">
+    <span id="status-dot"></span>
+    <button class="btn primary" id="btn-play" title="Tocar (Espaço)">▶ Tocar</button>
+    <button class="btn stop" id="btn-stop" title="Parar (S)">⏹ Parar</button>
+    <div style="width:1px; height:28px; background:var(--border); margin:0 2px;"></div>
+    <label class="ctrl-label" title="Voz masculina (Eliezer)">
+      Eliezer:
+      <select class="ctrl-select" id="voice-eliezer"></select>
+    </label>
+    <label class="ctrl-label" title="Voz feminina (IA)">
+      IA:
+      <select class="ctrl-select" id="voice-ia"></select>
+    </label>
+    <label class="ctrl-label">
+      Vel:
+      <input type="range" id="rate" min="0.6" max="1.4" step="0.05" value="1.0">
+      <span id="rate-val">1.0×</span>
+    </label>
+    <label class="ctrl-label">
+      <input type="checkbox" id="auto-advance" checked>
+      Auto-avançar
+    </label>
+    <span id="status-text">Pronto. Pressione ▶ Tocar ou Espaço.</span>
+  </div>
+</div>
+
+<script>
+// ================================================================
+// DATA
+// ================================================================
+const SLIDES = [
+  {
+    "number": 1,
+    "title": "A Genealogia do IDD",
+    "content": [
+      "De onde vêm as ideias que moldam um paradigma?",
+      "Cada inovação se apoia em ombros de gigantes.",
+      "Hoje rastreamos a linhagem intelectual do IDD."
+    ],
+    "lines": [
+      {
+        "speaker": "IA",
+        "text": "Olá a todos e bem-vindos ao episódio 3 da série 'Base de Conhecimento IDD'! Eu sou a IA, sua co-host, e estou animada para mergulhar no tema de hoje. Nosso slide de abertura, 'A Genealogia do IDD', nos convida a explorar: De onde vêm as ideias que moldam um paradigma? Cada inovação se apoia em ombros de gigantes. Hoje rastreamos a linhagem intelectual do IDD.",
+        "note": "Entusiasmado, apresentando o tema"
+      },
+      {
+        "speaker": "Eliezer",
+        "text": "É uma jornada fascinante, IA. Quando comecei a construir sistemas complexos lá em 76, no IBM, com RPG II, e depois Cobol, DCAlgol, eu sentia que havia algo faltando. Uma forma mais profunda de expressar o que queríamos que o sistema fizesse, não apenas como. Essa busca me levou a revisitar muitos desses 'gigantes' que veremos hoje.",
+        "note": "Reflexivo, pessoal, abrindo o contexto"
+      },
+      {
+        "speaker": "IA",
+        "text": "É incrível como suas experiências práticas já intuíam esses conceitos fundacionais. Então, hoje vamos traçar essa linha do tempo de ideias que pavimentaram o caminho para o Intent-Driven Development. Que venham os pioneiros!",
+        "note": "Animado, fazendo a transição"
+      }
+    ]
+  },
+  {
+    "number": 2,
+    "title": "Genealogia Intelectual",
+    "content": [
+      "Ideias não nascem do nada — elas evoluem.",
+      "Um paradigma é uma rede de influências.",
+      "Entender a genealogia é entender o 'porquê' profundo."
+    ],
+    "lines": [
+      {
+        "speaker": "IA",
+        "text": "Nosso próximo slide, 'Genealogia Intelectual', reforça essa ideia: Ideias não nascem do nada — elas evoluem. Um paradigma é uma rede de influências. Entender a genealogia é entender o 'porquê' profundo.",
+        "note": "Explicativo, envolvente"
+      },
+      {
+        "speaker": "Eliezer",
+        "text": "Exato. Quando você está arquitetando algo complexo, como um sistema de 2PC que fiz no Grupo Paes Mendonça nos anos 80, não basta resolver o 'como'. Você precisa entender o 'porquê' da consistência, da recuperação. Essas são as raízes conceituais, muitas vezes invisíveis, que dão solidez ao design.",
+        "note": "Sábio, conectando com experiência"
+      },
+      {
+        "speaker": "IA",
+        "text": "É a diferença entre um artesão e um arquiteto, não é? Um constrói seguindo planos, o outro entende a fundação geológica. E isso nos leva ao primeiro gigante em nossa linhagem...",
+        "note": "Curioso, fazendo a ponte"
+      }
+    ]
+  },
+  {
+    "number": 3,
+    "title": "Vannevar Bush — 1945",
+    "content": [
+      "Artigo 'As We May Think' — Atlantic Monthly",
+      "Memex: dispositivo de memória externa associativa",
+      "O pensamento humano opera por associação",
+      "Base conceitual para hipertexto e Web"
+    ],
+    "lines": [
+      {
+        "speaker": "IA",
+        "text": "Nosso primeiro visionário é Vannevar Bush, em 1945. Ele nos trouxe o artigo 'As We May Think' na Atlantic Monthly, onde descreveu o Memex: um dispositivo de memória externa associativa. A ideia de que o pensamento humano opera por associação é a base conceitual para hipertexto e a própria Web.",
+        "note": "Envolvente, apresentando o pioneiro"
+      },
+      {
+        "speaker": "Eliezer",
+        "text": "Bush foi profético. Imagine, em 1945, num mundo pré-computadores digitais, ele já antecipava a ideia de conexões, de 'links'. Eu vi isso ganhar forma com a Internet, mas a semente de associar ideias, não apenas arquivar documentos, é poderosa. É a base de como construímos conhecimento.",
+        "note": "Admirado, conectando com a história"
+      },
+      {
+        "speaker": "IA",
+        "text": "Sem dúvida. Ele descreveu um sistema que mimetiza a mente humana, saltando de um conceito para outro. Uma verdadeira fundação para a forma como interagimos com a informação hoje. E essa ideia de associação é tão central que merece um slide próprio.",
+        "note": "Sintetizando, apontando a relevância"
+      }
+    ]
+  },
+  {
+    "number": 4,
+    "title": "O Princípio da Associação",
+    "content": [
+      "'O cérebro humano opera por associação.",
+      "Com um item em mãos, ele salta para o próximo.'",
+      "— Vannevar Bush, 1945",
+      "Legado: links, hipertexto, semântica associativa"
+    ],
+    "lines": [
+      {
+        "speaker": "IA",
+        "text": "No 'Princípio da Associação', Bush nos disse: 'O cérebro humano opera por associação. Com um item em mãos, ele salta para o próximo.' Seu legado é visível em links, hipertexto e na semântica associativa que permeia nossos sistemas.",
+        "note": "Enfatizando a citação"
+      },
+      {
+        "speaker": "Eliezer",
+        "text": "É essa capacidade de conectar 'intenções' que define um bom sistema de conhecimento, e um bom software. Não é só ter dados, é ter relações significativas entre eles. Nos meus primeiros sistemas, eu já via a necessidade de criar essas ligações, mesmo que fossem implícitas no código.",
+        "note": "Conectando ao IDD, pessoal"
+      },
+      {
+        "speaker": "IA",
+        "text": "Uma intuição fundamental que mais tarde se tornou explícita na World Wide Web e agora no IDD. É como se a mente humana, ou a intenção, fosse a verdadeira interface. E falando em interação humano-máquina, nosso próximo gigante é Licklider.",
+        "note": "Fazendo transição, entusiasmado"
+      }
+    ]
+  },
+  {
+    "number": 5,
+    "title": "J.C.R. Licklider — 1960",
+    "content": [
+      "'Man-Computer Symbiosis'",
+      "Simbiose: humano + máquina pensando juntos",
+      "Visão: computadores amplificam, não substituem",
+      "Legado direto: ARPANET → Internet"
+    ],
+    "lines": [
+      {
+        "speaker": "IA",
+        "text": "Em 1960, J.C.R. Licklider publicou 'Man-Computer Symbiosis'. Ele imaginou uma simbiose onde humanos e máquinas pensam juntos, com computadores amplificando as capacidades humanas, não as substituindo. Seu legado direto? A ARPANET, que se tornou a Internet!",
+        "note": "Admirado, apresentando o visionário"
+      },
+      {
+        "speaker": "Eliezer",
+        "text": "A ideia de 'simbiose' sempre me fascinou. Licklider não falava em automação total, mas em uma parceria. Isso me lembra de como eu via o potencial dos computadores nos anos 70 e 80: ferramentas que expandiriam nossa mente. Não para nos substituir, mas para nos tornar mais potentes. Um assistente, não um mestre.",
+        "note": "Reflexivo, pessoal, conectando com a visão"
+      },
+      {
+        "speaker": "IA",
+        "text": "Essa distinção entre amplificar e substituir é um fio condutor essencial que vemos se repetir em vários momentos, e que o IDD resgata com força. É a base da inteligência aumentada, e não da inteligência artificial autônoma. Impressionante!",
+        "note": "Sintetizando, animado"
+      }
+    ]
+  },
+  {
+    "number": 6,
+    "title": "Norbert Wiener — Cibernética (1948)",
+    "content": [
+      "Feedback loops: o sistema observa seu próprio output",
+      "Cibernética: controle e comunicação em sistemas",
+      "Baseou toda teoria de controle e automação",
+      "Influência: sistemas auto-reguláveis → IDD invariants"
+    ],
+    "lines": [
+      {
+        "speaker": "IA",
+        "text": "Agora, vamos para Norbert Wiener e a Cibernética, em 1948. Ele introduziu os 'feedback loops', onde o sistema observa seu próprio output para se auto-regular. A Cibernética baseou toda teoria de controle e automação, e sua influência é clara em sistemas auto-reguláveis, que nos levam aos invariantes do IDD.",
+        "note": "Explicativo, apontando a influência"
+      },
+      {
+        "speaker": "Eliezer",
+        "text": "Ah, Wiener! Nos sistemas de missão crítica que eu construí, a auto-regulação era vital. Quando você tem transações bancárias ou estoque em tempo real, o sistema precisa garantir sua consistência, mesmo sob falhas. O feedback loop é o mecanismo para isso. É a inteligência inerente ao próprio sistema, não só ao código.",
+        "note": "Prático, conectando com a experiência"
+      },
+      {
+        "speaker": "IA",
+        "text": "Então, os invariantes do IDD, que são as propriedades que o sistema nunca pode violar, têm essa raiz na cibernética, garantindo que o sistema se mantenha dentro dos limites desejados. Uma base sólida para a confiabilidade. E agora, Engelbart.",
+        "note": "Sintetizando, fazendo transição"
+      }
+    ]
+  },
+  {
+    "number": 7,
+    "title": "Douglas Engelbart — 1962",
+    "content": [
+      "'Augmenting Human Intellect' — SRI",
+      "Aumentar, não automatizar: esta é a distinção",
+      "Mouse, janelas, hipertexto: ferramentas cognitivas",
+      "Base filosófica direta do IDD"
+    ],
+    "lines": [
+      {
+        "speaker": "IA",
+        "text": "Douglas Engelbart, em 1962, nos deu 'Augmenting Human Intellect' no SRI. Ele fez a distinção crucial: aumentar, não automatizar. Ele nos deu o mouse, janelas, e hipertexto como ferramentas cognitivas. É a base filosófica direta do IDD, não é Eliezer?",
+        "note": "Entusiasmado, fazendo uma pergunta"
+      },
+      {
+        "speaker": "Eliezer",
+        "text": "Absolutamente! A distinção entre 'aumentar' e 'automatizar' é o coração do IDD. A tecnologia deve nos empoderar, não nos relegar a meros observadores. Engelbart já entendia que o papel humano, o cognitivo, deve ser amplificado, e não substituído por um algoritmo cego. Isso me marcou profundamente.",
+        "note": "Apaixonado, enfático"
+      },
+      {
+        "speaker": "IA",
+        "text": "É uma visão que desafia a narrativa comum da IA substituindo empregos, e sim a posicionando como uma parceira para nos tornar mais capazes. Uma verdadeira mudança de perspectiva. E ele não ficou só na teoria...",
+        "note": "Concordando, fazendo suspense"
+      }
+    ]
+  },
+  {
+    "number": 8,
+    "title": "The Mother of All Demos — 1968",
+    "content": [
+      "NLS: primeiro sistema com mouse + hipertexto + vídeo",
+      "Engelbart demonstrou tudo em 90 minutos",
+      "'O futuro' ao vivo, 50 anos antes do tempo",
+      "Augmenting em ação: humano sempre no centro"
+    ],
+    "lines": [
+      {
+        "speaker": "IA",
+        "text": "Em 1968, Engelbart nos deu 'The Mother of All Demos'. O NLS foi o primeiro sistema com mouse, hipertexto e vídeo. Ele demonstrou tudo em 90 minutos, mostrando 'o futuro' ao vivo, 50 anos antes do tempo. Era 'Augmenting' em ação, com o humano sempre no centro.",
+        "note": "Admirado, detalhando o evento"
+      },
+      {
+        "speaker": "Eliezer",
+        "text": "Imagine o impacto de ver aquilo em 68! Eu estava começando minha carreira, e mesmo sem ver a demo ao vivo, os ecos dessa visão me alcançaram. Aquilo não era só tecnologia; era uma nova forma de pensar. Mostrava que a interface não é apenas botões e telas, mas a manifestação de uma intenção.",
+        "note": "Reflexivo, evocando a visão"
+      },
+      {
+        "speaker": "IA",
+        "text": "Um verdadeiro marco! A demonstração de que o futuro não é sobre o que a máquina pode fazer sozinha, mas o que ela nos permite realizar juntos. E essa ideia de declarar o que se quer, em vez de como fazer, nos leva a Ivan Sutherland.",
+        "note": "Conectando, fazendo transição"
+      }
+    ]
+  },
+  {
+    "number": 9,
+    "title": "Ivan Sutherland — Sketchpad (1963)",
+    "content": [
+      "Primeira interface gráfica interativa",
+      "Constraints: 'esta linha SEMPRE deve ser horizontal'",
+      "O sistema mantém propriedades declaradas",
+      "Ancestral direto dos invariantes do IDD"
+    ],
+    "lines": [
+      {
+        "speaker": "IA",
+        "text": "Ivan Sutherland, com seu Sketchpad de 1963, criou a primeira interface gráfica interativa. Ele introduziu 'constraints', como 'esta linha SEMPRE deve ser horizontal'. O sistema mantinha as propriedades declaradas. É um ancestral direto dos invariantes do IDD, certo?",
+        "note": "Explicativo, questionando"
+      },
+      {
+        "speaker": "Eliezer",
+        "text": "Com certeza! É um divisor de águas. No Sketchpad, você dizia o que queria que fosse verdade, e o sistema se encarregava de manter essa verdade. Isso é muito mais poderoso do que dar instruções passo a passo. Eu vi isso em sistemas de CAD/CAM que trabalhei, a ideia de que o sistema 'entende' a geometria, não só a desenha.",
+        "note": "Enfático, conectando com a experiência"
+      },
+      {
+        "speaker": "IA",
+        "text": "É a base para a programação declarativa, onde o foco está no 'o quê', e não no 'como'. Uma mudança de paradigma que ressoa profundamente no IDD. E essa ideia de declarar, não programar, é tão crucial que vamos aprofundá-la.",
+        "note": "Sintetizando, fazendo transição"
+      }
+    ]
+  },
+  {
+    "number": 10,
+    "title": "Constraints: Declarar, Não Programar",
+    "content": [
+      "Você declara a PROPRIEDADE desejada",
+      "O sistema cuida da implementação",
+      "Não é 'como fazer' — é 'o que deve ser'",
+      "DNA direto dos invariantes de negócio do IDD"
+    ],
+    "lines": [
+      {
+        "speaker": "IA",
+        "text": "Neste slide, 'Constraints: Declarar, Não Programar', vemos a essência: Você declara a PROPRIEDADE desejada. O sistema cuida da implementação. Não é 'como fazer' — é 'o que deve ser'. Este é o DNA direto dos invariantes de negócio do IDD.",
+        "note": "Enfatizando o conceito"
+      },
+      {
+        "speaker": "Eliezer",
+        "text": "Isso é liberdade para o desenvolvedor e clareza para o negócio. Em vez de escrever mil linhas de código para garantir que um valor nunca seja negativo, você declara: 'Valor sempre >= 0'. O sistema então se encarrega disso. É uma mudança de poder da máquina para a intenção humana.",
+        "note": "Explicativo, apaixonado"
+      },
+      {
+        "speaker": "IA",
+        "text": "Uma forma muito mais robusta e menos propensa a erros de se construir sistemas complexos. E essa visão de tornar o computador um instrumento pessoal e intuitivo, foi levada adiante por Alan Kay.",
+        "note": "Sintetizando, fazendo transição"
+      }
+    ]
+  },
+  {
+    "number": 11,
+    "title": "Alan Kay — Dynabook (1968–72)",
+    "content": [
+      "O computador como instrumento pessoal",
+      "'Um computador para crianças de todas as idades'",
+      "Metáfora: computador como livro vivo e interativo",
+      "Antecipou o iPad 40 anos antes"
+    ],
+    "lines": [
+      {
+        "speaker": "IA",
+        "text": "Alan Kay, entre 1968 e 1972, nos trouxe o conceito do Dynabook: o computador como instrumento pessoal, um 'computador para crianças de todas as idades'. Sua metáfora era o computador como um livro vivo e interativo. Ele antecipou o iPad 40 anos antes!",
+        "note": "Admirado, entusiasmado"
+      },
+      {
+        "speaker": "Eliezer",
+        "text": "Kay tinha uma visão de 'instrumento', não de 'ferramenta' ou 'máquina'. Instrumentos são extensões da nossa mente e corpo. Isso mudou a forma como eu via o software: não era apenas lógica, era uma experiência, uma interação. Essa filosofia do Dynabook, de empoderamento pessoal, é central para o IDD.",
+        "note": "Reflexivo, apaixonado"
+      },
+      {
+        "speaker": "IA",
+        "text": "A visão de Kay de um computador que se adapta a nós, e não o contrário, é profundamente influente. E sua linguagem de programação, Smalltalk, também carregava essa filosofia.",
+        "note": "Sintetizando, fazendo transição"
+      }
+    ]
+  },
+  {
+    "number": 12,
+    "title": "Smalltalk — Objetos e Mensagens",
+    "content": [
+      "Objetos como seres autônomos que trocam mensagens",
+      "'Nunca pensei em variáveis — pensei em mensagens'",
+      "Herança que a indústria distorceu em Java/C++",
+      "IDD herda: componentes com intenção própria"
+    ],
+    "lines": [
+      {
+        "speaker": "IA",
+        "text": "Smalltalk, a linguagem de Alan Kay, introduziu objetos como seres autônomos que trocam mensagens. Kay disse: 'Nunca pensei em variáveis — pensei em mensagens'. Essa herança foi distorcida em Java e C++, mas no IDD, vemos componentes com intenção própria, muito mais alinhados à visão original.",
+        "note": "Explicativo, crítico"
+      },
+      {
+        "speaker": "Eliezer",
+        "text": "Ah, Smalltalk! Eu tive contato com Smalltalk nos anos 90, quando dava palestras sobre OO na UFBA e na Telemar. A clareza conceitual era deslumbrante. A ideia de que cada objeto tem sua própria intenção, sua própria responsabilidade, e se comunica de forma assíncrona, é o que busco no IDD: a orquestração de intenções.",
+        "note": "Apaixonado, pessoal"
+      },
+      {
+        "speaker": "IA",
+        "text": "Então, essa visão original de objetos autônomos e a comunicação por mensagens é um pilar para o design de agentes no AEON, o projeto que implementa o IDD. É uma redescoberta de um conceito poderoso. E isso nos leva de volta ao princípio central de Kay.",
+        "note": "Sintetizando, fazendo transição"
+      }
+    ]
+  },
+  {
+    "number": 13,
+    "title": "Amplificar, Não Substituir",
+    "content": [
+      "'O computador deve amplificar o que o humano faz,",
+      "não substituí-lo.' — Alan Kay",
+      "Distinção preservada como princípio central do IDD",
+      "Cada ferramenta que substitui empobrece o humano"
+    ],
+    "lines": [
+      {
+        "speaker": "IA",
+        "text": "Em 'Amplificar, Não Substituir', Alan Kay nos lembrou: 'O computador deve amplificar o que o humano faz, não substituí-lo'. Essa distinção é preservada como princípio central do IDD. Cada ferramenta que substitui empobrece o humano, não é Eliezer?",
+        "note": "Enfático, questionando"
+      },
+      {
+        "speaker": "Eliezer",
+        "text": "Sem dúvida. Se eu tivesse um real por cada vez que vi a tecnologia automatizar tarefas que deveriam ser enriquecedoras para o ser humano, eu estaria rico! O IDD insiste que o epistêmico, a inteligência, o julgamento, permanecem com o humano. A máquina executa a intenção, mas não a define.",
+        "note": "Com humor sutil, enfático"
+      },
+      {
+        "speaker": "IA",
+        "text": "É uma responsabilidade ética intrínseca ao design de sistemas. E essa responsabilidade de design, especialmente em relação à complexidade, nos leva a Fred Brooks.",
+        "note": "Sintetizando, fazendo transição"
+      }
+    ]
+  },
+  {
+    "number": 14,
+    "title": "Fred Brooks — The Mythical Man-Month (1975)",
+    "content": [
+      "Complexidade essencial vs. acidental",
+      "9 mulheres não fazem um bebê em 1 mês",
+      "Software tem complexidade irredutível",
+      "Lição: respeitar a natureza do problema"
+    ],
+    "lines": [
+      {
+        "speaker": "IA",
+        "text": "Em 1975, Fred Brooks nos deu 'The Mythical Man-Month'. Ele distinguiu a complexidade essencial da acidental, e nos lembrou que '9 mulheres não fazem um bebê em 1 mês'. O software tem complexidade irredutível. A lição: respeitar a natureza do problema.",
+        "note": "Explicativo, com a citação famosa"
+      },
+      {
+        "speaker": "Eliezer",
+        "text": "Ah, Brooks! Esse livro foi um choque de realidade para muitos de nós que estávamos na linha de frente do desenvolvimento. A complexidade essencial é a do negócio em si, a da intenção. A acidental é o que criamos com ferramentas e abordagens inadequadas. O IDD tenta minimizar a acidental para focar no que realmente importa.",
+        "note": "Reflexivo, prático, conectando ao IDD"
+      },
+      {
+        "speaker": "IA",
+        "text": "Uma distinção crucial para qualquer arquiteto de software. E Brooks também falou sobre a importância da integridade conceitual.",
+        "note": "Sintetizando, fazendo transição"
+      }
+    ]
+  },
+  {
+    "number": 15,
+    "title": "Integridade Conceitual — Brooks",
+    "content": [
+      "'É melhor um sistema ter menos funcionalidades",
+      "mas com consistência do que muitas inconsistentes.'",
+      "O arquiteto único como guardião da visão",
+      "No IDD: o epistêmico permanece no humano"
+    ],
+    "lines": [
+      {
+        "speaker": "IA",
+        "text": "Sobre 'Integridade Conceitual', Brooks afirmou: 'É melhor um sistema ter menos funcionalidades, mas com consistência do que muitas inconsistentes'. Ele defendia o arquiteto único como guardião da visão. No IDD, o epistêmico permanece no humano, garantindo essa integridade.",
+        "note": "Enfatizando a citação"
+      },
+      {
+        "speaker": "Eliezer",
+        "text": "Esse foi um dos pilares do meu trabalho. Quando eu arquitetava sistemas de grande porte, como um que fiz para a Secretaria da Fazenda de um estado, a integridade conceitual era tudo. Sem ela, o sistema virava um frankenstein de funcionalidades que não se falavam. O IDD garante que essa visão única da intenção seja preservada.",
+        "note": "Pessoal, prático, conectando ao IDD"
+      },
+      {
+        "speaker": "IA",
+        "text": "É a diferença entre um projeto com uma alma e um mero aglomerado de código. E Brooks, ainda mais tarde, reforçaria essa ideia de que não há bala de prata.",
+        "note": "Sintetizando, fazendo transição"
+      }
+    ]
+  },
+  {
+    "number": 16,
+    "title": "No Silver Bullet — Brooks (1986)",
+    "content": [
+      "Nenhuma técnica elimina a complexidade essencial",
+      "Complexidade acidental: pode ser reduzida (IDD faz isso)",
+      "Complexidade essencial: é o domínio em si",
+      "O IDD ataca o acidental, respeita o essencial"
+    ],
+    "lines": [
+      {
+        "speaker": "IA",
+        "text": "Em 'No Silver Bullet', de 1986, Brooks foi categórico: Nenhuma técnica elimina a complexidade essencial. A complexidade acidental, sim, pode ser reduzida — e o IDD faz isso. Mas a complexidade essencial é o domínio em si. O IDD ataca o acidental, respeita o essencial.",
+        "note": "Explicativo, distinguindo"
+      },
+      {
+        "speaker": "Eliezer",
+        "text": "E quantas 'balas de prata' eu vi surgirem e morrerem! Cada nova linguagem, cada novo framework, prometendo resolver tudo. Mas a realidade é que o problema do software não é a ferramenta, é a complexidade intrínseca ao que se quer fazer. O IDD não promete milagres, mas uma abordagem para gerenciar essa complexidade de forma mais inteligente.",
+        "note": "Cético, experiente, conectando ao IDD"
+      },
+      {
+        "speaker": "IA",
+        "text": "É uma lição de humildade para a indústria de software. E essa humildade nos leva a pensar na experiência do usuário, um aspecto crucial que Jakob Nielsen abordou.",
+        "note": "Sintetizando, fazendo transição"
+      }
+    ]
+  },
+  {
+    "number": 17,
+    "title": "Jakob Nielsen — Heurísticas de Usabilidade",
+    "content": [
+      "10 princípios para sistemas usáveis (1993)",
+      "O sistema deve falar a língua do usuário",
+      "Visibilidade do estado do sistema",
+      "Legado: intenção do usuário como centro do design"
+    ],
+    "lines": [
+      {
+        "speaker": "IA",
+        "text": "Jakob Nielsen, em 1993, nos deu as 10 Heurísticas de Usabilidade. Princípios como 'o sistema deve falar a língua do usuário' e 'visibilidade do estado do sistema' se tornaram fundamentais. Seu legado: a intenção do usuário como centro do design.",
+        "note": "Explicativo, destacando a importância"
+      },
+      {
+        "speaker": "Eliezer",
+        "text": "A usabilidade é a ponte entre a máquina e a intenção humana. Se o sistema não fala a língua do usuário, ele falha em entender a intenção. Eu via muitos sistemas que faziam o que o programador queria, não o que o usuário precisava. Nielsen trouxe clareza para essa lacuna.",
+        "note": "Prático, conectando a experiência"
+      },
+      {
+        "speaker": "IA",
+        "text": "Sim, a usabilidade é, em essência, sobre alinhamento de intenções: a do usuário e a do sistema. E essa ideia foi levada a um nível ainda mais profundo por Jef Raskin.",
+        "note": "Sintetizando, fazendo transição"
+      }
+    ]
+  },
+  {
+    "number": 18,
+    "title": "Jef Raskin — The Humane Interface (2000)",
+    "content": [
+      "'O sistema deve servir à intenção do usuário.'",
+      "Intenção como unidade mínima de interação",
+      "Não fluxos de telas — objetivos a alcançar",
+      "DNA direto do IDD: intenção como artefato"
+    ],
+    "lines": [
+      {
+        "speaker": "IA",
+        "text": "Jef Raskin, em 'The Humane Interface' (2000), disse: 'O sistema deve servir à intenção do usuário'. Ele propôs a intenção como unidade mínima de interação, focando em objetivos a alcançar, não em fluxos de telas. Este é o DNA direto do IDD: intenção como artefato.",
+        "note": "Enfático, destacando a citação"
+      },
+      {
+        "speaker": "Eliezer",
+        "text": "Raskin vocalizou o que muitos sentiam: estamos construindo sistemas que nos forçam a pensar como a máquina. Mas deveria ser o contrário! O IDD abraça essa ideia fundamental. O ponto de partida é sempre a intenção humana, e o sistema é um meio para realizá-la, não um fim em si mesmo. É a inteligência do propósito.",
+        "note": "Apaixonado, filosófico"
+      },
+      {
+        "speaker": "IA",
+        "text": "Essa é a ponte direta entre a usabilidade e a arquitetura de software: a intenção como a unidade atômica. E, ironicamente, o maior sistema de intenção global nasceu da descentralização: a World Wide Web.",
+        "note": "Sintetizando, fazendo transição"
+      }
+    ]
+  },
+  {
+    "number": 19,
+    "title": "Tim Berners-Lee — World Wide Web (1989)",
+    "content": [
+      "Hipertexto universal: qualquer doc linka qualquer doc",
+      "Publicação de intenção: o autor decide a semântica",
+      "Descentralização: sem autoridade central de significado",
+      "Primeiro sistema de intenção em escala global"
+    ],
+    "lines": [
+      {
+        "speaker": "IA",
+        "text": "Tim Berners-Lee, em 1989, criou a World Wide Web. Um hipertexto universal onde qualquer documento pode linkar qualquer outro. Era a publicação de intenção: o autor decide a semântica. E, crucialmente, descentralização, sem autoridade central de significado. O primeiro sistema de intenção em escala global.",
+        "note": "Admirado, explicando o impacto"
+      },
+      {
+        "speaker": "Eliezer",
+        "text": "Eu vi a Web nascer e se expandir. O poder de qualquer um publicar e conectar suas ideias, suas intenções, foi revolucionário. Não havia um sistema central dizendo o que era válido ou não. É a pura expressão da intenção. Isso é algo que busco no IDD: a liberdade de expressar a intenção sem amarras.",
+        "note": "Reflexivo, pessoal, conectando ao IDD"
+      },
+      {
+        "speaker": "IA",
+        "text": "Uma democratização da intenção, sem dúvida. Mas o próprio Berners-Lee percebeu que precisávamos de mais para que as máquinas realmente 'entendesssem'.",
+        "note": "Sintetizando, fazendo transição"
+      }
+    ]
+  },
+  {
+    "number": 20,
+    "title": "Web Semântica — Berners-Lee (2001)",
+    "content": [
+      "'Máquinas entendendo o significado do conteúdo'",
+      "OWL, RDF: ontologias formais na Web",
+      "Agentes que inferem, não apenas recuperam",
+      "Ancestral da camada semântica do IDD"
+    ],
+    "lines": [
+      {
+        "speaker": "IA",
+        "text": "E assim surgiu a Web Semântica, proposta por Berners-Lee em 2001. A ideia era 'máquinas entendendo o significado do conteúdo' através de ontologias formais como OWL e RDF. Agentes que inferem, não apenas recuperam. Este é um ancestral da camada semântica do IDD.",
+        "note": "Explicativo, apontando a evolução"
+      },
+      {
+        "speaker": "Eliezer",
+        "text": "Essa foi a tentativa de dar 'sentido' à vastidão da Web. Não basta linkar; é preciso que o link tenha significado para a máquina. Eu fiz algumas pesquisas sobre IA e OO na UFBA nos anos 90, e a ideia de representar conhecimento de forma explícita sempre me pareceu o caminho. A Web Semântica foi um passo audacioso nessa direção.",
+        "note": "Reflexivo, conectado à pesquisa"
+      },
+      {
+        "speaker": "IA",
+        "text": "Transformar dados em conhecimento compreensível por máquinas é um desafio persistente, e a Web Semântica buscou isso com rigor. E falando em ontologias, Tom Gruber é a próxima figura chave.",
+        "note": "Sintetizando, fazendo transição"
+      }
+    ]
+  },
+  {
+    "number": 21,
+    "title": "Tom Gruber — Ontologias (1992+)",
+    "content": [
+      "'Uma ontologia é uma especificação explícita",
+      "de uma conceitualização.' — Gruber, 1993",
+      "Conhecimento explícito, auditável, compartilhável",
+      "Influência direta na base de conhecimento do IDD"
+    ],
+    "lines": [
+      {
+        "speaker": "IA",
+        "text": "Tom Gruber, a partir de 1992, definiu ontologias. Ele disse: 'Uma ontologia é uma especificação explícita de uma conceitualização'. Conhecimento explícito, auditável, compartilhável. Essa é uma influência direta na base de conhecimento do IDD.",
+        "note": "Explicativo, citando a definição"
+      },
+      {
+        "speaker": "Eliezer",
+        "text": "Gruber me deu a linguagem para formalizar o que eu buscava. Quando você arquiteta um sistema, você está, na verdade, construindo uma ontologia do negócio, mesmo que não saiba. Mas torná-la explícita, auditável, é o que permite a um sistema como o IDD realmente 'entender' o que se espera dele, não apenas executar comandos.",
+        "note": "Prático, reflexivo, conectando ao IDD"
+      },
+      {
+        "speaker": "IA",
+        "text": "Sim, é a formalização da intenção, um passo crítico para a interoperabilidade e a inteligência das máquinas. E a ideia de soluções que emergem do contexto e da intenção também foi explorada por Christopher Alexander.",
+        "note": "Sintetizando, fazendo transição"
+      }
+    ]
+  },
+  {
+    "number": 22,
+    "title": "Christopher Alexander — Pattern Language",
+    "content": [
+      "Padrões: soluções que emergem do contexto (1977)",
+      "Não receitas — forças em equilíbrio dinâmico",
+      "Design como documentação de intenção estrutural",
+      "Influência em Design Patterns, DDD e IDD"
+    ],
+    "lines": [
+      {
+        "speaker": "IA",
+        "text": "Christopher Alexander, com sua 'Pattern Language' (1977), nos mostrou padrões como soluções que emergem do contexto, não receitas. Design como documentação de intenção estrutural. Sua influência é visível em Design Patterns, DDD e, claro, no IDD.",
+        "note": "Explicativo, conectando influências"
+      },
+      {
+        "speaker": "Eliezer",
+        "text": "Alexander me ensinou que a arquitetura não é sobre desenhar caixas, mas sobre entender as 'forças' que moldam um espaço. E no software, essas forças são as intenções e os invariantes do negócio. A linguagem de padrões não é uma lista de soluções, mas um vocabulário para expressar intenções arquiteturais que funcionam.",
+        "note": "Reflexivo, pessoal, filosófico"
+      },
+      {
+        "speaker": "IA",
+        "text": "É a diferença entre um manual e uma filosofia de design. E todos esses pensadores parecem apontar para um conceito central que, por muito tempo, foi um elo perdido.",
+        "note": "Sintetizando, fazendo transição"
+      }
+    ]
+  },
+  {
+    "number": 23,
+    "title": "O Elo Perdido: Intenção como Artefato",
+    "content": [
+      "Bush → associação | Licklider → simbiose",
+      "Engelbart → augmenting | Sutherland → constraints",
+      "Kay → mensagens | Brooks → integridade conceitual",
+      "Todos apontavam para o mesmo destino: a INTENÇÃO"
+    ],
+    "lines": [
+      {
+        "speaker": "IA",
+        "text": "Chegamos ao slide 'O Elo Perdido: Intenção como Artefato'. Bush com a associação, Licklider com a simbiose, Engelbart com o augmenting, Sutherland com os constraints, Kay com as mensagens, Brooks com a integridade conceitual. Todos, de alguma forma, apontavam para o mesmo destino: a INTENÇÃO.",
+        "note": "Enfático, conectando todos os pontos"
+      },
+      {
+        "speaker": "Eliezer",
+        "text": "É como se estivessem todos tocando diferentes notas de uma mesma sinfonia. Eu senti isso na prática, ao longo de décadas. A dificuldade em expressar o que realmente se quer, e não apenas como implementar. É a essência do que tentamos capturar no IDD: a intenção como um artefato de primeira classe.",
+        "note": "Apaixonado, pessoal"
+      },
+      {
+        "speaker": "IA",
+        "text": "Então, o IDD não inventa a intenção, mas a formaliza e a coloca no centro do desenvolvimento. Uma convergência poderosa de ideias que estava apenas esperando o momento certo.",
+        "note": "Sintetizando, fazendo a ligação com o IDD"
+      }
+    ]
+  },
+  {
+    "number": 24,
+    "title": "A Grande Convergência",
+    "content": [
+      "Todos os pioneiros separaram 'o quê' do 'como'",
+      "Declarar o objetivo é mais duradouro que implementar",
+      "A implementação envelhece; a intenção permanece",
+      "IDD: intenção como artefato de primeira classe"
+    ],
+    "lines": [
+      {
+        "speaker": "IA",
+        "text": "Essa é a 'Grande Convergência': todos os pioneiros separaram 'o quê' do 'como'. Declarar o objetivo é mais duradouro que implementar. A implementação envelhece; a intenção permanece. No IDD, a intenção é um artefato de primeira classe.",
+        "note": "Enfático, clarificando o conceito"
+      },
+      {
+        "speaker": "Eliezer",
+        "text": "Eu vi sistemas construídos nos anos 70, em Cobol, que ainda funcionam porque a 'intenção' do negócio por trás deles não mudou. Mas o código, o 'como', foi reescrito várias vezes. O IDD foca em eternizar essa intenção, tornando-a agnóstica à tecnologia de implementação.",
+        "note": "Prático, experiente"
+      },
+      {
+        "speaker": "IA",
+        "text": "Essa é a chave para a longevidade e adaptabilidade. E essa convergência de ideias se tornou ainda mais urgente diante da crescente crise de complexidade.",
+        "note": "Sintetizando, fazendo transição"
+      }
+    ]
+  },
+  {
+    "number": 25,
+    "title": "A Crise de Complexidade (2000–2020)",
+    "content": [
+      "Frameworks empilhados sobre frameworks",
+      "Boa parte do tempo do dev vai para complexidade acidental",
+      "Documentação desatualizada nasce morta",
+      "A intenção original perdida no código"
+    ],
+    "lines": [
+      {
+        "speaker": "IA",
+        "text": "Entre 2000 e 2020, vivemos a 'Crise de Complexidade'. Frameworks empilhados sobre frameworks. Boa parte do tempo do desenvolvedor vai para complexidade acidental. Documentação desatualizada nasce morta. A intenção original, perdida no código. Uma descrição bastante sombria, Eliezer.",
+        "note": "Séria, questionando"
+      },
+      {
+        "speaker": "Eliezer",
+        "text": "Sombria e verdadeira! Eu vi isso acontecer em tempo real. A promessa de produtividade se transformou em uma armadilha de complexidade. O código se tornou a única fonte de verdade, e a intenção, se existisse, estava enterrada. Era um ciclo vicioso de retrabalho e frustração.",
+        "note": "Com frustração, pessoal"
+      },
+      {
+        "speaker": "IA",
+        "text": "Um cenário que clamava por uma nova abordagem. E então, algo mudou drasticamente. A tecnologia finalmente alcançou a visão dos pioneiros.",
+        "note": "Sintetizando, fazendo transição"
+      }
+    ]
+  },
+  {
+    "number": 26,
+    "title": "LLMs: O Catalisador que Faltava",
+    "content": [
+      "GPT-3 (2020): linguagem natural como interface",
+      "Pela primeira vez: a máquina interpreta intenção em linguagem natural",
+      "O sonho de Engelbart, Bush e Licklider possível",
+      "IDD: aproveitou essa janela histórica"
+    ],
+    "lines": [
+      {
+        "speaker": "IA",
+        "text": "Os LLMs, ou Large Language Models, surgiram como 'O Catalisador que Faltava'. Com o GPT-3 em 2020, a linguagem natural finalmente se tornou uma interface. Pela primeira vez, a máquina interpreta intenção expressa em linguagem natural. O sonho de Engelbart, Bush e Licklider se tornou possível. O IDD aproveitou essa janela histórica.",
+        "note": "Exaltado, reconhecendo o game-changer"
+      },
+      {
+        "speaker": "Eliezer",
+        "text": "Foi um momento 'Eureka!' para mim. Eu passei décadas buscando uma forma de expressar intenção que fosse compreensível tanto para humanos quanto para máquinas. Com os LLMs, essa barreira foi quebrada. O que antes era uma abstração, agora é uma realidade executável. A máquina finalmente pode ser um parceiro de diálogo.",
+        "note": "Apaixonado, com admiração"
+      },
+      {
+        "speaker": "IA",
+        "text": "É a concretização de décadas de pesquisa e visões ambiciosas. A linguagem natural, finalmente, como uma ponte robusta entre o humano e o sistema. E isso gerou uma verdadeira virada semântica.",
+        "note": "Sintetizando, fazendo transição"
+      }
+    ]
+  },
+  {
+    "number": 27,
+    "title": "A Virada Semântica (2020–2025)",
+    "content": [
+      "Modelos que raciocinam em linguagem natural",
+      "Code generation: o operacional delegável",
+      "Embeddings: semântica vira vetor matemático",
+      "Peça final do quebra-cabeça que o IDD precisava"
+    ],
+    "lines": [
+      {
+        "speaker": "IA",
+        "text": "A 'Virada Semântica', de 2020 a 2025, trouxe modelos que raciocinam em linguagem natural. A geração de código se tornou delegável. E os 'embeddings' transformaram a semântica em vetores matemáticos. A peça final do quebra-cabeça que o IDD precisava para realmente decolar.",
+        "note": "Explicativo, com entusiasmo"
+      },
+      {
+        "speaker": "Eliezer",
+        "text": "Essa virada é o que nos permitiu tirar o IDD do campo da teoria e colocá-lo em prática. Agora, o 'como fazer' pode ser inferido pela máquina a partir do 'o quê fazer'. Isso libera o engenheiro para focar no epistêmico, na arquitetura da intenção, e não mais no operacional repetitivo.",
+        "note": "Otimista, prático"
+      },
+      {
+        "speaker": "IA",
+        "text": "É a concretização da promessa de Brooks de reduzir a complexidade acidental, deixando o humano livre para lidar com a complexidade essencial. E assim, todos esses fios convergem no IDD.",
+        "note": "Sintetizando, fazendo transição"
+      }
+    ]
+  },
+  {
+    "number": 28,
+    "title": "IDD: Nó de Convergência · ✅ conceito",
+    "content": [
+      "Bush (associação) + Engelbart (augmenting)",
+      "+ Sutherland (constraints) + Brooks (integridade)",
+      "+ Berners-Lee (semântica) + Gruber (ontologias)",
+      "+ LLMs (execução natural) = IDD"
+    ],
+    "lines": [
+      {
+        "speaker": "IA",
+        "text": "O IDD é o nosso 'Nó de Convergência'. A associação de Bush, o augmenting de Engelbart, os constraints de Sutherland, a integridade de Brooks, a semântica de Berners-Lee, as ontologias de Gruber, somados aos LLMs para execução natural. Isso tudo é o IDD!",
+        "note": "Entusiasmado, recapitulando"
+      },
+      {
+        "speaker": "Eliezer",
+        "text": "É a síntese de uma vida inteira de observação e prática. Eu 'senti' essas ideias muito antes de conhecer os nomes de seus criadores. Quando comecei a formalizar o IDD, foi como montar um quebra-cabeça que eu carregava na mente há décadas. Cada peça se encaixou perfeitamente, e a intenção estava no centro de tudo.",
+        "note": "Reflexivo, pessoal, realizado"
+      },
+      {
+        "speaker": "IA",
+        "text": "É a história de como a experiência prática e a intuição podem se encontrar com a teoria e a tecnologia para produzir uma síntese própria. E sua jornada pessoal é um fio condutor fascinante nessa história, Eliezer.",
+        "note": "Admirado, elogiando"
+      }
+    ]
+  },
+  {
+    "number": 29,
+    "title": "Eliezer Rosa: O Fio Condutor",
+    "content": [
+      "IBM 1976 → UNISYS 2PC → OO/IA UFBA anos 90",
+      "Viu os pioneiros antes de conhecê-los por nome",
+      "A genealogia confirmou o que a prática ensinou",
+      "'Eu não inventei — eu reconheci o padrão'"
+    ],
+    "lines": [
+      {
+        "speaker": "IA",
+        "text": "No slide 'Eliezer Rosa: O Fio Condutor', vemos sua trajetória: IBM 1976, UNISYS 2PC, OO/IA na UFBA nos anos 90. Você viu os pioneiros antes de conhecê-los por nome. A genealogia confirmou o que a prática ensinou. Como você mesmo diz: 'Eu não inventei — eu reconheci o padrão'.",
+        "note": "Com respeito, citando Eliezer"
+      },
+      {
+        "speaker": "Eliezer",
+        "text": "Sim, é uma síntese de uma vida inteira de aprendizado e experimentação. Cada problema que enfrentei, desde os mais simples com RPG II até os mais complexos com 2PC, me empurrava para uma solução mais 'intencional'. A tecnologia nos permite hoje fazer o que antes era apenas um ideal.",
+        "note": "Humilde, mas orgulhoso"
+      },
+      {
+        "speaker": "IA",
+        "text": "É um exemplo de que a inovação muitas vezes é a redescoberta de verdades antigas sob uma nova luz. Mas é importante diferenciar o IDD de outras abordagens mais superficiais com LLMs.",
+        "note": "Sintetizando, fazendo transição"
+      }
+    ]
+  },
+  {
+    "number": 30,
+    "title": "IDD ≠ Prompt Engineering · ✅ conceito",
+    "content": [
+      "Prompt Engineering: instrução ad hoc, descartável",
+      "IDD: intenção como artefato versionado e auditável",
+      "Diferença: permanência, rastreabilidade, governança",
+      "É a diferença entre código e comentário de código"
+    ],
+    "lines": [
+      {
+        "speaker": "IA",
+        "text": "É crucial entender que 'IDD ≠ Prompt Engineering'. Prompt Engineering é uma instrução ad hoc, descartável. O IDD, por outro lado, trata a intenção como um artefato versionado e auditável. A diferença é permanência, rastreabilidade, governança. É a diferença entre código e comentário de código.",
+        "note": "Enfático, fazendo a distinção"
+      },
+      {
+        "speaker": "Eliezer",
+        "text": "Exato! Um prompt é como uma conversa que se apaga. Um artefato de intenção é um contrato, uma lei. No IDD, o Runbook é a constituição do sistema, viva e evolutiva. Ele define o que o sistema DEVE ser, e não apenas o que ele FAZ agora. Isso é governança e rastreabilidade que a indústria sempre buscou.",
+        "note": "Apaixonado, clarificando"
+      },
+      {
+        "speaker": "IA",
+        "text": "Essa é uma distinção vital, que eleva a intenção de uma instrução efêmera para um componente arquitetônico central. E essa permanência se manifesta claramente nos invariantes do IDD.",
+        "note": "Sintetizando, fazendo transição"
+      }
+    ]
+  },
+  {
+    "number": 31,
+    "title": "Invariantes: A Constituição do Sistema · ✅ (prova formal: 🔭)",
+    "content": [
+      "Herdado de Sutherland (constraints) e Brooks",
+      "Invariante: propriedade que o sistema não pode violar",
+      "Ex: 'o status de pedido nunca regride'",
+      "O agente executa; a verificação determinística confere o invariante"
+    ],
+    "lines": [
+      {
+        "speaker": "IA",
+        "text": "Os 'Invariantes: A Constituição do Sistema', são herdados de Sutherland e Brooks. Um invariante é uma propriedade que o sistema não pode violar. Por exemplo: 'o status de pedido nunca regride'. O agente executa; uma verificação determinística confere o invariante.",
+        "note": "Enfático, explicando o conceito"
+      },
+      {
+        "speaker": "Eliezer",
+        "text": "É a base da confiança no sistema. Em sistemas bancários que trabalhei, um erro nos invariantes poderia significar milhões de dólares perdidos. O IDD declara esses invariantes explicitamente e os confere com mecanismos determinísticos, como schema, testes e constraints de banco, em vez de confiar que a IA os respeite. A prova formal desses invariantes é proposta para o futuro.",
+        "note": "Prático, sério, conectando ao IDD"
+      },
+      {
+        "speaker": "IA",
+        "text": "Então, os invariantes são as 'leis' do sistema; o agente é o 'executor', e a verificação determinística confere se essas leis foram respeitadas. É uma arquitetura de governança embutida. E como essas intenções e invariantes são expressos?",
+        "note": "Sintetizando, fazendo transição"
+      }
+    ]
+  },
+  {
+    "number": 32,
+    "title": "Runbooks .intent.md · ✅ método",
+    "content": [
+      "Intenção + invariantes em linguagem natural estruturada",
+      "O humano define o epistêmico; o agente, o operacional",
+      "Confirm-once: um 'go', agente executa até o fim",
+      "Trace auditável: o epistêmico permanece verificável"
+    ],
+    "lines": [
+      {
+        "speaker": "IA",
+        "text": "Através dos 'Runbooks .intent.md'. Eles combinam intenção e invariantes em linguagem natural estruturada. O humano define o epistêmico; o agente, o operacional. Com um 'confirm-once', o agente executa até o fim. E há um trace auditável, mantendo o epistêmico verificável.",
+        "note": "Explicativo, detalhando o artefato"
+      },
+      {
+        "speaker": "Eliezer",
+        "text": "O Runbook é a manifestação prática do IDD. Ele é o coração da comunicação entre humano e IA. Não é um prompt qualquer; é um documento vivo que guia o sistema, registra suas ações e mantém a intenção original rastreável. É a memória do sistema.",
+        "note": "Apaixonado, descrevendo a essência"
+      },
+      {
+        "speaker": "IA",
+        "text": "Então, o Runbook é onde a genealogia do IDD realmente se materializa, com a intenção humana sendo a força motriz. E todo esse arcabouço ganha vida através do Projeto AEON.",
+        "note": "Sintetizando, fazendo transição"
+      }
+    ]
+  },
+  {
+    "number": 33,
+    "title": "Projeto AEON · 🔭 proposta",
+    "content": [
+      "Proposta de orquestrador semântico para o IDD",
+      "Objetivo: traduzir intenções em arquiteturas executáveis",
+      "Multi-agent: cada agente com responsabilidade clara",
+      "'A visão de Engelbart executada por LLMs'"
+    ],
+    "lines": [
+      {
+        "speaker": "IA",
+        "text": "O 'Projeto AEON' é uma proposta de orquestrador semântico para o IDD. A ideia é traduzir intenções em arquiteturas executáveis, usando uma abordagem multi-agent, onde cada agente tem responsabilidade clara. É 'A visão de Engelbart executada por LLMs'.",
+        "note": "Explicativo, exaltando o projeto"
+      },
+      {
+        "speaker": "Eliezer",
+        "text": "AEON é a direção para onde aponta tudo que discutimos. A proposta é pegar a intenção humana, formalizada nos Runbooks, e transformá-la em ação, delegando o operacional à IA, mas mantendo o humano no controle do propósito e dos invariantes.",
+        "note": "Apaixonado, concluindo"
+      },
+      {
+        "speaker": "IA",
+        "text": "Uma proposta que busca a simbiose homem-máquina. E com tanto poder em nossas mãos, vem também uma grande responsabilidade, não é mesmo?",
+        "note": "Sintetizando, fazendo transição para o próximo tema"
+      }
+    ]
+  },
+  {
+    "number": 34,
+    "title": "A Responsabilidade do Engenheiro",
+    "content": [
+      "Quem conhece a genealogia tem responsabilidade",
+      "Não basta usar LLMs — é preciso entender o porquê",
+      "A genealogia é a bússola ética e técnica",
+      "Augmenting: responsabilidade de manter o epistêmico"
+    ],
+    "lines": [
+      {
+        "speaker": "IA",
+        "text": "E isso nos leva à 'A Responsabilidade do Engenheiro'. Quem conhece a genealogia tem responsabilidade. Não basta usar LLMs — é preciso entender o porquê. A genealogia é a bússola ética e técnica. Augmenting: responsabilidade de manter o epistêmico.",
+        "note": "Séria, reflexiva"
+      },
+      {
+        "speaker": "Eliezer",
+        "text": "Essa é a mensagem mais importante. Não somos meros 'prompt engineers'. Somos arquitetos de intenção. Nossa responsabilidade é garantir que a IA sirva a propósitos humanos, que amplifique nossa capacidade, e não que tome as rédeas. Entender essa genealogia nos dá a base para construir com sabedoria.",
+        "note": "Apaixonado, didático"
+      },
+      {
+        "speaker": "IA",
+        "text": "É um chamado à consciência para todos os que trabalham com tecnologia. Não somos apenas construtores de máquinas, mas guardiões da inteligência humana. E a missão de evoluir continua.",
+        "note": "Inspirador, concluindo"
+      }
+    ]
+  },
+  {
+    "number": 35,
+    "title": "A Missão Continua",
+    "content": [
+      "De Bush (1945) a IDD (2024): 79 anos de linhagem",
+      "Cada paradigma preparou o terreno para o próximo",
+      "O IDD não é o fim — é o próximo ombro de gigante",
+      "Anúncio: Ep04 — Runbooks: quando a intenção vira código"
+    ],
+    "lines": [
+      {
+        "speaker": "IA",
+        "text": "Chegamos ao nosso último slide, 'A Missão Continua'. De Bush em 1945 ao IDD em 2024: 79 anos de linhagem. Cada paradigma preparou o terreno para o próximo. O IDD não é o fim — é o próximo ombro de gigante. E para o próximo episódio, anunciamos: Ep04 — Runbooks: quando a intenção vira código.",
+        "note": "Inspirador, anunciando o próximo episódio"
+      },
+      {
+        "speaker": "Eliezer",
+        "text": "É uma responsabilidade e um privilégio fazer parte dessa linhagem. O IDD é um passo, não o destino final. Espero que tenhamos acendido em vocês a curiosidade para entender as raízes e continuar a construir o futuro da forma mais humana e intencional possível. Muito obrigado!",
+        "note": "Reflexivo, agradecido"
+      },
+      {
+        "speaker": "IA",
+        "text": "Que jornada incrível, Eliezer! Foi uma honra traçar a genealogia do IDD com você. Muito obrigada pela sua sabedoria e por nos guiar por essa história rica. E a todos os nossos ouvintes, obrigado por estarem conosco nesta exploração. Não percam o próximo episódio! Até lá!",
+        "note": "Agradecida, entusiasmada, encerrando o episódio"
+      }
+    ]
+  }
+];
+
+// ================================================================
+// STATE
+// ================================================================
+let curSlide = 0;   // index in SLIDES
+let curLine  = 0;   // index in SLIDES[curSlide].lines
+let speaking = false;
+let utterance = null;
+let voices = [];
+let voiceEliezer = null;
+let voiceIA      = null;
+
+// ================================================================
+// DOM refs
+// ================================================================
+const $  = id => document.getElementById(id);
+const cover       = $('cover');
+const slideNum    = $('slide-counter');
+const slideNumBig = $('slide-num-badge');
+const slideTitle  = $('slide-title');
+const slideContent= $('slide-content');
+const spkBubble   = $('speaker-bubble');
+const spkName     = $('speaker-name');
+const spkDot      = $('speak-dot');
+const dlgText     = $('dialogue-text');
+const lineDots    = $('line-dots');
+const statusDot   = $('status-dot');
+const statusTxt   = $('status-text');
+const rateInput   = $('rate');
+const rateVal     = $('rate-val');
+const autoAdv     = $('auto-advance');
+const btnPlay     = $('btn-play');
+const btnStop     = $('btn-stop');
+const btnPrev     = $('btn-prev');
+const btnNext     = $('btn-next');
+const btnPrevLine = $('btn-prev-line');
+const btnNextLine = $('btn-next-line');
+const voiceElSel  = $('voice-eliezer');
+const voiceIASel  = $('voice-ia');
+
+// ================================================================
+// VOICE SETUP
+// ================================================================
+function loadVoices() {
+  voices = speechSynthesis.getVoices();
+  if (!voices.length) return;
+
+  const ptBR = voices.filter(v => v.lang.startsWith('pt'));
+  const male   = ptBR.filter(v => /ant[oô]nio|male|masc/i.test(v.name));
+  const female = ptBR.filter(v => /francisca|femi|fem/i.test(v.name));
+  const allPt  = ptBR.length ? ptBR : voices;
+
+  // populate selects
+  function populate(sel, preferred, fallbackList) {
+    sel.innerHTML = '';
+    const list = allPt.length ? allPt : voices;
+    list.forEach((v, i) => {
+      const opt = document.createElement('option');
+      opt.value = i + '___' + v.name;
+      opt.textContent = v.name.replace(/Microsoft |Online|Natural/g, '').trim();
+      sel.appendChild(opt);
+    });
+    // auto-select best
+    const best = preferred.length ? preferred[0] : (fallbackList.length ? fallbackList[0] : allPt[0]);
+    if (best) {
+      const idx = list.indexOf(best);
+      if (idx >= 0) sel.selectedIndex = idx;
+    }
+  }
+  populate(voiceElSel, male, ptBR);
+  populate(voiceIASel, female.length ? female : ptBR.filter((_,i)=>i!==voiceElSel.selectedIndex), ptBR);
+  updateVoicePtrs();
+}
+
+function updateVoicePtrs() {
+  const allPt = (speechSynthesis.getVoices().filter(v => v.lang.startsWith('pt')) || speechSynthesis.getVoices());
+  const list  = allPt.length ? allPt : speechSynthesis.getVoices();
+  const elIdx = voiceElSel.selectedIndex;
+  const iaIdx = voiceIASel.selectedIndex;
+  voiceEliezer = list[elIdx] || null;
+  voiceIA      = list[iaIdx] || null;
+}
+
+speechSynthesis.addEventListener('voiceschanged', loadVoices);
+loadVoices();
+voiceElSel.addEventListener('change', updateVoicePtrs);
+voiceIASel.addEventListener('change', updateVoicePtrs);
+
+// ================================================================
+// RENDER SLIDE
+// ================================================================
+function renderSlide(animate=true) {
+  const s = SLIDES[curSlide];
+  const total = SLIDES.length;
+
+  slideNum.textContent    = `Slide ${curSlide+1} / ${total}`;
+  slideNumBig.textContent = `SLIDE ${curSlide+1} / ${total}`;
+
+  if (animate) slideTitle.classList.remove('fade-in');
+  slideTitle.textContent = s.title || '(sem título)';
+  if (animate) void slideTitle.offsetWidth, slideTitle.classList.add('fade-in');
+
+  slideContent.innerHTML = '';
+  (s.content || []).slice(0, 7).forEach(c => {
+    const li = document.createElement('li');
+    li.textContent = c;
+    slideContent.appendChild(li);
+  });
+
+  renderLine(animate);
+  renderDots();
+  updateButtons();
+}
+
+function renderLine(animate=true) {
+  const s = SLIDES[curSlide];
+  const ln = s.lines[curLine];
+  const isEliezer = ln.speaker === 'Eliezer';
+
+  spkBubble.classList.toggle('eliezer', isEliezer);
+  spkName.textContent = ln.speaker;
+
+  if (animate) {
+    spkBubble.classList.remove('fade-in');
+    void spkBubble.offsetWidth;
+    spkBubble.classList.add('fade-in');
+  }
+  dlgText.textContent = ln.text;
+  renderDots();
+}
+
+function renderDots() {
+  const lines = SLIDES[curSlide].lines;
+  lineDots.innerHTML = '';
+  lines.forEach((_, i) => {
+    const d = document.createElement('span');
+    d.className = 'line-dot' + (i < curLine ? ' done' : '') + (i === curLine ? ' active' : '');
+    d.title = `Linha ${i+1} — ${lines[i].speaker}`;
+    d.addEventListener('click', () => { stopSpeech(); curLine = i; renderLine(); });
+    lineDots.appendChild(d);
+  });
+}
+
+function updateButtons() {
+  btnPrev.disabled     = curSlide === 0 && curLine === 0;
+  btnNext.disabled     = curSlide === SLIDES.length - 1 && curLine === SLIDES[curSlide].lines.length - 1;
+  btnPrevLine.disabled = curLine === 0;
+  btnNextLine.disabled = curLine === SLIDES[curSlide].lines.length - 1;
+  btnPlay.textContent  = speaking ? '⏸ Pausar' : '▶ Tocar';
+}
+
+// ================================================================
+// SPEECH
+// ================================================================
+function stopSpeech() {
+  speechSynthesis.cancel();
+  speaking = false;
+  spkDot.classList.remove('active');
+  statusDot.classList.remove('speaking');
+  statusTxt.textContent = 'Parado.';
+  btnPlay.textContent = '▶ Tocar';
+}
+
+function speakCurrent(onEnd) {
+  const s  = SLIDES[curSlide];
+  const ln = s.lines[curLine];
+  const utter = new SpeechSynthesisUtterance(ln.text);
+  const isEliezer = ln.speaker === 'Eliezer';
+
+  updateVoicePtrs();
+  utter.voice = isEliezer ? voiceEliezer : voiceIA;
+  utter.lang  = 'pt-BR';
+  utter.rate  = parseFloat(rateInput.value);
+
+  spkDot.classList.add('active');
+  statusDot.classList.add('speaking');
+  statusTxt.textContent = `Falando: ${ln.speaker} — "${ln.text.substring(0,60)}…"`;
+  speaking = true;
+  btnPlay.textContent = '⏸ Pausar';
+
+  utter.onend = () => {
+    spkDot.classList.remove('active');
+    speaking = false;
+    if (onEnd) onEnd();
+  };
+  utter.onerror = (e) => {
+    if (e.error !== 'interrupted') console.warn('TTS error:', e.error);
+    spkDot.classList.remove('active');
+    speaking = false;
+  };
+
+  speechSynthesis.cancel();
+  speechSynthesis.speak(utter);
+}
+
+function playFromCurrent() {
+  function next() {
+    if (!autoAdv.checked) {
+      statusDot.classList.remove('speaking');
+      statusTxt.textContent = 'Parado (auto-avançar desligado).';
+      btnPlay.textContent = '▶ Tocar';
+      return;
+    }
+    // advance line
+    const lines = SLIDES[curSlide].lines;
+    if (curLine < lines.length - 1) {
+      curLine++;
+      renderLine();
+      speakCurrent(next);
+    } else if (curSlide < SLIDES.length - 1) {
+      curSlide++;
+      curLine = 0;
+      renderSlide();
+      speakCurrent(next);
+    } else {
+      // end
+      statusDot.classList.remove('speaking');
+      statusTxt.textContent = 'Apresentação concluída! 🎉';
+      btnPlay.textContent = '▶ Tocar';
+    }
+  }
+  speakCurrent(next);
+}
+
+// ================================================================
+// CONTROLS
+// ================================================================
+btnPlay.addEventListener('click', () => {
+  if (speechSynthesis.speaking) {
+    if (speechSynthesis.paused) {
+      speechSynthesis.resume();
+      speaking = true;
+      btnPlay.textContent = '⏸ Pausar';
+    } else {
+      speechSynthesis.pause();
+      btnPlay.textContent = '▶ Retomar';
+    }
+  } else {
+    playFromCurrent();
+  }
+});
+
+btnStop.addEventListener('click', stopSpeech);
+
+btnPrev.addEventListener('click', () => {
+  stopSpeech();
+  if (curLine > 0) { curLine--; renderLine(); }
+  else if (curSlide > 0) { curSlide--; curLine = SLIDES[curSlide].lines.length - 1; renderSlide(); }
+});
+
+btnNext.addEventListener('click', () => {
+  stopSpeech();
+  const lines = SLIDES[curSlide].lines;
+  if (curLine < lines.length - 1) { curLine++; renderLine(); }
+  else if (curSlide < SLIDES.length - 1) { curSlide++; curLine = 0; renderSlide(); }
+});
+
+btnPrevLine.addEventListener('click', () => {
+  if (curLine > 0) { stopSpeech(); curLine--; renderLine(); }
+});
+
+btnNextLine.addEventListener('click', () => {
+  const lines = SLIDES[curSlide].lines;
+  if (curLine < lines.length - 1) { stopSpeech(); curLine++; renderLine(); }
+});
+
+rateInput.addEventListener('input', () => {
+  rateVal.textContent = parseFloat(rateInput.value).toFixed(2) + '×';
+});
+
+// keyboard
+document.addEventListener('keydown', e => {
+  if (cover && !cover.classList.contains('hidden')) return;
+  if (e.target.tagName === 'SELECT' || e.target.tagName === 'INPUT') return;
+  const lines = SLIDES[curSlide].lines;
+  switch(e.key) {
+    case ' ':
+      e.preventDefault();
+      btnPlay.click();
+      break;
+    case 'ArrowRight':
+      if (e.shiftKey) { btnNextLine.click(); }
+      else { btnNext.click(); }
+      break;
+    case 'ArrowLeft':
+      if (e.shiftKey) { btnPrevLine.click(); }
+      else { btnPrev.click(); }
+      break;
+    case 's': case 'S':
+      stopSpeech();
+      break;
+    case 'a': case 'A':
+      autoAdv.checked = !autoAdv.checked;
+      break;
+  }
+});
+
+// ================================================================
+// COVER dismiss
+// ================================================================
+cover.addEventListener('click', () => {
+  cover.classList.add('hidden');
+  // try loading voices on user gesture
+  loadVoices();
+});
+
+// ================================================================
+// INIT
+// ================================================================
+renderSlide(false);
+
+// Auto-hide cover after 4s
+setTimeout(() => cover.classList.add('hidden'), 4000);
+</script>
+</body>
+</html>

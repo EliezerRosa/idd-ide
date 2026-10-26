@@ -1,0 +1,529 @@
+# IDD IDE v2.0 — MASTER ARCHITECTURAL SPECIFICATION & EXECUTION BLUEPRINT
+
+---
+
+## 1. Visão Geral e Fundamentação Histórico-Científica
+
+### 1.1 Resumo Executivo
+
+O **IDD IDE (Intent Driven Development)** é uma plataforma de desenvolvimento neuro-simbólica projetada para elevar a *intenção de negócio* ao status de fonte primária da verdade (*Single Source of Truth*).
+
+A versão 2.0 expande a capacidade da plataforma ao estruturar um pipeline em 3 camadas que converte especificações ambíguas em Linguagem Natural em artefatos determinísticos de código, modelos relacionais rigorosos e validações visuais multimodais, combatendo continuamente o **Stochastic Semantic Drift** (Desvio Semântico Estocástico).
+
+---
+
+### 1.2 Herança Histórica: Do Unisys SIM (1990) & SDM (1981) ao IDD IDE
+
+O IDD IDE resgata e moderniza as bases da **Modelagem Semântica de Dados (Semantic Data Model - SDM)** formulada por Hammer & McLeod (1981) e implementada comercialmente no **Unisys SIM (Semantic Information Manager)** na década de 1990.
+
+```
+ [ Unisys SIM (década de 1990) ]           [ IDD IDE v2.0 (2026) ]
+
+    Esquema Semântico (SDM)                 domain.intent.yaml (Intenção)
+               │                                       │
+               ▼                                       ▼  idd domain compile
+    Compilador SGBD SIM                    Engine Neuro-Simbólico IDD
+               │                                       │
+               ▼                                       ▼
+ Estruturas Físicas de Banco               schema.sql + JSONB + AST + Excalidraw
+
+```
+
+* **Esquema Semântico como Fonte Única:** No Unisys SIM, o desenvolvedor não definia estruturas físicas (`CREATE TABLE` ou `FOREIGN KEY`), mas sim um *Esquema Semântico Declarativo*. O IDD IDE reencarna esse princípio no arquivo `domain.intent.yaml`. O DDL SQL, schemas de validação JSONB, diagramas ER e grafos Excalidraw são apenas **artefatos derivados compilados** através do comando `idd domain compile`.
+* **Restrições Semânticas Ativas:** O SIM garantia que regras de negócio fossem validadas ativamente no nível da entidade. O IDD IDE expande esse conceito para o ciclo de vida do código, interceptando violações no editor (LSP), no terminal (*pre-commit*) e no pipeline de CI/CD via GitHub Actions.
+* **A Evolução Neuro-Simbólica:** Enquanto o SIM exigia entradas formais 100% rígidas e escritas manualmente, o IDD IDE integra um **Compilador de Linguagem Ubíqua (SHALA-LLM)** que aceita Linguagem Natural ambígua, mensura sua entropia e conduz diálogos de convergência até atingir a estabilidade semântica necessária para o motor simbólico estrito (Axiomas de Armstrong e Formas Normais 1NF a DKNF).
+
+---
+
+### 1.3 A Hierarquia das 3 Camadas de Intenções
+
+```
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ 1. CAMADA 1: INTENÇÃO DE PROJETO (project.intent.yaml)                      │
+│    Governança Macro, Bounded Contexts, Status de Maturidade e Roles        │
+└──────────────────────────────────────┬──────────────────────────────────────┘
+                                       │
+                                       ▼
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ 2. CAMADA 2: INTENÇÃO DE DOMÍNIO (domain.intent.yaml)                       │
+│    Esquema Semântico SDM, Entidades, FDs, Normalização e Excalidraw VLM    │
+└──────────────────────────────────────┬──────────────────────────────────────┘
+                                       │
+                                       ▼
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ 3. CAMADA 3: INTENÇÃO DE MÓDULO (.intent.yaml)                              │
+│    Circunscrição a Método de Classe (DDD/DbC), BDD e Verificação de AST     │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+```
+
+---
+
+### 1.4 Divisão de Arquitetura: Hard Gates vs. Soft Gates
+
+Para evitar problemas de *flaky builds* (falhas aleatórias por estocasticidade) e garantir alta velocidade no ciclo de desenvolvimento, o IDD IDE adota uma separação entre **portões determinísticos** e **portões opinativos**:
+
+* **Hard Gates (Bloqueantes — Determinismo Puro):**
+* Verificação de acoplamento entre Bounded Contexts (`project.intent.yaml`).
+* Normalização relacional (1NF a DKNF) via Axiomas de Armstrong.
+* Análise estática de AST (Visibilidade, Encapsulamento, LCOM, CBO, Lei de Demeter e LSP).
+* *Execução:* Local (CLI/LSP), milissegundos, sem chamadas de rede. **Bloqueia commit/PR**.
+
+
+* **Soft Gates (Advisory — Inteligência Neural Assíncrona):**
+* Diálogo de desambiguação de Linguagem Ubíqua (SHALA-LLM).
+* Inspeção topológica e cognitiva de diagramas Excalidraw por IA de Visão (VLM).
+* *Execução:* Assíncrona (background/CI). **Gera apenas pareceres, avisos e notas no PR**, sem nunca barrar o merge por pontuação estocástica.
+
+
+
+---
+
+## 2. Especificação da Camada 1: Governança Macro, Status de Maturidade e Papéis (`project.intent.yaml`)
+
+### 2.1 Conceito e Fundamentação (PSEEs, ACC e Gradual Verification)
+
+A Camada 1 reside na raiz do repositório (`/project.intent.yaml`). Ela fundamenta-se nos conceitos de **Process-Centered Software Engineering Environments (PSEEs)**, **Architectural Conformance Checking (ACC)** e **Gradual Verification**.
+
+O sistema permite parametrizar a rigidez das verificações conforme a fase do ciclo de vida do software (*Lifecycle Status*) e estabelecer uma hierarquia de papéis (*Governance Roles*) com suporte a exceções temporárias registradas (*Waivers*).
+
+### 2.2 Schema Completo do `/project.intent.yaml`
+
+```yaml
+version: "2.0"
+project: "IDD IDE Engine"
+purpose: >
+  Ambiente de Desenvolvimento Integrado e CLI neuro-simbólica para verificação 
+  contínua de intenções de código, schemas relacionais e topologia de arquitetura.
+
+# 1. ESTADO DE MATURIDADE DO PROJETO (Gradação de Rigor)
+lifecycle_status:
+  current_phase: "stabilization" # Opções: exploratory | stabilization | production
+  
+  phase_policies:
+    exploratory:
+      l1_ubiquitous_compiler: "advisory"     # Emitir avisos sem parar fluxo
+      ast_structural_verifier: "advisory"    # Tolerância a LCOM/CBO altos
+      domain_relational_verifier: "warning"  # Alerta desnormalizações sem barrar
+      visual_multimodal_verifier: "off"      # Desativado
+      ci_action: "allow_merge"
+
+    stabilization:
+      l1_ubiquitous_compiler: "interactive"  # Interrompe se H(p_q) > 0.35
+      ast_structural_verifier: "strict"       # Bloqueia vazamentos de visibilidade
+      domain_relational_verifier: "strict"     # Exige BCNF sem exceções
+      visual_multimodal_verifier: "advisory"  # Posta laudo no PR (soft gate)
+      ci_action: "block_on_critical"
+
+    production:
+      l1_ubiquitous_compiler: "imperative"   # Erro imediato em ambiguidades
+      ast_structural_verifier: "imperative"   # Tolerância zero para LCOM/CBO/Demeter
+      domain_relational_verifier: "imperative"# Exige validação relacional e DKNF
+      visual_multimodal_verifier: "strict"    # Exige visualScore >= 85%
+      ci_action: "block_on_any_drift"
+
+# 2. HIERARQUIA DE AUTORIDADE E GOVERNANÇA
+governance:
+  roles:
+    legislator:
+      permissions: ["edit_project_intent", "change_lifecycle_phase", "define_invariants"]
+      assigned_users: ["@architect-lead"]
+
+    moderator:
+      permissions: ["grant_drift_waiver", "override_warning", "merge_with_soft_gate_failure"]
+      assigned_users: ["@tech-lead"]
+
+    executor:
+      permissions: ["write_code", "create_module_intent"]
+      assigned_users: ["@dev-team"]
+
+  waiver_policy:
+    allow_temporary_waivers: true
+    max_waiver_duration_days: 7
+    requires_moderator_approval: true
+
+# 3. INVARIANTES ARQUITETURAIS GLOBAIS
+global_constraints:
+  - id: GC-ARC-01
+    type: architecture
+    severity: critical
+    description: "A camada de LSP e CLI nunca deve depender exclusivamente de APIs neurais/LLM sem fallback simbólico estático."
+    enforcement: strict
+
+  - id: GC-SEC-02
+    type: security
+    severity: critical
+    description: "Chaves de API e segredos de ambiente nunca devem ser persistidos no SQLite local ou expostos em logs."
+    enforcement: strict
+
+# 4. MATRIZ DE ISOLAMENTO DE BOUNDED CONTEXTS
+bounded_contexts:
+  - name: "cli"
+    path: "packages/cli"
+    allowed_dependencies: ["core", "verifier", "domain"]
+
+  - name: "lsp"
+    path: "packages/lsp"
+    allowed_dependencies: ["core", "verifier"]
+
+  - name: "domain"
+    path: "packages/domain"
+    allowed_dependencies: ["core"]
+
+  - name: "verifier"
+    path: "packages/verifier"
+    allowed_dependencies: ["core"]
+
+  - name: "core"
+    path: "packages/core"
+    allowed_dependencies: []
+
+drift_policy:
+  min_overall_score: 85%
+  block_pr_on_critical: true
+
+```
+
+---
+
+## 3. Especificação da Camada 2: Compilador L1 & Domínio de Dados
+
+### 3.1 Fase 1 — Compilador L1 de Linguagem Ubíqua (SHALA-LLM)
+
+#### 3.1.1 Fundamentação Teórica
+
+Baseado na pesquisa **SHALA-LLM (Smartly Handling Ambiguous Labels in Aligning LLMs - Wu et al., MIT Media Lab, 2026)**, que demonstra que divergências em Linguagem Natural não representam ruído descartável, mas sim a distribuição de probabilidade de interpretações humanas $p_q$.
+
+#### 3.1.2 Algoritmo de Mensuração de Entropia e Diálogo de Convergência
+
+Para cada entrada de intenção $q$ em Linguagem Natural, o Compilador L1 solicita a geração de distribuições verbalizadas $\hat{P}_{(q,i)}$ e calcula a **Entropia Normalizada de Shannon** $\tilde{H}(p_q)$:
+
+$$\tilde{H}(p_q) = \frac{-\sum_{c=1}^{C} p_{q,c} \log p_{q,c}}{\log C} \in [0, 1]$$
+
+Onde $C$ é o número de interpretações candidatas identificadas.
+
+```
+                  ┌────────────────────────────────────────┐
+                  │ Entrada em LN: "Bloquear conta do usuário"
+                  └───────────────────┬────────────────────┘
+                                      │
+                                      ▼
+             [ Avaliação da Entropia Normalizada H(p_q) ]
+                                      │
+                   ┌──────────────────┴──────────────────┐
+                   ▼                                     ▼
+        Se H(p_q) <= 0.35 (Baixa)             Se H(p_q) > 0.35 (Alta)
+                   │                                     │
+                   ▼                                     ▼
+      Gera .intent.yaml Direto             [ Diálogo de Convergência L1 ]
+                                           • Exibe distribuições verbalizadas
+                                           • Coleta definições do dev
+                                           • Minimiza Distância JS: D_JS(P_hat, P)
+                                                         │
+                                                         ▼
+                                           Atualiza Dicionário Ubíquo Local
+                                           (.intent/ubiquitous-dictionary.json)
+
+```
+
+#### 3.1.3 Artefato Gerado: Dicionário Ubíquo (`.intent/ubiquitous-dictionary.json`)
+
+```json
+{
+  "version": "1.0",
+  "terms": {
+    "BloqueioTemporario": {
+      "definition": "Suspensão de acesso da conta por exatamente 15 minutos motivada por 5 falhas consecutivas de senha.",
+      "synonyms": ["Lockout", "TemporaryLock"],
+      "bounded_context": "auth"
+    }
+  }
+}
+
+```
+
+---
+
+### 3.2 Modelagem de Dados e Esquema Semântico (`domain.intent.yaml`)
+
+#### 3.2.1 Contrato Semântico do Domínio
+
+O arquivo `domain.intent.yaml` declara o modelo conceitual, as **Dependências Funcionais (FDs)** no formato $X \rightarrow Y$ e as restrições relacionais.
+
+```yaml
+version: "2.0"
+domain: "ECommerce"
+module: "sales/orders"
+
+entities:
+  UserAccount:
+    attributes:
+      cpf: { type: "string", primary_key: true }
+      name: { type: "string", nullable: false }
+      email: { type: "string", unique: true }
+
+  CustomerOrder:
+    attributes:
+      orderId: { type: "uuid", primary_key: true }
+      userCpf: { type: "string", foreign_key: "UserAccount.cpf" }
+      orderDate: { type: "timestamp" }
+      totalAmount: { type: "decimal" }
+
+functional_dependencies:
+  - determinant: ["cpf"]
+    dependent: ["name", "email"]
+  - determinant: ["orderId"]
+    dependent: ["userCpf", "orderDate", "totalAmount"]
+
+normalization_rules:
+  target_normal_form: "BCNF"
+  enforce_armstrong_axioms: true
+
+```
+
+#### 3.2.2 Engine de Normalização Simbólica (1NF a DKNF)
+
+O comando `idd domain normalize` aplica deterministicamente os **Axiomas de Armstrong** para calcular o fechamento de atributos $X^+$:
+
+1. **Reflexividade:** Se $Y \subseteq X$, então $X \rightarrow Y$.
+2. **Aumento:** Se $X \rightarrow Y$, então $XZ \rightarrow YZ$.
+3. **Transitividade:** Se $X \rightarrow Y$ e $Y \rightarrow Z$, então $X \rightarrow Z$.
+
+Se for identificada qualquer dependência funcional $X \rightarrow Y$ onde $X$ não seja uma superchave (violação de BCNF/3NF), o motor interrompe o pipeline e sugere a decomposição sem perda de informação (*Lossless-Join Decomposition*).
+
+---
+
+## 4. Especificação da Camada 3: Circunscrição Comportamental & Verificação AST
+
+### 4.1 Fase 2 — Circunscrição Comportamental a Métodos de Classe
+
+Aplica o princípio de **Design por Contrato (DbC - Bertrand Meyer)**, **Domain-Driven Design (DDD - Eric Evans)** e as **Restrições Semânticas Ativas do Unisys SIM** para erradicar o *Anemic Domain Model*.
+
+Toda intenção funcional $I_{func}$ é obrigatoriamente vinculada a **um Método de uma Classe de Negócio** (Entidade/Agregado DDD):
+
+$$\text{IntençãoFuncional } (I_{func}) \implies \text{ClasseDeNegocio.MetodoComportamental}()$$
+
+#### Schema de Intenção de Módulo Circunscrita (`auth/user-account.intent.yaml`)
+
+```yaml
+version: "2.0"
+target_class: "Domain.Auth.UserAccount"
+target_method: "registerFailedLoginAttempt"
+
+intent: >
+  Registrar uma tentativa incorreta de senha, incrementando o contador interno 
+  e alterando o estado da conta para BloqueadoTemporariamente ao atingir o limite.
+
+behavioral_contract:
+  visibility: "public"
+  state_mutation:
+    allowed_fields: ["failedAttemptsCount", "accountStatus", "lockoutExpiration"]
+    read_only_fields: ["id", "email", "passwordHash"]
+
+constraints:
+  - id: C-METH-01
+    type: invariant
+    severity: critical
+    description: "A transição para BLOCKED_TEMPORARY só pode ocorrer se failedAttemptsCount >= 5."
+
+  - id: C-METH-02
+    type: encapsulation
+    severity: critical
+    description: "Mutações nos atributos autorizados só podem ser executadas pelo próprio método circunscrito."
+
+acceptance:
+  - id: A-01
+    given: "Uma conta com failedAttemptsCount = 4"
+    when: "O método registerFailedLoginAttempt() for executado"
+    then: "failedAttemptsCount passa para 5 e accountStatus altera para BLOCKED_TEMPORARY."
+
+```
+
+---
+
+### 4.2 Fase 3 — Engine de Verificação Estrutural de AST (`idd diff --structural`)
+
+O comando `idd diff --structural` faz o parsing do código gerado/modificado e analisa a Árvore de Sintaxe Abstrata (AST) para validar quatro eixos estruturais:
+
+1. **Evasão de Visibilidade (Encapsulation Leak):** Detecta se atributos marcados como `read_only_fields` possuem mutadores públicos genéricos (`setters`) ou acesso público direto.
+2. **Coesão LCOM (Lack of Cohesion in Methods):** Valida se o método opera diretamente sobre os campos internos da classe declarada. Se $LCOM > \text{threshold}$, aponta que a intenção foi alocada na classe errada.
+3. **Acoplamento CBO & Lei de Demeter:** Garante que o método interaja apenas com seus próprios atributos, parâmetros diretos ou objetos por ele instanciados. Bloqueia chamadas profundas e encadeadas (ex: `user.getProfile().getSettings().update()`).
+4. **Princípio de Substituição de Liskov (LSP):** Impede que subclasses sobrescrevam métodos enfraquecendo as *constraints* definidas na intenção da classe pai.
+
+---
+
+## 5. Especificação da Validação Visual Multimodal (`idd domain verify-visual`)
+
+### 5.1 Fase 4 — Arquitetura do Engine Visual (Soft Gate / Advisory)
+
+A Validação Visual Multimodal atua como uma auditoria de ergonomia cognitiva e topologia de arquitetura, unindo a precisão da AST a modelos de visão (VLMs - *Vision-Language Models*). Como é estocástica, roda como **Soft Gate (apenas gera relatórios e pareceres assíncronos no PR)**.
+
+```
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                 ENGINE DE VALIDAÇÃO VISUAL MULTIMODAL (IDD)                 │
+└─────────────────────────────────────────────────────────────────────────────┘
+  [ Domain AST ]
+        │
+        ▼  idd domain render-excalidraw
+  ┌─────────────────────────────────────────────────────────────────────────┐
+  │ 1. ExcalidrawVisualSynthesizer (.excalidraw JSON)                        │
+  │    • Bounded Context Containers (Bordas tracejadas)                     │
+  │    • Aggregate Roots (Realce em roxo #534AB7)                             │
+  │    • Arestas de Conectividade e Rótulos de Cardinalidade (1:1, 1:N, N:M)   │
+  └─────────────────────────────────────────────────────────────────────────┘
+        │
+        ▼  Headless Canvas API (PNG Export)
+  ┌─────────────────────────────────────────────────────────────────────────┐
+  │ 2. Renderizador de Imagem PNG/SVG                                       │
+  └─────────────────────────────────────────────────────────────────────────┘
+        │
+        ▼  idd domain inspect-visual
+  ┌─────────────────────────────────────────────────────────────────────────┐
+  │ 3. VLMVisualInspector (Claude 3.5 Sonnet / Gemini Vision)               │
+  │    • Entradas: domain.intent.yaml + Imagem Renderizada (PNG)            │
+  │    • Análise: God Entities, Context Leaks, Cognitive Clutter            │
+  └─────────────────────────────────────────────────────────────────────────┘
+        │
+        ▼
+  ┌─────────────────────────────────────────────────────────────────────────┐
+  │ 4. Laudo de Conformidade Visual (visualScore + Bounding Box Coordinates) │
+  └─────────────────────────────────────────────────────────────────────────┘
+
+```
+
+---
+
+### 5.2 Prompt do Agente Inspetor VLM
+
+```markdown
+Você é um Arquiteto de Software Principal especializado em Raciocínio Diagramático (Larkin & Simon, 1987) e Dimensões Cognitivas de Notações (Green & Petre, 1996).
+
+Sua tarefa é analisar a imagem do diagrama Excalidraw (`domain-model.png`) e cruzá-la rigorosamente com as restrições declaradas no arquivo de contrato `domain.intent.yaml`.
+
+### Análises Obrigatórias:
+1. **God Entities (Aglomeração Visual):** Identifique nós centrais com grau de conectividade desproporcional.
+2. **Context Leaks (Vazamento de Bounded Context):** Inspecione relacionamentos cruzando contêineres sem passar por uma Raiz de Agregação (Aggregate Root).
+3. **Cognitive Clutter & Divergência de Cardinalidade:** Identifique acoplamentos visuais ilegíveis e cardinalidades (1:1, 1:N, N:M) que divirjam do `.intent.yaml`.
+
+### Formato Obrigatório de Resposta (JSON):
+{
+  "visualScore": 88,
+  "passed": true,
+  "findings": [
+    {
+      "severity": "CRITICAL",
+      "category": "CONTEXT_LEAK",
+      "targetEntity": "PaymentDetail",
+      "description": "Conexão direta detectada entre 'PaymentDetail' (Contexto Financeiro) e 'InventoryStock' (Contexto Logística) sem mediação da raiz 'Order'.",
+      "boundingCoordinates": { "x": 240, "y": 410, "w": 180, "h": 120 },
+      "recommendation": "Rotear o relacionamento através do evento Domain.Sales.OrderCompleted."
+    }
+  ],
+  "visualSummary": "Modelo bem estruturado, com uma violação de fronteira entre contextos no módulo financeiro."
+}
+
+```
+
+---
+
+## 6. Integração CI/CD & Pipeline Unificado
+
+### 6.1 Fase 5 — Workflow GitHub Actions (`.github/workflows/idd-full-verification.yml`)
+
+```yaml
+name: IDD Full Neuro-Symbolic Verification
+
+on:
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js Environment
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install IDD CLI & Dependencies
+        run: npm ci
+
+      # --- HARD GATES (DETERMINÍSTICOS & BLOQUEANTES) ---
+      - name: 1. Camada 1 — Verificação Arquitetural e Permissões do Projeto
+        run: npx idd verify --project --config=project.intent.yaml
+
+      - name: 2. Camada 2 — Verificação Relacional e Normalização (1NF..DKNF)
+        run: npx idd domain verify --target-normal-form=BCNF
+
+      - name: 3. Camada 3 — Verificação Estrutural de AST (Encapsulamento, LCOM, CBO)
+        run: npx idd diff --structural --fail-on=critical
+
+      # --- SOFT GATES (ADVISORY / PARECER MULTIMODAL ASSÍNCRONO) ---
+      - name: 4. Validação Visual Multimodal (Excalidraw + VLM Inspector)
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          npx idd domain render-excalidraw --out=dist/domain-model.json
+          npx idd domain export-png --in=dist/domain-model.json --out=dist/domain-model.png
+          npx idd domain inspect-visual --image=dist/domain-model.png --intent=domain.intent.yaml --out=dist/visual-report.json || true
+
+      - name: 5. Postagem do Parecer no PR
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            let body = "### ⬡ IDD Verification Report\n";
+            body += "✅ **Hard Gates (Determinísticos):** Aprovados com sucesso.\n\n";
+
+            if (fs.existsSync('dist/visual-report.json')) {
+              const report = JSON.parse(fs.readFileSync('dist/visual-report.json', 'utf8'));
+              body += `### 👁️ Parecer Visual Multimodal (Soft Gate - Advisory)\n`;
+              body += `- **Visual Score:** ${report.visualScore}%\n`;
+              body += `- **Achados de Arquitetura:** ${report.findings.length}\n\n`;
+              body += `> ${report.visualSummary}\n`;
+            }
+
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: body
+            });
+
+```
+
+---
+
+## 7. Roteiro Sequencial de Execução para Agentes de IA
+
+Ao submeter este documento ao Claude ou agente automatizado, ordene a implementação conforme o plano de execução abaixo:
+
+* [ ] **Sprint 1 (Governança Macro & Hard Gates):** Implementar o schema `/project.intent.yaml` com suporte a `lifecycle_status` e `governance` e criar o validador de importação entre pacotes em `packages/cli/src/commands/verify-project.ts`.
+* [ ] **Sprint 2 (Compilador L1 - SHALA):** Implementar o cálculo da entropia $\tilde{H}(p_q)$ e o diálogo de convergência em `packages/core/src/ubiquitous/`.
+* [ ] **Sprint 3 (Circunscrição & AST Engine):** Atualizar o parser da Camada 3 e criar os verificadores estáticos de visibilidade, LCOM, CBO e Demeter em `packages/verifier/src/ast/`.
+* [ ] **Sprint 4 (Validação Visual Multimodal):** Implementar `ExcalidrawVisualSynthesizer` e `VLMVisualInspector` em `packages/domain/src/visual/`.
+* [ ] **Sprint 5 (Workflow CI/CD):** Configurar o arquivo `.github/workflows/idd-full-verification.yml` e integrar os laudos em Pull Requests.
+
+---
+
+## 8. Bibliografia e Referências Acadêmicas Expandida
+
+1. **Aroyo, L., & Welty, C. (2015).** *Truth is a lie: Crowd truth and the seven myths of human annotation.* AI Magazine, 36(1), 15-24.
+2. **Bader, J., et al. (2018).** *Gradual Verification in Practice.* Proceedings of the ACM on Programming Languages.
+3. **Chidamber, S. R., & Kemerer, C. F. (1994).** *A metrics suite for object oriented design.* IEEE Transactions on Software Engineering, 20(6), 476-493.
+4. **Evans, E. (2003).** *Domain-Driven Design: Tackling Complexity in the Heart of Software.* Addison-Wesley.
+5. **Green, T. R., & Petre, M. (1996).** *Usability analysis of visual programming environments: a 'cognitive dimensions' framework.* Journal of Visual Languages & Computing, 7(2), 131-174.
+6. **Hammer, M., & McLeod, D. (1981).** *Database description with SDM: A semantic database model.* ACM Transactions on Database Systems (TODS), 6(3), 351-386.
+7. **Kaiser, G. E., et al. (1988).** *An Architecture for Intelligent Software Development Environments.* IEEE Software (PSEEs).
+8. **Larkin, J. H., & Simon, H. A. (1987).** *Why a diagram is (sometimes) worth ten thousand words.* Cognitive Science, 11(1), 65-100.
+9. **Lieberherr, K. J., & Holland, I. M. (1989).** *Assuring good style for object-oriented programs.* IEEE Software, 6(5), 38-48. (Lei de Demeter).
+10. **Liskov, B. H., & Wing, J. M. (1994).** *A behavioral notion of subtyping.* ACM Transactions on Programming Languages and Systems (TOPLAS), 16(6), 1811-1841.
+11. **Meyer, B. (1988).** *Object-Oriented Software Construction.* Prentice Hall. (Design por Contrato).
+12. **Sloman, M. (1994).** *Policy Driven Management for Distributed Systems.* Plenum Press.
+13. **Terra, R., & Valente, M. T. (2009).** *A Dependency Constraint Language to Verify Software Architecture.* Journal of Systems and Software (ACC & Leniency Policies).
+14. **Unisys Corporation. (1990).** *SIM (Semantic Information Manager): Concepts and Facilities Reference Manual.* Unisys Documentation.
+15. **Wu, J., Wang, A., Ong, K., Liang, P. P., & Picard, R. W. (2026).** *SHALA-LLM: Smartly Handling Ambiguous Labels in Aligning LLMs.* arXiv preprint arXiv:2606.05376v1.

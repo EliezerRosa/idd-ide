@@ -1,0 +1,11 @@
+version: "2.0"
+target_class: "Domain.Auth.UserAccount"
+target_method: "registerFailedLoginAttempt"
+
+intent: "Registrar tentativa incorreta de senha e alterar estado da conta para BloqueadoTemporariamente ao atingir o limite."
+
+behavioral_contract:
+  visibility: "public"
+  state_mutation:
+    allowed_fields: ["failedAttemptsCount", "accountStatus"]
+    read_only_fields: ["id", "email", "passwordHash"]

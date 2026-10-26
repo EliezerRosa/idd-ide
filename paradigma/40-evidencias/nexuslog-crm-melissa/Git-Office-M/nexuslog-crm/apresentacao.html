@@ -1,0 +1,705 @@
+﻿<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Melissa &amp; a IA — Como uma leiga criou o NexusLog CRM</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html, body { height:100%; }
+  body {
+    font-family:'Inter', sans-serif;
+    background: linear-gradient(135deg, #0b1026 0%, #1a1040 50%, #2a0f4a 100%);
+    color:#e8e6f0;
+    overflow:hidden;
+    display:flex; flex-direction:column;
+  }
+  h1,h2,h3 { font-family:'Syne', sans-serif; }
+
+  /* ── Header ─────────────────────────────── */
+  header {
+    padding:14px 28px; display:flex; align-items:center; justify-content:space-between;
+    border-bottom:1px solid rgba(255,255,255,.08);
+    background:rgba(0,0,0,.25); backdrop-filter:blur(8px);
+    z-index:10;
+  }
+  header h1 { font-size:16px; font-weight:700; letter-spacing:.5px;
+    background:linear-gradient(90deg,#7dd3fc,#c084fc); -webkit-background-clip:text; background-clip:text; color:transparent; }
+  header .badge { font-size:11px; color:rgba(255,255,255,.45); }
+
+  /* ── Stage ──────────────────────────────── */
+  #stage { flex:1; position:relative; overflow:hidden; }
+  .slide {
+    position:absolute; inset:0; padding:30px 40px 20px;
+    display:none; flex-direction:column; align-items:center;
+    opacity:0; transition:opacity .5s ease;
+    overflow-y:auto;
+  }
+  .slide.active { display:flex; opacity:1; }
+  .slide-title {
+    font-size:clamp(20px,3vw,32px); font-weight:800; margin-bottom:6px; text-align:center;
+    background:linear-gradient(90deg,#7dd3fc,#c084fc); -webkit-background-clip:text; background-clip:text; color:transparent;
+  }
+  .slide-sub { font-size:14px; color:rgba(255,255,255,.5); margin-bottom:24px; text-align:center; }
+
+  /* ── Avatars & dialog ───────────────────── */
+  .convo { display:flex; gap:40px; width:100%; max-width:1100px; flex:1; align-items:flex-start; justify-content:center; }
+  .speaker { display:flex; flex-direction:column; align-items:center; width:180px; flex-shrink:0; }
+  .avatar {
+    width:130px; height:130px; border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    border:3px solid transparent; transition:all .3s;
+    position:relative;
+  }
+  .avatar.carlos { background:radial-gradient(circle at 35% 30%, #1e3a8a, #0f1e4a); }
+  .avatar.melissa { background:radial-gradient(circle at 35% 30%, #6d28d9, #2e1065); }
+  .avatar svg { width:100px; height:100px; }
+  .speaker .sname { margin-top:10px; font-family:'Syne'; font-weight:700; font-size:16px; }
+  .speaker .srole { font-size:11px; color:rgba(255,255,255,.45); }
+
+  .speaker.talking .avatar {
+    animation:pulse 1.2s ease-in-out infinite;
+  }
+  .speaker.talking.side-carlos .avatar { border-color:#38bdf8; box-shadow:0 0 30px rgba(56,189,248,.55); }
+  .speaker.talking.side-melissa .avatar { border-color:#c084fc; box-shadow:0 0 30px rgba(192,132,252,.55); }
+  @keyframes pulse { 0%,100%{transform:scale(1);} 50%{transform:scale(1.06);} }
+
+  .bubbles { flex:1; max-width:640px; display:flex; flex-direction:column; gap:18px; padding-top:10px; }
+  .bubble {
+    position:relative; padding:16px 20px; border-radius:16px; font-size:clamp(14px,1.6vw,18px);
+    line-height:1.55; opacity:.35; transition:opacity .3s, box-shadow .3s;
+    background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.1);
+  }
+  .bubble.active { opacity:1; }
+  .bubble.b-carlos { align-self:flex-start; border-left:4px solid #38bdf8; border-top-left-radius:4px; }
+  .bubble.b-carlos.active { box-shadow:0 0 24px rgba(56,189,248,.2); }
+  .bubble.b-melissa { align-self:flex-end; border-right:4px solid #c084fc; border-top-right-radius:4px; }
+  .bubble.b-melissa.active { box-shadow:0 0 24px rgba(192,132,252,.2); }
+  .bubble .who { font-family:'Syne'; font-weight:700; font-size:12px; letter-spacing:1px; text-transform:uppercase; margin-bottom:6px; }
+  .bubble.b-carlos .who { color:#38bdf8; }
+  .bubble.b-melissa .who { color:#c084fc; }
+
+  /* ── Code slide ─────────────────────────── */
+  .codebox {
+    width:100%; max-width:760px; margin-top:8px; border-radius:12px; overflow:hidden;
+    border:1px solid rgba(255,255,255,.12); box-shadow:0 10px 40px rgba(0,0,0,.5);
+  }
+  .codebox .cb-head {
+    background:#1b1d29; padding:8px 14px; font-size:12px; color:rgba(255,255,255,.5);
+    display:flex; gap:8px; align-items:center;
+  }
+  .cb-head .dot { width:10px; height:10px; border-radius:50%; }
+  .codebox pre { margin:0; max-height:280px; overflow:auto; }
+  .codebox code { font-size:12.5px; line-height:1.5; }
+
+  /* ── Chat example (interação com a IA) ──── */
+  .chatbox {
+    width:100%; max-width:720px; margin-top:10px; border-radius:14px;
+    border:1px solid rgba(255,255,255,.12); background:rgba(0,0,0,.35);
+    padding:16px 18px; display:flex; flex-direction:column; gap:10px;
+    box-shadow:0 10px 40px rgba(0,0,0,.45);
+  }
+  .chatbox .chat-title { font-size:11px; letter-spacing:1.5px; text-transform:uppercase; color:rgba(255,255,255,.4); margin-bottom:2px; }
+  .chat-msg { font-size:13.5px; line-height:1.5; padding:10px 14px; border-radius:12px; max-width:92%; }
+  .chat-msg.user { align-self:flex-end; background:rgba(147,51,234,.22); border:1px solid rgba(192,132,252,.35); border-bottom-right-radius:4px; }
+  .chat-msg.ai   { align-self:flex-start; background:rgba(14,165,233,.14); border:1px solid rgba(56,189,248,.3); border-bottom-left-radius:4px; }
+  .chat-msg .clabel { font-family:'Syne'; font-weight:700; font-size:10.5px; letter-spacing:1px; text-transform:uppercase; display:block; margin-bottom:4px; }
+  .chat-msg.user .clabel { color:#c084fc; }
+  .chat-msg.ai .clabel { color:#38bdf8; }
+
+  /* ── IDD highlight ───────────────────────── */
+  .iddbox {
+    width:100%; max-width:760px; margin-top:12px; border-radius:14px;
+    background:linear-gradient(120deg, rgba(14,165,233,.12), rgba(139,92,246,.15));
+    border:1px solid rgba(139,92,246,.35); padding:20px 24px;
+    box-shadow:0 0 40px rgba(139,92,246,.15);
+  }
+  .iddbox h3 { font-size:16px; margin-bottom:10px;
+    background:linear-gradient(90deg,#7dd3fc,#c084fc); -webkit-background-clip:text; background-clip:text; color:transparent; }
+  .iddbox .idd-flow { display:flex; align-items:center; justify-content:center; gap:10px; flex-wrap:wrap; margin:12px 0; }
+  .idd-step { padding:10px 16px; border-radius:10px; font-size:13px; font-weight:600;
+    background:rgba(255,255,255,.07); border:1px solid rgba(255,255,255,.15); }
+  .idd-arrow { color:#c084fc; font-size:18px; }
+  .iddbox .idd-note { font-size:12.5px; color:rgba(255,255,255,.55); line-height:1.6; text-align:center; }
+  .iddbox .idd-note a { color:#7dd3fc; text-decoration:none; }
+
+  /* ── UI Tour (telas do CRM) ────────────── */
+  .ui-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(300px, 1fr)); gap:16px; width:100%; max-width:1000px; margin-top:10px; }
+  .ui-card {
+    border-radius:14px; border:1px solid rgba(255,255,255,.12); background:rgba(0,0,0,.35);
+    overflow:hidden; opacity:.35; transition:opacity .4s, box-shadow .4s, transform .4s;
+  }
+  .ui-card.active { opacity:1; box-shadow:0 0 34px rgba(56,189,248,.35); transform:scale(1.02); border-color:#38bdf8; }
+  .ui-card .ui-head { padding:10px 14px; background:rgba(255,255,255,.06); display:flex; align-items:center; gap:8px; }
+  .ui-card .ui-head .ui-icon { font-size:18px; }
+  .ui-card .ui-head .ui-name { font-family:'Syne'; font-weight:700; font-size:14px; color:#7dd3fc; }
+  .ui-card .ui-mock { padding:14px; }
+  .ui-card .ui-desc { padding:0 14px 14px; font-size:12.5px; line-height:1.55; color:rgba(255,255,255,.65); }
+  .mock-bar { height:10px; border-radius:5px; background:rgba(255,255,255,.14); margin-bottom:8px; }
+  .mock-bar.w60{width:60%} .mock-bar.w80{width:80%} .mock-bar.w40{width:40%}
+  .mock-row { display:flex; gap:8px; margin-bottom:8px; }
+  .mock-chip { flex:1; height:34px; border-radius:8px; background:linear-gradient(120deg, rgba(14,165,233,.25), rgba(139,92,246,.25)); border:1px solid rgba(255,255,255,.1); }
+  .mock-btn { height:26px; width:110px; border-radius:8px; background:linear-gradient(90deg,#0ea5e9,#8b5cf6); }
+
+  /* ── Final slide ────────────────────────── */
+  #slide-final { justify-content:center; }
+  #particles { position:absolute; inset:0; z-index:0; }
+  .final-content { position:relative; z-index:1; text-align:center; max-width:800px; }
+  .ai-orb {
+    width:110px; height:110px; margin:0 auto 24px; border-radius:50%;
+    background:radial-gradient(circle at 35% 30%, #38bdf8, #7c3aed 70%);
+    box-shadow:0 0 60px rgba(124,58,237,.6);
+    display:flex; align-items:center; justify-content:center; font-size:44px;
+  }
+  .ai-orb.talking { animation:orbPulse 1.4s ease-in-out infinite; }
+  @keyframes orbPulse { 0%,100%{transform:scale(1); box-shadow:0 0 60px rgba(124,58,237,.6);} 50%{transform:scale(1.08); box-shadow:0 0 90px rgba(56,189,248,.7);} }
+  #typewriter { font-size:clamp(16px,2vw,22px); line-height:1.7; min-height:170px; color:#dcd9ec; }
+  #typewriter::after { content:'▌'; animation:blink 1s step-end infinite; color:#c084fc; }
+  @keyframes blink { 50%{opacity:0;} }
+
+  /* ── Controls ───────────────────────────── */
+  footer {
+    padding:12px 28px; display:flex; align-items:center; justify-content:center; gap:14px;
+    border-top:1px solid rgba(255,255,255,.08); background:rgba(0,0,0,.3);
+    flex-wrap:wrap; z-index:10;
+  }
+  button {
+    font-family:'Inter'; font-weight:600; font-size:13px; cursor:pointer;
+    padding:10px 20px; border-radius:10px; border:1px solid rgba(255,255,255,.15);
+    background:rgba(255,255,255,.07); color:#e8e6f0; transition:all .2s;
+  }
+  button:hover { background:rgba(255,255,255,.16); transform:translateY(-1px); }
+  button.primary { background:linear-gradient(90deg,#0ea5e9,#8b5cf6); border:none; }
+  button.primary:hover { filter:brightness(1.15); }
+  #slideNum { font-size:13px; color:rgba(255,255,255,.5); min-width:52px; text-align:center; }
+  .autoplay-wrap { display:flex; align-items:center; gap:8px; font-size:13px; color:rgba(255,255,255,.6); }
+  .autoplay-wrap input { accent-color:#8b5cf6; width:16px; height:16px; cursor:pointer; }
+
+  /* start overlay */
+  #startOverlay {
+    position:fixed; inset:0; z-index:100; display:flex; flex-direction:column;
+    align-items:center; justify-content:center; gap:20px;
+    background:linear-gradient(135deg, #0b1026, #2a0f4a); text-align:center; padding:20px;
+  }
+  #startOverlay h2 { font-size:clamp(24px,4vw,40px);
+    background:linear-gradient(90deg,#7dd3fc,#c084fc); -webkit-background-clip:text; background-clip:text; color:transparent; }
+  #startOverlay p { color:rgba(255,255,255,.6); max-width:520px; line-height:1.6; }
+  #startOverlay button { font-size:16px; padding:14px 36px; }
+
+  @media (max-width:820px) {
+    .convo { flex-direction:column; align-items:center; gap:16px; }
+    .speaker { flex-direction:row; width:auto; gap:12px; }
+    .avatar { width:70px; height:70px; }
+    .avatar svg { width:54px; height:54px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ══ START OVERLAY ══════════════════════════ -->
+<div id="startOverlay">
+  <h2>🎙️ Melissa &amp; a IA</h2>
+  <p>Como uma leiga em programação criou um app real — o <strong>NexusLog CRM</strong> — conversando com a IA Claude.
+  Uma apresentação com voz. Use Chrome ou Edge para a melhor experiência.</p>
+  <button class="primary" onclick="startShow()">▶ Iniciar apresentação</button>
+</div>
+
+<header>
+  <h1>NexusLog CRM — A jornada de Melissa com a IA</h1>
+  <span class="badge">React · Supabase · Vercel · Criado com Claude</span>
+</header>
+
+<div id="stage"></div>
+
+<footer>
+  <button onclick="prevSlide()">← Anterior</button>
+  <span id="slideNum">1 / 7</span>
+  <button onclick="nextSlide()">Próximo →</button>
+  <button class="primary" id="btnPlay" onclick="playSlide()">🔊 Reproduzir Voz</button>
+  <button onclick="pauseSpeech()">⏸ Pausar</button>
+  <label class="autoplay-wrap"><input type="checkbox" id="autoplay"> Apresentação automática</label>
+</footer>
+
+<script>
+/* ══════════════════ AVATARES SVG ══════════════════ */
+const svgCarlos = `
+<svg viewBox="0 0 100 100">
+  <circle cx="50" cy="50" r="46" fill="#152a5e"/>
+  <circle cx="50" cy="42" r="20" fill="#f0c8a0"/>
+  <path d="M30 40 Q30 20 50 20 Q70 20 70 40 L70 34 Q70 26 50 26 Q30 26 30 34 Z" fill="#3b2a1a"/>
+  <circle cx="43" cy="42" r="2.5" fill="#222"/>
+  <circle cx="57" cy="42" r="2.5" fill="#222"/>
+  <path d="M44 51 Q50 55 56 51" stroke="#222" stroke-width="2" fill="none" stroke-linecap="round"/>
+  <path d="M28 96 Q28 66 50 66 Q72 66 72 96 Z" fill="#1d4ed8"/>
+  <rect x="46" y="66" width="8" height="16" fill="#e5e7eb"/>
+</svg>`;
+
+const svgMelissa = `
+<svg viewBox="0 0 100 100">
+  <circle cx="50" cy="50" r="46" fill="#3b1a6e"/>
+  <path d="M26 60 Q22 25 50 20 Q78 25 74 60 L74 74 Q66 68 66 50 L34 50 Q34 68 26 74 Z" fill="#6b3a1f"/>
+  <circle cx="50" cy="43" r="19" fill="#f5d3b3"/>
+  <path d="M32 38 Q34 24 50 24 Q66 24 68 38 Q60 30 50 30 Q40 30 32 38 Z" fill="#6b3a1f"/>
+  <circle cx="43.5" cy="43" r="2.5" fill="#222"/>
+  <circle cx="56.5" cy="43" r="2.5" fill="#222"/>
+  <path d="M44 51 Q50 56 56 51" stroke="#b3225a" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+  <path d="M29 96 Q29 66 50 66 Q71 66 71 96 Z" fill="#9333ea"/>
+</svg>`;
+
+/* ══════════════════ ROTEIRO ══════════════════ */
+const CODE_SAMPLE = `// src/App.js — código real do NexusLog CRM
+function AppInner() {
+  const { user, loading: authLoading } = useAuth();
+  const [page, setPage]         = useState('dashboard');
+  const [selected, setSelected] = useState(null);
+  const [toast, setToast]       = useState(null);
+
+  const { proposals, create: createProposal } = useProposals();
+  const { visits,   create: createVisit }     = useVisits();
+
+  if (!user) return <PageAuth />;
+
+  const handleNewProposal = async (form) => {
+    await createProposal(form);
+    showToast('Proposta salva com sucesso!');
+    navigateTo('proposals');
+  };
+  // ... Melissa nunca escreveu uma linha disso.
+  // A IA escreveu. Ela decidiu O QUE o app faria.
+}`;
+
+const slides = [
+  {
+    title:"Introdução", sub:"Slide 1 — Como tudo começou",
+    dialog:[
+      { who:"carlos", text:"Melissa, você criou um sistema de gestão de clientes completo — com login, banco de dados e tudo funcionando na internet — sem saber programar. Como isso é possível?" },
+      { who:"melissa", text:"Eu mesma não acreditei quando vi funcionando, Eliézer! Usei o Claude, uma inteligência artificial, e fui perguntando o que eu precisava. Ele escrevia todo o código, e eu só seguia as instruções, passo a passo." },
+    ]
+  },
+  {
+    title:"O Começo", sub:"Slide 2 — O primeiro passo",
+    dialog:[
+      { who:"carlos", text:"Por onde você começou? O que foi o primeiro passo dessa jornada?" },
+      { who:"melissa", text:"Eu simplesmente disse pra IA o que eu queria: um sistema pra gerenciar clientes, com login, cadastro de propostas, agendamento de visitas... tudo. Ela foi perguntando os detalhes, e começou a criar os arquivos um por um. Parecia mágica, mas era só uma conversa." },
+    ]
+  },
+  {
+    title:"O Susto com o Token do GitHub", sub:"Slide 3 — Uma lição de segurança",
+    dialog:[
+      { who:"carlos", text:"Teve algum momento de susto durante o processo?" },
+      { who:"melissa", text:"Sim! Eu tentei passar uma senha especial — chamada token do GitHub — direto pro Claude. Mas o sistema apagou na hora, e o Claude me avisou pra cancelar aquela senha imediatamente. Me ensinou que nunca devo compartilhar tokens ou senhas assim. A IA me protegeu de um erro que eu nem sabia que estava cometendo." },
+    ]
+  },
+  {
+    title:"O Que a IA Fez", sub:"Slide 4 — O código real do app",
+    code:true,
+    dialog:[
+      { who:"carlos", text:"O que exatamente a IA fez que você não sabia fazer?" },
+      { who:"melissa", text:"Tudo! O código em React, a conexão com o banco de dados Supabase, a publicação no Vercel... Eu nem sabia o que essas palavras significavam antes. Esse código na tela é do meu app de verdade — e eu não escrevi uma linha dele." },
+    ]
+  },
+  {
+    title:"O Que Melissa Fez", sub:"Slide 5 — O papel humano",
+    dialog:[
+      { who:"carlos", text:"E qual foi a sua parte no processo? O que você fez de verdade?" },
+      { who:"melissa", text:"Eu decidi o que o app precisava ter. Cliquei nos botões certos, segui o passo a passo, e fiz perguntas quando não entendia. A IA sempre me explicava em linguagem simples, sem termos técnicos complicados. Eu fui a diretora — a IA foi a equipe inteira." },
+    ]
+  },
+  {
+    title:"Exemplos de Interação", sub:"Slide 6 — Como Melissa conversava com a IA na prática",
+    chat:[
+      { who:"user", label:"Melissa", text:"Quero que quando eu salvar uma proposta, apareça uma mensagem de confirmação e volte pra lista." },
+      { who:"ai", label:"Claude", text:"Perfeito! Vou criar a função handleNewProposal: ela salva no banco, mostra o aviso “Proposta salva com sucesso!” e navega para a tela de propostas. Pronto — teste clicando em Salvar." },
+      { who:"user", label:"Melissa", text:"O que é esse tal de Supabase que você mencionou? É pago?" },
+      { who:"ai", label:"Claude", text:"É o “armário” onde seus dados ficam guardados na nuvem — como uma planilha superpoderosa com senha. Tem plano gratuito, suficiente pro seu app. Vou te guiar na criação da conta, tela por tela." },
+      { who:"user", label:"Melissa", text:"Deu um erro vermelho na tela: 'user_id violates row-level security'. Estraguei tudo?" },
+      { who:"ai", label:"Claude", text:"Calma, nada quebrou! Isso é a segurança do banco funcionando — ela só deixa cada pessoa ver os próprios dados. Falta uma regra de permissão. Copie este comando e cole no painel do Supabase…" },
+    ],
+    dialog:[
+      { who:"carlos", text:"Como eram essas conversas com a IA no dia a dia? Você falava em 'tecniquês'?" },
+      { who:"melissa", text:"Nada disso! Eu falava como falo com qualquer pessoa. Olha esses exemplos reais na tela: eu pedia em português simples, a IA fazia o código e ainda me explicava com analogias. Até os erros assustadores viravam aula." },
+    ]
+  },
+  {
+    title:"Reflexão Final", sub:"Slide 7 — Uma mensagem pra você",
+    dialog:[
+      { who:"carlos", text:"O que você diria pra outras pessoas que acham que programação não é pra elas?" },
+      { who:"melissa", text:"Que a IA mudou isso completamente. Você não precisa mais saber programar pra criar. Você precisa saber O QUE você quer criar. A IA sabe o como. A única coisa entre você e o seu app é uma boa conversa." },
+    ]
+  },
+  {
+    title:"O Paradigma IDD", sub:"Slide 8 — Intention-Driven Development · canal Eliézer J P Rosa (@eliezerjprosa)",
+    idd:true,
+    dialog:[
+      { who:"melissa", text:"Eliézer, depois eu descobri que você dá nome a esse jeito de criar software no seu canal do YouTube. É isso mesmo?" },
+      { who:"carlos", text:"Exatamente, Melissa! Eu chamo de IDD — Desenvolvimento Dirigido por Intenção, ou Intention-Driven Development. É o que apresento no canal Eliézer J P Rosa. Em vez de escrever código, você declara a INTENÇÃO: o que quer, pra quem e por quê. A IA transforma a intenção em software. Você viveu o IDD na prática sem saber!" },
+      { who:"melissa", text:"Faz todo sentido! Minha intenção era gerenciar clientes — o React, o Supabase e o Vercel foram consequência. Cada pergunta minha era um requisito, cada resposta da IA era uma entrega." },
+    ]
+  },
+  {
+    title:"IDD — Os Fundamentos", sub:"Slide 9 — Eliézer disserta: por que a intenção vem antes do código",
+    dialog:[
+      { who:"carlos", text:"Deixa eu aprofundar, porque isso é o coração do que ensino no canal. Durante décadas, programar exigiu traduzir ideias humanas para a língua das máquinas. O IDD inverte essa lógica: agora a máquina entende a língua humana. O artefato central deixa de ser o código-fonte e passa a ser a INTENÇÃO bem expressa. Código virou detalhe de implementação — quem dirige é a intenção." },
+      { who:"carlos", text:"E intenção não é só um desejo vago. No IDD, uma boa intenção tem três ingredientes: o PROPÓSITO — por que isso precisa existir; o CONTEXTO — pra quem é e onde vai ser usado; e o CRITÉRIO DE SUCESSO — como saber que ficou pronto. A Melissa fez isso intuitivamente: quero gerenciar clientes, sou da área comercial, preciso ver minhas propostas e visitas. Propósito, contexto e critério — tudo ali, em português simples." },
+      { who:"melissa", text:"Verdade! Eu nunca escrevi um documento de requisitos. Minha intenção ERA o documento." },
+    ]
+  },
+  {
+    title:"IDD — Os Passos do Paradigma", sub:"Slide 10 — Eliézer detalha o ciclo, como no canal",
+    iddSteps:true,
+    dialog:[
+      { who:"carlos", text:"No canal eu detalho o ciclo em cinco passos. Passo um: DECLARAR A INTENÇÃO — diga à IA o que você quer, pra quem e por quê, na sua língua, sem tecniquês. Passo dois: DIALOGAR E REFINAR — a IA pergunta, você responde; é nessa conversa que os requisitos nascem. Passo três: A IA IMPLEMENTA — ela escolhe as tecnologias, escreve o código e configura a infraestrutura." },
+      { who:"carlos", text:"Passo quatro: VALIDAR PELA EXPERIÊNCIA — você não lê o código, você USA o resultado. Ficou como imaginou? Ótimo. Não ficou? Aí vem o passo cinco: REFINAR A INTENÇÃO — ajuste o que pediu e rode o ciclo de novo. Cada volta aproxima o software da sua intenção original. É iterativo, é conversacional, e o humano nunca sai do comando." },
+      { who:"melissa", text:"E foi exatamente assim comigo! Eu nem sabia que estava seguindo um método — mas cada 'não ficou como eu queria, muda isso' era o passo cinco acontecendo." },
+    ]
+  },
+  {
+    title:"IDD — O Novo Papel do Humano", sub:"Slide 11 — Eliézer conclui a dissertação",
+    dialog:[
+      { who:"carlos", text:"Pra fechar: o IDD não elimina o humano — ele PROMOVE o humano. Você sobe de operador de sintaxe para diretor de intenção. As habilidades que passam a valer são clareza de propósito, capacidade de decidir, senso crítico pra validar e persistência pra iterar. São habilidades humanas, não técnicas." },
+      { who:"carlos", text:"A história da Melissa é a prova viva: uma leiga em programação entregou um CRM real em produção. No canal Eliézer J P Rosa eu mostro mais casos e aprofundo cada passo do paradigma. A mensagem é uma só: se você tem uma intenção clara, você já sabe o suficiente pra começar." },
+      { who:"melissa", text:"E eu assino embaixo. Se eu consegui, qualquer pessoa com uma boa ideia e curiosidade consegue também!" },
+    ]
+  },
+  {
+    title:"O Papel da IA — Análise", sub:"Slide 12 — Resenha do narrador IA",
+    final:true,
+    narration:"Neste caso, a IA atuou como um parceiro técnico acessível. Ela escreveu código, configurou infraestrutura, protegeu a usuária de erros de segurança e adaptou a linguagem ao nível de quem estava aprendendo. Mas o papel humano foi o mais importante: definir o problema, tomar decisões e persistir. Essa é a essência do paradigma IDD, o Desenvolvimento Dirigido por Intenção, apresentado por Eliézer J P Rosa em seu canal no YouTube: a intenção humana dirige, e a IA executa. Melissa não aprendeu a programar. Ela aprendeu algo mais valioso: que a criação agora está ao alcance de qualquer pessoa com uma ideia clara e curiosidade para perguntar."
+  },
+  {
+    title:"As Telas do NexusLog CRM", sub:"Slide 13 — Tour final pelas UI's, narrado pelo Claude",
+    uiTour:true,
+    intro:"Olá, aqui é o Claude. Para encerrar, deixe-me apresentar as telas que construí junto com a Melissa — cada uma nasceu de uma intenção declarada em português simples.",
+    uis:[
+      { icon:"🔐", name:"Login — PageAuth", desc:"Entrada segura com e-mail e senha via Supabase Auth. Cadastro e recuperação incluídos.",
+        narr:"A tela de Login. Autenticação completa com Supabase: e-mail, senha e cadastro de novos usuários. Melissa pediu 'quero que só eu veja meus dados' — e esta tela nasceu." },
+      { icon:"📊", name:"Dashboard — PageDashboard", desc:"Visão geral: propostas em negociação, visitas agendadas e atalhos rápidos.",
+        narr:"O Dashboard. Um resumo de tudo em uma tela: propostas em negociação, próximas visitas e acesso rápido às ações. A intenção era 'ver tudo de uma vez ao abrir o app'." },
+      { icon:"📋", name:"Propostas — PageProposals", desc:"Lista completa das propostas comerciais com status colorido: Aguardando, Negociando, Fechada.",
+        narr:"A tela de Propostas. Todas as negociações listadas com status colorido — aguardando, negociando, fechada. Um clique abre os detalhes." },
+      { icon:"➕", name:"Nova Proposta — PageNewProposal", desc:"Formulário com cliente, equipamento, valores de frete, treinamento e cálculo automático do total.",
+        narr:"Nova Proposta. Formulário guiado: cliente, equipamento, valores de frete, treinamento, manutenção e desconto — com o total calculado automaticamente. Melissa não precisou fazer uma conta sequer." },
+      { icon:"🔍", name:"Detalhe — PageDetail", desc:"Visão completa da proposta: mudar status, agendar visita e exportar PDF.",
+        narr:"O Detalhe da Proposta. Aqui ela muda o status, agenda visitas e exporta a proposta em PDF para enviar ao cliente — direto da janela de impressão." },
+      { icon:"📅", name:"Visitas — PageVisits", desc:"Agendamento e acompanhamento de visitas técnicas e comerciais.",
+        narr:"A tela de Visitas. Agendamento e acompanhamento de cada visita ao cliente, com status atualizado em um toque." },
+      { icon:"🚜", name:"Catálogo — PageCatalog", desc:"Catálogo de equipamentos com capacidade, tração e altura de elevação.",
+        narr:"O Catálogo de equipamentos, com capacidade, tração e altura de elevação — tudo à mão na hora de montar uma proposta." },
+      { icon:"⚙️", name:"Configurações — PageSettings", desc:"Perfil do usuário e preferências da conta.",
+        narr:"E as Configurações, onde Melissa gerencia seu perfil. Oito telas. Zero linhas de código escritas por ela. Uma intenção clara — e uma boa conversa. Este é o NexusLog CRM. Obrigado por assistir!" },
+    ]
+  }
+];
+
+/* ══════════════════ RENDERIZAÇÃO ══════════════════ */
+const stage = document.getElementById('stage');
+
+function speakerHTML(who, side){
+  const isC = who==='carlos';
+  return `
+  <div class="speaker side-${who}" data-speaker="${who}">
+    <div class="avatar ${who}">${isC?svgCarlos:svgMelissa}</div>
+    <div class="sname">${isC?'Eliézer':'Melissa'}</div>
+    <div class="srole">${isC?'Entrevistador · Canal Eliézer J P Rosa':'Criadora do NexusLog CRM'}</div>
+  </div>`;
+}
+
+slides.forEach((s, i) => {
+  const div = document.createElement('div');
+  div.className = 'slide';
+  div.id = 'slide-' + i;
+
+  if (s.final) {
+    div.id = 'slide-final';
+    div.innerHTML = `
+      <canvas id="particles"></canvas>
+      <div class="final-content">
+        <div class="slide-title">${s.title}</div>
+        <div class="slide-sub">${s.sub}</div>
+        <div class="ai-orb" id="aiOrb">✨</div>
+        <div id="typewriter"></div>
+      </div>`;
+  } else if (s.uiTour) {
+    div.innerHTML = `
+      <div class="slide-title">${s.title}</div>
+      <div class="slide-sub">${s.sub}</div>
+      <div class="ai-orb" id="aiOrbTour" style="width:70px;height:70px;font-size:28px;margin-bottom:14px;">✨</div>
+      <div class="ui-grid">
+        ${s.uis.map((u,j)=>`
+          <div class="ui-card" data-ui="${j}">
+            <div class="ui-head"><span class="ui-icon">${u.icon}</span><span class="ui-name">${u.name}</span></div>
+            <div class="ui-mock">
+              <div class="mock-bar w60"></div>
+              <div class="mock-row"><div class="mock-chip"></div><div class="mock-chip"></div></div>
+              <div class="mock-bar w80"></div>
+              <div class="mock-bar w40"></div>
+              <div class="mock-btn"></div>
+            </div>
+            <div class="ui-desc">${u.desc}</div>
+          </div>`).join('')}
+      </div>`;
+  } else {
+    let bubbles = s.dialog.map((d,j)=>`
+      <div class="bubble b-${d.who}" data-idx="${j}">
+        <div class="who">${d.who==='carlos'?'Eliézer':'Melissa'}</div>
+        ${d.text}
+      </div>`).join('');
+    let codeBlock = s.code ? `
+      <div class="codebox">
+        <div class="cb-head">
+          <span class="dot" style="background:#ff5f57"></span>
+          <span class="dot" style="background:#febc2e"></span>
+          <span class="dot" style="background:#28c840"></span>
+          <span style="margin-left:8px">src/App.js — NexusLog CRM</span>
+        </div>
+        <pre><code class="language-javascript">${CODE_SAMPLE.replace(/</g,'&lt;').replace(/>/g,'&gt;')}</code></pre>
+      </div>` : '';
+    let chatBlock = s.chat ? `
+      <div class="chatbox">
+        <div class="chat-title">💬 Trechos reais do estilo de conversa Melissa ↔ Claude</div>
+        ${s.chat.map(m=>`
+          <div class="chat-msg ${m.who}">
+            <span class="clabel">${m.label}</span>${m.text}
+          </div>`).join('')}
+      </div>` : '';
+    let iddBlock = s.idd ? `
+      <div class="iddbox">
+        <h3>⚡ IDD — Intention-Driven Development (Desenvolvimento Dirigido por Intenção)</h3>
+        <div class="idd-flow">
+          <span class="idd-step">🎯 Intenção</span><span class="idd-arrow">→</span>
+          <span class="idd-step">🤖 IA implementa</span><span class="idd-arrow">→</span>
+          <span class="idd-step">👀 Humano valida</span><span class="idd-arrow">→</span>
+          <span class="idd-step">🔁 Refina a intenção</span>
+        </div>
+        <div class="idd-note">A conversa É o desenvolvimento: cada pergunta é um requisito, cada resposta é uma entrega.<br>
+        Saiba mais no canal <strong>Eliézer J P Rosa</strong> — <a href="https://www.youtube.com/@eliezerjprosa" target="_blank" rel="noopener">▶ youtube.com/@eliezerjprosa</a></div>
+      </div>` : '';
+    let iddStepsBlock = s.iddSteps ? `
+      <div class="iddbox">
+        <h3>📋 Os 5 passos do ciclo IDD — como no canal Eliézer J P Rosa</h3>
+        <div class="idd-flow">
+          <span class="idd-step">1️⃣ Declarar a Intenção</span><span class="idd-arrow">→</span>
+          <span class="idd-step">2️⃣ Dialogar e Refinar</span><span class="idd-arrow">→</span>
+          <span class="idd-step">3️⃣ IA Implementa</span><span class="idd-arrow">→</span>
+          <span class="idd-step">4️⃣ Validar pela Experiência</span><span class="idd-arrow">→</span>
+          <span class="idd-step">5️⃣ Refinar a Intenção 🔁</span>
+        </div>
+        <div class="idd-note">Intenção = Propósito (por quê) + Contexto (pra quem) + Critério de Sucesso (como saber que ficou pronto).<br>
+        <a href="https://www.youtube.com/@eliezerjprosa" target="_blank" rel="noopener">▶ youtube.com/@eliezerjprosa</a></div>
+      </div>` : '';
+    div.innerHTML = `
+      <div class="slide-title">${s.title}</div>
+      <div class="slide-sub">${s.sub}</div>
+      <div class="convo">
+        ${speakerHTML('carlos')}
+        <div class="bubbles">${bubbles}</div>
+        ${speakerHTML('melissa')}
+      </div>
+      ${chatBlock}${codeBlock}${iddBlock}${iddStepsBlock}`;
+  }
+  stage.appendChild(div);
+});
+hljs.highlightAll();
+
+/* ══════════════════ VOZ (Web Speech API) ══════════════════ */
+const synth = window.speechSynthesis;
+let ptVoice = null;        // voz padrão pt (fallback / narrador IA)
+let femaleVoice = null;    // voz feminina pt-BR — Melissa
+let maleVoice = null;      // voz masculina pt-BR — Eliézer
+
+function pickVoice(){
+  const vs = synth.getVoices();
+  const ptVoices = vs.filter(v=>v.lang==='pt-BR' || (v.lang&&v.lang.replace('_','-').startsWith('pt')));
+  ptVoice = ptVoices[0] || null;
+
+  const femaleNames = ['maria','francisca','thalita','leticia','letícia','luciana','vitoria','vitória','camila','fernanda','female','feminin'];
+  const maleNames   = ['daniel','antonio','antônio','felipe','ricardo','male','masculin'];
+
+  femaleVoice = ptVoices.find(v=>femaleNames.some(n=>v.name.toLowerCase().includes(n))) || null;
+  maleVoice   = ptVoices.find(v=>maleNames.some(n=>v.name.toLowerCase().includes(n))) || null;
+
+  // Google pt-BR (Chrome) costuma ser feminina
+  if (!femaleVoice) femaleVoice = ptVoices.find(v=>v.name.toLowerCase().includes('google')) || null;
+  // fallback: vozes diferentes para cada um, se houver mais de uma
+  if (!femaleVoice && ptVoices.length>1) femaleVoice = ptVoices[1];
+  if (!maleVoice) maleVoice = ptVoices.find(v=>v!==femaleVoice) || ptVoice;
+  if (!femaleVoice) femaleVoice = ptVoice;
+}
+pickVoice();
+if (synth.onvoiceschanged !== undefined) synth.onvoiceschanged = pickVoice;
+
+const VOICE_PROFILES = {
+  carlos:  { pitch:0.9, rate:0.95 },
+  melissa: { pitch:1.2, rate:1.0 },
+  ai:      { pitch:1.0, rate:0.85 },
+};
+
+let current = 0;
+let speaking = false;
+let speechToken = 0; // cancels stale sequences
+
+function speak(text, who){
+  return new Promise(resolve=>{
+    const u = new SpeechSynthesisUtterance(text);
+    u.lang = 'pt-BR';
+    const chosen = who==='melissa' ? femaleVoice : who==='carlos' ? maleVoice : ptVoice;
+    if (chosen) u.voice = chosen;
+    const p = VOICE_PROFILES[who] || VOICE_PROFILES.ai;
+    u.pitch = p.pitch; u.rate = p.rate;
+    u.onend = resolve;
+    u.onerror = resolve;
+    synth.speak(u);
+  });
+}
+
+function clearHighlights(slideEl){
+  slideEl.querySelectorAll('.speaker').forEach(s=>s.classList.remove('talking'));
+  slideEl.querySelectorAll('.bubble').forEach(b=>b.classList.remove('active'));
+}
+
+function scrollToCenter(el){
+  el?.scrollIntoView({ behavior:'smooth', block:'center' });
+}
+
+async function playSlide(){
+  synth.cancel();
+  const myToken = ++speechToken;
+  speaking = true;
+  const s = slides[current];
+  const slideEl = document.getElementById(s.final ? 'slide-final' : 'slide-'+current);
+
+  if (s.final) {
+    const orb = document.getElementById('aiOrb');
+    orb.classList.add('talking');
+    typewriterStart(s.narration);
+    await speak(s.narration, 'ai');
+    orb.classList.remove('talking');
+  } else if (s.uiTour) {
+    const orb = document.getElementById('aiOrbTour');
+    orb.classList.add('talking');
+    scrollToCenter(orb);
+    await speak(s.intro, 'ai');
+    for (let j=0; j<s.uis.length; j++){
+      if (myToken !== speechToken) return;
+      slideEl.querySelectorAll('.ui-card').forEach(c=>c.classList.remove('active'));
+      const card = slideEl.querySelector(`.ui-card[data-ui="${j}"]`);
+      card?.classList.add('active');
+      scrollToCenter(card);
+      await speak(s.uis[j].narr, 'ai');
+    }
+    if (myToken === speechToken){
+      orb.classList.remove('talking');
+      slideEl.querySelectorAll('.ui-card').forEach(c=>c.classList.add('active'));
+    }
+  } else {
+    clearHighlights(slideEl);
+    for (let j=0; j<s.dialog.length; j++){
+      if (myToken !== speechToken) return;
+      const d = s.dialog[j];
+      clearHighlights(slideEl);
+      slideEl.querySelector(`.speaker[data-speaker="${d.who}"]`)?.classList.add('talking');
+      const bubble = slideEl.querySelector(`.bubble[data-idx="${j}"]`);
+      bubble?.classList.add('active');
+      scrollToCenter(bubble);
+      await speak(d.text, d.who);
+    }
+    if (myToken === speechToken) clearHighlights(slideEl);
+  }
+  speaking = false;
+
+  if (myToken === speechToken && document.getElementById('autoplay').checked && current < slides.length-1){
+    setTimeout(()=>{ if (myToken === speechToken){ nextSlide(); playSlide(); } }, 900);
+  }
+}
+
+function pauseSpeech(){
+  speechToken++;
+  synth.cancel();
+  speaking = false;
+  document.querySelectorAll('.speaker').forEach(s=>s.classList.remove('talking'));
+  document.getElementById('aiOrb')?.classList.remove('talking');
+  document.getElementById('aiOrbTour')?.classList.remove('talking');
+}
+
+/* ══════════════════ NAVEGAÇÃO ══════════════════ */
+function showSlide(i){
+  pauseSpeech();
+  document.querySelectorAll('.slide').forEach(s=>s.classList.remove('active'));
+  const s = slides[i];
+  const el = document.getElementById(s.final ? 'slide-final' : 'slide-'+i);
+  el.classList.add('active');
+  document.getElementById('slideNum').textContent = (i+1)+' / '+slides.length;
+  if (s.final){ startParticles(); document.getElementById('typewriter').textContent=''; }
+  if (s.uiTour){ el.querySelectorAll('.ui-card').forEach(c=>c.classList.add('active')); }
+  s.dialog && el.querySelectorAll('.bubble').forEach(b=>b.classList.add('active'));
+}
+function nextSlide(){ if(current<slides.length-1){ current++; showSlide(current);} }
+function prevSlide(){ if(current>0){ current--; showSlide(current);} }
+
+document.addEventListener('keydown', e=>{
+  if (e.key==='ArrowRight') nextSlide();
+  if (e.key==='ArrowLeft') prevSlide();
+  if (e.key===' ') { e.preventDefault(); playSlide(); }
+});
+
+/* ══════════════════ TYPEWRITER ══════════════════ */
+let twTimer = null;
+function typewriterStart(text){
+  clearInterval(twTimer);
+  const el = document.getElementById('typewriter');
+  el.textContent = '';
+  let i = 0;
+  const total = text.length;
+  // sincroniza aproximadamente com a duração da fala (rate 0.85 ≈ 13 chars/s)
+  const interval = Math.max(30, Math.floor(1000/14));
+  twTimer = setInterval(()=>{
+    el.textContent = text.slice(0, ++i);
+    if (i>=total) clearInterval(twTimer);
+  }, interval);
+}
+
+/* ══════════════════ PARTÍCULAS ══════════════════ */
+let particlesRunning = false;
+function startParticles(){
+  if (particlesRunning) return;
+  particlesRunning = true;
+  const canvas = document.getElementById('particles');
+  const ctx = canvas.getContext('2d');
+  const stars = [];
+  function resize(){ canvas.width = canvas.offsetWidth; canvas.height = canvas.offsetHeight; }
+  resize(); window.addEventListener('resize', resize);
+  for (let i=0;i<120;i++){
+    stars.push({
+      x:Math.random()*canvas.width, y:Math.random()*canvas.height,
+      r:Math.random()*1.8+0.3, s:Math.random()*0.4+0.1,
+      a:Math.random()*Math.PI*2
+    });
+  }
+  (function loop(){
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    for (const st of stars){
+      st.y -= st.s; st.a += 0.03;
+      if (st.y < -5){ st.y = canvas.height+5; st.x = Math.random()*canvas.width; }
+      const alpha = 0.4 + 0.4*Math.sin(st.a);
+      ctx.beginPath();
+      ctx.arc(st.x, st.y, st.r, 0, Math.PI*2);
+      ctx.fillStyle = `rgba(200,180,255,${alpha})`;
+      ctx.fill();
+    }
+    requestAnimationFrame(loop);
+  })();
+}
+
+/* ══════════════════ START ══════════════════ */
+function startShow(){
+  document.getElementById('startOverlay').style.display = 'none';
+  showSlide(0);
+  playSlide();
+}
+showSlide(0);
+</script>
+</body>
+</html>

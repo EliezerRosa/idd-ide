@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Nova Engenharia de Software: O Paradigma da Intenção</title>
+    <style>
+        :root {
+            --primary: #0f172a;
+            --accent: #38bdf8;
+            --text: #f1f5f9;
+            --glass: rgba(255, 255, 255, 0.05);
+        }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: radial-gradient(circle at top right, #1e293b, #0f172a);
+            color: var(--text);
+            margin: 0;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+        #presentation-deck {
+            width: 90%;
+            max-width: 1000px;
+            height: 600px;
+            background: var(--glass);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+        .slide {
+            display: none;
+            animation: fadeIn 0.6s ease-out forwards;
+            height: 100%;
+        }
+        .active { display: flex; flex-direction: column; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        h1 { color: var(--accent); font-size: 2.5rem; margin-bottom: 1rem; letter-spacing: -0.025em; }
+        h2 { font-size: 1.2rem; text-transform: uppercase; color: #94a3b8; letter-spacing: 0.1em; margin-bottom: 2rem; }
+        p { font-size: 1.25rem; line-height: 1.6; color: #cbd5e1; }
+        
+        .profile-tag {
+            display: inline-block;
+            background: rgba(56, 189, 248, 0.1);
+            color: var(--accent);
+            padding: 4px 12px;
+            border-radius: 9999px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .simulator {
+            background: #000;
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 20px;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.9rem;
+            border-left: 4px solid var(--accent);
+        }
+        .sim-input { color: #10b981; }
+        .sim-process { color: #f59e0b; margin: 10px 0; }
+        .sim-output { color: #38bdf8; font-weight: bold; }
+
+        .controls {
+            margin-top: 30px;
+            display: flex;
+            gap: 15px;
+        }
+        button {
+            background: var(--accent);
+            color: var(--primary);
+            border: none;
+            padding: 12px 24px;
+            border-radius: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+        }
+        button:hover { transform: scale(1.05); filter: brightness(1.1); }
+        button:disabled { background: #475569; cursor: not-allowed; opacity: 0.5; }
+        
+        .voice-toggle {
+            position: absolute;
+            top: 20px;
+            right: 40px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.8rem;
+            color: #94a3b8;
+        }
+    </style>
+</head>
+<body>
+<div id="idd-status-banner" role="note" style="position:fixed;bottom:6px;left:6px;z-index:2147483000;max-width:min(92vw,560px);padding:3px 8px;font:11px/1.35 system-ui,-apple-system,Segoe UI,sans-serif;color:#fde68a;background:rgba(17,17,17,.82);border:1px solid rgba(253,230,138,.35);border-radius:6px;pointer-events:none;">📜 Peça histórica (versão anterior ao Cânone v1.0-rc1). Afirmações podem não refletir o status atual — ver paradigma/00-canone/AFIRMACOES.md</div>
+
+    <div id="presentation-deck">
+        <div class="voice-toggle">
+            <span>🔊 Áudio habilitado em PT-BR</span>
+        </div>
+
+        <div class="slide active" id="slide-0">
+            <div class="profile-tag">Pioneirismo: 1976 → 2026</div>
+            <h1>A Ponte de 50 Anos</h1>
+            <p>De sistemas IBM e mainframes na década de 70 até a orquestração de agentes de IA hoje. Esta jornada não é sobre o esquecimento do passado, mas sobre a evolução da abstração.</p>
+            <p>O "gap" técnico de quem não digitou código por décadas agora é uma vantagem: enquanto outros focam na sintaxe, nós focamos na <strong>intenção estratégica</strong>.</p>
+        </div>
+
+        <div class="slide" id="slide-1">
+            <h2>O Paradigma NNGroup</h2>
+            <h1>A Grande Ruptura em 60 Anos</h1>
+            <p>Jakob Nielsen decretou: saímos da era dos <strong>comandos</strong> (onde clicamos em botões e formulários rígidos) para a era da <strong>intenção</strong>.</p>
+            <p>No novo modelo, o usuário não opera a ferramenta; ele dita o resultado esperado. O software deixa de ser um "martelo" e passa a ser um "mestre de obras".</p>
+        </div>
+
+        <div class="slide" id="slide-2">
+            <h2>Metodologia IDD</h2>
+            <h1>Intent-Driven Development</h1>
+            <p>O IDD é a simetria perfeita entre o <strong>Domínio</strong> (as regras do mundo real) e a <strong>IA</strong> (o motor de execução).</p>
+            <p>Desenvolver agora é um ato de tradução: transformamos a Linguagem Ubíqua em ações automáticas. É a "Sinergia Simétrica" entre o pensamento estruturado e a inteligência generativa.</p>
+        </div>
+
+        <div class="slide" id="slide-3">
+            <h2>Prática</h2>
+            <h1>Simulador de Intenção</h1>
+            <p>Veja como a camada de agente substitui centenas de linhas de código manual:</p>
+            <div class="simulator">
+                <div class="sim-input">> HUMANO: "Agente, gere os relatórios de designação da semana e avise os voluntários via WhatsApp."</div>
+                <div class="sim-process">⚙️ AGENTE: Consultando Bounded Context 'Designações'... Validando permissões... Gerando PDFs...</div>
+                <div class="sim-output">✅ RESULTADO: 18 designações processadas. 18 mensagens enviadas. Banco de dados sincronizado.</div>
+            </div>
+        </div>
+
+        <div class="slide" id="slide-4">
+            <h2>O Salto</h2>
+            <h1>Seja o Orquestrador</h1>
+            <p>Para quem quer "pular etapas": pare de estudar linguagens e comece a estudar <strong>intenções</strong>.</p>
+            <p>O futuro da engenharia não pertence a quem sabe digitar, mas a quem sabe orquestrar. Bem-vindos ao topo da árvore de abstração.</p>
+        </div>
+
+        <div class="controls">
+            <button id="prevBtn" onclick="moveSlide(-1)" disabled>Anterior</button>
+            <button id="playBtn" onclick="narrate()">Narrar Slide</button>
+            <button id="nextBtn" onclick="moveSlide(1)">Próximo</button>
+        </div>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const totalSlides = 5;
+        const synth = window.speechSynthesis;
+
+        const narrations = [
+            "Bem-vindo. Esta apresentação conecta minha trajetória, iniciada nos terminais IBM em 1976, com a fronteira da IA em 2026. O segredo não é a sintaxe, mas a evolução da abstração.",
+            "O Grupo Nielsen Norman afirma que estamos vivendo a maior mudança em 60 anos. Saímos do controle por comandos e botões para o controle por intenção. O humano agora dita o que quer, não como fazer.",
+            "O Desenvolvimento Orientado a Intenção, ou IDD, é a sinergia entre o domínio do negócio e a inteligência artificial. A linguagem que usamos para conversar é o novo código-fonte de alto nível.",
+            "No simulador, você vê a mágica: uma simples frase em português orquestra bancos de dados, gera documentos e envia mensagens. Isso substitui meses de programação tradicional.",
+            "Para meus amigos que querem pular etapas: o mercado não precisa mais de digitadores de código. O mercado precisa de orquestradores. Aprenda a definir intenções claras e domine o futuro."
+        ];
+
+        function moveSlide(direction) {
+            document.getElementById(`slide-${currentSlide}`).classList.remove('active');
+            currentSlide += direction;
+            document.getElementById(`slide-${currentSlide}`).classList.add('active');
+            
+            document.getElementById('prevBtn').disabled = (currentSlide === 0);
+            document.getElementById('nextBtn').disabled = (currentSlide === totalSlides - 1);
+            
+            synth.cancel();
+        }
+
+        function narrate() {
+            synth.cancel();
+            const utter = new SpeechSynthesisUtterance(narrations[currentSlide]);
+            utter.lang = 'pt-BR';
+            utter.rate = 1.0;
+            synth.speak(utter);
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,70 @@
+%%{init: {
+  'theme': 'base',
+  'themeVariables': {
+    'fontSize': '20px',
+    'fontFamily': 'Arial, sans-serif',
+    'primaryColor': '#7B1FA2',
+    'primaryTextColor': '#ffffff',
+    'primaryBorderColor': '#4A148C',
+    'lineColor': '#37474F',
+    'textColor': '#212121'
+  }
+}}%%
+
+classDiagram
+    direction TB
+
+    class HistoryRecord["📜 HISTORY RECORD"] {
+        +String id
+        +String weekId
+        +String weekDisplay
+        +String date
+        +MeetingSection section
+        +String partTitle
+        +Int partSequence
+        +PartModality modality
+        +String rawPublisherName
+        +String participationRole
+        +String resolvedPublisherId
+        +String resolvedPublisherName
+        +Float matchConfidence
+        +String standardPartKey
+        +String partTheme
+        +HistoryStatus status
+        +String importSource
+        +String importBatchId
+        +String createdAt
+    }
+
+    class ImportBatch["📥 IMPORT BATCH"] {
+        +String id
+        +String fileName
+        +String importDate
+        +String source
+        +Int totalRecords
+        +Int pendingCount
+        +Int validatedCount
+        +Int approvedCount
+        +Int rejectedCount
+    }
+
+    class HistoryStatus {
+        <<enumeration>>
+        ⏳ PENDING
+        ✔️ VALIDATED
+        ✅ APPROVED
+        ❌ REJECTED
+    }
+
+    class ImportSource {
+        <<enumeration>>
+        📄 PDF
+        📊 Excel
+        📋 JSON
+        ✍️ Manual
+        🤖 AUTO_INJECTED
+    }
+
+    ImportBatch "1" *-- "1..*" HistoryRecord : contém
+    HistoryRecord --> HistoryStatus : tem
+    ImportBatch --> ImportSource : origem

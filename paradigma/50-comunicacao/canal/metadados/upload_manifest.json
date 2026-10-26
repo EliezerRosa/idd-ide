@@ -1,0 +1,228 @@
+{
+  "channels": {
+    "zico_josias": {
+      "email": "[e-mail removido]",
+      "channel_id": "UCqeACaXB4w3irE-N6gcW-lQ",
+      "channel_title": "Zico Josias",
+      "playlist_id": "PLMWN1EWhq5tM",
+      "playlist_url": "https://www.youtube.com/playlist?list=PLMWN1EWhq5tM",
+      "videos": {
+        "melissa_crm": "oPcNC5FXnHY",
+        "refrigeracao_ep1": "LSeoDp7cOno",
+        "refrigeracao_ep2": "7SUj0N_hNqI",
+        "refrigeracao_ep3": "rUaJn-r-p8I",
+        "refrigeracao_ep4": "2iFSnsmjT00"
+      },
+      "shorts": {
+        "short_01_softwares_falham": "l_ttXQbvTzE",
+        "short_02_regras_inviolaveis": "mNrZzHGS5og",
+        "short_03_artefato_mais_alta_ordem": "3YAxKOKE4vU",
+        "short_04_aumentar_nao_automatizar": "uvUW6E5lSdA",
+        "short_05_melissa_leiga_criou_crm": "85FmEz8SP88"
+      }
+    },
+    "eliezer_rosa": {
+      "email": "[e-mail removido]",
+      "channel_id": "UCmXhQsrKa5wlO46etZKDkeA",
+      "channel_title": "Eliézer Rosa",
+      "playlist_id": "PLNkRuKhFHiBs",
+      "playlist_url": "https://www.youtube.com/playlist?list=PLNkRuKhFHiBs",
+      "videos": {
+        "melissa_crm": "oPcNC5FXnHY",
+        "refrigeracao_ep1": "LSeoDp7cOno",
+        "refrigeracao_ep2": "7SUj0N_hNqI",
+        "refrigeracao_ep3": "rUaJn-r-p8I",
+        "refrigeracao_ep4": "2iFSnsmjT00",
+        "manifesto_oficial": "uaUKrnagVb4",
+        "refrigeracao_ep1_remasterizado": "GKzaXOfl_0E",
+        "refrigeracao_ep2_remasterizado": "0Kw7L_0wbdI",
+        "refrigeracao_ep3_remasterizado": "Q-dhHSxxIJ0",
+        "refrigeracao_ep4_remasterizado": "K__7BKaaclU",
+        "metodologia_ep1b_requisitos": "DiOLR6G_I20",
+        "metodologia_ep2b_mer": "pfRvCRqG-rs",
+        "metodologia_ep3b_uml": "0IAil4qzCUg",
+        "metodologia_ep4b_governanca": "GtZmMaE7Nyk",
+        "metodologia_ep5_futuro_software": "ZDduoIZdZ6I",
+        "metodologia_ep3c_bounded_contexts": "qiIuQaiyejY",
+        "metodologia_ep3d_transacoes_atomicas": "H20yVSuyCdg",
+        "metodologia_ep4c_diff_intencoes": "v2JFTd3KJqs",
+        "metodologia_ep4d_invariantes_temporizadas": "dNAq3rsaptQ",
+        "metodologia_ep4e_ergonomia_industrial": "GIvXYuVpDOU",
+        "metodologia_ep4f_offline_first_validacao": "oM-VEojObi4"
+      },
+      "shorts": {
+        "manifesto_vertical": "r2hTBA9f6DA"
+      },
+      "playlist_casos_de_uso": {
+        "id": "PLAyb9-CLqwPA",
+        "url": "https://www.youtube.com/playlist?list=PLAyb9-CLqwPA",
+        "title": "IDD na Prática - Casos de Uso"
+      }
+    }
+  },
+  "playlists_leigos_novas": {
+    "barbearia": {
+      "id": "PLHCqwtNiGbt8",
+      "title": "IDD na Prática: App de Barbearia & Salão com IA",
+      "url": "https://www.youtube.com/playlist?list=PLHCqwtNiGbt8"
+    },
+    "cafeteria": {
+      "id": "PLLfynRT3_DJs",
+      "title": "IDD na Prática: App de Cafeteria & Padaria com IA",
+      "url": "https://www.youtube.com/playlist?list=PLLfynRT3_DJs"
+    },
+    "racha_conta": {
+      "id": "PLdaNms3TnbXA",
+      "title": "IDD na Prática: App de Racha de Conta & Pix com IA",
+      "url": "https://www.youtube.com/playlist?list=PLdaNms3TnbXA"
+    }
+  },
+  "barbearia_videos": {
+    "ep2": "HVdA53peUNo",
+    "ep2b": "wlYmLPdUIAI",
+    "ep3": "602elac7gb4",
+    "ep3b": "n2LaAPuF7OU",
+    "ep4": "TSU_R6ti7gE",
+    "ep4b": "zarzG9Y_4ms",
+    "ep5": "0g-lj4iyIbY"
+  },
+  "cafeteria_videos": {
+    "ep1": "x-BOQtec7fY",
+    "ep1b": "YcRxn6G9bVs",
+    "ep2": "2yJr7kfBK8U",
+    "ep2b": "okVT92Oe5k8",
+    "ep3": "tnl6SQtucDY",
+    "ep3b": "HzBO8VSlpG0",
+    "ep4": "3WZixt212wI",
+    "ep4b": "DM_kRaFtoSU",
+    "ep5": "leAG0j-_XEs"
+  },
+  "racha_videos": {
+    "ep1": "Pu351sstDOw",
+    "ep1b": "png__8PCMqM",
+    "ep2": "HwufTvZq1yo",
+    "ep2b": "tyUZCZ7qrVU",
+    "ep3": "-nnjSAn8Z_k",
+    "ep3b": "XMe6wdC5zfY",
+    "ep4": "wkq913IIArg",
+    "ep4b": "cMb8iXiR_zY",
+    "ep5": "qbLf7W-w6h0"
+  },
+  "Racha_Episodio_4": {
+    "videoId": "wkq913IIArg",
+    "url": "https://www.youtube.com/watch?v=wkq913IIArg",
+    "title": "Racha de Conta: Código Exemplo, Bateria de 200 Testes & Deploy com IA | Ep. 4 Racha IDD",
+    "playlistId": "PLdaNms3TnbXA",
+    "position": 6,
+    "filename": "IDD_Racha_Episodio_4.mp4"
+  },
+  "Racha_Episodio_4B": {
+    "videoId": "cMb8iXiR_zY",
+    "url": "https://www.youtube.com/watch?v=cMb8iXiR_zY",
+    "title": "Metodologia IDD: O 4º Passo Sagrado - Amarração do Código às Invariantes com IA | Ep. 4B Racha IDD",
+    "playlistId": "PLdaNms3TnbXA",
+    "position": 7,
+    "filename": "IDD_Racha_Episodio_4B.mp4"
+  },
+  "Racha_Episodio_5": {
+    "videoId": "qbLf7W-w6h0",
+    "url": "https://www.youtube.com/watch?v=qbLf7W-w6h0",
+    "title": "A Grande Síntese do Paradigma IDD: Da Ideia Leiga ao Software Blindado com IA | Ep. 5 Racha IDD",
+    "playlistId": "PLdaNms3TnbXA",
+    "position": 8,
+    "filename": "IDD_Racha_Episodio_5.mp4"
+  },
+  "Racha_Episodio_2C": {
+    "videoId": "MYvmlWoDvi4",
+    "url": "https://www.youtube.com/watch?v=MYvmlWoDvi4",
+    "title": "MER Completo: Entidades Derivadas, Normalização & Invariantes de Dados | Ep. 2C Racha IDD",
+    "playlistId": "PLdaNms3TnbXA",
+    "position": 4,
+    "filename": "IDD_Racha_Episodio_2C.mp4"
+  },
+  "Racha_Episodio_3C": {
+    "videoId": "tI9x67am_Go",
+    "url": "https://www.youtube.com/watch?v=tI9x67am_Go",
+    "title": "UML Completo: Atores, Classes, Casos de Uso, Estados & Métodos | Ep. 3C Racha IDD",
+    "playlistId": "PLdaNms3TnbXA",
+    "position": 7,
+    "filename": "IDD_Racha_Episodio_3C.mp4"
+  },
+  "Racha_Episodio_4C": {
+    "videoId": "IL7BHZ1iHVE",
+    "url": "https://www.youtube.com/watch?v=IL7BHZ1iHVE",
+    "title": "Implementação Completa: Funções Puras & Métodos Amarrados às Invariantes | Ep. 4C Racha IDD",
+    "playlistId": "PLdaNms3TnbXA",
+    "position": 10,
+    "filename": "IDD_Racha_Episodio_4C.mp4"
+  },
+  "Barbearia_Episodio_2C": {
+    "videoId": "qkd2p4eXoOE",
+    "url": "https://www.youtube.com/watch?v=qkd2p4eXoOE",
+    "title": "MER Canônico: Crow's Foot, Normalização & Invariantes de Dados | Ep. 2C Barbearia IDD",
+    "playlistId": "PLHCqwtNiGbt8",
+    "position": 4,
+    "filename": "IDD_Barbearia_Episodio_2C.mp4"
+  },
+  "Barbearia_Episodio_3C": {
+    "videoId": "9Gs4BoSkmR4",
+    "url": "https://www.youtube.com/watch?v=9Gs4BoSkmR4",
+    "title": "UML Completo: Atores, Classes, Casos de Uso, Estados & Métodos | Ep. 3C Barbearia IDD",
+    "playlistId": "PLHCqwtNiGbt8",
+    "position": 7,
+    "filename": "IDD_Barbearia_Episodio_3C.mp4"
+  },
+  "Barbearia_Episodio_4C": {
+    "videoId": "r5BkIDJfkQA",
+    "url": "https://www.youtube.com/watch?v=r5BkIDJfkQA",
+    "title": "Implementação Completa: Funções Puras & Métodos Amarrados às Invariantes | Ep. 4C Barbearia IDD",
+    "playlistId": "PLHCqwtNiGbt8",
+    "position": 10,
+    "filename": "IDD_Barbearia_Episodio_4C.mp4"
+  },
+  "Cafeteria_Episodio_2C": {
+    "videoId": "LvSJ7OeAK9U",
+    "url": "https://www.youtube.com/watch?v=LvSJ7OeAK9U",
+    "title": "MER Canônico: Crow's Foot, Ficha Técnica & Invariantes de Dados | Ep. 2C Cafeteria IDD",
+    "playlistId": "PLLfynRT3_DJs",
+    "position": 4,
+    "filename": "IDD_Cafeteria_Episodio_2C.mp4"
+  },
+  "Cafeteria_Episodio_3C": {
+    "videoId": "ybEEhu1ovMU",
+    "url": "https://www.youtube.com/watch?v=ybEEhu1ovMU",
+    "title": "UML Completo: Atores, Classes, Casos de Uso, Estados & Métodos | Ep. 3C Cafeteria IDD",
+    "playlistId": "PLLfynRT3_DJs",
+    "position": 7,
+    "filename": "IDD_Cafeteria_Episodio_3C.mp4"
+  },
+  "Cafeteria_Episodio_4C": {
+    "videoId": "psdGYEMfTkY",
+    "url": "https://www.youtube.com/watch?v=psdGYEMfTkY",
+    "title": "Implementação Completa: Funções Puras & Métodos Amarrados às Invariantes | Ep. 4C Cafeteria IDD",
+    "playlistId": "PLLfynRT3_DJs",
+    "position": 10,
+    "filename": "IDD_Cafeteria_Episodio_4C.mp4"
+  },
+  "Refrigeracao_TalkShow_MER_UML": {
+    "videoId": "Z8vzxfNrAwE",
+    "url": "https://www.youtube.com/watch?v=Z8vzxfNrAwE",
+    "title": "Talk Show de Homologação: MER Canônico & UML de Casos de Uso | IDD Refrigeração Especial",
+    "playlistId": "PLNkRuKhFHiBs",
+    "filename": "IDD_Refrigeracao_TalkShow_Completo.mp4"
+  },
+  "playlists_especiais": {
+    "perspectiva_tecnica": {
+      "id": "PLW-P0rMNaKDs",
+      "title": "IDD  Paradigma - Perspectiva Técnica: Avaliação Isenta & Os 5 Pilares de Formalização",
+      "url": "https://www.youtube.com/playlist?list=PLW-P0rMNaKDs"
+    }
+  },
+  "especial_perspectiva_tecnica": {
+    "videoId": "sIN3nMc7Nhw",
+    "url": "https://www.youtube.com/watch?v=sIN3nMc7Nhw",
+    "title": "IDD Paradigma — Perspectiva Técnica: Avaliação Isenta & Os 5 Pilares de Formalização",
+    "playlistId": "PLW-P0rMNaKDs",
+    "filename": "IDD_Paradigma_Perspectiva_Tecnica_Especial.mp4"
+  }
+}

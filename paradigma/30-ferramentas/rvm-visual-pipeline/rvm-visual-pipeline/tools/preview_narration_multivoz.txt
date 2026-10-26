@@ -1,0 +1,2325 @@
+=== PREVIEW MULTIVOZ - ORDEM CRONOLÓGICA ===
+
+Vozes usadas:
+  Narrador A (principal): pt-BR-AntonioNeural
+  Narrador B (secundário): pt-BR-FabioNeural
+  Comentarista IA (feminino): pt-BR-FranciscaNeural
+
+
+[1/556] INTRO - pt-BR-AntonioNeural
+ID: intro
+Texto: Bem-vindo Ã  apresentaÃ§Ã£o interativa do RVM DesignaÃ§Ãµes.
+
+Objetivo: mostrar, em quatro grafos navegÃ¡veis, como o RVM DesignaÃ§Ãµes decide quem faz o quÃª na reuniÃ£o â€” do construtor de contexto atÃ© a elegibilidade fina por modalidade â€” e como as quatro superfÃ­cies (motor automÃ¡tico, interface manual do dirigente, painel de diagnÃ³stico e agente de inteligência artificial) chegam Ã  mesma verdade.
+
+Esta apresentaÃ§Ã£o tem quatro abas: Overview do Fluxo, Fluxo de Geração, Árvore de Decisão de Elegibilidade e ComparaÃ§Ã£o UI vs Agente. Cada uma Ã© um Ã¢ngulo diferente do mesmo sistema.
+
+Em cada aba, o vÃ­deo percorre o grafo caminho por caminho, anunciando primeiro o objetivo de cada caminho, e depois cada nÃ³ com uma descriÃ§Ã£o coloquial e um comentÃ¡rio mais profundo da IA. O dedo apontador segue o nÃ³ que estÃ¡ sendo narrado, e o painel Ã  direita mostra a explicaÃ§Ã£o e o comentÃ¡rio do nÃ³ ativo.
+
+Vamos comeÃ§ar pela visÃ£o geral.
+Original: Bem-vindo Ã  apresentaÃ§Ã£o interativa do RVM DesignaÃ§Ãµes.
+
+Objetivo: mostrar, em quatro grafos navegÃ¡veis, como o RVM DesignaÃ§Ãµes decide quem faz o quÃª na reuniÃ£o â€” do construtor de contexto atÃ© a elegibilidade fina por modalidade â€” e como as quatro superfÃ­cies (motor automÃ¡tico, UI manual, painel de diagnÃ³stico e agente de IA) chegam Ã  mesma verdade.
+
+Esta apresentaÃ§Ã£o tem quatro abas: Overview do Fluxo, Generation Flow, Eligibility Decision Tree e ComparaÃ§Ã£o UI vs Agente. Cada uma Ã© um Ã¢ngulo diferente do mesmo sistema.
+
+Em cada aba, o vÃ­deo percorre o grafo caminho por caminho, anunciando primeiro o objetivo de cada caminho, e depois cada nÃ³ com uma descriÃ§Ã£o coloquial e um comentÃ¡rio mais profundo da IA. O dedo apontador segue o nÃ³ que estÃ¡ sendo narrado, e o painel Ã  direita mostra a explicaÃ§Ã£o e o comentÃ¡rio do nÃ³ ativo.
+
+Vamos comeÃ§ar pela visÃ£o geral.
+
+[2/556] TAB - pt-BR-AntonioNeural
+ID: tab-overview
+Texto: Overview do Fluxo. distribuir designacoes com justica, transparencia e rastreabilidade
+
+[3/556] [CONECTIVO] - pt-BR-FabioNeural
+ID: connector-flow-overview-0
+Texto: Avançando
+
+[4/556] FLOW - pt-BR-FabioNeural
+ID: flow-overview-0
+Texto: Caminho 1: ApresentaÃ§Ã£o dos quatro caminhos. Objetivo: Mostrar as portas de entrada que o sistema oferece para designar partes.
+
+[5/556] [CONECTIVO] - pt-BR-AntonioNeural
+ID: connector-node-overview-0-explanation
+Texto: Por outro lado
+
+[6/556] EXPLANATION - pt-BR-AntonioNeural
+ID: node-overview-0-explanation
+Texto: Tudo comeÃ§a aqui quando o sistema decide montar a programaÃ§Ã£o da semana sem ajuda humana: ele varre as partes, junta o contexto e dispara a eleiÃ§Ã£o automÃ¡tica dos nomes.
+
+[7/556] [CONECTIVO] - pt-BR-FranciscaNeural
+ID: connector-node-overview-0-aicomment
+Texto: Em outras palavras
+
+[8/556] AICOMMENT - pt-BR-FranciscaNeural
+ID: node-overview-0-aicomment
+Texto: IntenÃ§Ã£o: oferecer um primeiro rascunho coerente do quadro inteiro aplicando regras unificadas. Impacto: economiza horas do dirigente e jÃ¡ entrega uma proposta auditÃ¡vel, que serve como ponto de partida para revisÃ£o humana, em vez de partir do zero a cada semana.
+
+[9/556] [CONECTIVO] - pt-BR-FabioNeural
+ID: connector-node-overview-1-explanation
+Texto: E temos também
+
+[10/556] EXPLANATION - pt-BR-FabioNeural
+ID: node-overview-1-explanation
+Texto: Este Ã© o caminho oposto: o dirigente abre uma parte especÃ­fica e escolhe Ã  mÃ£o. Mesmo manual, o sistema entra junto e oferece sÃ³ os nomes que cumprem as regras.
+
+[11/556] [CONECTIVO] - pt-BR-FranciscaNeural
+ID: connector-node-overview-1-aicomment
+Texto: Fundamentalmente
+
+[12/556] AICOMMENT - pt-BR-FranciscaNeural
+ID: node-overview-1-aicomment
+Texto: IntenÃ§Ã£o: preservar a decisÃ£o humana sem abrir mÃ£o da disciplina das regras. Impacto: evita que escolhas pontuais quebrem a coerÃªncia geral da designaÃ§Ã£o, porque a interface manual do dirigente e o motor automÃ¡tico partilham o mesmo gate de elegibilidade.
+Original: IntenÃ§Ã£o: preservar a decisÃ£o humana sem abrir mÃ£o da disciplina das regras. Impacto: evita que escolhas pontuais quebrem a coerÃªncia geral da designaÃ§Ã£o, porque a UI manual e o motor automÃ¡tico partilham o mesmo gate de elegibilidade.
+
+[13/556] [CONECTIVO] - pt-BR-AntonioNeural
+ID: connector-node-overview-2-explanation
+Texto: Continuando
+
+[14/556] EXPLANATION - pt-BR-AntonioNeural
+ID: node-overview-2-explanation
+Texto: Aqui Ã© o painel de diagnÃ³stico, acionado quando alguÃ©m quer entender por que tal nome apareceu (ou nÃ£o). Mostra o classificação ordenada completo lado a lado com os bloqueios.
+Original: Aqui Ã© o painel de diagnÃ³stico, acionado quando alguÃ©m quer entender por que tal nome apareceu (ou nÃ£o). Mostra o ranking completo lado a lado com os bloqueios.
+
+[15/556] [CONECTIVO] - pt-BR-FranciscaNeural
+ID: connector-node-overview-2-aicomment
+Texto: O ponto-chave
+
+[16/556] AICOMMENT - pt-BR-FranciscaNeural
+ID: node-overview-2-aicomment
+Texto: IntenÃ§Ã£o: transformar a caixa-preta da eleiÃ§Ã£o em uma vitrine transparente. Impacto: ganha-se confianÃ§a no sistema porque cada nome do classificação ordenada tem justificativa visÃ­vel e auditÃ¡vel, o que sustenta conversas pastorais difÃ­ceis com base em dados.
+Original: IntenÃ§Ã£o: transformar a caixa-preta da eleiÃ§Ã£o em uma vitrine transparente. Impacto: ganha-se confianÃ§a no sistema porque cada nome do ranking tem justificativa visÃ­vel e auditÃ¡vel, o que sustenta conversas pastorais difÃ­ceis com base em dados.
+
+[17/556] [CONECTIVO] - pt-BR-FabioNeural
+ID: connector-node-overview-3-explanation
+Texto: Adiante
+
+[18/556] EXPLANATION - pt-BR-FabioNeural
+ID: node-overview-3-explanation
+Texto: Quando o usuÃ¡rio pergunta ao agente de inteligência artificial do chat algo como "quem Ã© melhor para esta parte?", Ã© por aqui que passa: o agente busca o classificação ordenada e devolve com explicaÃ§Ã£o textual.
+Original: Quando o usuÃ¡rio pergunta ao agente IA do chat algo como "quem Ã© melhor para esta parte?", Ã© por aqui que passa: o agente busca o ranking e devolve com explicaÃ§Ã£o textual.
+
+[19/556] [CONECTIVO] - pt-BR-FranciscaNeural
+ID: connector-node-overview-3-aicomment
+Texto: Fundamentalmente
+
+[20/556] AICOMMENT - pt-BR-FranciscaNeural
+ID: node-overview-3-aicomment
+Texto: IntenÃ§Ã£o: levar a mesma lÃ³gica de eleiÃ§Ã£o para dentro da conversa, no idioma natural do usuÃ¡rio. Impacto: o agente nunca opina por intuiÃ§Ã£o â€” sempre fala em cima da mesma engrenagem que o painel usa, garantindo respostas reprodutÃ­veis.
+
+[21/556] [CONECTIVO] - pt-BR-FabioNeural
+ID: connector-flow-overview-1
+Texto: Avancemos
+
+[22/556] FLOW - pt-BR-FabioNeural
+ID: flow-overview-1
+Texto: Caminho 2: Base comum partilhada. Objetivo: Ver o que todos os caminhos consultam por baixo: contexto, elegibilidade, classificação ordenada, nota de prioridade e intervalo obrigatório entre designações.
+Original: Caminho 2: Base comum partilhada. Objetivo: Ver o que todos os caminhos consultam por baixo: contexto, elegibilidade, ranking, score e cooldown.
+
+[23/556] [CONECTIVO] - pt-BR-AntonioNeural
+ID: connector-node-overview-4-explanation
+Texto: Repare também que
+
+[24/556] EXPLANATION - pt-BR-AntonioNeural
+ID: node-overview-4-explanation
+Texto: Antes de qualquer escolha, Ã© preciso saber a semana inteira: data, titular, presidente e o que jÃ¡ foi designado. Esse contexto comum alimenta todos os caminhos acima.
+
+[25/556] [CONECTIVO] - pt-BR-FranciscaNeural
+ID: connector-node-overview-4-aicomment
+Texto: Observação importante
+
+[26/556] AICOMMENT - pt-BR-FranciscaNeural
+ID: node-overview-4-aicomment
+Texto: IntenÃ§Ã£o: ter uma Ãºnica verdade sobre a semana para que cada caminho enxergue o mesmo cenÃ¡rio. Impacto: elimina divergÃªncia entre superfÃ­cies â€” chat, painel e interface manual do dirigente consultam a mesma fonte e nunca contradizem uns aos outros.
+Original: IntenÃ§Ã£o: ter uma Ãºnica verdade sobre a semana para que cada caminho enxergue o mesmo cenÃ¡rio. Impacto: elimina divergÃªncia entre superfÃ­cies â€” chat, painel e UI manual consultam a mesma fonte e nunca contradizem uns aos outros.
+
+[27/556] [CONECTIVO] - pt-BR-FabioNeural
+ID: connector-node-overview-5-explanation
+Texto: Retomando o fluxo
+
+[28/556] EXPLANATION - pt-BR-FabioNeural
+ID: node-overview-5-explanation
+Texto: Com o contexto pronto, este Ã© o portÃ£o: para cada candidato e cada parte, responde "pode ou nÃ£o pode" â€” e, se nÃ£o pode, devolve o motivo exato.
+
+[29/556] [CONECTIVO] - pt-BR-FranciscaNeural
+ID: connector-node-overview-5-aicomment
+Texto: Em outras palavras
+
+[30/556] AICOMMENT - pt-BR-FranciscaNeural
+ID: node-overview-5-aicomment
+Texto: IntenÃ§Ã£o: regra Ãºnica declarada em um sÃ³ lugar, sempre acompanhada de causa. Impacto: nenhum nome Ã© descartado em silÃªncio â€” todo bloqueio deixa rastro auditÃ¡vel, o que permite explicar a decisÃ£o a anciÃ£os e publicadores.
+
+[31/556] [CONECTIVO] - pt-BR-AntonioNeural
+ID: connector-node-overview-6-explanation
+Texto: Continuemos
+
+[32/556] EXPLANATION - pt-BR-AntonioNeural
+ID: node-overview-6-explanation
+Texto: Passados pelo portÃ£o, os elegÃ­veis caem aqui para serem ordenados por mÃ©rito de rotaÃ§Ã£o. O classificação ordenada Ã© determinÃ­stico â€” mesmas entradas geram a mesma ordem.
+Original: Passados pelo portÃ£o, os elegÃ­veis caem aqui para serem ordenados por mÃ©rito de rotaÃ§Ã£o. O ranking Ã© determinÃ­stico â€” mesmas entradas geram a mesma ordem.
+
+[33/556] [CONECTIVO] - pt-BR-FranciscaNeural
+ID: connector-node-overview-6-aicomment
+Texto: O ponto-chave
+
+[34/556] AICOMMENT - pt-BR-FranciscaNeural
+ID: node-overview-6-aicomment
+Texto: IntenÃ§Ã£o: garantir justiÃ§a reproduzÃ­vel, sem sorteios ocultos. Impacto: a mesma situaÃ§Ã£o sempre gera a mesma sugestÃ£o, e isso protege o processo contra suspeita de favoritismo ou influÃªncia indevida.
+
+[35/556] [CONECTIVO] - pt-BR-FabioNeural
+ID: connector-node-overview-7-explanation
+Texto: Continuando
+
+[36/556] EXPLANATION - pt-BR-FabioNeural
+ID: node-overview-7-explanation
+Texto: O classificação ordenada nÃ£o inventa nota: cada candidato recebe um nota de prioridade baseado em quanto tempo estÃ¡ sem servir, quÃ£o frequente foi e se acabou de carregar uma parte pesada.
+Original: O ranking nÃ£o inventa nota: cada candidato recebe um score baseado em quanto tempo estÃ¡ sem servir, quÃ£o frequente foi e se acabou de carregar uma parte pesada.
+
+[37/556] [CONECTIVO] - pt-BR-FranciscaNeural
+ID: connector-node-overview-7-aicomment
+Texto: Análise
+
+[38/556] AICOMMENT - pt-BR-FranciscaNeural
+ID: node-overview-7-aicomment
+Texto: IntenÃ§Ã£o: equilibrar oportunidades sem sobrecarregar quem acabou de servir. Impacto: ao longo do ano, quem estÃ¡ hÃ¡ mais tempo sem designaÃ§Ã£o tende a ser puxado naturalmente, sem precisar de planilha paralela do dirigente.
+
+[39/556] [CONECTIVO] - pt-BR-AntonioNeural
+ID: connector-node-overview-8-explanation
+Texto: Vamos adiante
+
+[40/556] EXPLANATION - pt-BR-AntonioNeural
+ID: node-overview-8-explanation
+Texto: Mesmo depois de ordenado, o sistema checa se algum candidato estÃ¡ em descanso obrigatÃ³rio (intervalo obrigatório entre designações) â€” e marca essa informaÃ§Ã£o para tratamento diferente conforme a tela.
+Original: Mesmo depois de ordenado, o sistema checa se algum candidato estÃ¡ em descanso obrigatÃ³rio (cooldown) â€” e marca essa informaÃ§Ã£o para tratamento diferente conforme a tela.
+
+[41/556] [CONECTIVO] - pt-BR-FranciscaNeural
+ID: connector-node-overview-8-aicomment
+Texto: Essencialmente
+
+[42/556] AICOMMENT - pt-BR-FranciscaNeural
+ID: node-overview-8-aicomment
+Texto: IntenÃ§Ã£o: respeitar o intervalo entre designaÃ§Ãµes como sinal claro, sem apagar o candidato do classificação ordenada. Impacto: o painel pode mostrar com aviso, o agente pode explicar, e a interface manual do dirigente pode bloquear â€” cada um a seu modo, mas todos cientes.
+Original: IntenÃ§Ã£o: respeitar o intervalo entre designaÃ§Ãµes como sinal claro, sem apagar o candidato do ranking. Impacto: o painel pode mostrar com aviso, o agente pode explicar, e a UI manual pode bloquear â€” cada um a seu modo, mas todos cientes.
+
+[43/556] [CONECTIVO] - pt-BR-FabioNeural
+ID: connector-flow-overview-2
+Texto: Prossigamos
+
+[44/556] FLOW - pt-BR-FabioNeural
+ID: flow-overview-2
+Texto: Caminho 3: Encontros e divergÃªncia entre caminhos. Objetivo: Entender onde os caminhos convergem na regra e onde divergem propositalmente.
+
+[45/556] [CONECTIVO] - pt-BR-FabioNeural
+ID: connector-node-overview-9-explanation
+Texto: Traduzindo
+
+[46/556] EXPLANATION - pt-BR-FabioNeural
+ID: node-overview-9-explanation
+Texto: Aqui se enxerga o primeiro encontro: por mais que existam quatro entradas diferentes, todas passam pelo mesmo portÃ£o de elegibilidade.
+
+[47/556] [CONECTIVO] - pt-BR-FranciscaNeural
+ID: connector-node-overview-9-aicomment
+Texto: Essencialmente
+
+[48/556] AICOMMENT - pt-BR-FranciscaNeural
+ID: node-overview-9-aicomment
+Texto: IntenÃ§Ã£o: forÃ§ar coerÃªncia no que mais importa â€” quem pode servir. Impacto: nunca acontece de um caminho aceitar alguÃ©m que outro recusaria, eliminando contradiÃ§Ãµes entre superfÃ­cies e protegendo a confianÃ§a no app.
+
+[49/556] [CONECTIVO] - pt-BR-AntonioNeural
+ID: connector-node-overview-10-explanation
+Texto: Adiante
+
+[50/556] EXPLANATION - pt-BR-AntonioNeural
+ID: node-overview-10-explanation
+Texto: Segundo encontro: a ordem dos candidatos tambÃ©m sai do mesmo serviÃ§o de rotaÃ§Ã£o para todos os caminhos.
+
+[51/556] [CONECTIVO] - pt-BR-FranciscaNeural
+ID: connector-node-overview-10-aicomment
+Texto: Em síntese
+
+[52/556] AICOMMENT - pt-BR-FranciscaNeural
+ID: node-overview-10-aicomment
+Texto: IntenÃ§Ã£o: que "melhor candidato" signifique a mesma coisa em todo o app. Impacto: alinha o discurso do agente, a lista do painel e a seleÃ§Ã£o automÃ¡tica, garantindo que trÃªs usuÃ¡rios vejam a mesma resposta para a mesma pergunta.
+
+[53/556] [CONECTIVO] - pt-BR-FabioNeural
+ID: connector-node-overview-11-explanation
+Texto: E temos também
+
+[54/556] EXPLANATION - pt-BR-FabioNeural
+ID: node-overview-11-explanation
+Texto: Mas hÃ¡ um ponto onde os caminhos divergem: o intervalo obrigatório entre designações Ã© tratado de jeito diferente conforme a tela â€” em algumas Ã© sÃ³ um aviso, em outras Ã© bloqueio efetivo.
+Original: Mas hÃ¡ um ponto onde os caminhos divergem: o cooldown Ã© tratado de jeito diferente conforme a tela â€” em algumas Ã© sÃ³ um aviso, em outras Ã© bloqueio efetivo.
+
+[55/556] [CONECTIVO] - pt-BR-FranciscaNeural
+ID: connector-node-overview-11-aicomment
+Texto: Traduzindo
+
+[56/556] AICOMMENT - pt-BR-FranciscaNeural
+ID: node-overview-11-aicomment
+Texto: IntenÃ§Ã£o: respeitar o contexto de uso (a interface manual do dirigente exige proteÃ§Ã£o forte; o diagnÃ³stico exige transparÃªncia total). Impacto: experiÃªncia adaptada por superfÃ­cie, mas com a mesma regra por trÃ¡s â€” divergÃªncia intencional, nÃ£o acidental.
+Original: IntenÃ§Ã£o: respeitar o contexto de uso (a UI manual exige proteÃ§Ã£o forte; o diagnÃ³stico exige transparÃªncia total). Impacto: experiÃªncia adaptada por superfÃ­cie, mas com a mesma regra por trÃ¡s â€” divergÃªncia intencional, nÃ£o acidental.
+
+[57/556] [CONECTIVO] - pt-BR-FabioNeural
+ID: connector-flow-overview-3
+Texto: Avancemos
+
+[58/556] FLOW - pt-BR-FabioNeural
+ID: flow-overview-3
+Texto: Caminho 4: Como cada caminho termina. Objetivo: Ver a entrega final de cada porta: motor, interface manual do dirigente, painel de diagnÃ³stico e agente de inteligência artificial.
+Original: Caminho 4: Como cada caminho termina. Objetivo: Ver a entrega final de cada porta: motor, UI manual, painel de diagnÃ³stico e agente IA.
+
+[59/556] [CONECTIVO] - pt-BR-AntonioNeural
+ID: connector-node-overview-12-explanation
+Texto: Indo além
+
+[60/556] EXPLANATION - pt-BR-AntonioNeural
+ID: node-overview-12-explanation
+Texto: Fim do caminho automÃ¡tico: cada parte ganha um nome e o sistema grava no quadro semanal.
+
+[61/556] [CONECTIVO] - pt-BR-FranciscaNeural
+ID: connector-node-overview-12-aicomment
+Texto: O cerne da questão
+
+[62/556] AICOMMENT - pt-BR-FranciscaNeural
+ID: node-overview-12-aicomment
+Texto: IntenÃ§Ã£o: entregar uma programaÃ§Ã£o semanal pronta, porÃ©m reversÃ­vel. Impacto: o dirigente recebe um rascunho consistente que pode ajustar com poucos cliques, em vez de montar tudo do zero.
+
+[63/556] [CONECTIVO] - pt-BR-FabioNeural
+ID: connector-node-overview-13-explanation
+Texto: Continuando
+
+[64/556] EXPLANATION - pt-BR-FabioNeural
+ID: node-overview-13-explanation
+Texto: Fim do caminho manual: o lista suspensa de opções sÃ³ mostra os elegÃ­veis, escondendo bloqueados.
+Original: Fim do caminho manual: o dropdown sÃ³ mostra os elegÃ­veis, escondendo bloqueados.
+
+[65/556] [CONECTIVO] - pt-BR-FranciscaNeural
+ID: connector-node-overview-13-aicomment
+Texto: Em síntese
+
+[66/556] AICOMMENT - pt-BR-FranciscaNeural
+ID: node-overview-13-aicomment
+Texto: IntenÃ§Ã£o: simplificar a escolha humana sem dar a opÃ§Ã£o de errar. Impacto: o dirigente foca em decidir entre os bons, nÃ£o em filtrar os ruins, reduzindo o tempo da designaÃ§Ã£o manual.
+
+[67/556] [CONECTIVO] - pt-BR-AntonioNeural
+ID: connector-node-overview-14-explanation
+Texto: Próxima etapa
+
+[68/556] EXPLANATION - pt-BR-AntonioNeural
+ID: node-overview-14-explanation
+Texto: Fim do caminho diagnÃ³stico: o painel exibe o melhor e o top da lista, separando claramente bloqueados de aptos.
+
+[69/556] [CONECTIVO] - pt-BR-FranciscaNeural
+ID: connector-node-overview-14-aicomment
+Texto: Análise
+
+[70/556] AICOMMENT - pt-BR-FranciscaNeural
+ID: node-overview-14-aicomment
+Texto: IntenÃ§Ã£o: dar visÃ£o completa para auditoria e ajustes finos. Impacto: o usuÃ¡rio entende a fila inteira, nÃ£o sÃ³ o vencedor, o que sustenta conversas sobre por que tal nome ainda nÃ£o apareceu.
+
+[71/556] [CONECTIVO] - pt-BR-FabioNeural
+ID: connector-node-overview-15-explanation
+Texto: Prossigamos
+
+[72/556] EXPLANATION - pt-BR-FabioNeural
+ID: node-overview-15-explanation
+Texto: Fim do caminho agente de inteligência artificial: a resposta do chat traz classificação ordenada acompanhado de tags de elegibilidade â€” quem Ã© melhor e por quÃª.
+Original: Fim do caminho agente IA: a resposta do chat traz ranking acompanhado de tags de elegibilidade â€” quem Ã© melhor e por quÃª.
+
+[73/556] [CONECTIVO] - pt-BR-FranciscaNeural
+ID: connector-node-overview-15-aicomment
+Texto: Traduzindo
+
+[74/556] AICOMMENT - pt-BR-FranciscaNeural
+ID: node-overview-15-aicomment
+Texto: IntenÃ§Ã£o: levar transparÃªncia conversacional ao processo de eleiÃ§Ã£o. Impacto: o usuÃ¡rio entende em linguagem natural a mesma decisÃ£o que o painel visualiza, com explicaÃ§Ã£o e tag de intervalo obrigatório entre designações quando faz sentido.
+Original: IntenÃ§Ã£o: levar transparÃªncia conversacional ao processo de eleiÃ§Ã£o. Impacto: o usuÃ¡rio entende em linguagem natural a mesma decisÃ£o que o painel visualiza, com explicaÃ§Ã£o e tag de cooldown quando faz sentido.
+
+[75/556] [CONECTIVO] - pt-BR-AntonioNeural
+ID: connector-tab-generation
+Texto: Voltemos ao processo
+
+[76/556] TAB - pt-BR-AntonioNeural
+ID: tab-generation
+Texto: Fluxo de Geração. sugerir nomes viaveis sem ferir regras e com equilibrio entre pessoas
+Original: Generation Flow. sugerir nomes viaveis sem ferir regras e com equilibrio entre pessoas
+
+[77/556] [CONECTIVO] - pt-BR-FabioNeural
+ID: connector-flow-generation-0
+Texto: Mais adiante
+
+[78/556] FLOW - pt-BR-FabioNeural
+ID: flow-generation-0
+Texto: Caminho 1: Carga e triagem das partes. Objetivo: Reunir o contexto e descartar partes que nÃ£o cabem na rodada.
+
+[79/556] [CONECTIVO] - pt-BR-AntonioNeural
+ID: connector-node-generation-0-explanation
+Texto: E mais
+
+[80/556] EXPLANATION - pt-BR-AntonioNeural
+ID: node-generation-0-explanation
+Texto: O motor comeÃ§a carregando os trÃªs insumos da rodada: as partes da semana, os publicadores disponÃ­veis e o histÃ³rico recente de designaÃ§Ãµes.
+
+[81/556] [CONECTIVO] - pt-BR-FranciscaNeural
+ID: connector-node-generation-0-aicomment
+Texto: Destaque
+
+[82/556] AICOMMENT - pt-BR-FranciscaNeural
+ID: node-generation-0-aicomment
+Texto: IntenÃ§Ã£o: nunca decidir no escuro â€” sempre com contexto completo da congregaÃ§Ã£o. Impacto: a rotaÃ§Ã£o faz sentido porque enxerga o passado prÃ³ximo, em vez de tratar cada semana como evento isolado.
+
+[83/556] [CONECTIVO] - pt-BR-FabioNeural
+ID: connector-node-generation-1-explanation
+Texto: Avancemos
+
+[84/556] EXPLANATION - pt-BR-FabioNeural
+ID: node-generation-1-explanation
+Texto: Da pilha de partes recebida, separa sÃ³ as que realmente precisam de nome agora, descartando o que jÃ¡ estÃ¡ resolvido.
+
+[85/556] [CONECTIVO] - pt-BR-FranciscaNeural
+ID: connector-node-generation-1-aicomment
+Texto: Análise
+
+[86/556] AICOMMENT - pt-BR-FranciscaNeural
+ID: node-generation-1-aicomment
+Texto: IntenÃ§Ã£o: trabalhar apenas onde hÃ¡ decisÃ£o a tomar, sem mexer no que estÃ¡ bom. Impacto: processo mais rÃ¡pido e foco nas pendÃªncias reais, evitando reprocessamento desnecessÃ¡rio.
+
+[87/556] [CONECTIVO] - pt-BR-AntonioNeural
+ID: connector-node-generation-2-explanation
+Texto: Voltemos ao processo
+
+[88/556] EXPLANATION - pt-BR-AntonioNeural
+ID: node-generation-2-explanation
+Texto: Para cada parte filtrada, pergunta: Ã© de uma data jÃ¡ passada? Porque atribuir nome retroativo geralmente nÃ£o faz sentido.
+
+[89/556] [CONECTIVO] - pt-BR-FranciscaNeural
+ID: connector-node-generation-2-aicomment
+Texto: Traduzindo
+
+[90/556] AICOMMENT - pt-BR-FranciscaNeural
+ID: node-generation-2-aicomment
+Texto: IntenÃ§Ã£o: respeitar o fluxo cronolÃ³gico das reuniÃµes. Impacto: evita poluir o histÃ³rico com sugestÃµes inÃºteis e mantÃ©m o motor focado em ajudar de fato a prÃ³xima reuniÃ£o.
+
+[91/556] [CONECTIVO] - pt-BR-FabioNeural
+ID: connector-node-generation-3-explanation
+Texto: Próxima etapa
+
+[92/556] EXPLANATION - pt-BR-FabioNeural
+ID: node-generation-3-explanation
+Texto: Se a data Ã© vÃ¡lida, prÃ³xima pergunta: a parte Ã© de um tipo que o sistema nÃ£o atribui sozinho (canto, comentÃ¡rios iniciais etc.)?
+
+[93/556] [CONECTIVO] - pt-BR-FranciscaNeural
+ID: connector-node-generation-3-aicomment
+Texto: Em outras palavras
+
+[94/556] AICOMMENT - pt-BR-FranciscaNeural
+ID: node-generation-3-aicomment
+Texto: IntenÃ§Ã£o: o motor nÃ£o tenta automatizar o que pertence Ã  decisÃ£o manual ou ao desenho da reuniÃ£o. Impacto: respeita os limites do escopo automatizÃ¡vel e evita conflitos com o que o dirigente prefere controlar.
+
+[95/556] [CONECTIVO] - pt-BR-AntonioNeural
+ID: connector-node-generation-4-explanation
+Texto: Continuando
+
+[96/556] EXPLANATION - pt-BR-AntonioNeural
+ID: node-generation-4-explanation
+Texto: Passou pela nÃ£o-designabilidade. Agora: a parte jÃ¡ estÃ¡ num estado final (concluída ou cancelada)?
+Original: Passou pela nÃ£o-designabilidade. Agora: a parte jÃ¡ estÃ¡ num estado final (CONCLUIDA ou CANCELADA)?
+
+[97/556] [CONECTIVO] - pt-BR-FranciscaNeural
+ID: connector-node-generation-4-aicomment
+Texto: Para fixar
+
+[98/556] AICOMMENT - pt-BR-FranciscaNeural
+ID: node-generation-4-aicomment
+Texto: IntenÃ§Ã£o: respeitar estados firmados â€” uma parte concluÃ­da nÃ£o pode ser sobrescrita por uma decisÃ£o automÃ¡tica. Impacto: protege decisÃµes passadas contra retrabalho indevido.
+
+[99/556] [CONECTIVO] - pt-BR-FabioNeural
+ID: connector-node-generation-5-explanation
+Texto: E temos também
+
+[100/556] EXPLANATION - pt-BR-FabioNeural
+ID: node-generation-5-explanation
+Texto: Ãšltima triagem: a parte estÃ¡ realmente pendente, sem nome ou com nome invÃ¡lido? SÃ³ nesse caso vale a pena seguir.
+
+[101/556] [CONECTIVO] - pt-BR-FranciscaNeural
+ID: connector-node-generation-5-aicomment
+Texto: Destaque
+
+[102/556] AICOMMENT - pt-BR-FranciscaNeural
+ID: node-generation-5-aicomment
+Texto: IntenÃ§Ã£o: foco cirÃºrgico nas lacunas reais. Impacto: nada Ã© tocado sem motivo claro, o que mantÃ©m o motor previsÃ­vel e conservador.
+
+[103/556] [CONECTIVO] - pt-BR-AntonioNeural
+ID: connector-node-generation-6-explanation
+Texto: Seguindo
+
+[104/556] EXPLANATION - pt-BR-AntonioNeural
+ID: node-generation-6-explanation
+Texto: Se qualquer pergunta anterior disse "nÃ£o vale", a parte cai aqui e Ã© descartada da rodada.
+
+[105/556] [CONECTIVO] - pt-BR-FranciscaNeural
+ID: connector-node-generation-6-aicomment
+Texto: Fundamentalmente
+
+[106/556] AICOMMENT - pt-BR-FranciscaNeural
+ID: node-generation-6-aicomment
+Texto: IntenÃ§Ã£o: enxugar o trabalho ao essencial. Impacto: o motor sÃ³ investe esforÃ§o onde hÃ¡ algo a ganhar, mantendo a rodada eficiente.
+
+[107/556] [CONECTIVO] - pt-BR-FabioNeural
+ID: connector-node-generation-7-explanation
+Texto: Mais um passo
+
+[108/556] EXPLANATION - pt-BR-FabioNeural
+ID: node-generation-7-explanation
+Texto: Quando a parte Ã© nÃ£o-designÃ¡vel mas ainda tem nome residual, esta fase entra para limpar â€” marca o resÃ­duo com limpeza de resíduo.
+Original: Quando a parte Ã© nÃ£o-designÃ¡vel mas ainda tem nome residual, esta fase entra para limpar â€” marca o resÃ­duo com CLEANUP.
+
+[109/556] [CONECTIVO] - pt-BR-FranciscaNeural
+ID: connector-node-generation-7-aicomment
+Texto: Análise
+
+[110/556] AICOMMENT - pt-BR-FranciscaNeural
+ID: node-generation-7-aicomment
+Texto: IntenÃ§Ã£o: deixar a base coerente antes de qualquer eleiÃ§Ã£o nova. Impacto: evita que sujeira de histÃ³rico (nomes em partes que nÃ£o deveriam tÃª-los) contamine decisÃµes futuras.
+
+[111/556] [CONECTIVO] - pt-BR-FabioNeural
+ID: connector-flow-generation-1
+Texto: Adiante
+
+[112/556] FLOW - pt-BR-FabioNeural
+ID: flow-generation-1
+Texto: Caminho 2: Sanidade dos jÃ¡ designados. Objetivo: Verificar se nomes existentes ainda passam nas regras antes de gerar novos.
+
+[113/556] [CONECTIVO] - pt-BR-AntonioNeural
+ID: connector-node-generation-8-explanation
+Texto: Repare também que
+
+[114/556] EXPLANATION - pt-BR-AntonioNeural
+ID: node-generation-8-explanation
+Texto: Antes de inventar novidades, esta fase faz sanidade: quem jÃ¡ estÃ¡ designado ainda passa nas regras atuais?
+
+[115/556] [CONECTIVO] - pt-BR-FranciscaNeural
+ID: connector-node-generation-8-aicomment
+Texto: Para fixar
+
+[116/556] AICOMMENT - pt-BR-FranciscaNeural
+ID: node-generation-8-aicomment
+Texto: IntenÃ§Ã£o: corrigir designaÃ§Ãµes que ficaram invÃ¡lidas (alguÃ©m ficou inativo, mudou de status). Impacto: estabiliza o quadro antes de evoluir, evitando construir em cima de base quebrada.
+
+[117/556] [CONECTIVO] - pt-BR-FabioNeural
+ID: connector-node-generation-9-explanation
+Texto: Seguimos
+
+[118/556] EXPLANATION - pt-BR-FabioNeural
+ID: node-generation-9-explanation
+Texto: Pergunta sanitÃ¡ria: o nome atualmente atribuÃ­do ainda Ã© elegÃ­vel para essa parte?
+
+[119/556] [CONECTIVO] - pt-BR-FranciscaNeural
+ID: connector-node-generation-9-aicomment
+Texto: Comentário da IA
+
+[120/556] AICOMMENT - pt-BR-FranciscaNeural
+ID: node-generation-9-aicomment
+Texto: IntenÃ§Ã£o: confiar mas verificar. Impacto: ninguÃ©m fica numa parte que nÃ£o pode mais cumprir, e o quadro chega Ã  fase de eleiÃ§Ã£o com integridade.
+
+[121/556] [CONECTIVO] - pt-BR-FabioNeural
+ID: connector-flow-generation-2
+Texto: Seguindo
+
+[122/556] FLOW - pt-BR-FabioNeural
+ID: flow-generation-2
+Texto: Caminho 3: EleiÃ§Ã£o da presidÃªncia. Objetivo: Definir presidÃªncia primeiro e propagar para as partes dependentes.
+
+[123/556] [CONECTIVO] - pt-BR-AntonioNeural
+ID: connector-node-generation-10-explanation
+Texto: Seguindo adiante
+
+[124/556] EXPLANATION - pt-BR-AntonioNeural
+ID: node-generation-10-explanation
+Texto: Agora comeÃ§a a eleiÃ§Ã£o de verdade. Primeiro a presidÃªncia da semana â€” porque ela influencia vÃ¡rias escolhas seguintes.
+
+[125/556] [CONECTIVO] - pt-BR-FranciscaNeural
+ID: connector-node-generation-10-aicomment
+Texto: Destaque
+
+[126/556] AICOMMENT - pt-BR-FranciscaNeural
+ID: node-generation-10-aicomment
+Texto: IntenÃ§Ã£o: ancorar a semana inteira no papel mais sensÃ­vel antes de tudo. Impacto: cascata coerente â€” ajudante depende do titular, titular depende do presidente, entÃ£o o presidente vem primeiro.
+
+[127/556] [CONECTIVO] - pt-BR-FabioNeural
+ID: connector-node-generation-11-explanation
+Texto: Próximo
+
+[128/556] EXPLANATION - pt-BR-FabioNeural
+ID: node-generation-11-explanation
+Texto: Para presidir, aplica eligibility de PRESIDENCIA, checa disponibilidade na quinta, ordena os elegÃ­veis e escolhe o primeiro sem intervalo obrigatório entre designações.
+Original: Para presidir, aplica eligibility de PRESIDENCIA, checa disponibilidade na quinta, ordena os elegÃ­veis e escolhe o primeiro sem cooldown.
+
+[129/556] [CONECTIVO] - pt-BR-FranciscaNeural
+ID: connector-node-generation-11-aicomment
+Texto: Comentário da IA
+
+[130/556] AICOMMENT - pt-BR-FranciscaNeural
+ID: node-generation-11-aicomment
+Texto: IntenÃ§Ã£o: regras explÃ­citas e ordenadas, nada subjetivo. Impacto: o presidente da semana sempre Ã© o mais apto disponÃ­vel, nÃ£o o mais lembrado, eliminando vieses involuntÃ¡rios.
+
+[131/556] [CONECTIVO] - pt-BR-AntonioNeural
+ID: connector-node-generation-12-explanation
+Texto: Continuemos
+
+[132/556] EXPLANATION - pt-BR-AntonioNeural
+ID: node-generation-12-explanation
+Texto: Logo depois, propaga o presidente escolhido como assignee automÃ¡tico nas partes que dependem dele (comentÃ¡rios iniciais, oraÃ§Ã£o inicial).
+
+[133/556] [CONECTIVO] - pt-BR-FranciscaNeural
+ID: connector-node-generation-12-aicomment
+Texto: O ponto-chave
+
+[134/556] AICOMMENT - pt-BR-FranciscaNeural
+ID: node-generation-12-aicomment
+Texto: IntenÃ§Ã£o: economizar trabalho repetitivo do dirigente naquilo que naturalmente segue a presidÃªncia. Impacto: o quadro fica coerente sem clique extra para partes que sempre vÃ£o para o presidente.
+
+[135/556] [CONECTIVO] - pt-BR-FabioNeural
+ID: connector-node-generation-13-explanation
+Texto: Próximo
+
+[136/556] EXPLANATION - pt-BR-FabioNeural
+ID: node-generation-13-explanation
+Texto: Regra simples desta cascata: sÃ³ persiste a vinculaÃ§Ã£o automÃ¡tica se o presidente jÃ¡ estiver definido.
+
+[137/556] [CONECTIVO] - pt-BR-FranciscaNeural
+ID: connector-node-generation-13-aicomment
+Texto: Em outras palavras
+
+[138/556] AICOMMENT - pt-BR-FranciscaNeural
+ID: node-generation-13-aicomment
+Texto: IntenÃ§Ã£o: proteÃ§Ã£o contra cascata fantasma. Impacto: nÃ£o grava ligaÃ§Ã£o sem Ã¢ncora real, evitando dados inconsistentes na base.
+
+[139/556] [CONECTIVO] - pt-BR-FabioNeural
+ID: connector-flow-generation-3
+Texto: Retomando o fluxo
+
+[140/556] FLOW - pt-BR-FabioNeural
+ID: flow-generation-3
+Texto: Caminho 4: Faixa de ensino. Objetivo: Designar partes de ensino com perfil especÃ­fico (Tesouros, Joias, Estudo Bíblico de Congregação).
+Original: Caminho 4: Faixa de ensino. Objetivo: Designar partes de ensino com perfil especÃ­fico (Tesouros, Joias, EBC).
+
+[141/556] [CONECTIVO] - pt-BR-AntonioNeural
+ID: connector-node-generation-14-explanation
+Texto: Indo além
+
+[142/556] EXPLANATION - pt-BR-AntonioNeural
+ID: node-generation-14-explanation
+Texto: Com presidÃªncia resolvida, entra a faixa de partes de ensino (Tesouros, Joias, Estudo Bíblico de Congregação Vida etc.).
+Original: Com presidÃªncia resolvida, entra a faixa de partes de ensino (Tesouros, Joias, EBC Vida etc.).
+
+[143/556] [CONECTIVO] - pt-BR-FranciscaNeural
+ID: connector-node-generation-14-aicomment
+Texto: Destaque
+
+[144/556] AICOMMENT - pt-BR-FranciscaNeural
+ID: node-generation-14-aicomment
+Texto: IntenÃ§Ã£o: tratar primeiro as partes que pedem perfil mais especÃ­fico. Impacto: as exigentes sÃ£o preenchidas enquanto ainda hÃ¡ muitos candidatos com perfil amplo disponÃ­veis.
+
+[145/556] [CONECTIVO] - pt-BR-FabioNeural
+ID: connector-node-generation-15-explanation
+Texto: De volta ao diagrama
+
+[146/556] EXPLANATION - pt-BR-FabioNeural
+ID: node-generation-15-explanation
+Texto: Pergunta o subtipo de ensino (Discurso, Joias, Estudo Bíblico de Congregação Vida) para aplicar a regra certa de cada uma.
+Original: Pergunta o subtipo de ensino (Discurso, Joias, EBC Vida) para aplicar a regra certa de cada uma.
+
+[147/556] [CONECTIVO] - pt-BR-FranciscaNeural
+ID: connector-node-generation-15-aicomment
+Texto: Em outras palavras
+
+[148/556] AICOMMENT - pt-BR-FranciscaNeural
+ID: node-generation-15-aicomment
+Texto: IntenÃ§Ã£o: cada subtipo de ensino tem pÃºblico e perfil prÃ³prios. Impacto: a eleiÃ§Ã£o Ã© especializada por tipo, nÃ£o genÃ©rica, refletindo a estrutura real da apostila.
+
+[149/556] [CONECTIVO] - pt-BR-AntonioNeural
+ID: connector-node-generation-16-explanation
+Texto: Voltemos ao processo
+
+[150/556] EXPLANATION - pt-BR-AntonioNeural
+ID: node-generation-16-explanation
+Texto: Para a parte de ensino: verifica elegibilidade pela modalidade, prioriza irmÃ£o batizado para Leitor de Estudo Bíblico de Congregação (irmÃ£o > MS > anciÃ£o), ordena por rotaÃ§Ã£o e escolhe sem intervalo obrigatório entre designações.
+Original: Para a parte de ensino: verifica elegibilidade pela modalidade, prioriza irmÃ£o batizado para Leitor de EBC (irmÃ£o > MS > anciÃ£o), ordena por rotaÃ§Ã£o e escolhe sem cooldown.
+
+[151/556] [CONECTIVO] - pt-BR-FranciscaNeural
+ID: connector-node-generation-16-aicomment
+Texto: Para fixar
+
+[152/556] AICOMMENT - pt-BR-FranciscaNeural
+ID: node-generation-16-aicomment
+Texto: IntenÃ§Ã£o: respeitar o desenho organizacional (quem pode fazer o quÃª) sem sacrificar a justiÃ§a da rotaÃ§Ã£o. Impacto: a eleiÃ§Ã£o Ã© ao mesmo tempo regulamentar e equilibrada, sem repetir sempre o anciÃ£o disponÃ­vel.
+
+[153/556] [CONECTIVO] - pt-BR-FabioNeural
+ID: connector-flow-generation-4
+Texto: Seguindo
+
+[154/556] FLOW - pt-BR-FabioNeural
+ID: flow-generation-4
+Texto: Caminho 5: Faixa estudantil. Objetivo: Designar leituras e demonstraÃ§Ãµes da escola, incluindo o ajudante.
+
+[155/556] [CONECTIVO] - pt-BR-FabioNeural
+ID: connector-node-generation-17-explanation
+Texto: Traduzindo
+
+[156/556] EXPLANATION - pt-BR-FabioNeural
+ID: node-generation-17-explanation
+Texto: Em seguida, a faixa estudantil â€” leituras e demonstraÃ§Ãµes da escola.
+
+[157/556] [CONECTIVO] - pt-BR-FranciscaNeural
+ID: connector-node-generation-17-aicomment
+Texto: Análise
+
+[158/556] AICOMMENT - pt-BR-FranciscaNeural
+ID: node-generation-17-aicomment
+Texto: IntenÃ§Ã£o: cuidar do treinamento progressivo dos publicadores. Impacto: novos tÃªm oportunidade equilibrada de progredir, e o motor previne que sempre os mesmos sejam chamados.
+
+[159/556] [CONECTIVO] - pt-BR-AntonioNeural
+ID: connector-node-generation-18-explanation
+Texto: Adiante
+
+[160/556] EXPLANATION - pt-BR-AntonioNeural
+ID: node-generation-18-explanation
+Texto: Diferencia agora: a parte estudantil Ã© demonstraÃ§Ã£o (precisa de ajudante) ou leitura solo?
+
+[161/556] [CONECTIVO] - pt-BR-FranciscaNeural
+ID: connector-node-generation-18-aicomment
+Texto: Observação importante
+
+[162/556] AICOMMENT - pt-BR-FranciscaNeural
+ID: node-generation-18-aicomment
+Texto: IntenÃ§Ã£o: ramificar a regra porque demonstraÃ§Ã£o envolve par titular/ajudante. Impacto: o motor monta o par junto e coerente, nÃ£o em duas decisÃµes soltas que poderiam nÃ£o combinar.
+
+[163/556] [CONECTIVO] - pt-BR-FabioNeural
+ID: connector-node-generation-19-explanation
+Texto: Próximo
+
+[164/556] EXPLANATION - pt-BR-FabioNeural
+ID: node-generation-19-explanation
+Texto: Para demonstraÃ§Ãµes: prioriza irmÃ£s, depois irmÃ£os, depois MS, depois anciÃ£o â€” depois ordena por rotaÃ§Ã£o e tira bloqueados.
+
+[165/556] [CONECTIVO] - pt-BR-FranciscaNeural
+ID: connector-node-generation-19-aicomment
+Texto: Resumindo
+
+[166/556] AICOMMENT - pt-BR-FranciscaNeural
+ID: node-generation-19-aicomment
+Texto: IntenÃ§Ã£o: dar protagonismo Ã s irmÃ£s nas partes prÃ³prias delas. Impacto: equilÃ­brio real de oportunidade por gÃªnero, especialmente nas partes onde a apostila prevÃª isso.
+
+[167/556] [CONECTIVO] - pt-BR-AntonioNeural
+ID: connector-node-generation-20-explanation
+Texto: Mais um passo
+
+[168/556] EXPLANATION - pt-BR-AntonioNeural
+ID: node-generation-20-explanation
+Texto: Para leituras: aplica a lista de elegÃ­veis, ordena por rotaÃ§Ã£o e descarta intervalo obrigatório entre designações â€” a fÃ³rmula universal.
+Original: Para leituras: aplica a lista de elegÃ­veis, ordena por rotaÃ§Ã£o e descarta cooldown â€” a fÃ³rmula universal.
+
+[169/556] [CONECTIVO] - pt-BR-FranciscaNeural
+ID: connector-node-generation-20-aicomment
+Texto: Em outras palavras
+
+[170/556] AICOMMENT - pt-BR-FranciscaNeural
+ID: node-generation-20-aicomment
+Texto: IntenÃ§Ã£o: usar o algoritmo padrÃ£o quando o perfil exigido Ã© mais aberto. Impacto: simplicidade onde o caso permite, sem inventar regra nova Ã  toa.
+
+[171/556] [CONECTIVO] - pt-BR-FabioNeural
+ID: connector-flow-generation-5
+Texto: De volta ao diagrama
+
+[172/556] FLOW - pt-BR-FabioNeural
+ID: flow-generation-5
+Texto: Caminho 6: Demais partes da semana. Objetivo: Resolver ajudantes, oraÃ§Ãµes, o restante das partes pendentes e ir injetando essas escolhas no histÃ³rico interno da rodada.
+
+[173/556] [CONECTIVO] - pt-BR-FabioNeural
+ID: connector-node-generation-21-explanation
+Texto: Resumindo
+
+[174/556] EXPLANATION - pt-BR-FabioNeural
+ID: node-generation-21-explanation
+Texto: Faixa final: tudo que sobrou (oraÃ§Ãµes, partes da seÃ§Ã£o da congregaÃ§Ã£o, necessidades locais).
+
+[175/556] [CONECTIVO] - pt-BR-FranciscaNeural
+ID: connector-node-generation-21-aicomment
+Texto: Em síntese
+
+[176/556] AICOMMENT - pt-BR-FranciscaNeural
+ID: node-generation-21-aicomment
+Texto: IntenÃ§Ã£o: fechar o quadro completo da semana, sem deixar buraco. Impacto: a programaÃ§Ã£o nÃ£o termina pela metade, e o dirigente recebe algo realmente publicÃ¡vel.
+
+[177/556] [CONECTIVO] - pt-BR-AntonioNeural
+ID: connector-node-generation-22-explanation
+Texto: Avancemos
+
+[178/556] EXPLANATION - pt-BR-AntonioNeural
+ID: node-generation-22-explanation
+Texto: Antes de escolher cada parte que sobrou, pergunta: a funÃ§Ã£o Ã© AJUDANTE? Porque o ajudante depende do titular jÃ¡ escolhido.
+
+[179/556] [CONECTIVO] - pt-BR-FranciscaNeural
+ID: connector-node-generation-22-aicomment
+Texto: Resumindo
+
+[180/556] AICOMMENT - pt-BR-FranciscaNeural
+ID: node-generation-22-aicomment
+Texto: IntenÃ§Ã£o: jamais escolher um ajudante sem saber quem Ã© o titular dele. Impacto: protege a coerÃªncia do par titular/ajudante, que Ã© uma das regras mais sensÃ­veis da reuniÃ£o.
+
+[181/556] [CONECTIVO] - pt-BR-FabioNeural
+ID: connector-node-generation-23-explanation
+Texto: Continuando
+
+[182/556] EXPLANATION - pt-BR-FabioNeural
+ID: node-generation-23-explanation
+Texto: Para ajudante: resolve quem Ã© o titular, limpa modalidades-solo, aplica eligibility de AJUDANTE, exige mesmo gÃªnero (ou exceção para casal ou familiar) e ordena.
+Original: Para ajudante: resolve quem Ã© o titular, limpa modalidades-solo, aplica eligibility de AJUDANTE, exige mesmo gÃªnero (ou bypass familiar) e ordena.
+
+[183/556] [CONECTIVO] - pt-BR-FranciscaNeural
+ID: connector-node-generation-23-aicomment
+Texto: Fundamentalmente
+
+[184/556] AICOMMENT - pt-BR-FranciscaNeural
+ID: node-generation-23-aicomment
+Texto: IntenÃ§Ã£o: respeitar tanto a regra organizacional quanto a sensibilidade pastoral (casal e famÃ­lia ganham passagem suave). Impacto: ajudantes naturais entram limpo; entre estranhos, segue a regra padrÃ£o de gÃªnero.
+
+[185/556] [CONECTIVO] - pt-BR-AntonioNeural
+ID: connector-node-generation-24-explanation
+Texto: E temos também
+
+[186/556] EXPLANATION - pt-BR-AntonioNeural
+ID: node-generation-24-explanation
+Texto: Se nÃ£o Ã© ajudante, prÃ³xima pergunta: Ã© a oraÃ§Ã£o final? Ela tem regra prÃ³pria de preferÃªncia.
+
+[187/556] [CONECTIVO] - pt-BR-FranciscaNeural
+ID: connector-node-generation-24-aicomment
+Texto: Vale destacar
+
+[188/556] AICOMMENT - pt-BR-FranciscaNeural
+ID: node-generation-24-aicomment
+Texto: IntenÃ§Ã£o: a oraÃ§Ã£o final tem ordem especÃ­fica (livre prevalece sobre ocupado; presidente entra sÃ³ por opção de último recurso). Impacto: distribui o convite com sensibilidade ao papel jÃ¡ assumido pelo candidato na mesma semana.
+Original: IntenÃ§Ã£o: a oraÃ§Ã£o final tem ordem especÃ­fica (livre prevalece sobre ocupado; presidente entra sÃ³ por fallback). Impacto: distribui o convite com sensibilidade ao papel jÃ¡ assumido pelo candidato na mesma semana.
+
+[189/556] [CONECTIVO] - pt-BR-FabioNeural
+ID: connector-node-generation-25-explanation
+Texto: Prossigamos
+
+[190/556] EXPLANATION - pt-BR-FabioNeural
+ID: node-generation-25-explanation
+Texto: Para a oraÃ§Ã£o final: aplica trÃªs grupos â€” livres sem cargo de presidente, ocupados sem presidÃªncia, e o presidente como Ãºltimo recurso.
+
+[191/556] [CONECTIVO] - pt-BR-FranciscaNeural
+ID: connector-node-generation-25-aicomment
+Texto: Em síntese
+
+[192/556] AICOMMENT - pt-BR-FranciscaNeural
+ID: node-generation-25-aicomment
+Texto: IntenÃ§Ã£o: priorizar quem ainda nÃ£o estÃ¡ envolvido na semana. Impacto: distribui visibilidade na reuniÃ£o sem sobrecarregar quem jÃ¡ cumpriu outra parte.
+
+[193/556] [CONECTIVO] - pt-BR-AntonioNeural
+ID: connector-node-generation-26-explanation
+Texto: Voltemos ao processo
+
+[194/556] EXPLANATION - pt-BR-AntonioNeural
+ID: node-generation-26-explanation
+Texto: Para o resto das partes: pega elegÃ­veis, ordena por rotaÃ§Ã£o, tira bloqueados, e exclui quem jÃ¡ apareceu na semana.
+
+[195/556] [CONECTIVO] - pt-BR-FranciscaNeural
+ID: connector-node-generation-26-aicomment
+Texto: O ponto-chave
+
+[196/556] AICOMMENT - pt-BR-FranciscaNeural
+ID: node-generation-26-aicomment
+Texto: IntenÃ§Ã£o: evitar repetir o mesmo nome em duas partes da mesma semana. Impacto: percepÃ§Ã£o de variedade no quadro, sem que o motor caia na facilidade de repetir o disponÃ­vel.
+
+[197/556] [CONECTIVO] - pt-BR-FabioNeural
+ID: connector-node-generation-27-explanation
+Texto: Seguindo
+
+[198/556] EXPLANATION - pt-BR-FabioNeural
+ID: node-generation-27-explanation
+Texto: Conforme atribui, vai injetando essas atribuiÃ§Ãµes num histÃ³rico interno temporÃ¡rio â€” para que a prÃ³xima parte da rodada jÃ¡ enxergue o que acabou de ser feito.
+
+[199/556] [CONECTIVO] - pt-BR-FranciscaNeural
+ID: connector-node-generation-27-aicomment
+Texto: Na prática isso significa
+
+[200/556] AICOMMENT - pt-BR-FranciscaNeural
+ID: node-generation-27-aicomment
+Texto: IntenÃ§Ã£o: o intervalo obrigatório entre designações e a rotaÃ§Ã£o enxergam decisÃµes do prÃ³prio lote, nÃ£o sÃ³ do passado jÃ¡ salvo. Impacto: evita escalar a mesma pessoa duas vezes numa rodada longa, mesmo antes de qualquer gravaÃ§Ã£o no banco.
+Original: IntenÃ§Ã£o: o cooldown e a rotaÃ§Ã£o enxergam decisÃµes do prÃ³prio lote, nÃ£o sÃ³ do passado jÃ¡ salvo. Impacto: evita escalar a mesma pessoa duas vezes numa rodada longa, mesmo antes de qualquer gravaÃ§Ã£o no banco.
+
+[201/556] [CONECTIVO] - pt-BR-FabioNeural
+ID: connector-flow-generation-6
+Texto: Continuemos
+
+[202/556] FLOW - pt-BR-FabioNeural
+ID: flow-generation-6
+Texto: Caminho 7: PersistÃªncia e auditoria. Objetivo: Gravar tudo de forma reprodutÃ­vel ou apenas simular sem efeito colateral.
+
+[203/556] [CONECTIVO] - pt-BR-AntonioNeural
+ID: connector-node-generation-28-explanation
+Texto: Repare também que
+
+[204/556] EXPLANATION - pt-BR-AntonioNeural
+ID: node-generation-28-explanation
+Texto: Antes de gravar qualquer coisa: isso Ã© simulaÃ§Ã£o ou pra valer?
+
+[205/556] [CONECTIVO] - pt-BR-FranciscaNeural
+ID: connector-node-generation-28-aicomment
+Texto: Observação importante
+
+[206/556] AICOMMENT - pt-BR-FranciscaNeural
+ID: node-generation-28-aicomment
+Texto: IntenÃ§Ã£o: blindar contra escrita acidental. Impacto: o usuÃ¡rio pode experimentar cenÃ¡rios sem medo de comprometer a programaÃ§Ã£o real.
+
+[207/556] [CONECTIVO] - pt-BR-FabioNeural
+ID: connector-node-generation-29-explanation
+Texto: Retomando o fluxo
+
+[208/556] EXPLANATION - pt-BR-FabioNeural
+ID: node-generation-29-explanation
+Texto: Se for simulaÃ§Ã£o, devolve sÃ³ o resultado para inspeÃ§Ã£o e sai sem tocar na base.
+
+[209/556] [CONECTIVO] - pt-BR-FranciscaNeural
+ID: connector-node-generation-29-aicomment
+Texto: Fundamentalmente
+
+[210/556] AICOMMENT - pt-BR-FranciscaNeural
+ID: node-generation-29-aicomment
+Texto: IntenÃ§Ã£o: ferramenta segura de exploraÃ§Ã£o e auditoria. Impacto: testar cenÃ¡rios Ã© barato e sem efeito colateral â€” o motor pode ser usado para anÃ¡lises e nÃ£o sÃ³ para gerar.
+
+[211/556] [CONECTIVO] - pt-BR-AntonioNeural
+ID: connector-node-generation-30-explanation
+Texto: Vamos adiante
+
+[212/556] EXPLANATION - pt-BR-AntonioNeural
+ID: node-generation-30-explanation
+Texto: Se for pra valer, persiste todas as atribuiÃ§Ãµes da rodada no banco.
+
+[213/556] [CONECTIVO] - pt-BR-FranciscaNeural
+ID: connector-node-generation-30-aicomment
+Texto: Traduzindo
+
+[214/556] AICOMMENT - pt-BR-FranciscaNeural
+ID: node-generation-30-aicomment
+Texto: IntenÃ§Ã£o: efetivar a programaÃ§Ã£o como resultado oficial. Impacto: a partir daqui as designaÃ§Ãµes entram nos formulário de designação, nas notificaÃ§Ãµes e no fluxo de aprovaÃ§Ã£o.
+Original: IntenÃ§Ã£o: efetivar a programaÃ§Ã£o como resultado oficial. Impacto: a partir daqui as designaÃ§Ãµes entram nos S-89, nas notificaÃ§Ãµes e no fluxo de aprovaÃ§Ã£o.
+
+[215/556] [CONECTIVO] - pt-BR-FabioNeural
+ID: connector-node-generation-31-explanation
+Texto: Retomando o fluxo
+
+[216/556] EXPLANATION - pt-BR-FabioNeural
+ID: node-generation-31-explanation
+Texto: Junto com o commit, grava um registro instantâneo do estado completo da configuraÃ§Ã£o do motor e da versÃ£o das regras de elegibilidade usadas.
+Original: Junto com o commit, grava um snapshot completo da configuraÃ§Ã£o do motor e da versÃ£o das regras de elegibilidade usadas.
+
+[217/556] [CONECTIVO] - pt-BR-FranciscaNeural
+ID: connector-node-generation-31-aicomment
+Texto: Em outras palavras
+
+[218/556] AICOMMENT - pt-BR-FranciscaNeural
+ID: node-generation-31-aicomment
+Texto: IntenÃ§Ã£o: poder reproduzir no futuro exatamente a decisÃ£o tomada agora, mesmo que as regras evoluam. Impacto: auditoria perfeita e investigaÃ§Ãµes pastorais sustentadas por evidÃªncia reprodutÃ­vel.
+
+[219/556] [CONECTIVO] - pt-BR-AntonioNeural
+ID: connector-tab-eligibility
+Texto: E temos também
+
+[220/556] TAB - pt-BR-AntonioNeural
+ID: tab-eligibility
+Texto: Árvore de Decisão de Elegibilidade. proteger regras de elegibilidade sem excluir injustamente
+Original: Eligibility Decision Tree. proteger regras de elegibilidade sem excluir injustamente
+
+[221/556] [CONECTIVO] - pt-BR-FabioNeural
+ID: connector-flow-eligibility-0
+Texto: Daí passamos para
+
+[222/556] FLOW - pt-BR-FabioNeural
+ID: flow-eligibility-0
+Texto: Caminho 1: Triagem universal. Objetivo: Filtros que valem para qualquer candidato e qualquer parte.
+
+[223/556] [CONECTIVO] - pt-BR-AntonioNeural
+ID: connector-node-eligibility-0-explanation
+Texto: Por outro lado
+
+[224/556] EXPLANATION - pt-BR-AntonioNeural
+ID: node-eligibility-0-explanation
+Texto: Tudo comeÃ§a quando alguÃ©m pergunta: "fulano pode fazer esta parte?". A funÃ§Ã£o recebe publicador, modalidade, funÃ§Ã£o e contexto da semana.
+
+[225/556] [CONECTIVO] - pt-BR-FranciscaNeural
+ID: connector-node-eligibility-0-aicomment
+Texto: Na prática isso significa
+
+[226/556] AICOMMENT - pt-BR-FranciscaNeural
+ID: node-eligibility-0-aicomment
+Texto: IntenÃ§Ã£o: ter um Ãºnico ponto de entrada para qualquer pergunta de elegibilidade no app. Impacto: nÃ£o importa quem chama (motor automÃ¡tico, interface manual do dirigente, painel ou agente de inteligência artificial) â€” a resposta sempre sai do mesmo lugar.
+Original: IntenÃ§Ã£o: ter um Ãºnico ponto de entrada para qualquer pergunta de elegibilidade no app. Impacto: nÃ£o importa quem chama (motor automÃ¡tico, UI manual, painel ou agente IA) â€” a resposta sempre sai do mesmo lugar.
+
+[227/556] [CONECTIVO] - pt-BR-FabioNeural
+ID: connector-node-eligibility-1-explanation
+Texto: Adiante
+
+[228/556] EXPLANATION - pt-BR-FabioNeural
+ID: node-eligibility-1-explanation
+Texto: Primeira pergunta universal e mais barata: o publicador estÃ¡ ativo na congregaÃ§Ã£o?
+
+[229/556] [CONECTIVO] - pt-BR-FranciscaNeural
+ID: connector-node-eligibility-1-aicomment
+Texto: Observação importante
+
+[230/556] AICOMMENT - pt-BR-FranciscaNeural
+ID: node-eligibility-1-aicomment
+Texto: IntenÃ§Ã£o: descartar logo quem nem estÃ¡ em atividade, antes de gastar anÃ¡lise pesada. Impacto: filtro mais barato vem primeiro, economizando ciclos e mantendo a funÃ§Ã£o rÃ¡pida.
+
+[231/556] [CONECTIVO] - pt-BR-AntonioNeural
+ID: connector-node-eligibility-2-explanation
+Texto: Seguimos
+
+[232/556] EXPLANATION - pt-BR-AntonioNeural
+ID: node-eligibility-2-explanation
+Texto: Se estÃ¡ servindo, prÃ³xima pergunta: foi marcado como "nÃ£o qualificado" pelo ancionato?
+
+[233/556] [CONECTIVO] - pt-BR-FranciscaNeural
+ID: connector-node-eligibility-2-aicomment
+Texto: Em outras palavras
+
+[234/556] AICOMMENT - pt-BR-FranciscaNeural
+ID: node-eligibility-2-aicomment
+Texto: IntenÃ§Ã£o: respeitar o marcação de status pastoral acima de qualquer cÃ¡lculo automatizado. Impacto: a decisÃ£o manual do corpo de anciÃ£os sempre prevalece sobre qualquer otimizaÃ§Ã£o do algoritmo.
+Original: IntenÃ§Ã£o: respeitar o flag pastoral acima de qualquer cÃ¡lculo automatizado. Impacto: a decisÃ£o manual do corpo de anciÃ£os sempre prevalece sobre qualquer otimizaÃ§Ã£o do algoritmo.
+
+[235/556] [CONECTIVO] - pt-BR-FabioNeural
+ID: connector-node-eligibility-3-explanation
+Texto: Voltemos ao processo
+
+[236/556] EXPLANATION - pt-BR-FabioNeural
+ID: node-eligibility-3-explanation
+Texto: EstÃ¡ qualificado. Agora: o publicador pediu para nÃ£o participar (suspensÃ£o temporÃ¡ria)?
+
+[237/556] [CONECTIVO] - pt-BR-FranciscaNeural
+ID: connector-node-eligibility-3-aicomment
+Texto: Em síntese
+
+[238/556] AICOMMENT - pt-BR-FranciscaNeural
+ID: node-eligibility-3-aicomment
+Texto: IntenÃ§Ã£o: honrar pedidos pessoais sem precisar deletar o cadastro. Impacto: respeito ao publicador combinado com flexibilidade â€” basta um clique para suspender e outro para retomar quando ele quiser.
+
+[239/556] [CONECTIVO] - pt-BR-AntonioNeural
+ID: connector-node-eligibility-4-explanation
+Texto: Seguindo
+
+[240/556] EXPLANATION - pt-BR-AntonioNeural
+ID: node-eligibility-4-explanation
+Texto: Para semanas correntes ou futuras, checa o calendÃ¡rio de disponibilidade. Para passado, pula esta checagem.
+
+[241/556] [CONECTIVO] - pt-BR-FranciscaNeural
+ID: connector-node-eligibility-4-aicomment
+Texto: O ponto-chave
+
+[242/556] AICOMMENT - pt-BR-FranciscaNeural
+ID: node-eligibility-4-aicomment
+Texto: IntenÃ§Ã£o: nÃ£o punir histÃ³rico aplicando regra de agora. Impacto: anÃ¡lise retroativa nÃ£o cria bloqueios artificiais sobre quem jÃ¡ cumpriu a parte no passado.
+
+[243/556] [CONECTIVO] - pt-BR-FabioNeural
+ID: connector-node-eligibility-5-explanation
+Texto: Próximo
+
+[244/556] EXPLANATION - pt-BR-FabioNeural
+ID: node-eligibility-5-explanation
+Texto: DisponÃ­vel. Mas atenÃ§Ã£o: se a pessoa se declarou "sÃ³ ajudante" e estÃ£o pedindo para titular, bloqueia aqui.
+
+[245/556] [CONECTIVO] - pt-BR-FranciscaNeural
+ID: connector-node-eligibility-5-aicomment
+Texto: Vale destacar
+
+[246/556] AICOMMENT - pt-BR-FranciscaNeural
+ID: node-eligibility-5-aicomment
+Texto: IntenÃ§Ã£o: preservar o perfil declarado pelo prÃ³prio publicador. Impacto: evita escalaÃ§Ãµes que contrariam o que o irmÃ£o definiu sobre seu prÃ³prio nÃ­vel de participaÃ§Ã£o.
+
+[247/556] [CONECTIVO] - pt-BR-AntonioNeural
+ID: connector-node-eligibility-6-explanation
+Texto: De volta ao diagrama
+
+[248/556] EXPLANATION - pt-BR-AntonioNeural
+ID: node-eligibility-6-explanation
+Texto: Checa os privilÃ©gios da seÃ§Ã£o (presidÃªncia, oraÃ§Ã£o, ensino, Estudo Bíblico de Congregação etc.) cruzando com a modalidade pedida.
+Original: Checa os privilÃ©gios da seÃ§Ã£o (presidÃªncia, oraÃ§Ã£o, ensino, EBC etc.) cruzando com a modalidade pedida.
+
+[249/556] [CONECTIVO] - pt-BR-FranciscaNeural
+ID: connector-node-eligibility-6-aicomment
+Texto: Traduzindo
+
+[250/556] AICOMMENT - pt-BR-FranciscaNeural
+ID: node-eligibility-6-aicomment
+Texto: IntenÃ§Ã£o: aplicar o mapa de privilÃ©gios sem improvisos. Impacto: a regra organizacional vira cÃ³digo auditÃ¡vel, nÃ£o memÃ³ria ou intuiÃ§Ã£o do dirigente.
+
+[251/556] [CONECTIVO] - pt-BR-FabioNeural
+ID: connector-node-eligibility-7-explanation
+Texto: Voltemos ao processo
+
+[252/556] EXPLANATION - pt-BR-FabioNeural
+ID: node-eligibility-7-explanation
+Texto: Ãšltima camada textual: gÃªnero, condiÃ§Ã£o, funÃ§Ã£o e batismo conferem com a parte especÃ­fica?
+
+[253/556] [CONECTIVO] - pt-BR-FranciscaNeural
+ID: connector-node-eligibility-7-aicomment
+Texto: Vale destacar
+
+[254/556] AICOMMENT - pt-BR-FranciscaNeural
+ID: node-eligibility-7-aicomment
+Texto: IntenÃ§Ã£o: capturar restriÃ§Ãµes literais previstas pela apostila e pelos materiais publicados. Impacto: alinhamento automÃ¡tico com o que o material jÃ¡ diz, sem o dirigente precisar reler tudo.
+
+[255/556] [CONECTIVO] - pt-BR-FabioNeural
+ID: connector-flow-eligibility-1
+Texto: Vamos adiante
+
+[256/556] FLOW - pt-BR-FabioNeural
+ID: flow-eligibility-1
+Texto: Caminho 2: SaÃ­das de bloqueio universal. Objetivo: Mostrar os motivos rastreÃ¡veis quando alguÃ©m Ã© reprovado na triagem.
+
+[257/556] [CONECTIVO] - pt-BR-FabioNeural
+ID: connector-node-eligibility-9-explanation
+Texto: Em outras palavras
+
+[258/556] EXPLANATION - pt-BR-FabioNeural
+ID: node-eligibility-9-explanation
+Texto: SaÃ­da de bloqueio se a pessoa nÃ£o estÃ¡ servindo: retorna com motivo claro.
+
+[259/556] [CONECTIVO] - pt-BR-FranciscaNeural
+ID: connector-node-eligibility-9-aicomment
+Texto: O cerne da questão
+
+[260/556] AICOMMENT - pt-BR-FranciscaNeural
+ID: node-eligibility-9-aicomment
+Texto: IntenÃ§Ã£o: bloqueio com causa rastreÃ¡vel, nunca silencioso. Impacto: o painel e o chat podem mostrar exatamente por que o nome nÃ£o entra na lista, sustentando explicaÃ§Ãµes pastorais.
+
+[261/556] [CONECTIVO] - pt-BR-AntonioNeural
+ID: connector-node-eligibility-10-explanation
+Texto: Adiante
+
+[262/556] EXPLANATION - pt-BR-AntonioNeural
+ID: node-eligibility-10-explanation
+Texto: SaÃ­da de bloqueio para quem estÃ¡ marcado como nÃ£o-qualificado, com motivo registrado.
+
+[263/556] [CONECTIVO] - pt-BR-FranciscaNeural
+ID: connector-node-eligibility-10-aicomment
+Texto: O ponto-chave
+
+[264/556] AICOMMENT - pt-BR-FranciscaNeural
+ID: node-eligibility-10-aicomment
+Texto: IntenÃ§Ã£o: respeitar a marcaÃ§Ã£o pastoral acima da otimizaÃ§Ã£o do motor. Impacto: nenhum algoritmo passa por cima de uma decisÃ£o dos anciÃ£os.
+
+[265/556] [CONECTIVO] - pt-BR-FabioNeural
+ID: connector-node-eligibility-11-explanation
+Texto: Retomando o fluxo
+
+[266/556] EXPLANATION - pt-BR-FabioNeural
+ID: node-eligibility-11-explanation
+Texto: SaÃ­da de bloqueio para quem pediu para nÃ£o participar nesta janela.
+
+[267/556] [CONECTIVO] - pt-BR-FranciscaNeural
+ID: connector-node-eligibility-11-aicomment
+Texto: Em outras palavras
+
+[268/556] AICOMMENT - pt-BR-FranciscaNeural
+ID: node-eligibility-11-aicomment
+Texto: IntenÃ§Ã£o: respeito ao pedido pessoal do publicador. Impacto: o irmÃ£o confia que seu pedido Ã© honrado de fato pelo sistema, fortalecendo a relaÃ§Ã£o com a ferramenta.
+
+[269/556] [CONECTIVO] - pt-BR-AntonioNeural
+ID: connector-node-eligibility-12-explanation
+Texto: Continuando
+
+[270/556] EXPLANATION - pt-BR-AntonioNeural
+ID: node-eligibility-12-explanation
+Texto: SaÃ­da de bloqueio para quem marcou indisponibilidade nesta semana especÃ­fica.
+
+[271/556] [CONECTIVO] - pt-BR-FranciscaNeural
+ID: connector-node-eligibility-12-aicomment
+Texto: Fundamentalmente
+
+[272/556] AICOMMENT - pt-BR-FranciscaNeural
+ID: node-eligibility-12-aicomment
+Texto: IntenÃ§Ã£o: nunca escalar quem informou que nÃ£o pode. Impacto: zero substituiÃ§Ã£o de Ãºltima hora por esquecimento â€” o dirigente confia na disponibilidade declarada.
+
+[273/556] [CONECTIVO] - pt-BR-FabioNeural
+ID: connector-node-eligibility-13-explanation
+Texto: Prossigamos
+
+[274/556] EXPLANATION - pt-BR-FabioNeural
+ID: node-eligibility-13-explanation
+Texto: SaÃ­da de bloqueio para titular quando a pessoa se declarou "sÃ³ ajudante".
+
+[275/556] [CONECTIVO] - pt-BR-FranciscaNeural
+ID: connector-node-eligibility-13-aicomment
+Texto: Em outras palavras
+
+[276/556] AICOMMENT - pt-BR-FranciscaNeural
+ID: node-eligibility-13-aicomment
+Texto: IntenÃ§Ã£o: preservar o perfil declarado. Impacto: ninguÃ©m Ã© puxado para titular contra a prÃ³pria definiÃ§Ã£o, e o sistema parece atencioso.
+
+[277/556] [CONECTIVO] - pt-BR-AntonioNeural
+ID: connector-node-eligibility-14-explanation
+Texto: E temos também
+
+[278/556] EXPLANATION - pt-BR-AntonioNeural
+ID: node-eligibility-14-explanation
+Texto: SaÃ­da de bloqueio quando o privilÃ©gio de seÃ§Ã£o do candidato nÃ£o bate com a modalidade pedida.
+
+[279/556] [CONECTIVO] - pt-BR-FranciscaNeural
+ID: connector-node-eligibility-14-aicomment
+Texto: Fundamentalmente
+
+[280/556] AICOMMENT - pt-BR-FranciscaNeural
+ID: node-eligibility-14-aicomment
+Texto: IntenÃ§Ã£o: respeitar o mapa formal de privilÃ©gios. Impacto: cada parte recebe alguÃ©m qualificado para ela, e a regra organizacional fica visÃ­vel em vez de implÃ­cita.
+
+[281/556] [CONECTIVO] - pt-BR-FabioNeural
+ID: connector-node-eligibility-15-explanation
+Texto: Próximo
+
+[282/556] EXPLANATION - pt-BR-FabioNeural
+ID: node-eligibility-15-explanation
+Texto: SaÃ­da de bloqueio por restriÃ§Ã£o textual (gÃªnero, condiÃ§Ã£o, funÃ§Ã£o ou batismo nÃ£o conferem com a parte).
+
+[283/556] [CONECTIVO] - pt-BR-FranciscaNeural
+ID: connector-node-eligibility-15-aicomment
+Texto: Em outras palavras
+
+[284/556] AICOMMENT - pt-BR-FranciscaNeural
+ID: node-eligibility-15-aicomment
+Texto: IntenÃ§Ã£o: cumprir a letra da apostila. Impacto: o sistema atua dentro do que a publicaÃ§Ã£o prevÃª, sem improvisar exceÃ§Ãµes.
+
+[285/556] [CONECTIVO] - pt-BR-FabioNeural
+ID: connector-flow-eligibility-2
+Texto: Próxima etapa
+
+[286/556] FLOW - pt-BR-FabioNeural
+ID: flow-eligibility-2
+Texto: Caminho 3: Ramo Ajudante. Objetivo: Regras especiais do par titular/ajudante, incluindo exceção para casal ou familiar.
+Original: Caminho 3: Ramo Ajudante. Objetivo: Regras especiais do par titular/ajudante, incluindo bypass familiar.
+
+[287/556] [CONECTIVO] - pt-BR-AntonioNeural
+ID: connector-node-eligibility-8-explanation
+Texto: Voltando ao fluxo
+
+[288/556] EXPLANATION - pt-BR-AntonioNeural
+ID: node-eligibility-8-explanation
+Texto: Passou em tudo. Agora abre a ramificaÃ§Ã£o especial: a funÃ§Ã£o pedida Ã© AJUDANTE?
+
+[289/556] [CONECTIVO] - pt-BR-FranciscaNeural
+ID: connector-node-eligibility-8-aicomment
+Texto: Destaque
+
+[290/556] AICOMMENT - pt-BR-FranciscaNeural
+ID: node-eligibility-8-aicomment
+Texto: IntenÃ§Ã£o: separar a lÃ³gica do ajudante porque ela depende de outro candidato â€” o titular. Impacto: as regras de par sÃ£o tratadas no lugar certo, sem misturar com regras de candidato Ãºnico.
+
+[291/556] [CONECTIVO] - pt-BR-AntonioNeural
+ID: connector-node-eligibility-16-explanation
+Texto: Continuando
+
+[292/556] EXPLANATION - pt-BR-AntonioNeural
+ID: node-eligibility-16-explanation
+Texto: Entrou na trilha de ajudante. Primeira pergunta: o gÃªnero do titular dessa parte jÃ¡ estÃ¡ definido?
+
+[293/556] [CONECTIVO] - pt-BR-FranciscaNeural
+ID: connector-node-eligibility-16-aicomment
+Texto: Para fixar
+
+[294/556] AICOMMENT - pt-BR-FranciscaNeural
+ID: node-eligibility-16-aicomment
+Texto: IntenÃ§Ã£o: jamais decidir ajudante no escuro, sem saber com quem ele faria par. Impacto: protege a regra de mesmo gÃªnero contra falsos positivos por contexto incompleto.
+
+[295/556] [CONECTIVO] - pt-BR-FabioNeural
+ID: connector-node-eligibility-17-explanation
+Texto: Próximo
+
+[296/556] EXPLANATION - pt-BR-FabioNeural
+ID: node-eligibility-17-explanation
+Texto: SaÃ­da de bloqueio para ajudante quando o titular ainda nÃ£o estÃ¡ definido â€” sem contexto, sem decisÃ£o.
+
+[297/556] [CONECTIVO] - pt-BR-FranciscaNeural
+ID: connector-node-eligibility-17-aicomment
+Texto: Comentário da IA
+
+[298/556] AICOMMENT - pt-BR-FranciscaNeural
+ID: node-eligibility-17-aicomment
+Texto: IntenÃ§Ã£o: integridade primeiro, otimizaÃ§Ã£o depois. Impacto: erro silencioso vira erro explÃ­cito, muito mais fÃ¡cil de corrigir pelo dirigente.
+
+[299/556] [CONECTIVO] - pt-BR-AntonioNeural
+ID: connector-node-eligibility-18-explanation
+Texto: Prossigamos
+
+[300/556] EXPLANATION - pt-BR-AntonioNeural
+ID: node-eligibility-18-explanation
+Texto: Tem titular. PrÃ³xima pergunta sensÃ­vel: o candidato Ã© cÃ´njuge ou parente direto do titular (pai-filho, mÃ£e-filha)? Se sim, pode acompanhar com qualquer gÃªnero.
+
+[301/556] [CONECTIVO] - pt-BR-FranciscaNeural
+ID: connector-node-eligibility-18-aicomment
+Texto: Para fixar
+
+[302/556] AICOMMENT - pt-BR-FranciscaNeural
+ID: node-eligibility-18-aicomment
+Texto: IntenÃ§Ã£o: respeitar a sensibilidade pastoral do par familiar. Impacto: marido/esposa e pai/filho passam suave, sem ferir a regra geral nem expor a famÃ­lia a constrangimento.
+
+[303/556] [CONECTIVO] - pt-BR-FabioNeural
+ID: connector-node-eligibility-19-explanation
+Texto: Continuemos
+
+[304/556] EXPLANATION - pt-BR-FabioNeural
+ID: node-eligibility-19-explanation
+Texto: AprovaÃ§Ã£o do ajudante via exceção para casal ou familiar.
+Original: AprovaÃ§Ã£o do ajudante via bypass familiar.
+
+[305/556] [CONECTIVO] - pt-BR-FranciscaNeural
+ID: connector-node-eligibility-19-aicomment
+Texto: Em síntese
+
+[306/556] AICOMMENT - pt-BR-FranciscaNeural
+ID: node-eligibility-19-aicomment
+Texto: IntenÃ§Ã£o: reconhecer relaÃ§Ãµes que justificam exceÃ§Ã£o legÃ­tima Ã  regra geral. Impacto: a prÃ¡tica real da congregaÃ§Ã£o Ã© refletida no cÃ³digo, sem o sistema parecer rÃ­gido demais.
+
+[307/556] [CONECTIVO] - pt-BR-AntonioNeural
+ID: connector-node-eligibility-20-explanation
+Texto: Continuando
+
+[308/556] EXPLANATION - pt-BR-AntonioNeural
+ID: node-eligibility-20-explanation
+Texto: Sem laÃ§o familiar. Agora a regra padrÃ£o: o ajudante tem o mesmo gÃªnero do titular?
+
+[309/556] [CONECTIVO] - pt-BR-FranciscaNeural
+ID: connector-node-eligibility-20-aicomment
+Texto: Na prática isso significa
+
+[310/556] AICOMMENT - pt-BR-FranciscaNeural
+ID: node-eligibility-20-aicomment
+Texto: IntenÃ§Ã£o: aplicar a regra padrÃ£o de gÃªnero quando nÃ£o hÃ¡ laÃ§o familiar que justifique exceÃ§Ã£o. Impacto: ordem espiritual mantida no caso geral, sem deixar de cuidar dos casos sensÃ­veis.
+
+[311/556] [CONECTIVO] - pt-BR-FabioNeural
+ID: connector-node-eligibility-21-explanation
+Texto: De volta ao diagrama
+
+[312/556] EXPLANATION - pt-BR-FabioNeural
+ID: node-eligibility-21-explanation
+Texto: SaÃ­da de bloqueio para ajudante de gÃªnero diferente sem laÃ§o familiar.
+
+[313/556] [CONECTIVO] - pt-BR-FranciscaNeural
+ID: connector-node-eligibility-21-aicomment
+Texto: Fundamentalmente
+
+[314/556] AICOMMENT - pt-BR-FranciscaNeural
+ID: node-eligibility-21-aicomment
+Texto: IntenÃ§Ã£o: cumprir orientaÃ§Ã£o organizacional sobre par titular/ajudante. Impacto: evita constrangimento e mal-entendido na hora da execuÃ§Ã£o da parte.
+
+[315/556] [CONECTIVO] - pt-BR-FabioNeural
+ID: connector-flow-eligibility-3
+Texto: Próximo
+
+[316/556] FLOW - pt-BR-FabioNeural
+ID: flow-eligibility-3
+Texto: Caminho 4: Ramo PresidÃªncia. Objetivo: Filtro pelo privilÃ©gio formal de presidir a reuniÃ£o.
+
+[317/556] [CONECTIVO] - pt-BR-AntonioNeural
+ID: connector-node-eligibility-22-explanation
+Texto: Retomando
+
+[318/556] EXPLANATION - pt-BR-AntonioNeural
+ID: node-eligibility-22-explanation
+Texto: NÃ£o Ã© ajudante. Aqui o fluxo ramifica por modalidade da parte: presidÃªncia, oraÃ§Ã£o, discurso de ensino, demonstraÃ§Ã£o, Estudo Bíblico de Congregação e assim por diante.
+Original: NÃ£o Ã© ajudante. Aqui o fluxo ramifica por modalidade da parte: presidÃªncia, oraÃ§Ã£o, discurso de ensino, demonstraÃ§Ã£o, EBC e assim por diante.
+
+[319/556] [CONECTIVO] - pt-BR-FranciscaNeural
+ID: connector-node-eligibility-22-aicomment
+Texto: O ponto-chave
+
+[320/556] AICOMMENT - pt-BR-FranciscaNeural
+ID: node-eligibility-22-aicomment
+Texto: IntenÃ§Ã£o: cada modalidade tem critÃ©rio prÃ³prio de qualificaÃ§Ã£o. Impacto: regras tratadas no nÃ­vel certo de especializaÃ§Ã£o, sem misturar lÃ³gicas que nÃ£o se aplicam entre si.
+
+[321/556] [CONECTIVO] - pt-BR-FabioNeural
+ID: connector-node-eligibility-23-explanation
+Texto: Próxima etapa
+
+[322/556] EXPLANATION - pt-BR-FabioNeural
+ID: node-eligibility-23-explanation
+Texto: Ramo PRESIDÃŠNCIA: o candidato tem permissÃ£o formal de presidir?
+
+[323/556] [CONECTIVO] - pt-BR-FranciscaNeural
+ID: connector-node-eligibility-23-aicomment
+Texto: Para fixar
+
+[324/556] AICOMMENT - pt-BR-FranciscaNeural
+ID: node-eligibility-23-aicomment
+Texto: IntenÃ§Ã£o: filtrar pelo privilÃ©gio mais alto da reuniÃ£o antes de qualquer outra coisa. Impacto: sÃ³ presidem irmÃ£os explicitamente qualificados para tal.
+
+[325/556] [CONECTIVO] - pt-BR-AntonioNeural
+ID: connector-node-eligibility-24-explanation
+Texto: Mais um passo
+
+[326/556] EXPLANATION - pt-BR-AntonioNeural
+ID: node-eligibility-24-explanation
+Texto: SaÃ­da de bloqueio: sem permissÃ£o de presidir, fora da modalidade PRESIDÃŠNCIA.
+
+[327/556] [CONECTIVO] - pt-BR-FranciscaNeural
+ID: connector-node-eligibility-24-aicomment
+Texto: Comentário da IA
+
+[328/556] AICOMMENT - pt-BR-FranciscaNeural
+ID: node-eligibility-24-aicomment
+Texto: IntenÃ§Ã£o: respeitar o privilÃ©gio formal de presidÃªncia. Impacto: integridade da presidÃªncia preservada em todas as semanas.
+
+[329/556] [CONECTIVO] - pt-BR-FabioNeural
+ID: connector-node-eligibility-25-explanation
+Texto: Avancemos
+
+[330/556] EXPLANATION - pt-BR-FabioNeural
+ID: node-eligibility-25-explanation
+Texto: AprovaÃ§Ã£o para PRESIDÃŠNCIA: o candidato tem o privilÃ©gio e entra no conjunto de candidatos de eleiÃ§Ã£o.
+Original: AprovaÃ§Ã£o para PRESIDÃŠNCIA: o candidato tem o privilÃ©gio e entra no pool de eleiÃ§Ã£o.
+
+[331/556] [CONECTIVO] - pt-BR-FranciscaNeural
+ID: connector-node-eligibility-25-aicomment
+Texto: Na prática isso significa
+
+[332/556] AICOMMENT - pt-BR-FranciscaNeural
+ID: node-eligibility-25-aicomment
+Texto: IntenÃ§Ã£o: oferecer ao motor de eleiÃ§Ã£o apenas candidatos realmente aptos. Impacto: a presidÃªncia da semana sairÃ¡ de um conjunto verdadeiramente qualificado.
+
+[333/556] [CONECTIVO] - pt-BR-FabioNeural
+ID: connector-flow-eligibility-4
+Texto: Voltemos ao processo
+
+[334/556] FLOW - pt-BR-FabioNeural
+ID: flow-eligibility-4
+Texto: Caminho 5: Ramo OraÃ§Ã£o. Objetivo: CritÃ©rios prÃ³prios para oraÃ§Ã£o inicial e final.
+
+[335/556] [CONECTIVO] - pt-BR-AntonioNeural
+ID: connector-node-eligibility-26-explanation
+Texto: Por outro lado
+
+[336/556] EXPLANATION - pt-BR-AntonioNeural
+ID: node-eligibility-26-explanation
+Texto: Ramo ORAÃ‡ÃƒO: Ã© irmÃ£o batizado e tem permissÃ£o de orar publicamente?
+
+[337/556] [CONECTIVO] - pt-BR-FranciscaNeural
+ID: connector-node-eligibility-26-aicomment
+Texto: Observação importante
+
+[338/556] AICOMMENT - pt-BR-FranciscaNeural
+ID: node-eligibility-26-aicomment
+Texto: IntenÃ§Ã£o: respeitar quem pode representar a congregaÃ§Ã£o em oraÃ§Ã£o pÃºblica. Impacto: oraÃ§Ã£o na reuniÃ£o sÃ³ com quem tem essa condiÃ§Ã£o formalmente reconhecida.
+
+[339/556] [CONECTIVO] - pt-BR-FabioNeural
+ID: connector-node-eligibility-27-explanation
+Texto: Próximo
+
+[340/556] EXPLANATION - pt-BR-FabioNeural
+ID: node-eligibility-27-explanation
+Texto: SaÃ­da de bloqueio: nÃ£o Ã© irmÃ£o batizado com permissÃ£o de orar.
+
+[341/556] [CONECTIVO] - pt-BR-FranciscaNeural
+ID: connector-node-eligibility-27-aicomment
+Texto: Destaque
+
+[342/556] AICOMMENT - pt-BR-FranciscaNeural
+ID: node-eligibility-27-aicomment
+Texto: IntenÃ§Ã£o: cumprir a orientaÃ§Ã£o publicada sobre quem ora na reuniÃ£o. Impacto: nenhuma escalaÃ§Ã£o fora desse critÃ©rio, mesmo em emergÃªncia.
+
+[343/556] [CONECTIVO] - pt-BR-AntonioNeural
+ID: connector-node-eligibility-28-explanation
+Texto: Continuando
+
+[344/556] EXPLANATION - pt-BR-AntonioNeural
+ID: node-eligibility-28-explanation
+Texto: Sub-pergunta da oraÃ§Ã£o: se Ã© OraÃ§Ã£o Inicial, exige tambÃ©m o privilÃ©gio de presidir?
+
+[345/556] [CONECTIVO] - pt-BR-FranciscaNeural
+ID: connector-node-eligibility-28-aicomment
+Texto: Vale destacar
+
+[346/556] AICOMMENT - pt-BR-FranciscaNeural
+ID: node-eligibility-28-aicomment
+Texto: IntenÃ§Ã£o: a oraÃ§Ã£o inicial costuma estar ligada a quem dirige a reuniÃ£o. Impacto: alinhamento natural entre presidÃªncia e abertura, evitando arranjos estranhos.
+
+[347/556] [CONECTIVO] - pt-BR-FabioNeural
+ID: connector-node-eligibility-29-explanation
+Texto: Voltemos ao processo
+
+[348/556] EXPLANATION - pt-BR-FabioNeural
+ID: node-eligibility-29-explanation
+Texto: SaÃ­da de bloqueio: candidato nÃ£o preside, entÃ£o nÃ£o pode fazer a OraÃ§Ã£o Inicial.
+
+[349/556] [CONECTIVO] - pt-BR-FranciscaNeural
+ID: connector-node-eligibility-29-aicomment
+Texto: Fundamentalmente
+
+[350/556] AICOMMENT - pt-BR-FranciscaNeural
+ID: node-eligibility-29-aicomment
+Texto: IntenÃ§Ã£o: coerÃªncia entre quem abre a reuniÃ£o e quem a dirige. Impacto: evita o caso desconfortÃ¡vel de abertura por um irmÃ£o e direÃ§Ã£o por outro.
+
+[351/556] [CONECTIVO] - pt-BR-AntonioNeural
+ID: connector-node-eligibility-30-explanation
+Texto: Continuando
+
+[352/556] EXPLANATION - pt-BR-AntonioNeural
+ID: node-eligibility-30-explanation
+Texto: Outra sub-pergunta: para OraÃ§Ã£o Final, prefere quem nÃ£o Ã© o presidente da semana.
+
+[353/556] [CONECTIVO] - pt-BR-FranciscaNeural
+ID: connector-node-eligibility-30-aicomment
+Texto: O ponto-chave
+
+[354/556] AICOMMENT - pt-BR-FranciscaNeural
+ID: node-eligibility-30-aicomment
+Texto: IntenÃ§Ã£o: ampliar a participaÃ§Ã£o na oraÃ§Ã£o final para alÃ©m do presidente. Impacto: o presidente entra sÃ³ como opção de último recurso, distribuindo a visibilidade.
+Original: IntenÃ§Ã£o: ampliar a participaÃ§Ã£o na oraÃ§Ã£o final para alÃ©m do presidente. Impacto: o presidente entra sÃ³ como fallback, distribuindo a visibilidade.
+
+[355/556] [CONECTIVO] - pt-BR-FabioNeural
+ID: connector-node-eligibility-31-explanation
+Texto: Próxima etapa
+
+[356/556] EXPLANATION - pt-BR-FabioNeural
+ID: node-eligibility-31-explanation
+Texto: SaÃ­da de bloqueio: candidato Ã© o presidente â€” bloqueio da oraÃ§Ã£o final (a menos que entre como opção de último recurso explÃ­cito).
+Original: SaÃ­da de bloqueio: candidato Ã© o presidente â€” bloqueio da oraÃ§Ã£o final (a menos que entre como fallback explÃ­cito).
+
+[357/556] [CONECTIVO] - pt-BR-FranciscaNeural
+ID: connector-node-eligibility-31-aicomment
+Texto: Em outras palavras
+
+[358/556] AICOMMENT - pt-BR-FranciscaNeural
+ID: node-eligibility-31-aicomment
+Texto: IntenÃ§Ã£o: priorizar outros irmÃ£os qualificados na oraÃ§Ã£o final. Impacto: distribuiÃ§Ã£o mais ampla da participaÃ§Ã£o e quebra de monotonia.
+
+[359/556] [CONECTIVO] - pt-BR-AntonioNeural
+ID: connector-node-eligibility-32-explanation
+Texto: E temos também
+
+[360/556] EXPLANATION - pt-BR-AntonioNeural
+ID: node-eligibility-32-explanation
+Texto: AprovaÃ§Ã£o para ORAÃ‡ÃƒO: candidato passou em todas as sub-condiÃ§Ãµes.
+
+[361/556] [CONECTIVO] - pt-BR-FranciscaNeural
+ID: connector-node-eligibility-32-aicomment
+Texto: Traduzindo
+
+[362/556] AICOMMENT - pt-BR-FranciscaNeural
+ID: node-eligibility-32-aicomment
+Texto: IntenÃ§Ã£o: liberar para o motor de eleiÃ§Ã£o apenas quem realmente atende ao critÃ©rio completo. Impacto: conjunto de candidatos real de orantes elegÃ­veis para a semana.
+Original: IntenÃ§Ã£o: liberar para o motor de eleiÃ§Ã£o apenas quem realmente atende ao critÃ©rio completo. Impacto: pool real de orantes elegÃ­veis para a semana.
+
+[363/556] [CONECTIVO] - pt-BR-FabioNeural
+ID: connector-flow-eligibility-5
+Texto: Próxima etapa
+
+[364/556] FLOW - pt-BR-FabioNeural
+ID: flow-eligibility-5
+Texto: Caminho 6: Ramos de ensino e escola. Objetivo: Quem pode ensinar, quem pode ler, quem pode demonstrar e quem pode discursar.
+
+[365/556] [CONECTIVO] - pt-BR-FabioNeural
+ID: connector-node-eligibility-33-explanation
+Texto: O ponto-chave
+
+[366/556] EXPLANATION - pt-BR-FabioNeural
+ID: node-eligibility-33-explanation
+Texto: Ramo DISCURSO DE ENSINO: Ã© irmÃ£o com permissÃ£o de discursar, anciÃ£o ou servo ministerial?
+
+[367/556] [CONECTIVO] - pt-BR-FranciscaNeural
+ID: connector-node-eligibility-33-aicomment
+Texto: Observação importante
+
+[368/556] AICOMMENT - pt-BR-FranciscaNeural
+ID: node-eligibility-33-aicomment
+Texto: IntenÃ§Ã£o: discurso de ensino exige preparo formal e privilÃ©gio. Impacto: a parte de ensino recebe nome com perfil realmente compatÃ­vel com a responsabilidade.
+
+[369/556] [CONECTIVO] - pt-BR-AntonioNeural
+ID: connector-node-eligibility-34-explanation
+Texto: Retomando o fluxo
+
+[370/556] EXPLANATION - pt-BR-AntonioNeural
+ID: node-eligibility-34-explanation
+Texto: SaÃ­da de bloqueio: perfil nÃ£o bate com discurso de ensino.
+
+[371/556] [CONECTIVO] - pt-BR-FranciscaNeural
+ID: connector-node-eligibility-34-aicomment
+Texto: Vale destacar
+
+[372/556] AICOMMENT - pt-BR-FranciscaNeural
+ID: node-eligibility-34-aicomment
+Texto: IntenÃ§Ã£o: respeitar a exigÃªncia de qualificaÃ§Ã£o formal. Impacto: ensino nÃ£o vai a quem ainda nÃ£o foi designado para essa responsabilidade.
+
+[373/556] [CONECTIVO] - pt-BR-FabioNeural
+ID: connector-node-eligibility-35-explanation
+Texto: Continuemos
+
+[374/556] EXPLANATION - pt-BR-FabioNeural
+ID: node-eligibility-35-explanation
+Texto: AprovaÃ§Ã£o para DISCURSO DE ENSINO.
+
+[375/556] [CONECTIVO] - pt-BR-FranciscaNeural
+ID: connector-node-eligibility-35-aicomment
+Texto: O ponto-chave
+
+[376/556] AICOMMENT - pt-BR-FranciscaNeural
+ID: node-eligibility-35-aicomment
+Texto: IntenÃ§Ã£o: conjunto de candidatos real de quem pode ensinar na reuniÃ£o. Impacto: a rotaÃ§Ã£o dessas partes acontece dentro do cÃ­rculo qualificado, sem improviso.
+Original: IntenÃ§Ã£o: pool real de quem pode ensinar na reuniÃ£o. Impacto: a rotaÃ§Ã£o dessas partes acontece dentro do cÃ­rculo qualificado, sem improviso.
+
+[377/556] [CONECTIVO] - pt-BR-AntonioNeural
+ID: connector-node-eligibility-36-explanation
+Texto: Retomando o fluxo
+
+[378/556] EXPLANATION - pt-BR-AntonioNeural
+ID: node-eligibility-36-explanation
+Texto: Ramo LEITURA ESTUDANTE: Ã© irmÃ£o e cumpre as regras de aluno?
+
+[379/556] [CONECTIVO] - pt-BR-FranciscaNeural
+ID: connector-node-eligibility-36-aicomment
+Texto: Para fixar
+
+[380/556] AICOMMENT - pt-BR-FranciscaNeural
+ID: node-eligibility-36-aicomment
+Texto: IntenÃ§Ã£o: a leitura estudante Ã© parte do treinamento progressivo dos irmÃ£os. Impacto: o palco Ã© dado a quem estÃ¡ sendo preparado, fortalecendo a escola.
+
+[381/556] [CONECTIVO] - pt-BR-FabioNeural
+ID: connector-node-eligibility-37-explanation
+Texto: Continuando
+
+[382/556] EXPLANATION - pt-BR-FabioNeural
+ID: node-eligibility-37-explanation
+Texto: SaÃ­da de bloqueio: nÃ£o cumpre regras de leitura estudante.
+
+[383/556] [CONECTIVO] - pt-BR-FranciscaNeural
+ID: connector-node-eligibility-37-aicomment
+Texto: Vale destacar
+
+[384/556] AICOMMENT - pt-BR-FranciscaNeural
+ID: node-eligibility-37-aicomment
+Texto: IntenÃ§Ã£o: manter o carÃ¡ter formativo da parte. Impacto: a parte cumpre sua funÃ§Ã£o pedagÃ³gica em vez de virar formalidade.
+
+[385/556] [CONECTIVO] - pt-BR-AntonioNeural
+ID: connector-node-eligibility-38-explanation
+Texto: Próximo
+
+[386/556] EXPLANATION - pt-BR-AntonioNeural
+ID: node-eligibility-38-explanation
+Texto: AprovaÃ§Ã£o para LEITURA ESTUDANTE.
+
+[387/556] [CONECTIVO] - pt-BR-FranciscaNeural
+ID: connector-node-eligibility-38-aicomment
+Texto: Análise
+
+[388/556] AICOMMENT - pt-BR-FranciscaNeural
+ID: node-eligibility-38-aicomment
+Texto: IntenÃ§Ã£o: incluir no conjunto de candidatos de estudantes leitores aptos. Impacto: rotaÃ§Ã£o saudÃ¡vel entre os aprendizes ao longo do mÃªs.
+Original: IntenÃ§Ã£o: incluir no pool de estudantes leitores aptos. Impacto: rotaÃ§Ã£o saudÃ¡vel entre os aprendizes ao longo do mÃªs.
+
+[389/556] [CONECTIVO] - pt-BR-FabioNeural
+ID: connector-node-eligibility-39-explanation
+Texto: Seguimos
+
+[390/556] EXPLANATION - pt-BR-FabioNeural
+ID: node-eligibility-39-explanation
+Texto: Ramo DEMONSTRAÃ‡ÃƒO: passa nas regras de aluno (que aqui incluem irmÃ£s naturalmente)?
+
+[391/556] [CONECTIVO] - pt-BR-FranciscaNeural
+ID: connector-node-eligibility-39-aicomment
+Texto: Em síntese
+
+[392/556] AICOMMENT - pt-BR-FranciscaNeural
+ID: node-eligibility-39-aicomment
+Texto: IntenÃ§Ã£o: a demonstraÃ§Ã£o contempla par de candidatos e abre espaÃ§o a irmÃ£s. Impacto: tanto irmÃ£s quanto irmÃ£os tÃªm seu espaÃ§o de treino prÃ¡tico.
+
+[393/556] [CONECTIVO] - pt-BR-AntonioNeural
+ID: connector-node-eligibility-40-explanation
+Texto: Continuando
+
+[394/556] EXPLANATION - pt-BR-AntonioNeural
+ID: node-eligibility-40-explanation
+Texto: SaÃ­da de bloqueio: nÃ£o cumpre as regras de aluno para demonstraÃ§Ã£o.
+
+[395/556] [CONECTIVO] - pt-BR-FranciscaNeural
+ID: connector-node-eligibility-40-aicomment
+Texto: Para fixar
+
+[396/556] AICOMMENT - pt-BR-FranciscaNeural
+ID: node-eligibility-40-aicomment
+Texto: IntenÃ§Ã£o: preservar a integridade do propÃ³sito da parte. Impacto: nenhum atalho que viole o desenho da escola.
+
+[397/556] [CONECTIVO] - pt-BR-FabioNeural
+ID: connector-node-eligibility-41-explanation
+Texto: Continuemos
+
+[398/556] EXPLANATION - pt-BR-FabioNeural
+ID: node-eligibility-41-explanation
+Texto: AprovaÃ§Ã£o para DEMONSTRAÃ‡ÃƒO.
+
+[399/556] [CONECTIVO] - pt-BR-FranciscaNeural
+ID: connector-node-eligibility-41-aicomment
+Texto: Resumindo
+
+[400/556] AICOMMENT - pt-BR-FranciscaNeural
+ID: node-eligibility-41-aicomment
+Texto: IntenÃ§Ã£o: conjunto de candidatos real de estudantes em fase de treino prÃ¡tico. Impacto: a rotaÃ§Ã£o cresce entre quem precisa do palco para se desenvolver.
+Original: IntenÃ§Ã£o: pool real de estudantes em fase de treino prÃ¡tico. Impacto: a rotaÃ§Ã£o cresce entre quem precisa do palco para se desenvolver.
+
+[401/556] [CONECTIVO] - pt-BR-AntonioNeural
+ID: connector-node-eligibility-42-explanation
+Texto: E temos também
+
+[402/556] EXPLANATION - pt-BR-AntonioNeural
+ID: node-eligibility-42-explanation
+Texto: Ramo DISCURSO ESTUDANTE: Ã© irmÃ£o habilitado para discurso estudante?
+
+[403/556] [CONECTIVO] - pt-BR-FranciscaNeural
+ID: connector-node-eligibility-42-aicomment
+Texto: Observação importante
+
+[404/556] AICOMMENT - pt-BR-FranciscaNeural
+ID: node-eligibility-42-aicomment
+Texto: IntenÃ§Ã£o: parte especÃ­fica para irmÃ£os em desenvolvimento como oradores. Impacto: respeita a progressÃ£o didÃ¡tica prevista na escola atual.
+
+[405/556] [CONECTIVO] - pt-BR-FabioNeural
+ID: connector-node-eligibility-43-explanation
+Texto: Continuemos
+
+[406/556] EXPLANATION - pt-BR-FabioNeural
+ID: node-eligibility-43-explanation
+Texto: SaÃ­da de bloqueio: nÃ£o estÃ¡ habilitado para discurso estudante.
+
+[407/556] [CONECTIVO] - pt-BR-FranciscaNeural
+ID: connector-node-eligibility-43-aicomment
+Texto: Em outras palavras
+
+[408/556] AICOMMENT - pt-BR-FranciscaNeural
+ID: node-eligibility-43-aicomment
+Texto: IntenÃ§Ã£o: a parte vai a quem foi de fato treinado para o formato. Impacto: progressÃ£o didÃ¡tica preservada, sem queimar etapas.
+
+[409/556] [CONECTIVO] - pt-BR-AntonioNeural
+ID: connector-node-eligibility-44-explanation
+Texto: Retomando o fluxo
+
+[410/556] EXPLANATION - pt-BR-AntonioNeural
+ID: node-eligibility-44-explanation
+Texto: AprovaÃ§Ã£o para DISCURSO ESTUDANTE.
+
+[411/556] [CONECTIVO] - pt-BR-FranciscaNeural
+ID: connector-node-eligibility-44-aicomment
+Texto: O ponto-chave
+
+[412/556] AICOMMENT - pt-BR-FranciscaNeural
+ID: node-eligibility-44-aicomment
+Texto: IntenÃ§Ã£o: conjunto de candidatos real de irmÃ£os aptos nesse formato. Impacto: oportunidades equilibradas dentro do grupo em treinamento.
+Original: IntenÃ§Ã£o: pool real de irmÃ£os aptos nesse formato. Impacto: oportunidades equilibradas dentro do grupo em treinamento.
+
+[413/556] [CONECTIVO] - pt-BR-FabioNeural
+ID: connector-flow-eligibility-6
+Texto: Vamos adiante
+
+[414/556] FLOW - pt-BR-FabioNeural
+ID: flow-eligibility-6
+Texto: Caminho 7: Ramo Estudo Bíblico de Congregação. Objetivo: Quem conduz e quem Ã© leitor do Estudo BÃ­blico da CongregaÃ§Ã£o.
+Original: Caminho 7: Ramo EBC. Objetivo: Quem conduz e quem Ã© leitor do Estudo BÃ­blico da CongregaÃ§Ã£o.
+
+[415/556] [CONECTIVO] - pt-BR-FabioNeural
+ID: connector-node-eligibility-45-explanation
+Texto: Em outras palavras
+
+[416/556] EXPLANATION - pt-BR-FabioNeural
+ID: node-eligibility-45-explanation
+Texto: Ramo DIRIGENTE Estudo Bíblico de Congregação: Ã© anciÃ£o com permissÃ£o de conduzir o Estudo BÃ­blico da CongregaÃ§Ã£o?
+Original: Ramo DIRIGENTE EBC: Ã© anciÃ£o com permissÃ£o de conduzir o Estudo BÃ­blico da CongregaÃ§Ã£o?
+
+[417/556] [CONECTIVO] - pt-BR-FranciscaNeural
+ID: connector-node-eligibility-45-aicomment
+Texto: Fundamentalmente
+
+[418/556] AICOMMENT - pt-BR-FranciscaNeural
+ID: node-eligibility-45-aicomment
+Texto: IntenÃ§Ã£o: a conduÃ§Ã£o do Estudo Bíblico de Congregação pede privilÃ©gio elevado. Impacto: a parte Ã© entregue a quem tem o encargo pastoral apropriado.
+Original: IntenÃ§Ã£o: a conduÃ§Ã£o do EBC pede privilÃ©gio elevado. Impacto: a parte Ã© entregue a quem tem o encargo pastoral apropriado.
+
+[419/556] [CONECTIVO] - pt-BR-AntonioNeural
+ID: connector-node-eligibility-46-explanation
+Texto: Retomando o fluxo
+
+[420/556] EXPLANATION - pt-BR-AntonioNeural
+ID: node-eligibility-46-explanation
+Texto: SaÃ­da de bloqueio: nÃ£o Ã© anciÃ£o apto para conduzir Estudo Bíblico de Congregação.
+Original: SaÃ­da de bloqueio: nÃ£o Ã© anciÃ£o apto para conduzir EBC.
+
+[421/556] [CONECTIVO] - pt-BR-FranciscaNeural
+ID: connector-node-eligibility-46-aicomment
+Texto: Para fixar
+
+[422/556] AICOMMENT - pt-BR-FranciscaNeural
+ID: node-eligibility-46-aicomment
+Texto: IntenÃ§Ã£o: respeitar o perfil pastoral de quem conduz. Impacto: conduÃ§Ã£o sempre dentro do critÃ©rio organizacional.
+
+[423/556] [CONECTIVO] - pt-BR-FabioNeural
+ID: connector-node-eligibility-47-explanation
+Texto: Próximo
+
+[424/556] EXPLANATION - pt-BR-FabioNeural
+ID: node-eligibility-47-explanation
+Texto: AprovaÃ§Ã£o para DIRIGENTE Estudo Bíblico de Congregação.
+Original: AprovaÃ§Ã£o para DIRIGENTE EBC.
+
+[425/556] [CONECTIVO] - pt-BR-FranciscaNeural
+ID: connector-node-eligibility-47-aicomment
+Texto: O cerne da questão
+
+[426/556] AICOMMENT - pt-BR-FranciscaNeural
+ID: node-eligibility-47-aicomment
+Texto: IntenÃ§Ã£o: conjunto de candidatos real dos dirigentes habilitados. Impacto: rotaÃ§Ã£o justa entre os anciÃ£os qualificados, sem repetir sempre o mais disponÃ­vel.
+Original: IntenÃ§Ã£o: pool real dos dirigentes habilitados. Impacto: rotaÃ§Ã£o justa entre os anciÃ£os qualificados, sem repetir sempre o mais disponÃ­vel.
+
+[427/556] [CONECTIVO] - pt-BR-AntonioNeural
+ID: connector-node-eligibility-48-explanation
+Texto: E temos também
+
+[428/556] EXPLANATION - pt-BR-AntonioNeural
+ID: node-eligibility-48-explanation
+Texto: Ramo LEITOR Estudo Bíblico de Congregação: Ã© irmÃ£o batizado com permissÃ£o especÃ­fica de leitor de EBC?
+Original: Ramo LEITOR EBC: Ã© irmÃ£o batizado com permissÃ£o especÃ­fica de leitor de EBC?
+
+[429/556] [CONECTIVO] - pt-BR-FranciscaNeural
+ID: connector-node-eligibility-48-aicomment
+Texto: Para fixar
+
+[430/556] AICOMMENT - pt-BR-FranciscaNeural
+ID: node-eligibility-48-aicomment
+Texto: IntenÃ§Ã£o: o leitor de Estudo Bíblico de Congregação tem perfil bem especÃ­fico (irmÃ£o, batizado, com privilÃ©gio). Impacto: a parte vai a quem realmente pode cumprir o papel.
+Original: IntenÃ§Ã£o: o leitor de EBC tem perfil bem especÃ­fico (irmÃ£o, batizado, com privilÃ©gio). Impacto: a parte vai a quem realmente pode cumprir o papel.
+
+[431/556] [CONECTIVO] - pt-BR-FabioNeural
+ID: connector-node-eligibility-49-explanation
+Texto: Voltemos ao processo
+
+[432/556] EXPLANATION - pt-BR-FabioNeural
+ID: node-eligibility-49-explanation
+Texto: SaÃ­da de bloqueio: nÃ£o Ã© irmÃ£o batizado apto para leitor Estudo Bíblico de Congregação.
+Original: SaÃ­da de bloqueio: nÃ£o Ã© irmÃ£o batizado apto para leitor EBC.
+
+[433/556] [CONECTIVO] - pt-BR-FranciscaNeural
+ID: connector-node-eligibility-49-aicomment
+Texto: Fundamentalmente
+
+[434/556] AICOMMENT - pt-BR-FranciscaNeural
+ID: node-eligibility-49-aicomment
+Texto: IntenÃ§Ã£o: respeitar o perfil declarado. Impacto: nenhuma escalaÃ§Ã£o fora do critÃ©rio, mesmo em semanas apertadas.
+
+[435/556] [CONECTIVO] - pt-BR-AntonioNeural
+ID: connector-node-eligibility-50-explanation
+Texto: Prossigamos
+
+[436/556] EXPLANATION - pt-BR-AntonioNeural
+ID: node-eligibility-50-explanation
+Texto: AprovaÃ§Ã£o para LEITOR Estudo Bíblico de Congregação.
+Original: AprovaÃ§Ã£o para LEITOR EBC.
+
+[437/556] [CONECTIVO] - pt-BR-FranciscaNeural
+ID: connector-node-eligibility-50-aicomment
+Texto: Na prática isso significa
+
+[438/556] AICOMMENT - pt-BR-FranciscaNeural
+ID: node-eligibility-50-aicomment
+Texto: IntenÃ§Ã£o: conjunto de candidatos real de leitores qualificados. Impacto: equilibra os elegÃ­veis ao longo das semanas, evitando concentrar sempre no mesmo irmÃ£o.
+Original: IntenÃ§Ã£o: pool real de leitores qualificados. Impacto: equilibra os elegÃ­veis ao longo das semanas, evitando concentrar sempre no mesmo irmÃ£o.
+
+[439/556] [CONECTIVO] - pt-BR-FabioNeural
+ID: connector-flow-eligibility-7
+Texto: Adiante
+
+[440/556] FLOW - pt-BR-FabioNeural
+ID: flow-eligibility-7
+Texto: Caminho 8: Ramo Necessidades Locais. Objetivo: Quem pode cuidar dessa parte pastoral local.
+
+[441/556] [CONECTIVO] - pt-BR-FabioNeural
+ID: connector-node-eligibility-51-explanation
+Texto: Vale destacar
+
+[442/556] EXPLANATION - pt-BR-FabioNeural
+ID: node-eligibility-51-explanation
+Texto: Ramo NECESSIDADES LOCAIS: Ã© anciÃ£o com permissÃ£o de discursos?
+
+[443/556] [CONECTIVO] - pt-BR-FranciscaNeural
+ID: connector-node-eligibility-51-aicomment
+Texto: O cerne da questão
+
+[444/556] AICOMMENT - pt-BR-FranciscaNeural
+ID: node-eligibility-51-aicomment
+Texto: IntenÃ§Ã£o: parte sensÃ­vel, costuma ser do anciÃ£o por seu carÃ¡ter pastoral local. Impacto: preserva o tom de cuidado e direÃ§Ã£o da parte.
+
+[445/556] [CONECTIVO] - pt-BR-AntonioNeural
+ID: connector-node-eligibility-52-explanation
+Texto: Próximo
+
+[446/556] EXPLANATION - pt-BR-AntonioNeural
+ID: node-eligibility-52-explanation
+Texto: SaÃ­da de bloqueio: perfil nÃ£o bate com Necessidades Locais.
+
+[447/556] [CONECTIVO] - pt-BR-FranciscaNeural
+ID: connector-node-eligibility-52-aicomment
+Texto: Na prática isso significa
+
+[448/556] AICOMMENT - pt-BR-FranciscaNeural
+ID: node-eligibility-52-aicomment
+Texto: IntenÃ§Ã£o: respeitar a expectativa pastoral da parte. Impacto: a parte chega a quem foi efetivamente designado para esse encargo.
+
+[449/556] [CONECTIVO] - pt-BR-FabioNeural
+ID: connector-node-eligibility-53-explanation
+Texto: Avancemos
+
+[450/556] EXPLANATION - pt-BR-FabioNeural
+ID: node-eligibility-53-explanation
+Texto: AprovaÃ§Ã£o para NECESSIDADES LOCAIS.
+
+[451/556] [CONECTIVO] - pt-BR-FranciscaNeural
+ID: connector-node-eligibility-53-aicomment
+Texto: Vale destacar
+
+[452/556] AICOMMENT - pt-BR-FranciscaNeural
+ID: node-eligibility-53-aicomment
+Texto: IntenÃ§Ã£o: incluir no conjunto de candidatos dos anciÃ£os aptos para essa parte. Impacto: distribuiÃ§Ã£o equilibrada ao longo do ano entre os qualificados.
+Original: IntenÃ§Ã£o: incluir no pool dos anciÃ£os aptos para essa parte. Impacto: distribuiÃ§Ã£o equilibrada ao longo do ano entre os qualificados.
+
+[453/556] [CONECTIVO] - pt-BR-AntonioNeural
+ID: connector-tab-uiAgent
+Texto: Adiante
+
+[454/556] TAB - pt-BR-AntonioNeural
+ID: tab-uiAgent
+Texto: Comparacao UI vs Agent. alinhar decisao humana e assistencia da IA com coerencia entre superficies
+
+[455/556] [CONECTIVO] - pt-BR-FabioNeural
+ID: connector-flow-uiAgent-0
+Texto: Outro ponto
+
+[456/556] FLOW - pt-BR-FabioNeural
+ID: flow-uiAgent-0
+Texto: Caminho 1: Caminho Manual. Objetivo: Como a interface manual do dirigente oferece um lista suspensa de opções filtrado pelas mesmas regras do motor.
+Original: Caminho 1: Caminho Manual. Objetivo: Como a UI manual oferece um dropdown filtrado pelas mesmas regras do motor.
+
+[457/556] [CONECTIVO] - pt-BR-AntonioNeural
+ID: connector-node-uiAgent-0-explanation
+Texto: Complementando
+
+[458/556] EXPLANATION - pt-BR-AntonioNeural
+ID: node-uiAgent-0-explanation
+Texto: Caminho manual comeÃ§a preparando o contexto da semana â€” exatamente o mesmo construtor usado pelo motor automÃ¡tico.
+
+[459/556] [CONECTIVO] - pt-BR-FranciscaNeural
+ID: connector-node-uiAgent-0-aicomment
+Texto: Para fixar
+
+[460/556] AICOMMENT - pt-BR-FranciscaNeural
+ID: node-uiAgent-0-aicomment
+Texto: IntenÃ§Ã£o: humano e automaÃ§Ã£o partem do mesmo ponto. Impacto: a interface manual do dirigente nÃ£o tem regras paralelas â€” apenas oferece a decisÃ£o visual sobre a mesma base de verdade.
+Original: IntenÃ§Ã£o: humano e automaÃ§Ã£o partem do mesmo ponto. Impacto: a UI manual nÃ£o tem regras paralelas â€” apenas oferece a decisÃ£o visual sobre a mesma base de verdade.
+
+[461/556] [CONECTIVO] - pt-BR-FabioNeural
+ID: connector-node-uiAgent-1-explanation
+Texto: Seguindo
+
+[462/556] EXPLANATION - pt-BR-FabioNeural
+ID: node-uiAgent-1-explanation
+Texto: Para cada publicador disponÃ­vel, a UI pergunta ao mesmo gate central: pode ou nÃ£o pode?
+
+[463/556] [CONECTIVO] - pt-BR-FranciscaNeural
+ID: connector-node-uiAgent-1-aicomment
+Texto: Traduzindo
+
+[464/556] AICOMMENT - pt-BR-FranciscaNeural
+ID: node-uiAgent-1-aicomment
+Texto: IntenÃ§Ã£o: filtragem honesta antes de mostrar opÃ§Ãµes ao dirigente. Impacto: a tela nÃ£o tenta o usuÃ¡rio com nomes que seriam reprovados depois, evitando frustraÃ§Ã£o e correÃ§Ã£o.
+
+[465/556] [CONECTIVO] - pt-BR-AntonioNeural
+ID: connector-node-uiAgent-2-explanation
+Texto: Avancemos
+
+[466/556] EXPLANATION - pt-BR-AntonioNeural
+ID: node-uiAgent-2-explanation
+Texto: DecisÃ£o exclusiva do caminho manual: esse nome jÃ¡ estÃ¡ designado para outra parte nesta mesma semana?
+
+[467/556] [CONECTIVO] - pt-BR-FranciscaNeural
+ID: connector-node-uiAgent-2-aicomment
+Texto: O cerne da questão
+
+[468/556] AICOMMENT - pt-BR-FranciscaNeural
+ID: node-uiAgent-2-aicomment
+Texto: IntenÃ§Ã£o: na escolha manual, repetir nome na semana Ã© considerado erro duro e bloqueado. Impacto: protege a diversidade semanal contra deslize do usuÃ¡rio que nÃ£o lembrou do que jÃ¡ designou.
+
+[469/556] [CONECTIVO] - pt-BR-FabioNeural
+ID: connector-node-uiAgent-3-explanation
+Texto: Seguimos
+
+[470/556] EXPLANATION - pt-BR-FabioNeural
+ID: node-uiAgent-3-explanation
+Texto: Calcula o nota de prioridade e descobre se hÃ¡ intervalo obrigatório entre designações â€” exatamente as mesmas funÃ§Ãµes que o motor automÃ¡tico usa para rankear.
+Original: Calcula o score e descobre se hÃ¡ cooldown â€” exatamente as mesmas funÃ§Ãµes que o motor automÃ¡tico usa para rankear.
+
+[471/556] [CONECTIVO] - pt-BR-FranciscaNeural
+ID: connector-node-uiAgent-3-aicomment
+Texto: Observação importante
+
+[472/556] AICOMMENT - pt-BR-FranciscaNeural
+ID: node-uiAgent-3-aicomment
+Texto: IntenÃ§Ã£o: enriquecer a UI com a mesma inteligÃªncia da eleiÃ§Ã£o automÃ¡tica. Impacto: o dirigente decide com a mesma informaÃ§Ã£o que a IA usaria, em vez de ter uma versÃ£o simplificada da realidade.
+
+[473/556] [CONECTIVO] - pt-BR-AntonioNeural
+ID: connector-node-uiAgent-4-explanation
+Texto: Voltemos ao processo
+
+[474/556] EXPLANATION - pt-BR-AntonioNeural
+ID: node-uiAgent-4-explanation
+Texto: O lista suspensa de opções mostra apenas os elegÃ­veis e ranqueados.
+Original: O dropdown mostra apenas os elegÃ­veis e ranqueados.
+
+[475/556] [CONECTIVO] - pt-BR-FranciscaNeural
+ID: connector-node-uiAgent-4-aicomment
+Texto: Fundamentalmente
+
+[476/556] AICOMMENT - pt-BR-FranciscaNeural
+ID: node-uiAgent-4-aicomment
+Texto: IntenÃ§Ã£o: simplificar a escolha humana ao mÃ¡ximo. Impacto: o dirigente foca em decidir entre os bons, nÃ£o em filtrar os impedidos.
+
+[477/556] [CONECTIVO] - pt-BR-FabioNeural
+ID: connector-node-uiAgent-5-explanation
+Texto: Seguimos
+
+[478/556] EXPLANATION - pt-BR-FabioNeural
+ID: node-uiAgent-5-explanation
+Texto: Quem estÃ¡ em intervalo obrigatório entre designações, se aparecer, vem com dica flutuante explicando o motivo do alerta.
+Original: Quem estÃ¡ em cooldown, se aparecer, vem com tooltip explicando o motivo do alerta.
+
+[479/556] [CONECTIVO] - pt-BR-FranciscaNeural
+ID: connector-node-uiAgent-5-aicomment
+Texto: Essencialmente
+
+[480/556] AICOMMENT - pt-BR-FranciscaNeural
+ID: node-uiAgent-5-aicomment
+Texto: IntenÃ§Ã£o: transparÃªncia sem censura â€” o usuÃ¡rio vÃª o motivo do alerta. Impacto: decisÃ£o informada em vez de cega, preservando autonomia humana com responsabilidade.
+
+[481/556] [CONECTIVO] - pt-BR-FabioNeural
+ID: connector-flow-uiAgent-1
+Texto: De volta ao diagrama
+
+[482/556] FLOW - pt-BR-FabioNeural
+ID: flow-uiAgent-1
+Texto: Caminho 2: Caminho DiagnÃ³stico. Objetivo: Como o painel exibe o classificação ordenada completo e separa bloqueados para auditoria.
+Original: Caminho 2: Caminho DiagnÃ³stico. Objetivo: Como o painel exibe o ranking completo e separa bloqueados para auditoria.
+
+[483/556] [CONECTIVO] - pt-BR-AntonioNeural
+ID: connector-node-uiAgent-6-explanation
+Texto: Vale notar
+
+[484/556] EXPLANATION - pt-BR-AntonioNeural
+ID: node-uiAgent-6-explanation
+Texto: Caminho diagnÃ³stico (painel de controle) tambÃ©m comeÃ§a pelo mesmo construtor de contexto.
+
+[485/556] [CONECTIVO] - pt-BR-FranciscaNeural
+ID: connector-node-uiAgent-6-aicomment
+Texto: O ponto-chave
+
+[486/556] AICOMMENT - pt-BR-FranciscaNeural
+ID: node-uiAgent-6-aicomment
+Texto: IntenÃ§Ã£o: garantir consistÃªncia entre superfÃ­cies do app. Impacto: o painel de diagnÃ³stico vÃª o mesmo cenÃ¡rio que o motor â€” anÃ¡lise sobre dados reais, nÃ£o simulaÃ§Ã£o.
+
+[487/556] [CONECTIVO] - pt-BR-FabioNeural
+ID: connector-node-uiAgent-7-explanation
+Texto: Seguindo
+
+[488/556] EXPLANATION - pt-BR-FabioNeural
+ID: node-uiAgent-7-explanation
+Texto: Levanta a lista de elegÃ­veis chamando o mesmo gate central de elegibilidade.
+
+[489/556] [CONECTIVO] - pt-BR-FranciscaNeural
+ID: connector-node-uiAgent-7-aicomment
+Texto: Em outras palavras
+
+[490/556] AICOMMENT - pt-BR-FranciscaNeural
+ID: node-uiAgent-7-aicomment
+Texto: IntenÃ§Ã£o: zero divergÃªncia na regra entre superfÃ­cies. Impacto: o painel diagnostica a partir da verdade real do sistema, sustentando conversas e investigaÃ§Ãµes pastorais.
+
+[491/556] [CONECTIVO] - pt-BR-AntonioNeural
+ID: connector-node-uiAgent-8-explanation
+Texto: Seguimos
+
+[492/556] EXPLANATION - pt-BR-AntonioNeural
+ID: node-uiAgent-8-explanation
+Texto: Pega o classificação ordenada determinÃ­stico â€” exatamente o mesmo que o motor automÃ¡tico usaria.
+Original: Pega o ranking determinÃ­stico â€” exatamente o mesmo que o motor automÃ¡tico usaria.
+
+[493/556] [CONECTIVO] - pt-BR-FranciscaNeural
+ID: connector-node-uiAgent-8-aicomment
+Texto: Destaque
+
+[494/556] AICOMMENT - pt-BR-FranciscaNeural
+ID: node-uiAgent-8-aicomment
+Texto: IntenÃ§Ã£o: "melhor candidato" significa a mesma coisa em qualquer tela. Impacto: explicabilidade real, nÃ£o simulaÃ§Ã£o â€” quem aparece no top do painel Ã© quem o motor escolheria.
+
+[495/556] [CONECTIVO] - pt-BR-FabioNeural
+ID: connector-node-uiAgent-9-explanation
+Texto: De volta ao diagrama
+
+[496/556] EXPLANATION - pt-BR-FabioNeural
+ID: node-uiAgent-9-explanation
+Texto: Para cada candidato no classificação ordenada, pergunta: estÃ¡ bloqueado por intervalo obrigatório entre designações?
+Original: Para cada candidato no ranking, pergunta: estÃ¡ bloqueado por cooldown?
+
+[497/556] [CONECTIVO] - pt-BR-FranciscaNeural
+ID: connector-node-uiAgent-9-aicomment
+Texto: Para fixar
+
+[498/556] AICOMMENT - pt-BR-FranciscaNeural
+ID: node-uiAgent-9-aicomment
+Texto: IntenÃ§Ã£o: separar visualmente quem estÃ¡ apto agora de quem estÃ¡ em descanso. Impacto: o usuÃ¡rio entende o estado atual da rotaÃ§Ã£o e antecipa quem voltarÃ¡ a estar elegÃ­vel.
+
+[499/556] [CONECTIVO] - pt-BR-AntonioNeural
+ID: connector-node-uiAgent-10-explanation
+Texto: E temos também
+
+[500/556] EXPLANATION - pt-BR-AntonioNeural
+ID: node-uiAgent-10-explanation
+Texto: Define como "melhor candidato" o primeiro nÃ£o-bloqueado do classificação ordenada.
+Original: Define como "melhor candidato" o primeiro nÃ£o-bloqueado do ranking.
+
+[501/556] [CONECTIVO] - pt-BR-FranciscaNeural
+ID: connector-node-uiAgent-10-aicomment
+Texto: Vale destacar
+
+[502/556] AICOMMENT - pt-BR-FranciscaNeural
+ID: node-uiAgent-10-aicomment
+Texto: IntenÃ§Ã£o: o painel sugere de fato uma escolha viÃ¡vel, nÃ£o teÃ³rica. Impacto: "melhor candidato" nunca Ã© alguÃ©m em intervalo obrigatório entre designações, evitando recomendaÃ§Ã£o que precisaria ser desfeita.
+Original: IntenÃ§Ã£o: o painel sugere de fato uma escolha viÃ¡vel, nÃ£o teÃ³rica. Impacto: "melhor candidato" nunca Ã© alguÃ©m em cooldown, evitando recomendaÃ§Ã£o que precisaria ser desfeita.
+
+[503/556] [CONECTIVO] - pt-BR-FabioNeural
+ID: connector-node-uiAgent-11-explanation
+Texto: Retomando o fluxo
+
+[504/556] EXPLANATION - pt-BR-FabioNeural
+ID: node-uiAgent-11-explanation
+Texto: Mostra tambÃ©m o top 4 do classificação ordenada â€” incluindo bloqueados, para anÃ¡lise visual.
+Original: Mostra tambÃ©m o top 4 do ranking â€” incluindo bloqueados, para anÃ¡lise visual.
+
+[505/556] [CONECTIVO] - pt-BR-FranciscaNeural
+ID: connector-node-uiAgent-11-aicomment
+Texto: Em outras palavras
+
+[506/556] AICOMMENT - pt-BR-FranciscaNeural
+ID: node-uiAgent-11-aicomment
+Texto: IntenÃ§Ã£o: dar visÃ£o da fila inteira, nÃ£o sÃ³ do vencedor. Impacto: o usuÃ¡rio entende quem viria depois e por que alguns ainda estÃ£o bloqueados, sustentando decisÃµes pastorais conscientes.
+
+[507/556] [CONECTIVO] - pt-BR-FabioNeural
+ID: connector-flow-uiAgent-2
+Texto: De volta ao diagrama
+
+[508/556] FLOW - pt-BR-FabioNeural
+ID: flow-uiAgent-2
+Texto: Caminho 3: Caminho agente de inteligência artificial. Objetivo: Como o chat traduz a pergunta e devolve classificação ordenada com tags de elegibilidade.
+Original: Caminho 3: Caminho Agente IA. Objetivo: Como o chat traduz a pergunta e devolve ranking com tags de elegibilidade.
+
+[509/556] [CONECTIVO] - pt-BR-AntonioNeural
+ID: connector-node-uiAgent-12-explanation
+Texto: Retomando
+
+[510/556] EXPLANATION - pt-BR-AntonioNeural
+ID: node-uiAgent-12-explanation
+Texto: Caminho agente de inteligência artificial comeÃ§a traduzindo o pedido em linguagem natural para a parte concreta do sistema.
+Original: Caminho agente IA comeÃ§a traduzindo o pedido em linguagem natural para a parte concreta do sistema.
+
+[511/556] [CONECTIVO] - pt-BR-FranciscaNeural
+ID: connector-node-uiAgent-12-aicomment
+Texto: Fundamentalmente
+
+[512/556] AICOMMENT - pt-BR-FranciscaNeural
+ID: node-uiAgent-12-aicomment
+Texto: IntenÃ§Ã£o: o agente entende sinÃ´nimos, abreviaÃ§Ãµes e referÃªncias livres do usuÃ¡rio. Impacto: "quem vai dar a primeira parte de Joias?" vira identificador de parte e modalidade reais.
+
+[513/556] [CONECTIVO] - pt-BR-FabioNeural
+ID: connector-node-uiAgent-13-explanation
+Texto: Voltemos ao processo
+
+[514/556] EXPLANATION - pt-BR-FabioNeural
+ID: node-uiAgent-13-explanation
+Texto: Agente monta o mesmo contexto comum da semana.
+
+[515/556] [CONECTIVO] - pt-BR-FranciscaNeural
+ID: connector-node-uiAgent-13-aicomment
+Texto: Destaque
+
+[516/556] AICOMMENT - pt-BR-FranciscaNeural
+ID: node-uiAgent-13-aicomment
+Texto: IntenÃ§Ã£o: a conversa fala com a mesma verdade que o painel e a interface manual do dirigente. Impacto: o usuÃ¡rio pode confiar que a explicaÃ§Ã£o do chat bate com o que ele vÃª em outra tela.
+Original: IntenÃ§Ã£o: a conversa fala com a mesma verdade que o painel e a UI manual. Impacto: o usuÃ¡rio pode confiar que a explicaÃ§Ã£o do chat bate com o que ele vÃª em outra tela.
+
+[517/556] [CONECTIVO] - pt-BR-AntonioNeural
+ID: connector-node-uiAgent-14-explanation
+Texto: De volta ao diagrama
+
+[518/556] EXPLANATION - pt-BR-AntonioNeural
+ID: node-uiAgent-14-explanation
+Texto: Levanta elegÃ­veis pelo mesmo gate central.
+
+[519/556] [CONECTIVO] - pt-BR-FranciscaNeural
+ID: connector-node-uiAgent-14-aicomment
+Texto: Resumindo
+
+[520/556] AICOMMENT - pt-BR-FranciscaNeural
+ID: node-uiAgent-14-aicomment
+Texto: IntenÃ§Ã£o: o agente nÃ£o inventa nem alucina nome â€” sÃ³ responde com base na verdade verificada. Impacto: confianÃ§a no canal conversacional como fonte legÃ­tima de decisÃ£o.
+
+[521/556] [CONECTIVO] - pt-BR-FabioNeural
+ID: connector-node-uiAgent-15-explanation
+Texto: Vamos adiante
+
+[522/556] EXPLANATION - pt-BR-FabioNeural
+ID: node-uiAgent-15-explanation
+Texto: Pega o classificação ordenada determinÃ­stico (mesmo serviÃ§o dos outros caminhos).
+Original: Pega o ranking determinÃ­stico (mesmo serviÃ§o dos outros caminhos).
+
+[523/556] [CONECTIVO] - pt-BR-FranciscaNeural
+ID: connector-node-uiAgent-15-aicomment
+Texto: Comentário da IA
+
+[524/556] AICOMMENT - pt-BR-FranciscaNeural
+ID: node-uiAgent-15-aicomment
+Texto: IntenÃ§Ã£o: "melhor candidato" do chat Ã© idÃªntico ao "melhor candidato" do painel. Impacto: respostas reprodutÃ­veis e auditÃ¡veis, mesmo via conversa natural.
+
+[525/556] [CONECTIVO] - pt-BR-AntonioNeural
+ID: connector-node-uiAgent-16-explanation
+Texto: Seguindo
+
+[526/556] EXPLANATION - pt-BR-AntonioNeural
+ID: node-uiAgent-16-explanation
+Texto: Marca quem estÃ¡ em intervalo obrigatório entre designações â€” mas, diferente da interface manual do dirigente, nÃ£o esconde.
+Original: Marca quem estÃ¡ em cooldown â€” mas, diferente da UI manual, nÃ£o esconde.
+
+[527/556] [CONECTIVO] - pt-BR-FranciscaNeural
+ID: connector-node-uiAgent-16-aicomment
+Texto: O ponto-chave
+
+[528/556] AICOMMENT - pt-BR-FranciscaNeural
+ID: node-uiAgent-16-aicomment
+Texto: IntenÃ§Ã£o: o chat tem carÃ¡ter pedagÃ³gico, por isso mostra a tag em vez de filtrar. Impacto: o usuÃ¡rio aprende a lÃ³gica da rotaÃ§Ã£o enquanto consome a resposta.
+
+[529/556] [CONECTIVO] - pt-BR-FabioNeural
+ID: connector-node-uiAgent-17-explanation
+Texto: Próximo
+
+[530/556] EXPLANATION - pt-BR-FabioNeural
+ID: node-uiAgent-17-explanation
+Texto: Devolve a lista ordenada: aptos primeiro, bloqueados em seguida com tag de motivo.
+
+[531/556] [CONECTIVO] - pt-BR-FranciscaNeural
+ID: connector-node-uiAgent-17-aicomment
+Texto: Comentário da IA
+
+[532/556] AICOMMENT - pt-BR-FranciscaNeural
+ID: node-uiAgent-17-aicomment
+Texto: IntenÃ§Ã£o: pedagogia + utilidade no mesmo retorno. Impacto: o usuÃ¡rio escolhe com contexto e descobre quando precisaria esperar ou substituir alguÃ©m.
+
+[533/556] [CONECTIVO] - pt-BR-FabioNeural
+ID: connector-flow-uiAgent-3
+Texto: Retomando o fluxo
+
+[534/556] FLOW - pt-BR-FabioNeural
+ID: flow-uiAgent-3
+Texto: Caminho 4: ConvergÃªncias e divergÃªncias propositais. Objetivo: Onde os trÃªs caminhos batem na mesma regra e onde divergem por estilo da superfÃ­cie.
+
+[535/556] [CONECTIVO] - pt-BR-AntonioNeural
+ID: connector-node-uiAgent-18-explanation
+Texto: Seguindo adiante
+
+[536/556] EXPLANATION - pt-BR-AntonioNeural
+ID: node-uiAgent-18-explanation
+Texto: Aqui aparece o pacto entre os trÃªs caminhos: todos usam o mesmo gate de elegibilidade e o mesmo construtor de contexto.
+
+[537/556] [CONECTIVO] - pt-BR-FranciscaNeural
+ID: connector-node-uiAgent-18-aicomment
+Texto: Análise
+
+[538/556] AICOMMENT - pt-BR-FranciscaNeural
+ID: node-uiAgent-18-aicomment
+Texto: IntenÃ§Ã£o: blindar a regra de elegibilidade contra divergÃªncia por superfÃ­cie. Impacto: independente da porta de entrada, o critÃ©rio Ã© Ãºnico â€” coerÃªncia arquitetural garantida.
+
+[539/556] [CONECTIVO] - pt-BR-FabioNeural
+ID: connector-node-uiAgent-19-explanation
+Texto: Seguimos
+
+[540/556] EXPLANATION - pt-BR-FabioNeural
+ID: node-uiAgent-19-explanation
+Texto: Segundo pacto: classificação ordenada tambÃ©m Ã© o mesmo serviÃ§o, idÃªntico para todos os caminhos.
+Original: Segundo pacto: ranking tambÃ©m Ã© o mesmo serviÃ§o, idÃªntico para todos os caminhos.
+
+[541/556] [CONECTIVO] - pt-BR-FranciscaNeural
+ID: connector-node-uiAgent-19-aicomment
+Texto: Em outras palavras
+
+[542/556] AICOMMENT - pt-BR-FranciscaNeural
+ID: node-uiAgent-19-aicomment
+Texto: IntenÃ§Ã£o: que "melhor" signifique a mesma coisa em qualquer superfÃ­cie. Impacto: explicaÃ§Ãµes alinhadas entre tela, painel e chat â€” zero contradiÃ§Ã£o visÃ­vel ao usuÃ¡rio.
+
+[543/556] [CONECTIVO] - pt-BR-AntonioNeural
+ID: connector-node-uiAgent-20-explanation
+Texto: Avancemos
+
+[544/556] EXPLANATION - pt-BR-AntonioNeural
+ID: node-uiAgent-20-explanation
+Texto: DivergÃªncia exclusiva da interface manual do dirigente: bloqueia duro repetir o mesmo nome na mesma semana.
+Original: DivergÃªncia exclusiva da UI manual: bloqueia duro repetir o mesmo nome na mesma semana.
+
+[545/556] [CONECTIVO] - pt-BR-FranciscaNeural
+ID: connector-node-uiAgent-20-aicomment
+Texto: Fundamentalmente
+
+[546/556] AICOMMENT - pt-BR-FranciscaNeural
+ID: node-uiAgent-20-aicomment
+Texto: IntenÃ§Ã£o: a interface manual do dirigente protege contra o deslize humano de nÃ£o lembrar do que jÃ¡ designou. Impacto: a tela Ã© mais rÃ­gida que motor/agente porque o usuÃ¡rio decide isolado, sem rede.
+Original: IntenÃ§Ã£o: a UI manual protege contra o deslize humano de nÃ£o lembrar do que jÃ¡ designou. Impacto: a tela Ã© mais rÃ­gida que motor/agente porque o usuÃ¡rio decide isolado, sem rede.
+
+[547/556] [CONECTIVO] - pt-BR-FabioNeural
+ID: connector-node-uiAgent-21-explanation
+Texto: Seguindo
+
+[548/556] EXPLANATION - pt-BR-FabioNeural
+ID: node-uiAgent-21-explanation
+Texto: intervalo obrigatório entre designações Ã© tratado distinto por superfÃ­cie: aviso na UI, ordenaÃ§Ã£o no painel, tag no agente.
+Original: Cooldown Ã© tratado distinto por superfÃ­cie: aviso na UI, ordenaÃ§Ã£o no painel, tag no agente.
+
+[549/556] [CONECTIVO] - pt-BR-FranciscaNeural
+ID: connector-node-uiAgent-21-aicomment
+Texto: Para fixar
+
+[550/556] AICOMMENT - pt-BR-FranciscaNeural
+ID: node-uiAgent-21-aicomment
+Texto: IntenÃ§Ã£o: respeitar o estilo de cada superfÃ­cie sem violar a regra central. Impacto: experiÃªncia adaptada ao contexto de uso, mas com regra Ãºnica por trÃ¡s â€” divergÃªncia intencional, nÃ£o acidental.
+
+[551/556] [CONECTIVO] - pt-BR-AntonioNeural
+ID: connector-node-uiAgent-22-explanation
+Texto: Continuemos
+
+[552/556] EXPLANATION - pt-BR-AntonioNeural
+ID: node-uiAgent-22-explanation
+Texto: No painel, o top da lista pode mostrar bloqueados (para anÃ¡lise), mas o "melhor candidato" nunca Ã© bloqueado.
+
+[553/556] [CONECTIVO] - pt-BR-FranciscaNeural
+ID: connector-node-uiAgent-22-aicomment
+Texto: Destaque
+
+[554/556] AICOMMENT - pt-BR-FranciscaNeural
+ID: node-uiAgent-22-aicomment
+Texto: IntenÃ§Ã£o: dar visÃ£o completa para auditoria e ao mesmo tempo recomendar com seguranÃ§a. Impacto: o usuÃ¡rio diagnostica e age sem ambiguidade â€” vÃª tudo, mas recebe sugestÃ£o segura.
+
+[555/556] [CONECTIVO] - pt-BR-AntonioNeural
+ID: connector-outro
+Texto: Próxima etapa
+
+[556/556] OUTRO - pt-BR-AntonioNeural
+ID: outro
+Texto: Fim da apresentação. Obrigado por acompanhar o RVM Designações.

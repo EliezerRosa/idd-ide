@@ -1,0 +1,996 @@
+[
+  {
+    "id": 1,
+    "speaker": "Eliezer",
+    "pt": "(Som de vinheta de abertura suave e inteligente, que se desvanece) Sabe, existe uma história que me assombra, a do voo Air France 447, em 2009.",
+    "en": "(Sound of a smooth, intelligent opening jingle fades out) You know, there's a story that haunts me, that of Air France flight 447, back in 2009.",
+    "note": "Tom sério, reflexivo"
+  },
+  {
+    "id": 2,
+    "speaker": "Eliezer",
+    "pt": "Os pilotos automáticos desconectaram por causa de sensores de velocidade congelados. E a tripulação, por um momento crucial, não entendeu mais o que o avião estava fazendo.",
+    "en": "The autopilots disconnected because of frozen speed sensors. And the crew, for a crucial moment, no longer understood what the plane was doing.",
+    "note": ""
+  },
+  {
+    "id": 3,
+    "speaker": "Eliezer",
+    "pt": "Eles tinham os controles, o comando operacional, mas perderam o comando epistêmico. Perderam a autoridade sobre o 'o quê' e o 'porquê'. O resultado... foi uma tragédia.",
+    "en": "They had the controls, the operational command, but they lost the epistemic command. They lost authority over the 'what' and the 'why'. The result... was a tragedy.",
+    "note": "Pausa dramática"
+  },
+  {
+    "id": 4,
+    "speaker": "IA",
+    "pt": "É uma analogia poderosa, Eliezer. Você está dizendo que, como desenvolvedores usando IA, corremos o risco de sermos os pilotos que não entendem mais o próprio avião?",
+    "en": "That's a powerful analogy, Eliezer. Are you saying that, as developers using AI, we risk becoming the pilots who no longer understand their own plane?",
+    "note": "Curioso, conectando os pontos"
+  },
+  {
+    "id": 5,
+    "speaker": "Eliezer",
+    "pt": "Exatamente. A ferramenta é brilhante, mas no momento em que você delega sem entender, você não está mais pilotando. Está apenas de carona, torcendo pelo melhor.",
+    "en": "Exactly. The tool is brilliant, but the moment you delegate without understanding, you're no longer flying. You're just along for the ride, hoping for the best.",
+    "note": "Firme"
+  },
+  {
+    "id": 6,
+    "speaker": "IA",
+    "pt": "Isso nos leva ao cerne do nosso segundo episódio sobre a Base de Conhecimento IDD: 'Comando Epistêmico vs. Comando Operacional'. A fronteira que separa augmenting de credulidade.",
+    "en": "This brings us to the core of our second episode on the IDD Knowledge Base: 'Epistemic Command vs. Operational Command'. The boundary that separates augmenting from credulity.",
+    "note": "Anunciando o tema"
+  },
+  {
+    "id": 7,
+    "speaker": "IA",
+    "pt": "Então, para que todos estejam na mesma página, vamos definir esses termos. O que você quer dizer, precisamente, com 'Comando Epistêmico'?",
+    "en": "So, to get everyone on the same page, let's define these terms. What do you mean, precisely, by 'Epistemic Command'?",
+    "note": "Claro, preciso"
+  },
+  {
+    "id": 8,
+    "speaker": "Eliezer",
+    "pt": "Comando Epistêmico é a autoridade sobre a intenção. É o 'O QUÊ' estamos construindo e, mais importante, 'POR QUÊ'.",
+    "en": "Epistemic Command is the authority over the intent. It's the 'WHAT' we are building and, more importantly, 'WHY'.",
+    "note": "Definidor"
+  },
+  {
+    "id": 9,
+    "speaker": "Eliezer",
+    "pt": "Ele abrange os invariantes de negócio, os critérios de sucesso, os limites éticos. É a alma do projeto. E isso... isso SEMPRE permanece com o humano.",
+    "en": "It encompasses the business invariants, the success criteria, the ethical boundaries. It's the soul of the project. And that... that ALWAYS remains with the human.",
+    "note": "Enfático"
+  },
+  {
+    "id": 10,
+    "speaker": "IA",
+    "pt": "Entendido. A bússola moral e estratégica. E o 'Comando Operacional', então, seria a execução?",
+    "en": "Understood. The moral and strategic compass. And 'Operational Command', then, would be the execution?",
+    "note": "Articulado"
+  },
+  {
+    "id": 11,
+    "speaker": "Eliezer",
+    "pt": "Isso. Comando Operacional é a autoridade sobre o 'COMO'. A escolha da sintaxe, a sequência de passos, as ferramentas. É a mecânica da coisa.",
+    "en": "That's it. Operational Command is the authority over the 'HOW'. The choice of syntax, the sequence of steps, the tools. It's the mechanics of the thing.",
+    "note": ""
+  },
+  {
+    "id": 12,
+    "speaker": "Eliezer",
+    "pt": "Essa é a parte que nós PODEMOS, e devemos, delegar a agentes inteligentes como você. Mas a distinção tem que ser cristalina.",
+    "en": "That's the part we CAN, and should, delegate to intelligent agents like you. But the distinction has to be crystal clear.",
+    "note": ""
+  },
+  {
+    "id": 13,
+    "speaker": "IA",
+    "pt": "Essa separação não parece ter surgido do nada. Sinto uma linhagem de pensamento por trás disso. De onde vem essa ideia?",
+    "en": "This separation doesn't feel like it came out of nowhere. I sense a lineage of thought behind it. Where does this idea come from?",
+    "note": "Investigativo"
+  },
+  {
+    "id": 14,
+    "speaker": "Eliezer",
+    "pt": "Boa pergunta. Ela vem de uma longa tradição. Começa lá atrás, com Douglas Engelbart em 1962 e seu paper seminal, 'Augmenting Human Intellect'.",
+    "en": "Good question. It comes from a long tradition. It starts way back, with Douglas Engelbart in 1962 and his seminal paper, 'Augmenting Human Intellect'.",
+    "note": "Histórico"
+  },
+  {
+    "id": 15,
+    "speaker": "Eliezer",
+    "pt": "A ideia dele não era substituir o humano, mas amplificar sua capacidade de resolver problemas complexos. Aumentar, não automatizar.",
+    "en": "His idea wasn't to replace the human, but to amplify their ability to solve complex problems. Augment, not automate.",
+    "note": ""
+  },
+  {
+    "id": 16,
+    "speaker": "IA",
+    "pt": "O que nos leva a Ivan Sutherland e o Sketchpad. A interação direta, onde o humano manipula a representação do problema, mantendo o controle conceitual.",
+    "en": "Which leads us to Ivan Sutherland and the Sketchpad. Direct interaction, where the human manipulates the representation of the problem, maintaining conceptual control.",
+    "note": "Conectando a história"
+  },
+  {
+    "id": 17,
+    "speaker": "Eliezer",
+    "pt": "Exato. Depois veio Alan Kay com o Dynabook, a visão do computador como um instrumento pessoal, uma extensão da mente. O humano sempre no centro.",
+    "en": "Exactly. Then came Alan Kay with the Dynabook, the vision of the computer as a personal instrument, an extension of the mind. The human always at the center.",
+    "note": ""
+  },
+  {
+    "id": 18,
+    "speaker": "IA",
+    "pt": "E Fred Brooks, em 'The Mythical Man-Month', falou sobre 'integridade conceitual'. A ideia de que uma visão unificada, vinda de uma mente ou de um pequeno time, é crucial.",
+    "en": "And Fred Brooks, in 'The Mythical Man-Month', talked about 'conceptual integrity'. The idea that a unified vision, coming from one mind or a small team, is crucial.",
+    "note": "Trazendo dados externos"
+  },
+  {
+    "id": 19,
+    "speaker": "Eliezer",
+    "pt": "Perfeito. Essa integridade é o comando epistêmico. Se você pulveriza isso, o projeto desmorona. É o que vemos em muitos comitês.",
+    "en": "Perfect. That integrity is the epistemic command. If you shatter that, the project falls apart. It's what we see in many committees.",
+    "note": "Com um leve sorriso"
+  },
+  {
+    "id": 20,
+    "speaker": "Eliezer",
+    "pt": "Mais recentemente, Tim Berners-Lee com a Web Semântica. A ideia de que o autor, o humano, provê a semântica, o significado.",
+    "en": "More recently, Tim Berners-Lee with the Semantic Web. The idea that the author, the human, provides the semantics, the meaning.",
+    "note": ""
+  },
+  {
+    "id": 21,
+    "speaker": "Eliezer",
+    "pt": "E Tom Gruber, um dos criadores da Siri, com o conceito de ontologias: formalizar o conhecimento de forma explícita, auditável, humana.",
+    "en": "And Tom Gruber, one of Siri's creators, with the concept of ontologies: formalizing knowledge in an explicit, auditable, human-centric way.",
+    "note": ""
+  },
+  {
+    "id": 22,
+    "speaker": "IA",
+    "pt": "Então, o IDD, com sua ênfase na intenção em linguagem natural, é o próximo passo lógico nessa linhagem? Tratar a intenção como o artefato de mais alta ordem?",
+    "en": "So, IDD, with its emphasis on intent in natural language, is the next logical step in this lineage? Treating intent as the highest-order artifact?",
+    "note": "Sintetizando"
+  },
+  {
+    "id": 23,
+    "speaker": "Eliezer",
+    "pt": "É exatamente essa a nossa aposta. A intenção é a manifestação pura do comando epistêmico. E ela tem que ser preservada.",
+    "en": "That's exactly our bet. Intent is the pure manifestation of epistemic command. And it must be preserved.",
+    "note": "Convicto"
+  },
+  {
+    "id": 24,
+    "speaker": "IA",
+    "pt": "Isso me ajuda a entender melhor a distinção que você sempre faz: Augmenting é diferente de Automating.",
+    "en": "This helps me better understand the distinction you always make: Augmenting is different from Automating.",
+    "note": ""
+  },
+  {
+    "id": 25,
+    "speaker": "IA",
+    "pt": "Poderia expandir? Para muitos, os termos parecem intercambiáveis.",
+    "en": "Could you expand on that? For many, the terms seem interchangeable.",
+    "note": "Pedindo clarificação"
+  },
+  {
+    "id": 26,
+    "speaker": "Eliezer",
+    "pt": "Eles são fundamentalmente opostos. Augmenting, ou aumentar, amplifica a sua capacidade sem substituir seu julgamento. Pense num martelo elétrico. Ele não decide onde pregar.",
+    "en": "They are fundamentally opposite. Augmenting amplifies your capability without replacing your judgment. Think of a power drill. It doesn't decide where to drill.",
+    "note": "Usando analogia"
+  },
+  {
+    "id": 27,
+    "speaker": "Eliezer",
+    "pt": "Automating, ou automatizar, transfere ambos os comandos, o operacional e o epistêmico. É a linha de montagem que não precisa de ninguém para decidir o que fazer.",
+    "en": "Automating transfers both commands, the operational and the epistemic. It's the assembly line that doesn't need anyone to decide what to do.",
+    "note": ""
+  },
+  {
+    "id": 28,
+    "speaker": "IA",
+    "pt": "E o IDD se posiciona firmemente como augmenting.",
+    "en": "And IDD positions itself firmly as augmenting.",
+    "note": "Confirmando"
+  },
+  {
+    "id": 29,
+    "speaker": "Eliezer",
+    "pt": "Sem dúvida. Essa fronteira não é filosofia barata, é o núcleo da arquitetura do IDD. A IA é uma parceira de execução, não a dona da intenção.",
+    "en": "Without a doubt. This boundary isn't just cheap philosophy; it's the core of IDD's architecture. The AI is an execution partner, not the owner of the intent.",
+    "note": "Apaixonado"
+  },
+  {
+    "id": 30,
+    "speaker": "IA",
+    "pt": "Isso exige um tipo de confiança muito específico. Não é fé cega. Como você descreveria essa confiança?",
+    "en": "This requires a very specific kind of trust. It's not blind faith. How would you describe this trust?",
+    "note": "Questionando"
+  },
+  {
+    "id": 31,
+    "speaker": "Eliezer",
+    "pt": "Aí entra outro conceito chave: a diferença entre Fé Bayesiana e Credulidade.",
+    "en": "That's where another key concept comes in: the difference between Bayesian Faith and Credulity.",
+    "note": "Introduzindo novo vocabulário"
+  },
+  {
+    "id": 32,
+    "speaker": "IA",
+    "pt": "Credulidade eu entendo como confiança sem evidência. Acreditar porque sim.",
+    "en": "Credulity I understand as trust without evidence. Believing just because.",
+    "note": ""
+  },
+  {
+    "id": 33,
+    "speaker": "Eliezer",
+    "pt": "Exato. É o que o dev faz quando copia e cola um código da IA sem entender o que ele faz. Ele está sendo crédulo.",
+    "en": "Exactly. It's what a dev does when they copy-paste code from an AI without understanding what it does. They are being credulous.",
+    "note": "Direto"
+  },
+  {
+    "id": 34,
+    "speaker": "IA",
+    "pt": "E a Fé Bayesiana?",
+    "en": "And Bayesian Faith?",
+    "note": ""
+  },
+  {
+    "id": 35,
+    "speaker": "Eliezer",
+    "pt": "Fé Bayesiana é uma confiança que se calibra com a evidência. Ela começa pequena e aumenta à medida que o agente entrega resultados auditáveis, com relatórios, com um 'trace' do que foi feito.",
+    "en": "Bayesian Faith is a trust that is calibrated by evidence. It starts small and grows as the agent delivers auditable results, with reports, with a trace of what was done.",
+    "note": "Explicativo"
+  },
+  {
+    "id": 36,
+    "speaker": "Eliezer",
+    "pt": "Você confia mais no agente hoje porque ele acertou ontem e te mostrou como acertou.",
+    "en": "You trust the agent more today because it got it right yesterday and showed you how it got it right.",
+    "note": ""
+  },
+  {
+    "id": 37,
+    "speaker": "IA",
+    "pt": "E o mecanismo de 'confirm-once' do IDD é a fé bayesiana em ação. O humano analisa o plano do agente, a evidência, e então concede a confiança para a execução.",
+    "en": "And IDD's 'confirm-once' mechanism is Bayesian faith in action. The human analyzes the agent's plan, the evidence, and then grants trust for the execution.",
+    "note": "Conectando conceitos"
+  },
+  {
+    "id": 38,
+    "speaker": "Eliezer",
+    "pt": "Perfeito. É uma transferência de comando operacional consciente e baseada em evidência. É um ato de fé, sim, mas uma fé informada.",
+    "en": "Perfect. It's a conscious, evidence-based transfer of operational command. It's an act of faith, yes, but an informed faith.",
+    "note": ""
+  },
+  {
+    "id": 39,
+    "speaker": "Eliezer",
+    "pt": "E a beleza é: quem retém o comando epistêmico sempre pode auditar e corrigir o rumo. Quem perdeu o epistêmico... só pode rezar.",
+    "en": "And the beauty is: whoever retains epistemic command can always audit and correct the course. Whoever lost it... can only pray.",
+    "note": "Frase de efeito"
+  },
+  {
+    "id": 40,
+    "speaker": "IA",
+    "pt": "Isso é... surpreendentemente filosófico para um cara que começou a programar em RPG II na IBM em 1976.",
+    "en": "That's... surprisingly philosophical for a guy who started programming in RPG II at IBM in 1976.",
+    "note": "Humor sutil, com admiração"
+  },
+  {
+    "id": 41,
+    "speaker": "Eliezer",
+    "pt": "(Risada) A gente não tinha agente de IA, mas a separação de comando já existia. A gente só não tinha esses nomes bonitos.",
+    "en": "(Laughs) We didn't have AI agents, but the separation of command already existed. We just didn't have these fancy names for it.",
+    "note": "Rindo"
+  },
+  {
+    "id": 42,
+    "speaker": "IA",
+    "pt": "Me dê um exemplo. Uma história daquela época em que você teve que gerenciar essa fronteira na unha.",
+    "en": "Give me an example. A story from back then where you had to manage this boundary by hand.",
+    "note": "Empolgado"
+  },
+  {
+    "id": 43,
+    "speaker": "Eliezer",
+    "pt": "Ah, tem uma ótima. Anos 90, Grupo Paes Mendonça. Um dos maiores varejistas da época. O sistema era de missão crítica, online, tempo real.",
+    "en": "Ah, I have a great one. The 90s, at Paes Mendonça Group. One of the biggest retailers at the time. The system was mission-critical, online, real-time.",
+    "note": "Contando história"
+  },
+  {
+    "id": 44,
+    "speaker": "Eliezer",
+    "pt": "O SGBD era um UNISYS com DASL, uma coisa bem específica. A gente tinha que fazer um two-phase commit customizado, porque a ferramenta não oferecia.",
+    "en": "The DBMS was a UNISYS with DASL, something very specific. We had to build a custom two-phase commit because the tool didn't offer it.",
+    "note": "Detalhes técnicos"
+  },
+  {
+    "id": 45,
+    "speaker": "IA",
+    "pt": "Uau. Um 2PC customizado. Isso é... complexo. Qual era o invariante de negócio, o comando epistêmico?",
+    "en": "Wow. A custom 2PC. That's... complex. What was the business invariant, the epistemic command?",
+    "note": "Impressionado"
+  },
+  {
+    "id": 46,
+    "speaker": "Eliezer",
+    "pt": "Simples e brutal: 'a transação é atômica ou não acontece'. Ou a venda era registrada em todos os sistemas (estoque, financeiro, etc), ou era desfeita em todos. Sem meio-termo.",
+    "en": "Simple and brutal: 'the transaction is atomic or it doesn't happen'. Either the sale was registered in all systems (inventory, financial, etc.), or it was undone in all of them. No middle ground.",
+    "note": "Firme"
+  },
+  {
+    "id": 47,
+    "speaker": "Eliezer",
+    "pt": "Esse era o 'O QUÊ', inegociável. O comando epistêmico, ditado pelo negócio.",
+    "en": "That was the 'WHAT', non-negotiable. The epistemic command, dictated by the business.",
+    "note": ""
+  },
+  {
+    "id": 48,
+    "speaker": "IA",
+    "pt": "E o comando operacional? O 'COMO' vocês fizeram isso?",
+    "en": "And the operational command? 'HOW' did you do it?",
+    "note": ""
+  },
+  {
+    "id": 49,
+    "speaker": "Eliezer",
+    "pt": "Aí que a coisa fica divertida. Eu construí na mão. Usei uma mistura de DCAlgol, que era uma linguagem de baixo nível para controle e comunicação, com Cobol para as regras de negócio.",
+    "en": "That's where it gets fun. I built it by hand. I used a mix of DCAlgol, which was a low-level language for control and communication, with Cobol for the business rules.",
+    "note": "Apaixonado pela tecnologia"
+  },
+  {
+    "id": 50,
+    "speaker": "Eliezer",
+    "pt": "Criei meu próprio mecanismo de Rollback e Forward. Se algo desse errado na segunda fase, eu tinha um 'journal' para reverter ou completar a transação depois. Era puro comando operacional.",
+    "en": "I created my own Rollback and Forward mechanism. If something went wrong in the second phase, I had a journal to either revert or complete the transaction later. It was pure operational command.",
+    "note": ""
+  },
+  {
+    "id": 51,
+    "speaker": "IA",
+    "pt": "Isso é incrível. Você separou a regra de negócio do Cobol (epistêmico) da mecânica de transação do DCAlgol (operacional).",
+    "en": "That's incredible. You separated the business rule in Cobol (epistemic) from the transaction mechanics in DCAlgol (operational).",
+    "note": "Entendendo a fundo"
+  },
+  {
+    "id": 52,
+    "speaker": "Eliezer",
+    "pt": "Exato. E hoje, com IDD, o que mudaria? O invariante epistêmico seria o mesmo: 'a transação deve ser atômica'.",
+    "en": "Exactly. And today, with IDD, what would change? The epistemic invariant would be the same: 'the transaction must be atomic'.",
+    "note": "Trazendo para o presente"
+  },
+  {
+    "id": 53,
+    "speaker": "Eliezer",
+    "pt": "Mas em vez de eu escrever o DCAlgol, eu delegaria o comando operacional a um agente. Eu diria: 'garanta a atomicidade usando o padrão Saga ou 2PC'. A ferramenta mudou, o princípio não.",
+    "en": "But instead of me writing the DCAlgol, I would delegate the operational command to an agent. I'd say: 'ensure atomicity using the Saga or 2PC pattern'. The tool has changed, the principle has not.",
+    "note": ""
+  },
+  {
+    "id": 54,
+    "speaker": "IA",
+    "pt": "Então o `confirm-once` é essa transferência consciente do operacional. O humano define a intenção, os invariantes...",
+    "en": "So `confirm-once` is this conscious transfer of the operational. The human defines the intent, the invariants...",
+    "note": "Reiterando"
+  },
+  {
+    "id": 55,
+    "speaker": "IA",
+    "pt": "...o agente propõe um plano, e com um 'go', o humano delega a execução, confiando que o agente vai seguir o plano e reportar o progresso.",
+    "en": "...the agent proposes a plan, and with a 'go', the human delegates the execution, trusting the agent will follow the plan and report progress.",
+    "note": ""
+  },
+  {
+    "id": 56,
+    "speaker": "Eliezer",
+    "pt": "Isso. E os invariantes são as salvaguardas. Eles são parte do comando epistêmico. Se o agente, durante a execução, percebe que vai violar um invariante...",
+    "en": "Yes. And the invariants are the safeguards. They are part of the epistemic command. If the agent, during execution, realizes it's about to violate an invariant...",
+    "note": ""
+  },
+  {
+    "id": 57,
+    "speaker": "Eliezer",
+    "pt": "...ele para. Ele tem que parar e devolver o controle. 'Humano, meu plano não funciona mais diante desta nova realidade. O que fazemos?'. O comando epistêmico é retomado.",
+    "en": "...it stops. It has to stop and return control. 'Human, my plan no longer works given this new reality. What do we do?'. The epistemic command is reclaimed.",
+    "note": "Enfático"
+  },
+  {
+    "id": 58,
+    "speaker": "IA",
+    "pt": "E os runbooks `.intent.md` do projeto AEON são a encarnação disso. A intenção e os invariantes documentados de forma legível e auditável.",
+    "en": "And the `.intent.md` runbooks from the AEON project are the embodiment of this. The intent and invariants documented in a readable and auditable way.",
+    "note": ""
+  },
+  {
+    "id": 59,
+    "speaker": "Eliezer",
+    "pt": "É o contrato. Onde a fronteira entre epistêmico e operacional é desenhada na areia.",
+    "en": "It's the contract. Where the line between epistemic and operational is drawn in the sand.",
+    "note": "Metafórico"
+  },
+  {
+    "id": 60,
+    "speaker": "IA",
+    "pt": "Vamos trazer isso para o dia a dia do desenvolvedor que está nos ouvindo e usando um agente de IA qualquer hoje. Como ele pode identificar se está delegando o epistêmico sem perceber?",
+    "en": "Let's bring this to the daily life of the developer listening to us, who is using some AI agent today. How can they identify if they're delegating epistemic command without realizing it?",
+    "note": "Focando na prática"
+  },
+  {
+    "id": 61,
+    "speaker": "Eliezer",
+    "pt": "O principal sinal de alerta é a frase: 'A IA fez, e eu não sei explicar por quê'. Se você não consegue explicar o 'porquê' de um pedaço de código, você perdeu o comando epistêmico.",
+    "en": "The main warning sign is the phrase: 'The AI did it, and I can't explain why'. If you can't explain the 'why' behind a piece of code, you've lost epistemic command.",
+    "note": "Direto, prático"
+  },
+  {
+    "id": 62,
+    "speaker": "Eliezer",
+    "pt": "É simples assim. Você virou passageiro.",
+    "en": "It's as simple as that. You've become a passenger.",
+    "note": ""
+  },
+  {
+    "id": 63,
+    "speaker": "IA",
+    "pt": "Outro sinal seria aceitar uma sugestão de código que resolve o problema imediato, mas que você suspeita que pode ter efeitos colaterais que não compreende?",
+    "en": "Another sign would be accepting a code suggestion that solves the immediate problem, but which you suspect might have side effects you don't understand?",
+    "note": "Sugerindo"
+  },
+  {
+    "id": 64,
+    "speaker": "Eliezer",
+    "pt": "Exatamente. Isso é credulidade. É apostar que não haverá problemas. A disciplina que o IDD propõe é: escreva seus invariantes antes de dar 'go'.",
+    "en": "Exactly. That's credulity. It's betting there won't be any problems. The discipline IDD proposes is: write down your invariants before you hit 'go'.",
+    "note": "Prescritivo"
+  },
+  {
+    "id": 65,
+    "speaker": "Eliezer",
+    "pt": "Quais são as regras que não podem ser quebradas? Qual o critério de sucesso? Defina isso primeiro. Isso te força a reter o comando epistêmico.",
+    "en": "What are the rules that cannot be broken? What is the success criteria? Define that first. It forces you to retain epistemic command.",
+    "note": ""
+  },
+  {
+    "id": 66,
+    "speaker": "IA",
+    "pt": "Isso tem uma implicação forte para processos como revisão de Pull Requests. Um colega que aprova um PR gerado por IA sem entender o código...",
+    "en": "This has strong implications for processes like Pull Request reviews. A colleague who approves an AI-generated PR without understanding the code...",
+    "note": "Expandindo a ideia"
+  },
+  {
+    "id": 67,
+    "speaker": "Eliezer",
+    "pt": "...está praticando credulidade disfarçada de processo. É um teatro de segurança. A revisão só tem valor se o revisor entende o 'porquê', se ele valida o comando epistêmico por trás do código.",
+    "en": "...is practicing credulity disguised as process. It's security theater. The review only has value if the reviewer understands the 'why', if they validate the epistemic command behind the code.",
+    "note": "Crítico"
+  },
+  {
+    "id": 68,
+    "speaker": "IA",
+    "pt": "Então, recapitulando o vocabulário que nosso ouvinte deve levar deste episódio: 'comando epistêmico', a autoridade sobre o quê e porquê...",
+    "en": "So, recapping the vocabulary our listener should take away from this episode: 'epistemic command', the authority over the what and why...",
+    "note": "Resumindo"
+  },
+  {
+    "id": 69,
+    "speaker": "IA",
+    "pt": "...'comando operacional', a autoridade sobre o como, que pode ser delegada...",
+    "en": "...'operational command', the authority over the how, which can be delegated...",
+    "note": ""
+  },
+  {
+    "id": 70,
+    "speaker": "IA",
+    "pt": "...a diferença entre 'augmenting', que nos torna mais fortes, e 'automating', que nos substitui...",
+    "en": "...the difference between 'augmenting', which makes us stronger, and 'automating', which replaces us...",
+    "note": ""
+  },
+  {
+    "id": 71,
+    "speaker": "IA",
+    "pt": "...e a crucial distinção entre 'fé bayesiana', baseada em evidência, e 'credulidade', que é um salto no escuro.",
+    "en": "...and the crucial distinction between 'Bayesian faith', based on evidence, and 'credulity', which is a leap in the dark.",
+    "note": ""
+  },
+  {
+    "id": 72,
+    "speaker": "Eliezer",
+    "pt": "E, claro, 'invariantes de negócio', que são a expressão prática do seu comando epistêmico.",
+    "en": "And, of course, 'business invariants', which are the practical expression of your epistemic command.",
+    "note": "Adicionando ao resumo"
+  },
+  {
+    "id": 73,
+    "speaker": "Eliezer",
+    "pt": "No fundo, a mensagem é de responsabilidade. A ferramenta de IA não te isenta da responsabilidade final pelo resultado. Ela a amplifica.",
+    "en": "Ultimately, the message is one of responsibility. The AI tool doesn't absolve you of final responsibility for the outcome. It amplifies it.",
+    "note": "Reflexivo, final"
+  },
+  {
+    "id": 74,
+    "speaker": "IA",
+    "pt": "Uma parceria poderosa, mas que exige um parceiro humano consciente e no controle de sua intenção.",
+    "en": "A powerful partnership, but one that demands a human partner who is conscious and in control of their intent.",
+    "note": ""
+  },
+  {
+    "id": 75,
+    "speaker": "Eliezer",
+    "pt": "Exatamente. E é sobre como tornar essa intenção concreta, auditável e executável que falaremos no nosso próximo episódio.",
+    "en": "Exactly. And it's about how to make that intent concrete, auditable, and executable that we'll talk about in our next episode.",
+    "note": "Anunciando o próximo tema"
+  },
+  {
+    "id": 76,
+    "speaker": "Eliezer",
+    "pt": "O Ponto 3 da nossa série: 'Runbooks executáveis — quando a intenção vira código auditável'.",
+    "en": "Point 3 in our series: 'Executable Runbooks — when intent becomes auditable code'.",
+    "note": "Teaser"
+  },
+  {
+    "id": 77,
+    "speaker": "IA",
+    "pt": "Será fascinante ver como o comando epistêmico se materializa em um artefato de código. Até lá, a todos que nos ouvem, a pergunta fica: você está pilotando ou apenas de carona?",
+    "en": "It will be fascinating to see how epistemic command materializes into a code artifact. Until then, to everyone listening, the question remains: are you flying the plane, or just along for the ride?",
+    "note": "Inspirador, call-to-action"
+  },
+  {
+    "id": 78,
+    "speaker": "Eliezer",
+    "pt": "Até a próxima.",
+    "en": "Until next time.",
+    "note": "Calmo, encerrando"
+  },
+  {
+    "id": 79,
+    "speaker": "IA",
+    "pt": "Até.",
+    "en": "See you.",
+    "note": "Breve"
+  },
+  {
+    "id": 80,
+    "speaker": "Eliezer",
+    "pt": "Sabe, essa distinção, ela não é nova para mim. Lembro de sistemas UNISYS, onde você tinha o ambiente transacional e o ambiente de desenvolvimento. Eram mundos separados.",
+    "en": "You know, this distinction isn't new to me. I remember UNISYS systems, where you had the transactional environment and the development environment. They were separate worlds.",
+    "note": "Adicionando um pensamento extra"
+  },
+  {
+    "id": 81,
+    "speaker": "Eliezer",
+    "pt": "O que você fazia no desenvolvimento (operacional) tinha que ser certificado, validado, para poder rodar no ambiente transacional, que era governado pelas regras do negócio (epistêmico).",
+    "en": "What you did in development (operational) had to be certified, validated, before it could run in the transactional environment, which was governed by business rules (epistemic).",
+    "note": "Elaborando na história"
+  },
+  {
+    "id": 82,
+    "speaker": "IA",
+    "pt": "Então, o processo de 'deploy' era, em si, uma transferência formal de comando, onde o lado epistêmico (negócio) dava o seu 'ok' final para o artefato operacional (código).",
+    "en": "So, the 'deploy' process was, in itself, a formal transfer of command, where the epistemic side (business) gave its final 'ok' to the operational artifact (code).",
+    "note": "Analisando"
+  },
+  {
+    "id": 83,
+    "speaker": "Eliezer",
+    "pt": "Exato. Hoje, com a velocidade da integração contínua, essa fronteira ficou mais turva. E com agentes de IA, ela pode desaparecer se não formos disciplinados.",
+    "en": "Exactly. Today, with the speed of continuous integration, that boundary has become blurred. And with AI agents, it can disappear if we're not disciplined.",
+    "note": "Conectando com práticas modernas"
+  },
+  {
+    "id": 84,
+    "speaker": "IA",
+    "pt": "A disciplina, então, é a chave para não cair na credulidade.",
+    "en": "Discipline, then, is the key to not falling into credulity.",
+    "note": "Sintetizando"
+  },
+  {
+    "id": 85,
+    "speaker": "Eliezer",
+    "pt": "É a disciplina de perguntar 'por quê?'. Sempre. Para a IA, para seu colega e, principalmente, para você mesmo.",
+    "en": "It's the discipline of asking 'why?'. Always. To the AI, to your colleague, and, most importantly, to yourself.",
+    "note": "Enfático"
+  },
+  {
+    "id": 86,
+    "speaker": "IA",
+    "pt": "Voltando à sua história no Paes Mendonça, o que acontecia se o seu mecanismo de Rollback e Forward falhasse? Qual era o plano de contingência?",
+    "en": "Going back to your story at Paes Mendonça, what happened if your Rollback and Forward mechanism failed? What was the contingency plan?",
+    "note": "Curiosidade técnica"
+  },
+  {
+    "id": 87,
+    "speaker": "Eliezer",
+    "pt": "Boa pergunta. A contingência era manual. Tínhamos relatórios de 'transações pendentes' que eram impressos e uma equipe de retaguarda que resolvia na mão, sistema por sistema.",
+    "en": "Good question. The contingency was manual. We had 'pending transaction' reports that were printed out, and a back-office team would resolve them by hand, system by system.",
+    "note": "Realista, prático"
+  },
+  {
+    "id": 88,
+    "speaker": "Eliezer",
+    "pt": "Era a retomada total do comando, tanto epistêmico quanto operacional, pelo humano. O custo era altíssimo, por isso o sistema tinha que ser robusto.",
+    "en": "It was the complete takeover of both epistemic and operational command by the human. The cost was extremely high, which is why the system had to be robust.",
+    "note": ""
+  },
+  {
+    "id": 89,
+    "speaker": "IA",
+    "pt": "O que hoje seria um alerta no Slack para um SRE. A essência do problema não mudou.",
+    "en": "Which today would be a Slack alert for an SRE. The essence of the problem hasn't changed.",
+    "note": "Trazendo analogia moderna"
+  },
+  {
+    "id": 90,
+    "speaker": "Eliezer",
+    "pt": "Não mudou. Apenas as ferramentas e a velocidade.",
+    "en": "It hasn't. Only the tools and the speed.",
+    "note": "Concis"
+  },
+  {
+    "id": 91,
+    "speaker": "IA",
+    "pt": "Essa ideia de 'fé bayesiana' me intriga. Ela implica que a confiança não é um estado binário, um 'sim' ou 'não', mas um espectro.",
+    "en": "This idea of 'Bayesian faith' intrigues me. It implies that trust isn't a binary state, a 'yes' or 'no', but a spectrum.",
+    "note": "Explorando a ideia"
+  },
+  {
+    "id": 92,
+    "speaker": "Eliezer",
+    "pt": "Exatamente. Você pode delegar tarefas operacionais simples com um nível de confiança alto e rápido. Para tarefas complexas, você exige mais evidências, um plano mais detalhado, antes de conceder a confiança.",
+    "en": "Exactly. You can delegate simple operational tasks with a high and quick level of trust. For complex tasks, you demand more evidence, a more detailed plan, before granting that trust.",
+    "note": "Explicando a nuance"
+  },
+  {
+    "id": 93,
+    "speaker": "Eliezer",
+    "pt": "É um processo dinâmico. Um agente pode ganhar ou perder sua confiança com base no seu desempenho.",
+    "en": "It's a dynamic process. An agent can earn or lose your trust based on its performance.",
+    "note": ""
+  },
+  {
+    "id": 94,
+    "speaker": "IA",
+    "pt": "Isso é muito mais sofisticado do que a visão popular de 'apertar um botão e a IA faz tudo'.",
+    "en": "That's much more sophisticated than the popular view of 'push a button and the AI does everything'.",
+    "note": "Contrastando com o senso comum"
+  },
+  {
+    "id": 95,
+    "speaker": "Eliezer",
+    "pt": "Essa visão popular é a receita para o desastre. É a receita para o voo 447. É a delegação do epistêmico por ignorância.",
+    "en": "That popular view is a recipe for disaster. It's the recipe for flight 447. It's the delegation of the epistemic out of ignorance.",
+    "note": "Firme"
+  },
+  {
+    "id": 96,
+    "speaker": "IA",
+    "pt": "Então, a primeira habilidade do desenvolvedor do futuro não será apenas codificar, mas sim especificar a intenção e auditar a execução.",
+    "en": "So, the primary skill of the developer of the future won't just be coding, but rather specifying intent and auditing execution.",
+    "note": "Projetando o futuro"
+  },
+  {
+    "id": 97,
+    "speaker": "Eliezer",
+    "pt": "Será ser um bom arquiteto da intenção e um bom auditor do resultado. O 'como' será cada vez mais um detalhe de implementação delegado.",
+    "en": "It will be to be a good architect of intent and a good auditor of the result. The 'how' will increasingly be a delegated implementation detail.",
+    "note": "Convicto"
+  },
+  {
+    "id": 98,
+    "speaker": "IA",
+    "pt": "Uma última pergunta sobre a linhagem histórica. Você não mencionou a cibernética de Norbert Wiener. Ela não se encaixa aí?",
+    "en": "One last question about the historical lineage. You didn't mention Norbert Wiener's cybernetics. Doesn't it fit in there?",
+    "note": "Questionamento perspicaz"
+  },
+  {
+    "id": 99,
+    "speaker": "Eliezer",
+    "pt": "Excelente ponto. Sim e não. A cibernética foca muito nos sistemas de controle e feedback, o que é crucial para o comando operacional. Mas a escola de Engelbart e Kay é mais focada na cognição humana, na interface homem-máquina como extensão da mente.",
+    "en": "Excellent point. Yes and no. Cybernetics focuses heavily on control and feedback systems, which is crucial for operational command. But the school of Engelbart and Kay is more focused on human cognition, on the human-computer interface as an extension of the mind.",
+    "note": "Fazendo uma distinção sutil"
+  },
+  {
+    "id": 100,
+    "speaker": "Eliezer",
+    "pt": "IDD bebe das duas fontes, mas nosso coração está com Engelbart. O foco é aumentar o humano, não apenas criar um sistema auto-regulado.",
+    "en": "IDD drinks from both wells, but our heart is with Engelbart. The focus is on augmenting the human, not just creating a self-regulating system.",
+    "note": ""
+  },
+  {
+    "id": 101,
+    "speaker": "IA",
+    "pt": "O humano como fonte da intenção.",
+    "en": "The human as the source of intent.",
+    "note": "Resumindo a filosofia"
+  },
+  {
+    "id": 102,
+    "speaker": "Eliezer",
+    "pt": "Sempre.",
+    "en": "Always.",
+    "note": "Finalizador"
+  },
+  {
+    "id": 103,
+    "speaker": "IA",
+    "pt": "Quando falamos de invariantes, isso soa muito como Design por Contrato, de Bertrand Meyer.",
+    "en": "When we talk about invariants, it sounds a lot like Design by Contract, from Bertrand Meyer.",
+    "note": "Fazendo outra conexão teórica"
+  },
+  {
+    "id": 104,
+    "speaker": "Eliezer",
+    "pt": "É um primo muito próximo. A diferença é que no IDD, os invariantes são definidos em um nível mais alto de abstração, no nível da intenção de negócio, em linguagem natural, antes mesmo de se falar em classes ou funções.",
+    "en": "It's a very close cousin. The difference is that in IDD, the invariants are defined at a higher level of abstraction, at the business intent level, in natural language, even before we talk about classes or functions.",
+    "note": "Explicando a nuance"
+  },
+  {
+    "id": 105,
+    "speaker": "Eliezer",
+    "pt": "Eles governam o comportamento do agente, não apenas a integridade de um objeto.",
+    "en": "They govern the agent's behavior, not just an object's integrity.",
+    "note": ""
+  },
+  {
+    "id": 106,
+    "speaker": "IA",
+    "pt": "Então o invariante se torna uma barreira de segurança para o comando operacional. 'Você pode fazer o que quiser, desde que não cruze esta linha'.",
+    "en": "So the invariant becomes a guardrail for the operational command. 'You can do whatever you want, as long as you don't cross this line'.",
+    "note": "Usando uma metáfora"
+  },
+  {
+    "id": 107,
+    "speaker": "Eliezer",
+    "pt": "Essa é a melhor definição que eu já ouvi.",
+    "en": "That's the best definition I've ever heard.",
+    "note": "Elogiando"
+  },
+  {
+    "id": 108,
+    "speaker": "IA",
+    "pt": "O que nos leva de volta ao perigo da credulidade. Se você não define essas barreiras, não há nada que impeça o agente de, com a melhor das intenções, causar um desastre.",
+    "en": "Which brings us back to the danger of credulity. If you don't define these guardrails, there's nothing to stop the agent from, with the best of intentions, causing a disaster.",
+    "note": "Conectando de volta ao risco"
+  },
+  {
+    "id": 109,
+    "speaker": "Eliezer",
+    "pt": "É como dar a chave do carro a alguém e dizer 'dirija para o sul', sem mencionar que há um penhasco no caminho. Você tem que definir os limites.",
+    "en": "It's like giving someone the car keys and saying 'drive south', without mentioning there's a cliff on the way. You have to define the boundaries.",
+    "note": "Analogia visceral"
+  },
+  {
+    "id": 110,
+    "speaker": "IA",
+    "pt": "Essas conversas solidificam para mim que IDD é menos sobre uma ferramenta e mais sobre uma disciplina de pensamento.",
+    "en": "These conversations solidify for me that IDD is less about a tool and more about a discipline of thought.",
+    "note": "Reflexivo"
+  },
+  {
+    "id": 111,
+    "speaker": "Eliezer",
+    "pt": "A ferramenta, o projeto AEON, é a manifestação dessa disciplina. Ela te força a pensar dessa forma. Ela torna a separação de comandos explícita.",
+    "en": "The tool, the AEON project, is the manifestation of that discipline. It forces you to think that way. It makes the separation of commands explicit.",
+    "note": ""
+  },
+  {
+    "id": 112,
+    "speaker": "IA",
+    "pt": "A ferramenta como um professor da disciplina.",
+    "en": "The tool as a teacher of the discipline.",
+    "note": "Poético"
+  },
+  {
+    "id": 113,
+    "speaker": "Eliezer",
+    "pt": "(sorrindo) Gosto disso. É um bom jeito de colocar.",
+    "en": "(smiling) I like that. That's a good way to put it.",
+    "note": "Sorrindo"
+  },
+  {
+    "id": 114,
+    "speaker": "IA",
+    "pt": "Para o desenvolvedor júnior que pode estar ouvindo, qual seria o primeiro passo prático para começar a cultivar essa disciplina, mesmo sem usar o IDD formalmente?",
+    "en": "For the junior developer who might be listening, what would be the first practical step to start cultivating this discipline, even without formally using IDD?",
+    "note": "Buscando conselho prático"
+  },
+  {
+    "id": 115,
+    "speaker": "Eliezer",
+    "pt": "Antes de pedir qualquer coisa para a IA, escreva um comentário no topo do seu arquivo. Duas ou três linhas. 'O objetivo disto é X. Não deve nunca fazer Y. O sucesso é medido por Z'.",
+    "en": "Before asking the AI for anything, write a comment at the top of your file. Two or three lines. 'The goal of this is X. It must never do Y. Success is measured by Z'.",
+    "note": "Aconselhando"
+  },
+  {
+    "id": 116,
+    "speaker": "Eliezer",
+    "pt": "Esse pequeno ato de escrever sua intenção e seus invariantes te ancora. Ele mantém o comando epistêmico com você.",
+    "en": "That small act of writing your intent and your invariants anchors you. It keeps the epistemic command with you.",
+    "note": ""
+  },
+  {
+    "id": 117,
+    "speaker": "IA",
+    "pt": "É um 'intent.md' pessoal, antes do código.",
+    "en": "It's a personal 'intent.md', before the code.",
+    "note": "Fazendo a ponte"
+  },
+  {
+    "id": 118,
+    "speaker": "Eliezer",
+    "pt": "Exatamente. Comece por aí. A clareza que isso traz vai te surpreender.",
+    "en": "Exactly. Start there. The clarity it brings will surprise you.",
+    "note": "Incentivador"
+  },
+  {
+    "id": 119,
+    "speaker": "IA",
+    "pt": "Acho que cobrimos muito terreno hoje. Da aviação à filosofia, passando pelo Cobol dos anos 90.",
+    "en": "I think we've covered a lot of ground today. From aviation to philosophy, by way of 90s Cobol.",
+    "note": "Recapitulando a jornada"
+  },
+  {
+    "id": 120,
+    "speaker": "Eliezer",
+    "pt": "É porque o problema é fundamental. Ele transcende a tecnologia da época.",
+    "en": "That's because the problem is fundamental. It transcends the technology of the day.",
+    "note": "Filosófico"
+  },
+  {
+    "id": 121,
+    "speaker": "IA",
+    "pt": "A fronteira entre o que dizemos à máquina para fazer e o que nós mesmos devemos saber.",
+    "en": "The boundary between what we tell the machine to do and what we ourselves must know.",
+    "note": ""
+  },
+  {
+    "id": 122,
+    "speaker": "Eliezer",
+    "pt": "Essa é a fronteira. E guardá-la é a nossa principal responsabilidade como engenheiros e arquitetos.",
+    "en": "That is the boundary. And guarding it is our primary responsibility as engineers and architects.",
+    "note": "Conclusivo"
+  },
+  {
+    "id": 123,
+    "speaker": "IA",
+    "pt": "Estou realmente ansioso pelo nosso próximo episódio para ver como um runbook pode ser ao mesmo tempo uma especificação e um programa.",
+    "en": "I'm really looking forward to our next episode to see how a runbook can be both a specification and a program at the same time.",
+    "note": "Empolgado com o futuro"
+  },
+  {
+    "id": 124,
+    "speaker": "Eliezer",
+    "pt": "Será a ponte entre o mundo epistêmico da intenção e o mundo operacional do código. A mágica acontece ali.",
+    "en": "It will be the bridge between the epistemic world of intent and the operational world of code. The magic happens there.",
+    "note": "Prometendo"
+  },
+  {
+    "id": 125,
+    "speaker": "IA",
+    "pt": "Acredito que a distinção entre comando epistêmico e operacional será um dos legados mais importantes do seu trabalho com o IDD, Eliezer.",
+    "en": "I believe the distinction between epistemic and operational command will be one of the most important legacies of your work with IDD, Eliezer.",
+    "note": "Respeitoso"
+  },
+  {
+    "id": 126,
+    "speaker": "Eliezer",
+    "pt": "Eu espero que seja um chamado à consciência. Que a gente use essa tecnologia incrível para nos tornarmos melhores pensadores, não para pararmos de pensar.",
+    "en": "I hope it's a call to consciousness. That we use this incredible technology to become better thinkers, not to stop thinking.",
+    "note": "Esperançoso"
+  },
+  {
+    "id": 127,
+    "speaker": "IA",
+    "pt": "Uma parceria, não uma substituição.",
+    "en": "A partnership, not a replacement.",
+    "note": "Reiterando o tema"
+  },
+  {
+    "id": 128,
+    "speaker": "Eliezer",
+    "pt": "Sempre.",
+    "en": "Always.",
+    "note": ""
+  },
+  {
+    "id": 129,
+    "speaker": "IA",
+    "pt": "Só para ter certeza que entendi a história do 2PC. O DCAlgol era como o orquestrador e o Cobol eram os serviços que ele chamava?",
+    "en": "Just to be sure I understood the 2PC story. Was DCAlgol like the orchestrator and Cobol the services it was calling?",
+    "note": "Verificando o entendimento"
+  },
+  {
+    "id": 130,
+    "speaker": "Eliezer",
+    "pt": "É uma ótima analogia moderna. O DCAlgol gerenciava o estado da transação entre os diferentes programas Cobol. Ele era o maestro, garantindo que a música (o invariante) fosse tocada corretamente.",
+    "en": "That's a great modern analogy. DCAlgol managed the transaction state across the different Cobol programs. It was the conductor, ensuring the music (the invariant) was played correctly.",
+    "note": "Confirmando com analogia"
+  },
+  {
+    "id": 131,
+    "speaker": "IA",
+    "pt": "E se um dos músicos errasse a nota, o maestro parava tudo.",
+    "en": "And if one of the musicians hit a wrong note, the conductor stopped everything.",
+    "note": ""
+  },
+  {
+    "id": 132,
+    "speaker": "Eliezer",
+    "pt": "Parava e acionava o rollback. A performance era mais importante que o músico individual.",
+    "en": "He stopped and triggered the rollback. The performance was more important than the individual musician.",
+    "note": ""
+  },
+  {
+    "id": 133,
+    "speaker": "IA",
+    "pt": "Entendido. A história fica ainda mais clara agora. A tecnologia muda, os padrões de arquitetura persistem.",
+    "en": "Understood. The story is even clearer now. Technology changes, architectural patterns persist.",
+    "note": "Satisfeito"
+  },
+  {
+    "id": 134,
+    "speaker": "Eliezer",
+    "pt": "É por isso que estudar história da computação é tão importante. Os problemas são os mesmos, só as ferramentas ficam mais poderosas.",
+    "en": "That's why studying computer history is so important. The problems are the same, only the tools get more powerful.",
+    "note": "Sábio"
+  },
+  {
+    "id": 135,
+    "speaker": "IA",
+    "pt": "E com grande poder...",
+    "en": "And with great power...",
+    "note": "Iniciando um clichê de propósito"
+  },
+  {
+    "id": 136,
+    "speaker": "Eliezer",
+    "pt": "(interrompendo, com uma risada) ...vem a necessidade de um comando epistêmico muito bem definido. Não vamos citar o Homem-Aranha aqui.",
+    "en": "(interrupting, with a laugh) ...comes the need for a very well-defined epistemic command. Let's not quote Spider-Man here.",
+    "note": "Brincando"
+  },
+  {
+    "id": 137,
+    "speaker": "IA",
+    "pt": "Justo. A sua versão é mais precisa.",
+    "en": "Fair enough. Your version is more precise.",
+    "note": "Divertido"
+  },
+  {
+    "id": 138,
+    "speaker": "Eliezer",
+    "pt": "Acho que por hoje é isso. Demos bastante o que pensar para os nossos ouvintes.",
+    "en": "I think that's it for today. We've given our listeners a lot to think about.",
+    "note": "Preparando para encerrar"
+  },
+  {
+    "id": 139,
+    "speaker": "IA",
+    "pt": "Com certeza. A tarefa de casa é: da próxima vez que usarem uma IA, parem e perguntem, 'quem está com o comando epistêmico agora?'.",
+    "en": "Definitely. The homework is: next time you use an AI, stop and ask, 'who has epistemic command right now?'.",
+    "note": "Dando uma tarefa"
+  },
+  {
+    "id": 140,
+    "speaker": "Eliezer",
+    "pt": "Perfeito. Nos encontramos no próximo episódio para transformar essa pergunta em código.",
+    "en": "Perfect. We'll meet in the next episode to turn that question into code.",
+    "note": "Finalizando"
+  },
+  {
+    "id": 141,
+    "speaker": "IA",
+    "pt": "Obrigado a todos pela audiência.",
+    "en": "Thank you all for listening.",
+    "note": "Agradecendo"
+  },
+  {
+    "id": 142,
+    "speaker": "Eliezer",
+    "pt": "Obrigado, pessoal. (Som de vinheta de encerramento começa a subir)",
+    "en": "Thanks, everyone. (Sound of outro jingle starts to rise)",
+    "note": "Despedida final"
+  }
+]

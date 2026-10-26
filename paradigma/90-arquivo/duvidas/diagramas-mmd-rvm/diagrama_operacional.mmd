@@ -1,0 +1,118 @@
+classDiagram
+    direction TB
+    
+    class Congregacao {
+        +String id
+        +String nome
+        +String numero
+        +String circuito
+        +boolean temSalaB
+        +int qtdSalasAdicionais
+    }
+    
+    class Designacao {
+        +String id
+        +String parteId
+        +String publicadorId
+        +String ajudanteId
+        +Date data
+        +String sala
+        +StatusDesignacao status
+    }
+    
+    class FormularioS89 {
+        +String id
+        +String designacaoId
+        +Date data
+        +String congregacao
+        +String nomeEstudante
+        +String nomeAjudante
+        +int numeroParte
+        +String tituloDesignacao
+        +Cenario cenario
+        +int duracaoMinutos
+        +String licao
+    }
+    
+    class QuadroS140 {
+        +String id
+        +String semanaId
+        +Date dataReuniao
+        +String presidente
+        +String oracaoInicial
+        +String canticoInicial
+        +String discursoOrador
+        +String joiasOrador
+        +String leituraEstudante
+        +ItemS140 partesMinisterio
+        +String canticoIntermediario
+        +ItemS140 partesVidaCrista
+        +String dirigenteEBC
+        +String leitorEBC
+        +String canticoFinal
+        +String oracaoFinal
+    }
+    
+    class ItemS140 {
+        +int numero
+        +String titulo
+        +int duracao
+        +String participantePrincipal
+        +String ajudantePrincipal
+        +String participanteSalaB
+        +String ajudanteSalaB
+    }
+    
+    class StatusDesignacao {
+        PENDENTE
+        NOTIFICADA
+        CONFIRMADA
+        RECUSADA
+        SUBSTITUIDA
+    }
+    
+    class HistoricoDesignacao {
+        +String id
+        +String publicadorId
+        +String tipoParteId
+        +Date data
+        +boolean compareceu
+    }
+    
+    class EstatisticaPublicador {
+        +String publicadorId
+        +int totalDesignacoes
+        +Date ultimaDesignacao
+        +float mediaDiasEntreDesignacoes
+    }
+    
+    class Publicador {
+        +String id
+        +String nome
+    }
+    
+    class Parte {
+        +String id
+        +String titulo
+    }
+    
+    class Semana {
+        +String id
+        +String titulo
+    }
+    
+    Congregacao "1" -- "*" Publicador : tem
+    Congregacao "1" -- "*" QuadroS140 : gera
+    
+    Designacao "*" --> "1" Parte : para
+    Designacao "*" --> "1" Publicador : principal
+    Designacao "*" --> "0..1" Publicador : ajudante
+    Designacao --> StatusDesignacao
+    
+    FormularioS89 "1" --> "1" Designacao : gera de
+    
+    QuadroS140 "1" --> "1" Semana : da
+    QuadroS140 "1" *-- "*" ItemS140 : contem
+    
+    HistoricoDesignacao "*" --> "1" Publicador : de
+    EstatisticaPublicador "1" --> "1" Publicador : de

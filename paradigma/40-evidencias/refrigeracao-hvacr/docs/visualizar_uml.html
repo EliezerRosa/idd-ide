@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Diagrama Gráfico UML Interativo — IDD Refrigeração (HVAC-R)</title>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; }
+    body {
+      background: #050811;
+      color: #f1f5f9;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 30px 15px;
+    }
+    header {
+      text-align: center;
+      margin-bottom: 25px;
+      max-width: 950px;
+    }
+    .badge {
+      display: inline-block;
+      background: linear-gradient(135deg, #059669, #0284c7);
+      color: white;
+      font-weight: 800;
+      font-size: 13px;
+      padding: 5px 16px;
+      border-radius: 999px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+      box-shadow: 0 0 15px rgba(16, 185, 129, 0.4);
+    }
+    h1 {
+      font-size: 32px;
+      font-weight: 900;
+      color: #ffffff;
+      letter-spacing: -0.5px;
+    }
+    p {
+      color: #94a3b8;
+      font-size: 15px;
+      margin-top: 6px;
+      line-height: 1.4;
+    }
+    .sections-wrapper {
+      width: 100%;
+      max-width: 1400px;
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+    }
+    .card-panel {
+      background: rgba(11, 20, 38, 0.95);
+      border: 1.5px solid rgba(56, 189, 248, 0.25);
+      border-radius: 18px;
+      padding: 24px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+      display: flex;
+      flex-direction: column;
+    }
+    .card-header-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .card-title {
+      font-size: 20px;
+      font-weight: 800;
+      color: #38bdf8;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .card-desc {
+      font-size: 13.5px;
+      color: #94a3b8;
+      margin-top: 4px;
+    }
+
+    /* BARRA DE CONTROLES DE FOCO E FILTRO */
+    .controls-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      background: rgba(5, 8, 17, 0.7);
+      border: 1px solid rgba(56, 189, 248, 0.2);
+      border-radius: 12px;
+      padding: 10px 14px;
+      margin-bottom: 16px;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .filter-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      align-items: center;
+    }
+    .filter-label {
+      font-size: 12px;
+      font-weight: 800;
+      color: #38bdf8;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-right: 4px;
+    }
+    .btn-filter {
+      background: rgba(15, 23, 42, 0.8);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: #cbd5e1;
+      padding: 6px 12px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .btn-filter:hover {
+      background: rgba(56, 189, 248, 0.15);
+      border-color: #38bdf8;
+      color: #ffffff;
+    }
+    .btn-filter.active {
+      background: linear-gradient(135deg, #0284c7, #059669);
+      border-color: #38bdf8;
+      color: #ffffff;
+      box-shadow: 0 0 12px rgba(56, 189, 248, 0.4);
+    }
+
+    /* CONTROLES DE ZOOM */
+    .zoom-controls {
+      display: flex;
+      gap: 6px;
+      align-items: center;
+    }
+    .btn-zoom {
+      background: #0f172a;
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      color: #38bdf8;
+      width: 32px;
+      height: 32px;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 900;
+      font-size: 14px;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    .btn-zoom:hover {
+      background: #0284c7;
+      color: #ffffff;
+    }
+
+    /* CONTAINER DO DIAGRAMA COM SUPORTE A PAN/ZOOM */
+    .diagram-viewport {
+      width: 100%;
+      height: 600px;
+      background: rgba(5, 8, 17, 0.85);
+      border-radius: 14px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      overflow: hidden;
+      position: relative;
+      cursor: grab;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .diagram-viewport:active {
+      cursor: grabbing;
+    }
+    .diagram-content {
+      transform-origin: center center;
+      transition: transform 0.1s ease-out;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      height: 100%;
+      user-select: none;
+    }
+    .mermaid {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      height: 100%;
+    }
+    .mermaid svg {
+      width: 100%;
+      height: 100%;
+      max-width: 95%;
+      max-height: 95%;
+    }
+
+    /* TABELA DE USE CASES */
+    .table-container {
+      max-height: 360px;
+      overflow-y: auto;
+      margin-top: 15px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 10px;
+    }
+    .uc-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+    .uc-table th {
+      background: rgba(14, 165, 233, 0.15);
+      color: #38bdf8;
+      text-transform: uppercase;
+      font-weight: 800;
+      letter-spacing: 0.8px;
+      padding: 10px 12px;
+      text-align: left;
+      position: sticky;
+      top: 0;
+      backdrop-filter: blur(8px);
+      border-bottom: 2px solid rgba(56, 189, 248, 0.3);
+    }
+    .uc-table td {
+      padding: 10px 12px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      color: #cbd5e1;
+    }
+    .uc-table tr:hover {
+      background: rgba(255, 255, 255, 0.03);
+    }
+    .tag-uc {
+      font-family: monospace;
+      font-weight: 800;
+      color: #fde047;
+      background: rgba(250, 204, 21, 0.12);
+      padding: 2px 6px;
+      border-radius: 4px;
+      border: 1px solid rgba(250, 204, 21, 0.3);
+    }
+    .tag-inc {
+      font-size: 11px;
+      font-weight: 800;
+      color: #34d399;
+      background: rgba(16, 185, 129, 0.12);
+      padding: 2px 6px;
+      border-radius: 4px;
+      border: 1px solid rgba(16, 185, 129, 0.3);
+    }
+    .tag-ext {
+      font-size: 11px;
+      font-weight: 800;
+      color: #c084fc;
+      background: rgba(168, 85, 247, 0.12);
+      padding: 2px 6px;
+      border-radius: 4px;
+      border: 1px solid rgba(168, 85, 247, 0.3);
+    }
+    .tag-actor {
+      color: #38bdf8;
+      font-weight: 700;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="badge">Paradigma IDD • Refrigeração (HVAC-R)</div>
+    <h1>Modelo UML Interativo: Seleção de Foco &amp; Casos de Uso</h1>
+    <p>Navegue gradualmente pelos Casos de Uso por <strong>Ator</strong> ou por <strong>Módulo</strong> com zoom, pan e visualização ergonômica em qualquer tamanho de tela.</p>
+  </header>
+
+  <div class="sections-wrapper">
+
+    <!-- CARD 1: DIAGRAMA DE CASOS DE USO COM SELEÇÃO DE FOCO -->
+    <div class="card-panel">
+      <div class="card-header-row">
+        <div>
+          <div class="card-title">
+            <span>🎯</span> 1. Diagrama de Casos de Uso Interativo (Seleção de Foco)
+          </div>
+          <div class="card-desc">
+            Selecione um foco para isolar o fluxo de análise e visualizar elipses amplas e nítidas sem poluição visual.
+          </div>
+        </div>
+      </div>
+
+      <!-- BARRA DE FILTROS E FOCO -->
+      <div class="controls-bar">
+        <div class="filter-group">
+          <span class="filter-label">Foco por Ator:</span>
+          <button class="btn-filter active" onclick="setFocus('mecanico')">👨‍🔧 Mecânico (Campo)</button>
+          <button class="btn-filter" onclick="setFocus('cliente')">🏢 Cliente / Síndico</button>
+          <button class="btn-filter" onclick="setFocus('responsavel')">📜 Resp. Técnico &amp; PMOC</button>
+          <button class="btn-filter" onclick="setFocus('gestor')">👤 Gestor &amp; Contratos</button>
+        </div>
+
+        <div class="filter-group" style="margin-top: 4px;">
+          <span class="filter-label">Módulos:</span>
+          <button class="btn-filter" onclick="setFocus('modulo_ativos')">📱 Ativos &amp; QR Code</button>
+          <button class="btn-filter" onclick="setFocus('modulo_pmoc')">📜 PMOC Sanitário</button>
+          <button class="btn-filter" onclick="setFocus('modulo_fluidos')">🌡️ Física &amp; Fluidos</button>
+          <button class="btn-filter" onclick="setFocus('visao_completa')">🌐 Mapa Integrado</button>
+        </div>
+
+        <div class="zoom-controls">
+          <button class="btn-zoom" title="Zoom In (+)" onclick="zoomDiagram(1.2)">＋</button>
+          <button class="btn-zoom" title="Zoom Out (-)" onclick="zoomDiagram(0.8)">－</button>
+          <button class="btn-zoom" title="Reset Zoom" onclick="resetZoom()">↺</button>
+        </div>
+      </div>
+
+      <!-- ÁREA DE VISUALIZAÇÃO COM ZOOM E PAN -->
+      <div class="diagram-viewport" id="viewport">
+        <div class="diagram-content" id="diagramContent">
+          <div class="mermaid" id="mermaidContainer"></div>
+        </div>
+      </div>
+
+      <!-- TABELA DINÂMICA DE RASTREABILIDADE -->
+      <div style="margin-top: 20px;">
+        <div style="font-size: 14px; font-weight: 800; color: #38bdf8; margin-bottom: 6px;">
+          📋 Casos de Uso em Foco na Análise Atual
+        </div>
+        <div class="table-container">
+          <table class="uc-table" id="ucTable">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Caso de Uso (Intenção do Negócio)</th>
+                <th>Ator Primário</th>
+                <th>Relação</th>
+                <th>Invariante / Regra Inviolável</th>
+              </tr>
+            </thead>
+            <tbody id="ucTableBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- CARD 2: DIAGRAMA DE CLASSES NOS 3 COMPARTIMENTOS -->
+    <div class="card-panel">
+      <div class="card-title">
+        <span>📦</span> 2. Diagrama de Classes de Domínio (3 Compartimentos OMG Standard)
+      </div>
+      <div class="card-desc">
+        Classes puras com visibilidade estrita de atributos privados (-) e métodos de domínio públicos (+), desacopladas de frameworks.
+      </div>
+      <div style="background: rgba(5, 8, 17, 0.65); border-radius: 12px; padding: 20px; overflow-x: auto;">
+        <div class="static-mermaid" id="classDiagramContainer">
+classDiagram
+    class Equipamento {
+        -UUID id
+        -String qrCodeId
+        -String fabricante
+        -String modelo
+        -Int capacidadeBtu
+        -String tipoFluidoGas
+        -String tensaoEletrica
+        +calcularRendimentoTermico() RendimentoEnum
+        +validarCompatibilidadeGas(fluido) Boolean
+        +getHistoricoIntervencoes() List~OS~
+    }
+
+    class OrdemServico {
+        -UUID id
+        -UUID equipamentoId
+        -UUID tecnicoId
+        -TipoAtendimento tipo
+        -EstadoOS status
+        -DateTime dataAgendamento
+        -DateTime dataConclusao
+        +iniciarAtendimento(tecnicoId) Void
+        +registrarMedicao(medicao) Result
+        +solicitarPeca(pecaId) Void
+        +fecharComAssinatura(fotoAntes, fotoDepois, assinatura) Result
+    }
+
+    class MedicaoTecnica {
+        -UUID id
+        -Float pressaoSucaoPsi
+        -Float pressaoDescargaPsi
+        -Float tempInsuflamentoC
+        -Float tempRetornoC
+        -Float correnteOperacaoA
+        +calcularDeltaT() Float
+        +calcularSuperaquecimento() Float
+        +calcularSubresfriamento() Float
+        +isInvarianteValida() Boolean
+    }
+
+    class LaudoPMOC {
+        -UUID id
+        -UUID ordemServicoId
+        -String hashSHA256
+        -Boolean filtroHigienizado
+        -Boolean drenoDesobstruido
+        -Boolean bandejaLimpa
+        -Boolean serpentinaHigienizada
+        -Float gasRecolhidoKg
+        -Float gasAdicionadoKg
+        +certificarConformidadeLei13589() StatusLaudo
+        +gerarHashImutavel() String
+    }
+
+    Equipamento "1" *-- "0..*" OrdemServico : recebe
+    OrdemServico "1" *-- "1..*" MedicaoTecnica : contém
+    OrdemServico "1" -- "0..1" LaudoPMOC : gera
+        </div>
+      </div>
+    </div>
+
+    <!-- CARD 3: MÁQUINA DE ESTADOS DA ORDEM DE SERVIÇO -->
+    <div class="card-panel">
+      <div class="card-title">
+        <span>🔄</span> 3. Máquina de Estados da Ordem de Serviço (Statechart)
+      </div>
+      <div class="card-desc">
+        Ciclo de vida inviolável: trilhos estritos que impedem avanço sem validação física e laudo prévio.
+      </div>
+      <div style="background: rgba(5, 8, 17, 0.65); border-radius: 12px; padding: 20px; overflow-x: auto;">
+        <div class="static-mermaid" id="stateDiagramContainer">
+stateDiagram-v2
+    [*] --> RASCUNHO : Criar chamado
+    RASCUNHO --> AGENDADA : [Equipamento ativo && Técnico disponível]
+    AGENDADA --> EM_DESLOCAMENTO : Despachar técnico
+    EM_DESLOCAMENTO --> EM_ATENDIMENTO : Ler QR Code no local
+
+    state EM_ATENDIMENTO {
+        [*] --> CheckIn
+        CheckIn --> ColetaMedicoes : [Manifold Conectado]
+        ColetaMedicoes --> RegistroFotos : [Delta T calculado]
+        RegistroFotos --> ColetaAssinatura : [Fotos Antes e Depois anexadas]
+    }
+
+    EM_ATENDIMENTO --> AGUARDANDO_PECA : [Peça em falta no estoque móvel]
+    AGUARDANDO_PECA --> EM_ATENDIMENTO : [Peça entregue em campo]
+    EM_ATENDIMENTO --> CONCLUIDA : [Checklist PMOC OK && Assinatura Coletada]
+    CONCLUIDA --> [*] : Gerar Hash SHA-256 e Laudo Imutável
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // BASE DE DADOS DOS CASOS DE USO PARA FILTRAGEM
+    var UC_DATABASE = [
+      { id: 'UC01', nome: 'Escanear QR Code & Abrir Prontuário', ator: 'Mecânico em Campo', modulo: 'modulo_ativos', tags: ['mecanico', 'modulo_ativos'], relacao: 'Direto', inv: 'Acesso imediato (< 50ms) e bloqueio de máquinas órfãs.' },
+      { id: 'UC02', nome: 'Consultar Ficha Técnica & Histórico', ator: 'Mecânico / Gestor', modulo: 'modulo_ativos', tags: ['mecanico', 'modulo_ativos', 'gestor'], relacao: 'Subordinado a UC01', inv: 'Imutabilidade de dados de placa (capacidade BTU e fluido).' },
+      { id: 'UC03', nome: 'Registrar Retrofit / Troca de Compressor', ator: 'Responsável Técnico', modulo: 'modulo_ativos', tags: ['responsavel', 'modulo_ativos'], relacao: 'Assinatura RT', inv: 'Exige ART/TRT e laudo de compatibilidade de óleo.' },
+      { id: 'UC04', nome: 'Executar Atendimento Preventivo PMOC', ator: 'Mecânico em Campo', modulo: 'modulo_pmoc', tags: ['mecanico', 'modulo_pmoc', 'responsavel'], relacao: 'Inclui UC05, UC07, UC15', inv: 'Bloqueio de fechamento sem validar os 4 itens da Portaria 3.523.' },
+      { id: 'UC05', nome: 'Aplicar Checklist Sanitário Normativo', ator: 'Mecânico em Campo', modulo: 'modulo_pmoc', tags: ['mecanico', 'modulo_pmoc', 'responsavel'], relacao: '<<include>> em UC04', inv: 'Filtros limpos, dreno livre, bandeja limpa e bactericida.' },
+      { id: 'UC06', nome: 'Emitir Laudo PMOC com ART/TRT', ator: 'Responsável Técnico', modulo: 'modulo_pmoc', tags: ['responsavel', 'modulo_pmoc'], relacao: '<<extend>> de UC04', inv: 'Obrigatório para sistemas > 60.000 BTU/h (Lei 13.589/18).' },
+      { id: 'UC07', nome: 'Registrar Medições Termodinâmicas', ator: 'Mecânico em Campo', modulo: 'modulo_fluidos', tags: ['mecanico', 'modulo_fluidos'], relacao: 'Inclui UC08', inv: 'Pressão de Descarga > Pressão de Sucção (invariante termodinâmica).' },
+      { id: 'UC08', nome: 'Calcular Superaquecimento & Sub-resfriamento', ator: 'Mecânico / Sistema', modulo: 'modulo_fluidos', tags: ['mecanico', 'modulo_fluidos'], relacao: '<<include>> em UC07', inv: 'Superaquecimento útil não pode ser negativo em regime estável.' },
+      { id: 'UC09', nome: 'Registrar Recarga de Gás Refrigerante', ator: 'Mecânico em Campo', modulo: 'modulo_fluidos', tags: ['mecanico', 'modulo_fluidos'], relacao: 'Obriga UC10', inv: 'Qtd > 0 e gás quimicamente compatível com o compressor.' },
+      { id: 'UC10', nome: 'Teste Obrigatório de Estanqueidade', ator: 'Mecânico em Campo', modulo: 'modulo_fluidos', tags: ['mecanico', 'modulo_fluidos'], relacao: '<<include>> em UC09', inv: 'Proibida recarga cega sem solucionar a causa-raiz de vazamento.' },
+      { id: 'UC11', nome: 'Recolhimento Ecológico de Gás', ator: 'Mecânico em Campo', modulo: 'modulo_fluidos', tags: ['mecanico', 'modulo_fluidos', 'responsavel'], relacao: 'Norma CONAMA', inv: 'Registro compulsório de máquina recolhedora e botija de destinação.' },
+      { id: 'UC12', nome: 'Abertura de Chamado Emergencial', ator: 'Cliente / Síndico', modulo: 'campo', tags: ['cliente', 'gestor'], relacao: 'Dispara UC13', inv: 'Triagem por risco térmico: câmaras frigoríficas têm SLA crítico.' },
+      { id: 'UC13', nome: 'Despacho Inteligente de Ordem de Serviço', ator: 'Orquestrador / Gestor', modulo: 'campo', tags: ['gestor'], relacao: 'Roteirização', inv: 'Atribuição obrigatória a técnico habilitado para o porte do ativo.' },
+      { id: 'UC14', nome: 'Solicitar Peça Emergencial em Campo', ator: 'Mecânico em Campo', modulo: 'campo', tags: ['mecanico'], relacao: '<<extend>> de UC04/UC12', inv: 'Transiciona máquina para Alerta e OS para Aguardando_Peça.' },
+      { id: 'UC15', nome: 'Coletar Fotos e Assinatura na Tela', ator: 'Mecânico e Cliente', modulo: 'campo', tags: ['mecanico', 'cliente'], relacao: 'Fechamento OS', inv: 'Exige foto Antes e Depois e assinatura legível no celular.' },
+      { id: 'UC16', nome: 'Sincronizar em Modo Offline-First', ator: 'Motor PWA / IndexedDB', modulo: 'campo', tags: ['mecanico'], relacao: 'Background Sync', inv: 'Operação ininterrupta em subsolos e casas de máquinas.' },
+      { id: 'UC17', nome: 'Disparo de Comprovante no WhatsApp', ator: 'Sistema Z-API', modulo: 'campo', tags: ['cliente', 'gestor'], relacao: '<<include>> em UC15', inv: 'Comprovante entregue ao cliente em menos de 90 segundos.' },
+      { id: 'UC18', nome: 'Geração Automática de Preventivas', ator: 'Cron Supabase', modulo: 'contratos', tags: ['gestor'], relacao: 'Dia 1º de cada mês', inv: 'Garante cumprimento regular do PMOC sem esquecimentos manuais.' },
+      { id: 'UC19', nome: 'Auditoria Sanitária e Histórico Legal', ator: 'Fiscal Sanitário', modulo: 'contratos', tags: ['responsavel'], relacao: 'Leitura de Laudo', inv: 'Proibição absoluta de retroatividade falsa em datas vencidas.' }
+    ];
+
+    // DIAGRAMAS ESPECÍFICOS DE MERMAID POR FOCO
+    var MERMAID_DIAGRAMS = {
+      mecanico: 'flowchart TD\n' +
+        '  Mec["👨‍🔧 Mecânico em Campo (Mobile / PWA)"]\n' +
+        '  subgraph FluxoCampo["Rotina de Campo do Mecânico"]\n' +
+        '    UC01(["UC01: Escanear QR Code e Prontuário"])\n' +
+        '    UC04(["UC04: Executar Atendimento PMOC"])\n' +
+        '    UC05(["UC05: Aplicar Checklist Sanitário"])\n' +
+        '    UC07(["UC07: Registrar Medições Termodinâmicas"])\n' +
+        '    UC08(["UC08: Calcular Superaquecimento/Sub-resfriamento"])\n' +
+        '    UC10(["UC10: Teste Obrigatório de Estanqueidade"])\n' +
+        '    UC14(["UC14: Solicitar Peça do Estoque Móvel"])\n' +
+        '    UC15(["UC15: Coletar Fotos e Assinatura"])\n' +
+        '    UC16(["UC16: Sincronizar Modo Offline-First"])\n' +
+        '  end\n' +
+        '  Mec --> UC01\n' +
+        '  Mec --> UC04\n' +
+        '  Mec --> UC07\n' +
+        '  Mec --> UC15\n' +
+        '  Mec --> UC16\n' +
+        '  UC04 -.->|include| UC05\n' +
+        '  UC04 -.->|include| UC07\n' +
+        '  UC04 -.->|include| UC15\n' +
+        '  UC07 -.->|include| UC08\n' +
+        '  UC04 -.->|extend| UC14\n' +
+        '  UC07 -.->|extend| UC10\n',
+
+      cliente: 'flowchart TD\n' +
+        '  Cli["🏢 Cliente / Síndico"]\n' +
+        '  Mec["👨‍🔧 Mecânico"]\n' +
+        '  Zap["📲 WhatsApp Bot"]\n' +
+        '  subgraph ExperienciaCliente["Jornada do Cliente / Síndico"]\n' +
+        '    UC12(["UC12: Abrir Chamado por Severidade"])\n' +
+        '    UC15(["UC15: Validar Serviço e Assinar na Tela"])\n' +
+        '    UC17(["UC17: Receber Comprovante no WhatsApp em menos de 90s"])\n' +
+        '  end\n' +
+        '  Cli --> UC12\n' +
+        '  Cli --> UC15\n' +
+        '  Mec --> UC15\n' +
+        '  UC15 -.->|include| UC17\n' +
+        '  UC17 --> Zap\n' +
+        '  Zap --> Cli\n',
+
+      responsavel: 'flowchart TD\n' +
+        '  Resp["📜 Responsável Técnico (CREA/CFT)"]\n' +
+        '  Anvisa["⚖️ Fiscal Sanitário (Anvisa/MTE)"]\n' +
+        '  subgraph ConformidadeLegal["Compliance & PMOC (Lei 13.589/18)"]\n' +
+        '    UC03(["UC03: Registrar Retrofit / Troca de Compressor"])\n' +
+        '    UC04(["UC04: Auditar Atendimento PMOC Executado"])\n' +
+        '    UC06(["UC06: Emitir Laudo PMOC com ART/TRT"])\n' +
+        '    UC11(["UC11: Certificar Recolhimento Ecológico de Gás"])\n' +
+        '    UC19(["UC19: Apresentar Prontuário Sanitário à Fiscalização"])\n' +
+        '  end\n' +
+        '  Resp --> UC03\n' +
+        '  Resp --> UC06\n' +
+        '  Resp --> UC11\n' +
+        '  Anvisa --> UC19\n' +
+        '  UC04 -.->|extend| UC06\n' +
+        '  UC19 -.->|include| UC06\n',
+
+      gestor: 'flowchart TD\n' +
+        '  Gestor["👤 Eliézer (Orquestrador / Gestor)"]\n' +
+        '  Cron["🤖 Cron Supabase (Auto)"]\n' +
+        '  Mec["👨‍🔧 Mecânico"]\n' +
+        '  subgraph GestaoOperacional["Despacho & Gestão de Contratos"]\n' +
+        '    UC12(["UC12: Chamado Aberto no Painel"])\n' +
+        '    UC13(["UC13: Despacho Inteligente por Competência"])\n' +
+        '    UC18(["UC18: Geração Automática de OS Mensais (MRR)"])\n' +
+        '    UC02(["UC02: Gestão do Prontuário Vitalício do Parque"])\n' +
+        '  end\n' +
+        '  Cron --> UC18\n' +
+        '  Gestor --> UC13\n' +
+        '  Gestor --> UC02\n' +
+        '  UC12 --> UC13\n' +
+        '  UC13 --> Mec\n' +
+        '  UC18 --> Mec\n',
+
+      modulo_ativos: 'flowchart TD\n' +
+        '  Mec["👨‍🔧 Mecânico"]\n' +
+        '  Resp["📜 Resp. Técnico"]\n' +
+        '  subgraph Ativos["Módulo: Ativos & Prontuário Digital"]\n' +
+        '    UC01(["UC01: Escanear QR Code e Abrir Prontuário"])\n' +
+        '    UC02(["UC02: Consultar Ficha Técnica de Fábrica"])\n' +
+        '    UC03(["UC03: Registrar Retrofit / Troca de Compressor"])\n' +
+        '  end\n' +
+        '  Mec --> UC01\n' +
+        '  Mec --> UC02\n' +
+        '  Resp --> UC03\n' +
+        '  UC01 -.->|include| UC02\n',
+
+      modulo_pmoc: 'flowchart TD\n' +
+        '  Mec["👨‍🔧 Mecânico"]\n' +
+        '  Resp["📜 Resp. Técnico"]\n' +
+        '  subgraph PMOC["Módulo: PMOC Normativo (Lei 13.589/18)"]\n' +
+        '    UC04(["UC04: Executar Atendimento Preventivo PMOC"])\n' +
+        '    UC05(["UC05: Aplicar Checklist Sanitário (Portaria 3.523)"])\n' +
+        '    UC06(["UC06: Emitir Laudo PMOC com ART/TRT"])\n' +
+        '  end\n' +
+        '  Mec --> UC04\n' +
+        '  Resp --> UC06\n' +
+        '  UC04 -.->|include| UC05\n' +
+        '  UC04 -.->|extend| UC06\n',
+
+      modulo_fluidos: 'flowchart TD\n' +
+        '  Mec["👨‍🔧 Mecânico"]\n' +
+        '  subgraph Fluidos["Módulo: Física Térmica & Fluidos (CONAMA)"]\n' +
+        '    UC07(["UC07: Registrar Medições (Pressões e Delta T)"])\n' +
+        '    UC08(["UC08: Calcular Superaquecimento/Sub-resfriamento"])\n' +
+        '    UC09(["UC09: Registrar Recarga de Gás Refrigerante"])\n' +
+        '    UC10(["UC10: Teste Obrigatório de Estanqueidade"])\n' +
+        '    UC11(["UC11: Recolhimento Ecológico de Fluido"])\n' +
+        '  end\n' +
+        '  Mec --> UC07\n' +
+        '  Mec --> UC09\n' +
+        '  Mec --> UC11\n' +
+        '  UC07 -.->|include| UC08\n' +
+        '  UC09 -.->|include| UC10\n',
+
+      visao_completa: 'flowchart TD\n' +
+        '  subgraph Atores["Atores"]\n' +
+        '    Mec["👨‍🔧 Mecânico"]\n' +
+        '    Cli["🏢 Cliente"]\n' +
+        '    Resp["📜 Resp. Técnico"]\n' +
+        '    Gest["👤 Gestor"]\n' +
+        '  end\n' +
+        '  subgraph Sistema["Sistema Integrado IDD Refrigeração"]\n' +
+        '    UC_Ativos(["Módulo 1: Ativos & QR Code"])\n' +
+        '    UC_PMOC(["Módulo 2: Prevenção & PMOC"])\n' +
+        '    UC_Termica(["Módulo 3: Física & Fluidos"])\n' +
+        '    UC_Campo(["Módulo 4: Campo & WhatsApp"])\n' +
+        '    UC_Contrato(["Módulo 5: Contratos & Cron"])\n' +
+        '  end\n' +
+        '  Mec --> UC_Ativos\n' +
+        '  Mec --> UC_PMOC\n' +
+        '  Mec --> UC_Termica\n' +
+        '  Mec --> UC_Campo\n' +
+        '  Cli --> UC_Campo\n' +
+        '  Resp --> UC_PMOC\n' +
+        '  Gest --> UC_Contrato\n'
+    };
+
+    var currentZoom = 1;
+    var isPanning = false;
+    var startX = 0, startY = 0;
+    var translateX = 0, translateY = 0;
+
+    function applyTransform() {
+      var el = document.getElementById('diagramContent');
+      el.style.transform = 'translate(' + translateX + 'px, ' + translateY + 'px) scale(' + currentZoom + ')';
+    }
+
+    function zoomDiagram(factor) {
+      currentZoom *= factor;
+      currentZoom = Math.min(Math.max(0.5, currentZoom), 3.0);
+      applyTransform();
+    }
+
+    function resetZoom() {
+      currentZoom = 1;
+      translateX = 0;
+      translateY = 0;
+      applyTransform();
+    }
+
+    // SUPORTE A PAN COM O MOUSE
+    var viewport = document.getElementById('viewport');
+    viewport.addEventListener('mousedown', function(e) {
+      isPanning = true;
+      startX = e.clientX - translateX;
+      startY = e.clientY - translateY;
+    });
+    window.addEventListener('mousemove', function(e) {
+      if (!isPanning) return;
+      translateX = e.clientX - startX;
+      translateY = e.clientY - startY;
+      applyTransform();
+    });
+    window.addEventListener('mouseup', function() { isPanning = false; });
+    viewport.addEventListener('wheel', function(e) {
+      e.preventDefault();
+      var factor = e.deltaY < 0 ? 1.1 : 0.9;
+      zoomDiagram(factor);
+    }, { passive: false });
+
+    // RENDERIZAÇÃO DO DIAGRAMA POR FOCO
+    async function setFocus(focusKey) {
+      // Atualizar botões
+      document.querySelectorAll('.btn-filter').forEach(function(btn) {
+        if (btn.getAttribute('onclick').indexOf(focusKey) !== -1) {
+          btn.classList.add('active');
+        } else {
+          btn.classList.remove('active');
+        }
+      });
+
+      // Atualizar Mermaid
+      var container = document.getElementById('mermaidContainer');
+      var diagramCode = MERMAID_DIAGRAMS[focusKey] || MERMAID_DIAGRAMS.mecanico;
+      container.removeAttribute('data-processed');
+      container.innerHTML = diagramCode;
+
+      try {
+        await mermaid.run({ nodes: [container] });
+      } catch (err) {
+        console.error('Erro mermaid:', err);
+      }
+      resetZoom();
+
+      // Atualizar Tabela de Casos de Uso
+      var tbody = document.getElementById('ucTableBody');
+      tbody.innerHTML = '';
+      var filtered = (focusKey === 'visao_completa')
+        ? UC_DATABASE 
+        : UC_DATABASE.filter(function(uc) {
+            return uc.tags.indexOf(focusKey) !== -1 || uc.modulo === focusKey;
+          });
+
+      filtered.forEach(function(uc) {
+        var tr = document.createElement('tr');
+        var tagRel = uc.relacao.indexOf('include') !== -1 ? 'tag-inc' : (uc.relacao.indexOf('extend') !== -1 ? 'tag-ext' : '');
+        tr.innerHTML = 
+          '<td><span class="tag-uc">' + uc.id + '</span></td>' +
+          '<td><strong>' + uc.nome + '</strong></td>' +
+          '<td><span class="tag-actor">' + uc.ator + '</span></td>' +
+          '<td><span class="' + tagRel + '">' + uc.relacao + '</span></td>' +
+          '<td>' + uc.inv + '</td>';
+        tbody.appendChild(tr);
+      });
+    }
+
+    mermaid.initialize({
+      startOnLoad: false,
+      theme: 'dark',
+      themeVariables: {
+        darkMode: true,
+        background: '#050811',
+        primaryColor: '#0284c7',
+        primaryBorderColor: '#38bdf8',
+        primaryTextColor: '#f8fafc',
+        lineColor: '#38bdf8'
+      }
+    });
+
+    window.addEventListener('DOMContentLoaded', async function() {
+      await setFocus('mecanico');
+      
+      // Renderizar também os diagramas estáticos de Classes e Statechart
+      try {
+        var staticNodes = document.querySelectorAll('.static-mermaid');
+        if (staticNodes.length > 0) {
+          await mermaid.run({ nodes: Array.from(staticNodes) });
+        }
+      } catch (err) {
+        console.error('Erro ao renderizar diagramas estáticos:', err);
+      }
+    });
+  </script>
+</body>
+</html>

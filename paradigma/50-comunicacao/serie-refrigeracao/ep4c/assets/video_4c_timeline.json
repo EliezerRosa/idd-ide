@@ -1,0 +1,110 @@
+{
+  "projectName": "IDD_Refrigeracao_Novo_Episodio_4C",
+  "totalDurationSec": 125.45,
+  "items": [
+    {
+      "index": 0,
+      "id": "seg_00_leigo",
+      "who": "leigo",
+      "actor": "Usuária Leiga",
+      "avatar": "leigo",
+      "slide": 1,
+      "text": "Eliézer, nós já colocamos o aplicativo em produção e o sistema está rodando com milhares de ordens de serviço. Mas e quando o negócio muda? Quando surge uma nova lei ou um novo processo, como o IDD atualiza o sistema sem apagar o banco de dados?",
+      "wav": "C:\\Antigravity - IDD Refrigeração\\motion_graphics_renderer\\idd_video_4c_assets\\audio\\seg_00_leigo.wav",
+      "startSec": 0.5,
+      "durSec": 15.936,
+      "endSec": 16.436
+    },
+    {
+      "index": 1,
+      "id": "seg_01_eliezer",
+      "who": "eliezer",
+      "actor": "Eliézer Rosa",
+      "avatar": "eliezer",
+      "slide": 1,
+      "text": "Esse é o coração da sustentabilidade no Paradigma IDD! No desenvolvimento convencional, as migrações olham linhas de código no Git. Mas no IDD, a fonte da verdade é a Intenção. Por isso nós criamos a Máquina de Diff de Intenções, que compara grafos semânticos de domínio em vez de apenas texto.",
+      "wav": "C:\\Antigravity - IDD Refrigeração\\motion_graphics_renderer\\idd_video_4c_assets\\audio\\seg_01_eliezer.wav",
+      "startSec": 17.086,
+      "durSec": 20.952,
+      "endSec": 38.038
+    },
+    {
+      "index": 2,
+      "id": "seg_02_leigo",
+      "who": "leigo",
+      "actor": "Usuária Leiga",
+      "avatar": "leigo",
+      "slide": 2,
+      "text": "Veja no Slide dois a inteligência dessa análise! A Máquina de Diff classifica qualquer mudança em três categorias: Classe A para adições seguras, Classe B para endurecimento de regras e Classe C para quebras estruturais.",
+      "wav": "C:\\Antigravity - IDD Refrigeração\\motion_graphics_renderer\\idd_video_4c_assets\\audio\\seg_02_leigo.wav",
+      "startSec": 38.688,
+      "durSec": 14.016,
+      "endSec": 52.704
+    },
+    {
+      "index": 3,
+      "id": "seg_03_eliezer",
+      "who": "eliezer",
+      "actor": "Eliézer Rosa",
+      "avatar": "eliezer",
+      "slide": 2,
+      "text": "Exatamente! Se a mudança for uma nova tabela ou campo opcional, a IA compila diretamente. Mas se for uma mudança crítica, a máquina calcula o raio de alcance e gera o Plano de Migração de Intenção para aprovação humana antes de qualquer execução.",
+      "wav": "C:\\Antigravity - IDD Refrigeração\\motion_graphics_renderer\\idd_video_4c_assets\\audio\\seg_03_eliezer.wav",
+      "startSec": 53.354,
+      "durSec": 17.448,
+      "endSec": 70.802
+    },
+    {
+      "index": 4,
+      "id": "seg_04_leigo",
+      "who": "leigo",
+      "actor": "Usuária Leiga",
+      "avatar": "leigo",
+      "slide": 3,
+      "text": "E no Slide três nós vemos o ciclo em cinco etapas: do parsing semântico do grafo até a suíte de não-regressão de invariantes. Nada vai para produção no escuro!",
+      "wav": "C:\\Antigravity - IDD Refrigeração\\motion_graphics_renderer\\idd_video_4c_assets\\audio\\seg_04_leigo.wav",
+      "startSec": 71.452,
+      "durSec": 10.728,
+      "endSec": 82.18
+    },
+    {
+      "index": 5,
+      "id": "seg_05_eliezer",
+      "who": "eliezer",
+      "actor": "Eliézer Rosa",
+      "avatar": "eliezer",
+      "slide": 3,
+      "text": "Com certeza! O compilador do IDD gera o plano declarativo, simula os impactos sobre os dados em produção e garante que o histórico de manutenções nunca seja destruído por uma refatoração inconsequente da IA.",
+      "wav": "C:\\Antigravity - IDD Refrigeração\\motion_graphics_renderer\\idd_video_4c_assets\\audio\\seg_05_eliezer.wav",
+      "startSec": 82.83,
+      "durSec": 14.424,
+      "endSec": 97.254
+    },
+    {
+      "index": 6,
+      "id": "seg_06_leigo",
+      "who": "leigo",
+      "actor": "Usuária Leiga",
+      "avatar": "leigo",
+      "slide": 4,
+      "text": "Fantástico! E no próximo episódio, o quatro D, nós vamos ver como resolver o maior pesadelo dos bancos de dados: como aplicar regras novas sem invalidar o histórico antigo usando Invariantes Temporizadas!",
+      "wav": "C:\\Antigravity - IDD Refrigeração\\motion_graphics_renderer\\idd_video_4c_assets\\audio\\seg_06_leigo.wav",
+      "startSec": 97.904,
+      "durSec": 13.368,
+      "endSec": 111.272
+    },
+    {
+      "index": 7,
+      "id": "seg_07_eliezer",
+      "who": "eliezer",
+      "actor": "Eliézer Rosa",
+      "avatar": "eliezer",
+      "slide": 4,
+      "text": "Perfeito! A evolução contínua é o que torna o software vivo e longevo. Acompanhe a nossa série e domine a engenharia de software orientada à intenção!",
+      "wav": "C:\\Antigravity - IDD Refrigeração\\motion_graphics_renderer\\idd_video_4c_assets\\audio\\seg_07_eliezer.wav",
+      "startSec": 111.922,
+      "durSec": 11.376,
+      "endSec": 123.298
+    }
+  ]
+}

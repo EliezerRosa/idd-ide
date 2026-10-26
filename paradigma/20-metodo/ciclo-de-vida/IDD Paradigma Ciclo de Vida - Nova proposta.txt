@@ -1,0 +1,67 @@
+A abordagem de **Agente Dedicado (Prompt/IDD)** atua na camada analítica de extração e formalização da intenção de negócio, posicionando-se como a inteligência a montante (*upstream*) que alimenta tanto a esteira de código do **Aider** quanto o repositório visual do **Visual Paradigm**.
+### 0. Fase 0 (investigativa) do Ciclo de Vida IDD paradigma?
+1. Objetivo: **Agente Dedicado (Prompt/IDD)** atua na camada analítica de extração e formalização da intenção de negócio, posicionando-se como a inteligência a montante (*upstream*) que alimenta tanto a esteira de código do **Aider** quanto o repositório visual do **Visual Paradigm**.
+2. Num loop, usar resolvedor de ambiguidades, tipo SHADA com saída de especificação ubígua.
+3. O INPUT do loop de 2, podem ser docs, pdfs, .md, imagens, vídeos, etc.
+4. O input 3, seria sempre traduzido em LN, independente do formato
+5. AO final do loop 2, a IA produziria input pata VP + Aider.
+6. Uma UIX com chat-agente-IA (API key's de IA's fortes em inferência semântica profunda, com foco e contexto socrático-investigativo
+7. Saída adicional para tudo em JSON(B), YAML para GitHub Actions de verificação de conformidade de código.
+---
+
+### 1. Relação com o Aider (Modo *Architect*)
+
+O Aider, no modo `--architect`, implementa a separação técnica entre **planejar** (modelo denso) e **editar** (modelo rápido). O Agente Dedicado sob o paradigma IDD conecta-se a esse mecanismo atuando na fase de **concepção e especificação pré-código**:
+
+* **Extensão da Fase de Arquitetura:** Por padrão, o modo *Architect* do Aider costuma ir direto ao plano técnico de arquivos e funções (`src/services/xyz.ts`). O Agente Dedicado IDD estende esse passo para trás: antes de definir quais arquivos editar, ele força a identificação dos invariantes de domínio, casos de uso e contratos de dados.
+* **Alimentação por Artefatos Formais:** Em vez de você abrir o Aider e descrever uma regra de negócio complexa em linguagem natural (arriscando alucinações no plano), você entrega ao Aider o documento gerado pelo Agente Dedicado — contendo os diagramas de classes PlantUML, os schemas Zod de entrada/saída e os critérios de aceitação.
+* **Mitigação de Drift no Git:** Com os contratos e relacionamentos fechados previamente pelo agente investigativo, o *Editor/Coder* do Aider gera diffs cirúrgicos, sem inventar tabelas, sem alterar colunas pré-existentes e sem quebrar invariantes de banco.
+
+```text
+[Usuário / Requisitos Brutos]
+            │
+            ▼
+[Agente Dedicado IDD] ──► Gera Dicionário de Domínio + Contratos Zod + Regras
+            │
+            ▼
+[Aider: Architect Mode] ──► Lê a especificação formal e desenha o plano de arquivos
+            │
+            ▼
+[Aider: Coder Engine] ──► Aplica diffs atômicos e roda testes/lint no Git
+
+```
+
+---
+
+### 2. Relação com o Visual Paradigm (VP Online + AI Modeler)
+
+O Visual Paradigm é uma ferramenta CASE (*Computer-Aided Software Engineering*) com foco em conformidade com metamodelos visuais da OMG (UML) e modelagem relacional formal (MER/DER). O Agente Dedicado resolve o ponto cego da IA nativa do VP:
+
+* **Superação da Passividade da Ferramenta:** A IA do Visual Paradigm é puramente passiva — ela recebe um texto pronto e tenta desenhar. Ela não pergunta *"se um publicador for transferido de congregação, o histórico de designações dele é mantido ou arquivado?"*. O Agente Dedicado IDD assume essa postura investigativa prévia, estressando as exceções e cardinalidades antes do desenho.
+* **Geração em Linguagem Intermediária (PlantUML / DBML):** O Agente Dedicado compila as conclusões da entrevista em código declarativo de modelagem (sintaxe PlantUML ou Mermaid para classes e sequência; DBML ou DDL SQL para o MER).
+* **Importação Direta no VP Online:** O Visual Paradigm possui suporte nativo para importar código PlantUML e DDL de banco. Em vez de depender do gerador visual proprietário da ferramenta (que muitas vezes perde conexões ou gera layouts confusos), você importa a especificação textual validada pelo agente, e o VP atua como a **engine de renderização, versionamento e governança visual**.
+
+```text
+[Entrevista Investigativa Socrática]
+            │
+            ▼
+[Agente Dedicado IDD] ──► Emite especificações textuais formais (PlantUML / MER em DBML)
+            │
+            ▼
+[Visual Paradigm Online] ──► Importa código, valida metamodelo CASE e gera documentação executiva
+
+```
+
+---
+
+### A Tríade Integrada no Ciclo de Vida IDD
+
+A divisão de responsabilidades entre os três componentes opera como uma esteira coesa de engenharia:
+
+| Componente | Papel no Ciclo de Vida | Entrada Principal | Saída Gerada |
+| --- | --- | --- | --- |
+| **Agente Dedicado IDD** | **Investigador e Analista** (Extração de requisitos, disambiguação socrática e contratos) | Diálogos com usuários, atas, anotações de domínio | Dicionário de dados, PlantUML, schemas Zod, critérios de aceite |
+| **Visual Paradigm** | **Repositório CASE e Visualização** (Governança formal da arquitetura e esquemas) | PlantUML / DDL exportados pelo Agente Dedicado | Diagramas formais (UML/MER), documentação arquitetural corporativa |
+| **Aider (Architect/Coder)** | **Compilador de Código** (Transformação da especificação em código auditado) | Especificações e contratos aprovados pelo Agente Dedicado | Diffs de código no Git, testes unitários, migrações no banco |
+
+Essa composição elimina o *"vibe coding"*: o negócio é investigado e estressado no Agente Dedicado, documentado formalmente no Visual Paradigm e implementado de forma atômica pelo Aider.

@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>IDD Cafeteria - Ep. 3C UML Completo: Atores a Métodos</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, sans-serif; }
+    body {
+      width: 1920px; height: 1080px; background: #0c0a09; color: #f8fafc;
+      overflow: hidden; position: relative;
+    }
+    .grid-bg {
+      position: absolute; inset: 0;
+      background-image: linear-gradient(rgba(245, 158, 11, 0.05) 1px, transparent 1px),
+                        linear-gradient(90deg, rgba(245, 158, 11, 0.05) 1px, transparent 1px);
+      background-size: 60px 60px;
+    }
+    .glow-ambient {
+      position: absolute; width: 1150px; height: 1150px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(245, 158, 11, 0.25) 0%, rgba(217, 119, 6, 0.14) 45%, transparent 70%);
+      top: 50%; left: 50%; transform: translate(-50%, -50%); filter: blur(95px); pointer-events: none;
+    }
+
+    /* TOP BAR */
+    .top-bar {
+      position: absolute; top: 0; left: 0; right: 0; height: 80px;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 60px; background: rgba(28, 25, 23, 0.9);
+      border-bottom: 1px solid rgba(245, 158, 11, 0.35); backdrop-filter: blur(12px); z-index: 50;
+    }
+    .top-title { display: flex; align-items: center; gap: 18px; }
+    .badge-ep {
+      background: linear-gradient(135deg, #d97706, #b45309); color: white;
+      font-weight: 800; font-size: 16px; letter-spacing: 1.5px;
+      padding: 6px 18px; border-radius: 999px; text-transform: uppercase;
+      box-shadow: 0 0 20px rgba(245, 158, 11, 0.4);
+    }
+    .series-name { font-size: 20px; font-weight: 700; color: #cbd5e1; }
+    .series-name span { color: #fbbf24; font-weight: 800; }
+    .timer-box { font-size: 18px; font-family: monospace; color: #fbbf24; font-weight: 700; }
+
+    /* STAGE */
+    .stage {
+      position: absolute; top: 80px; bottom: 220px; left: 0; right: 0;
+      padding: 30px 60px; display: flex; flex-direction: column; z-index: 20;
+    }
+    .slide-view {
+      display: none; width: 100%; height: 100%; flex-direction: column;
+      animation: fadeIn 0.4s ease-out forwards;
+    }
+    .slide-view.active { display: flex; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+    .slide-header { margin-bottom: 18px; }
+    .slide-category { font-size: 15px; font-weight: 800; color: #fbbf24; text-transform: uppercase; letter-spacing: 2px; }
+    .slide-title { font-size: 36px; font-weight: 900; color: #ffffff; margin-top: 4px; }
+    .slide-subtitle { font-size: 18px; color: #94a3b8; margin-top: 4px; }
+
+    /* SLIDE 1: CASOS DE USO & ATORES CANÔNICOS */
+    .usecase-layout {
+      display: grid; grid-template-columns: 240px 1fr 240px; gap: 20px; flex: 1; align-items: center;
+    }
+    .actor-box {
+      display: flex; flex-direction: column; align-items: center; gap: 12px;
+      background: rgba(28, 25, 23, 0.85); border: 1.5px solid rgba(245, 158, 11, 0.35);
+      border-radius: 16px; padding: 24px 16px;
+    }
+    .actor-icon {
+      width: 50px; height: 50px; stroke: #fbbf24; stroke-width: 2.5; fill: none;
+    }
+    .actor-name { font-size: 16px; font-weight: 800; color: #f8fafc; text-align: center; }
+    .actor-role { font-size: 12px; color: #f59e0b; font-weight: 700; text-transform: uppercase; }
+
+    .system-boundary {
+      background: rgba(28, 25, 23, 0.95); border: 2px dashed #f59e0b;
+      border-radius: 18px; padding: 20px 24px; display: flex; flex-direction: column;
+      height: 100%; box-shadow: 0 10px 30px rgba(0,0,0,0.6); position: relative;
+    }
+    .boundary-title {
+      font-size: 13px; font-weight: 800; color: #fbbf24; text-transform: uppercase; letter-spacing: 1.5px;
+      margin-bottom: 14px; display: flex; justify-content: space-between; align-items: center;
+    }
+    .usecases-grid {
+      display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; flex: 1; align-content: center;
+    }
+    .usecase-oval {
+      background: rgba(41, 37, 36, 0.9); border: 2px solid #f59e0b;
+      border-radius: 999px; padding: 14px 20px; text-align: center;
+      display: flex; flex-direction: column; justify-content: center;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+    }
+    .uc-id { font-size: 11px; font-weight: 800; color: #fbbf24; text-transform: uppercase; }
+    .uc-title { font-size: 14px; font-weight: 700; color: #f8fafc; margin-top: 2px; }
+    .uc-tag { font-size: 11px; color: #94a3b8; font-style: italic; margin-top: 2px; }
+
+    /* SLIDE 2: CLASSES NOS 3 COMPARTIMENTOS */
+    .classes-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; flex: 1;
+    }
+    .uml-class-box {
+      background: rgba(28, 25, 23, 0.95); border: 2px solid #f59e0b;
+      border-radius: 12px; overflow: hidden; display: flex; flex-direction: column;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.6);
+    }
+    .class-header {
+      background: linear-gradient(135deg, #b45309, #d97706); color: white;
+      padding: 10px 14px; text-align: center; border-bottom: 1.5px solid rgba(245, 158, 11, 0.5);
+    }
+    .class-stereotype { font-size: 11px; font-weight: 700; color: #fef3c7; text-transform: uppercase; }
+    .class-name { font-size: 18px; font-weight: 900; letter-spacing: 0.5px; margin-top: 2px; }
+    .class-attrs {
+      padding: 10px 14px; border-bottom: 1.5px solid rgba(245, 158, 11, 0.3);
+      font-family: 'Consolas', monospace; font-size: 12px; line-height: 1.5; color: #cbd5e1;
+      background: rgba(12, 10, 9, 0.5);
+    }
+    .class-methods {
+      padding: 10px 14px; font-family: 'Consolas', monospace; font-size: 12px;
+      line-height: 1.55; color: #38bdf8; flex: 1;
+    }
+    .vis-priv { color: #f43f5e; font-weight: 700; }
+    .vis-pub { color: #10b981; font-weight: 700; }
+
+    /* SLIDE 3: MÁQUINA DE ESTADOS & TERMINAL */
+    .statechart-container {
+      display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 24px; flex: 1;
+    }
+    .states-visual-card {
+      background: rgba(28, 25, 23, 0.9); border: 1.5px solid rgba(245, 158, 11, 0.35);
+      border-radius: 16px; padding: 22px; display: flex; flex-direction: column;
+    }
+    .states-flow {
+      display: flex; flex-direction: column; gap: 14px; flex: 1; justify-content: space-around;
+    }
+    .state-node-row {
+      display: flex; align-items: center; gap: 14px;
+    }
+    .state-pill {
+      background: rgba(41, 37, 36, 0.95); border: 2px solid #f59e0b;
+      border-radius: 12px; padding: 10px 20px; font-weight: 800; font-size: 14px; color: #f8fafc;
+      min-width: 170px; text-align: center; box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+    }
+    .state-arrow {
+      flex: 1; height: 2px; background: #fbbf24; position: relative;
+    }
+    .state-arrow::after {
+      content: ''; position: absolute; right: 0; top: -4px; width: 0; height: 0;
+      border-left: 8px solid #fbbf24; border-top: 5px solid transparent; border-bottom: 5px solid transparent;
+    }
+    .state-guard {
+      font-size: 11px; font-family: monospace; color: #fde047; margin-bottom: 4px;
+    }
+
+    .terminal-window {
+      background: #0c0a09; border: 1.5px solid #292524; border-radius: 16px;
+      padding: 22px; font-family: 'Consolas', monospace; font-size: 13px;
+      color: #fbbf24; display: flex; flex-direction: column;
+    }
+    .terminal-header { display: flex; gap: 8px; margin-bottom: 12px; border-bottom: 1px solid #292524; padding-bottom: 10px; }
+    .t-dot { width: 12px; height: 12px; border-radius: 50%; }
+    .t-red { background: #ef4444; } .t-yellow { background: #f59e0b; } .t-green { background: #10b981; }
+    .terminal-body { flex: 1; line-height: 1.55; color: #e2e8f0; font-size: 12px; }
+
+    /* SLIDE 4: SÍNTESE */
+    .cards-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; flex: 1; }
+    .feature-card {
+      background: rgba(28, 25, 23, 0.85); border: 1.5px solid rgba(245, 158, 11, 0.35);
+      border-radius: 18px; padding: 28px; display: flex; flex-direction: column;
+      box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+    }
+    .card-icon { font-size: 38px; margin-bottom: 16px; }
+    .card-title { font-size: 24px; font-weight: 800; color: #fbbf24; margin-bottom: 12px; }
+    .card-desc { font-size: 17px; color: #e2e8f0; line-height: 1.5; flex: 1; }
+    .card-tag {
+      margin-top: 15px; align-self: flex-start; background: rgba(245, 158, 11, 0.15);
+      border: 1px solid #f59e0b; color: #fef3c7; padding: 4px 12px; border-radius: 8px;
+      font-size: 13px; font-weight: 700;
+    }
+
+    /* BOTTOM BAR */
+    .bottom-bar {
+      position: absolute; bottom: 0; left: 0; right: 0; height: 220px;
+      background: rgba(18, 16, 15, 0.96); border-top: 1px solid rgba(245, 158, 11, 0.35);
+      backdrop-filter: blur(16px); display: flex; align-items: center;
+      padding: 0 60px; gap: 40px; z-index: 50;
+    }
+    .avatars-container { display: flex; gap: 30px; align-items: center; }
+    .avatar-card {
+      display: flex; flex-direction: column; align-items: center;
+      transition: all 0.3s ease; opacity: 0.45; transform: scale(0.95);
+    }
+    .avatar-card.active { opacity: 1; transform: scale(1.05); }
+    .avatar-circle {
+      width: 90px; height: 90px; border-radius: 50%; overflow: hidden;
+      border: 3px solid #44403c; position: relative; background: #1c1917;
+    }
+    .avatar-card.active .avatar-circle {
+      border-color: #f59e0b; box-shadow: 0 0 25px rgba(245, 158, 11, 0.7);
+    }
+    .avatar-circle img { width: 100%; height: 100%; object-fit: cover; }
+    .avatar-name { font-size: 15px; font-weight: 800; color: #f8fafc; margin-top: 8px; }
+    .avatar-role { font-size: 12px; color: #94a3b8; font-weight: 600; }
+
+    .subtitles-container {
+      flex: 1; height: 140px; background: rgba(28, 25, 23, 0.8);
+      border: 1.5px solid rgba(245, 158, 11, 0.35); border-radius: 16px;
+      padding: 20px 28px; display: flex; flex-direction: column; justify-content: center;
+    }
+    .sub-speaker {
+      font-size: 14px; font-weight: 800; text-transform: uppercase; letter-spacing: 1.5px;
+      margin-bottom: 8px;
+    }
+    .speaker-leigo { color: #f43f5e; }
+    .speaker-eliezer { color: #38bdf8; }
+    .speaker-ia { color: #fbbf24; }
+    .sub-text { font-size: 19px; line-height: 1.45; color: #f8fafc; font-weight: 500; }
+
+    #black-curtain {
+      position: absolute; inset: 0; background: #000000; z-index: 9999;
+      pointer-events: none; transition: opacity 0.08s linear;
+    }
+  </style>
+</head>
+<body>
+  <div id="black-curtain"></div>
+  <div class="glow-ambient"></div>
+  <div class="grid-bg"></div>
+
+  <!-- TOP BAR -->
+  <div class="top-bar">
+    <div class="top-title">
+      <div class="badge-ep">Episódio 3C • UML Completo</div>
+      <div class="series-name">IDD NA PRÁTICA: <span>CAFETERIA & OMG UML COMPLETO</span></div>
+    </div>
+    <div class="timer-box" id="clock-display">00:00.0</div>
+  </div>
+
+  <!-- STAGE -->
+  <div class="stage">
+    <!-- SLIDE 1: DIAGRAMA DE CASOS DE USO CANÔNICO -->
+    <div class="slide-view active" id="slide-1">
+      <div class="slide-header">
+        <div class="slide-category">Arquitetura Comportamental • OMG UML Standard</div>
+        <div class="slide-title">Diagrama de Casos de Uso Canônico & Atores Formais</div>
+        <div class="slide-subtitle">Fronteiras da Cafeteria, Balcão, Cozinha e Relações de Inclusão Estrita</div>
+      </div>
+      <div class="usecase-layout">
+        <!-- ATOR 1: CLIENTE -->
+        <div class="actor-box">
+          <svg class="actor-icon" viewBox="0 0 24 24">
+            <circle cx="12" cy="7" r="4"/>
+            <path d="M5.5 21v-2a6.5 6.5 0 0 1 13 0v2"/>
+          </svg>
+          <div class="actor-name">Cliente</div>
+          <div class="actor-role">Ator Humano</div>
+        </div>
+
+        <!-- SISTEMA BOUNDARY -->
+        <div class="system-boundary">
+          <div class="boundary-title">
+            <span>Sistema Integrado Cafeteria & Padaria</span>
+            <span style="font-family: monospace; color: #f59e0b;">&lt;&lt;subsystem&gt;&gt;</span>
+          </div>
+          <div class="usecases-grid">
+            <div class="usecase-oval">
+              <span class="uc-id">UC01</span>
+              <span class="uc-title">Realizar Pedido no Balcão</span>
+              <span class="uc-tag">registro de itens e comanda</span>
+            </div>
+            <div class="usecase-oval" style="border-color: #38bdf8;">
+              <span class="uc-id" style="color: #38bdf8;">UC02 &lt;&lt;include&gt;&gt;</span>
+              <span class="uc-title">Baixar Insumos Ficha Técnica</span>
+              <span class="uc-tag">dedução estrita por lote FIFO</span>
+            </div>
+            <div class="usecase-oval">
+              <span class="uc-id">UC03</span>
+              <span class="uc-title">Liquidar Pagamento</span>
+              <span class="uc-tag">Pix, Cartão ou Débito em Comanda</span>
+            </div>
+            <div class="usecase-oval" style="border-color: #10b981;">
+              <span class="uc-id" style="color: #10b981;">UC04 &lt;&lt;include&gt;&gt;</span>
+              <span class="uc-title">Emitir Cupom Fiscal NFC-e</span>
+              <span class="uc-tag">integração com SEFAZ</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- ATOR 2 & 3: BARISTA & TERMINAL PDV -->
+        <div style="display: flex; flex-direction: column; gap: 16px;">
+          <div class="actor-box" style="padding: 16px;">
+            <svg class="actor-icon" viewBox="0 0 24 24" style="stroke: #38bdf8;">
+              <circle cx="12" cy="7" r="4"/>
+              <path d="M5.5 21v-2a6.5 6.5 0 0 1 13 0v2"/>
+            </svg>
+            <div class="actor-name">Barista / Cozinha</div>
+            <div class="actor-role" style="color: #38bdf8;">Profissional</div>
+          </div>
+          <div class="actor-box" style="padding: 16px;">
+            <svg class="actor-icon" viewBox="0 0 24 24" style="stroke: #10b981;">
+              <rect x="3" y="4" width="18" height="16" rx="2"/>
+              <line x1="8" y1="10" x2="16" y2="10"/>
+              <line x1="8" y1="14" x2="12" y2="14"/>
+            </svg>
+            <div class="actor-name">Emissor Fiscal SEFAZ</div>
+            <div class="actor-role" style="color: #10b981;">Ator Externo</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 2: DIAGRAMA DE CLASSES NOS 3 COMPARTIMENTOS -->
+    <div class="slide-view" id="slide-2">
+      <div class="slide-header">
+        <div class="slide-category">Estrutura Orientada a Objetos • Padrão Canônico</div>
+        <div class="slide-title">Diagrama de Classes nos Três Compartimentos Oficiais</div>
+        <div class="slide-subtitle">Atributos Privados com Tipagem Estrita e Assinaturas de Métodos Puros</div>
+      </div>
+      <div class="classes-grid">
+        <!-- PEDIDO_CAFETERIA -->
+        <div class="uml-class-box">
+          <div class="class-header">
+            <div class="class-stereotype">&lt;&lt;aggregate root&gt;&gt;</div>
+            <div class="class-name">PedidoCafeteria</div>
+          </div>
+          <div class="class-attrs">
+            <div><span class="vis-priv">-</span> id: UUID</div>
+            <div><span class="vis-priv">-</span> comandaId: UUID</div>
+            <div><span class="vis-priv">-</span> status: StatusPedido</div>
+            <div><span class="vis-priv">-</span> itens: List&lt;ItemPedido&gt;</div>
+            <div><span class="vis-priv">-</span> totalCentavos: BigInt</div>
+          </div>
+          <div class="class-methods">
+            <div><span class="vis-pub">+</span> adicionarItem(produtoId, qtd): Result</div>
+            <div><span class="vis-pub">+</span> enviarParaPreparo(): Void</div>
+            <div><span class="vis-pub">+</span> liquidarPagamento(transacao): Result</div>
+            <div><span class="vis-pub">+</span> getTempoEsperaEstimado(): Minutos</div>
+          </div>
+        </div>
+
+        <!-- FICHA_TECNICA_INSUMO -->
+        <div class="uml-class-box" style="border-color: #38bdf8;">
+          <div class="class-header" style="background: linear-gradient(135deg, #0284c7, #2563eb);">
+            <div class="class-stereotype">&lt;&lt;domain entity&gt;&gt;</div>
+            <div class="class-name">FichaTecnicaInsumo</div>
+          </div>
+          <div class="class-attrs">
+            <div><span class="vis-priv">-</span> id: UUID</div>
+            <div><span class="vis-priv">-</span> produtoId: UUID</div>
+            <div><span class="vis-priv">-</span> insumoId: UUID</div>
+            <div><span class="vis-priv">-</span> gramasConsumo: Decimal</div>
+            <div><span class="vis-priv">-</span> margemPerdaPercentual: Decimal</div>
+          </div>
+          <div class="class-methods">
+            <div><span class="vis-pub">+</span> calcularConsumoTotal(qtd): Gramas</div>
+            <div><span class="vis-pub">+</span> validarSaldoEstoque(): Boolean</div>
+            <div><span class="vis-pub">+</span> reservarInsumos(): Result&lt;Void&gt;</div>
+          </div>
+        </div>
+
+        <!-- MOVIMENTACAO_ESTOQUE -->
+        <div class="uml-class-box" style="border-color: #10b981;">
+          <div class="class-header" style="background: linear-gradient(135deg, #059669, #10b981);">
+            <div class="class-stereotype">&lt;&lt;immutable domain event&gt;&gt;</div>
+            <div class="class-name">MovimentacaoEstoque</div>
+          </div>
+          <div class="class-attrs">
+            <div><span class="vis-priv">-</span> id: UUID</div>
+            <div><span class="vis-priv">-</span> loteInsumoId: UUID</div>
+            <div><span class="vis-priv">-</span> quantidadeGramas: Decimal</div>
+            <div><span class="vis-priv">-</span> saldoAnterior: Decimal</div>
+            <div><span class="vis-priv">-</span> saldoPosterior: Decimal</div>
+          </div>
+          <div class="class-methods">
+            <div><span class="vis-pub">+</span> debitarLoteFIFO(): Result&lt;Saldo&gt;</div>
+            <div><span class="vis-pub">+</span> emitirReciboFiscal(): JSON</div>
+            <div><span class="vis-pub">+</span> getSnapshotAuditoria(): JSON</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 3: MÁQUINA DE ESTADOS & TERMINAL -->
+    <div class="slide-view" id="slide-3">
+      <div class="slide-header">
+        <div class="slide-category">Dinâmica e Ciclo de Vida • Statechart IDD</div>
+        <div class="slide-title">Máquina de Estados do Pedido & Terminal da IA</div>
+        <div class="slide-subtitle">Transições Válidas, Guardas de Ficha Técnica e Homologação de Contratos</div>
+      </div>
+      <div class="statechart-container">
+        <div class="states-visual-card">
+          <div style="font-size: 13px; font-weight: 800; color: #fbbf24; text-transform: uppercase; margin-bottom: 12px;">
+            Ciclo de Vida do Pedido (Statechart)
+          </div>
+          <div class="states-flow">
+            <div class="state-node-row">
+              <div style="width: 20px; height: 20px; border-radius: 50%; background: #ffffff;"></div>
+              <div class="state-arrow"></div>
+              <div class="state-pill">Registrado</div>
+            </div>
+            <div class="state-node-row">
+              <div class="state-guard">[lotes com saldo &gt; 0] / bloquearEstoque()</div>
+              <div class="state-arrow"></div>
+              <div class="state-pill">EmPreparo</div>
+            </div>
+            <div class="state-node-row">
+              <div class="state-guard">[produção concluída] / notificarPronto()</div>
+              <div class="state-arrow"></div>
+              <div class="state-pill">ProntoRetirada</div>
+            </div>
+            <div class="state-node-row">
+              <div class="state-guard">[pagamento liquidado &amp;&amp; retirado] / debitarDefinitivo()</div>
+              <div class="state-arrow"></div>
+              <div class="state-pill" style="border-color: #10b981; color: #6ee7b7;">Entregue</div>
+              <div style="width: 22px; height: 22px; border-radius: 50%; border: 2px solid white; display: flex; align-items: center; justify-content: center;">
+                <div style="width: 12px; height: 12px; border-radius: 50%; background: white;"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="terminal-window">
+          <div class="terminal-header">
+            <div class="t-dot t-red"></div>
+            <div class="t-dot t-yellow"></div>
+            <div class="t-dot t-green"></div>
+            <span style="margin-left: 10px; font-size: 12px; color: #78716c;">ai-compiler@cafeteria-uml:~/state-guards</span>
+          </div>
+          <div class="terminal-body">
+            <p style="color: #fbbf24;">[MATRIZ DE INVARIANTES COMPORTAMENTAIS CAFETERIA]</p>
+            <br>
+            <p style="color: #4ade80;">✓ GUARDA_01 (Disponibilidade Ficha Técnica):</p>
+            <p style="color: #cbd5e1;">  canPrepare(p) = every(item ➔ hasStock(item.fichaTecnica, item.qtd))</p>
+            <br>
+            <p style="color: #4ade80;">✓ GUARDA_02 (Invariante de Bloqueio Pós-Moagem):</p>
+            <p style="color: #cbd5e1;">  cancel(p) = FORBIDDEN IF p.status === 'EmPreparo' &amp;&amp; p.graosMoidos === true</p>
+            <br>
+            <p style="color: #4ade80;">✓ GUARDA_03 (Liquidação e Liberação de Balcão):</p>
+            <p style="color: #cbd5e1;">  canDeliver(p) = p.status === 'ProntoRetirada' &amp;&amp; p.totalPago === p.totalCentavos</p>
+            <br>
+            <p style="color: #fde047;">[STATUS] Aguardando homologação do Orquestrador Eliézer Rosa...</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 4: SÍNTESE & RUMO AO CÓDIGO VIVO (EP. 4C) -->
+    <div class="slide-view" id="slide-4">
+      <div class="slide-header">
+        <div class="slide-category">Consolidação Arquitetural • Paradigma IDD</div>
+        <div class="slide-title">Do UML Oficial ao Código Vivo Compilado</div>
+        <div class="slide-subtitle">A Especificação Comportamental Pronta para o Motor de Execução</div>
+      </div>
+      <div class="cards-grid">
+        <div class="feature-card">
+          <div class="card-icon">📐</div>
+          <div class="card-title">OMG UML Standard</div>
+          <div class="card-desc">Diagrama de Casos de Uso, Classes em 3 compartimentos e Statecharts com guardas matemáticas.</div>
+          <div class="card-tag">OMG Standard</div>
+        </div>
+        <div class="feature-card">
+          <div class="card-icon">⚡</div>
+          <div class="card-title">Próximo Passo: Ep. 4C</div>
+          <div class="card-desc">No Episódio 4C, vamos dissecar o Código Vivo da Cafeteria: Funções Puras com o decorador @invariant em runtime!</div>
+          <div class="card-tag">Código Compilado</div>
+        </div>
+        <div class="feature-card">
+          <div class="card-icon">🎯</div>
+          <div class="card-title">Governança Invencível</div>
+          <div class="card-desc">Intenções (1B) ➔ MER (2C) ➔ UML (3C) ➔ Código (4C). Zero desperdício e precisão de gramas na xícara!</div>
+          <div class="card-tag">Paradigma IDD</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BOTTOM BAR -->
+  <div class="bottom-bar">
+    <div class="avatars-container">
+      <div class="avatar-card" id="av-leigo">
+        <div class="avatar-circle">
+          <img src="../../avatares/avatar_usuaria_leiga.png" alt="Usuária Leiga">
+        </div>
+        <div class="avatar-name">Usuária Leiga</div>
+        <div class="avatar-role">Validadora de Domínio</div>
+      </div>
+      <div class="avatar-card" id="av-eliezer">
+        <div class="avatar-circle">
+          <img src="../../avatares/avatar_eliezer_oficial.png" alt="Eliézer Rosa">
+        </div>
+        <div class="avatar-name">Eliézer Rosa</div>
+        <div class="avatar-role">Orquestrador IDD</div>
+      </div>
+      <div class="avatar-card" id="av-ia">
+        <div class="avatar-circle">
+          <img src="../../avatares/avatar_ia_compilador.png" alt="IA Compilador">
+        </div>
+        <div class="avatar-name">IA Compilador</div>
+        <div class="avatar-role">Arquitetura Comportamental</div>
+      </div>
+    </div>
+    <div class="subtitles-container">
+      <div class="sub-speaker" id="sub-speaker">USUÁRIA LEIGA</div>
+      <div class="sub-text" id="sub-text">Iniciando episódio 3C: UML Completo da Cafeteria &amp; Padaria...</div>
+    </div>
+  </div>
+
+  <script>
+    let timelineItems = [];
+    let isRunning = false;
+    let startTimeMs = 0;
+
+    window.setTimeline = function(items) { timelineItems = items; };
+    window.stopPresentation = function() {
+      isRunning = false;
+    };
+    window.startPresentation = function() {
+      const curtain = document.getElementById('black-curtain');
+      if (curtain) {
+        curtain.style.opacity = '0';
+        setTimeout(() => curtain.remove(), 80);
+      }
+      isRunning = true;
+      startTimeMs = performance.now();
+      requestAnimationFrame(renderLoop);
+    };
+
+    function renderLoop(now) {
+      if (!isRunning) return;
+      const elapsedSec = (now - startTimeMs) / 1000;
+      const minutes = Math.floor(elapsedSec / 60);
+      const seconds = (elapsedSec % 60).toFixed(1);
+      document.getElementById('clock-display').innerText =
+        String(minutes).padStart(2, '0') + ':' + String(seconds).padStart(4, '0');
+
+      const curSeg = timelineItems.find(item => elapsedSec >= item.startSec && elapsedSec < item.endSec);
+      if (curSeg) {
+        const targetSlideId = 'slide-' + curSeg.slide;
+        document.querySelectorAll('.slide-view').forEach(s => {
+          if (s.id === targetSlideId) {
+            if (!s.classList.contains('active')) s.classList.add('active');
+          } else {
+            s.classList.remove('active');
+          }
+        });
+
+        ['leigo', 'eliezer', 'ia'].forEach(who => {
+          const el = document.getElementById('av-' + who);
+          if (el) {
+            if (curSeg.who === who) el.classList.add('active');
+            else el.classList.remove('active');
+          }
+        });
+
+        const speakerEl = document.getElementById('sub-speaker');
+        const textEl = document.getElementById('sub-text');
+        speakerEl.className = 'sub-speaker speaker-' + curSeg.who;
+        speakerEl.innerText = curSeg.actor;
+        textEl.innerText = curSeg.text;
+      }
+      requestAnimationFrame(renderLoop);
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,115 @@
+{
+  "episode": "4C",
+  "title": "Implementação Completa: Funções Puras & Métodos Amarrados às Invariantes",
+  "totalDurationSec": 131.31,
+  "items": [
+    {
+      "id": "seg_01_leigo",
+      "who": "leigo",
+      "actor": "Usuária Leiga",
+      "slide": 1,
+      "chat": false,
+      "startSec": 0.5,
+      "endSec": 11.92,
+      "durationSec": 11.42,
+      "text": "Eliézer, chegamos na fase de código vivo da Barbearia! Como transformar os modelos visuais em um motor de software puro, que impede que dois clientes agendem a mesma cadeira ao mesmo tempo?",
+      "file": "audio/seg_01_leigo.mp3"
+    },
+    {
+      "id": "seg_02_eliezer",
+      "who": "eliezer",
+      "actor": "Eliézer Rosa",
+      "slide": 1,
+      "chat": false,
+      "startSec": 12.57,
+      "endSec": 30.14,
+      "durationSec": 17.57,
+      "text": "No Paradigma IDD, nós não confiamos em travas frágeis de banco ou verificações manuais no frontend. Toda a lógica de agendamento é encapsulada em Funções Puras determinísticas, onde intervalos de tempo são tratados como tipos primitivos imutáveis e testados matematicamente!",
+      "file": "audio/seg_02_eliezer.mp3"
+    },
+    {
+      "id": "seg_03_leigo",
+      "who": "leigo",
+      "actor": "Usuária Leiga",
+      "slide": 2,
+      "chat": false,
+      "startSec": 30.79,
+      "endSec": 41.23,
+      "durationSec": 10.44,
+      "text": "Vejam na tela o editor de código: o método confirmarAgendamento possui o decorador arroba invariant! IA Compilador, como ele blinda o negócio?",
+      "file": "audio/seg_03_leigo.mp3"
+    },
+    {
+      "id": "seg_04_ia",
+      "who": "ia",
+      "actor": "IA Compilador",
+      "slide": 2,
+      "chat": false,
+      "startSec": 41.88,
+      "endSec": 65.02,
+      "durationSec": 23.14,
+      "text": "O decorador atua em tempo de execução como uma barreira intransponível. Antes da alocação, ele valida se o intervalo de tempo solicitado não possui intersecção temporal com nenhum agendamento prévio do barbeiro. E no retorno, ele assegura que a comanda vinculada já foi inicializada com o snapshot de comissão. Se qualquer condição for violada, a operação aborta instantaneamente!",
+      "file": "audio/seg_04_ia.mp3"
+    },
+    {
+      "id": "seg_05_leigo",
+      "who": "leigo",
+      "actor": "Usuária Leiga",
+      "slide": 3,
+      "chat": false,
+      "startSec": 65.67,
+      "endSec": 71.48,
+      "durationSec": 5.81,
+      "text": "E se houver dezenas de clientes tentando reservar o mesmo horário de sexta-feira às dezenove horas?",
+      "file": "audio/seg_05_leigo.mp3"
+    },
+    {
+      "id": "seg_06_ia",
+      "who": "ia",
+      "actor": "IA Compilador",
+      "slide": 3,
+      "chat": true,
+      "startSec": 72.13,
+      "endSec": 93.59,
+      "durationSec": 21.46,
+      "text": "Executando agora a suíte de testes de estresse com duzentas simulações de alta concorrência! Cenários extremos: múltiplos acessos simultâneos, tentativas de cancelamento fora de prazo e cálculo de comissões centavo por centavo. Duzentos testes executados: duzentos aprovados com taxa de sucesso de cem por cento e zero conflitos de agenda!",
+      "file": "audio/seg_06_ia.mp3"
+    },
+    {
+      "id": "seg_07_eliezer",
+      "who": "eliezer",
+      "actor": "Eliézer Rosa",
+      "slide": 3,
+      "chat": true,
+      "startSec": 94.24,
+      "endSec": 106.67,
+      "durationSec": 12.43,
+      "text": "Implementação e suíte de testes formalmente homologadas! Essa é a garantia do Paradigma IDD: software em produção sem surpresas, sem bugs e com estabilidade inabalável.",
+      "file": "audio/seg_07_eliezer.mp3"
+    },
+    {
+      "id": "seg_08_leigo",
+      "who": "leigo",
+      "actor": "Usuária Leiga",
+      "slide": 4,
+      "chat": false,
+      "startSec": 107.32,
+      "endSec": 115.96,
+      "durationSec": 8.64,
+      "text": "Com o 2C de MER, o 3C de UML e o 4C de Código Vivo, a trilha da Barbearia & Salão está completamente consagrada!",
+      "file": "audio/seg_08_leigo.mp3"
+    },
+    {
+      "id": "seg_09_eliezer",
+      "who": "eliezer",
+      "actor": "Eliézer Rosa",
+      "slide": 4,
+      "chat": false,
+      "startSec": 116.61,
+      "endSec": 129.16,
+      "durationSec": 12.55,
+      "text": "Isso mesmo! E agora vamos aplicar esse mesmo padrão de excelência na trilha de Cafeteria & Padaria. Confiram todas as nossas playlists oficiais e dominem o Paradigma IDD!",
+      "file": "audio/seg_09_eliezer.mp3"
+    }
+  ]
+}

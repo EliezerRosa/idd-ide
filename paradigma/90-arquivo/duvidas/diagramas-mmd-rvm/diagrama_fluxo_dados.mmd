@@ -1,0 +1,53 @@
+flowchart TD
+    %% Estilos
+    classDef db fill:#f3f4f6,stroke:#374151,stroke-width:2px,color:#1f2937
+    classDef service fill:#dcfce7,stroke:#16a34a,stroke-width:2px,color:#14532d
+    classDef component fill:#eef2ff,stroke:#4f46e5,stroke-width:2px,color:#312e81
+    classDef filter fill:#fef3c7,stroke:#d97706,stroke-width:2px,stroke-dasharray: 5 5,color:#78350f
+
+    %% Camada de Dados
+    subgraph Supabase [Fonte Única de Verdade]
+        direction TB
+        DB[("workbook_parts\n(Tabela Única)\nJan/2024 a Mai/2026")]:::db
+    end
+
+    %% Camada de Serviço (Leitura)
+    subgraph Services [Camada de Serviço]
+        direction TB
+        WS["workbookService.fetchAll()\n(Sem Filtro)"]:::service
+        HA["historyAdapter.loadCompletedParticipations()\n(Filtro: Últimos 12 Meses)"]:::service
+    end
+
+    %% Camada de Consumo
+    subgraph Consumers [Quem Usa o Que?]
+        direction TB
+        
+        %% Consumidores do "TUDO"
+        subgraph ViewAll [Visão Completa (UI & Analytics)]
+            Apostila["Aba Apostila\n(Lista Tudo)"]:::component
+            S140["S-140 Preview\n(Qualquer Semana)"]:::component
+            AgAnalytic["Agente: Analytics\n(Campeão/Lanterna)\nUsa TUDO"]:::component
+        end
+
+        %% Consumidores do "Histórico Recente"
+        subgraph ViewRecent [Visão Rotação (Engine)]
+            Engine["Motor de Rotação\n(Cooldown & Score)"]:::component
+            AgChat["Agente: Chat Histórico\n(Lista Detalhada)\n(Limitado a 52 semanas)"]:::component
+        end
+    end
+
+    %% Relacionamentos
+    DB -->|"Lê TODAS as linhas"| WS
+    DB -->|"Lê com WHERE date > 12 meses"| HA
+
+    WS -->|"Retorna Parts[]"| Apostila
+    WS -->|"Retorna Parts[]"| S140
+    WS -->|"Retorna Parts[]"| AgAnalytic
+
+    HA -->|"Retorna HistoryRecords[]"| Engine
+    HA -->|"Retorna HistoryRecords[]"| AgChat
+
+    %% Anotações
+    FilterNote(("> Janela de 12 Meses apenas <br/> para decisão justa de rotação")):::filter
+    HA -.- FilterNote
+

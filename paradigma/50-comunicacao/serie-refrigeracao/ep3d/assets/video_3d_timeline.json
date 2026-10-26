@@ -1,0 +1,110 @@
+{
+  "projectName": "IDD_Refrigeracao_Novo_Episodio_3D",
+  "totalDurationSec": 138.26,
+  "items": [
+    {
+      "index": 0,
+      "id": "seg_00_leigo",
+      "who": "leigo",
+      "actor": "Usuária Leiga",
+      "avatar": "leigo",
+      "slide": 1,
+      "text": "Eliézer, no episódio três C nós delimitamos os sub-módulos e os Casos de Uso de segundo nível. Mas como isso funciona na hora em que o aplicativo precisa gravar dados reais? Como garantir que uma operação complexa não deixe o banco de dados corrompido pela metade?",
+      "wav": "C:\\Antigravity - IDD Refrigeração\\motion_graphics_renderer\\idd_video_3d_assets\\audio\\seg_00_leigo.wav",
+      "startSec": 0.5,
+      "durSec": 16.8,
+      "endSec": 17.3
+    },
+    {
+      "index": 1,
+      "id": "seg_01_eliezer",
+      "who": "eliezer",
+      "actor": "Eliézer Rosa",
+      "avatar": "eliezer",
+      "slide": 1,
+      "text": "Aqui entra o conceito mais moderno de Transações Atômicas de Negócio! No Paradigma IDD, cada Caso de Uso de segundo nível opera como uma Unit of Work, ou seja, uma transação de Agregado estrita. Tudo comita ou nada comita. Não existe estado meio certo.",
+      "wav": "C:\\Antigravity - IDD Refrigeração\\motion_graphics_renderer\\idd_video_3d_assets\\audio\\seg_01_eliezer.wav",
+      "startSec": 17.95,
+      "durSec": 19.032,
+      "endSec": 36.982
+    },
+    {
+      "index": 2,
+      "id": "seg_02_leigo",
+      "who": "leigo",
+      "actor": "Usuária Leiga",
+      "avatar": "leigo",
+      "slide": 2,
+      "text": "Veja no Slide dois o exemplo do fechamento da Ordem de Serviço em campo! Nós temos o técnico finalizando a visita, baixando o capacitor do carro, coletando a assinatura do síndico e emitindo o laudo do PMOC. Como a atomicidade protege essa rotina?",
+      "wav": "C:\\Antigravity - IDD Refrigeração\\motion_graphics_renderer\\idd_video_3d_assets\\audio\\seg_02_leigo.wav",
+      "startSec": 37.632,
+      "durSec": 15.744,
+      "endSec": 53.376
+    },
+    {
+      "index": 3,
+      "id": "seg_03_eliezer",
+      "who": "eliezer",
+      "actor": "Eliézer Rosa",
+      "avatar": "eliezer",
+      "slide": 2,
+      "text": "Se a conexão de internet cair ou se o laudo violar uma regra sanitária, o IDD aciona a compensação imediata. A peça volta ao estoque do carro, a ordem de serviço permanece em atendimento e nenhuma mensagem incorreta é disparada no WhatsApp. É a integridade do MER e das regras de negócio preservada a ferro e fogo.",
+      "wav": "C:\\Antigravity - IDD Refrigeração\\motion_graphics_renderer\\idd_video_3d_assets\\audio\\seg_03_eliezer.wav",
+      "startSec": 54.026,
+      "durSec": 21.144,
+      "endSec": 75.17
+    },
+    {
+      "index": 4,
+      "id": "seg_04_leigo",
+      "who": "leigo",
+      "actor": "Usuária Leiga",
+      "avatar": "leigo",
+      "slide": 3,
+      "text": "E no Slide três nós vemos as Classes UML! Reparem que os métodos não são apenas getters e setters vazios. Eles são sub-componentes funcionais com quatro fases bem definidas!",
+      "wav": "C:\\Antigravity - IDD Refrigeração\\motion_graphics_renderer\\idd_video_3d_assets\\audio\\seg_04_leigo.wav",
+      "startSec": 75.82,
+      "durSec": 11.952,
+      "endSec": 87.772
+    },
+    {
+      "index": 5,
+      "id": "seg_05_eliezer",
+      "who": "eliezer",
+      "actor": "Eliézer Rosa",
+      "avatar": "eliezer",
+      "slide": 3,
+      "text": "Exatamente! Cada classe possui métodos de Guarda para validar pré-condições, métodos de Mutação atômica em memória, métodos de Pós-Condição para checar invariantes e gerar o hash imutável, e métodos de Compensação para rollback seguro.",
+      "wav": "C:\\Antigravity - IDD Refrigeração\\motion_graphics_renderer\\idd_video_3d_assets\\audio\\seg_05_eliezer.wav",
+      "startSec": 88.422,
+      "durSec": 15.912,
+      "endSec": 104.334
+    },
+    {
+      "index": 6,
+      "id": "seg_06_leigo",
+      "who": "leigo",
+      "actor": "Usuária Leiga",
+      "avatar": "leigo",
+      "slide": 4,
+      "text": "Sensacional! Com Bounded Contexts rígidos e Transações Atômicas governadas por invariantes, o desenvolvedor e o especialista de negócio têm a certeza de que a IA vai construir um software resiliente e profissional!",
+      "wav": "C:\\Antigravity - IDD Refrigeração\\motion_graphics_renderer\\idd_video_3d_assets\\audio\\seg_06_leigo.wav",
+      "startSec": 104.984,
+      "durSec": 14.544,
+      "endSec": 119.528
+    },
+    {
+      "index": 7,
+      "id": "seg_07_eliezer",
+      "who": "eliezer",
+      "actor": "Eliézer Rosa",
+      "avatar": "eliezer",
+      "slide": 4,
+      "text": "Essa é a maturidade do Paradigma IDD: combinar a velocidade da inteligência artificial com o rigor inegociável da engenharia de software. No próximo episódio nós avançamos para a validação em produção. Continue acompanhando a série!",
+      "wav": "C:\\Antigravity - IDD Refrigeração\\motion_graphics_renderer\\idd_video_3d_assets\\audio\\seg_07_eliezer.wav",
+      "startSec": 120.178,
+      "durSec": 15.936,
+      "endSec": 136.114
+    }
+  ]
+}

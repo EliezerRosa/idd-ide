@@ -1,0 +1,58 @@
+$basePath = "C:\IDE IDD Claude"
+
+# Criação da pasta raiz
+if (!(Test-Path $basePath)) {
+    New-Item -ItemType Directory -Path $basePath -Force | Out-Null
+}
+
+# 1. Documento Mestre
+$doc00 = @"
+# 00 - Master Architecture Blueprint: Evolução IDD IDE (v2.0)
+
+## Visão Geral da Evolução
+Este documento define a arquitetura macro para a evolução do IDD IDE, introduzindo uma hierarquia de 3 camadas de intenções, verificação multimodal e alinhamento de linguagem.
+
+## Hierarquia de Intenções do Sistema
+1. **Camada 1 (Macro/Projeto - `project.intent.yaml`):** Governança de Bounded Contexts, regras de acoplamento entre pacotes e políticas globais de drift.
+2. **Camada 2 (Dados/Domínio - `domain.intent.yaml`):** Modelagem relacional, FDs, verificação de formas normais (1NF a DKNF) e diagramas Excalidraw.
+3. **Camada 3 (Módulo/Funcional - `.intent.yaml`):** Intenções circunscritas a métodos de classes de negócio, critérios BDD e verificação estrutural via AST.
+
+## Fluxo Completo da Pipeline
+Linguagem Natural Ambígua 
+  └──> Compilador L1 (SHALA-LLM: Entropia H(p_q))
+        └──> Linguagem Ubíqua Desambiguada
+              └──> Circunscrição a Método de Classe (DDD Aggregate)
+                    └──> Verification AST & Diffs (LCOM, CBO, Demeter)
+                          └──> Validação Visual Multimodal (Excalidraw + VLM)
+                                └──> CI/CD Enforcement & GitHub Actions
+
+## Configuração Raiz: `/project.intent.yaml`
+```yaml
+version: "2.0"
+project: "IDD IDE Engine"
+purpose: "IDE e CLI neuro-simbólica para verificação contínua de intenções de código, dados e arquitetura."
+
+global_constraints:
+  - id: GC-ARC-01
+    type: architecture
+    severity: critical
+    description: "A camada de LSP e CLI nunca deve depender exclusivamente de APIs neurais/LLM sem fallback simbólico estático."
+
+  - id: GC-SEC-02
+    type: security
+    severity: critical
+    description: "Chaves de API e segredos de ambiente nunca devem ser persistidos no SQLite local ou expostos em logs."
+
+bounded_contexts:
+  - name: "cli"
+    allowed_dependencies: ["core", "verifier", "domain"]
+  - name: "lsp"
+    allowed_dependencies: ["core", "verifier"]
+  - name: "domain"
+    allowed_dependencies: ["core"]
+  - name: "verifier"
+    allowed_dependencies: ["core"]
+
+drift_policy:
+  min_overall_score: 85%
+  block_pr_on_critical: true

@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=1920, height=1080, initial-scale=1.0">
+  <title>Episódio 10 — IDD Base de Conhecimento: IDD vs Copilot Workspace & Aider</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-dark: #050811;
+      --bg-card: rgba(11, 20, 38, 0.90);
+      --purple-spec: #a855f7;
+      --purple-glow: rgba(168, 85, 247, 0.45);
+      --orange-aider: #f97316;
+      --orange-glow: rgba(249, 115, 22, 0.45);
+      --emerald-idd: #10b981;
+      --cyan-tech: #38bdf8;
+      --rose-fail: #f43f5e;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      width: 1920px;
+      height: 1080px;
+      overflow: hidden;
+      background: #050811;
+      color: var(--text-main);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      position: relative;
+    }
+
+    #bg-canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 1920px;
+      height: 1080px;
+      z-index: 1;
+    }
+
+    .app-container {
+      position: relative;
+      z-index: 10;
+      width: 1920px;
+      height: 1080px;
+      display: flex;
+      flex-direction: column;
+      padding: 30px 45px;
+      justify-content: space-between;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 18px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .brand-wrap {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .brand-logo {
+      width: 50px;
+      height: 50px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #a855f7, #f97316);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 26px;
+      box-shadow: 0 0 20px rgba(168, 85, 247, 0.5);
+    }
+    .brand-text h1 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 22px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      color: #fff;
+    }
+    .brand-text span {
+      font-size: 13px;
+      color: #c084fc;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+    }
+
+    .header-badges {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .h-badge {
+      padding: 8px 18px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: rgba(15, 23, 42, 0.7);
+    }
+    .h-badge.ep-tag {
+      background: linear-gradient(135deg, rgba(168, 85, 247, 0.25), rgba(249, 115, 22, 0.25));
+      border-color: rgba(168, 85, 247, 0.5);
+      color: #f3e8ff;
+    }
+    .h-badge.live-indicator {
+      border-color: rgba(249, 115, 22, 0.4);
+      color: #fb923c;
+    }
+    .pulse-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #fb923c;
+      box-shadow: 0 0 8px #fb923c;
+    }
+
+    main {
+      flex: 1;
+      display: grid;
+      grid-template-columns: 1420px 380px;
+      gap: 30px;
+      margin: 20px 0;
+      min-height: 0;
+    }
+
+    .slide-panel {
+      background: var(--bg-card);
+      border: 1px solid rgba(168, 85, 247, 0.25);
+      border-radius: 24px;
+      padding: 32px 38px;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(16px);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .slide-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 24px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      padding-bottom: 16px;
+    }
+    .slide-title-area h2 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 32px;
+      font-weight: 800;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .slide-title-area h2 span {
+      color: #c084fc;
+    }
+    .slide-title-area p {
+      color: var(--text-muted);
+      font-size: 15px;
+      margin-top: 6px;
+    }
+    .slide-num-tag {
+      background: rgba(168, 85, 247, 0.15);
+      border: 1px solid #a855f7;
+      color: #c084fc;
+      padding: 6px 16px;
+      border-radius: 12px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .slide-content-viewport {
+      flex: 1;
+      position: relative;
+      min-height: 0;
+    }
+    .slide-view {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.4s ease, transform 0.4s ease;
+      transform: translateY(10px);
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .slide-view.active {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0);
+    }
+
+    /* SLIDE 1: A ILUSÃO DO SPEC-DRIVEN */
+    .spec-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      flex: 1;
+    }
+    .spec-box {
+      background: rgba(15, 23, 42, 0.7);
+      border-radius: 16px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .spec-box.copilot {
+      border-color: rgba(249, 115, 22, 0.4);
+      background: radial-gradient(circle at top right, rgba(249, 115, 22, 0.1), transparent 70%), rgba(15, 23, 42, 0.8);
+    }
+    .spec-box.idd-ir {
+      border-color: rgba(16, 185, 129, 0.4);
+      background: radial-gradient(circle at top right, rgba(16, 185, 129, 0.15), transparent 70%), rgba(15, 23, 42, 0.8);
+    }
+    .s-head {
+      font-family: 'Outfit', sans-serif;
+      font-size: 20px;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .s-head.copilot { color: #fb923c; }
+    .s-head.idd-ir { color: #34d399; }
+    .s-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      font-size: 15px;
+      line-height: 1.5;
+      color: #cbd5e1;
+    }
+    .s-item strong { color: #fff; }
+
+    /* SLIDE 2: O FIM DO PATCH-AND-PRAY */
+    .patch-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      flex: 1;
+    }
+    .p-card {
+      background: rgba(15, 23, 42, 0.7);
+      border-radius: 16px;
+      padding: 22px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .p-card.pray {
+      border-color: rgba(244, 63, 94, 0.4);
+      background: radial-gradient(circle at top, rgba(244, 63, 94, 0.12), transparent 80%), rgba(15, 23, 42, 0.8);
+    }
+    .p-card.smt {
+      border-color: rgba(16, 185, 129, 0.4);
+      background: radial-gradient(circle at top, rgba(16, 185, 129, 0.12), transparent 80%), rgba(15, 23, 42, 0.8);
+    }
+
+    /* SLIDE 3: O GIT É CEGO */
+    .git-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      flex: 1;
+    }
+    .git-box {
+      background: rgba(15, 23, 42, 0.7);
+      border-radius: 16px;
+      padding: 22px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    /* SLIDE 4: MANIFESTO 3.0 */
+    .manifest-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 24px;
+      flex: 1;
+    }
+    .manifest-card {
+      background: rgba(15, 23, 42, 0.8);
+      border: 1.5px solid rgba(168, 85, 247, 0.4);
+      border-radius: 18px;
+      padding: 26px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .final-call {
+      background: linear-gradient(135deg, rgba(168, 85, 247, 0.25), rgba(249, 115, 22, 0.2));
+      border: 1.5px solid rgba(168, 85, 247, 0.5);
+      border-radius: 18px;
+      padding: 26px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      box-shadow: 0 10px 30px rgba(168, 85, 247, 0.2);
+    }
+
+    /* BARRA LATERAL */
+    .sidebar {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+    .host-card {
+      background: var(--bg-card);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 20px;
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    .host-card.talking {
+      border-color: #a855f7;
+      background: linear-gradient(135deg, rgba(168, 85, 247, 0.2), rgba(15, 23, 42, 0.9));
+      box-shadow: 0 0 30px rgba(168, 85, 247, 0.35);
+      transform: scale(1.02);
+    }
+    .host-card.talking.leigo-active {
+      border-color: #38bdf8;
+      background: linear-gradient(135deg, rgba(56, 189, 248, 0.2), rgba(15, 23, 42, 0.9));
+      box-shadow: 0 0 30px rgba(56, 189, 248, 0.35);
+    }
+    .avatar-wrap {
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      border: 2px solid rgba(255, 255, 255, 0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 32px;
+      background: #0b1426;
+      flex-shrink: 0;
+    }
+    .host-info h4 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 17px;
+      font-weight: 700;
+      color: #fff;
+    }
+    .host-info p {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 3px;
+    }
+    .talk-badge {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      font-size: 10px;
+      text-transform: uppercase;
+      font-weight: 800;
+      letter-spacing: 1px;
+      padding: 3px 8px;
+      border-radius: 999px;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .host-card.talking .talk-badge {
+      opacity: 1;
+      background: #a855f7;
+      color: #fff;
+    }
+    .host-card.talking.leigo-active .talk-badge {
+      background: #38bdf8;
+      color: #0b1426;
+    }
+
+    .telemetry-card {
+      background: var(--bg-card);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 20px;
+      padding: 20px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .tele-title {
+      font-size: 12px;
+      font-weight: 800;
+      color: var(--text-muted);
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .tele-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 13px;
+      padding: 8px 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+    .tele-val {
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 700;
+      color: #c084fc;
+    }
+
+    footer {
+      background: rgba(11, 20, 38, 0.95);
+      border: 1px solid rgba(168, 85, 247, 0.25);
+      border-radius: 18px;
+      padding: 16px 26px;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+    .spk-pill {
+      padding: 6px 14px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-shrink: 0;
+    }
+    .spk-pill.eliezer {
+      background: rgba(168, 85, 247, 0.2);
+      border: 1px solid #a855f7;
+      color: #c084fc;
+    }
+    .spk-pill.leigo {
+      background: rgba(56, 189, 248, 0.2);
+      border: 1px solid #38bdf8;
+      color: #38bdf8;
+    }
+    .speech-box {
+      flex: 1;
+      font-size: 16px;
+      color: #e2e8f0;
+      font-weight: 500;
+      line-height: 1.4;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .wave-bars {
+      display: flex;
+      gap: 4px;
+      align-items: center;
+      height: 24px;
+      opacity: 0.3;
+    }
+    .wave-bars.active { opacity: 1; }
+    .w-bar {
+      width: 3px;
+      background: #c084fc;
+      border-radius: 999px;
+      animation: wavePulse 0.8s infinite ease-in-out;
+    }
+    .w-bar:nth-child(2) { animation-delay: 0.15s; height: 18px; }
+    .w-bar:nth-child(3) { animation-delay: 0.3s; height: 24px; }
+    .w-bar:nth-child(4) { animation-delay: 0.45s; height: 14px; }
+    .w-bar:nth-child(5) { animation-delay: 0.2s; height: 20px; }
+    @keyframes wavePulse {
+      0%, 100% { height: 6px; }
+      50% { height: 22px; }
+    }
+  </style>
+</head>
+<body>
+  <canvas id="bg-canvas"></canvas>
+
+  <div class="app-container">
+    <header>
+      <div class="brand-wrap">
+        <div class="brand-logo">⚔️</div>
+        <div class="brand-text">
+          <h1>PARADIGMA IDD — BASE DE CONHECIMENTO</h1>
+          <span>O CONFRONTO TÉCNICO: IDD vs. O MERCADO DE IA</span>
+        </div>
+      </div>
+      <div class="header-badges">
+        <div class="h-badge ep-tag">
+          <span>EPISÓDIO 10</span>
+          <strong>IDD vs. COPILOT WORKSPACE &amp; AIDER</strong>
+        </div>
+        <div class="h-badge live-indicator">
+          <div class="pulse-dot"></div>
+          <span id="timeReadout">00:00 / 02:40</span>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section class="slide-panel">
+        <div class="slide-header">
+          <div class="slide-title-area">
+            <h2 id="mainSlideTitle"><span>📝</span> A Ilusão do Spec-Driven: Markdown Amíguo vs. Intent IR</h2>
+            <p id="mainSlideSubtitle">Por que trocar prompt solto por texto solto com bullet points não resolve o determinismo.</p>
+          </div>
+          <div class="slide-num-tag">SLIDE <span id="slideIndicator">1</span>/4</div>
+        </div>
+
+        <div class="slide-content-viewport">
+          <!-- SLIDE 1: A ILUSÃO DO SPEC-DRIVEN -->
+          <div class="slide-view active" id="view-slide-1">
+            <div class="spec-grid">
+              <div class="spec-box copilot">
+                <div class="s-head copilot">📄 GitHub Copilot Workspace: A "Spec" em Markdown</div>
+                <div class="s-item">
+                  <span>🔄</span>
+                  <div><strong>Texto Gerando Texto:</strong> Converte uma Issue em um texto em Markdown com bullet points. Continua sendo linguagem natural aberta e estocástica!</div>
+                </div>
+                <div class="s-item">
+                  <span>🎲</span>
+                  <div><strong>Não-Determinístico:</strong> Dois planos iguais podem gerar códigos completamente diferentes e com regressões silenciosas.</div>
+                </div>
+                <div class="s-item">
+                  <span>🙈</span>
+                  <div><strong>Cego para Bancos de Dados:</strong> Focado puramente em commits de arquivos de aplicação, sem diff semântico de tabelas.</div>
+                </div>
+              </div>
+
+              <div class="spec-box idd-ir">
+                <div class="s-head idd-ir">🌲 IDD: A Intent IR (Árvore Sintática do Domínio)</div>
+                <div class="s-item">
+                  <span>📐</span>
+                  <div><strong>Representação Intermediária Tipada:</strong> A intenção é compilada para uma AST formal com contratos de tipo estritos e invariantes explícitas.</div>
+                </div>
+                <div class="s-item">
+                  <span>⚡</span>
+                  <div><strong>Compilação Determinística:</strong> Como na tradição LLVM/DSPy, a mesma intenção produz a mesma semântica verificável.</div>
+                </div>
+                <div class="s-item">
+                  <span>🏛️</span>
+                  <div><strong>Governança de Dados:</strong> O modelo relacional (MER) é o tribunal supremo inviolável da corporação.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- SLIDE 2: O FIM DO PATCH-AND-PRAY -->
+          <div class="slide-view" id="view-slide-2">
+            <div class="patch-grid">
+              <div class="p-card pray">
+                <div class="s-head" style="color: #fb7185;">🎲 Aider / SWE-bench: A Cultura "Patch-and-Pray"</div>
+                <div class="s-item">
+                  <span>🩹</span>
+                  <div><strong>Remendo e Reza:</strong> O modelo aplica um patch no arquivo Python/JS e roda a suíte de testes unitários (`pytest`).</div>
+                </div>
+                <div class="s-item">
+                  <span>⚠️</span>
+                  <div><strong>A Falácia do assert_equal:</strong> Testes unitários cobrem apenas amostras finitas conhecidas pelo programador.</div>
+                </div>
+                <div class="s-item">
+                  <span>⏰</span>
+                  <div><strong>O Bug das 3h da Manhã:</strong> Se o teste não previa concorrência ou corrida de dados, o patch passa no CI e quebra em produção!</div>
+                </div>
+              </div>
+
+              <div class="p-card smt">
+                <div class="s-head" style="color: #34d399;">📐 IDD: Prova Formal com SMT Solvers (Z3 &amp; Dafny)</div>
+                <div class="s-item">
+                  <span>🛡️</span>
+                  <div><strong>Garantia Matemática Universal:</strong> Em vez de testar 3 exemplos, o provador formal analisa todo o espaço de estados possíveis.</div>
+                </div>
+                <div class="s-item">
+                  <span>🚫</span>
+                  <div><strong>Alucinação de Domínio Zero:</strong> Se a proposta do agente violar uma única regra de negócio, a compilação é abortada no ato.</div>
+                </div>
+                <div class="s-item">
+                  <span>✨</span>
+                  <div><strong>Software Inabalável:</strong> O código só chega à produção acompanhado da prova formal de não-violação.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- SLIDE 3: O GIT É CEGO -->
+          <div class="slide-view" id="view-slide-3">
+            <div class="git-grid">
+              <div class="git-box" style="border-color: rgba(244, 63, 94, 0.4);">
+                <div class="s-head" style="color: #fb7185;">🚫 Por que o Git é Cego para a IA?</div>
+                <div style="font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #cbd5e1; background: #030712; padding: 14px; border-radius: 8px; line-height: 1.6;">
+                  - status VARCHAR(20)<br>
+                  + status_id INT REFERENCES status(id)<br><br>
+                  <span style="color: #fb7185;"># O Git enxerga: 1 linha adicionada, 1 linha removida.</span><br>
+                  <span style="color: #f43f5e; font-weight: 700;"># O Git NÃO enxerga: Tabela travada por 40 min em produção!</span>
+                </div>
+                <div style="font-size: 14px; color: #cbd5e1; line-height: 1.4;">
+                  O Git é um grafo de hashes SHA-1 sobre texto ASCII. Ele não entende cardinalidades, foreign keys ou bloqueios de banco.
+                </div>
+              </div>
+
+              <div class="git-box" style="border-color: rgba(16, 185, 129, 0.4);">
+                <div class="s-head" style="color: #34d399;">🌲 A Máquina de Diff de Intenções do IDD</div>
+                <div style="font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #cbd5e1; background: #030712; padding: 14px; border-radius: 8px; line-height: 1.6;">
+                  &lt;Mutation type="RELATIONAL_SCHEMA_MIGRATION"&gt;<br>
+                  &nbsp;&nbsp;Class: CLASSE_C_RUPTURA<br>
+                  &nbsp;&nbsp;RequiredStrategy: EXPAND_AND_CONTRACT<br>
+                  &nbsp;&nbsp;HumanTribunalApproval: MANDATORY<br>
+                  &lt;/Mutation&gt;
+                </div>
+                <div style="font-size: 14px; color: #cbd5e1; line-height: 1.4;">
+                  O IDD analisa o grafo de domínio, prevê o raio de destruição e exige o padrão Expand and Contract para zero downtime.
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- SLIDE 4: MANIFESTO 3.0 -->
+          <div class="slide-view" id="view-slide-4">
+            <div class="manifest-grid">
+              <div class="manifest-card">
+                <div style="font-size: 13px; font-weight: 800; color: #c084fc; text-transform: uppercase; letter-spacing: 1px;">
+                  O VEREDITO TÉCNICO DEFINITIVO
+                </div>
+                <h3 style="font-family: 'Outfit', sans-serif; font-size: 24px; font-weight: 800; color: #fff;">
+                  O Fim do Vibe Coding Amador
+                </h3>
+                <div class="s-item">
+                  <span>🔬</span>
+                  <div><strong>Não é mágica, é Ciência:</strong> Substituímos a intuição empírica de prompts por compiladores declarativos e métodos formais.</div>
+                </div>
+                <div class="s-item">
+                  <span>🏛️</span>
+                  <div><strong>A Verdadeira Engenharia de Software 3.0:</strong> O código é commodity efêmera; o patrimônio perpétuo é a ontologia da empresa.</div>
+                </div>
+              </div>
+
+              <div class="final-call">
+                <div>
+                  <div style="font-size: 12px; font-weight: 800; color: #fb923c; text-transform: uppercase; letter-spacing: 1px;">
+                    PARTICIPE DA REVOLUÇÃO DO IDD
+                  </div>
+                  <h3 style="font-family: 'Outfit', sans-serif; font-size: 24px; font-weight: 900; color: #fff; margin-top: 8px; line-height: 1.2;">
+                    CONSTRUA SOFTWARE INABALÁVEL COM IA
+                  </h3>
+                  <p style="font-size: 14px; color: #cbd5e1; margin-top: 10px; line-height: 1.4;">
+                    Inscreva-se no canal, comente sua experiência com as ferramentas de mercado e lidere o futuro pós-sintaxe.
+                  </p>
+                </div>
+                <div style="background: rgba(15, 23, 42, 0.85); border-radius: 10px; padding: 12px; font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #fb923c; border: 1px solid rgba(249, 115, 22, 0.4);">
+                  ▶ Série Completa na Playlist "IDD — Base de Conhecimento"
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <aside class="sidebar">
+        <div class="host-card" id="card-eliezer">
+          <div class="avatar-wrap">👨‍💼</div>
+          <div class="host-info">
+            <h4>Eliézer Rosa</h4>
+            <p>Criador do Paradigma IDD</p>
+          </div>
+          <div class="talk-badge">FALANDO</div>
+        </div>
+
+        <div class="host-card" id="card-leigo">
+          <div class="avatar-wrap">👩‍💻</div>
+          <div class="host-info">
+            <h4>Usuária Leiga</h4>
+            <p>Voz da Ergonomia de Campo</p>
+          </div>
+          <div class="talk-badge">FALANDO</div>
+        </div>
+
+        <div class="telemetry-card">
+          <div class="tele-title">
+            <span>⚙️</span> CONFRONTO TÉCNICO
+          </div>
+          <div class="tele-item">
+            <span style="color: var(--text-muted);">Copilot Workspace</span>
+            <span class="tele-val" style="color: #fb923c;">MARKDOWN SOLTO</span>
+          </div>
+          <div class="tele-item">
+            <span style="color: var(--text-muted);">Aider &amp; Pytest</span>
+            <span class="tele-val" style="color: #fb7185;">PATCH-AND-PRAY</span>
+          </div>
+          <div class="tele-item">
+            <span style="color: var(--text-muted);">Git Histórico</span>
+            <span class="tele-val" style="color: #94a3b8;">CEGO PARA BANCO</span>
+          </div>
+          <div class="tele-item">
+            <span style="color: var(--text-muted);">Paradigma IDD</span>
+            <span class="tele-val" style="color: #10b981;">SMT &amp; INTENT IR</span>
+          </div>
+        </div>
+      </aside>
+    </main>
+
+    <footer>
+      <div class="spk-pill leigo" id="speakerPill">
+        <span>🎙️</span> <span id="speakerName">Usuária Leiga</span>
+      </div>
+      <div class="speech-box" id="speechContent">
+        "Eliézer, no episódio anterior nós vimos os limites do MCP..."
+      </div>
+      <div class="wave-bars active" id="waveBars">
+        <div class="w-bar"></div>
+        <div class="w-bar"></div>
+        <div class="w-bar"></div>
+        <div class="w-bar"></div>
+        <div class="w-bar"></div>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    const canvas = document.getElementById('bg-canvas');
+    const ctx = canvas.getContext('2d');
+    canvas.width = 1920;
+    canvas.height = 1080;
+
+    const particles = [];
+    for (let i = 0; i < 70; i++) {
+      particles.push({
+        x: Math.random() * 1920,
+        y: Math.random() * 1080,
+        radius: Math.random() * 2 + 0.5,
+        speedX: (Math.random() - 0.5) * 0.3,
+        speedY: (Math.random() - 0.5) * 0.3,
+        color: Math.random() > 0.5 ? '#a855f7' : '#f97316',
+        alpha: Math.random() * 0.4 + 0.1
+      });
+    }
+
+    function animateBg() {
+      ctx.fillStyle = '#050811';
+      ctx.fillRect(0, 0, 1920, 1080);
+      particles.forEach(p => {
+        p.x += p.speedX; p.y += p.speedY;
+        if (p.y < 0) p.y = 1080;
+        if (p.x < 0) p.x = 1920;
+        if (p.x > 1920) p.x = 0;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+        ctx.fillStyle = p.color;
+        ctx.globalAlpha = p.alpha;
+        ctx.fill();
+      });
+      requestAnimationFrame(animateBg);
+    }
+    requestAnimationFrame(animateBg);
+
+    window.timelineItems = [];
+
+    window.setTimeline = function(items) {
+      if (items && items.length > 0) window.timelineItems = items;
+    };
+
+    const slideTitles = [
+      { t: "A Ilusão do Spec-Driven: Markdown Amíguo vs. Intent IR", s: "Por que trocar prompt solto por texto solto com bullet points não resolve o determinismo." },
+      { t: "A Falácia do 'Passou no Pytest': O Fim do Patch-and-Pray", s: "Por que testes unitários finitos são insuficientes perante provadores matemáticos SMT." },
+      { t: "Por que o Git é Cego: Linhas ASCII vs Grafo de Domínio", s: "A diferença entre enxergar hashes de caracteres e garantir zero downtime em bancos de dados." },
+      { t: "O Manifesto da Engenharia de Software 3.0", s: "A superação definitiva do Vibe Coding amador: rigor, ontologia e matemática formal." }
+    ];
+
+    window.updateFrameAtTime = function(timeSec) {
+      const curtain = document.getElementById('sync-curtain');
+      if (curtain && curtain.style.display !== 'none') curtain.style.display = 'none';
+
+      const m = Math.floor(timeSec / 60);
+      const s = Math.floor(timeSec % 60);
+      const timeStr = `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+      const timeEl = document.getElementById('timeReadout');
+      if (timeEl) timeEl.innerText = `${timeStr} / 02:40`;
+
+      if (!window.timelineItems || window.timelineItems.length === 0) return;
+
+      const currentSeg = window.timelineItems.find(it => timeSec >= it.startSec && timeSec <= it.endSec)
+        || window.timelineItems.filter(it => it.startSec <= timeSec).pop()
+        || window.timelineItems[0];
+
+      const speakingSeg = window.timelineItems.find(it => timeSec >= it.startSec && timeSec <= it.endSec);
+
+      document.querySelectorAll('.slide-view').forEach(sv => sv.classList.remove('active'));
+      const activeView = document.getElementById(`view-slide-${currentSeg.slide}`);
+      if (activeView) activeView.classList.add('active');
+
+      document.getElementById('slideIndicator').innerText = currentSeg.slide;
+      const tInfo = slideTitles[currentSeg.slide - 1];
+      if (tInfo) {
+        document.getElementById('mainSlideTitle').innerHTML = `<span>⚔️</span> ${tInfo.t}`;
+        document.getElementById('mainSlideSubtitle').innerText = tInfo.s;
+      }
+
+      document.getElementById('speechContent').innerText = `"${currentSeg.text}"`;
+      document.getElementById('speakerName').innerText = currentSeg.actor;
+      const pill = document.getElementById('speakerPill');
+      pill.className = `spk-pill ${currentSeg.who}`;
+
+      const cardEliezer = document.getElementById('card-eliezer');
+      const cardLeigo = document.getElementById('card-leigo');
+      const waveBars = document.getElementById('waveBars');
+
+      if (speakingSeg) {
+        cardEliezer.classList.toggle('talking', speakingSeg.who === 'eliezer');
+        cardLeigo.classList.toggle('talking', speakingSeg.who === 'leigo');
+        cardLeigo.classList.toggle('leigo-active', speakingSeg.who === 'leigo');
+        waveBars.classList.add('active');
+      } else {
+        cardEliezer.classList.remove('talking');
+        cardLeigo.classList.remove('talking');
+        cardLeigo.classList.remove('leigo-active');
+        waveBars.classList.remove('active');
+      }
+    };
+  </script>
+</body>
+</html>

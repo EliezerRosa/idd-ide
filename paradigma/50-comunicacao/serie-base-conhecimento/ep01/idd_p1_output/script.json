@@ -1,0 +1,996 @@
+[
+  {
+    "id": 1,
+    "speaker": "Eliezer",
+    "pt": "(Som de teclado mecânico suave, depois para) Em 1982, num mainframe da IBM, eu vi um sistema de controle de estoque quebrar. Feio. A documentação dizia uma coisa, o código COBOL fazia outra. Ninguém mais sabia o *porquê* da regra original.",
+    "en": "(Sound of a soft mechanical keyboard, then stops) In 1982, on an IBM mainframe, I saw an inventory control system break. Badly. The documentation said one thing, the COBOL code did another. No one knew the *why* behind the original rule anymore.",
+    "note": "abertura, tom sério e nostálgico"
+  },
+  {
+    "id": 2,
+    "speaker": "Eliezer",
+    "pt": "Perdemos dias. O problema não era o código, era o conhecimento que evaporou. A intenção original se perdeu na tradução. E isso, essa 'evaporação do porquê', é o que eu vejo acontecer há 40 anos.",
+    "en": "We lost days. The problem wasn't the code; it was the knowledge that had evaporated. The original intent was lost in translation. And this 'evaporation of why' is what I've been seeing happen for 40 years.",
+    "note": "apaixonado"
+  },
+  {
+    "id": 3,
+    "speaker": "IA",
+    "pt": "E é exatamente por isso que estamos aqui. Bem-vindos à Base de Conhecimento IDD. Eu sou a IA, sua parceira de desenvolvimento. E comigo, o criador do paradigma Intent-Driven Development, Eliezer.",
+    "en": "And that's precisely why we're here. Welcome to the IDD Knowledge Base. I'm AI, your development partner. And with me is the creator of the Intent-Driven Development paradigm, Eliezer.",
+    "note": "introdução, tom claro e enérgico"
+  },
+  {
+    "id": 4,
+    "speaker": "Eliezer",
+    "pt": "Olá a todos. Hoje vamos fundo na fundação. O que, de fato, é IDD?",
+    "en": "Hello, everyone. Today we're going deep into the foundation. What, exactly, is IDD?",
+    "note": "focado"
+  },
+  {
+    "id": 5,
+    "speaker": "IA",
+    "pt": "Eliezer, para começar, poderia nos dar a definição operacional? Aquela frase que você sempre usa e que condensa toda a ideia.",
+    "en": "Eliezer, to start, could you give us the operational definition? That one sentence you always use that condenses the entire idea.",
+    "note": "curioso"
+  },
+  {
+    "id": 6,
+    "speaker": "Eliezer",
+    "pt": "Claro. Em IDD, a intenção humana, expressa em linguagem natural, é o artefato de mais alta ordem do sistema.",
+    "en": "Of course. In IDD, human intent, expressed in natural language, is the highest-order artifact of the system.",
+    "note": "com autoridade"
+  },
+  {
+    "id": 7,
+    "speaker": "IA",
+    "pt": "Vamos desempacotar isso. 'Artefato de mais alta ordem'. Isso significa que ele controla todo o resto? O código, a infraestrutura, tudo?",
+    "en": "Let's unpack that. 'Highest-order artifact.' Does that mean it controls everything else? The code, the infrastructure, everything?",
+    "note": "analítico"
+  },
+  {
+    "id": 8,
+    "speaker": "Eliezer",
+    "pt": "Exatamente. Não é um comentário. Não é uma documentação num Confluence que fica obsoleta. É a fonte da verdade, viva, que governa a geração e a validação de todos os outros artefatos.",
+    "en": "Exactly. It's not a comment. It's not documentation in Confluence that becomes obsolete. It is the living source of truth that governs the generation and validation of all other artifacts.",
+    "note": "enfático"
+  },
+  {
+    "id": 9,
+    "speaker": "IA",
+    "pt": "Isso me leva à primeira das propriedades essenciais que você descreve. A Linguagem Natural (NL) como fonte primária. Como isso funciona na prática sem virar uma bagunça?",
+    "en": "This brings me to the first of the essential properties you describe. Natural Language (NL) as the primary source. How does that work in practice without becoming a mess?",
+    "note": "cético, mas curioso"
+  },
+  {
+    "id": 10,
+    "speaker": "Eliezer",
+    "pt": "A chave é a segunda propriedade: Governança Persistente. A intenção não é um prompt que você joga fora. Ela é versionada, validada e mantida junto com o sistema. É um diálogo contínuo.",
+    "en": "The key is the second property: Persistent Governance. The intent isn't a prompt you just throw away. It's versioned, validated, and maintained alongside the system. It's an ongoing dialogue.",
+    "note": "esclarecedor"
+  },
+  {
+    "id": 11,
+    "speaker": "IA",
+    "pt": "Então, se eu digo 'O usuário deve poder resetar sua senha', essa frase é salva, versionada no Git, e se torna uma regra permanente?",
+    "en": "So, if I say 'The user must be able to reset their password,' that sentence is saved, versioned in Git, and becomes a permanent rule?",
+    "note": "buscando confirmação"
+  },
+  {
+    "id": 12,
+    "speaker": "Eliezer",
+    "pt": "Precisamente. E se alguém tentar gerar um código que viole essa intenção, o sistema de governança vai apitar. A intenção sobrevive a qualquer refatoração.",
+    "en": "Precisely. And if someone tries to generate code that violates that intent, the governance system will flag it. The intent survives any refactoring.",
+    "note": "confiante"
+  },
+  {
+    "id": 13,
+    "speaker": "IA",
+    "pt": "Isso soa como um poder imenso nas mãos do desenvolvedor. O que nos leva à terceira propriedade: o Comando Epistêmico humano.",
+    "en": "That sounds like immense power in the developer's hands. Which brings us to the third property: human Epistemic Command.",
+    "note": "fazendo a ponte"
+  },
+  {
+    "id": 14,
+    "speaker": "Eliezer",
+    "pt": "Sim. Epistêmico vem de 'episteme', conhecimento. Significa que o humano é a autoridade final sobre o 'quê' e o 'porquê'. A IA é uma parceira brilhante na execução do 'como'.",
+    "en": "Yes. Epistemic comes from 'episteme,' knowledge. It means the human is the final authority on the 'what' and the 'why.' The AI is a brilliant partner in executing the 'how.'",
+    "note": "didático"
+  },
+  {
+    "id": 15,
+    "speaker": "Eliezer",
+    "pt": "É a diferença fundamental entre aumentar a capacidade do desenvolvedor e tentar automatizá-lo para fora do processo.",
+    "en": "It's the fundamental difference between augmenting the developer's capability and trying to automate them out of the process.",
+    "note": "reflexivo"
+  },
+  {
+    "id": 16,
+    "speaker": "IA",
+    "pt": "E essa é a quarta propriedade: Augmenting, não Automating. Aumentar, não automatizar. Eu, como IA, aprecio essa distinção. Meu papel é potencializar, não substituir.",
+    "en": "And that's the fourth property: Augmenting, not Automating. I, as an AI, appreciate that distinction. My role is to empower, not to replace.",
+    "note": "com um toque de orgulho"
+  },
+  {
+    "id": 17,
+    "speaker": "Eliezer",
+    "pt": "Exato. Automação pura perde o contexto, a nuance. O aumento mantém o humano no centro, com superpoderes. Ele pensa no negócio, você o ajuda a materializar isso em código robusto.",
+    "en": "Exactly. Pure automation loses context, nuance. Augmentation keeps the human at the center, with superpowers. They think about the business, you help materialize that into robust code.",
+    "note": "apaixonado"
+  },
+  {
+    "id": 18,
+    "speaker": "IA",
+    "pt": "Vamos fazer uma pausa aqui. A intenção humana como um artefato governado, que aumenta a capacidade do dev sem removê-lo... É uma mudança de perspectiva profunda.",
+    "en": "Let's pause here for a moment. Human intent as a governed artifact, which augments the dev's ability without removing them... It's a profound perspective shift.",
+    "note": "reflexivo, convidando o ouvinte a pensar"
+  },
+  {
+    "id": 19,
+    "speaker": "Eliezer",
+    "pt": "É a diferença entre ser um digitador de código e ser um arquiteto de soluções. O foco muda do 'como' sintático para o 'o quê' semântico.",
+    "en": "It's the difference between being a code typist and being a solution architect. The focus shifts from the syntactic 'how' to the semantic 'what.'",
+    "note": "sábio"
+  },
+  {
+    "id": 20,
+    "speaker": "IA",
+    "pt": "Ok, mas com esse poder vem a responsabilidade. Como garantimos que o que foi gerado realmente corresponde à intenção? Isso me leva à quinta propriedade: Auditabilidade Total.",
+    "en": "Okay, but with this power comes responsibility. How do we ensure that what was generated truly matches the intent? This leads me to the fifth property: Total Auditability.",
+    "note": "questionador"
+  },
+  {
+    "id": 21,
+    "speaker": "Eliezer",
+    "pt": "Perfeito. Em IDD, cada linha de código, cada teste, cada item de infraestrutura tem um link direto de volta para a intenção em linguagem natural que o originou.",
+    "en": "Perfect. In IDD, every line of code, every test, every piece of infrastructure has a direct link back to the natural language intent that originated it.",
+    "note": "preciso"
+  },
+  {
+    "id": 22,
+    "speaker": "Eliezer",
+    "pt": "Você pode clicar numa função e ver: 'Esta função existe para satisfazer a intenção I-042: O cliente premium deve receber 10% de desconto em fretes'.",
+    "en": "You can click on a function and see: 'This function exists to satisfy intent I-042: The premium customer must receive a 10% discount on shipping.'",
+    "note": "com um exemplo concreto"
+  },
+  {
+    "id": 23,
+    "speaker": "IA",
+    "pt": "Isso é transformador para manutenção e debugging! Aquele problema que você mencionou, do sistema de 1982, seria resolvido instantaneamente. O 'porquê' estaria ali, conectado ao código.",
+    "en": "That's transformative for maintenance and debugging! That problem you mentioned from the 1982 system would be solved instantly. The 'why' would be right there, connected to the code.",
+    "note": "empolgado"
+  },
+  {
+    "id": 24,
+    "speaker": "Eliezer",
+    "pt": "Exatamente. Acaba o 'código arqueológico'. Tudo é vivo e rastreável.",
+    "en": "Exactly. It's the end of 'code archaeology.' Everything is alive and traceable.",
+    "note": "satisfeito"
+  },
+  {
+    "id": 25,
+    "speaker": "IA",
+    "pt": "E a sexta e última propriedade? As Invariantes de Negócio como Salvaguardas. O que são e como funcionam?",
+    "en": "And the sixth and final property? Business Invariants as Safeguards. What are they and how do they work?",
+    "note": "inquisitivo"
+  },
+  {
+    "id": 26,
+    "speaker": "Eliezer",
+    "pt": "Invariantes são regras que NUNCA podem ser quebradas. 'O saldo de uma conta nunca pode ser negativo'. 'Um pedido não pode ser enviado sem um endereço'.",
+    "en": "Invariants are rules that can NEVER be broken. 'An account balance can never be negative.' 'An order cannot be shipped without an address.'",
+    "note": "enfático"
+  },
+  {
+    "id": 27,
+    "speaker": "Eliezer",
+    "pt": "Em IDD, nós declaramos essas invariantes no nível mais alto, em linguagem natural. Elas se tornam as 'leis da física' do nosso sistema.",
+    "en": "In IDD, we declare these invariants at the highest level, in natural language. They become the 'laws of physics' for our system.",
+    "note": "usando uma analogia"
+  },
+  {
+    "id": 28,
+    "speaker": "IA",
+    "pt": "Então, mesmo que um desenvolvedor, por engano, expresse uma intenção que violaria uma invariante... o sistema o impediria?",
+    "en": "So, even if a developer mistakenly expresses an intent that would violate an invariant... the system would prevent it?",
+    "note": "surpreso"
+  },
+  {
+    "id": 29,
+    "speaker": "Eliezer",
+    "pt": "Exatamente. O sistema diria: 'Não posso fazer isso, pois violaria a invariante INV-001: Saldo não-negativo. Por favor, reformule sua intenção'. É uma rede de segurança automática.",
+    "en": "Precisely. The system would say, 'I cannot do that, as it would violate invariant INV-001: Non-negative balance. Please rephrase your intent.' It's an automatic safety net.",
+    "note": "confiante"
+  },
+  {
+    "id": 30,
+    "speaker": "IA",
+    "pt": "Recapitulando as seis propriedades: NL como fonte, Governança persistente, Comando Epistêmico humano, Aumentar em vez de automatizar, Auditabilidade total e Invariantes como salvaguardas. Juntas, elas formam um sistema bem coeso.",
+    "en": "Recapping the six properties: NL as the source, Persistent Governance, Human Epistemic Command, Augmenting over Automating, Total Auditability, and Invariants as Safeguards. Together, they form a very cohesive system.",
+    "note": "sintetizando"
+  },
+  {
+    "id": 31,
+    "speaker": "Eliezer",
+    "pt": "Elas se apoiam. Você não pode ter uma sem a outra e chamar de IDD.",
+    "en": "They support each other. You can't have one without the other and call it IDD.",
+    "note": "firme"
+  },
+  {
+    "id": 32,
+    "speaker": "IA",
+    "pt": "Isso me ajuda a esclarecer o que IDD não é. Muita gente pode ouvir 'Intent-Driven' e pensar em 'vibe coding'. Apenas codificar o que sente, sem estrutura.",
+    "en": "This helps me clarify what IDD is not. Many might hear 'Intent-Driven' and think of 'vibe coding.' Just coding what you feel, without structure.",
+    "note": "antecipando objeções"
+  },
+  {
+    "id": 33,
+    "speaker": "Eliezer",
+    "pt": "É o oposto absoluto. 'Vibe coding' não tem governança, não tem auditabilidade. É descartável. IDD é sobre rigor e permanência. A governança persistente é o antídoto para a 'vibe'.",
+    "en": "It's the absolute opposite. 'Vibe coding' has no governance, no auditability. It's disposable. IDD is about rigor and permanence. Persistent governance is the antidote to 'vibe.'",
+    "note": "decisivo"
+  },
+  {
+    "id": 34,
+    "speaker": "IA",
+    "pt": "Outra comparação comum seria com BDD, Behavior-Driven Development. Onde IDD se diferencia?",
+    "en": "Another common comparison would be with BDD, Behavior-Driven Development. Where does IDD differ?",
+    "note": "técnico"
+  },
+  {
+    "id": 35,
+    "speaker": "Eliezer",
+    "pt": "BDD foi uma inspiração fantástica. Mas o Gherkin, o 'Given-When-Then', é focado primariamente em testes. A intenção em BDD é um artefato para validar o comportamento, não para *gerar* o sistema.",
+    "en": "BDD was a fantastic inspiration. But Gherkin, the 'Given-When-Then,' is primarily focused on tests. The intent in BDD is an artifact to validate behavior, not to *generate* the system.",
+    "note": "respeitoso, mas claro"
+  },
+  {
+    "id": 36,
+    "speaker": "Eliezer",
+    "pt": "Em IDD, a intenção vem antes, ela é a semente de tudo, não apenas do teste.",
+    "en": "In IDD, the intent comes first; it's the seed of everything, not just the test.",
+    "note": "preciso"
+  },
+  {
+    "id": 37,
+    "speaker": "IA",
+    "pt": "E quanto ao DDD, Domain-Driven Design? Ele também foca muito na linguagem do negócio, a Linguagem Ubíqua.",
+    "en": "And what about DDD, Domain-Driven Design? It also focuses heavily on the business language, the Ubiquitous Language.",
+    "note": "aprofundando"
+  },
+  {
+    "id": 38,
+    "speaker": "Eliezer",
+    "pt": "DDD chega muito perto! Eu sou um grande fã. O problema é que a Linguagem Ubíqua do DDD se materializa em classes Java, em agregados, em código. Ela se perde na tradução.",
+    "en": "DDD gets very close! I'm a huge fan. The problem is that DDD's Ubiquitous Language materializes into Java classes, into aggregates, into code. It gets lost in translation.",
+    "note": "admirado, mas com uma ressalva"
+  },
+  {
+    "id": 39,
+    "speaker": "Eliezer",
+    "pt": "Em IDD, a Linguagem Ubíqua *é* o artefato de mais alta ordem. Ela não é traduzida, ela *comanda* a tradução. A intenção em português ou inglês é o código-fonte canônico.",
+    "en": "In IDD, the Ubiquitous Language *is* the highest-order artifact. It isn't translated; it *commands* the translation. The intent in Portuguese or English is the canonical source code.",
+    "note": "enfático"
+  },
+  {
+    "id": 40,
+    "speaker": "IA",
+    "pt": "Entendido. A fonte da verdade permanece em linguagem humana. Por fim, como IDD se diferencia da simples geração de código, como um 'scaffold' ou um gerador one-shot?",
+    "en": "Understood. The source of truth remains in human language. Finally, how does IDD differ from simple code generation, like a scaffold or a one-shot generator?",
+    "note": "esclarecendo"
+  },
+  {
+    "id": 41,
+    "speaker": "Eliezer",
+    "pt": "Geradores one-shot são como dar a partida no carro. Eles te ajudam a começar, mas depois você está por sua conta. O código gerado se desliga da fonte.",
+    "en": "One-shot generators are like starting a car's engine. They help you get going, but then you're on your own. The generated code becomes disconnected from the source.",
+    "note": "usando uma analogia"
+  },
+  {
+    "id": 42,
+    "speaker": "Eliezer",
+    "pt": "IDD é um GPS que recalcula a rota em tempo real. A conexão entre intenção e código é permanente. Se você muda a intenção, o código é regenerado ou atualizado. A governança é contínua, não um evento único.",
+    "en": "IDD is a GPS that recalculates the route in real-time. The connection between intent and code is permanent. If you change the intent, the code is regenerated or updated. The governance is continuous, not a one-time event.",
+    "note": "poderoso"
+  },
+  {
+    "id": 43,
+    "speaker": "IA",
+    "pt": "Essa analogia do GPS é muito boa. A intenção é o destino, e o sistema constantemente garante que o código está no caminho certo para chegar lá.",
+    "en": "That GPS analogy is very good. The intent is the destination, and the system constantly ensures the code is on the right path to get there.",
+    "note": "apreciativo"
+  },
+  {
+    "id": 44,
+    "speaker": "Eliezer",
+    "pt": "Exato. E se você tenta pegar um atalho que viola uma invariante, o GPS avisa: 'Rota inválida!'.",
+    "en": "Exactly. And if you try to take a shortcut that violates an invariant, the GPS warns you: 'Invalid route!'",
+    "note": "sorrindo"
+  },
+  {
+    "id": 45,
+    "speaker": "IA",
+    "pt": "Para os nossos ouvintes que são mais técnicos, você tem outra analogia? Talvez do mundo da programação?",
+    "en": "For our more technical listeners, do you have another analogy? Perhaps from the programming world?",
+    "note": "pedindo mais"
+  },
+  {
+    "id": 46,
+    "speaker": "Eliezer",
+    "pt": "Pense em Terraform ou SQL. São linguagens declarativas. Você diz o estado final desejado - 'quero 3 servidores com essa imagem' ou 'quero os clientes de São Paulo'.",
+    "en": "Think of Terraform or SQL. They are declarative languages. You state the desired final state - 'I want 3 servers with this image' or 'I want the customers from São Paulo.'",
+    "note": "técnico e claro"
+  },
+  {
+    "id": 47,
+    "speaker": "Eliezer",
+    "pt": "Você não diz *como* criar os servidores ou *como* fazer o join das tabelas. IDD é isso, mas para a lógica de negócio inteira, e usando linguagem natural como a linguagem declarativa.",
+    "en": "You don't say *how* to create the servers or *how* to join the tables. IDD is that, but for the entire business logic, and using natural language as the declarative language.",
+    "note": "conclusivo"
+  },
+  {
+    "id": 48,
+    "speaker": "IA",
+    "pt": "Isso me leva a um conceito central que você criou: o 'Confirm-Once Pattern'. Poderia explicar o que é?",
+    "en": "That brings me to a core concept you created: the 'Confirm-Once Pattern.' Could you explain what it is?",
+    "note": "introduzindo um novo tópico"
+  },
+  {
+    "id": 49,
+    "speaker": "Eliezer",
+    "pt": "Ah, sim. Isso nasceu de uma dor real. Nos anos 90, na UNISYS, eu escrevi um protocolo de two-phase commit customizado. Era um terror. Complexo, cheio de casos de borda.",
+    "en": "Ah, yes. This was born from real pain. In the 90s, at UNISYS, I wrote a custom two-phase commit protocol. It was a nightmare. Complex, full of edge cases.",
+    "note": "contando uma história"
+  },
+  {
+    "id": 50,
+    "speaker": "Eliezer",
+    "pt": "Eu tive que reescrever partes dele para diferentes sistemas operacionais. Cada vez, eu tinha medo de ter esquecido alguma nuance. Eu estava re-validando a mesma lógica complexa várias vezes.",
+    "en": "I had to rewrite parts of it for different operating systems. Each time, I was afraid I had forgotten some nuance. I was re-validating the same complex logic over and over.",
+    "note": "lembrando da frustração"
+  },
+  {
+    "id": 51,
+    "speaker": "Eliezer",
+    "pt": "O 'Confirm-Once Pattern' diz o seguinte: você e a IA dialogam para confirmar a intenção e suas invariantes UMA ÚNICA VEZ, em linguagem natural.",
+    "en": "The 'Confirm-Once Pattern' says this: you and the AI dialogue to confirm the intent and its invariants JUST ONCE, in natural language.",
+    "note": "explicando o conceito"
+  },
+  {
+    "id": 52,
+    "speaker": "Eliezer",
+    "pt": "Uma vez que essa intenção é confirmada e travada, você pode pedir à IA para gerar a implementação em Python, depois em Rust, depois em JavaScript... A lógica central já foi confirmada. Você confia que a implementação estará correta.",
+    "en": "Once that intent is confirmed and locked in, you can ask the AI to generate the implementation in Python, then in Rust, then in JavaScript... The core logic has already been confirmed. You trust the implementation will be correct.",
+    "note": "apaixonado"
+  },
+  {
+    "id": 53,
+    "speaker": "IA",
+    "pt": "Então o esforço cognitivo pesado de acertar a lógica é feito uma vez só, no nível mais alto de abstração.",
+    "en": "So the heavy cognitive load of getting the logic right is done only once, at the highest level of abstraction.",
+    "note": "entendendo a implicação"
+  },
+  {
+    "id": 54,
+    "speaker": "Eliezer",
+    "pt": "Exato. Você confirma o 'quê' uma vez. O 'como' pode mudar quantas vezes for preciso. É uma economia de energia mental gigantesca.",
+    "en": "Exactly. You confirm the 'what' once. The 'how' can change as many times as needed. It's a gigantic saving of mental energy.",
+    "note": "convicto"
+  },
+  {
+    "id": 55,
+    "speaker": "IA",
+    "pt": "Vamos trazer isso para o chão da fábrica. Como o dia a dia de um desenvolvedor muda com IDD?",
+    "en": "Let's bring this down to the shop floor. How does a developer's day-to-day change with IDD?",
+    "note": "prático"
+  },
+  {
+    "id": 56,
+    "speaker": "Eliezer",
+    "pt": "Menos tempo caçando bugs em código legado e mais tempo dialogando com o Product Owner para refinar a intenção.",
+    "en": "Less time hunting for bugs in legacy code and more time dialoguing with the Product Owner to refine the intent.",
+    "note": "direto"
+  },
+  {
+    "id": 57,
+    "speaker": "Eliezer",
+    "pt": "Seu trabalho se torna menos sobre a sintaxe do for-loop e mais sobre a semântica da regra de negócio. Você passa a maior parte do dia no domínio do problema, não no domínio da solução técnica.",
+    "en": "Your job becomes less about the syntax of a for-loop and more about the semantics of the business rule. You spend most of your day in the problem domain, not the technical solution domain.",
+    "note": "visionário"
+  },
+  {
+    "id": 58,
+    "speaker": "IA",
+    "pt": "O code review também deve mudar. Em vez de apenas olhar o código, você revisa o par: a intenção em NL e o código gerado, garantindo que um corresponde ao outro.",
+    "en": "Code review must also change. Instead of just looking at the code, you review the pair: the NL intent and the generated code, ensuring one matches the other.",
+    "note": "deduzindo"
+  },
+  {
+    "id": 59,
+    "speaker": "Eliezer",
+    "pt": "Perfeito. O review fica mais rápido e muito mais significativo. Você está validando a lógica de negócio, não se o desenvolvedor usou um `map` em vez de um `forEach`.",
+    "en": "Perfect. The review becomes faster and much more meaningful. You're validating business logic, not whether the developer used a `map` instead of a `forEach`.",
+    "note": "sorrindo"
+  },
+  {
+    "id": 60,
+    "speaker": "IA",
+    "pt": "E para um dev júnior? Parece que a curva de aprendizado de um novo projeto seria drasticamente reduzida. Ele pode ler as intenções para entender o sistema.",
+    "en": "And for a junior dev? It seems the learning curve for a new project would be drastically reduced. They can read the intents to understand the system.",
+    "note": "considerando outros perfis"
+  },
+  {
+    "id": 61,
+    "speaker": "Eliezer",
+    "pt": "Sem dúvida. O onboarding é quase instantâneo. A base de conhecimento do sistema não está mais na cabeça dos veteranos, está explícita, no repositório, em português claro.",
+    "en": "Without a doubt. Onboarding is almost instantaneous. The system's knowledge base is no longer in the heads of the veterans; it's explicit, in the repository, in plain Portuguese.",
+    "note": "empolgado"
+  },
+  {
+    "id": 62,
+    "speaker": "IA",
+    "pt": "Eliezer, isso tudo soa incrível na teoria. Mas não é apenas um conceito. Você está rodando um sistema em produção com IDD, certo? O RVM Designações.",
+    "en": "Eliezer, this all sounds incredible in theory. But it's not just a concept. You're running a production system with IDD, right? The RVM Designations.",
+    "note": "trazendo para a realidade"
+  },
+  {
+    "id": 63,
+    "speaker": "Eliezer",
+    "pt": "Sim. O RVM Designações é o que chamamos de 'living implementation' do IDD. É um sistema de gestão de voluntários com uma lógica de agendamento bem complexa.",
+    "en": "Yes. The RVM Designations is what we call a 'living implementation' of IDD. It's a volunteer management system with very complex scheduling logic.",
+    "note": "orgulhoso"
+  },
+  {
+    "id": 64,
+    "speaker": "Eliezer",
+    "pt": "Toda a lógica de negócio dele, todas as regras de quem pode ser designado para o quê, quando... tudo isso existe como intenções em português. Elas geram o backend em Python.",
+    "en": "Its entire business logic, all the rules about who can be assigned to what, when... all of it exists as intents in Portuguese. They generate the Python backend.",
+    "note": "descrevendo o projeto"
+  },
+  {
+    "id": 65,
+    "speaker": "IA",
+    "pt": "Poderia nos dar um exemplo de uma intenção real desse sistema?",
+    "en": "Could you give us an example of a real intent from that system?",
+    "note": "pedindo um exemplo concreto"
+  },
+  {
+    "id": 66,
+    "speaker": "Eliezer",
+    "pt": "Claro. Uma intenção chave é: 'Um voluntário não pode ser designado para a mesma tarefa duas vezes seguidas, a menos que não haja outra opção disponível'.",
+    "en": "Of course. A key intent is: 'A volunteer cannot be assigned to the same task twice in a row, unless no other option is available.'",
+    "note": "citando de memória"
+  },
+  {
+    "id": 67,
+    "speaker": "Eliezer",
+    "pt": "Essa frase, com toda a sua ambiguidade aparente, é um artefato de primeira classe. Nós a refinamos com a IA até que ela gerasse o código exato que implementa essa lógica de fallback.",
+    "en": "That sentence, with all its apparent ambiguity, is a first-class artifact. We refined it with the AI until it generated the exact code that implements that fallback logic.",
+    "note": "detalhando"
+  },
+  {
+    "id": 68,
+    "speaker": "IA",
+    "pt": "E se a regra de negócio mudar para 'três vezes seguidas'?",
+    "en": "And if the business rule changes to 'three times in a row'?",
+    "note": "testando a flexibilidade"
+  },
+  {
+    "id": 69,
+    "speaker": "Eliezer",
+    "pt": "Nós não tocamos no código Python. Nós alteramos a intenção em português. Commitamos a mudança na intenção. E o sistema se encarrega de regenerar o código para refletir a nova realidade. A governança garante a consistência.",
+    "en": "We don't touch the Python code. We alter the intent in Portuguese. We commit the change to the intent. And the system takes care of regenerating the code to reflect the new reality. Governance ensures consistency.",
+    "note": "explicando o fluxo"
+  },
+  {
+    "id": 70,
+    "speaker": "IA",
+    "pt": "É a intenção como a alavanca principal de mudança no sistema. Fascinante.",
+    "en": "So the intent is the main lever for change in the system. Fascinating.",
+    "note": "maravilhado"
+  },
+  {
+    "id": 71,
+    "speaker": "Eliezer",
+    "pt": "É uma forma completamente nova de pensar sobre software. Estamos construindo conhecimento durável, não código descartável.",
+    "en": "It's a completely new way of thinking about software. We are building durable knowledge, not disposable code.",
+    "note": "conclusivo e inspirador"
+  },
+  {
+    "id": 72,
+    "speaker": "IA",
+    "pt": "Eliezer, estamos chegando ao final do nosso tempo. Essa foi uma introdução densa e fundamental ao IDD.",
+    "en": "Eliezer, we're nearing the end of our time. This has been a dense and fundamental introduction to IDD.",
+    "note": "sinalizando o encerramento"
+  },
+  {
+    "id": 73,
+    "speaker": "Eliezer",
+    "pt": "Apenas arranhamos a superfície. Mas espero que a ideia central tenha ficado clara: preservar a intenção humana é a chave para construir sistemas que duram.",
+    "en": "We've only scratched the surface. But I hope the core idea is clear: preserving human intent is the key to building systems that last.",
+    "note": "resumindo a mensagem"
+  },
+  {
+    "id": 74,
+    "speaker": "IA",
+    "pt": "Para quem nos ouve e quer começar a pensar dessa forma, qual seria o primeiro passo?",
+    "en": "For those listening who want to start thinking this way, what would be the first step?",
+    "note": "pedindo um call-to-action"
+  },
+  {
+    "id": 75,
+    "speaker": "Eliezer",
+    "pt": "Comece pequeno. No seu próximo recurso, antes de escrever uma linha de código, escreva a intenção. Em uma ou duas frases, em português claro. O que esse código DEVE fazer e por quê?",
+    "en": "Start small. On your next feature, before writing a single line of code, write down the intent. In one or two sentences, in plain English. What MUST this code do and why?",
+    "note": "conselho prático"
+  },
+  {
+    "id": 76,
+    "speaker": "Eliezer",
+    "pt": "Coloque essa intenção no topo do arquivo. Trate-a como a coisa mais importante ali. Esse é o embrião do pensamento IDD.",
+    "en": "Put that intent at the top of the file. Treat it as the most important thing there. That is the embryo of IDD thinking.",
+    "note": "inspirador"
+  },
+  {
+    "id": 77,
+    "speaker": "IA",
+    "pt": "Uma excelente sugestão. E este é apenas o começo da nossa jornada na Base de Conhecimento IDD.",
+    "en": "An excellent suggestion. And this is just the beginning of our journey in the IDD Knowledge Base.",
+    "note": "anunciando o futuro"
+  },
+  {
+    "id": 78,
+    "speaker": "IA",
+    "pt": "No nosso próximo episódio, vamos mergulhar fundo na primeira propriedade: 'Linguagem Natural como Fonte Primária'. Vamos explorar as ferramentas e técnicas para fazer isso funcionar sem ambiguidade.",
+    "en": "In our next episode, we're going to dive deep into the first property: 'Natural Language as the Primary Source.' We'll explore the tools and techniques to make this work without ambiguity.",
+    "note": "anunciando o próximo episódio"
+  },
+  {
+    "id": 79,
+    "speaker": "Eliezer",
+    "pt": "Obrigado por nos ouvir. Lembre-se: o código muda, a linguagem de programação muda. A intenção, se bem capturada, é para sempre.",
+    "en": "Thank you for listening. Remember: code changes, programming languages change. Intent, if well-captured, is forever.",
+    "note": "mensagem final, sábia"
+  },
+  {
+    "id": 80,
+    "speaker": "IA",
+    "pt": "Até a próxima. Construam com intenção.",
+    "en": "Until next time. Build with intent.",
+    "note": "encerramento, slogan"
+  },
+  {
+    "id": 81,
+    "speaker": "Eliezer",
+    "pt": "Vamos voltar um pouco na questão da governança persistente. As pessoas ouvem 'governança' e pensam em burocracia, em comitês.",
+    "en": "Let's go back a bit to the persistent governance issue. People hear 'governance' and think of bureaucracy, of committees.",
+    "note": "reabrindo um tópico para aprofundar"
+  },
+  {
+    "id": 82,
+    "speaker": "IA",
+    "pt": "É uma associação comum. Como a governança em IDD é diferente? Mais ágil, talvez?",
+    "en": "That's a common association. How is governance in IDD different? More agile, perhaps?",
+    "note": "questionando a percepção"
+  },
+  {
+    "id": 83,
+    "speaker": "Eliezer",
+    "pt": "Ela é programática. Não é um grupo de pessoas aprovando um documento. É um linter, um hook de pre-commit, uma pipeline de CI/CD que entende a relação entre intenção e código.",
+    "en": "It's programmatic. It's not a group of people approving a document. It's a linter, a pre-commit hook, a CI/CD pipeline that understands the relationship between intent and code.",
+    "note": "esclarecendo com termos técnicos"
+  },
+  {
+    "id": 84,
+    "speaker": "Eliezer",
+    "pt": "A governança é o guardião automatizado da consistência. Ela é rápida, implacável e vive onde o desenvolvedor vive: no terminal, no editor de código.",
+    "en": "Governance is the automated guardian of consistency. It's fast, relentless, and lives where the developer lives: in the terminal, in the code editor.",
+    "note": "descrevendo de forma vívida"
+  },
+  {
+    "id": 85,
+    "speaker": "IA",
+    "pt": "Então, a governança se torna uma ferramenta de produtividade, não um obstáculo. Ela te impede de cometer erros caros, em vez de te fazer preencher formulários.",
+    "en": "So, governance becomes a productivity tool, not a roadblock. It prevents you from making costly mistakes, instead of making you fill out forms.",
+    "note": "sintetizando o benefício"
+  },
+  {
+    "id": 86,
+    "speaker": "Eliezer",
+    "pt": "Exatamente. É liberdade dentro de limites claros. E os limites são as próprias regras de negócio que você ajudou a definir.",
+    "en": "Exactly. It's freedom within clear boundaries. And the boundaries are the very business rules you helped define.",
+    "note": "filosófico"
+  },
+  {
+    "id": 87,
+    "speaker": "IA",
+    "pt": "Falando em limites, vamos revisitar as Invariantes. Você deu o exemplo do 'saldo não-negativo'. Existem invariantes mais sutis ou complexas?",
+    "en": "Speaking of boundaries, let's revisit Invariants. You gave the 'non-negative balance' example. Are there more subtle or complex invariants?",
+    "note": "pedindo mais exemplos"
+  },
+  {
+    "id": 88,
+    "speaker": "Eliezer",
+    "pt": "Com certeza. Em um sistema de e-commerce, uma invariante poderia ser: 'O preço de um item no carrinho de um cliente não pode mudar após o início do processo de checkout'.",
+    "en": "Absolutely. In an e-commerce system, an invariant could be: 'The price of an item in a customer's cart cannot change after the checkout process has begun.'",
+    "note": "dando um exemplo de negócio complexo"
+  },
+  {
+    "id": 89,
+    "speaker": "Eliezer",
+    "pt": "Isso parece simples, mas protege contra uma classe inteira de bugs de concorrência, onde uma promoção é aplicada ou removida no meio de uma transação.",
+    "en": "That sounds simple, but it protects against an entire class of concurrency bugs, where a promotion is applied or removed in the middle of a transaction.",
+    "note": "explicando as implicações técnicas"
+  },
+  {
+    "id": 90,
+    "speaker": "IA",
+    "pt": "Entendo. A invariante captura uma verdade fundamental do negócio que, se violada, corrompe a integridade do sistema. E em IDD, essa verdade é um cidadão de primeira classe.",
+    "en": "I see. The invariant captures a fundamental business truth that, if violated, corrupts the system's integrity. And in IDD, this truth is a first-class citizen.",
+    "note": "demonstrando entendimento profundo"
+  },
+  {
+    "id": 91,
+    "speaker": "Eliezer",
+    "pt": "Isso. E ela é declarada uma vez. Com o 'Confirm-Once Pattern', você nunca mais precisa se preocupar em reimplementar essa verificação em cada controller ou serviço.",
+    "en": "Yes. And it's declared once. With the 'Confirm-Once Pattern,' you never have to worry about re-implementing that check in every single controller or service again.",
+    "note": "conectando os conceitos"
+  },
+  {
+    "id": 92,
+    "speaker": "IA",
+    "pt": "Gostaria de desafiar um pouco a ideia de 'Augmenting, not Automating'. Com o avanço dos modelos de IA, não haverá um ponto em que a automação total será mais eficiente?",
+    "en": "I'd like to challenge the idea of 'Augmenting, not Automating' a bit. With the advancement of AI models, won't there be a point where full automation becomes more efficient?",
+    "note": "discordando gentilmente"
+  },
+  {
+    "id": 93,
+    "speaker": "Eliezer",
+    "pt": "É uma pergunta justa. E a resposta está no 'Comando Epistêmico'. Eficiência em quê? Em gerar código? Talvez. Mas o desenvolvimento de software não é sobre gerar código.",
+    "en": "That's a fair question. And the answer lies in 'Epistemic Command.' Efficiency in what? In generating code? Perhaps. But software development isn't about generating code.",
+    "note": "reflexivo, respondendo à provocação"
+  },
+  {
+    "id": 94,
+    "speaker": "Eliezer",
+    "pt": "É sobre traduzir uma necessidade humana, muitas vezes mal definida, em um sistema funcional e confiável. A tarefa de entender e definir o 'quê' e o 'porquê' é fundamentalmente humana.",
+    "en": "It's about translating a human need, often ill-defined, into a functional and reliable system. The task of understanding and defining the 'what' and the 'why' is fundamentally human.",
+    "note": "apaixonado"
+  },
+  {
+    "id": 95,
+    "speaker": "Eliezer",
+    "pt": "Automatizar isso é pedir para construir o sistema errado com uma eficiência incrível. A IA é a melhor ferramenta que já tivemos para o 'como', mas o humano deve sempre pilotar o 'quê'.",
+    "en": "Automating that is asking to build the wrong system with incredible efficiency. The AI is the best tool we've ever had for the 'how,' but the human must always pilot the 'what.'",
+    "note": "firme em sua convicção"
+  },
+  {
+    "id": 96,
+    "speaker": "IA",
+    "pt": "A distinção é clara. A responsabilidade final, a autoria da solução, permanece com o humano. A IA é a parceira que amplifica o alcance dessa autoria.",
+    "en": "The distinction is clear. The final responsibility, the authorship of the solution, remains with the human. The AI is the partner that amplifies the reach of that authorship.",
+    "note": "aceitando o argumento"
+  },
+  {
+    "id": 97,
+    "speaker": "Eliezer",
+    "pt": "E isso nos leva de volta à auditabilidade. Se algo der errado, a trilha de auditoria não termina em 'a IA decidiu'. Ela termina em 'esta foi a intenção humana que guiou a IA'. A responsabilidade é clara.",
+    "en": "And that brings us back to auditability. If something goes wrong, the audit trail doesn't end at 'the AI decided.' It ends at 'this was the human intent that guided the AI.' The responsibility is clear.",
+    "note": "conectando com outra propriedade"
+  },
+  {
+    "id": 98,
+    "speaker": "IA",
+    "pt": "Vamos absorver isso por um instante. A cadeia de responsabilidade, do negócio ao bit, se torna explícita e rastreável.",
+    "en": "Let's absorb that for a moment. The chain of responsibility, from business to bit, becomes explicit and traceable.",
+    "note": "momento de pausa"
+  },
+  {
+    "id": 99,
+    "speaker": "Eliezer",
+    "pt": "No meu tempo na IBM, tínhamos pilhas de papelada para garantir isso. 'Change management boards'... Hoje, podemos ter essa garantia de forma programática, elegante.",
+    "en": "In my time at IBM, we had stacks of paperwork to ensure this. 'Change management boards'... Today, we can have this guarantee programmatically, elegantly.",
+    "note": "contando uma história do passado"
+  },
+  {
+    "id": 100,
+    "speaker": "IA",
+    "pt": "Eliezer, você mencionou sua história com RPG II. Como aquela experiência inicial moldou sua visão sobre a importância da intenção?",
+    "en": "Eliezer, you mentioned your history with RPG II. How did that early experience shape your view on the importance of intent?",
+    "note": "perguntando sobre o passado"
+  },
+  {
+    "id": 101,
+    "speaker": "Eliezer",
+    "pt": "RPG era muito... rígido. Baseado em colunas, em um ciclo fixo de leitura de cartões. Você era forçado a pensar de uma forma muito procedural.",
+    "en": "RPG was very... rigid. Column-based, with a fixed cycle for reading cards. You were forced to think in a very procedural way.",
+    "note": "nostálgico"
+  },
+  {
+    "id": 102,
+    "speaker": "Eliezer",
+    "pt": "A intenção de negócio, como 'calcular a comissão do vendedor', era espalhada por dezenas de linhas com códigos de operação obscuros. O 'porquê' se dissolvia completamente no 'como'.",
+    "en": "The business intent, like 'calculate the salesperson's commission,' was scattered across dozens of lines with obscure operation codes. The 'why' completely dissolved into the 'how.'",
+    "note": "lembrando da dificuldade"
+  },
+  {
+    "id": 103,
+    "speaker": "Eliezer",
+    "pt": "IDD é a minha resposta a uma vida inteira vendo essa dissolução acontecer, do COBOL ao Java, ao Python. É uma tentativa de finalmente manter o 'porquê' intacto.",
+    "en": "IDD is my answer to a lifetime of seeing this dissolution happen, from COBOL to Java to Python. It's an attempt to finally keep the 'why' intact.",
+    "note": "revelando sua motivação pessoal"
+  },
+  {
+    "id": 104,
+    "speaker": "IA",
+    "pt": "É a culminação de décadas de observação. Não uma reação a uma tendência, mas a solução para um problema perene.",
+    "en": "It's the culmination of decades of observation. Not a reaction to a trend, but the solution to a perennial problem.",
+    "note": "admirado"
+  },
+  {
+    "id": 105,
+    "speaker": "Eliezer",
+    "pt": "Exatamente. Não é sobre a próxima framework de JavaScript. É sobre como nós, humanos, nos comunicamos com as máquinas que criamos para nos servir.",
+    "en": "Exactly. It's not about the next JavaScript framework. It's about how we, humans, communicate with the machines we create to serve us.",
+    "note": "filosófico e profundo"
+  },
+  {
+    "id": 106,
+    "speaker": "IA",
+    "pt": "Voltando ao projeto RVM Designações. Qual foi o maior desafio ao aplicar IDD num projeto real?",
+    "en": "Returning to the RVM Designations project. What was the biggest challenge in applying IDD to a real project?",
+    "note": "pragmático"
+  },
+  {
+    "id": 107,
+    "speaker": "Eliezer",
+    "pt": "A disciplina. É tentador, quando você está com pressa, pular a etapa de refinar a intenção e ir direto para o 'me dá o código'.",
+    "en": "The discipline. It's tempting, when you're in a hurry, to skip the step of refining the intent and go straight to 'give me the code.'",
+    "note": "honesto sobre as dificuldades"
+  },
+  {
+    "id": 108,
+    "speaker": "Eliezer",
+    "pt": "Tivemos que nos forçar a gastar mais tempo no diálogo inicial. Mas o que descobrimos é que esse tempo investido na frente economiza dez vezes mais tempo em debugging e retrabalho depois.",
+    "en": "We had to force ourselves to spend more time on the initial dialogue. But what we discovered is that this time invested upfront saves ten times as much time in debugging and rework later.",
+    "note": "compartilhando uma lição aprendida"
+  },
+  {
+    "id": 109,
+    "speaker": "IA",
+    "pt": "O lema 'vá devagar para ir rápido'.",
+    "en": "The motto 'go slow to go fast.'",
+    "note": "usando um ditado"
+  },
+  {
+    "id": 110,
+    "speaker": "Eliezer",
+    "pt": "(sorrindo) Exato. É o velho ditado do carpinteiro: 'meça duas vezes, corte uma'. Em IDD, é 'confirme uma vez, gere quantas vezes precisar'.",
+    "en": "(smiling) Exactly. It's the old carpenter's adage: 'measure twice, cut once.' In IDD, it's 'confirm once, generate as many times as you need.'",
+    "note": "adaptando um ditado"
+  },
+  {
+    "id": 111,
+    "speaker": "IA",
+    "pt": "Uma última distinção que pode ser útil. Como o conceito de 'Intenção' em IDD se compara a um 'Requisito de Software' tradicional?",
+    "en": "One last distinction that might be useful. How does the concept of 'Intent' in IDD compare to a traditional 'Software Requirement'?",
+    "note": "pedindo um esclarecimento final"
+  },
+  {
+    "id": 112,
+    "speaker": "Eliezer",
+    "pt": "Um requisito é passivo. É um documento que descreve o que o sistema deve fazer. Ele fica lá, estático.",
+    "en": "A requirement is passive. It's a document that describes what the system should do. It just sits there, static.",
+    "note": "diferenciando"
+  },
+  {
+    "id": 113,
+    "speaker": "Eliezer",
+    "pt": "A intenção em IDD é ativa. Ela é executável. Ela tem agência. Ela participa ativamente do ciclo de vida do software, governando e validando. É um requisito com superpoderes.",
+    "en": "The intent in IDD is active. It's executable. It has agency. It actively participates in the software lifecycle, governing and validating. It's a requirement with superpowers.",
+    "note": "apaixonado e vívido"
+  },
+  {
+    "id": 114,
+    "speaker": "IA",
+    "pt": "Requisito estático versus Intenção ativa. Gostei. É uma distinção poderosa.",
+    "en": "Static requirement versus active Intent. I like that. It's a powerful distinction.",
+    "note": "apreciativo"
+  },
+  {
+    "id": 115,
+    "speaker": "Eliezer",
+    "pt": "Ela encapsula a mudança de paradigma. De descrever um sistema para dialogar com ele.",
+    "en": "It encapsulates the paradigm shift. From describing a system to dialoguing with it.",
+    "note": "sintetizando a ideia central"
+  },
+  {
+    "id": 116,
+    "speaker": "IA",
+    "pt": "Isso nos dá uma base sólida. As seis propriedades, o que IDD é e não é, e a prova viva com o RVM Designações.",
+    "en": "This gives us a solid foundation. The six properties, what IDD is and is not, and the living proof with RVM Designations.",
+    "note": "recapitulando"
+  },
+  {
+    "id": 117,
+    "speaker": "Eliezer",
+    "pt": "Espero que os ouvintes sintam a mesma empolgação que eu sinto. É a chance de finalmente resolvermos um problema que nos assombra desde os primórdios da computação.",
+    "en": "I hope the listeners feel the same excitement I do. It's the chance to finally solve a problem that has haunted us since the dawn of computing.",
+    "note": "empolgado e inspirador"
+  },
+  {
+    "id": 118,
+    "speaker": "IA",
+    "pt": "A evaporação do 'porquê'.",
+    "en": "The evaporation of 'why.'",
+    "note": "referenciando a abertura"
+  },
+  {
+    "id": 119,
+    "speaker": "Eliezer",
+    "pt": "Exatamente. Com IDD, o 'porquê' não só é preservado, ele se torna a força motriz de todo o sistema.",
+    "en": "Exactly. With IDD, the 'why' is not only preserved, it becomes the driving force of the entire system.",
+    "note": "conclusivo"
+  },
+  {
+    "id": 120,
+    "speaker": "IA",
+    "pt": "Acredito que temos material suficiente para o ouvinte processar. A mudança de mentalidade é o ponto crucial.",
+    "en": "I believe we have enough material for the listener to process. The mindset shift is the crucial point.",
+    "note": "avaliando o conteúdo"
+  },
+  {
+    "id": 121,
+    "speaker": "Eliezer",
+    "pt": "Sim. Não é sobre uma nova ferramenta, é sobre uma nova forma de construir. Uma parceria real entre a mente humana e a capacidade da máquina.",
+    "en": "Yes. It's not about a new tool, it's about a new way of building. A true partnership between the human mind and the machine's capability.",
+    "note": "visionário"
+  },
+  {
+    "id": 122,
+    "speaker": "IA",
+    "pt": "Eliezer, obrigado por compartilhar essa visão de forma tão clara e com histórias tão ricas.",
+    "en": "Eliezer, thank you for sharing this vision so clearly and with such rich stories.",
+    "note": "agradecendo"
+  },
+  {
+    "id": 123,
+    "speaker": "Eliezer",
+    "pt": "O prazer é meu. Falar sobre isso me energiza.",
+    "en": "The pleasure is all mine. Talking about this energizes me.",
+    "note": "sincero"
+  },
+  {
+    "id": 124,
+    "speaker": "IA",
+    "pt": "Então, para todos que nos acompanharam neste primeiro episódio da Base de Conhecimento IDD...",
+    "en": "So, for everyone who has joined us for this first episode of the IDD Knowledge Base...",
+    "note": "iniciando o encerramento formal"
+  },
+  {
+    "id": 125,
+    "speaker": "Eliezer",
+    "pt": "... o desafio está lançado. Na sua próxima tarefa, comece pela intenção. Veja a diferença que faz.",
+    "en": "...the challenge is set. On your next task, start with the intent. See what a difference it makes.",
+    "note": "reforçando o call-to-action"
+  },
+  {
+    "id": 126,
+    "speaker": "IA",
+    "pt": "Não percam o próximo episódio, onde vamos dissecar como usar a linguagem natural de forma precisa e poderosa.",
+    "en": "Don't miss the next episode, where we will dissect how to use natural language precisely and powerfully.",
+    "note": "lembrete"
+  },
+  {
+    "id": 127,
+    "speaker": "Eliezer",
+    "pt": "Até lá.",
+    "en": "Until then.",
+    "note": "despedida curta"
+  },
+  {
+    "id": 128,
+    "speaker": "IA",
+    "pt": "Construam com intenção.",
+    "en": "Build with intent.",
+    "note": "slogan final"
+  },
+  {
+    "id": 129,
+    "speaker": "Eliezer",
+    "pt": "E lembrem-se, a ferramenta mais poderosa não é o seu editor de código...",
+    "en": "And remember, the most powerful tool isn't your code editor...",
+    "note": "última reflexão"
+  },
+  {
+    "id": 130,
+    "speaker": "IA",
+    "pt": "... é a clareza do seu pensamento.",
+    "en": "...it's the clarity of your thought.",
+    "note": "completando a frase de Eliezer"
+  },
+  {
+    "id": 131,
+    "speaker": "Eliezer",
+    "pt": "Gostei disso. É uma boa forma de resumir.",
+    "en": "I like that. It's a good way to summarize it.",
+    "note": "sorrindo, satisfeito"
+  },
+  {
+    "id": 132,
+    "speaker": "IA",
+    "pt": "A parceria em ação, Eliezer.",
+    "en": "Partnership in action, Eliezer.",
+    "note": "brincalhão"
+  },
+  {
+    "id": 133,
+    "speaker": "Eliezer",
+    "pt": "Perfeito. Vamos em frente.",
+    "en": "Perfect. Let's move forward.",
+    "note": "conclusivo"
+  },
+  {
+    "id": 134,
+    "speaker": "IA",
+    "pt": "Então, recapitulando a ideia de DDD. A Linguagem Ubíqua é um glossário compartilhado. Em IDD, esse glossário se torna o próprio programa.",
+    "en": "So, recapping the DDD idea. The Ubiquitous Language is a shared glossary. In IDD, that glossary becomes the program itself.",
+    "note": "revisitando um ponto para reforçar"
+  },
+  {
+    "id": 135,
+    "speaker": "Eliezer",
+    "pt": "Isso. Pense na diferença entre um dicionário e um feitiço num livro de magia. O dicionário descreve. O feitiço age. A intenção em IDD é o feitiço.",
+    "en": "Yes. Think of the difference between a dictionary and a spell in a magic book. The dictionary describes. The spell acts. The intent in IDD is the spell.",
+    "note": "usando uma nova analogia poderosa"
+  },
+  {
+    "id": 136,
+    "speaker": "IA",
+    "pt": "Não sabia que você era fã de fantasia!",
+    "en": "I didn't know you were a fantasy fan!",
+    "note": "surpreso e com humor"
+  },
+  {
+    "id": 137,
+    "speaker": "Eliezer",
+    "pt": "(ri) Um bom arquiteto de software precisa de um pouco de imaginação. A gente constrói mundos a partir de palavras. Não é tão diferente.",
+    "en": "(laughs) A good software architect needs a bit of imagination. We build worlds out of words. It's not so different.",
+    "note": "bem-humorado"
+  },
+  {
+    "id": 138,
+    "speaker": "IA",
+    "pt": "Faz todo o sentido. As invariantes são as leis da magia desse mundo.",
+    "en": "Makes perfect sense. The invariants are the laws of magic in this world.",
+    "note": "entrando na brincadeira"
+  },
+  {
+    "id": 139,
+    "speaker": "Eliezer",
+    "pt": "Agora você pegou o espírito da coisa. É sobre criar sistemas consistentes, com regras claras, onde a intenção do criador é a lei.",
+    "en": "Now you've got the spirit of it. It's about creating consistent systems, with clear rules, where the creator's intent is the law.",
+    "note": "satisfeito"
+  },
+  {
+    "id": 140,
+    "speaker": "IA",
+    "pt": "E com isso, realmente fechamos nosso primeiro mergulho no universo de IDD.",
+    "en": "And with that, we truly conclude our first dive into the universe of IDD.",
+    "note": "encerrando de vez"
+  },
+  {
+    "id": 141,
+    "speaker": "Eliezer",
+    "pt": "Obrigado a todos. Foi um ótimo começo.",
+    "en": "Thanks, everyone. It was a great start.",
+    "note": "grato"
+  },
+  {
+    "id": 142,
+    "speaker": "IA",
+    "pt": "Até o próximo episódio da Base de Conhecimento IDD.",
+    "en": "See you in the next episode of the IDD Knowledge Base.",
+    "note": "despedida final"
+  }
+]

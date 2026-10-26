@@ -1,0 +1,107 @@
+﻿PLANO DE DESENVOLVIMENTO INCREMENTAL
+PROJETO: Sistema Automatizado de Designação de Partes para a Reunião "Nossa Vida e Ministério Cristão" (RV&M).
+ABORDAGEM: Desenvolvimento modular em 5 fases, priorizando o Modelo de Dados e o Núcleo de Lógica (Backend) antes da Interface do Usuário (Frontend). A comunicação em todas as etapas será baseada em JSON, seguindo os princípios de Coesão e Baixo Acoplamento.
+FASE 0: SETUP E MODELO DE DADOS FUNDAMENTAL (MODEL FIRST)
+Objetivo: Estabelecer a fundação do banco de dados, as estruturas JSON e o controle de acesso básico (RBAC).
+Etapa
+	Tarefas (Deliverables)
+	Interação / Milestone
+	0.1 Setup do Projeto
+	Criação do repositório/ambiente de desenvolvimento. Definição do sistema de gerenciamento de estado e bibliotecas.
+	
+
+	0.2 Definição dos Schemas JSON
+	Elaborar o esquema JSON final (com tipagem estrita) para: Publisher, MeetingPart, AssignmentHistory, e Assignment.
+	
+
+	0.3 Mock-up de Dados
+	Criação de um conjunto de dados de teste (JSON) que inclua 20 Publicadores, 3 semanas de Histórico (AssignmentHistory), e 1 pauta de MeetingPart com partes que exijam Gênero, Privilégio e Aprovação.
+	Milestone 1: Revisão e Aprovação dos 4 Schemas JSON e dos dados de Mock-up.
+	0.4 Implementação do RBAC Básico
+	Configuração da autenticação e autorização (RBAC) para proteger a API, verificando o campo Publisher.authorityLevel (Ancião, SM, Publicador). Essencial para a Regra 8.
+	
+
+	FASE 1: NÚCLEO DE CONTROLE E REGRAS (BACKEND CORE I)
+Objetivo: Implementar o Filtro Rígido, o Motor de Ranqueamento e o Módulo de Cronometragem.
+Etapa
+	Tarefas (Deliverables)
+	Interação / Milestone
+	1.1 Módulo AssignmentFilter
+	Implementar a lógica de Filtro Rígido (Regras 1, 2 e 3 da seção 3): Gênero, Disponibilidade e Privilégios (Elegibilidade). O módulo deve retornar apenas candidatos elegíveis.
+	
+
+	1.2 Módulo RankingEngine
+	Implementar o cálculo de Prioridade Ponderada (Regra 2) e a lógica de Cooldown/Penalidade (Regra 3). Este módulo recebe elegíveis e retorna Publicadores ranqueados com suas pontuações.
+	
+
+	1.3 Implementação da Cronometragem
+	Implementar o Módulo TimingCalculator para calcular os horários de início e fim de cada Assignment com base na duração da parte e no horário inicial da reunião (Requisito Não Funcional).
+	
+
+	1.4 Testes Unitários de Lógica
+	Criação de testes unitários para validar que o AssignmentFilter, RankingEngine e TimingCalculator funcionam perfeitamente com os dados de mock-up (0.3).
+	Milestone 2: Demonstração da filtragem, ranqueamento e cálculo de horários corretos em ambiente isolado.
+	FASE 2: MOTOR DE INFERÊNCIA E API (BACKEND CORE II)
+Objetivo: Integrar os módulos de lógica e criar o Módulo Core Controller (AssignmentEngine) que orquestra todo o processo via interfaces JSON.
+Etapa
+	Tarefas (Deliverables)
+	Interação / Milestone
+	2.1 Implementação do AssignmentEngine
+	Desenvolvimento do Módulo Central (Core Controller). Ele deve orquestrar (1.1), (1.2), (1.3) e aplicar as Regras de Gatilho de Aprovação (Regras 4 e 5).
+	
+
+	2.2 Implementação do Módulo PairingLogic
+	Implementar a lógica de Pareamento de Ajudante/Leitor (Regra 4), reutilizando o AssignmentFilter.
+	
+
+	2.3 Definição da API JSON
+	Criação do endpoint principal: POST /api/generateAssignments. Entrada: JSON da pauta + dados de publicadores. Saída: JSON de Assignment[] com status DRAFT ou PENDING_APPROVAL.
+	Milestone 3: Chamada de API bem-sucedida (usando JSON) que gera uma lista completa de designações (Assignment objects) para a semana de mock-up.
+	FASE 3: CONSTRUÇÃO DO FRONTE-END (UI RESPONSIVA)
+Objetivo: Desenvolver a estrutura front-end com foco na usabilidade e design responsivo (desktop e mobile).
+Etapa
+	Tarefas (Deliverables)
+	Interação / Milestone
+	3.1 Setup Front-end
+	Configuração do ambiente (e.g., framework, Tailwind CSS). Definição dos componentes básicos de UI (Botões, Cards, Modais).
+	
+
+	3.2 Layout Responsivo (Shell)
+	Criação do layout principal que se adapta a telas pequenas e grandes, incluindo menus de navegação, cabeçalhos e áreas de trabalho.
+	
+
+	3.3 UI de Gerenciamento de Dados
+	Desenvolvimento de telas para visualização e edição de Publisher e MeetingPart. Foco na usabilidade para o SMRV&M.
+	Milestone 4: Demonstração do Protótipo Funcional da UI em modo CRUD (Criação, Leitura e Edição de Publicadores) com design responsivo.
+	FASE 4: FLUXOS CRÍTICOS E INTEGRAÇÃO (FULL STACK)
+Objetivo: Conectar o Front-end ao Backend (API JSON) e implementar os fluxos de trabalho de geração e aprovação, aplicando o controle de acesso por nível de autoridade.
+Etapa
+	Tarefas (Deliverables)
+	Interação / Milestone
+	4.1 Integração do AssignmentEngine
+	Conectar o botão "Gerar Pauta" (UI) ao endpoint POST /api/generateAssignments (Backend). Exibir o resultado (lista de Assignments) na tela, incluindo os horários calculados.
+	
+
+	4.2 Fluxo de Aprovação (Ancião)
+	Implementar a tela de "Designações Pendentes". Adicionar a funcionalidade para usuários ELDER alterarem o approvalStatus para APPROVED ou REJECTED (Regra 6), com validação RBAC.
+	
+
+	4.3 Fluxo de Rejeição e Refluxo
+	Implementar a funcionalidade que, ao rejeitar uma designação, chama o AssignmentEngine novamente para preencher a Parte que ficou vazia (Regra 7).
+	
+
+	4.4 Histórico e Exportação
+	Implementar a visualização do histórico e a funcionalidade de exportação da pauta final (Assignment[]) (UC6 e UC7).
+	Milestone 5: Demonstração do ciclo completo: Geração automática -> Revisão por Ancião -> Aprovação (ou Rejeição com Refluxo).
+	FASE 5: REFINAMENTO E ESTABILIZAÇÃO
+Objetivo: Testes finais, ajustes de usabilidade e documentação.
+Etapa
+	Tarefas (Deliverables)
+	Interação / Milestone
+	5.1 Testes de Usabilidade (UX)
+	Ajustes finos na UI/UX baseados em feedback (ex: cores, acessibilidade).
+	
+
+	5.2 Testes de Stress de Regras
+	Testar o AssignmentEngine com dados complexos e cenários limite (ex: poucos elegíveis, muitos indisponíveis, regras de cooldown).
+	Milestone Final: Implantação e Revisão Final da Documentação.

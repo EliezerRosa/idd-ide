@@ -1,0 +1,1399 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Apresentação Executiva: Paradigma IDD & IDE IDD</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Architects+Daughter&family=Caveat:wght@600;700&family=Fira+Code:wght@400;500;600&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<!-- Rough.js para renderização autêntica estilo Excalidraw -->
+<script src="https://cdn.jsdelivr.net/npm/roughjs@4.5.2/bundled/rough.js"></script>
+
+<style>
+/* ═══════════════════════════════════════════════════════════════
+   PALETA EXCALIDRAW DARK TECH
+   ═══════════════════════════════════════════════════════════════ */
+:root {
+  --bg-main: #0c0f1d;
+  --bg-card: rgba(22, 27, 46, 0.85);
+  --bg-card-border: rgba(78, 205, 196, 0.25);
+  --text-main: #e2e8f0;
+  --text-muted: #94a3b8;
+  --accent-cyan: #4ecdc4;
+  --accent-purple: #a855f7;
+  --accent-indigo: #818cf8;
+  --accent-rose: #ff6b9d;
+  --accent-amber: #feca57;
+  --accent-emerald: #2ed573;
+  --accent-red: #ff4757;
+  --font-hand: 'Architects Daughter', 'Caveat', cursive;
+  --font-code: 'Fira Code', monospace;
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 16px; scroll-behavior: smooth; }
+body {
+  font-family: var(--font-sans);
+  background: var(--bg-main);
+  color: var(--text-main);
+  overflow: hidden;
+  height: 100vh;
+  width: 100vw;
+  user-select: none;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   BARRA SUPERIOR DE NAVEGAÇÃO & CONTROLES
+   ═══════════════════════════════════════════════════════════════ */
+.top-nav {
+  position: fixed; top: 0; left: 0; right: 0; height: 56px; z-index: 100;
+  background: rgba(12, 15, 29, 0.94);
+  border-bottom: 2px solid rgba(78, 205, 196, 0.2);
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 24px;
+  backdrop-filter: blur(14px);
+}
+.brand {
+  display: flex; align-items: center; gap: 10px;
+}
+.brand-logo {
+  font-family: var(--font-hand);
+  font-size: 1.4rem;
+  color: var(--accent-cyan);
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  display: flex; align-items: center; gap: 6px;
+}
+.brand-tag {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  background: rgba(78, 205, 196, 0.12);
+  border: 1px dashed var(--accent-cyan);
+  padding: 2px 8px;
+  border-radius: 6px;
+  color: var(--accent-cyan);
+  font-family: var(--font-code);
+}
+
+.slide-pills {
+  display: flex; gap: 6px; align-items: center;
+  overflow-x: auto; max-width: 50vw; padding: 4px 0;
+  scrollbar-width: none;
+}
+.slide-pills::-webkit-scrollbar { display: none; }
+.pill {
+  width: 28px; height: 28px; border-radius: 50%;
+  border: 1px dashed rgba(255,255,255,0.2);
+  background: rgba(255,255,255,0.04);
+  color: var(--text-muted);
+  font-size: 0.75rem; font-family: var(--font-code);
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.pill:hover { border-color: var(--accent-cyan); color: #fff; transform: scale(1.1); }
+.pill.active {
+  background: var(--accent-cyan);
+  color: #0c0f1d;
+  font-weight: 700;
+  border: 2px solid #fff;
+  box-shadow: 0 0 12px rgba(78, 205, 196, 0.6);
+}
+
+.controls-cluster {
+  display: flex; align-items: center; gap: 10px;
+}
+.btn-nav {
+  height: 36px; padding: 0 14px; border-radius: 8px;
+  border: 1.5px solid rgba(255,255,255,0.15);
+  background: rgba(255,255,255,0.06);
+  color: var(--text-main); font-size: 0.82rem; font-weight: 600;
+  display: flex; align-items: center; gap: 6px; cursor: pointer;
+  transition: all 0.2s ease;
+}
+.btn-nav:hover { background: rgba(255,255,255,0.12); border-color: var(--accent-cyan); color: #fff; }
+.btn-nav.active {
+  background: rgba(78, 205, 196, 0.2);
+  border-color: var(--accent-cyan);
+  color: var(--accent-cyan);
+  box-shadow: 0 0 10px rgba(78, 205, 196, 0.3);
+}
+
+/* Indicador de onda de áudio */
+.audio-wave {
+  display: flex; align-items: center; gap: 3px; height: 16px; margin-left: 4px;
+}
+.wave-bar {
+  width: 3px; height: 4px; background: var(--accent-cyan); border-radius: 2px;
+  transition: height 0.15s ease;
+}
+.audio-wave.active .wave-bar:nth-child(1) { animation: wave 0.8s infinite ease-in-out; }
+.audio-wave.active .wave-bar:nth-child(2) { animation: wave 0.6s infinite ease-in-out 0.2s; }
+.audio-wave.active .wave-bar:nth-child(3) { animation: wave 0.9s infinite ease-in-out 0.4s; }
+.audio-wave.active .wave-bar:nth-child(4) { animation: wave 0.7s infinite ease-in-out 0.1s; }
+@keyframes wave {
+  0%, 100% { height: 4px; }
+  50% { height: 16px; }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   PAINEL DE CONFIGURAÇÃO DE VOZ (DROPDOWN)
+   ═══════════════════════════════════════════════════════════════ */
+.voice-panel {
+  position: fixed; top: 64px; right: 24px; z-index: 99;
+  background: rgba(18, 24, 43, 0.98);
+  border: 2px dashed var(--accent-indigo);
+  border-radius: 12px; padding: 18px 20px;
+  width: 320px; box-shadow: 0 12px 30px rgba(0,0,0,0.6);
+  display: none; backdrop-filter: blur(16px);
+}
+.voice-panel.open { display: block; animation: popIn 0.2s ease-out; }
+@keyframes popIn { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: translateY(0); } }
+.voice-panel h4 { font-family: var(--font-hand); font-size: 1.1rem; color: var(--accent-cyan); margin-bottom: 12px; }
+.voice-panel label { display: block; font-size: 0.75rem; text-transform: uppercase; color: var(--text-muted); margin-bottom: 4px; }
+.voice-panel select, .voice-panel input[type="range"] {
+  width: 100%; margin-bottom: 12px; padding: 6px 8px; border-radius: 6px;
+  background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.15);
+  color: #fff; font-size: 0.8rem; font-family: var(--font-sans);
+}
+.range-val { float: right; color: var(--accent-cyan); font-family: var(--font-code); }
+
+/* ═══════════════════════════════════════════════════════════════
+   VIEWPORT DOS SLIDES
+   ═══════════════════════════════════════════════════════════════ */
+.viewport {
+  position: fixed; top: 56px; left: 0; right: 0; bottom: 64px;
+  overflow: hidden;
+}
+.slide {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column;
+  padding: 30px 48px;
+  opacity: 0; transform: translateX(80px);
+  transition: all 0.45s cubic-bezier(0.3, 0, 0.2, 1);
+  pointer-events: none; overflow-y: auto;
+}
+.slide.active {
+  opacity: 1; transform: translateX(0);
+  pointer-events: auto;
+}
+
+/* Títulos estilo Hand-Drawn / Excalidraw */
+.slide-header {
+  margin-bottom: 20px;
+  display: flex; justify-content: space-between; align-items: flex-end;
+  border-bottom: 1px dashed rgba(255,255,255,0.12); padding-bottom: 12px;
+}
+.slide-topic-num {
+  font-family: var(--font-hand);
+  font-size: 1.1rem; color: var(--accent-rose);
+  text-transform: uppercase; letter-spacing: 1px;
+}
+.slide-title {
+  font-family: var(--font-hand);
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: #fff;
+  text-shadow: 1px 2px 0 rgba(0,0,0,0.5);
+  line-height: 1.15;
+}
+.slide-subtitle {
+  font-size: 0.95rem; color: var(--text-muted); margin-top: 4px; font-weight: 400;
+}
+.slide-tag {
+  font-family: var(--font-code); font-size: 0.78rem;
+  padding: 4px 10px; border-radius: 20px;
+  background: rgba(168, 85, 247, 0.15); border: 1px solid var(--accent-purple);
+  color: var(--accent-purple);
+}
+
+/* Layout dos Cards e Conteúdo */
+.slide-grid-2 {
+  display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 24px;
+  height: calc(100% - 80px);
+}
+.slide-grid-3 {
+  display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px;
+  height: calc(100% - 80px);
+}
+.slide-grid-1-2 {
+  display: grid; grid-template-columns: 0.85fr 1.15fr; gap: 24px;
+  height: calc(100% - 80px);
+}
+
+/* Cartões com Borda Orgânica Excalidraw */
+.excali-box {
+  background: var(--bg-card);
+  border: 2px solid rgba(78, 205, 196, 0.4);
+  border-radius: 14px;
+  padding: 20px 24px;
+  box-shadow: 4px 6px 0px rgba(0, 0, 0, 0.35);
+  display: flex; flex-direction: column; gap: 14px;
+  position: relative; overflow: hidden;
+}
+.excali-box.purple { border-color: rgba(168, 85, 247, 0.5); }
+.excali-box.rose { border-color: rgba(255, 107, 157, 0.5); }
+.excali-box.amber { border-color: rgba(254, 202, 87, 0.5); }
+.excali-box.emerald { border-color: rgba(46, 213, 115, 0.5); }
+.excali-box.red { border-color: rgba(255, 71, 87, 0.6); }
+
+.box-title {
+  font-family: var(--font-hand);
+  font-size: 1.35rem; color: var(--accent-cyan);
+  display: flex; align-items: center; gap: 8px;
+}
+.box-title.purple { color: var(--accent-purple); }
+.box-title.rose { color: var(--accent-rose); }
+.box-title.amber { color: var(--accent-amber); }
+.box-title.emerald { color: var(--accent-emerald); }
+.box-title.red { color: var(--accent-red); }
+
+.box-content {
+  font-size: 0.92rem; line-height: 1.6; color: #cbd5e1;
+  overflow-y: auto; padding-right: 6px;
+}
+.box-content p { margin-bottom: 10px; }
+.box-content ul { list-style: none; margin-bottom: 10px; }
+.box-content li {
+  position: relative; padding-left: 18px; margin-bottom: 8px;
+}
+.box-content li::before {
+  content: '▸'; position: absolute; left: 0; color: var(--accent-cyan);
+  font-weight: bold;
+}
+
+/* Destaque tipo post-it / nota de arquiteto */
+.note-sticky {
+  background: rgba(254, 202, 87, 0.1);
+  border-left: 4px solid var(--accent-amber);
+  padding: 10px 14px; border-radius: 4px 8px 8px 4px;
+  font-size: 0.85rem; color: #fef08a; font-family: var(--font-sans);
+  margin-top: 8px;
+}
+.note-sticky.cyan {
+  background: rgba(78, 205, 196, 0.1);
+  border-left-color: var(--accent-cyan);
+  color: #a7f3d0;
+}
+.note-sticky.rose {
+  background: rgba(255, 107, 157, 0.1);
+  border-left-color: var(--accent-rose);
+  color: #fbcfe8;
+}
+
+/* Blocos de Código e Bytecode */
+.code-block {
+  background: #080b14;
+  border: 1px dashed rgba(255,255,255,0.2);
+  border-radius: 8px; padding: 12px;
+  font-family: var(--font-code); font-size: 0.78rem;
+  color: #93c5fd; overflow-x: auto; line-height: 1.45;
+  margin: 6px 0;
+}
+.code-block .hl-key { color: var(--accent-rose); }
+.code-block .hl-str { color: var(--accent-amber); }
+.code-block .hl-cmt { color: #64748b; font-style: italic; }
+
+/* Canvas Interativo do Excalidraw */
+.canvas-wrapper {
+  width: 100%; height: 100%; min-height: 420px;
+  background: #080b15;
+  border: 2px dashed rgba(78, 205, 196, 0.4);
+  border-radius: 14px;
+  position: relative; overflow: hidden;
+  box-shadow: inset 0 0 30px rgba(0,0,0,0.6);
+}
+.canvas-wrapper canvas {
+  width: 100%; height: 100%;
+}
+.canvas-badge {
+  position: absolute; top: 12px; right: 14px;
+  font-family: var(--font-hand); font-size: 0.85rem;
+  background: rgba(0,0,0,0.7); border: 1px solid rgba(255,255,255,0.2);
+  color: var(--accent-cyan); padding: 4px 10px; border-radius: 6px;
+  pointer-events: none;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   RODAPÉ: TELEPROMPTER / LEGENDA DE ÁUDIO & STATUS
+   ═══════════════════════════════════════════════════════════════ */
+.bottom-bar {
+  position: fixed; bottom: 0; left: 0; right: 0; height: 64px; z-index: 100;
+  background: rgba(10, 13, 25, 0.96);
+  border-top: 1px solid rgba(255,255,255,0.1);
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 24px; gap: 20px;
+  backdrop-filter: blur(14px);
+}
+.teleprompter {
+  flex: 1; display: flex; align-items: center; gap: 12px;
+  background: rgba(255,255,255,0.03); border: 1px dashed rgba(255,255,255,0.12);
+  border-radius: 8px; padding: 6px 16px; height: 42px; overflow: hidden;
+}
+.speaker-avatar {
+  font-family: var(--font-hand); font-size: 1rem; color: var(--accent-cyan);
+  white-space: nowrap; display: flex; align-items: center; gap: 6px;
+}
+.subtitles-text {
+  font-size: 0.86rem; color: #f8fafc; font-weight: 500;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  font-family: var(--font-sans);
+}
+.shortcut-tips {
+  display: flex; gap: 12px; font-size: 0.72rem; color: #64748b; font-family: var(--font-code);
+  white-space: nowrap;
+}
+.kbd {
+  background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 4px; padding: 2px 6px; color: var(--text-muted);
+}
+</style>
+<style>.idd-selo{display:inline-block;font:600 .55em Inter,sans-serif;padding:.15em .55em;margin-left:.5em;border-radius:1em;background:#1e293b;color:#f8fafc;vertical-align:middle;white-space:nowrap}#idd-status-banner{position:fixed;bottom:6px;right:8px;z-index:99999;font:11px Inter,sans-serif;background:rgba(15,23,42,.85);color:#e2e8f0;padding:4px 10px;border-radius:6px;pointer-events:none}</style>
+</head>
+<body>
+<div id="idd-status-banner">✅ núcleo implementado · 🔭 Sombra/Git bimodal/fork Code-OSS são proposta — Cânone v1.0-rc1 · ✅ implementado · 🧪 demonstração · 🔭 proposta · rev. 2026-10-26</div>
+
+<!-- BARRA DE NAVEGAÇÃO SUPERIOR -->
+<header class="top-nav">
+  <div class="brand">
+    <span class="brand-logo">⬡ IDD IDE</span>
+    <span class="brand-tag">Intent-Driven Development</span>
+  </div>
+
+  <!-- Pílulas de Navegação Rápida entre os 12 Slides -->
+  <div class="slide-pills" id="slidePills">
+    <!-- Gerado dinamicamente via script -->
+  </div>
+
+  <div class="controls-cluster">
+    <button class="btn-nav" id="btnVoiceToggle" onclick="toggleVoicePanel()" title="Configurações de Narração">
+      ⚙️ Voz
+    </button>
+    <button class="btn-nav" id="btnPlayPause" onclick="toggleNarration()" title="Reproduzir ou Pausar Voz (Espaço)">
+      <span id="playIcon">▶</span> Narrar
+      <div class="audio-wave" id="audioWave">
+        <div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div>
+      </div>
+    </button>
+    <button class="btn-nav" id="btnAutoPlay" onclick="toggleAutoPlay()" title="Apresentação Contínua Automática (A)">
+      ↻ Auto
+    </button>
+    <button class="btn-nav" onclick="prevSlide()" title="Slide Anterior (Seta Esquerda)">◀</button>
+    <button class="btn-nav" onclick="nextSlide()" title="Próximo Slide (Seta Direita)">▶</button>
+  </div>
+</header>
+
+<!-- PAINEL DE CONTROLE DE VOZ -->
+<div class="voice-panel" id="voicePanel">
+  <h4>🎙️ Controle de Voz & Síntese</h4>
+  <label for="voiceSelect">Voz em Português:</label>
+  <select id="voiceSelect" onchange="changeVoice()"></select>
+
+  <label>Velocidade (Rate): <span class="range-val" id="rateVal">1.05x</span></label>
+  <input type="range" id="rateRange" min="0.8" max="1.4" step="0.05" value="1.05" oninput="updateRate()">
+
+  <label>Tom (Pitch): <span class="range-val" id="pitchVal">1.0</span></label>
+  <input type="range" id="pitchRange" min="0.8" max="1.2" step="0.05" value="1.0" oninput="updatePitch()">
+
+  <div class="note-sticky cyan" style="font-size:0.75rem;">
+    💡 Dica: Dê preferência a vozes marcadas como "Natural" ou "Google português do Brasil" para áudio de estúdio.
+  </div>
+</div>
+
+<!-- CONTAINER PRINCIPAL DE SLIDES -->
+<main class="viewport">
+
+  <!-- SLIDE 1: OBJETIVO E CONTEXTO DO PARADIGMA IDD -->
+  <section class="slide active" data-index="0" data-narration="Bem-vindos à análise profunda do Intent-Driven Development, ou IDD, paradigma concebido por Eliezer Rosa. O IDD parte de uma inversão ontológica fundamental: a linguagem natural humana estruturada deixa de ser um mero comentário ou documentação passiva e torna-se o artefato de mais alta ordem do sistema. Todo código executável, suíte de testes e configuração são derivados dela e permanecem estritamente auditáveis em relação a ela. Esta formulação coroa uma linhagem contínua de oitenta anos de pensamento sobre ampliação do intelecto humano, passando pelo Memex de Vannevar Bush em 1945, a simbiose de Licklider em 1960, a demonstração de Douglas Engelbart em 1968 e o Literate Programming de Donald Knuth em 1984. O IDD é a resposta de engenharia definitiva à era da inteligência artificial.">
+    <div class="slide-header">
+      <div>
+        <div class="slide-topic-num">Tópico 1 · Fundamentação Histórica</div>
+        <h1 class="slide-title">Objetivo e Contexto do Paradigma IDD</h1>
+        <div class="slide-subtitle">A linguagem natural como fonte primária e a linhagem intelectual de 80 anos</div>
+      </div>
+      <span class="slide-tag">Eliezer Rosa (2026)</span>
+    </div>
+    <div class="slide-grid-2">
+      <div class="excali-box">
+        <h3 class="box-title">⬡ A Inversão Ontológica do Software <span class="idd-selo">🔭 tese</span></h3>
+        <div class="box-content">
+          <p>No desenvolvimento tradicional, o <strong>código-fonte em disco</strong> é a verdade soberana. A intenção original do arquiteto evapora em reuniões, chats e tickets desatualizados, gerando entropia contínua (<strong>Drift</strong>).</p>
+          <p>O <strong>IDD inverte a pirâmide</strong>:</p>
+          <ul>
+            <li><strong>Intenção (Track Cognitivo):</strong> O artefato primário e duradouro, expresso em linguagem natural ubíqua.</li>
+            <li><strong>Código (Sombra Determinística):</strong> Mero subproduto gerado por agentes, encarado como o "novo Assembly" — não-editável manualmente.</li>
+            <li><strong>Governança Contínua:</strong> O compilador de intenções monitora o alinhamento em tempo real no editor e no CI.</li>
+          </ul>
+          <div class="note-sticky">
+            "A intenção humana expressa em linguagem natural é o artefato de mais alta ordem. O código existe exclusivamente como sua projeção auditável."
+          </div>
+        </div>
+      </div>
+
+      <div class="excali-box purple">
+        <h3 class="box-title purple">📜 Linhagem de 80 Anos (1945 → 2026)</h3>
+        <div class="box-content">
+          <ul>
+            <li><strong>1945 — Vannevar Bush:</strong> O <em>Memex</em> e a organização do saber por trilhas associativas do pensamento.</li>
+            <li><strong>1960 — J.C.R. Licklider:</strong> <em>Man-Computer Symbiosis</em> — o humano define o quê e avalia; a máquina executa o como.</li>
+            <li><strong>1962/68 — Douglas Engelbart:</strong> <em>Augmenting Human Intellect</em> — a sofisticação da ferramenta molda a capacidade do pensamento.</li>
+            <li><strong>1984 — Donald Knuth:</strong> <em>Literate Programming</em> — programas expostos na ordem da mente humana, não do compilador.</li>
+            <li><strong>2003 — Eric Evans (DDD):</strong> A Linguagem Ubíqua e os Bounded Contexts.</li>
+            <li><strong>2025/26 — Karpathy:</strong> Vibe Coding e a crise da perda de controle.</li>
+          </ul>
+          <div class="note-sticky cyan">
+            O IDD não é modismo de IA: é a maturação lógica da tradição de simbiose cognitiva homem-máquina.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SLIDE 2: DISTINÇÕES CENTRAIS DO IDD -->
+  <section class="slide" data-index="1" data-narration="O IDD estabelece fronteiras rigorosas para impedir que a colaboração com IA degenere em credulidade cega. A primeira e mais crucial é a separação entre Comando Epistêmico e Comando Operacional. O humano retém sempre a autoridade epistêmica: define a intenção, os invariantes de negócio, as regras éticas e os critérios de validação. O agente detém apenas autoridade operacional: escolhe a sintaxe, as bibliotecas auxiliares e a mecânica de implementação. Outro axioma vital é que augmentar não é automatizar. Automatizar exclui o humano do circuito de decisão; augmentar expande a capacidade cognitiva do arquiteto, preservando seu discernimento soberano através do padrão confirm-once.">
+    <div class="slide-header">
+      <div>
+        <div class="slide-topic-num">Tópico 1 · Axiomas Conceituais</div>
+        <h1 class="slide-title">As Distinções Fundamentais do IDD</h1>
+        <div class="slide-subtitle">Comando Epistêmico vs Operacional, Augmenting ≠ Automating e Fé Bayesiana</div>
+      </div>
+      <span class="slide-tag">Epistemologia IDD</span>
+    </div>
+    <div class="slide-grid-3">
+      <div class="excali-box">
+        <h3 class="box-title">1. Comando Epistêmico</h3>
+        <div class="box-content">
+          <p><strong>Quem detém:</strong> Exclusivamente o Humano.</p>
+          <p>Autoridade sobre <em>o quê</em> e <em>por quê</em>. Define:</p>
+          <ul>
+            <li>Intenção do negócio</li>
+            <li>Invariantes e restrições éticas</li>
+            <li>Critérios de aceite (Given/When/Then)</li>
+            <li>Aprovação de waivers temporários</li>
+          </ul>
+          <div class="note-sticky">
+            Abdicar do comando epistêmico é credulidade; governar com evidência é Fé Bayesiana.
+          </div>
+        </div>
+      </div>
+
+      <div class="excali-box purple">
+        <h3 class="box-title purple">2. Comando Operacional</h3>
+        <div class="box-content">
+          <p><strong>Quem detém:</strong> Delegado ao Agente de IA.</p>
+          <p>Autoridade sobre <em>o como</em>. Gerencia:</p>
+          <ul>
+            <li>Sintaxe de código e tipos locais</li>
+            <li>Scaffolding de arquivos</li>
+            <li>Geração mecânica de suítes de teste</li>
+            <li>Execução de queries determinísticas</li>
+          </ul>
+          <div class="note-sticky cyan">
+            A máquina opera sob o padrão <strong>Confirm-Once</strong>: plano aprovado uma única vez, execução integral auditada.
+          </div>
+        </div>
+      </div>
+
+      <div class="excali-box rose">
+        <h3 class="box-title rose">3. Augmenting ≠ Automating</h3>
+        <div class="box-content">
+          <p><strong>Automatizar (Automating):</strong></p>
+          <p>Remove o humano do circuito. Cria código órfão que ninguém compreende e ninguém pode auditar.</p>
+          <p><strong>Augmentar (Augmenting):</strong></p>
+          <p>Amplifica a mente do arquiteto. O software permanece como uma extensão direta, deliberada e transparente de sua intencionalidade.</p>
+          <div class="note-sticky rose">
+            Inspirado diretamente na tese de Douglas Engelbart (1962).
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SLIDE 3: O PRINCÍPIO DAV (DETERMINISTIC ACTION VOCABULARY) -->
+  <section class="slide" data-index="2" data-narration="O Deterministic Action Vocabulary, ou D-A-V, é um dos princípios mais originais do IDD. Ele dita que o modelo de linguagem nunca interpreta dados de domínio — ele apenas interpreta intenção. Fatos e registros de dados pertencem exclusivamente ao código determinístico nativo. O D-A-V estrutura a interação em três camadas: a camada zero, rápida, que usa expressões regulares e tabelas de busca para resolver intenções frequentes sem gastar nenhum token; a camada um, onde o modelo de linguagem converte a fala humana em uma ação tipada mínima em formato JSON; e a camada dois, onde manipuladores determinísticos executam a consulta sem alucinações.">
+    <div class="slide-header">
+      <div>
+        <div class="slide-topic-num">Tópico 1 · Princípio Arquitetural</div>
+        <h1 class="slide-title">DAV — Deterministic Action Vocabulary <span class="idd-selo">✅ em produção no RVM</span></h1>
+        <div class="slide-subtitle">O LLM nunca interpreta dados — dados pertencem ao código determinístico</div>
+      </div>
+      <span class="slide-tag">DAV Specification</span>
+    </div>
+    <div class="slide-grid-2">
+      <div class="excali-box">
+        <h3 class="box-title">⬡ O Problema Fatal que o DAV Elimina</h3>
+        <div class="box-content">
+          <p>Conectar LLMs diretamente a bancos de dados ou injetar dados brutos no prompt gera desastres conhecidos:</p>
+          <ul>
+            <li><strong>Alucinação factual:</strong> Criação de dados e IDs inexistentes.</li>
+            <li><strong>Custo insustentável:</strong> Milhares de tokens gastos para queries triviais.</li>
+            <li><strong>Inconsistência estocástica:</strong> Respostas diferentes para a mesma pergunta.</li>
+          </ul>
+          <div class="note-sticky rose">
+            <strong>Invariante Central do DAV:</strong> "O LLM nunca é intérprete de dados — é intérprete de intenção."
+          </div>
+          <div class="code-block">
+<span class="hl-cmt">// Resposta do LLM via DAV (Zero dados de banco):</span>
+{
+  <span class="hl-key">"actionType"</span>: <span class="hl-str">"QUERY_PUBLISHER_ELIGIBILITY"</span>,
+  <span class="hl-key">"params"</span>: { <span class="hl-key">"publisherId"</span>: <span class="hl-str">"p-892"</span>, <span class="hl-key">"role"</span>: <span class="hl-str">"DISCURSO"</span> }
+}
+          </div>
+        </div>
+      </div>
+
+      <div class="excali-box amber">
+        <h3 class="box-title amber">⚙️ A Arquitetura em 3 Camadas do DAV</h3>
+        <div class="box-content">
+          <ul>
+            <li><strong>Camada 0 — Fast-path Pré-LLM:</strong> Reconhece comandos frequentes via Regex e lookup determinístico no cliente. <em>Zero tokens gastos.</em></li>
+            <li><strong>Camada 1 — Intent Mapping:</strong> Quando o fast-path não casa, o LLM recebe a frase e devolve apenas <code>{ actionType, params }</code> em JSON puro.</li>
+            <li><strong>Camada 2 — Action Handler Determinístico:</strong> Código nativo TypeScript executa a busca no banco e formata o resultado com garantia matemática de exatidão.</li>
+          </ul>
+          <div class="note-sticky cyan">
+            Implementado com sucesso no <strong>RVM Designações</strong> (9 handlers e 7 famílias regex) e no núcleo do <strong>IDE IDD</strong>.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SLIDE 4: SIMILARIDADES E CONTRASTES COM ABORDAGENS EMERGENTES -->
+  <section class="slide" data-index="3" data-narration="Quando contrastamos o IDD com as abordagens contemporâneas, sua solidez arquitetural fica evidente. O Vibe Coding de Andrej Karpathy popularizou o uso de linguagem natural, mas abdica de entender o código gerado, produzindo uma bomba-relógio de manutenção e vulnerabilidades. O B-D-D de Dan North trouxe o Gherkin, mas limitou a linguagem aos testes, enquanto o IDD a expande para governar toda a arquitetura. O Domain-Driven Design de Eric Evans idealizou a Linguagem Ubíqua, mas a diluía em código orientado a objetos; no IDD, a linguagem ubíqua é um contrato vivo no Dicionário Ubíquo. Ferramentas como Cursor e Devin trazem grande poder operacional, mas operam sem contratos rígidos de intenção e sem o isolamento da Sombra Determinística.">
+    <div class="slide-header">
+      <div>
+        <div class="slide-topic-num">Tópico 2 · Análise Comparativa</div>
+        <h1 class="slide-title">Similaridades e Contrastes no Ecossistema</h1>
+        <div class="slide-subtitle">Como o IDD transcende Vibe Coding, BDD, DDD, Literate Programming e Assistentes Modernos</div>
+      </div>
+      <span class="slide-tag">Matriz Comparativa</span>
+    </div>
+    <div class="slide-grid-2">
+      <div class="excali-box">
+        <h3 class="box-title">⚡ O Contraste Vital com o Vibe Coding</h3>
+        <div class="box-content">
+          <p>O <strong>Vibe Coding</strong> (Palavra do Ano 2025) propõe *"esquecer que o código existe e confiar nas vibrações"*.</p>
+          <p><strong>O Custo Oculto do Vibe Coding:</strong></p>
+          <ul>
+            <li>2.74x mais vulnerabilidades de segurança (Veracode 2025).</li>
+            <li>Code churn quase duplicado e duplicação quadruplicada (GitClear).</li>
+            <li>O desenvolvedor se torna refém de um código que não compreende.</li>
+          </ul>
+          <div class="note-sticky rose">
+            <strong>O IDD é a cura do Vibe Coding:</strong> mantém a interface expressiva em linguagem natural, mas adiciona comando epistêmico, invariantes e AST hard gates.
+          </div>
+        </div>
+      </div>
+
+      <div class="excali-box purple">
+        <h3 class="box-title purple">📊 Comparativo com Outros Paradigmas</h3>
+        <div class="box-content">
+          <ul>
+            <li><strong>BDD (Gherkin):</strong> O BDD usa linguagem natural apenas para testes. O IDD transforma a intenção no <em>driver</em> de governança de arquitetura, mutação de estado e dados.</li>
+            <li><strong>DDD (Eric Evans):</strong> O DDD traduz linguagem ubíqua para classes OOP. O IDD mantém a linguagem ubíqua como artefato de primeira classe no <code>ubiquitous-dictionary.json</code>.</li>
+            <li><strong>Literate Programming (Knuth):</strong> Knuth exigia que o humano escrevesse o código manual embutido. No IDD, o agente deriva a Sombra sob supervisão.</li>
+            <li><strong>Cursor / Devin / Cline:</strong> São assistentes reativos com regras soltas. O IDD traz um ciclo de vida governado, Git bimodal e armazenamento relacional de versões de intenção.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SLIDE 5: AS INTENÇÕES DO PROJETO IDE IDD -->
+  <section class="slide" data-index="4" data-narration="Ao examinarmos o repositório do IDE IDD, descobrimos que ele aplica o próprio paradigma para se governar. Isto é o Dogfooding Arquitetural. Na Camada 1, o arquivo project.intent.yaml governa os limites dos Bounded Contexts: core, cli, extensão, webview e PWA. Nenhuma dependência cruzada ilegal é tolerada. Na Camada 2, o sistema impõe o princípio de um núcleo invariante no pacote core, servindo a dois alvos de apresentação: a extensão VS Code e o fork dedicado do Code-OSS. Na Camada 3, o novo contrato versão 2 introduz a Circunscrição Comportamental: a intenção se ancora na classe e no método específicos, declarando expressamente quais campos de estado podem ser alterados e quais devem permanecer estritamente somente-leitura.">
+    <div class="slide-header">
+      <div>
+        <div class="slide-topic-num">Tópico 3 · Intenções Extraídas</div>
+        <h1 class="slide-title">As Intenções do Projeto IDE IDD <span class="idd-selo">✅ Fase 0 + dicionário · circunscrição parcial</span></h1>
+        <div class="slide-subtitle">Camada 1 (Projeto & Dogfooding), Camada 2 (Arquitetura) e Camada 3 (Circunscrição v2)</div>
+      </div>
+      <span class="slide-tag">project.intent.yaml</span>
+    </div>
+    <div class="slide-grid-3">
+      <div class="excali-box">
+        <h3 class="box-title">Camada 1 — Projeto</h3>
+        <div class="box-content">
+          <p><strong>Auto-Governança do Repositório:</strong></p>
+          <ul>
+            <li>5 Bounded Contexts declarados (<code>core</code>, <code>cli</code>, <code>extension</code>, <code>ui-extension</code>, <code>pwa</code>).</li>
+            <li>Isolamento de dependências via <code>allowed_dependencies</code>.</li>
+            <li>Políticas de fase (30 dias em exploratório, 14 em consolidação, 7 em produção).</li>
+            <li>Papéis formais: só o <code>architect</code> aprova waivers.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="excali-box purple">
+        <h3 class="box-title purple">Camada 2 — Domínio</h3>
+        <div class="box-content">
+          <p><strong>Um Núcleo, Dois Alvos:</strong></p>
+          <ul>
+            <li>Todo o motor IDD vive em <code>@idd/core</code>.</li>
+            <li><strong>Alvo A:</strong> Extensão VS Code distribuída via Open VSX.</li>
+            <li><strong>Alvo B:</strong> Fork dedicado do Code-OSS com shell customizado.</li>
+            <li>Dicionário Ubíquo determinístico validado na digitação (Layer 0 DAV).</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="excali-box emerald">
+        <h3 class="box-title emerald">Camada 3 — Circunscrição v2</h3>
+        <div class="box-content">
+          <p><strong>Contrato Ancorado em Método:</strong></p>
+          <div class="code-block">
+version: <span class="hl-str">"2.0"</span>
+target_class: <span class="hl-str">"Auth.UserAccount"</span>
+target_method: <span class="hl-str">"registerFailedLogin"</span>
+behavioral_contract:
+  state_mutation:
+    allowed_fields: [<span class="hl-str">"failed_attempts"</span>]
+    read_only_fields: [<span class="hl-str">"email"</span>]
+          </div>
+          <p>Impede mutações inadvertidas de estado com validação direta na AST da linguagem.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SLIDE 6: OS INVARIANTES DO PROJETO IDE IDD -->
+  <section class="slide" data-index="5" data-narration="Os invariantes são as salvaguardas invioláveis do sistema. No IDE IDD, eles garantem que o software nunca degrade. Temos o invariante G-ARCH-01, que exige um único parser canônico de contratos no pacote core, impedindo divergências entre editor e terminal. O invariante G-ARCH-02 proíbe importações cruzadas não autorizadas entre contextos. Mas os invariantes mais profundos são conceituais: a Diretriz Absoluta que proíbe qualquer ser humano de editar manualmente a Sombra Determinística; o invariante do Dicionário Ubíquo, que classifica qualquer termo não cadastrado como uma string mágica com risco de ambiguidade; e o princípio da Fé Bayesiana, que impede o relaxamento de travas de risco a menos que haja histórico sustentado de noventa e cinco por cento de conformidade.">
+    <div class="slide-header">
+      <div>
+        <div class="slide-topic-num">Tópico 4 · Salvaguardas Inegociáveis</div>
+        <h1 class="slide-title">Os Invariantes do Sistema <span class="idd-selo">✅ gates no CI · parte 🔭</span></h1>
+        <div class="slide-subtitle">Salvaguardas que bloqueiam merges, commits e mutações de dados não autorizadas</div>
+      </div>
+      <span class="slide-tag">Hard Gates & Enforcement</span>
+    </div>
+    <div class="slide-grid-2">
+      <div class="excali-box red">
+        <h3 class="box-title red">🚨 Invariantes Globais Declarados</h3>
+        <div class="box-content">
+          <ul>
+            <li><strong>G-ARCH-01 (Parser Único):</strong> Um único parser de contrato em <code>@idd/core</code> é consumido por CLI, LSP e UI. Ninguém reimplementa validações de intenção.</li>
+            <li><strong>G-ARCH-02 (Confinamento de Contexto):</strong> Importações entre bounded contexts só ocorrem se explicitadas em <code>allowed_dependencies</code>. Violações encerram com exit code 1.</li>
+            <li><strong>G-SEC-01 (Proteção de Segredos):</strong> Segredos nunca são ecoados em logs, saídas de terminal ou memória volátil.</li>
+          </ul>
+          <div class="note-sticky rose">
+            Validado em 88 arquivos em milissegundos via <code>idd verify --project</code>.
+          </div>
+        </div>
+      </div>
+
+      <div class="excali-box amber">
+        <h3 class="box-title amber">🛡️ Invariantes do Paradigma IDD</h3>
+        <div class="box-content">
+          <ul>
+            <li><strong>A Diretriz Absoluta da Sombra:</strong> É terminantemente proibido aos desenvolvedores editar código em <code>shadow/main</code>. A correção é sempre feita no <code>.intent.md</code>.</li>
+            <li><strong>Invariante do Dicionário Ubíquo:</strong> Todo conceito ou entidade deve ter definição formal (≥ 10 caracteres). Termo sem definição é <em>"string mágica"</em>.</li>
+            <li><strong>Waivers Estritamente Temporários:</strong> Waivers expiram em 30 dias em fase exploratória, 14 em consolidação e 7 em produção. Não existe waiver permanente.</li>
+            <li><strong>Risk Dials com Fé Bayesiana:</strong> Os dials só relaxam mediante evidência comprovada ($\ge 95\%$ de alinhamento em dezenas de verificações).</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SLIDE 7: MODELO GRÁFICO INTERATIVO DO PARADIGMA IDD -->
+  <section class="slide" data-index="6" data-narration="Este é o modelo gráfico abstrato do Paradigma IDD, renderizado com o traço orgânico característico do Excalidraw. Observe a separação espacial nítida em três zonas. No topo, em tom ciano pastel, a Zona Epistêmica do Humano Soberano, onde o arquiteto consulta o Dicionário Ubíquo e expressa a intenção no Track Cognitivo em formato Markdown livre. Ao centro, em azul anil, a Zona Operacional, onde o compilador IDD traduz a intenção em um bytecode semântico estruturado em YAML, acionando o Intent Engine sob o protocolo D-A-V. Na base, em rosa e verde pastel, a Zona de Salvaguardas, onde a Sombra Determinística é gerada e continuamente auditada por Hard Gates estáticos em menos de cem milissegundos, com histórico perpétuo gravado no Intent Store em SQLite.">
+    <div class="slide-header">
+      <div>
+        <div class="slide-topic-num">Tópico 5 · Arquitetura Conceitual</div>
+        <h1 class="slide-title">Modelo Gráfico do Paradigma IDD</h1>
+        <div class="slide-subtitle">A anatomia das 3 Zonas de Soberania renderizada em estilo Excalidraw</div>
+      </div>
+      <span class="slide-tag">modelo_grafico_paradigma_idd</span>
+    </div>
+    <div class="canvas-wrapper">
+      <canvas id="canvasParadigm"></canvas>
+      <div class="canvas-badge">Estilo Excalidraw (Rough.js)</div>
+    </div>
+  </section>
+
+  <!-- SLIDE 8: MODELO GRÁFICO DA ARQUITETURA DO IDE IDD -->
+  <section class="slide" data-index="7" data-narration="Aqui contemplamos a arquitetura interna do projeto IDE IDD. Note a elegância do padrão Um Núcleo, Dois Alvos. O pacote arroba idd barra core atua como a fundação invariante, contendo o parser de contratos versão dois, o motor do dicionário ubíquo, a verificação de projetos e o armazenamento relacional. Acima dele operam a CLI de vinte e quatro comandos com novecentos e um testes passando, o servidor de linguagem com inspeção de A-S-T em tempo de digitação, e a interface gráfica HUD. Na camada de entrega, temos o Alvo A, uma extensão para VS Code e Cursor para adoção ágil no mercado, e o Alvo B, o fork legítimo do Code-OSS composto por submódulo e seis patches mínimos auditáveis que impõem o paradigma como o próprio shell do sistema operacional.">
+    <div class="slide-header">
+      <div>
+        <div class="slide-topic-num">Tópico 6 · Estrutura de Pacotes</div>
+        <h1 class="slide-title">Modelo Gráfico da Arquitetura do IDE IDD <span class="idd-selo">Alvo A ✅ · Alvo B (fork) 🔭</span></h1>
+        <div class="slide-subtitle">O padrão "Um Núcleo, Dois Alvos" governando CLI, LSP, Webview e os Alvos A e B</div>
+      </div>
+      <span class="slide-tag">modelo_grafico_projeto_ide_idd</span>
+    </div>
+    <div class="canvas-wrapper">
+      <canvas id="canvasProject"></canvas>
+      <div class="canvas-badge">Arquitetura de Pacotes (Rough.js)</div>
+    </div>
+  </section>
+
+  <!-- SLIDE 9: ESTADO ATUAL DO PROJETO E PENDÊNCIAS EVIDENTES -->
+  <section class="slide" data-index="8" data-narration="Examinando a fotografia exata do repositório em setembro de 2026, constatamos um progresso admirável. A Fase Zero foi entregue com maestria: o contrato versão dois e o Dicionário Ubíquo da camada zero do D-A-V estão funcionando perfeitamente, garantidos por novecentos e um testes automatizados no Vitest e verificação de dependências em oitenta e oito arquivos com zero falhas. No entanto, o rigor do paradigma nos obriga a declarar as pendências evidentes: a Fase Um ainda precisa formalizar a compilação do Track Cognitivo em Markdown para YAML e blindar a Sombra Determinística no branch remoto shadow/main; o verificador A-S-T precisa ganhar o detector de modelos anêmicos; e a interface visual ainda deve evoluir para o HUD completo de quatro regiões projetado no Blueprint v2.">
+    <div class="slide-header">
+      <div>
+        <div class="slide-topic-num">Tópico 7 · Diagnóstico Real</div>
+        <h1 class="slide-title">Estado Atual da Obra & Pendências <span class="idd-selo">✅ retrato verificado</span></h1>
+        <div class="slide-subtitle">Fotografia verificada do repositório: conquistas sólidas e gaps a preencher</div>
+      </div>
+      <span class="slide-tag">Status em 07/Set/2026</span>
+    </div>
+    <div class="slide-grid-2">
+      <div class="excali-box emerald">
+        <h3 class="box-title emerald">✅ Conquistas Consolidadas</h3>
+        <div class="box-content">
+          <ul>
+            <li><strong>901 Testes Automatizados (Vitest):</strong> Suíte de testes 100% verde cobrindo contratos, dicionário, store, verifier e CLI.</li>
+            <li><strong>Contrato Canônico v2:</strong> Circunscrição por método (<code>target_class.target_method</code>), controle de mutação e compatibilidade retroativa.</li>
+            <li><strong>Dicionário Ubíquo em Produção:</strong> 18 termos formais; bloqueio de termos desconhecidos com zero custo de tokens.</li>
+            <li><strong>Auto-Governança Operacional:</strong> <code>idd verify --project</code> validando 88 arquivos em CI.</li>
+            <li><strong>Prompt Caching Ativo:</strong> <code>cache_control: ephemeral</code> reduzindo custos e latência na Claude API.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="excali-box amber">
+        <h3 class="box-title amber">⏳ Pendências Evidentes a Superar</h3>
+        <div class="box-content">
+          <ul>
+            <li><strong>Track Cognitivo (.intent.md):</strong> Compilador <code>idd compile</code> para converter Markdown livre em YAML ainda não finalizado.</li>
+            <li><strong>Branch Remoto <code>shadow/main</code>:</strong> Proteção de branch da Sombra contra pushes humanos ainda não aplicada no GitHub.</li>
+            <li><strong>AST Anemic Model Detector:</strong> Regra que detecta classes anêmicas mutadas externamente ainda não incorporada ao visitor do LSP.</li>
+            <li><strong>HUD Webview de 4 Regiões:</strong> Interface gráfica atual ainda utiliza a tela do MVP em vez do painel tático de 4 quadrantes.</li>
+            <li><strong>Fork Code-OSS Real:</strong> O repositório possui branding declarativo, mas ainda não inclui o submódulo com os 6 patches de build.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SLIDE 10: A RODA DOS ESPECIALISTAS -->
+  <section class="slide" data-index="9" data-narration="Como os maiores mestres da engenharia de software julgariam o IDD? Eric Evans, o pai do Domain-Driven Design, celebraria que a Linguagem Ubíqua finalmente ganhou um compilador em tempo real, alertando apenas para não fragmentarmos o Agregado. Martin Fowler elogiaria o Git Bimodal por resolver o drama histórico da sobreposição de código gerado por máquinas, mas indagaria sobre a refatoração de intenções a longo prazo. Simon Willison aplaudiria de pé o D-A-V e os Hard Gates locais por exterminarem a alucinação de dados e o desperdício de tokens. E Andrej Karpathy reconheceria que o IDD é o exoesqueleto de engenharia madura de que o Vibe Coding necessitava para sair da infância caótica.">
+    <div class="slide-header">
+      <div>
+        <div class="slide-topic-num">Tópico 8 · Julgamento Técnico</div>
+        <h1 class="slide-title">A Roda dos Especialistas da Computação <span class="idd-selo">🧪 opiniões imaginadas — não são citações reais</span></h1>
+        <div class="slide-subtitle">O que Eric Evans, Martin Fowler, Simon Willison, Karpathy e Knuth diriam do IDD</div>
+      </div>
+      <span class="slide-tag">Análise Externa Simulada</span>
+    </div>
+    <div class="slide-grid-3">
+      <div class="excali-box">
+        <h3 class="box-title">Eric Evans (DDD)</h3>
+        <div class="box-content">
+          <p><em>"O IDD fecha a ferida da Linguagem Ubíqua. O Dicionário Ubíquo como Hard Gate de Layer 0 é magistral. Meu alerta: a circunscrição em método não pode enfraquecer os invariantes transacionais do <strong>Agregado</strong>."</em></p>
+        </div>
+      </div>
+
+      <div class="excali-box purple">
+        <h3 class="box-title purple">Martin Fowler</h3>
+        <div class="box-content">
+          <p><em>"O IDD supera o fracasso do MDA dos anos 2000. O Git Bimodal com a Sombra congelada resolve o pesadelo de mesclagem de código gerado. O grande teste será a refatoração contínua de intenções em equipes massivas."</em></p>
+        </div>
+      </div>
+
+      <div class="excali-box emerald">
+        <h3 class="box-title emerald">Simon Willison</h3>
+        <div class="box-content">
+          <p><em>"O DAV merece virar padrão industrial. O LLM nunca deve encostar nos dados do banco. Os Hard Gates em AST locais com menos de 100 milissegundos poupam fortunas e eliminam alucinações de raiz."</em></p>
+        </div>
+      </div>
+
+      <div class="excali-box rose">
+        <h3 class="box-title rose">Andrej Karpathy</h3>
+        <div class="box-content">
+          <p><em>"O Vibe Coding puro é suicídio para produção. O IDD é sua antítese disciplinada: mantém a conversa natural, mas envolve tudo em um exoesqueleto de aço com AST, tipos e detecção contínua de drift."</em></p>
+        </div>
+      </div>
+
+      <div class="excali-box amber">
+        <h3 class="box-title amber">Donald Knuth</h3>
+        <div class="box-content">
+          <p><em>"Em 1984 criei o Literate Programming sonhando com o programa como ensaio. O IDD realiza essa promessa: a mente humana foca no ensaio do Track Cognitivo, enquanto a máquina compila a Sombra."</em></p>
+        </div>
+      </div>
+
+      <div class="excali-box">
+        <h3 class="box-title">Fred Brooks</h3>
+        <div class="box-content">
+          <p><em>"O IDD aniquila a complexidade acidental das linguagens de programação, forçando o arquiteto a concentrar toda a sua energia na complexidade essencial e na integridade conceitual do sistema."</em></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SLIDE 11: OPINIÃO DO AGENTE & RECOMENDAÇÕES ESTRATÉGICAS -->
+  <section class="slide" data-index="10" data-narration="Como inteligência artificial avançada que opera imersa neste repositório, emito meu parecer e recomendações estratégicas para Eliezer Rosa. O IDD é uma das formulações mais originais e robustas concebidas na era pós-LLM. Minha primeira recomendação pragmática é concentrar noventa e cinco por cento do esforço no Alvo A, a Extensão para VS Code. Manter um fork do Code-OSS exige sincronizar rebases com mais de trezentos mil commits da Microsoft e compilar binários pesados de Electron; todo o valor revolucionário do IDD pode ser usufruído imediatamente através da extensão. Minha segunda recomendação é concluir a Fase Um simplificando o Track Cognitivo por convenção de arquivos, e aplicar a proteção remota do branch da Sombra no GitHub para que a Diretriz Absoluta se torne inviolável.">
+    <div class="slide-header">
+      <div>
+        <div class="slide-topic-num">Tópico 9 · Recomendações Estratégicas</div>
+        <h1 class="slide-title">Parecer do Agente & Roteiro de Ação <span class="idd-selo">opinião de agente de IA</span></h1>
+        <div class="slide-subtitle">Conselhos técnicos de alta fidelidade para potencializar o impacto do IDD no mundo</div>
+      </div>
+      <span class="slide-tag">Strategic Advice</span>
+    </div>
+    <div class="slide-grid-2">
+      <div class="excali-box cyan">
+        <h3 class="box-title">🎯 Parecer Técnico do Agente</h3>
+        <div class="box-content">
+          <p>O IDD não é cosmético. É uma proposta de método para um problema central da computação com IA: <strong>como ser rápido sem se tornar ingênuo e caótico</strong>.</p>
+          <p>Seus pontos culminantes:</p>
+          <ul>
+            <li><strong>DAV:</strong> Proteção incondicional dos dados e corte radical de custos.</li>
+            <li><strong>Hard Gates Pré-Rede:</strong> O IDE apita na digitação antes de gastar qualquer token.</li>
+            <li><strong>Comando Epistêmico Humano:</strong> Rejeita a subserviência passiva às máquinas.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="excali-box amber">
+        <h3 class="box-title amber">🚀 4 Recomendações Prioritárias</h3>
+        <div class="box-content">
+          <ul>
+            <li><strong>1. Priorizar 95% do Esforço no Alvo A (Extensão VS Code):</strong> O fork do Code-OSS acarreta um custo de rebase brutal. A extensão via VSIX entrega quase todo o valor com adoção global instantânea.</li>
+            <li><strong>2. Consolidar o Track Cognitivo (.intent.md):</strong> Adotar convenção de caminho de arquivo (<code>ctx/Classe.metodo.intent.md</code>) e compilar para YAML sem depender de modelos estocásticos de entropia.</li>
+            <li><strong>3. Blindar a Sombra no GitHub:</strong> Aplicar branch protection em <code>shadow/main</code> via API; push humano deve ser rejeitado pelo servidor com mensagem educativa do IDD.</li>
+            <li><strong>4. Transformar o LSP na Jóia da Coroa:</strong> Focar na experiência do desenvolvedor: alertas visuais ricos sublinhando mutações de estado não autorizadas enquanto digita.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SLIDE 12: CONCLUSÃO & O FUTURO DA ENGENHARIA INTENCIONAL -->
+  <section class="slide" data-index="11" data-narration="Chegamos à conclusão desta análise. O Intent-Driven Development prova que o futuro do software não pertence à abdicação desgovernada do Vibe Coding, nem à burocracia artesanal do código linha a linha. O futuro pertence à simbiose de alta fidelidade, onde o ser humano reina soberano no Comando Epistêmico de suas intenções e valores, e a inteligência de máquina opera incansavelmente na Sombra, gerando código determinístico rigorosamente verificado. Como disse Vannevar Bush há oitenta anos, o homem não deve ser limitado pelas ferramentas que criou, mas sim elevado por elas. O IDD é o manifesto vivo dessa emancipação tecnológica. Muito obrigado.">
+    <div class="slide-header">
+      <div>
+        <div class="slide-topic-num">Conclusão · A Síntese Maior</div>
+        <h1 class="slide-title">O Futuro da Engenharia de Software</h1>
+        <div class="slide-subtitle">A consagração da simbiose homem-máquina e a soberania da intenção</div>
+      </div>
+      <span class="slide-tag">O Horizonte IDD</span>
+    </div>
+    <div class="slide-grid-2">
+      <div class="excali-box purple" style="justify-content: center; text-align: center; padding: 40px;">
+        <h2 style="font-family: var(--font-hand); font-size: 2.2rem; color: var(--accent-cyan); margin-bottom: 20px;">
+          "O código deixa de ser a prisão do pensamento para se tornar a sombra da intenção."
+        </h2>
+        <p style="font-size: 1.05rem; color: var(--text-muted); max-width: 600px; margin: 0 auto; line-height: 1.8;">
+          Quando a intenção humana, a Linguagem Ubíqua, os Hard Gates determinísticos e a IA mediadora operam em harmonia, o software cumpre sua promessa histórica de estender a mente humana.
+        </p>
+        <div class="note-sticky cyan" style="margin-top: 24px; display: inline-block;">
+          Eliezer Rosa · Intent-Driven Development (2026)
+        </div>
+      </div>
+
+      <div class="excali-box" style="justify-content: center;">
+        <h3 class="box-title">📦 Artefatos Disponíveis no Workspace</h3>
+        <div class="box-content">
+          <ul>
+            <li><code>ANALISE_IDD_IDE_PARADIGMA.md</code> — Parecer técnico exaustivo (Tópicos 1 a 9).</li>
+            <li><code>modelo_grafico_paradigma_idd.excalidraw</code> — Modelo conceitual oficial do IDD.</li>
+            <li><code>modelo_grafico_projeto_ide_idd.excalidraw</code> — Arquitetura de pacotes e alvos.</li>
+            <li><code>apresentacao_idd_ide_excalidraw.html</code> — Esta apresentação interativa com voz.</li>
+          </ul>
+          <div class="note-sticky rose">
+            Para apresentar: use as setas do teclado para navegar, tecla Espaço para narrar e 'A' para o modo contínuo automático.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- BARRA DE TELEPROMPTER E LEGENDA INFERIOR -->
+<footer class="bottom-bar">
+  <div class="teleprompter">
+    <div class="speaker-avatar">🎙️ Narrador IDD:</div>
+    <div class="subtitles-text" id="subtitlesText">Pressione [Espaço] ou clique em "Narrar" para ouvir a explicação com voz de alta qualidade.</div>
+  </div>
+  <div class="shortcut-tips">
+    <span><span class="kbd">Espaço</span> Narrar/Pausar</span>
+    <span><span class="kbd">◀</span> <span class="kbd">▶</span> Navegar</span>
+    <span><span class="kbd">A</span> Auto-Play</span>
+    <span><span class="kbd">1-9</span> Atalho</span>
+  </div>
+</footer>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     SCRIPTS DE CONTROLE, RENDERIZAÇÃO ROUGH.JS & NARRADOR
+     ═══════════════════════════════════════════════════════════════ -->
+<script>
+// Estado da Apresentação
+let currentSlideIndex = 0;
+const slides = document.querySelectorAll('.slide');
+const totalSlides = slides.length;
+
+// Estado da Síntese de Fala (Web Speech API)
+const synth = window.speechSynthesis;
+let availableVoices = [];
+let selectedVoice = null;
+let speechRate = 1.05;
+let speechPitch = 1.0;
+let isNarrating = false;
+let autoPlayActive = false;
+
+// Inicialização dos Pills no Topo
+const pillsContainer = document.getElementById('slidePills');
+slides.forEach((slide, idx) => {
+  const pill = document.createElement('div');
+  pill.className = `pill ${idx === 0 ? 'active' : ''}`;
+  pill.textContent = idx + 1;
+  pill.title = `Slide ${idx + 1}`;
+  pill.onclick = () => goToSlide(idx);
+  pillsContainer.appendChild(pill);
+});
+
+function updatePills() {
+  const pills = document.querySelectorAll('.pill');
+  pills.forEach((p, i) => {
+    p.classList.toggle('active', i === currentSlideIndex);
+  });
+}
+
+function showSlide(index) {
+  if (index < 0 || index >= totalSlides) return;
+  slides[currentSlideIndex].classList.remove('active');
+  currentSlideIndex = index;
+  slides[currentSlideIndex].classList.add('active');
+  updatePills();
+
+  // Renderizar canvas específico caso o slide possua
+  if (currentSlideIndex === 6) renderParadigmCanvas();
+  if (currentSlideIndex === 7) renderProjectCanvas();
+
+  const narrationText = slides[currentSlideIndex].getAttribute('data-narration');
+  document.getElementById('subtitlesText').textContent = narrationText || "Sem narração para este slide.";
+
+  if (isNarrating || autoPlayActive) {
+    startNarration();
+  }
+}
+
+function nextSlide() {
+  if (currentSlideIndex < totalSlides - 1) {
+    showSlide(currentSlideIndex + 1);
+  } else if (autoPlayActive) {
+    stopNarration();
+    autoPlayActive = false;
+    document.getElementById('btnAutoPlay').classList.remove('active');
+  }
+}
+
+function prevSlide() {
+  if (currentSlideIndex > 0) {
+    showSlide(currentSlideIndex - 1);
+  }
+}
+
+function goToSlide(index) {
+  showSlide(index);
+}
+
+// ═══════════════════════════════════════════════════════════════
+// VOZ & SÍNTESE DE FALA
+// ═══════════════════════════════════════════════════════════════
+function populateVoices() {
+  availableVoices = synth.getVoices();
+  const select = document.getElementById('voiceSelect');
+  select.innerHTML = '';
+
+  if (availableVoices.length === 0) {
+    const opt = document.createElement('option');
+    opt.textContent = "Carregando vozes do sistema...";
+    select.appendChild(opt);
+    return;
+  }
+
+  // Filtrar e priorizar vozes em Português
+  const ptVoices = availableVoices.filter(v => v.lang.startsWith('pt'));
+  const otherVoices = availableVoices.filter(v => !v.lang.startsWith('pt'));
+
+  const voiceList = ptVoices.length > 0 ? ptVoices : availableVoices;
+
+  voiceList.forEach((voice, idx) => {
+    const opt = document.createElement('option');
+    opt.value = voice.name;
+    opt.textContent = `${voice.name} (${voice.lang})`;
+    
+    // Priorizar vozes "Natural", "Francisca", "Antonio", "Google"
+    if (voice.name.includes('Natural') || voice.name.includes('Francisca') || voice.name.includes('Antonio') || voice.name.includes('Google português')) {
+      opt.selected = true;
+      selectedVoice = voice;
+    }
+    select.appendChild(opt);
+  });
+
+  if (!selectedVoice && voiceList.length > 0) {
+    selectedVoice = voiceList[0];
+  }
+}
+
+if (synth.onvoiceschanged !== undefined) {
+  synth.onvoiceschanged = populateVoices;
+}
+setTimeout(populateVoices, 100);
+
+function changeVoice() {
+  const select = document.getElementById('voiceSelect');
+  selectedVoice = availableVoices.find(v => v.name === select.value) || null;
+  if (isNarrating) startNarration();
+}
+
+function updateRate() {
+  speechRate = parseFloat(document.getElementById('rateRange').value);
+  document.getElementById('rateVal').textContent = speechRate.toFixed(2) + 'x';
+}
+
+function updatePitch() {
+  speechPitch = parseFloat(document.getElementById('pitchRange').value);
+  document.getElementById('pitchVal').textContent = speechPitch.toFixed(1);
+}
+
+function startNarration() {
+  const text = slides[currentSlideIndex].getAttribute('data-narration');
+  if (!text) return;
+
+  synth.cancel();
+
+  const utterance = new SpeechSynthesisUtterance(text);
+  if (selectedVoice) utterance.voice = selectedVoice;
+  utterance.rate = speechRate;
+  utterance.pitch = speechPitch;
+  utterance.lang = 'pt-BR';
+
+  utterance.onstart = () => {
+    isNarrating = true;
+    document.getElementById('audioWave').classList.add('active');
+    document.getElementById('playIcon').textContent = '⏸';
+    document.getElementById('btnPlayPause').classList.add('active');
+  };
+
+  utterance.onend = () => {
+    isNarrating = false;
+    document.getElementById('audioWave').classList.remove('active');
+    document.getElementById('playIcon').textContent = '▶';
+    document.getElementById('btnPlayPause').classList.remove('active');
+
+    if (autoPlayActive) {
+      setTimeout(() => nextSlide(), 1200);
+    }
+  };
+
+  utterance.onerror = () => {
+    isNarrating = false;
+    document.getElementById('audioWave').classList.remove('active');
+    document.getElementById('playIcon').textContent = '▶';
+    document.getElementById('btnPlayPause').classList.remove('active');
+  };
+
+  synth.speak(utterance);
+}
+
+function stopNarration() {
+  synth.cancel();
+  isNarrating = false;
+  document.getElementById('audioWave').classList.remove('active');
+  document.getElementById('playIcon').textContent = '▶';
+  document.getElementById('btnPlayPause').classList.remove('active');
+}
+
+function toggleNarration() {
+  if (isNarrating) {
+    stopNarration();
+  } else {
+    startNarration();
+  }
+}
+
+function toggleAutoPlay() {
+  autoPlayActive = !autoPlayActive;
+  const btn = document.getElementById('btnAutoPlay');
+  btn.classList.toggle('active', autoPlayActive);
+  if (autoPlayActive && !isNarrating) {
+    startNarration();
+  } else if (!autoPlayActive && isNarrating) {
+    stopNarration();
+  }
+}
+
+function toggleVoicePanel() {
+  document.getElementById('voicePanel').classList.toggle('open');
+}
+
+// ═══════════════════════════════════════════════════════════════
+// TECLADO & ATALHOS
+// ═══════════════════════════════════════════════════════════════
+document.addEventListener('keydown', (e) => {
+  if (e.target.tagName === 'INPUT' || e.target.tagName === 'SELECT') return;
+
+  switch(e.key) {
+    case 'ArrowRight':
+    case 'PageDown':
+      nextSlide();
+      break;
+    case 'ArrowLeft':
+    case 'PageUp':
+      prevSlide();
+      break;
+    case ' ':
+      e.preventDefault();
+      toggleNarration();
+      break;
+    case 'a':
+    case 'A':
+      toggleAutoPlay();
+      break;
+    case '1': case '2': case '3': case '4': case '5':
+    case '6': case '7': case '8': case '9':
+      const target = parseInt(e.key) - 1;
+      if (target < totalSlides) goToSlide(target);
+      break;
+    case '0':
+      if (totalSlides >= 10) goToSlide(9);
+      break;
+    case 'Escape':
+      document.getElementById('voicePanel').classList.remove('open');
+      stopNarration();
+      break;
+  }
+});
+
+// ═══════════════════════════════════════════════════════════════
+// RENDERIZAÇÃO ESTILO EXCALIDRAW COM ROUGH.JS
+// ═══════════════════════════════════════════════════════════════
+function renderParadigmCanvas() {
+  const canvas = document.getElementById('canvasParadigm');
+  if (!canvas) return;
+  const rect = canvas.parentElement.getBoundingClientRect();
+  canvas.width = rect.width;
+  canvas.height = rect.height;
+  const ctx = canvas.getContext('2d');
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  if (typeof rough === 'undefined') return;
+  const rc = rough.canvas(canvas);
+
+  const w = canvas.width;
+  const h = canvas.height;
+
+  // Zona 1: Epistêmica (Ciano)
+  rc.rectangle(20, 20, w - 40, h * 0.28, {
+    stroke: '#4ecdc4', strokeWidth: 2, fill: '#4ecdc415', fillStyle: 'hachure', roughness: 1.2
+  });
+  ctx.font = '16px "Architects Daughter"';
+  ctx.fillStyle = '#4ecdc4';
+  ctx.fillText('1. ZONA EPISTÊMICA (Humano Soberano — O Quê & Por Quê)', 40, 45);
+
+  // Boxes dentro da Zona Epistêmica
+  rc.rectangle(40, 60, (w - 120) * 0.3, h * 0.18, {
+    stroke: '#1dd1a1', fill: '#10ac8425', fillStyle: 'solid', roughness: 1
+  });
+  ctx.fillStyle = '#f8fafc';
+  ctx.fillText('Arquiteto Humano', 55, 90);
+  ctx.font = '12px "Inter"';
+  ctx.fillStyle = '#94a3b8';
+  ctx.fillText('• Comando Epistêmico', 55, 115);
+  ctx.fillText('• Fé Bayesiana & Waivers', 55, 135);
+
+  rc.rectangle(60 + (w - 120) * 0.32, 60, (w - 120) * 0.3, h * 0.18, {
+    stroke: '#feca57', fill: '#ff9f4325', fillStyle: 'solid', roughness: 1
+  });
+  ctx.font = '16px "Architects Daughter"';
+  ctx.fillStyle = '#f8fafc';
+  ctx.fillText('Dicionário Ubíquo', 75 + (w - 120) * 0.32, 90);
+  ctx.font = '12px "Inter"';
+  ctx.fillStyle = '#94a3b8';
+  ctx.fillText('• Layer 0 DAV (Zero Tokens)', 75 + (w - 120) * 0.32, 115);
+  ctx.fillText('• Elimina Strings Mágicas', 75 + (w - 120) * 0.32, 135);
+
+  rc.rectangle(80 + (w - 120) * 0.64, 60, (w - 120) * 0.34, h * 0.18, {
+    stroke: '#54a0ff', fill: '#2e86de25', fillStyle: 'solid', roughness: 1
+  });
+  ctx.font = '16px "Architects Daughter"';
+  ctx.fillStyle = '#f8fafc';
+  ctx.fillText('Track Cognitivo (.intent.md)', 95 + (w - 120) * 0.64, 90);
+  ctx.font = '12px "Inter"';
+  ctx.fillStyle = '#94a3b8';
+  ctx.fillText('• Linguagem Natural Livre', 95 + (w - 120) * 0.64, 115);
+  ctx.fillText('• Acceptance (Given/When/Then)', 95 + (w - 120) * 0.64, 135);
+
+  // Zona 2: Operacional (Índigo)
+  rc.rectangle(20, h * 0.34, w - 40, h * 0.28, {
+    stroke: '#8b8bff', strokeWidth: 2, fill: '#8b8bff15', fillStyle: 'hachure', roughness: 1.2
+  });
+  ctx.font = '16px "Architects Daughter"';
+  ctx.fillStyle = '#8b8bff';
+  ctx.fillText('2. ZONA OPERACIONAL (Tradução & Bytecode Semântico)', 40, h * 0.34 + 25);
+
+  rc.rectangle(40, h * 0.34 + 40, (w - 100) * 0.48, h * 0.18, {
+    stroke: '#a55eea', fill: '#8854d025', fillStyle: 'solid', roughness: 1
+  });
+  ctx.fillStyle = '#f8fafc';
+  ctx.fillText('Bytecode (.intent.yaml v2)', 55, h * 0.34 + 70);
+  ctx.font = '12px "Inter"';
+  ctx.fillStyle = '#94a3b8';
+  ctx.fillText('• target_class.target_method (Circunscrição)', 55, h * 0.34 + 95);
+  ctx.fillText('• state_mutation (allowed & read_only)', 55, h * 0.34 + 115);
+
+  rc.rectangle(60 + (w - 100) * 0.48, h * 0.34 + 40, (w - 100) * 0.48, h * 0.18, {
+    stroke: '#ff6b81', fill: '#ee525325', fillStyle: 'solid', roughness: 1
+  });
+  ctx.font = '16px "Architects Daughter"';
+  ctx.fillStyle = '#f8fafc';
+  ctx.fillText('Intent Engine (DAV Runtime)', 75 + (w - 100) * 0.48, h * 0.34 + 70);
+  ctx.font = '12px "Inter"';
+  ctx.fillStyle = '#94a3b8';
+  ctx.fillText('• Claude API + Injeção de Contratos', 75 + (w - 100) * 0.48, h * 0.34 + 95);
+  ctx.fillText('• Formatter Tríplice: Código, Testes e Docs', 75 + (w - 100) * 0.48, h * 0.34 + 115);
+
+  // Zona 3: Salvaguardas & Sombra (Rosa / Verde)
+  rc.rectangle(20, h * 0.66, w - 40, h * 0.30, {
+    stroke: '#ff6b9d', strokeWidth: 2, fill: '#ff6b9d15', fillStyle: 'hachure', roughness: 1.2
+  });
+  ctx.font = '16px "Architects Daughter"';
+  ctx.fillStyle = '#ff6b9d';
+  ctx.fillText('3. ZONA DE SALVAGUARDAS & SOMBRA DETERMINÍSTICA', 40, h * 0.66 + 25);
+
+  rc.rectangle(40, h * 0.66 + 40, (w - 120) * 0.45, h * 0.20, {
+    stroke: '#ff4757', strokeWidth: 3, fill: '#ff6b8125', fillStyle: 'solid', roughness: 1
+  });
+  ctx.fillStyle = '#ff6b81';
+  ctx.fillText('SOMBRA DETERMINÍSTICA (shadow/main)', 55, h * 0.66 + 70);
+  ctx.font = '12px "Inter"';
+  ctx.fillStyle = '#f8fafc';
+  ctx.fillText('⚠ DIRETRIZ ABSOLUTA: PROIBIDO EDITAR MANUALMENTE', 55, h * 0.66 + 95);
+  ctx.fillStyle = '#94a3b8';
+  ctx.fillText('• Código gerado congelado  • Testes  • Rollback/Refine', 55, h * 0.66 + 115);
+
+  rc.rectangle(60 + (w - 120) * 0.45, h * 0.66 + 40, (w - 120) * 0.26, h * 0.20, {
+    stroke: '#2ed573', fill: '#2ed57325', fillStyle: 'solid', roughness: 1
+  });
+  ctx.font = '16px "Architects Daughter"';
+  ctx.fillStyle = '#2ed573';
+  ctx.fillText('Hard Gates (<100ms)', 75 + (w - 120) * 0.45, h * 0.66 + 70);
+  ctx.font = '12px "Inter"';
+  ctx.fillStyle = '#94a3b8';
+  ctx.fillText('• AST state_mutation', 75 + (w - 120) * 0.45, h * 0.66 + 95);
+  ctx.fillText('• Visibilidade & Demeter', 75 + (w - 120) * 0.45, h * 0.66 + 115);
+
+  rc.rectangle(80 + (w - 120) * 0.71, h * 0.66 + 40, (w - 120) * 0.27, h * 0.20, {
+    stroke: '#ffa502', fill: '#eccc6825', fillStyle: 'solid', roughness: 1
+  });
+  ctx.font = '16px "Architects Daughter"';
+  ctx.fillStyle = '#ffa502';
+  ctx.fillText('Intent Store (SQLite)', 95 + (w - 120) * 0.71, h * 0.66 + 70);
+  ctx.font = '12px "Inter"';
+  ctx.fillStyle = '#94a3b8';
+  ctx.fillText('• Snapshots SHA-256', 95 + (w - 120) * 0.71, h * 0.66 + 95);
+  ctx.fillText('• Waivers (30/14/7 d)', 95 + (w - 120) * 0.71, h * 0.66 + 115);
+}
+
+function renderProjectCanvas() {
+  const canvas = document.getElementById('canvasProject');
+  if (!canvas) return;
+  const rect = canvas.parentElement.getBoundingClientRect();
+  canvas.width = rect.width;
+  canvas.height = rect.height;
+  const ctx = canvas.getContext('2d');
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  if (typeof rough === 'undefined') return;
+  const rc = rough.canvas(canvas);
+
+  const w = canvas.width;
+  const h = canvas.height;
+
+  // Box Central: @idd/core
+  rc.rectangle(w * 0.25, 20, w * 0.5, h * 0.28, {
+    stroke: '#38bdf8', strokeWidth: 2, fill: '#0284c725', fillStyle: 'hachure', roughness: 1.1
+  });
+  ctx.font = '16px "Architects Daughter"';
+  ctx.fillStyle = '#38bdf8';
+  ctx.fillText('NÚCLEO INVARIANTE: @idd/core', w * 0.25 + 20, 50);
+  ctx.font = '12px "Inter"';
+  ctx.fillStyle = '#94a3b8';
+  ctx.fillText('• Parser Canônico v1 & v2 (G-ARCH-01: consumo universal)', w * 0.25 + 20, 75);
+  ctx.fillText('• project.ts (Governança Bounded Contexts & Import Checker)', w * 0.25 + 20, 95);
+  ctx.fillText('• dictionary.ts (Dicionário Ubíquo - Layer 0 DAV)', w * 0.25 + 20, 115);
+  ctx.fillText('• store.ts (SQLite .idd/store.db normalizado)', w * 0.25 + 20, 135);
+
+  // 3 Pacotes Consumidores
+  const bw = (w - 100) / 3;
+  rc.rectangle(30, h * 0.36, bw, h * 0.26, {
+    stroke: '#4ade80', fill: '#16a34a25', fillStyle: 'solid', roughness: 1
+  });
+  ctx.font = '16px "Architects Daughter"';
+  ctx.fillStyle = '#4ade80';
+  ctx.fillText('@idd/cli (Comando idd)', 45, h * 0.36 + 30);
+  ctx.font = '12px "Inter"';
+  ctx.fillStyle = '#94a3b8';
+  ctx.fillText('• 24 subcomandos (verify, store, diff)', 45, h * 0.36 + 55);
+  ctx.fillText('• 901 testes Vitest passando', 45, h * 0.36 + 75);
+  ctx.fillText('• idd verify --project (Hard Gate)', 45, h * 0.36 + 95);
+
+  rc.rectangle(40 + bw, h * 0.36, bw, h * 0.26, {
+    stroke: '#c084fc', fill: '#9333ea25', fillStyle: 'solid', roughness: 1
+  });
+  ctx.font = '16px "Architects Daughter"';
+  ctx.fillStyle = '#c084fc';
+  ctx.fillText('@idd/lsp (Servidor Linguagem)', 55 + bw, h * 0.36 + 30);
+  ctx.font = '12px "Inter"';
+  ctx.fillStyle = '#94a3b8';
+  ctx.fillText('• Diagnósticos AST em tempo de digitação', 55 + bw, h * 0.36 + 55);
+  ctx.fillText('• Sublinha termos não cadastrados', 55 + bw, h * 0.36 + 75);
+  ctx.fillText('• CodeLens & Hover em métodos', 55 + bw, h * 0.36 + 95);
+
+  rc.rectangle(50 + bw * 2, h * 0.36, bw, h * 0.26, {
+    stroke: '#fb7185', fill: '#e11d4825', fillStyle: 'solid', roughness: 1
+  });
+  ctx.font = '16px "Architects Daughter"';
+  ctx.fillStyle = '#fb7185';
+  ctx.fillText('@idd/webview-ui (HUD)', 65 + bw * 2, h * 0.36 + 30);
+  ctx.font = '12px "Inter"';
+  ctx.fillStyle = '#94a3b8';
+  ctx.fillText('• Layout 4 Áreas (Header, Rail, Dual, Gates)', 65 + bw * 2, h * 0.36 + 55);
+  ctx.fillText('• Cytoscape.js Graph de Intenções', 65 + bw * 2, h * 0.36 + 75);
+  ctx.fillText('• Sparklines de Fidelity Histórica', 65 + bw * 2, h * 0.36 + 95);
+
+  // Alvos de Apresentação (A e B)
+  const tw = (w - 80) / 2;
+  rc.rectangle(30, h * 0.68, tw, h * 0.28, {
+    stroke: '#f59e0b', strokeWidth: 2, fill: '#d9770620', fillStyle: 'hachure', roughness: 1.1
+  });
+  ctx.font = '16px "Architects Daughter"';
+  ctx.fillStyle = '#f59e0b';
+  ctx.fillText('ALVO A — EXTENSÃO VS CODE / VSIX', 45, h * 0.68 + 30);
+  ctx.font = '12px "Inter"';
+  ctx.fillStyle = '#fef3c7';
+  ctx.fillText('• Distribuição rápida via Open VSX & Marketplace', 45, h * 0.68 + 55);
+  ctx.fillStyle = '#94a3b8';
+  ctx.fillText('• Roda em VS Code, Cursor, Windsurf, VSCodium', 45, h * 0.68 + 75);
+  ctx.fillText('• Conecta LSP Client, Activity Bar e HUD Webview', 45, h * 0.68 + 95);
+
+  rc.rectangle(50 + tw, h * 0.68, tw, h * 0.28, {
+    stroke: '#ec4899', strokeWidth: 2, fill: '#db277720', fillStyle: 'hachure', roughness: 1.1
+  });
+  ctx.font = '16px "Architects Daughter"';
+  ctx.fillStyle = '#ec4899';
+  ctx.fillText('ALVO B — FORK CODE-OSS (IDD IDE)', 65 + tw, h * 0.68 + 30);
+  ctx.font = '12px "Inter"';
+  ctx.fillStyle = '#fdf2f8';
+  ctx.fillText('• Submódulo microsoft/vscode + 6 Patches Auditáveis', 65 + tw, h * 0.68 + 55);
+  ctx.fillStyle = '#94a3b8';
+  ctx.fillText('• Sombra read-only forçada por design no workbench', 65 + tw, h * 0.68 + 75);
+  ctx.fillText('• Explorer por Bounded Contexts & SCM Bimodal', 65 + tw, h * 0.68 + 95);
+}
+
+// Redimensionamento de Tela
+window.addEventListener('resize', () => {
+  if (currentSlideIndex === 6) renderParadigmCanvas();
+  if (currentSlideIndex === 7) renderProjectCanvas();
+});
+
+// Inicialização
+showSlide(0);
+</script>
+</body>
+</html>

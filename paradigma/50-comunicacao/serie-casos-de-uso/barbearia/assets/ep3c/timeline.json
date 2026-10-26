@@ -1,0 +1,115 @@
+{
+  "episode": "3C",
+  "title": "UML Completo: Atores, Classes, Casos de Uso, Estados & Métodos",
+  "totalDurationSec": 143.98,
+  "items": [
+    {
+      "id": "seg_01_leigo",
+      "who": "leigo",
+      "actor": "Usuária Leiga",
+      "slide": 1,
+      "chat": false,
+      "startSec": 0.5,
+      "endSec": 13.89,
+      "durationSec": 13.39,
+      "text": "Eliézer, após blindar o banco de dados da Barbearia no 2C, queremos ver o UML COMPLETO no padrão oficial da OMG: Atores, Limites do Sistema e Casos de Uso com relações estritas de include e extend!",
+      "file": "audio/seg_01_leigo.mp3"
+    },
+    {
+      "id": "seg_02_eliezer",
+      "who": "eliezer",
+      "actor": "Eliézer Rosa",
+      "slide": 1,
+      "chat": false,
+      "startSec": 14.54,
+      "endSec": 41.06,
+      "durationSec": 26.52,
+      "text": "Vejam na tela o Diagrama de Casos de Uso oficial da Barbearia! Nossos atores são o Cliente que agenda, o Barbeiro que executa o serviço e o Gateway de Pagamento. Observem os casos de uso: Agendar Horário, Cancelar Agendamento que possui uma relação de extensão extend para aplicar taxa de cancelamento tardio, e Faturar Comanda que obrigatoriamente inclui a geração do snapshot auditável de comissão!",
+      "file": "audio/seg_02_eliezer.mp3"
+    },
+    {
+      "id": "seg_03_leigo",
+      "who": "leigo",
+      "actor": "Usuária Leiga",
+      "slide": 2,
+      "chat": false,
+      "startSec": 41.71,
+      "endSec": 48.98,
+      "durationSec": 7.27,
+      "text": "E como esses comportamentos são traduzidos em classes com visibilidade privada de atributos e métodos com assinaturas puras?",
+      "file": "audio/seg_03_leigo.mp3"
+    },
+    {
+      "id": "seg_04_ia",
+      "who": "ia",
+      "actor": "IA Compilador",
+      "slide": 2,
+      "chat": false,
+      "startSec": 49.63,
+      "endSec": 77.09,
+      "durationSec": 27.46,
+      "text": "Exibindo o Diagrama de Classes nos três compartimentos canônicos da UML! No compartimento superior, os estereótipos de entidade e agregado; no compartimento central, os atributos privados tipados menos: menos id, menos horarioInicio, menos snapshotComissaoCentavos; e no compartimento inferior, os métodos com mais: mais confirmarAgendamento, mais faturarComanda e mais calcularComissaoBarbeiro com retornos imutáveis!",
+      "file": "audio/seg_04_ia.mp3"
+    },
+    {
+      "id": "seg_05_leigo",
+      "who": "leigo",
+      "actor": "Usuária Leiga",
+      "slide": 3,
+      "chat": false,
+      "startSec": 77.74,
+      "endSec": 87.22,
+      "durationSec": 9.48,
+      "text": "Vejam no Slide 3 a Máquina de Estados do Agendamento: as transições com guardas entre colchetes e a validação em tempo real no terminal da IA!",
+      "file": "audio/seg_05_leigo.mp3"
+    },
+    {
+      "id": "seg_06_ia",
+      "who": "ia",
+      "actor": "IA Compilador",
+      "slide": 3,
+      "chat": true,
+      "startSec": 87.87,
+      "endSec": 110.57,
+      "durationSec": 22.7,
+      "text": "Submetendo a Matriz de Invariantes Comportamentais do Salão. Guarda 1: Agendamento só transita para Confirmado se a cadeira estiver livre no slot. Guarda 2: Bloqueio de cancelamento sem taxa se a antecedência for inferior a duas horas. Guarda 3: Estado final Concluído exige liquidação total da comanda. Posso homologar a máquina de estados?",
+      "file": "audio/seg_06_ia.mp3"
+    },
+    {
+      "id": "seg_07_eliezer",
+      "who": "eliezer",
+      "actor": "Eliézer Rosa",
+      "slide": 3,
+      "chat": true,
+      "startSec": 111.22,
+      "endSec": 119.84,
+      "durationSec": 8.62,
+      "text": "Invariantes comportamentais homologadas! O sistema não permite estados inconsistentes nem atendimentos fantasmas.",
+      "file": "audio/seg_07_eliezer.mp3"
+    },
+    {
+      "id": "seg_08_leigo",
+      "who": "leigo",
+      "actor": "Usuária Leiga",
+      "slide": 4,
+      "chat": false,
+      "startSec": 120.49,
+      "endSec": 128.94,
+      "durationSec": 8.45,
+      "text": "Com os Casos de Uso, as Classes e a Máquina de Estados formalmente homologados, a Barbearia tem sua arquitetura comportamental completa!",
+      "file": "audio/seg_08_leigo.mp3"
+    },
+    {
+      "id": "seg_09_eliezer",
+      "who": "eliezer",
+      "actor": "Eliézer Rosa",
+      "slide": 4,
+      "chat": false,
+      "startSec": 129.59,
+      "endSec": 141.83,
+      "durationSec": 12.24,
+      "text": "Exato! E no Episódio 4C, vamos ver o Código Vivo da Barbearia compilado com o decorador de invariantes em runtime e testes de estresse de agenda. Não percam!",
+      "file": "audio/seg_09_eliezer.mp3"
+    }
+  ]
+}

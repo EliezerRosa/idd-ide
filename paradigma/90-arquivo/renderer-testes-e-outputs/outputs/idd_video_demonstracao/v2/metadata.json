@@ -1,0 +1,25 @@
+{
+  "schemaVersion": "1.0.0",
+  "createdAt": "2026-10-20T00:24:21.363Z",
+  "project": {
+    "name": "idd_video_demonstracao",
+    "width": 1920,
+    "height": 1080,
+    "frameRate": 30,
+    "totalFrames": 150,
+    "durationSec": 5,
+    "htmlPath": "c:\\Antigravity - IDD Refrigeração\\motion_graphics_renderer\\example_scene.html"
+  },
+  "deliverables": {
+    "videoFile": "final_video.mp4",
+    "videoSizeBytes": 397701,
+    "videoSizeMB": "0.38",
+    "audioFile": null
+  },
+  "renderStats": {
+    "pipelineDurationSec": "95.90",
+    "totalFrames": 150,
+    "fpsAchieved": "1.56",
+    "completedAt": "2026-10-20T00:24:22.414Z"
+  }
+}

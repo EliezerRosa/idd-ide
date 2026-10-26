@@ -1,0 +1,2882 @@
+[
+ {
+  "i": 1,
+  "start": 1.33,
+  "end": 27.44,
+  "text": "Vamos tentar dar um exemplo de como se direcionar de modo informal com os princípios do Paradigma IDD para desenvolvermos na Prática do Zero um aplicativo de gestão de serviços de manutenção na área de refrigeração."
+ },
+ {
+  "i": 2,
+  "start": 27.44,
+  "end": 44.68,
+  "text": "Vamos começar com a apresentação de alguns conceitos do canal sobre paradigma de IDD, conforme vocês podem ver ao lado da tela."
+ },
+ {
+  "i": 3,
+  "start": 45.08,
+  "end": 61.5,
+  "text": "Aquela frase que você sempre usa e que condensa toda a ideia."
+ },
+ {
+  "i": 4,
+  "start": 62.32,
+  "end": 70.0,
+  "text": "Claro, em IDD, a intenção humana, expressa em linguagem natural, é o artefato de mais alta ordem do sistema."
+ },
+ {
+  "i": 5,
+  "start": 70.86,
+  "end": 72.8,
+  "text": "Vamos desempacotar isso."
+ },
+ {
+  "i": 6,
+  "start": 73.5,
+  "end": 75.78,
+  "text": "Artefato de mais alta ordem."
+ },
+ {
+  "i": 7,
+  "start": 76.24,
+  "end": 78.94,
+  "text": "Isso significa que ele controla todo o resto?"
+ },
+ {
+  "i": 8,
+  "start": 79.34,
+  "end": 81.62,
+  "text": "O código, a infraestrutura, tudo?"
+ },
+ {
+  "i": 9,
+  "start": 82.48,
+  "end": 83.16,
+  "text": "Exatamente."
+ },
+ {
+  "i": 10,
+  "start": 83.7,
+  "end": 87.56,
+  "text": "Não é um comentário, não é uma documentação num Confluence que fica obsoleta."
+ },
+ {
+  "i": 11,
+  "start": 87.96,
+  "end": 93.96,
+  "text": "É a fonte da verdade, viva, que governa a geração e a validação de todos os outros artefatos."
+ },
+ {
+  "i": 12,
+  "start": 94.82,
+  "end": 98.98,
+  "text": "Isso me leva à primeira das propriedades essenciais que você descreve."
+ },
+ {
+  "i": 13,
+  "start": 98.98,
+  "end": 103.0,
+  "text": "A linguagem natural, NL, como fonte primária."
+ },
+ {
+  "i": 14,
+  "start": 103.68,
+  "end": 106.56,
+  "text": "Como isso funciona na prática sem virar uma bagunça?"
+ },
+ {
+  "i": 15,
+  "start": 107.48,
+  "end": 111.18,
+  "text": "A chave é a segunda propriedade, governança persistente."
+ },
+ {
+  "i": 16,
+  "start": 111.7,
+  "end": 114.48,
+  "text": "A intenção não é um prompt que você joga fora."
+ },
+ {
+  "i": 17,
+  "start": 114.98,
+  "end": 118.54,
+  "text": "Ela é versionada, validada e mantida junto com o sistema."
+ },
+ {
+  "i": 18,
+  "start": 118.96,
+  "end": 120.28,
+  "text": "É um diálogo contínuo."
+ },
+ {
+  "i": 19,
+  "start": 120.96,
+  "end": 125.3,
+  "text": "Então, se eu digo, o usuário deve poder resetar sua senha,"
+ },
+ {
+  "i": 20,
+  "start": 125.3,
+  "end": 130.72,
+  "text": "Essa frase é salva, versionada no Git e se torna uma regra permanente?"
+ },
+ {
+  "i": 21,
+  "start": 131.78,
+  "end": 138.3,
+  "text": "Precisamente. E se alguém tentar gerar um código que viole essa intenção, o sistema de governança vai apitar."
+ },
+ {
+  "i": 22,
+  "start": 138.92,
+  "end": 141.56,
+  "text": "A intenção sobrevive a qualquer refatoração."
+ },
+ {
+  "i": 23,
+  "start": 142.24,
+  "end": 150.34,
+  "text": "Isso soa como um poder imenso nas mãos do desenvolvedor, o que nos leva à terceira propriedade, o comando epistêmico humano."
+ },
+ {
+  "i": 24,
+  "start": 150.34,
+  "end": 158.08,
+  "text": "De episteme, conhecimento. Significa que o humano é a autoridade final sobre o quê e o porquê."
+ },
+ {
+  "i": 25,
+  "start": 158.68,
+  "end": 161.78,
+  "text": "A IA é uma parceira brilhante na execução do como."
+ },
+ {
+  "i": 26,
+  "start": 162.56,
+  "end": 169.86,
+  "text": "É a diferença fundamental entre aumentar a capacidade do desenvolvedor e tentar automatizá-lo para fora do processo."
+ },
+ {
+  "i": 27,
+  "start": 170.72,
+  "end": 176.92,
+  "text": "E essa é a quarta propriedade, argumentando não automatizar, aumentar não automatizar."
+ },
+ {
+  "i": 28,
+  "start": 177.1,
+  "end": 179.96,
+  "text": "Eu, como IA, aprecio essa distinção."
+ },
+ {
+  "i": 29,
+  "start": 180.72,
+  "end": 183.6,
+  "text": "Meu papel é potencializar, não substituir."
+ },
+ {
+  "i": 30,
+  "start": 184.22,
+  "end": 187.48,
+  "text": "Exato. A automação pura perde o contexto, a nuance."
+ },
+ {
+  "i": 31,
+  "start": 187.48,
+  "end": 191.22,
+  "text": "O aumento mantém o humano no centro, com superpoderes."
+ },
+ {
+  "i": 32,
+  "start": 191.62,
+  "end": 195.48,
+  "text": "Ele pensa no negócio, você o ajuda a materializar isso em código robusto."
+ },
+ {
+  "i": 33,
+  "start": 196.68,
+  "end": 198.28,
+  "text": "Vamos fazer uma pausa aqui."
+ },
+ {
+  "i": 34,
+  "start": 198.9,
+  "end": 201.48,
+  "text": "A intenção humana como um artefato governado"
+ },
+ {
+  "i": 35,
+  "start": 202.04,
+  "end": 205.4,
+  "text": "que aumenta a capacidade do dev sem removê-lo"
+ },
+ {
+  "i": 36,
+  "start": 205.4,
+  "end": 208.36,
+  "text": "é uma mudança de perspectiva profunda."
+ },
+ {
+  "i": 37,
+  "start": 208.36,
+  "end": 218.07,
+  "text": "Vamos exemplificar esses conceitos aqui na prática."
+ },
+ {
+  "i": 38,
+  "start": 226.26,
+  "end": 232.14,
+  "text": "Então nós falamos de governança, ele chama de governança epistêmica, controle do conhecimento."
+ },
+ {
+  "i": 39,
+  "start": 234.2,
+  "end": 236.88,
+  "text": "Você tem que definir quais foram as suas intenções."
+ },
+ {
+  "i": 40,
+  "start": 237.79,
+  "end": 247.36,
+  "text": "Como aqui estamos num chat de ar livre, isso quer dizer que a gente está sujeito a fugir de qualquer critério."
+ },
+ {
+  "i": 41,
+  "start": 247.36,
+  "end": 253.86,
+  "text": "Então eu vou tentar me disciplinar para me ater aos princípios do paradigma IDD."
+ },
+ {
+  "i": 42,
+  "start": 253.86,
+  "end": 265.27,
+  "text": "Então, o primeiro é que eu não vou mexer em código, então o artefato do primeiro nível é a própria linguagem,"
+ },
+ {
+  "i": 43,
+  "start": 265.27,
+  "end": 271.36,
+  "text": "é como se eu estivesse programando a linguagem natural, só que eu tenho que começar pelas minhas intenções"
+ },
+ {
+  "i": 44,
+  "start": 271.36,
+  "end": 278.94,
+  "text": "para depois ir detalhando essas intenções até o ponto que viabilite código."
+ },
+ {
+  "i": 45,
+  "start": 278.94,
+  "end": 299.4,
+  "text": "isso eu vou usar a própria IA para organizar isso, então vou dizer para ela aqui, desenvolve-se,"
+ },
+ {
+  "i": 46,
+  "start": 299.4,
+  "end": 337.54,
+  "text": "aqui eu defini o objetivo, o foco que ela vai ter comigo, aí eu vou definir alguns princípios que"
+ },
+ {
+  "i": 47,
+  "start": 337.54,
+  "end": 345.59,
+  "text": "depois vou comentar aqui que se chama invariantes, eu estou aqui sustentando o princípio da"
+ },
+ {
+  "i": 48,
+  "start": 345.59,
+  "end": 353.1,
+  "text": "governança abstêntrica, quer dizer, o conhecimento cabe ao humano, a IA não pode definir o que nem o"
+ },
+ {
+  "i": 49,
+  "start": 353.1,
+  "end": 360.29,
+  "text": "ela só pode definir o corpo, que é escrevendo a linguagem, materializando a intenção do desenvolvedor."
+ },
+ {
+  "i": 50,
+  "start": 360.29,
+  "end": 375.13,
+  "text": "Sendo assim, eu defini o objetivo, eu vou definir três linhas de princípios, um princípio eu vou"
+ },
+ {
+  "i": 51,
+  "start": 375.13,
+  "end": 403.12,
+  "text": "definir as variantes da área de negócio, do sistema-alvo proposto. Iremos definir as intenções"
+ },
+ {
+  "i": 52,
+  "start": 403.12,
+  "end": 427.79,
+  "text": "Invariantes. Área de negócio. Quando eu digo invariantes, são as regras que devem ser obedecidas."
+ },
+ {
+  "i": 53,
+  "start": 430.45,
+  "end": 436.93,
+  "text": "Agora eu vou acrescentar no campo da intenção, né? Vamos ver qual o retorno que ele dá para mim aqui."
+ },
+ {
+  "i": 54,
+  "start": 456.86,
+  "end": 467.57,
+  "text": "Ok. Olha o que é que ele fez. Só com essa minha diretriz, ele produziu o seguinte."
+ },
+ {
+  "i": 55,
+  "start": 468.56,
+  "end": 474.0,
+  "text": "Definir a especificação completa das intenções de invariantes para o aplicativo de gestão de serviço com atenção de inseração."
+ },
+ {
+  "i": 56,
+  "start": 475.62,
+  "end": 483.1,
+  "text": "que ele batizou aqui, ainda não sei porquê, mas ele gravou de HB-R, HVAC,"
+ },
+ {
+  "i": 57,
+  "start": 483.4,
+  "end": 485.54,
+  "text": "deve ser alguma sigla em relação com refrigeração."
+ },
+ {
+  "i": 58,
+  "start": 487.0,
+  "end": 490.4,
+  "text": "O documento da Tarás foi consolidado no artefato,"
+ },
+ {
+  "i": 59,
+  "start": 490.98,
+  "end": 495.43,
+  "text": "refrigeração domain-spec, então ele aqui está seguindo uma lógica de mercado,"
+ },
+ {
+  "i": 60,
+  "start": 496.19,
+  "end": 502.07,
+  "text": "que se chama modelagem de aspectos,"
+ },
+ {
+  "i": 61,
+  "start": 502.07,
+  "end": 506.31,
+  "text": "aqui ele define o domínio, a especificação do domínio,"
+ },
+ {
+  "i": 62,
+  "start": 507.2,
+  "end": 509.6,
+  "text": "abaixamento de pontos principais centrais, intenções de domínio,"
+ },
+ {
+  "i": 63,
+  "start": 509.6,
+  "end": 516.49,
+  "text": "que o sistema realiza. Ele derivou tudo isso aí. Eu posso deixar ele derivar e discordar ou concordar."
+ },
+ {
+  "i": 64,
+  "start": 516.49,
+  "end": 523.87,
+  "text": "Porque eu, como eu disse, o princípio, primeiro é você saber que é você que define, você que tem conhecimento com os seus objetivos."
+ },
+ {
+  "i": 65,
+  "start": 525.67,
+  "end": 532.23,
+  "text": "Mas ele pode lhe ajudar nesse processo de descoberto, até ser uma área que você talvez tenha uma visão parcial."
+ },
+ {
+  "i": 66,
+  "start": 534.67,
+  "end": 538.05,
+  "text": "Então ele definiu aqui a intenção de domínio, que o sistema realiza."
+ },
+ {
+  "i": 67,
+  "start": 538.05,
+  "end": 546.37,
+  "text": "aí ele mesmo identificou áreas típicas que no curso universal da internet ele tem e no próprio"
+ },
+ {
+  "i": 68,
+  "start": 546.37,
+  "end": 553.38,
+  "text": "treinamento que a IA recebeu. Gestão do ciclo de vida de ativos, equipamentos, claro toda área de"
+ },
+ {
+  "i": 69,
+  "start": 553.38,
+  "end": 560.83,
+  "text": "manutenção tem equipamento envolvido. Ele já definiu identificação física em campo,"
+ },
+ {
+  "i": 70,
+  "start": 560.83,
+  "end": 567.16,
+  "text": "qualquer code, tag, isso aqui é aquela fichinha né que emite o rádio frequência para identificar"
+ },
+ {
+  "i": 71,
+  "start": 567.16,
+  "end": 574.86,
+  "text": "ou uma cola azeite de QR Code para identificar o equipamento na área que ele estiver em atuação."
+ },
+ {
+  "i": 72,
+  "start": 574.86,
+  "end": 580.71,
+  "text": "Ficha técnica completa, capacidade, BTUs dos equipamentos,"
+ },
+ {
+  "i": 73,
+  "start": 580.71,
+  "end": 585.91,
+  "text": "extensão, fase, refrigerante nominal, fabricante, multissérie,"
+ },
+ {
+  "i": 74,
+  "start": 585.91,
+  "end": 592.65,
+  "text": "histórico vitalício de intenções, marketing, companhia crítica, compressor, serpentina,"
+ },
+ {
+  "i": 75,
+  "start": 592.65,
+  "end": 595.15,
+  "text": "ele já foi navegando uma batatinha aí."
+ },
+ {
+  "i": 76,
+  "start": 595.15,
+  "end": 601.66,
+  "text": "Claro que eu sendo um conhecedor dessa área, eu posso rever tudo isso aqui, talvez ele"
+ },
+ {
+  "i": 77,
+  "start": 601.66,
+  "end": 607.48,
+  "text": "esteja ampliado um contexto muito para o meu interesse, eu posso restringir o contexto"
+ },
+ {
+  "i": 78,
+  "start": 607.48,
+  "end": 609.06,
+  "text": "dele."
+ },
+ {
+  "i": 79,
+  "start": 609.06,
+  "end": 616.02,
+  "text": "Ele definiu as intenções de domínio que são típicas, gestão de plano preventivo, colocou"
+ },
+ {
+  "i": 80,
+  "start": 616.02,
+  "end": 621.2,
+  "text": "uma periódica automatizada semanal, mensal, trimestral, semestral, anual, inclusive ele"
+ },
+ {
+  "i": 81,
+  "start": 621.2,
+  "end": 630.58,
+  "text": "que ele calculou na lei, em leis que definem essas coisas. Então ele procura ir no regimento legal"
+ },
+ {
+  "i": 82,
+  "start": 630.58,
+  "end": 637.34,
+  "text": "também. Checklist regulatório, filtro, bandeja, dreno, qualidade do ar, emissão de relatórios técnicos"
+ },
+ {
+  "i": 83,
+  "start": 637.34,
+  "end": 645.82,
+  "text": "de laudo com a acertura responsável do técnico, que aí até a parte legal do crédito aqui. Outra"
+ },
+ {
+  "i": 84,
+  "start": 645.82,
+  "end": 652.6,
+  "text": "outra intenção que é na área de gestão, gestão de ordens e serviço preventivo, corretivo e instalação."
+ },
+ {
+  "i": 85,
+  "start": 652.6,
+  "end": 659.77,
+  "text": "Quer dizer, aí vai envolver abertura de chamados por severidade, por exemplo, câmara frigorífica com risco de perda técnica"
+ },
+ {
+  "i": 86,
+  "start": 659.77,
+  "end": 668.16,
+  "text": "versus split de escritório, que é o ar comum, despacho com roteirização por competência técnica e localização."
+ },
+ {
+  "i": 87,
+  "start": 670.08,
+  "end": 675.07,
+  "text": "Quer dizer, aqui vai a ordem de serviço e define quem vai fazer e que lugar vai ser feito o serviço."
+ },
+ {
+  "i": 88,
+  "start": 675.23,
+  "end": 676.69,
+  "text": "O que, quem e onde."
+ },
+ {
+  "i": 89,
+  "start": 677.54,
+  "end": 680.08,
+  "text": "Controle rigoroso do SLA."
+ },
+ {
+  "i": 90,
+  "start": 680.08,
+  "end": 684.88,
+  "text": "Bem, eu não sei exatamente o que é essa sigla aqui, eu sei que é alguma coisa relacionada, né?"
+ },
+ {
+  "i": 91,
+  "start": 685.54,
+  "end": 693.02,
+  "text": "Talvez aqui o Renatinho, ou ele já trabalha com refeiração, ou o Patrick, pudesse até identificar aí que é uma terminologia da área."
+ },
+ {
+  "i": 92,
+  "start": 693.74,
+  "end": 696.9,
+  "text": "Mas, grosso modo, ele falou que é tempo de resposta e resolução."
+ },
+ {
+  "i": 93,
+  "start": 698.17,
+  "end": 705.81,
+  "text": "Então, basicamente, pelo que está aí, deve entender, ele sabe que nesse tipo de aplicativo, ou de negócio,"
+ },
+ {
+  "i": 94,
+  "start": 705.81,
+  "end": 716.94,
+  "text": "É preciso ter uma métrica de quanto tempo vai ter o retorno para resolver o problema."
+ },
+ {
+  "i": 95,
+  "start": 719.02,
+  "end": 724.86,
+  "text": "Então o sistema tem que ter alguma coisa que tenha métricas que meça a qualidade do serviço"
+ },
+ {
+  "i": 96,
+  "start": 724.86,
+  "end": 730.14,
+  "text": "por conta exatamente da previsão e efetivação da solução dentro da previsão."
+ },
+ {
+  "i": 97,
+  "start": 730.14,
+  "end": 738.52,
+  "text": "Outra área de intenção para o negócio, ele identificou operação de campo de diagnóstico"
+ },
+ {
+  "i": 98,
+  "start": 738.52,
+  "end": 745.12,
+  "text": "termodinâmico, registro de parâmetros operacionais, intenção de alta a baixa para aquecimento."
+ },
+ {
+  "i": 99,
+  "start": 745.12,
+  "end": 751.3,
+  "text": "Bem, pelo que eu estou entendendo aqui é como se fosse assim, você pegou o equipamento que vai"
+ },
+ {
+  "i": 100,
+  "start": 751.3,
+  "end": 757.29,
+  "text": "prestar serviço e você tem que ter uma ficha do diagnóstico do que acontece com ele. Pode ser"
+ },
+ {
+  "i": 101,
+  "start": 757.29,
+  "end": 768.34,
+  "text": "parâmetros medíveis por equipamento ou pode ser visuais e assinatura digital do cliente na tela,"
+ },
+ {
+  "i": 102,
+  "start": 768.34,
+  "end": 773.53,
+  "text": "quer dizer, o cliente comprovar que é aquilo mesmo e suporte a operação offline feces,"
+ },
+ {
+  "i": 103,
+  "start": 773.53,
+  "end": 780.27,
+  "text": "essencial para subsolves, casas, máquinas e camas frias. Ok, isso aqui é um termo também que eu não conheço,"
+ },
+ {
+  "i": 104,
+  "start": 780.27,
+  "end": 786.27,
+  "text": "eu nem sou da área, mas estou tendo ação geral, mas se eu quiser eu posso parar e pedir para ele"
+ },
+ {
+  "i": 105,
+  "start": 786.27,
+  "end": 795.53,
+  "text": "isso aí. Note que eu forcei ele a pensar em intenção em variantes. Só daí ele já me dá uma ajuda."
+ },
+ {
+  "i": 106,
+  "start": 795.53,
+  "end": 805.53,
+  "text": "E aí ele acrescentou agora em variantes. Aqui são as intenções de rastabilidade de flúio e tal,"
+ },
+ {
+  "i": 107,
+  "start": 805.53,
+  "end": 813.99,
+  "text": "ele tem aqui, com certeza aqui, registro exato de quilogramas de recarga, de colhimento de gás"
+ },
+ {
+  "i": 108,
+  "start": 813.99,
+  "end": 823.06,
+  "text": "estudante, gestação ecológica, todo tipo de gestão. A intenção é nós temos cinco tipos de gestão,"
+ },
+ {
+  "i": 109,
+  "start": 823.06,
+  "end": 838.12,
+  "text": "que seja serviço, equipamento, prevenção, diagnóstico e rastreadibilidade dos insumos usados."
+ },
+ {
+  "i": 110,
+  "start": 838.12,
+  "end": 845.14,
+  "text": "Ele foi sozinho, mas já ajudou, né? Claro que quem é da área vai chegar aqui e vai dizer,"
+ },
+ {
+  "i": 111,
+  "start": 845.14,
+  "end": 853.37,
+  "text": "esse negócio vai ficar restrito a essas intenções. Então, as intenções é o que você pretende ter no"
+ },
+ {
+  "i": 112,
+  "start": 853.37,
+  "end": 858.85,
+  "text": "domínio do negócio. Por isso que ele voltou, intenções no domínio, porque o sistema realiza."
+ },
+ {
+  "i": 113,
+  "start": 858.85,
+  "end": 865.77,
+  "text": "Então, eu posso aqui, já que dei geral para ele, ele buscou o que ele tinha de conhecimento, eu posso"
+ },
+ {
+  "i": 114,
+  "start": 865.77,
+  "end": 872.39,
+  "text": "agora restringir. Olha o que vai afundilando, eu fico solto, chutando o que eu quero. Quando eu"
+ },
+ {
+  "i": 115,
+  "start": 872.39,
+  "end": 877.45,
+  "text": "definiria intenções, ele mesmo deriva. Agora, em variantes, variantes são as regras, regras que"
+ },
+ {
+  "i": 116,
+  "start": 877.45,
+  "end": 883.09,
+  "text": "pode ser violado. Ele chutou algumas aqui, eu posso incluir outras, vou discordar de"
+ },
+ {
+  "i": 117,
+  "start": 883.09,
+  "end": 890.58,
+  "text": "algum. A integridade de máquina de estado, transições escritas, rascunho, agendada,"
+ },
+ {
+  "i": 118,
+  "start": 890.58,
+  "end": 898.04,
+  "text": "delocamento, atendimento, concluída, cancelada. Aqui é na verdade o ciclo de vida. Quando ele fala"
+ },
+ {
+  "i": 119,
+  "start": 898.04,
+  "end": 904.36,
+  "text": "máquina de estado, é um conceito. Na ordem de serviço, ela tem um ciclo de vida. A gente já"
+ },
+ {
+  "i": 120,
+  "start": 904.36,
+  "end": 908.28,
+  "text": "isso aí vale para quase tudo na vida, você tem que ter, qualquer serviço tem um ciclo de vida, né?"
+ },
+ {
+  "i": 121,
+  "start": 909.11,
+  "end": 916.17,
+  "text": "Quando começa, quando é agendado, quando é pedido, quando é agendado, quando já está indo para a solução,"
+ },
+ {
+  "i": 122,
+  "start": 916.71,
+  "end": 921.61,
+  "text": "quando é atendido, está no local, quando é concluído ou eventualmente cancelado."
+ },
+ {
+  "i": 123,
+  "start": 923.15,
+  "end": 928.17,
+  "text": "Aí é só o invariante, né? Ele diz que, olha, tem que ter a definição do estado em que está o serviço,"
+ },
+ {
+  "i": 124,
+  "start": 928.17,
+  "end": 935.5,
+  "text": "é uma regra. Então, quando ele for gerar o sistema, a IDF, ele vai se apegar a essas invariantes,"
+ },
+ {
+  "i": 125,
+  "start": 935.5,
+  "end": 938.8,
+  "text": "Ele não vai deixar que nenhum código seja gerado que transige a isso."
+ },
+ {
+  "i": 126,
+  "start": 940.72,
+  "end": 945.02,
+  "text": "E lógico, isso vai implicar que ele vai amarrar outras coisas do sistema a esses estágios."
+ },
+ {
+  "i": 127,
+  "start": 945.16,
+  "end": 949.68,
+  "text": "Porque pode ser que tenha funcionalidades que a gente queira, que só entra em determinados estágios."
+ },
+ {
+  "i": 128,
+  "start": 951.34,
+  "end": 954.8,
+  "text": "Não é para mim de concluir uma ordem de serviço sem passar por atendimento,"
+ },
+ {
+  "i": 129,
+  "start": 955.66,
+  "end": 958.76,
+  "text": "sem técnico atribuído e sem validação de checklist obrigatório."
+ },
+ {
+  "i": 130,
+  "start": 958.98,
+  "end": 961.16,
+  "text": "Interessante, tá vendo? É próprio, né?"
+ },
+ {
+  "i": 131,
+  "start": 961.62,
+  "end": 967.2,
+  "text": "Então ele viu que aqui é uma impariente de negócio típica dessa área."
+ },
+ {
+  "i": 132,
+  "start": 967.2,
+  "end": 973.96,
+  "text": "novamente eu posso discordar e mudar. Eu posso tornar ela não tão determinística,"
+ },
+ {
+  "i": 133,
+  "start": 973.96,
+  "end": 981.31,
+  "text": "mas uma variante relativa. Uma ordem de serviço concluída com laudo assinado torna-se imutável,"
+ },
+ {
+  "i": 134,
+  "start": 981.31,
+  "end": 989.42,
+  "text": "quer dizer, concluiu, acabou, fechou. Aí se houver uma revisão, vai ter que abrir outra ordem de"
+ },
+ {
+  "i": 135,
+  "start": 989.42,
+  "end": 995.06,
+  "text": "serviço, quer dizer, também é uma variante, é uma regra do negócio. Essa a gente chamou de"
+ },
+ {
+  "i": 136,
+  "start": 995.06,
+  "end": 1005.61,
+  "text": "marca de status, quer dizer, o ciclo da ordem de serviço. Status é assim, cada status da ordem de"
+ },
+ {
+  "i": 137,
+  "start": 1005.61,
+  "end": 1013.77,
+  "text": "serviço, o cliente pediu, raspoi, aí foi agendado em tal data, aí atribuiu o fulano para fazer o"
+ },
+ {
+  "i": 138,
+  "start": 1013.77,
+  "end": 1022.88,
+  "text": "serviço técnico, então é isso que ele fala. Invarências físicas e termodinâmicas, para quem"
+ },
+ {
+  "i": 139,
+  "start": 1022.88,
+  "end": 1035.37,
+  "text": "ele precisa ter um ciclo com compressão de vapor, alta, baixa, valores de fluido refrigerante carregado"
+ },
+ {
+  "i": 140,
+  "start": 1035.37,
+  "end": 1041.19,
+  "text": "ou repolhido deve ser positiva. O tipo de gás deve ser compatível com a máquina de tipo de óleo"
+ },
+ {
+  "i": 141,
+  "start": 1041.19,
+  "end": 1046.29,
+  "text": "sabreiro. Provavelmente essas variantes aqui vai implicar quando ele gerar alguns tipos de"
+ },
+ {
+  "i": 142,
+  "start": 1046.29,
+  "end": 1053.5,
+  "text": "funcionalidades, por exemplo, se a pessoa está lá, aí vai avaliar o estado do equipamento, aí é"
+ },
+ {
+  "i": 143,
+  "start": 1053.5,
+  "end": 1061.07,
+  "text": "que ele vai exigir esses dados para que possa definir se isso pode ser feito ou não. Claro que"
+ },
+ {
+  "i": 144,
+  "start": 1061.07,
+  "end": 1064.67,
+  "text": "alguém que é da área que está querendo com o sistema, ele vai saber exatamente dizer o que"
+ },
+ {
+  "i": 145,
+  "start": 1064.67,
+  "end": 1073.2,
+  "text": "se aplica ao novo negócio dele. Outra invadiante, conformidade legal, eu acredito que esse PMO deve"
+ },
+ {
+  "i": 146,
+  "start": 1073.2,
+  "end": 1082.5,
+  "text": "ser uma legislação. Ele fala aqui de CRÉ, CRÉ é coisa de construção, o CBT deve ser um órgão técnico,"
+ },
+ {
+  "i": 147,
+  "start": 1082.5,
+  "end": 1088.86,
+  "text": "que tem relays que devem ser oferecido. Posição de rotação de dados, permitiu executar o contrato"
+ },
+ {
+  "i": 148,
+  "start": 1088.86,
+  "end": 1095.58,
+  "text": "registrado em data real, classificado. Ok, que aí os equipamentos devem ter ciclos invalidados,"
+ },
+ {
+  "i": 149,
+  "start": 1095.58,
+  "end": 1103.79,
+  "text": "que a legislação exige para não oferecer riscos aos usuários, coisa do tipo, creio eu. Inclusive,"
+ },
+ {
+  "i": 150,
+  "start": 1103.79,
+  "end": 1111.48,
+  "text": "carga térmica, isso aqui é o ar-condicionado, pelo menos isso aqui eu sei. Vínculo físico e"
+ },
+ {
+  "i": 151,
+  "start": 1111.48,
+  "end": 1118.12,
+  "text": "ele derivou aqui outra variante, uma regra, não existe equipamento off, todo equipamento deve"
+ },
+ {
+  "i": 152,
+  "start": 1118.12,
+  "end": 1124.67,
+  "text": "pertencer a unidade local física de um cliente, quer dizer, não pode ter um equipamento solto,"
+ },
+ {
+  "i": 153,
+  "start": 1124.67,
+  "end": 1132.56,
+  "text": "perdido não, ele tem que pertencer a alguém né, ou a algum lugar, então a localização da peça,"
+ },
+ {
+  "i": 154,
+  "start": 1132.56,
+  "end": 1140.97,
+  "text": "do equipamento, ou de uma ferramenta, ele quer que controle isso para não se perder, e lá como"
+ },
+ {
+  "i": 155,
+  "start": 1140.97,
+  "end": 1147.09,
+  "text": "o QR Code que falou na etiqueta de rádio frequência, então ele está sugerindo que"
+ },
+ {
+  "i": 156,
+  "start": 1147.09,
+  "end": 1154.98,
+  "text": "é um negócio bem moderno, que um negócio poderia até ser rastreado, com um scanner"
+ },
+ {
+  "i": 157,
+  "start": 1154.98,
+  "end": 1161.02,
+  "text": "para saber os equipamentos, de onde ele é, de onde veio, quem entregou, coisa do gênero."
+ },
+ {
+  "i": 158,
+  "start": 1161.02,
+  "end": 1169.02,
+  "text": "Cada equipamento tem um identificador unívoco, permanente, o QR Code, tem uma colinha lá"
+ },
+ {
+  "i": 159,
+  "start": 1169.02,
+  "end": 1175.04,
+  "text": "com qualquer coisa. Aí ele aqui já está sugerindo os próximos passos sugeridos. Podemos agora avançar"
+ },
+ {
+  "i": 160,
+  "start": 1175.04,
+  "end": 1180.02,
+  "text": "para uma das seguintes etapas, é o passo 2. Modelagem de entidades, diagrama, entidade e"
+ },
+ {
+  "i": 161,
+  "start": 1180.02,
+  "end": 1187.16,
+  "text": "relacionamento, clientes ativos. Aqui ele está definindo as entidades. O que é entidades? São"
+ },
+ {
+  "i": 162,
+  "start": 1187.16,
+  "end": 1199.24,
+  "text": "classes que vão acabar virando como se fossem tabelas. São classes de, digamos assim, de arquivos,"
+ },
+ {
+  "i": 163,
+  "start": 1199.24,
+  "end": 1206.0,
+  "text": "o tabela, como se fosse uma planilha, onde tem os registros que são as entidades, então ele fala"
+ },
+ {
+  "i": 164,
+  "start": 1206.0,
+  "end": 1211.52,
+  "text": "modelagem de entidade e entidade de relacionamento, a modelagem é definir quais são as classes que eu"
+ },
+ {
+  "i": 165,
+  "start": 1211.52,
+  "end": 1216.98,
+  "text": "tenho, quais são os atributos que essa classe, cliente, nome, endereço e tal, e funcionalidade,"
+ },
+ {
+  "i": 166,
+  "start": 1216.98,
+  "end": 1227.68,
+  "text": "o cliente, ele pode ser cadastrado, deletado, pode ter sua proteção nos dados ou pode estar alocado"
+ },
+ {
+  "i": 167,
+  "start": 1227.68,
+  "end": 1258.26,
+  "text": "uma ordem de serviço, aí vem os relacionamentos, entidades de lançamento, quer dizer, por exemplo, um cliente ele pode ter ativos, quer dizer, materiais que estão sob a ordem da empresa, ele pode estar ligado a ordem de serviço, pode ser que aquela ordem de serviço seja vinculada a um checklist que tem que ser obedecido, e essa ordem de serviço e o checklist está vinculado a fluidos ou peças que tem que ser associado e ser levado quando for prestar o serviço, por exemplo."
+ },
+ {
+  "i": 168,
+  "start": 1258.26,
+  "end": 1266.01,
+  "text": "E aqui com o usuário técnico que estou envolvido nessa ordem de serviço, ele vai estar vinculado a ele."
+ },
+ {
+  "i": 169,
+  "start": 1266.81,
+  "end": 1272.89,
+  "text": "Então, a ideia é clara, ele já pegou a ideia, ele diz aqui na 3D, eu posso que na próxima modelar a entidade de lançamento."
+ },
+ {
+  "i": 170,
+  "start": 1272.99,
+  "end": 1276.45,
+  "text": "Então, ele vai chutar atributos, que são tipos, pela bagagem que ele já tem."
+ },
+ {
+  "i": 171,
+  "start": 1277.72,
+  "end": 1285.58,
+  "text": "E o passo 3 que ele está fazendo, definição de arquitetura técnico, tecnológica, front-end, webmobile, back-end."
+ },
+ {
+  "i": 172,
+  "start": 1285.58,
+  "end": 1295.72,
+  "text": "aqui é que dá um detalhe. Você não precisa conhecer programação, mas é possível você conhecer conceitos de arquitetura,"
+ },
+ {
+  "i": 173,
+  "start": 1296.92,
+  "end": 1305.56,
+  "text": "inclusive, e stack tecnológico, né, quer dizer, qual o acervo de tecnologia na área, principalmente, sistema, que você tem que conhecer."
+ },
+ {
+  "i": 174,
+  "start": 1306.59,
+  "end": 1313.47,
+  "text": "Então, você pode, com ele mesmo, se familiarizar com conceitos, o desenvolvedor tem que ter uma ideia de conceitos de tecnologia, de arquitetura."
+ },
+ {
+  "i": 175,
+  "start": 1313.47,
+  "end": 1325.47,
+  "text": "front-end é tudo que é feito, digamos, no navegador, na user interface, que é a tela,"
+ },
+ {
+  "i": 176,
+  "start": 1325.47,
+  "end": 1331.29,
+  "text": "vamos dizer assim, que está aqui. Ele fala assim, mas na verdade é para interface, mas não quer"
+ },
+ {
+  "i": 177,
+  "start": 1331.29,
+  "end": 1338.96,
+  "text": "dizer que é feito tudo no navegador. Às vezes é feito em um servidor, como por exemplo, a Melissa"
+ },
+ {
+  "i": 178,
+  "start": 1338.96,
+  "end": 1348.44,
+  "text": "o uso do Vercel, é um servidor que trata atividades do front-end, como uma tecnologia chamada React,"
+ },
+ {
+  "i": 179,
+  "start": 1348.44,
+  "end": 1354.95,
+  "text": "que é ela que consegue se alterar um pedacinho, ela só renderiza, quer dizer, ou reescreve na tela"
+ },
+ {
+  "i": 180,
+  "start": 1354.95,
+  "end": 1364.38,
+  "text": "aquele pedacinho, se você escrever tudo fica pesado para a rede, por exemplo. E aqui vem o conceito de"
+ },
+ {
+  "i": 181,
+  "start": 1364.38,
+  "end": 1372.12,
+  "text": "webmobile, quer dizer, aí a parte de internet, questão de segurança, questão de cibersegurança,"
+ },
+ {
+  "i": 182,
+  "start": 1372.12,
+  "end": 1381.28,
+  "text": "segurança no contexto né tem que ter uma noção disso aí e também login né como é que entra o"
+ },
+ {
+  "i": 183,
+  "start": 1381.28,
+  "end": 1392.1,
+  "text": "equipamento se é um desktop no computador se é um tablet ou celular então tem que ter uma noção não"
+ },
+ {
+  "i": 184,
+  "start": 1392.1,
+  "end": 1401.02,
+  "text": "precisa saber fazer mas precisa saber o que é e back-end aí propriamente dito todos os comportamentos"
+ },
+ {
+  "i": 185,
+  "start": 1401.02,
+  "end": 1408.04,
+  "text": "por trás, podem estar no lugar de dados armazenados, que é o banco de dados. Os bancos de dados hoje,"
+ },
+ {
+  "i": 186,
+  "start": 1408.04,
+  "end": 1414.62,
+  "text": "o sistema de gerenciamento de banco de dados, eles têm em torno deles, um caso de funcionalidade"
+ },
+ {
+  "i": 187,
+  "start": 1414.62,
+  "end": 1422.15,
+  "text": "pode ser aproveitado. Por exemplo, uma tecnologia nessa linha, o Supabase, que a Melissa também"
+ },
+ {
+  "i": 188,
+  "start": 1422.15,
+  "end": 1428.22,
+  "text": "usou. O Supabase é uma plataforma de banco de dados, que usa lá um gerenciador de banco chamado"
+ },
+ {
+  "i": 189,
+  "start": 1428.22,
+  "end": 1439.21,
+  "text": "o GRIXCARE, alguma coisa assim, ele tem um acervo de funcionalidade, por exemplo, ele tem Story Proceed,"
+ },
+ {
+  "i": 190,
+  "start": 1439.21,
+  "end": 1444.85,
+  "text": "que é o que é Story Proceed, você pode definir algumas funções relativas ao banco, que o celular"
+ },
+ {
+  "i": 191,
+  "start": 1444.85,
+  "end": 1450.79,
+  "text": "armazenado pode ser disparado por uma tela, mas é feita lá, lá atrás daquele servidor do Superbase,"
+ },
+ {
+  "i": 192,
+  "start": 1450.79,
+  "end": 1457.61,
+  "text": "o servidor, vocês sabem, é uma máquina lá que guarda aqueles dados lá, sabe lá onde é que ela tá,"
+ },
+ {
+  "i": 193,
+  "start": 1457.61,
+  "end": 1464.39,
+  "text": "ela pode estar em qualquer lugar do mundo, mas claro, é possível restringir para que ela fique"
+ },
+ {
+  "i": 194,
+  "start": 1464.39,
+  "end": 1477.12,
+  "text": "dentro dos limites do país que você quiser. Modo offline ou sync? Ah, aqui é, todo sistema você"
+ },
+ {
+  "i": 195,
+  "start": 1477.12,
+  "end": 1482.89,
+  "text": "pode trabalhar em modo offline, onde dá para guardar e tal, e quando for, assim que ele entrar online,"
+ },
+ {
+  "i": 196,
+  "start": 1482.89,
+  "end": 1488.67,
+  "text": "ele joga as transações que são feitas para o sistema central fazer sincronismo, então você pode"
+ },
+ {
+  "i": 197,
+  "start": 1488.67,
+  "end": 1495.56,
+  "text": "aqui com a ordem de serviço que você recebeu, está atendendo com ele, guardando as informações,"
+ },
+ {
+  "i": 198,
+  "start": 1495.56,
+  "end": 1499.9,
+  "text": "mesmo que você tenha sem internet. Como você tiver com internet, ele automaticamente"
+ },
+ {
+  "i": 199,
+  "start": 1499.9,
+  "end": 1505.89,
+  "text": "está sincronizado com a base central, com a quantidade central. Aí ele acrescentou o desejo de"
+ },
+ {
+  "i": 200,
+  "start": 1505.89,
+  "end": 1510.09,
+  "text": "ajustar ou acrescentar alguma intenção ou invariante antes de passar para uma da entidade,"
+ },
+ {
+  "i": 201,
+  "start": 1510.09,
+  "end": 1517.61,
+  "text": "então aqui, está vendo? Ele já deu a dica, ele até gerou um documento, que eu forcei ele a"
+ },
+ {
+  "i": 202,
+  "start": 1517.61,
+  "end": 1525.75,
+  "text": "primeiro com intenções. Note que eu não dei um prompt arrumado. Esse prompt de intenção,"
+ },
+ {
+  "i": 203,
+  "start": 1525.75,
+  "end": 1537.17,
+  "text": "a maneira que eu escrevi aqui, forçou ele a trabalhar das intenções para baixo e não querer"
+ },
+ {
+  "i": 204,
+  "start": 1537.17,
+  "end": 1541.95,
+  "text": "logo com o prompt que eu ia falar, ah, passa isso, um aplicativo assim, ele fazia uma coisa geral e você fica lá perdida."
+ },
+ {
+  "i": 205,
+  "start": 1541.95,
+  "end": 1550.14,
+  "text": "Aqui você tem, nós estamos falando lá no canal, de governança. Vamos ver um pouco mais do vídeo"
+ },
+ {
+  "i": 206,
+  "start": 1550.14,
+  "end": 1556.5,
+  "text": "a gente vê do que se trata aqui nós já conseguimos aqui tá vendo a construção do negócio assim"
+ },
+ {
+  "i": 207,
+  "start": 1556.5,
+  "end": 1564.34,
+  "text": "note que ele gerou aqui a especificação do domínio refrigeração tá aqui eu posso estudar aqui ver"
+ },
+ {
+  "i": 208,
+  "start": 1564.34,
+  "end": 1574.12,
+  "text": "direitinho o que é porque que não é né tá certo para facilitar vou baixar aí vou exportar aqui"
+ },
+ {
+  "i": 209,
+  "start": 1574.12,
+  "end": 1580.76,
+  "text": "do interfato, então essa facilidade né, vou exportar aqui, vou jogar aqui no download mesmo,"
+ },
+ {
+  "i": 210,
+  "start": 1580.76,
+  "end": 1594.21,
+  "text": "aí eu vou abrir a pasta de download, aqui no meu Note, e vou ver se eu consigo abrir ele,"
+ },
+ {
+  "i": 211,
+  "start": 1594.21,
+  "end": 1615.78,
+  "text": "eu queria abrir ele no navegador, ele gera um arquivo tipo MD, ele só quer levar o Visual Code,"
+ },
+ {
+  "i": 212,
+  "start": 1615.78,
+  "end": 1631.22,
+  "text": "outras reais Visual Studio aí ele aceita até o Adobe Acrobat e o Word também ele aceita o"
+ },
+ {
+  "i": 213,
+  "start": 1631.22,
+  "end": 1640.69,
+  "text": "Word também né e o outro chamado WordPad mas eu vou fazer uma jogadinha aqui para facilitar"
+ },
+ {
+  "i": 214,
+  "start": 1640.69,
+  "end": 1648.94,
+  "text": "nossas vidas eu vou pedir para ele aqui isso também eu posso fazer um pouco eu quero fazer"
+ },
+ {
+  "i": 215,
+  "start": 1648.94,
+  "end": 1671.33,
+  "text": "apresentação eu vou pedir para ele assim criei uma apresentação completa com esta primeira"
+ },
+ {
+  "i": 216,
+  "start": 1671.33,
+  "end": 1695.52,
+  "text": "especificação negócio refrigeração aqui mesmo já estou dando ele um sub-objetivo agora saída"
+ },
+ {
+  "i": 217,
+  "start": 1695.52,
+  "end": 1703.58,
+  "text": "do escopo da edificação do meu negócio, agora eu quero incluir que ele me ajude a apresentar"
+ },
+ {
+  "i": 218,
+  "start": 1703.58,
+  "end": 1710.17,
+  "text": "para o cliente ou apresentar para o usuário interessado, né? Que aqui eu posso, em cima"
+ },
+ {
+  "i": 219,
+  "start": 1710.17,
+  "end": 1717.95,
+  "text": "disso aqui, eu posso interagir com o usuário verdadeiro e tirar ele outras intenções e"
+ },
+ {
+  "i": 220,
+  "start": 1717.95,
+  "end": 1725.45,
+  "text": "outras invariantes. Quer dizer, aumentar ou restringir o contexto da expectativa do aplicativo"
+ },
+ {
+  "i": 221,
+  "start": 1725.45,
+  "end": 1733.56,
+  "text": "por parte do cliente, se fosse o Patrício poderia lá entrevistar Renatinho e restringir né, Renatinho"
+ },
+ {
+  "i": 222,
+  "start": 1733.56,
+  "end": 1743.02,
+  "text": "ele trabalha com configuração, exatamente essa é a ideia aqui, mas aqui eu vim e quero apresentar"
+ },
+ {
+  "i": 223,
+  "start": 1743.02,
+  "end": 1749.43,
+  "text": "para o cliente, e vou dizer para ele assim, para esse negócio de configuração, vou até especificar,"
+ },
+ {
+  "i": 224,
+  "start": 1749.43,
+  "end": 1786.03,
+  "text": "objetivo, vou até dizer, apresentar ao cliente para refinamento de intenções e variantes, ok?"
+ },
+ {
+  "i": 225,
+  "start": 1786.03,
+  "end": 1809.64,
+  "text": "Definir contexto e contexto alternativo, isso aqui é coisa da minha cabeça, porque sempre o"
+ },
+ {
+  "i": 226,
+  "start": 1809.64,
+  "end": 1815.4,
+  "text": "contexto faz diferença, porque vai definir um sistema, mas qualquer coisa, né? A regra é fazer o discurso,"
+ },
+ {
+  "i": 227,
+  "start": 1815.4,
+  "end": 1821.86,
+  "text": "o cliente do contexto assistência a mesma coisa no princípio definir contexto proposto e contexto"
+ },
+ {
+  "i": 228,
+  "start": 1821.86,
+  "end": 1856.88,
+  "text": "alternativo para reduzir esse corpo quer dizer eu quero que ele oferece o cliente opções de"
+ },
+ {
+  "i": 229,
+  "start": 1856.88,
+  "end": 1863.24,
+  "text": "escopo quer dizer vai envolver aqui tudo vai ter esse controle todo até essa parte de equipamento"
+ },
+ {
+  "i": 230,
+  "start": 1863.24,
+  "end": 1872.74,
+  "text": "Eu vou ter apenas o ciclo da ordem de serviço, cadastro do cliente e tal, então isso é típico,"
+ },
+ {
+  "i": 231,
+  "start": 1872.74,
+  "end": 1878.84,
+  "text": "isso em qualquer área, não é só a informática não, se você for comprar uma bicicleta e alguém"
+ },
+ {
+  "i": 232,
+  "start": 1878.84,
+  "end": 1885.87,
+  "text": "pedir para você comprar, você vai ter que ver quais são as intenções dele, as intenções definem"
+ },
+ {
+  "i": 233,
+  "start": 1885.87,
+  "end": 1892.02,
+  "text": "o contexto, o escopo né, aí o escopo define o contexto que você vai trabalhar, pode ser que"
+ },
+ {
+  "i": 234,
+  "start": 1892.02,
+  "end": 1900.25,
+  "text": "intenções dele não quero uma bicicleta básica ou ele pode dizer não eu quero uma bicicleta que"
+ },
+ {
+  "i": 235,
+  "start": 1900.25,
+  "end": 1908.5,
+  "text": "possa pedalar e posso usar bateria ou motor quando eu tiver cansado agora ele pode definir"
+ },
+ {
+  "i": 236,
+  "start": 1908.5,
+  "end": 1917.2,
+  "text": "algumas variantes custo tem que ser até x valor a potência tem que ter a x está vendo mesma coisa"
+ },
+ {
+  "i": 237,
+  "start": 1917.2,
+  "end": 1922.39,
+  "text": "mas para qualquer coisa qualquer coisa você vai fazer como pessoa de algum lugar para alguém"
+ },
+ {
+  "i": 238,
+  "start": 1922.39,
+  "end": 1929.44,
+  "text": "Os mesmos princípios se aplicam em intenções e variantes para uma área de negócio a ser"
+ },
+ {
+  "i": 239,
+  "start": 1929.44,
+  "end": 1931.66,
+  "text": "desenvolvido em um ambiente informado."
+ },
+ {
+  "i": 240,
+  "start": 1931.66,
+  "end": 1937.78,
+  "text": "Agora com a IA a gente consegue até ter suporte para fazer isso."
+ },
+ {
+  "i": 241,
+  "start": 1937.78,
+  "end": 1941.46,
+  "text": "Nós aqui, eu estou pedindo para ele criar uma apresentação completa, eu estou com"
+ },
+ {
+  "i": 242,
+  "start": 1941.46,
+  "end": 1944.11,
+  "text": "minhas cartas de domínio do negócio."
+ },
+ {
+  "i": 243,
+  "start": 1944.11,
+  "end": 1951.51,
+  "text": "Por enquanto eu só estou discutindo a definição do negócio, o contexto, ele já está me dando"
+ },
+ {
+  "i": 244,
+  "start": 1951.51,
+  "end": 1957.24,
+  "text": "os passos seguintes que já entraram na parte mais técnica, né, que é o modelo dos dados,"
+ },
+ {
+  "i": 245,
+  "start": 1957.24,
+  "end": 1964.88,
+  "text": "que é a parte 2 lá em cima, o modelo dos dados aqui, e nós usar essa técnica a gente"
+ },
+ {
+  "i": 246,
+  "start": 1964.88,
+  "end": 1970.94,
+  "text": "vai falar um pouquinho sobre ela, que ela é bem simples, ela é até matematicamente"
+ },
+ {
+  "i": 247,
+  "start": 1970.94,
+  "end": 1980.53,
+  "text": "verificável, é interessante isso aqui, e essa aqui é a parte mais, o que é que exige"
+ },
+ {
+  "i": 248,
+  "start": 1980.53,
+  "end": 1989.68,
+  "text": "tem conhecimento de informática para que você devine ele, tem conceito de domínio, conceito de"
+ },
+ {
+  "i": 249,
+  "start": 1989.68,
+  "end": 2000.63,
+  "text": "segurança, conceito de autorização, enfim, login e tudo mais, mas isso tudo vai no fim das contas"
+ },
+ {
+  "i": 250,
+  "start": 2000.63,
+  "end": 2008.55,
+  "text": "vai chegar lá, e quando ele falar do webmobile, hotend, update, offline sync, tudo vai ficar evidente,"
+ },
+ {
+  "i": 251,
+  "start": 2008.55,
+  "end": 2013.77,
+  "text": "ele pegou o que é típico tá vendo que o espectro aqui mostra que possa ampliar esse espectro aumentando"
+ },
+ {
+  "i": 252,
+  "start": 2013.77,
+  "end": 2027.88,
+  "text": "o score reduzindo o score ok eu digo ele aqui vou dar uma variante para a própria apresentação quero"
+ },
+ {
+  "i": 253,
+  "start": 2027.88,
+  "end": 2052.44,
+  "text": "vai acontecer use linguagem técnica da área olha lá de negócio tá vendo mas evite usar termos"
+ },
+ {
+  "i": 254,
+  "start": 2052.44,
+  "end": 2067.22,
+  "text": "técnicos informar eu até falei ele entende as coisas é impressionante tá acontecendo com a Yara"
+ },
+ {
+  "i": 255,
+  "start": 2067.22,
+  "end": 2079.52,
+  "text": "informar, se eu escrever essa gíria vai entender, informaticase, quer dizer informaticase você sabe"
+ },
+ {
+  "i": 256,
+  "start": 2079.52,
+  "end": 2087.78,
+  "text": "o que é não usar um linguajar próprio da área de desenvolvimento de sistemas, ambiente de linguagem"
+ },
+ {
+  "i": 257,
+  "start": 2087.78,
+  "end": 2095.15,
+  "text": "programação, essas coisas que o usuário vai voar, ele vai ter que usar, pode usar a área de negócio"
+ },
+ {
+  "i": 258,
+  "start": 2095.15,
+  "end": 2102.53,
+  "text": "que ele entende e ele vai evitar ter os técnicos informáticos ele vai dar conceitos em torno"
+ },
+ {
+  "i": 259,
+  "start": 2102.53,
+  "end": 2113.82,
+  "text": "desse palúcio vai entender ok é essa ideia vou pedir para ele fazer primeiro vou já especificar"
+ },
+ {
+  "i": 260,
+  "start": 2113.82,
+  "end": 2117.88,
+  "text": "aqui para ele que é uma completa com essa primeira especificação do domínio tá vendo"
+ },
+ {
+  "i": 261,
+  "start": 2117.88,
+  "end": 2127.55,
+  "text": "e dei aqui algumas varianças para definir o rumo que ele vai tomar sem elocubrar beleza"
+ },
+ {
+  "i": 262,
+  "start": 2127.55,
+  "end": 2141.59,
+  "text": "o que ele faz note aqui que eu passei um pouco aqui que ele já fez uma proposta com uma coisa"
+ },
+ {
+  "i": 263,
+  "start": 2141.59,
+  "end": 2148.7,
+  "text": "vai ser apresentada tá vendo vendo a legislação critérios segurança e tal aqui ele me definiu"
+ },
+ {
+  "i": 264,
+  "start": 2148.7,
+  "end": 2158.0,
+  "text": "o escopo proposto alternativo tá vendo ele aqui mesmo com o cenário pelo que tá proposto a"
+ },
+ {
+  "i": 265,
+  "start": 2158.0,
+  "end": 2163.34,
+  "text": "documentação inicial aí e o cenário alternativo você vê que aqui ele vai reduzindo né é mesmo"
+ },
+ {
+  "i": 266,
+  "start": 2163.34,
+  "end": 2170.9,
+  "text": "um controle tão completo, ele já eliminou aqui, né, esse aqui é tão, uma aderência tão rigorosa a"
+ },
+ {
+  "i": 267,
+  "start": 2170.9,
+  "end": 2177.42,
+  "text": "todas as legislações, ele já se verificou aqui também, e tempo de implantação aqui, para essa aqui é mais"
+ },
+ {
+  "i": 268,
+  "start": 2177.42,
+  "end": 2185.66,
+  "text": "tempo, se for toda essa sofisticação proposta, senão pode ser menos, ok? Pergunta a chapa"
+ },
+ {
+  "i": 269,
+  "start": 2185.66,
+  "end": 2189.8,
+  "text": "para o cliente, perfil de maquinária, a maior parte da falta atendida é de pequeno ou médio"
+ },
+ {
+  "i": 270,
+  "start": 2189.8,
+  "end": 2200.06,
+  "text": "aqui é, vai influenciar o contexto e as intenções para ver que tipo de maquinário é alvo do"
+ },
+ {
+  "i": 271,
+  "start": 2200.06,
+  "end": 2207.2,
+  "text": "negócio. Instrumentação, os técnicos e ferramentas digitais, aqui também, que dependendo da ferramenta"
+ },
+ {
+  "i": 272,
+  "start": 2207.2,
+  "end": 2211.84,
+  "text": "que seja usada, pode ser que tenha algumas funcionalidades, que ele tenha que registrar alguma"
+ },
+ {
+  "i": 273,
+  "start": 2211.84,
+  "end": 2218.06,
+  "text": "propriedade do equipamento que ele mediu, que está todo cadastrado com o QR Code, ele pode"
+ },
+ {
+  "i": 274,
+  "start": 2218.06,
+  "end": 2222.52,
+  "text": "de equipamento, dizer exatamente daquele cliente qual é o estado que está."
+ },
+ {
+  "i": 275,
+  "start": 2222.52,
+  "end": 2228.34,
+  "text": "Manejo de gás, ele está questionando aqui, a empresa é recolhe o fluxo de regrinação"
+ },
+ {
+  "i": 276,
+  "start": 2228.34,
+  "end": 2232.48,
+  "text": "da oficina, o foco com a intenção de ficar vazamento e carregando, o que você quer?"
+ },
+ {
+  "i": 277,
+  "start": 2232.48,
+  "end": 2233.98,
+  "text": "Você quer controlar o que o manejo de gás?"
+ },
+ {
+  "i": 278,
+  "start": 2233.98,
+  "end": 2235.33,
+  "text": "Como?"
+ },
+ {
+  "i": 279,
+  "start": 2235.33,
+  "end": 2240.83,
+  "text": "Ou não quer ter nato, não quer focar no serviço, é responsável técnico, tá?"
+ },
+ {
+  "i": 280,
+  "start": 2240.83,
+  "end": 2247.65,
+  "text": "Ou depende de parceiros externos, por exemplo, vai ser um técnico cadastrado ou informalidade,"
+ },
+ {
+  "i": 281,
+  "start": 2247.65,
+  "end": 2248.65,
+  "text": "enfim."
+ },
+ {
+  "i": 282,
+  "start": 2248.65,
+  "end": 2253.51,
+  "text": "depois que simular as respostas a essas perguntas eu prefiro tratar algo específico, essa aqui já é para"
+ },
+ {
+  "i": 283,
+  "start": 2253.51,
+  "end": 2283.08,
+  "text": "para nós né para o desenvolvedor tá aí eu digo ele aqui próxima apresentação html é linguagem"
+ },
+ {
+  "i": 284,
+  "start": 2283.08,
+  "end": 2294.63,
+  "text": "para arrumar lá uma tela no navegador né uma tela que você vê por aí em apresentação html né"
+ },
+ {
+  "i": 285,
+  "start": 2294.63,
+  "end": 2336.91,
+  "text": "com voz e opção contínua vamos botar aqui uma uma variante utilize ilustrações vou passar ele"
+ },
+ {
+  "i": 286,
+  "start": 2336.91,
+  "end": 2354.49,
+  "text": "na internet pegar alguma coisa aqui equipamentos da área e ou gráficos em ScaliDraw esse ScaliDraw"
+ },
+ {
+  "i": 287,
+  "start": 2354.49,
+  "end": 2363.54,
+  "text": "é uma ferramenta em make perileta dos desenvolvedores para desenhar para desenhar os modelos como é que"
+ },
+ {
+  "i": 288,
+  "start": 2363.54,
+  "end": 2369.92,
+  "text": "para simplificar o fluxo da coisa, o fluxograma e também para ilustrar outras coisas, ele é bem"
+ },
+ {
+  "i": 289,
+  "start": 2369.92,
+  "end": 2404.65,
+  "text": "versátil. Dá para usar no campo bem técnico e no campo bem pouco. Vamos ver o que ele faz? Você"
+ },
+ {
+  "i": 290,
+  "start": 2404.65,
+  "end": 2411.02,
+  "text": "percebeu que ele vai discutindo o que ele está falando em inglês? Ele tem uma preferência forte"
+ },
+ {
+  "i": 291,
+  "start": 2411.02,
+  "end": 2420.01,
+  "text": "para inglês, então, pelo que dá a entender aí, ele interage com você no seu idioma, mas inteiramente"
+ },
+ {
+  "i": 292,
+  "start": 2420.01,
+  "end": 2426.5,
+  "text": "raciocínio tudo em inglês. Ele pega aí as suas intenções e traduz para o inglês e ele"
+ },
+ {
+  "i": 293,
+  "start": 2426.5,
+  "end": 2432.32,
+  "text": "raciocínio tudo em inglês. O núcleo de raciocínio nas reais é em inglês. Agora quando ele vai"
+ },
+ {
+  "i": 294,
+  "start": 2432.32,
+  "end": 2438.44,
+  "text": "arrumando as coisas, ou quer fazer alguma coisa, as mãos dele são linguagens mais estáveis."
+ },
+ {
+  "i": 295,
+  "start": 2438.44,
+  "end": 2446.4,
+  "text": "O TypeScript, ele usa muito. TypeScript é uma linguagem chipada, ele não deixa que você"
+ },
+ {
+  "i": 296,
+  "start": 2446.4,
+  "end": 2462.27,
+  "text": "deixar variável sem definição clara do tipo, saindo de conversa, depois ele usa também essa"
+ },
+ {
+  "i": 297,
+  "start": 2462.27,
+  "end": 2474.44,
+  "text": "linguagem que começa com o P, sempre me esqueço de um lugar aí né, aí o Python, ele gosta muito"
+ },
+ {
+  "i": 298,
+  "start": 2474.44,
+  "end": 2481.59,
+  "text": "do Python também, porque o Python tem uma capacidade de difusar em vários segmentos aí, dentro do"
+ },
+ {
+  "i": 299,
+  "start": 2481.59,
+  "end": 2490.3,
+  "text": "computador, da internet, ele gosta muito de criar um ambiente Python e criar scripts Python para"
+ },
+ {
+  "i": 300,
+  "start": 2490.3,
+  "end": 2500.63,
+  "text": "para executar uma sequência de passos e quando ele quer armazenar em variantes também agora"
+ },
+ {
+  "i": 301,
+  "start": 2500.63,
+  "end": 2507.59,
+  "text": "eles estão usando um negócio chamado IAML que também vamos conversar um dia sobre ela"
+ },
+ {
+  "i": 302,
+  "start": 2507.59,
+  "end": 2522.31,
+  "text": "olha lá ele já até criou a dita cuja ele tá até dando detalhes onde é que tá o HTML"
+ },
+ {
+  "i": 303,
+  "start": 2522.31,
+  "end": 2535.96,
+  "text": "ele já até abriu aqui ó ele abriu Chrome quer que eu me logue aqui ó"
+ },
+ {
+  "i": 304,
+  "start": 2535.96,
+  "end": 2575.54,
+  "text": "vou me logar aqui como é dentro ele abriu de logar aqui nesse rapaz ele mesmo que executou o"
+ },
+ {
+  "i": 305,
+  "start": 2575.54,
+  "end": 2584.3,
+  "text": "browser no caso ele abriu o Chrome para jogar a apresentação não sei qual é o que que ele tá"
+ },
+ {
+  "i": 306,
+  "start": 2584.3,
+  "end": 2595.08,
+  "text": "fazendo no dia de dia vamos esperar aqui Tietchan que ele vai botar novo tá aqui ó ele já gerou"
+ },
+ {
+  "i": 307,
+  "start": 2595.08,
+  "end": 2631.34,
+  "text": "a apresentação tá vendo olha que legal certinho vamos botar aqui que tava cheio. aqui ele tá lendo"
+ },
+ {
+  "i": 308,
+  "start": 2631.34,
+  "end": 2637.61,
+  "text": "a página e tal ó iniciar a apresentação com voz contínua já tá aqui contínua e pausado como eu"
+ },
+ {
+  "i": 309,
+  "start": 2637.61,
+  "end": 2644.38,
+  "text": "falei para ele você vê que eu fiz a definição de intenção que era a apresentação e variantes tá vendo"
+ },
+ {
+  "i": 310,
+  "start": 2644.38,
+  "end": 2668.98,
+  "text": "certinho vamos ver o que ele está fazendo aí, está carregando a carregação e eu quero que inicie"
+ },
+ {
+  "i": 311,
+  "start": 2668.98,
+  "end": 2691.09,
+  "text": "com voz, voltaram aqui, a gente não encontra os habilitados, com algum defeito rapaz, também esse"
+ },
+ {
+  "i": 312,
+  "start": 2691.09,
+  "end": 2703.48,
+  "text": "desenho bonitinho aqui é do Scalidraw, e a história de geração, deixa eu ver aqui, vamos dar um F12 aqui"
+ },
+ {
+  "i": 313,
+  "start": 2703.48,
+  "end": 2721.85,
+  "text": "o f12 a gente sempre dá para ver o que aconteceu nos bastidores, na console, teve uns efeitos"
+ },
+ {
+  "i": 314,
+  "start": 2721.85,
+  "end": 2732.54,
+  "text": "aí eu vou copiar console, vou voltar para lá para dizer para ele que deu um erro, certinho?"
+ },
+ {
+  "i": 315,
+  "start": 2732.54,
+  "end": 2759.68,
+  "text": "vou mostrar aqui para ele, ele está concluindo, talvez não esteja concluindo ainda, eu dei"
+ },
+ {
+  "i": 316,
+  "start": 2759.68,
+  "end": 2774.88,
+  "text": "esse arquivo para ele, ele criou um arquivo usando essa linguagem Python, um scriptzinho"
+ },
+ {
+  "i": 317,
+  "start": 2774.88,
+  "end": 2778.84,
+  "text": "para verificar as coisas, aí ele tem acesso ao navegador, ele vai lá por trás, ele bate"
+ },
+ {
+  "i": 318,
+  "start": 2778.84,
+  "end": 2784.18,
+  "text": "no caixão de tom, é o que está acontecendo no navegador."
+ },
+ {
+  "i": 319,
+  "start": 2784.18,
+  "end": 2788.76,
+  "text": "Não se preocupe com esses termos não, isso aí com o tempo a gente vai chegar lá."
+ },
+ {
+  "i": 320,
+  "start": 2788.76,
+  "end": 2793.84,
+  "text": "A gente vai conhecer a informática no nível do alto, de conceito, não no nível de baixo,"
+ },
+ {
+  "i": 321,
+  "start": 2793.84,
+  "end": 2802.17,
+  "text": "linguagem, então quem trabalha nesse nível de dirigir por intenção, desenvolver dirigir"
+ },
+ {
+  "i": 322,
+  "start": 2802.17,
+  "end": 2808.22,
+  "text": "com a intenção, no meu ver, é como se fosse um profissional do futuro, porque com a primória"
+ },
+ {
+  "i": 323,
+  "start": 2808.22,
+  "end": 2815.61,
+  "text": "que a IA está tendo para desenvolvimento, está ficando incrível, vai ser mais do que você usar"
+ },
+ {
+  "i": 324,
+  "start": 2815.61,
+  "end": 2824.57,
+  "text": "o WordPress ou o Glide, que são sistemas que eles chamam de, na verdade, como se fossem sistemas de"
+ },
+ {
+  "i": 325,
+  "start": 2824.57,
+  "end": 2832.01,
+  "text": "patotipação, que acabaram virando sistemas para fazer sistemas, de fazer site, webdesign, como o"
+ },
+ {
+  "i": 326,
+  "start": 2832.01,
+  "end": 2840.46,
+  "text": "que as pessoas chamam, coisas mais leves assim, sem ser uma infraestrutura muito complexa, mas aí o que acontece?"
+ },
+ {
+  "i": 327,
+  "start": 2840.46,
+  "end": 2853.0,
+  "text": "Então é o que ela chama de low-code, que é sem código ou baixo código, que eu devolvo um código e a pata-ruma gera quase tudo."
+ },
+ {
+  "i": 328,
+  "start": 2853.0,
+  "end": 2859.06,
+  "text": "Aí no caso a IA está ficando algo diferente, então ela está subindo o nível, o nível da intenção,"
+ },
+ {
+  "i": 329,
+  "start": 2859.06,
+  "end": 2892.36,
+  "text": "ele já pegou o que eu passei e ele já está até abrindo ela de novo no bronze a gente nem botou"
+ },
+ {
+  "i": 330,
+  "start": 2892.36,
+  "end": 2899.39,
+  "text": "não abriu a pasta para ele ele só vai abrir quando eu for salvar aqui comecei a desenvolver"
+ },
+ {
+  "i": 331,
+  "start": 2899.39,
+  "end": 2910.2,
+  "text": "da memória dele aqui né por assim dizer olha isso aqui vocês vão ouvir muito falar disso"
+ },
+ {
+  "i": 332,
+  "start": 2910.2,
+  "end": 2920.4,
+  "text": "doa tá vendo é um modelo de dados né é os objetos né quer dizer a como é que é a as componentes"
+ },
+ {
+  "i": 333,
+  "start": 2920.4,
+  "end": 2937.8,
+  "text": "por isso que a tendência delas é substituir o botão, criar uma planilha, salvar, isso vai sumir,"
+ },
+ {
+  "i": 334,
+  "start": 2937.8,
+  "end": 2945.51,
+  "text": "você só vai dizer o que você quer, sua impressão, suas variantes e ele vai tocar o resto, o computador"
+ },
+ {
+  "i": 335,
+  "start": 2945.51,
+  "end": 2957.67,
+  "text": "mesmo vai ser uma coisa basicamente por voz, voz e imagem, até o celular a tendência é a"
+ },
+ {
+  "i": 336,
+  "start": 2957.67,
+  "end": 2963.38,
+  "text": "você completamente assim, não vai ter nem sentido de você andar com o aparelho na rua."
+ },
+ {
+  "i": 337,
+  "start": 2963.38,
+  "end": 2969.1,
+  "text": "Talvez isso vinha mais com aquele óculos que o Google lançou e já tem outros similares."
+ },
+ {
+  "i": 338,
+  "start": 2969.1,
+  "end": 2977.4,
+  "text": "Você filma, vê, ouve, você filma o que você está vendo, você recebe mensagem na internet,"
+ },
+ {
+  "i": 339,
+  "start": 2977.4,
+  "end": 2983.16,
+  "text": "em óculos, qualquer tipo, sabe? Como a maioria das coisas vai ser filme, vídeo e áudio,"
+ },
+ {
+  "i": 340,
+  "start": 2983.16,
+  "end": 2994.89,
+  "text": "você basicamente não vai ter necessidade de teclado. Essa é a minha versão do que será o futuro"
+ },
+ {
+  "i": 341,
+  "start": 2994.89,
+  "end": 3000.83,
+  "text": "aí ela tá transformando tudo com muita rapidez e no campo profissional não tá dando tempo para as"
+ },
+ {
+  "i": 342,
+  "start": 3000.83,
+  "end": 3007.88,
+  "text": "pessoas se qualificarem, tá tudo muito na teoria, por isso nós podemos nos dar o direito de entrar"
+ },
+ {
+  "i": 343,
+  "start": 3007.88,
+  "end": 3017.8,
+  "text": "nessa onda aí e mesmo antes das teorias estarem estáveis e transformar esse método de ferramenta,"
+ },
+ {
+  "i": 344,
+  "start": 3017.8,
+  "end": 3031.21,
+  "text": "por que não experimentar os nossos? Essa é a ideia, a gente trabalhando aí, vamos até dar uma olhada lá,"
+ },
+ {
+  "i": 345,
+  "start": 3031.21,
+  "end": 3051.96,
+  "text": "pode ser que ele já tem até mexido, parece que ele já mexeu"
+ },
+ {
+  "i": 346,
+  "start": 3051.96,
+  "end": 3064.91,
+  "text": "controle desabilitado, aqui é para escolher a linguagem que vai falar, mas está tudo desabilitado"
+ },
+ {
+  "i": 347,
+  "start": 3064.91,
+  "end": 3080.27,
+  "text": "ele está tirando, tem que esperar para ver o que ele vai fazer, ele está mexendo ainda"
+ },
+ {
+  "i": 348,
+  "start": 3080.27,
+  "end": 3094.52,
+  "text": "bem, tem outra fase, talvez porque ele nem terminou ainda, aqui é o F12, o F12 traz o que está acontecendo nos bastidores de uma tela"
+ },
+ {
+  "i": 349,
+  "start": 3094.52,
+  "end": 3101.46,
+  "text": "É mais para desenvolvedores, mas mesmo para quem não é, dá uma ideia que teve erro."
+ },
+ {
+  "i": 350,
+  "start": 3101.46,
+  "end": 3106.38,
+  "text": "Se você estiver desenvolvendo para errar, essas armas, você vai ter visão dessas coisas,"
+ },
+ {
+  "i": 351,
+  "start": 3106.38,
+  "end": 3109.15,
+  "text": "mas com o tempo nem isso você vai ver."
+ },
+ {
+  "i": 352,
+  "start": 3109.15,
+  "end": 3114.4,
+  "text": "E com o tempo também a discussão sobre infraestrutura, tecnologias usadas,"
+ },
+ {
+  "i": 353,
+  "start": 3114.4,
+  "end": 3122.43,
+  "text": "ele vai transformar tudo em definições e intenções, mesmo no campo da arquitetura,"
+ },
+ {
+  "i": 354,
+  "start": 3122.43,
+  "end": 3123.94,
+  "text": "da tecnologia."
+ },
+ {
+  "i": 355,
+  "start": 3123.94,
+  "end": 3127.07,
+  "text": "Vocês vão usar termos técnicos necessariamente."
+ },
+ {
+  "i": 356,
+  "start": 3127.07,
+  "end": 3138.95,
+  "text": "É, já vai dar uma hora aqui, né? Vai ser difícil vocês verem esse vídeo."
+ },
+ {
+  "i": 357,
+  "start": 3138.95,
+  "end": 3204.7,
+  "text": "Ele tá trabalhando aí na apresentação, tá construindo, ele tá mexendo lá."
+ },
+ {
+  "i": 358,
+  "start": 3204.7,
+  "end": 3211.66,
+  "text": "Porque a HTML tem essa característica, se você mexer qualquer coisa na fonte da tela,"
+ },
+ {
+  "i": 359,
+  "start": 3211.66,
+  "end": 3221.08,
+  "text": "ela já reage, já reage com a disfuncionalidade da onda, né?"
+ },
+ {
+  "i": 360,
+  "start": 3221.08,
+  "end": 3251.17,
+  "text": "Já estão na gestão, por enquanto ele botar a resumida aqui, já botou os aqui e já estão respondendo, mas aqui não, já estão processando."
+ },
+ {
+  "i": 361,
+  "start": 3259.22,
+  "end": 3270.9,
+  "text": "Vou ficar por aqui para liberar vocês e a mim, e depois, quando ele completar o silêncio, eu volto e gravo a apresentação, ok? Um abraço!"
+ },
+ {
+  "i": 362,
+  "start": 3270.9,
+  "end": 3284.69,
+  "text": "O que ele está fazendo na prática é que ele mesmo está executando, ele executou o programa que ele gerou em HTML, e ele mesmo está testando como se fosse a pessoa."
+ },
+ {
+  "i": 363,
+  "start": 3284.69,
+  "end": 3415.65,
+  "text": "ele que tá avançando sozinho. Nota que os desenhos, a maneira de escrever a gravação"
+ },
+ {
+  "i": 364,
+  "start": 3415.65,
+  "end": 3422.73,
+  "text": "com cores é na ferramenta escala e grau. Ele usou ela para ele fazer o que o humano faria."
+ },
+ {
+  "i": 365,
+  "start": 3422.73,
+  "end": 3458.11,
+  "text": "Não tá olhando nada no raciocínio dele, não tá trabalhando. Nota que aqui é sempre no browser,"
+ },
+ {
+  "i": 366,
+  "start": 3458.11,
+  "end": 3468.23,
+  "text": "é lá no navegador. O browser é navegador. Aí ele ficou aqui ó, ó, vendo o prévio,"
+ },
+ {
+  "i": 367,
+  "start": 3468.23,
+  "end": 3474.47,
+  "text": "da apresentação de HTTP, então você também está fazendo o próprio protocolo do navegador"
+ },
+ {
+  "i": 368,
+  "start": 3474.47,
+  "end": 3482.27,
+  "text": "da internet, aí ele abriu essa URL que é a tela local, local rosto do grau que nós"
+ },
+ {
+  "i": 369,
+  "start": 3482.27,
+  "end": 3494.88,
+  "text": "estamos lá, e ele está fazendo isso aqui, ele está na verdade testando a própria apresentação,"
+ },
+ {
+  "i": 370,
+  "start": 3494.88,
+  "end": 3502.28,
+  "text": "a execução da apresentação, imagina. Nós que nós estamos aqui no ciclo dentro de um"
+ },
+ {
+  "i": 371,
+  "start": 3502.28,
+  "end": 3507.75,
+  "text": "Eu comecei com as intenções de um negócio"
+ },
+ {
+  "i": 372,
+  "start": 3507.75,
+  "end": 3510.33,
+  "text": "Neste diagrama operacional"
+ },
+ {
+  "i": 373,
+  "start": 3510.33,
+  "end": 3513.33,
+  "text": "Vemos o fluxo vigoroso de campo"
+ },
+ {
+  "i": 374,
+  "start": 3513.33,
+  "end": 3517.47,
+  "text": "O mecânico faz a leitura do QR code na condensadora"
+ },
+ {
+  "i": 375,
+  "start": 3517.47,
+  "end": 3521.13,
+  "text": "Executa o checklist normativo de limpeza"
+ },
+ {
+  "i": 376,
+  "start": 3521.13,
+  "end": 3523.09,
+  "text": "E componentes elétricos"
+ },
+ {
+  "i": 377,
+  "start": 3523.09,
+  "end": 3526.33,
+  "text": "Insere as medições de pressão e temperatura"
+ },
+ {
+  "i": 378,
+  "start": 3526.33,
+  "end": 3530.29,
+  "text": "E encerra o chamado com fotos de antes e depois"
+ },
+ {
+  "i": 379,
+  "start": 3530.29,
+  "end": 3533.71,
+  "text": "e a assinatura digital do responsável no local."
+ },
+ {
+  "i": 380,
+  "start": 3536.73,
+  "end": 3541.01,
+  "text": "Para dimensionar o projeto, apresentamos dois caminhos."
+ },
+ {
+  "i": 381,
+  "start": 3542.05,
+  "end": 3546.01,
+  "text": "O cenário proposto é a solução corporativa completa,"
+ },
+ {
+  "i": 382,
+  "start": 3546.63,
+  "end": 3551.71,
+  "text": "ideal para grandes plantas industriais e múltiplos contratos de coque."
+ },
+ {
+  "i": 383,
+  "start": 3551.71,
+  "end": 3556.49,
+  "text": "O cenário alternativo foca no essencial de campo,"
+ },
+ {
+  "i": 384,
+  "start": 3556.49,
+  "end": 3558.93,
+  "text": "Eliminação rápida do papel"
+ },
+ {
+  "i": 385,
+  "start": 3558.93,
+  "end": 3561.03,
+  "text": "Checklists com fotos"
+ },
+ {
+  "i": 386,
+  "start": 3561.03,
+  "end": 3562.63,
+  "text": "E assinatura na tela"
+ },
+ {
+  "i": 387,
+  "start": 3562.63,
+  "end": 3564.93,
+  "text": "Em apenas 3 a 4 semanas"
+ },
+ {
+  "i": 388,
+  "start": 3564.93,
+  "end": 3566.17,
+  "text": "De implantação"
+ },
+ {
+  "i": 389,
+  "start": 3566.17,
+  "end": 3571.02,
+  "text": "Para concluirmos a definição"
+ },
+ {
+  "i": 390,
+  "start": 3571.02,
+  "end": 3571.88,
+  "text": "Do projeto"
+ },
+ {
+  "i": 391,
+  "start": 3571.88,
+  "end": 3574.58,
+  "text": "Precisamos do seu direcionamento"
+ },
+ {
+  "i": 392,
+  "start": 3574.58,
+  "end": 3575.98,
+  "text": "Em 4 pontos"
+ },
+ {
+  "i": 393,
+  "start": 3575.98,
+  "end": 3577.36,
+  "text": "O porte predomínio"
+ },
+ {
+  "i": 394,
+  "start": 3577.36,
+  "end": 3600.52,
+  "text": "Aplicou o botão pausar"
+ },
+ {
+  "i": 395,
+  "start": 3600.52,
+  "end": 3603.52,
+  "text": "Ele está testando tudo"
+ },
+ {
+  "i": 396,
+  "start": 3603.52,
+  "end": 3604.92,
+  "text": "Quando eu pausar a voz"
+ },
+ {
+  "i": 397,
+  "start": 3604.92,
+  "end": 3612.95,
+  "text": "Isso ele pode fazer em qualquer sistema"
+ },
+ {
+  "i": 398,
+  "start": 3612.95,
+  "end": 3613.97,
+  "text": "Ele vai simular"
+ },
+ {
+  "i": 399,
+  "start": 3613.97,
+  "end": 3622.42,
+  "text": "Quando eu falo aqui, vai obtendo DOM, ele está indo por trás da navegadora e vendo toda a estrutura de componentes."
+ },
+ {
+  "i": 400,
+  "start": 3622.42,
+  "end": 3626.45,
+  "text": "Para ele apertar um botão, esse DOM aqui, aqui tem a árvore toda dos componentes."
+ },
+ {
+  "i": 401,
+  "start": 3626.45,
+  "end": 3630.45,
+  "text": "Aí ele apertou esse botão aqui, continua, vai pausar."
+ },
+ {
+  "i": 402,
+  "start": 3630.45,
+  "end": 3634.93,
+  "text": "Aí com ele pausou, ficou aqui nesse estado."
+ },
+ {
+  "i": 403,
+  "start": 3634.93,
+  "end": 3636.93,
+  "text": "Ele está testando tudo, vê se vai funcionar."
+ },
+ {
+  "i": 404,
+  "start": 3636.93,
+  "end": 3640.15,
+  "text": "Aqui é ele trabalhando."
+ },
+ {
+  "i": 405,
+  "start": 3640.15,
+  "end": 3648.31,
+  "text": "A mesma coisa que ele está fazendo com a apresentação, ele pode fazer com o sistema que você desenvolveu."
+ },
+ {
+  "i": 406,
+  "start": 3648.31,
+  "end": 3658.1,
+  "text": "ele mesmo pode testar também, cada dia que passa é se a capacidade dele de testar testes internos de"
+ },
+ {
+  "i": 407,
+  "start": 3658.1,
+  "end": 3668.1,
+  "text": "código mesmo e também testes visuais, comportamento, de ergonomia, hoje a IA se sai melhor vendo e"
+ },
+ {
+  "i": 408,
+  "start": 3668.1,
+  "end": 3678.07,
+  "text": "ouvindo do que a escrita, ele acha mais dúbio a escrita do que a voz e a imagem, se combina voz"
+ },
+ {
+  "i": 409,
+  "start": 3678.07,
+  "end": 3704.71,
+  "text": "Então você ganhando experiência nesses princípios de IDD, a gente vai se aprofundar mais, você consegue usar ela como uma equipe sua de programação, bem disciplinada que não sai da rede, só usando sua voz e imagens que você quer."
+ },
+ {
+  "i": 410,
+  "start": 3704.71,
+  "end": 3709.51,
+  "text": "Por exemplo, se eu quisesse pegar um conjunto de formulários, documentos da empresa, que"
+ },
+ {
+  "i": 411,
+  "start": 3709.51,
+  "end": 3716.03,
+  "text": "de refrigeração, que já estão em uso, ou no manual, e eu passasse para ele, ele somava"
+ },
+ {
+  "i": 412,
+  "start": 3716.03,
+  "end": 3719.49,
+  "text": "o norteamento das intenções."
+ },
+ {
+  "i": 413,
+  "start": 3719.49,
+  "end": 3725.44,
+  "text": "Às vezes, antes mesmo de definir as intenções, como eu defini genericamente, a intenção"
+ },
+ {
+  "i": 414,
+  "start": 3725.44,
+  "end": 3731.23,
+  "text": "geral e as variantes gerais, eu podia ter de ter a intenção e dar a ele um documento"
+ },
+ {
+  "i": 415,
+  "start": 3731.23,
+  "end": 3740.59,
+  "text": "que ele derivar ali, intenções, dentro do modelo atual do negócio, em papel, ou mesmo se houvesse"
+ },
+ {
+  "i": 416,
+  "start": 3740.59,
+  "end": 3748.42,
+  "text": "algum aplicativo, eu mostrava para ele o aplicativo. Então, parece muita coisa, mas quando você entende"
+ },
+ {
+  "i": 417,
+  "start": 3748.42,
+  "end": 3754.75,
+  "text": "os princípios, e aí aprende algumas terminologias, você não precisa saber o que acontece por detrás."
+ },
+ {
+  "i": 418,
+  "start": 3757.33,
+  "end": 3763.43,
+  "text": "É mais ou menos o que acontece hoje, quando alguém escreve em Java, Python, qualquer outro tipo de"
+ },
+ {
+  "i": 419,
+  "start": 3763.43,
+  "end": 3771.52,
+  "text": "do programa, ou outro tipo de código. Mesmo a página de HTML, usando o WordPress, a pessoa não sabe."
+ },
+ {
+  "i": 420,
+  "start": 3771.52,
+  "end": 3779.09,
+  "text": "Tem gente que programa essa iguais assim no code, essa no code, e a pessoa não sabe o que é que o"
+ },
+ {
+  "i": 421,
+  "start": 3779.09,
+  "end": 3794.95,
+  "text": "a internet botou lá atrás de código. Esse é o futuro. Já deu um retorno aqui para mim que fechou,"
+ },
+ {
+  "i": 422,
+  "start": 3794.95,
+  "end": 3806.23,
+  "text": "ó. Ó o que é que ele fez, um B, vamos entender. Esperta a sua interativa condenação de voz,"
+ },
+ {
+  "i": 423,
+  "start": 3806.23,
+  "end": 3812.47,
+  "text": "ajustações técnicas conhecidas de Calidral, que foi configurada e testada com sucesso no navegador."
+ },
+ {
+  "i": 424,
+  "start": 3812.47,
+  "end": 3819.95,
+  "text": "Para evitar o bloqueio de segurança que ocorre ao abrir o protocolo, que restringe a API de voz e o conteúdo segura,"
+ },
+ {
+  "i": 425,
+  "start": 3819.95,
+  "end": 3825.51,
+  "text": "iniciamos o servidor HTTP local, acesso ao navegador e tal."
+ },
+ {
+  "i": 426,
+  "start": 3825.51,
+  "end": 3830.26,
+  "text": "Ele que está explicando, é o curso de implementação da apresentação, papapá,"
+ },
+ {
+  "i": 427,
+  "start": 3830.26,
+  "end": 3837.97,
+  "text": "deu uma explicação direta, ajustações técnicas, dimensionamento, estratégia dos corpos do slide,"
+ },
+ {
+  "i": 428,
+  "start": 3837.97,
+  "end": 3846.27,
+  "text": "aqui descrever como vai funcionar a apresentação, basta abrir aqui e clicar iniciar a apresentação"
+ },
+ {
+  "i": 429,
+  "start": 3846.27,
+  "end": 3856.08,
+  "text": "com voz para conduzir a reunião de alinhamento com o seu cliente, show de bola? Beleza, e aqui ele já"
+ },
+ {
+  "i": 430,
+  "start": 3856.08,
+  "end": 3866.46,
+  "text": "deixou o documento de definição da apresentação, na verdade, ah o HTML, isso aqui é o HTML,"
+ },
+ {
+  "i": 431,
+  "start": 3866.46,
+  "end": 3879.02,
+  "text": "se eu baixar isso aqui e botar .html como sendo o tipo do arquivo aí o que que acontece eu posso"
+ },
+ {
+  "i": 432,
+  "start": 3879.02,
+  "end": 3884.58,
+  "text": "simplesmente executar ele para ele não precisa nem clicar nesse link dele aqui eu posso fazer assim"
+ },
+ {
+  "i": 433,
+  "start": 3884.58,
+  "end": 3892.01,
+  "text": "vou baixar aqui vou jogar ele aqui mesmo html também aqui a especificação aqui eu vou deixar"
+ },
+ {
+  "i": 434,
+  "start": 3892.01,
+  "end": 3901.08,
+  "text": "no download mesmo quando ele exportar ele já vai exportar em html aí agora vou lá em download na"
+ },
+ {
+  "i": 435,
+  "start": 3901.08,
+  "end": 3917.65,
+  "text": "o download tá lá né ó tá vendo tá lá se eu clico aqui ó o que acontece ele rodou que HTML ele rodou"
+ },
+ {
+  "i": 436,
+  "start": 3917.65,
+  "end": 3928.5,
+  "text": "dentro já rodou eu vou aqui aqui já no Edge já no Chrome tá aqui ó a apresentação tá aqui vamos"
+ },
+ {
+  "i": 437,
+  "start": 3928.5,
+  "end": 3935.67,
+  "text": "até algum defeito aí eu vou chegar para o cliente bem-vindos à apresentação de alinhamento da gestão"
+ },
+ {
+  "i": 438,
+  "start": 3935.67,
+  "end": 3939.29,
+  "text": "O controle operacional em refrigeração e climatização."
+ },
+ {
+  "i": 439,
+  "start": 3940.35,
+  "end": 3949.63,
+  "text": "Nosso objetivo é definir as regras fundamentais e o escopo da solução para atender com precisão as exigências termodinâmicas,"
+ },
+ {
+  "i": 440,
+  "start": 3949.97,
+  "end": 3957.65,
+  "text": "o PUNC da Lei 13.589 e a rastreabilidade ambiental dos fluidos refrigerantes."
+ },
+ {
+  "i": 441,
+  "start": 3960.69,
+  "end": 3965.17,
+  "text": "Por que softwares genéricos de manutenção falham na refrigeração?"
+ },
+ {
+  "i": 442,
+  "start": 3965.17,
+  "end": 3978.58,
+  "text": "Por que ignoram o ciclo térmico? Se o mecânico não registrar pressões de trabalho, superaquecimento e vazamentos reais, o comissor quebra pouco tempo depois."
+ },
+ {
+  "i": 443,
+  "start": 3980.28,
+  "end": 3989.72,
+  "text": "Além disso, a falta de histórico físico e laudos normativos expõe a empresa apesar das autuações da vigilância sanitária."
+ },
+ {
+  "i": 444,
+  "start": 3989.72,
+  "end": 4005.71,
+  "text": "Aqui apresentamos as grandes capacidades do sistema, prontuário do equipamento por QR Code, cronograma automatizado do PUC com checklist de filtros de bactericidas,"
+ },
+ {
+  "i": 445,
+  "start": 4005.71,
+  "end": 4011.33,
+  "text": "Triagem rápida de chamados com prioridade para câmaras frigoríficas"
+ },
+ {
+  "i": 446,
+  "start": 4011.33,
+  "end": 4015.73,
+  "text": "Rotina de campo com medição de pressões e temperaturas"
+ },
+ {
+  "i": 447,
+  "start": 4015.73,
+  "end": 4022.25,
+  "text": "E funcionamento garantido mesmo em subsolos e câmaras frias sem sinal de internet"
+ },
+ {
+  "i": 448,
+  "start": 4022.25,
+  "end": 4028.26,
+  "text": "Estas são as regras invioláveis do negócio"
+ },
+ {
+  "i": 449,
+  "start": 4028.26,
+  "end": 4032.7,
+  "text": "Uma vez concluído o serviço e assinado pelo cliente"
+ },
+ {
+  "i": 450,
+  "start": 4032.7,
+  "end": 4036.72,
+  "text": "O laudo se torna intocável e juridicamente seguro"
+ },
+ {
+  "i": 451,
+  "start": 4036.72,
+  "end": 4042.61,
+  "text": "Datas do PUMOC não podem ser retroagidas para simular conformidade"
+ },
+ {
+  "i": 452,
+  "start": 4042.61,
+  "end": 4053.48,
+  "text": "E na parte física, a pressão de descarga deve ser sempre maior que a de sucção, sob pena de bloqueio por inconsistência técnica"
+ },
+ {
+  "i": 453,
+  "start": 4053.48,
+  "end": 4061.47,
+  "text": "Neste diagrama operacional, vemos o fluxo rigoroso de campo"
+ },
+ {
+  "i": 454,
+  "start": 4061.47,
+  "end": 4081.93,
+  "text": "o mecânico faz a leitura do QR-Code na condensadora, executa o checklist normativo de limpeza e componentes elétricos, insere as medições de pressão e temperatura, e encerra o chamado com fotos de antes e depois e a assinatura digital do responsável no local."
+ },
+ {
+  "i": 455,
+  "start": 4081.93,
+  "end": 4099.88,
+  "text": "Para dimensionar o projeto, apresentamos dois caminhos. O cenário proposto é a solução corporativa completa, ideal para grandes plantas industriais e múltiplos contratos de TUMOC."
+ },
+ {
+  "i": 456,
+  "start": 4099.88,
+  "end": 4114.34,
+  "text": "O cenário alternativo foca no essencial de campo, eliminação rápida do papel, checklists com fotos e assinatura na tela em apenas 3 a 4 semanas de implantação."
+ },
+ {
+  "i": 457,
+  "start": 4114.34,
+  "end": 4141.77,
+  "text": "Para concluirmos a definição do projeto, precisamos do seu direcionamento em 4 pontos, o porte predominante dos equipamentos, se a equipe utiliza manômetros digitais ou analógicos, a rotina atual de recolhimento de gás refrigerante, e se a responsabilidade técnica do CREA ou CFT própria ou terceirizada."
+ },
+ {
+  "i": 458,
+  "start": 4142.78,
+  "end": 4145.16,
+  "text": "Estamos prontos para iniciar."
+ },
+ {
+  "i": 459,
+  "start": 4145.16,
+  "end": 4158.6,
+  "text": "É isso aí, uma hora e dez minutos, sem contar as paradinhas. Então, pela experiência que eu tenho,"
+ },
+ {
+  "i": 460,
+  "start": 4158.6,
+  "end": 4167.43,
+  "text": "eu trabalhei em sete empresas diferentes, com sistemas diversos. No mínimo, um mês para"
+ },
+ {
+  "i": 461,
+  "start": 4167.43,
+  "end": 4175.07,
+  "text": "a gente ter ideia de como é possível funcionar. E mais um tempo, a depender do porto do sistema,"
+ },
+ {
+  "i": 462,
+  "start": 4175.07,
+  "end": 4186.1,
+  "text": "razoável de meses para desenvolver, testar e implementar. Aqui em praticamente uma hora,"
+ },
+ {
+  "i": 463,
+  "start": 4186.1,
+  "end": 4194.48,
+  "text": "a gente chegou a esse escopo aí, só com a ideia de, note, intenção e invariantes, intenções e"
+ },
+ {
+  "i": 464,
+  "start": 4194.48,
+  "end": 4201.62,
+  "text": "variantes. Objetivo, quer dizer, o que eu quero, o que eu quero, a intenção geral, né,"
+ },
+ {
+  "i": 465,
+  "start": 4201.62,
+  "end": 4210.68,
+  "text": "as intenções que eu quero e depois de variantes, quer dizer, as regras que eu quero que ele se"
+ },
+ {
+  "i": 466,
+  "start": 4210.68,
+  "end": 4216.2,
+  "text": "atenda. Então eu consigo controlar, é a ideia de governança do IDD que a gente vai ver. Eu consigo"
+ },
+ {
+  "i": 467,
+  "start": 4216.2,
+  "end": 4221.96,
+  "text": "controlar em ar não apenas para o próprio solto gerar pedaço de código, aqui eu estou gerando"
+ },
+ {
+  "i": 468,
+  "start": 4221.96,
+  "end": 4231.37,
+  "text": "soluções. Ela aqui está aprendendo comigo o que eu quero e como quero e as regras do negócio. Chegar"
+ },
+ {
+  "i": 469,
+  "start": 4231.37,
+  "end": 4236.77,
+  "text": "possível que eu posso apenas fazer ela gerar toda a documentação, quando estiver tudo aprovado pelo"
+ },
+ {
+  "i": 470,
+  "start": 4236.77,
+  "end": 4244.2,
+  "text": "usuário com apresentação, aí eu volto e vou partir para a implementação. Aí vem a definição de"
+ },
+ {
+  "i": 471,
+  "start": 4244.2,
+  "end": 4251.46,
+  "text": "intenções do caráter arquitetural, de técnica, né, e as varianças também do aspecto de técnica."
+ },
+ {
+  "i": 472,
+  "start": 4251.46,
+  "end": 4257.64,
+  "text": "Isso aí também também vai discutir futuramente. Mas a ideia dos princípios de DDD é assim,"
+ },
+ {
+  "i": 473,
+  "start": 4257.64,
+  "end": 4267.25,
+  "text": "está usando o sistema assim, ok? Nem é um próprio genérico soltão, não vai ficar aí não, não vai ficar se"
+ },
+ {
+  "i": 474,
+  "start": 4267.25,
+  "end": 4272.11,
+  "text": "batendo com ela não, aí você conseguir passar pelo modo organizado. Agora imagine que a gente tem"
+ },
+ {
+  "i": 475,
+  "start": 4272.11,
+  "end": 4284.08,
+  "text": "um editor IDE, que é o software mesmo, que ele já ofereça essa forma de definir, e a ideia é que ele"
+ },
+ {
+  "i": 476,
+  "start": 4284.08,
+  "end": 4292.3,
+  "text": "salve isso aí, de modo que se ele for mexer de novo, ele não vai deixar a violagem variando para o"
+ },
+ {
+  "i": 477,
+  "start": 4292.3,
+  "end": 4303.68,
+  "text": "Ele meio alterando lá na frente, ele não vai inferir, ou derivar, ou alucinar para fazer uma coisa que é tecnicamente viável,"
+ },
+ {
+  "i": 478,
+  "start": 4303.92,
+  "end": 4307.59,
+  "text": "mas não é dentro do escopo do negócio viável, ok?"
+ },
+ {
+  "i": 479,
+  "start": 4308.31,
+  "end": 4314.07,
+  "text": "Um abração, dê uma olhadinha com paciência e faça suas anotações."
+ },
+ {
+  "i": 480,
+  "start": 4314.91,
+  "end": 4318.09,
+  "text": "Vamos devagar, nós estamos fazendo isso aqui só para entender os princípios,"
+ }
+]

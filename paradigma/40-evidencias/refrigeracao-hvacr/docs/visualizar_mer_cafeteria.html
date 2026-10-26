@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Diagrama Gráfico MER Canônico — Cafeteria & Padaria (IDD)</title>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, sans-serif; }
+    body {
+      background: #0c0a09;
+      color: #f5f5f4;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 30px;
+    }
+    header {
+      text-align: center;
+      margin-bottom: 25px;
+    }
+    .badge {
+      display: inline-block;
+      background: linear-gradient(135deg, #d97706, #f59e0b);
+      color: white;
+      font-weight: 800;
+      font-size: 13px;
+      padding: 5px 16px;
+      border-radius: 999px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+      box-shadow: 0 0 15px rgba(245, 158, 11, 0.4);
+    }
+    h1 {
+      font-size: 32px;
+      font-weight: 900;
+      color: #ffffff;
+      letter-spacing: -0.5px;
+    }
+    p {
+      color: #a8a29e;
+      font-size: 16px;
+      margin-top: 6px;
+    }
+    .container {
+      width: 100%;
+      max-width: 1400px;
+      background: rgba(28, 19, 14, 0.9);
+      border: 1.5px solid rgba(245, 158, 11, 0.35);
+      border-radius: 20px;
+      padding: 30px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .mermaid {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+    }
+
+    /* INVARIANTS GRID */
+    .invariants-box {
+      width: 100%;
+      margin-top: 30px;
+      border-top: 1px solid rgba(245, 158, 11, 0.25);
+      padding-top: 25px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+    .inv-card {
+      background: rgba(41, 29, 21, 0.7);
+      border: 1px solid rgba(245, 158, 11, 0.3);
+      border-radius: 14px;
+      padding: 18px;
+    }
+    .inv-title {
+      font-size: 15px;
+      font-weight: 800;
+      color: #fbbf24;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .inv-desc {
+      font-size: 14px;
+      color: #d6d3d1;
+      line-height: 1.5;
+    }
+    .inv-code {
+      margin-top: 10px;
+      background: #020617;
+      border: 1px solid #1e293b;
+      padding: 8px 12px;
+      border-radius: 8px;
+      font-family: 'Consolas', monospace;
+      font-size: 12px;
+      color: #38bdf8;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="badge">PARADIGMA IDD · MODELO CANÔNICO</div>
+    <h1>Modelo Entidade-Relacionamento — Cafeteria & Padaria</h1>
+    <p>Estrutura Relacional Completa: Comandas, Mesas, Ficha Técnica, Baixa de Insumos e Quitação Fiscal</p>
+  </header>
+
+  <div class="container">
+    <div class="mermaid">
+erDiagram
+    ESTABELECIMENTO ||--o{ MESA_BALCAO : possui
+    ESTABELECIMENTO ||--o{ INSUMO_ESTOQUE : controla
+    ESTABELECIMENTO ||--o{ ITEM_CARDAPIO : comercializa
+
+    MESA_BALCAO ||--o{ COMANDA : abriga
+    COMANDA ||--|{ ITEM_COMANDA : contem
+    COMANDA ||--|{ PAGAMENTO_FISCAL : quita
+
+    ITEM_CARDAPIO ||--o{ ITEM_COMANDA : referencia
+    ITEM_CARDAPIO ||--|{ FICHA_TECNICA : especifica
+    INSUMO_ESTOQUE ||--o{ FICHA_TECNICA : abastece
+
+    ESTABELECIMENTO {
+        uuid id PK
+        string cnpj UK
+        string razao_social
+        string nome_fantasia
+        string timezone
+    }
+
+    MESA_BALCAO {
+        uuid id PK
+        uuid estabelecimento_id FK
+        int numero UK
+        string setor "SALAO | BALCAO | EXTERNO"
+        string status_ocupacao "LIVRE | OCUPADA | RESERVADA"
+        string qr_code_token UK
+    }
+
+    COMANDA {
+        uuid id PK
+        uuid mesa_id FK
+        string identificador_cliente
+        string status_fsm "ABERTA | EM_CONFERENCIA | PAGA | ENCERRADA"
+        timestamp aberta_em
+        timestamp fechada_em
+        decimal valor_total
+        string hash_auditoria_sha256
+    }
+
+    ITEM_CARDAPIO {
+        uuid id PK
+        uuid estabelecimento_id FK
+        string codigo_sku UK
+        string nome
+        string categoria "BEBIDAS | PAES | CONFEITARIA | REFEICOES"
+        decimal preco_unitario
+        int tempo_estimado_min
+        boolean ativo
+    }
+
+    ITEM_COMANDA {
+        uuid id PK
+        uuid comanda_id FK
+        uuid item_cardapio_id FK
+        decimal quantidade
+        decimal preco_cobrado
+        string status_kds "RECEBIDO | EM_PREPARO | PRONTO | ENTREGUE | CANCELADO"
+        timestamp enviado_kds_em
+        timestamp entregue_em
+        string observacoes
+    }
+
+    FICHA_TECNICA {
+        uuid id PK
+        uuid item_cardapio_id FK
+        uuid insumo_id FK
+        decimal quantidade_consumida
+        string unidade_medida "GRAMA | ML | UNIDADE"
+    }
+
+    INSUMO_ESTOQUE {
+        uuid id PK
+        uuid estabelecimento_id FK
+        string codigo_barras UK
+        string descricao
+        decimal saldo_atual
+        decimal estoque_minimo_alerta
+        decimal custo_medio
+        string unidade_medida
+    }
+
+    PAGAMENTO_FISCAL {
+        uuid id PK
+        uuid comanda_id FK
+        string forma_pagamento "PIX_DINAMICO | CARTAO_DEBITO | CARTAO_CREDITO | DINHEIRO"
+        decimal valor_pago
+        string payload_pix_txid UK
+        string status_transacao "PENDENTE | CONFIRMADO | ESTORNADO"
+        string chave_nfc_e UK
+        timestamp processado_em
+    }
+    </div>
+
+    <div class="invariants-box">
+      <div class="inv-card">
+        <div class="inv-title">⚖️ 1. Baixa Técnica de Insumos</div>
+        <div class="inv-desc">Cada item de comanda enviado à cozinha deduz automaticamente do saldo_atual de insumos via ficha técnica de modo atômico e imutável.</div>
+        <div class="inv-code">ITEM_COMANDA.enviado ➔ ∀ insumo: saldo_atual -= (qtd * ficha.consumo)</div>
+      </div>
+      <div class="inv-card">
+        <div class="inv-title">⏱️ 2. Monotonia do KDS (Barista/Cozinha)</div>
+        <div class="inv-desc">A máquina de estados do KDS proíbe retrocesso: itens prontos não podem retornar ao estado recebido ou cancelado sem log supervisor.</div>
+        <div class="inv-code">RECEBIDO ➔ EM_PREPARO ➔ PRONTO ➔ ENTREGUE</div>
+      </div>
+      <div class="inv-card">
+        <div class="inv-title">🔒 3. Quitação Estrita &amp; NFC-e</div>
+        <div class="inv-desc">A comanda só atinge status ENCERRADA quando a soma dos pagamentos confirmados cobrir exatamente o valor_total da comanda.</div>
+        <div class="inv-code">Σ PAGAMENTO_FISCAL.valor_pago ≡ COMANDA.valor_total</div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: 'dark',
+      themeVariables: {
+        darkMode: true,
+        background: '#0c0a09',
+        primaryColor: '#d97706',
+        primaryTextColor: '#f5f5f4',
+        primaryBorderColor: '#f59e0b',
+        lineColor: '#f59e0b',
+        secondaryColor: '#1c1917',
+        tertiaryColor: '#292524'
+      }
+    });
+  </script>
+</body>
+</html>

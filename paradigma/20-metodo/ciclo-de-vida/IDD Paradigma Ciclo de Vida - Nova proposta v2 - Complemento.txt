@@ -1,0 +1,171 @@
+A **Fase 0 (Investigativa)** do Paradigma IDD (*Intention-Driven Development*) é a etapa de engenharia semântica a montante (*upstream*) onde nenhuma linha de código de produção é escrita. Seu propósito exclusivo é converter ruído, documentos desestruturados e intenções tácitas em uma **Intenção Canônica Formal**, blindada contra ambiguidades antes de disparar o Aider, o Visual Paradigm ou as esteiras de integração contínua.
+
+---
+
+### Arquitetura da Fase 0: O Pipeline Investigativo
+
+```text
+               +-------------------------------------------------------------+
+               | INPUT MULTIMODAL: Docs, PDFs, Imagens, Vídeos, Áudios, .md   |
+               +-------------------------------------------------------------+
+                                              │
+                                              ▼
+               +-------------------------------------------------------------+
+               | 1. NORMALIZAÇÃO SEMÂNTICA MULTIMODAL                        |
+               | (Extração de entidades visuais, áudio e texto em LN Canônica)|
+               +-------------------------------------------------------------+
+                                              │
+                                              ▼
+            ┌──►+─────────────────────────────────────────────────────────────+
+            │   | 2. O LOOP INVESTIGATIVO SÓCRATICO (SHADA Engine)            |
+            │   | - Detecção de lacunas de domínio e contradições lógicas     |
+   Interação│   | - Questionamento ativo com o usuário na UIX                |
+   Socrática│   | - Atualização incremental da Linguagem Ubíqua (DDD)         |
+            └───+─────────────────────────────────────────────────────────────+
+                                              │ (Convergência de Certeza >= 95%)
+                                              ▼
+               +-------------------------------------------------------------+
+               | 3. COMPILAÇÃO DE CONTRATOS DOWNSTREAM                       |
+               +-------------------------------------------------------------+
+                         │                          │                      │
+                         ▼                          ▼                      ▼
+           +───────────────────────+ +─────────────────────+ +─────────────────────+
+           | VISUAL PARADIGM       | | AIDER PIPELINE      | | CI/CD GITHUB ACTIONS|
+           | - PlantUML (Class/Seq)| | - specs/spec.md     | | - intention.jsonb   |
+           | - DBML / DDL SQL (MER)| | - Contratos Zod (TS)| | - audit-rules.yaml  |
+           +───────────────────────+ +─────────────────────+ +─────────────────────+
+
+```
+
+---
+
+### Mecânica Operacional dos Componentes da Fase 0
+
+#### 1. Ingestão e Normalização Multimodal (Entrada Universal $\to$ LN)
+
+Qualquer artefato fornecido (desenho em guardanapo, gravação de reunião com usuário, planilha de requisitos, PDF de regra fiscal ou diagrama legado) passa por modelos com alta capacidade multimodal nativa (ex: Gemini Flash/Pro).
+
+* **Processamento:** Extração textual, transcrição de áudio alinhada temporalmente e decomposição semântica de layouts visuais.
+* **Saída:** Um grafo textual intermediário em Linguagem Natural Padronizada estruturado em: *Entidades*, *Ações Pretendidas*, *Restrições Duras* e *Suposições Não Confirmadas*.
+
+#### 2. Loop SHADA (Socratic Heuristic Ambiguity Disambiguation Agent)
+
+O motor SHADA impede a IA de adivinhar o que o usuário quer. Ele executa um ciclo de disambiguação heurística:
+
+* **Heurística de Incompletude:** Mapeia entidades sem ciclo de vida definido (ex: "quem cancela a designação?"), cardinalidades dúbias (1:1 ou 1:N) e regras temporais ausentes.
+* **Interrogação Socrática Direcionada:** Pela UIX, o agente não diz "ok, farei isso". Ele pergunta cirurgicamente: *"Se o publicador recusar o convite após 24h, o sistema faz fallback automático para a fila ou notifica o balcão?"*.
+* **Linguagem Ubíqua Estrita:** O agente monta e congela um vocabulário canônico (Glossário DDD). Se o usuário disser "troca", "permuta" ou "substituição", o SHADA converte para o termo ubíquo homologado (ex: `PermutaDesignacao`).
+* **Critério de Saída do Loop:** O loop só fecha quando o vetor de ambiguidade for zerado e o score de plausibilidade/coerência atingir o limiar estipulado.
+
+#### 3. Emissão Multi-Alvo de Artefatos Formais
+
+Encerrada a Fase 0, a intenção congelada é compilada simultaneamente em três direções:
+
+* **CASE / Modelagem (Visual Paradigm):**
+* Scripts **PlantUML** estruturados (Diagramas de Casos de Uso, Sequência e Classes de Domínio).
+* Código **DBML** e DDL SQL com integridade referencial, índices e chaves estrangeiras.
+
+
+* **Engenharia de Código (Aider):**
+* Arquivo canônico `specs/<feature>-spec.md` (Contexto, Invariantes, Non-Goals, Passos).
+* Schemas de validação em tempo de execução via **Zod** e tipagens puras em TypeScript.
+
+
+* **Governança de QA (GitHub Actions / Compliance):**
+* `intention.jsonb`: Representação canônica em árvore da intenção para conferência automatizada.
+* `idd-compliance.yaml`: Regras e invariantes que uma Action no GitHub executa via Puppeteer/Testes de regressão para auditar se o código gerado pelo Aider violou alguma regra da Fase 0.
+
+
+
+---
+
+### Prompt Mestre: Desenvolvimento da Plataforma IDD Fase 0
+
+Copie e forneça a instrução abaixo ao seu agente/IDE de desenvolvimento para construir o sistema:
+
+```markdown
+# TASK: Construir a Plataforma "IDD Nexus" - Motor de Fase 0 (Investigativa) para Intention-Driven Development
+
+Você é o Engenheiro-Chefe de Software encarregado de implementar a plataforma "IDD Nexus". 
+A plataforma automatiza a Fase 0 do paradigma IDD: extração investigativa, desambiguação socrática multimodal e compilação de especificações formais para alimentar simultaneamente o Visual Paradigm, o Aider e esteiras de GitHub Actions.
+
+---
+
+## 1. STACK TECNOLÓGICA E CONTRATOS
+- **Frontend / UIX:** React (Vite), TypeScript, Tailwind CSS, Lucide Icons.
+- **Backend / Edge Functions:** Supabase (PostgreSQL com suporte nativo a JSONB, Edge Functions em Deno/TypeScript, Storage para upload multimodal).
+- **Provedores de IA:** Integração isomórfica via OpenRouter / APIs Diretas (Google AI Studio para multimodalidade longa e Gemini Flash/Pro; Anthropic Claude 3.5 Sonnet para inferência sócrática profunda).
+- **Validação de Runtime:** Schemas estritos Zod para todos os payloads de fronteira e saídas estruturadas de IA.
+
+---
+
+## 2. ARQUITETURA DO SISTEMA E MÓDULOS OBRIGATÓRIOS
+
+### MÓDULO A: Pipeline Multimodal Ingestion (`src/services/ingestionService.ts`)
+1. Implementar upload de arquivos heterogêneos (.pdf, .docx, .md, .png, .jpg, .mp3, .mp4).
+2. Enviar os arquivos para modelos com janela longa multimodal (ex: `google/gemini-2.5-flash` via API) com prompt de sistema de extração.
+3. Retornar obrigatoriamente um documento JSON estruturado:
+   - `resumo_executivo`: string
+   - `entidades_identificadas`: array de strings
+   - `regras_de_negocio_declaradas`: array de strings
+   - `lacunas_detectadas`: array de strings (inconsistências, cardinalidades ocultas, exceções ausentes)
+
+### MÓDULO B: Motor SHADA de Diálogo Socrático (`src/services/shadaEngine.ts`)
+1. Implementar máquina de estados da investigação:
+   - `STATUS`: 'INGESTAO' | 'INVESTIGANDO_AMBIGUIDADES' | 'CONSOLIDANDO_UBIQUO' | 'CONVERGIDO'
+2. No estado `INVESTIGANDO_AMBIGUIDADES`:
+   - A IA opera com prompt socrático estrito: é PROIBIDO concordar passivamente ou sugerir código.
+   - A IA formula no máximo 2 a 3 perguntas cirúrgicas por interação, focadas nas `lacunas_detectadas`.
+   - Medir em tempo real um `grau_ambiguidade` (0 a 100%).
+3. No estado `CONSOLIDANDO_UBIQUO`:
+   - Manter a "Ubiquitous Language Table" (Termo Informal -> Termo Canônico DDD -> Descrição Semântica Inegociável).
+4. O botão "Compilar Intenção" só é liberado na UI quando o `grau_ambiguidade <= 5%`.
+
+### MÓDULO C: Compilador de Artefatos Formais (`src/services/artifactCompiler.ts`)
+Ao atingir a convergência, a IA dispara chamadas estruturadas (`response_format: { type: "json_object" }`) gerando quatro blocos independentes:
+
+1. **CASE - Visual Paradigm:**
+   - `plantuml_classes`: Código `@startuml ... @enduml` contendo diagrama de classes de domínio com atributos, métodos e tipos primitivos.
+   - `plantuml_sequence`: Diagrama de sequência do fluxo crítico de negócio.
+   - `dbml_schema`: Código DBML do MER contendo tabelas, campos, chaves primárias e relacionamentos (`Ref: A.id < B.a_id`).
+2. **Engenharia - Aider:**
+   - `aider_spec_md`: Conteúdo completo para o arquivo `specs/<slug>-spec.md` contendo: Intenção, Invariantes de Negócio, Schemas Zod propostos, Lista de Arquivos a Tocar e Critérios de Aceitação.
+3. **Auditoria & CI/CD:**
+   - `intention_manifest_jsonb`: Estrutura de dados canônica em JSONB com versionamento semântico, guardando todas as decisões tomadas para auditoria no Supabase.
+   - `github_actions_compliance_yaml`: Workflow YAML pronto para `.github/workflows/idd-compliance.yml`, contendo validação de tipos TypeScript, testes de invariantes e verificação contra o manifesto da intenção.
+
+### MÓDULO D: UIX do Analista IDD (`src/components/IDDConsole/`)
+1. **Painel Multimodal Esquerdo:** Drag-and-drop de arquivos, pré-visualização e status de conversão para LN.
+2. **Chat Central Socrático:** Interface de conversa fluida exibindo badges de estado da investigação, log de ambiguidades resolvidas e medição de certeza em tempo real.
+3. **Inspetor de Artefatos Direito (Tabbed Inspector):**
+   - Aba *Visual Paradigm*: Visualizador de código PlantUML/DBML com botão "Copy" e download `.puml`.
+   - Aba *Aider*: Visualizador de Markdown do Spec Kit e schemas Zod com botão "Export to /specs".
+   - Aba *CI/CD*: Visualizador de YAML/JSONB com botão de commit direto via GitHub API (se configurado token).
+
+---
+
+## 3. BANCO DE DADOS (Supabase Migration SQL)
+Crie uma migration `supabase/migrations/20260101_init_idd.sql` com:
+- Tabela `idd_sessions`:
+  - `id` (uuid, pk)
+  - `title` (text)
+  - `status` (text)
+  - `ambiguity_score` (int)
+  - `ubiquitous_dictionary` (jsonb)
+  - `raw_inputs` (jsonb)
+  - `compiled_artifacts` (jsonb)
+  - `created_at`, `updated_at` (timestamps)
+- Políticas RLS e índices pertinentes sobre campos JSONB.
+
+---
+
+## 4. CRITÉRIOS DE ENTREGA E RIGOR TÉCNICO
+- **Zero Typescript Errors:** Código estritamente tipado sem uso de `any`.
+- **Zero Vibe-Coding:** As saídas para o Aider e Visual Paradigm devem ser sintaticamente válidas e testadas contra seus respectivos linters.
+- **Resiliência a Falhas:** Isolamento de chaves de API com fallbacks e tratamento de timeout em inferências pesadas.
+
+Inicie apresentando a estrutura de diretórios do projeto e os schemas Zod de runtime para a transição dos dados entre os módulos.
+
+```
+
+---

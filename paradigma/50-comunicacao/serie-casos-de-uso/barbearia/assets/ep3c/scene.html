@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>IDD Barbearia - Ep. 3C UML Completo: Atores a Métodos</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, sans-serif; }
+    body {
+      width: 1920px; height: 1080px; background: #030712; color: #f8fafc;
+      overflow: hidden; position: relative;
+    }
+    .grid-bg {
+      position: absolute; inset: 0;
+      background-image: linear-gradient(rgba(168, 85, 247, 0.05) 1px, transparent 1px),
+                        linear-gradient(90deg, rgba(168, 85, 247, 0.05) 1px, transparent 1px);
+      background-size: 60px 60px;
+    }
+    .glow-ambient {
+      position: absolute; width: 1150px; height: 1150px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(168, 85, 247, 0.28) 0%, rgba(59, 130, 246, 0.16) 45%, transparent 70%);
+      top: 50%; left: 50%; transform: translate(-50%, -50%); filter: blur(95px); pointer-events: none;
+    }
+
+    /* TOP BAR */
+    .top-bar {
+      position: absolute; top: 0; left: 0; right: 0; height: 80px;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 60px; background: rgba(15, 23, 42, 0.88);
+      border-bottom: 1px solid rgba(168, 85, 247, 0.35); backdrop-filter: blur(12px); z-index: 50;
+    }
+    .top-title { display: flex; align-items: center; gap: 18px; }
+    .badge-ep {
+      background: linear-gradient(135deg, #7e22ce, #6b21a8); color: white;
+      font-weight: 800; font-size: 16px; letter-spacing: 1.5px;
+      padding: 6px 18px; border-radius: 999px; text-transform: uppercase;
+      box-shadow: 0 0 20px rgba(168, 85, 247, 0.4);
+    }
+    .series-name { font-size: 20px; font-weight: 700; color: #cbd5e1; }
+    .series-name span { color: #c084fc; font-weight: 800; }
+    .timer-box { font-size: 18px; font-family: monospace; color: #c084fc; font-weight: 700; }
+
+    /* STAGE */
+    .stage {
+      position: absolute; top: 80px; bottom: 220px; left: 0; right: 0;
+      padding: 30px 60px; display: flex; flex-direction: column; z-index: 20;
+    }
+    .slide-view {
+      display: none; width: 100%; height: 100%; flex-direction: column;
+      animation: fadeIn 0.4s ease-out forwards;
+    }
+    .slide-view.active { display: flex; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+    .slide-header { margin-bottom: 18px; }
+    .slide-category { font-size: 15px; font-weight: 800; color: #c084fc; text-transform: uppercase; letter-spacing: 2px; }
+    .slide-title { font-size: 36px; font-weight: 900; color: #ffffff; margin-top: 4px; }
+    .slide-subtitle { font-size: 18px; color: #94a3b8; margin-top: 4px; }
+
+    /* SLIDE 1: CASOS DE USO & ATORES CANÔNICOS */
+    .usecase-layout {
+      display: grid; grid-template-columns: 240px 1fr 240px; gap: 20px; flex: 1; align-items: center;
+    }
+    .actor-box {
+      display: flex; flex-direction: column; align-items: center; gap: 12px;
+      background: rgba(15, 23, 42, 0.85); border: 1.5px solid rgba(168, 85, 247, 0.35);
+      border-radius: 16px; padding: 24px 16px;
+    }
+    .actor-icon {
+      width: 50px; height: 50px; stroke: #c084fc; stroke-width: 2.5; fill: none;
+    }
+    .actor-name { font-size: 16px; font-weight: 800; color: #f8fafc; text-align: center; }
+    .actor-role { font-size: 12px; color: #a855f7; font-weight: 700; text-transform: uppercase; }
+
+    .system-boundary {
+      background: rgba(15, 23, 42, 0.95); border: 2px dashed #a855f7;
+      border-radius: 18px; padding: 20px 24px; display: flex; flex-direction: column;
+      height: 100%; box-shadow: 0 10px 30px rgba(0,0,0,0.6); position: relative;
+    }
+    .boundary-title {
+      font-size: 13px; font-weight: 800; color: #c084fc; text-transform: uppercase; letter-spacing: 1.5px;
+      margin-bottom: 14px; display: flex; justify-content: space-between; align-items: center;
+    }
+    .usecases-grid {
+      display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; flex: 1; align-content: center;
+    }
+    .usecase-oval {
+      background: rgba(30, 41, 59, 0.9); border: 2px solid #a855f7;
+      border-radius: 999px; padding: 14px 20px; text-align: center;
+      display: flex; flex-direction: column; justify-content: center;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+    }
+    .uc-id { font-size: 11px; font-weight: 800; color: #c084fc; text-transform: uppercase; }
+    .uc-title { font-size: 14px; font-weight: 700; color: #f8fafc; margin-top: 2px; }
+    .uc-tag { font-size: 11px; color: #94a3b8; font-style: italic; margin-top: 2px; }
+
+    /* SLIDE 2: CLASSES NOS 3 COMPARTIMENTOS */
+    .classes-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; flex: 1;
+    }
+    .uml-class-box {
+      background: rgba(15, 23, 42, 0.95); border: 2px solid #a855f7;
+      border-radius: 12px; overflow: hidden; display: flex; flex-direction: column;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.6);
+    }
+    .class-header {
+      background: linear-gradient(135deg, #7e22ce, #9333ea); color: white;
+      padding: 10px 14px; text-align: center; border-bottom: 1.5px solid rgba(168, 85, 247, 0.5);
+    }
+    .class-stereotype { font-size: 11px; font-weight: 700; color: #e9d5ff; text-transform: uppercase; }
+    .class-name { font-size: 18px; font-weight: 900; letter-spacing: 0.5px; margin-top: 2px; }
+    .class-attrs {
+      padding: 10px 14px; border-bottom: 1.5px solid rgba(168, 85, 247, 0.3);
+      font-family: 'Consolas', monospace; font-size: 12px; line-height: 1.5; color: #cbd5e1;
+      background: rgba(2, 6, 23, 0.5);
+    }
+    .class-methods {
+      padding: 10px 14px; font-family: 'Consolas', monospace; font-size: 12px;
+      line-height: 1.55; color: #38bdf8; flex: 1;
+    }
+    .vis-priv { color: #f43f5e; font-weight: 700; }
+    .vis-pub { color: #10b981; font-weight: 700; }
+
+    /* SLIDE 3: MÁQUINA DE ESTADOS & TERMINAL */
+    .statechart-container {
+      display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 24px; flex: 1;
+    }
+    .states-visual-card {
+      background: rgba(15, 23, 42, 0.9); border: 1.5px solid rgba(168, 85, 247, 0.35);
+      border-radius: 16px; padding: 22px; display: flex; flex-direction: column;
+    }
+    .states-flow {
+      display: flex; flex-direction: column; gap: 14px; flex: 1; justify-content: space-around;
+    }
+    .state-node-row {
+      display: flex; align-items: center; gap: 14px;
+    }
+    .state-pill {
+      background: rgba(30, 41, 59, 0.95); border: 2px solid #a855f7;
+      border-radius: 12px; padding: 10px 20px; font-weight: 800; font-size: 14px; color: #f8fafc;
+      min-width: 170px; text-align: center; box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+    }
+    .state-arrow {
+      flex: 1; height: 2px; background: #c084fc; position: relative;
+    }
+    .state-arrow::after {
+      content: ''; position: absolute; right: 0; top: -4px; width: 0; height: 0;
+      border-left: 8px solid #c084fc; border-top: 5px solid transparent; border-bottom: 5px solid transparent;
+    }
+    .state-guard {
+      font-size: 11px; font-family: monospace; color: #fde047; margin-bottom: 4px;
+    }
+
+    .terminal-window {
+      background: #020617; border: 1.5px solid #1e293b; border-radius: 16px;
+      padding: 22px; font-family: 'Consolas', monospace; font-size: 13px;
+      color: #c084fc; display: flex; flex-direction: column;
+    }
+    .terminal-header { display: flex; gap: 8px; margin-bottom: 12px; border-bottom: 1px solid #1e293b; padding-bottom: 10px; }
+    .t-dot { width: 12px; height: 12px; border-radius: 50%; }
+    .t-red { background: #ef4444; } .t-yellow { background: #f59e0b; } .t-green { background: #10b981; }
+    .terminal-body { flex: 1; line-height: 1.55; color: #e2e8f0; font-size: 12px; }
+
+    /* SLIDE 4: SÍNTESE */
+    .cards-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; flex: 1; }
+    .feature-card {
+      background: rgba(15, 23, 42, 0.85); border: 1.5px solid rgba(168, 85, 247, 0.35);
+      border-radius: 18px; padding: 28px; display: flex; flex-direction: column;
+      box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+    }
+    .card-icon { font-size: 38px; margin-bottom: 16px; }
+    .card-title { font-size: 24px; font-weight: 800; color: #c084fc; margin-bottom: 12px; }
+    .card-desc { font-size: 17px; color: #e2e8f0; line-height: 1.5; flex: 1; }
+    .card-tag {
+      margin-top: 15px; align-self: flex-start; background: rgba(168, 85, 247, 0.15);
+      border: 1px solid #a855f7; color: #e9d5ff; padding: 4px 12px; border-radius: 8px;
+      font-size: 13px; font-weight: 700;
+    }
+
+    /* BOTTOM BAR */
+    .bottom-bar {
+      position: absolute; bottom: 0; left: 0; right: 0; height: 220px;
+      background: rgba(10, 15, 29, 0.96); border-top: 1px solid rgba(168, 85, 247, 0.35);
+      backdrop-filter: blur(16px); display: flex; align-items: center;
+      padding: 0 60px; gap: 40px; z-index: 50;
+    }
+    .avatars-container { display: flex; gap: 30px; align-items: center; }
+    .avatar-card {
+      display: flex; flex-direction: column; align-items: center;
+      transition: all 0.3s ease; opacity: 0.45; transform: scale(0.95);
+    }
+    .avatar-card.active { opacity: 1; transform: scale(1.05); }
+    .avatar-circle {
+      width: 90px; height: 90px; border-radius: 50%; overflow: hidden;
+      border: 3px solid #334155; position: relative; background: #0f172a;
+    }
+    .avatar-card.active .avatar-circle {
+      border-color: #a855f7; box-shadow: 0 0 25px rgba(168, 85, 247, 0.7);
+    }
+    .avatar-circle img { width: 100%; height: 100%; object-fit: cover; }
+    .avatar-name { font-size: 15px; font-weight: 800; color: #f8fafc; margin-top: 8px; }
+    .avatar-role { font-size: 12px; color: #94a3b8; font-weight: 600; }
+
+    .subtitles-container {
+      flex: 1; height: 140px; background: rgba(15, 23, 42, 0.8);
+      border: 1.5px solid rgba(168, 85, 247, 0.35); border-radius: 16px;
+      padding: 20px 28px; display: flex; flex-direction: column; justify-content: center;
+    }
+    .sub-speaker {
+      font-size: 14px; font-weight: 800; text-transform: uppercase; letter-spacing: 1.5px;
+      margin-bottom: 8px;
+    }
+    .speaker-leigo { color: #f43f5e; }
+    .speaker-eliezer { color: #38bdf8; }
+    .speaker-ia { color: #c084fc; }
+    .sub-text { font-size: 19px; line-height: 1.45; color: #f8fafc; font-weight: 500; }
+
+    #black-curtain {
+      position: absolute; inset: 0; background: #000000; z-index: 9999;
+      pointer-events: none; transition: opacity 0.08s linear;
+    }
+  </style>
+</head>
+<body>
+  <div id="black-curtain"></div>
+  <div class="glow-ambient"></div>
+  <div class="grid-bg"></div>
+
+  <!-- TOP BAR -->
+  <div class="top-bar">
+    <div class="top-title">
+      <div class="badge-ep">Episódio 3C • UML Completo</div>
+      <div class="series-name">IDD NA PRÁTICA: <span>BARBEARIA & OMG UML COMPLETO</span></div>
+    </div>
+    <div class="timer-box" id="clock-display">00:00.0</div>
+  </div>
+
+  <!-- STAGE -->
+  <div class="stage">
+    <!-- SLIDE 1: DIAGRAMA DE CASOS DE USO CANÔNICO -->
+    <div class="slide-view active" id="slide-1">
+      <div class="slide-header">
+        <div class="slide-category">Arquitetura Comportamental • OMG UML Standard</div>
+        <div class="slide-title">Diagrama de Casos de Uso Canônico & Atores Formais</div>
+        <div class="slide-subtitle">Fronteiras do Sistema de Barbearia, Relações de Inclusão e Extensão</div>
+      </div>
+      <div class="usecase-layout">
+        <!-- ATOR 1: CLIENTE -->
+        <div class="actor-box">
+          <svg class="actor-icon" viewBox="0 0 24 24">
+            <circle cx="12" cy="7" r="4"/>
+            <path d="M5.5 21v-2a6.5 6.5 0 0 1 13 0v2"/>
+          </svg>
+          <div class="actor-name">Cliente</div>
+          <div class="actor-role">Ator Humano</div>
+        </div>
+
+        <!-- SISTEMA BOUNDARY -->
+        <div class="system-boundary">
+          <div class="boundary-title">
+            <span>Sistema Gestão Barbearia</span>
+            <span style="font-family: monospace; color: #a855f7;">&lt;&lt;subsystem&gt;&gt;</span>
+          </div>
+          <div class="usecases-grid">
+            <div class="usecase-oval">
+              <span class="uc-id">UC01</span>
+              <span class="uc-title">Agendar Horário</span>
+              <span class="uc-tag">reserva de slot temporal</span>
+            </div>
+            <div class="usecase-oval">
+              <span class="uc-id">UC02</span>
+              <span class="uc-title">Executar Atendimento</span>
+              <span class="uc-tag">check-in de cadeira</span>
+            </div>
+            <div class="usecase-oval">
+              <span class="uc-id">UC03 &lt;&lt;extend&gt;&gt;</span>
+              <span class="uc-title">Cancelar Agendamento</span>
+              <span class="uc-tag">aplica taxa de no-show</span>
+            </div>
+            <div class="usecase-oval" style="border-color: #fde047;">
+              <span class="uc-id" style="color: #fde047;">UC04 &lt;&lt;include&gt;&gt;</span>
+              <span class="uc-title">Faturar Comanda</span>
+              <span class="uc-tag">inclui snapshot de comissão</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- ATOR 2 & 3: BARBEIRO & GATEWAY -->
+        <div style="display: flex; flex-direction: column; gap: 16px;">
+          <div class="actor-box" style="padding: 16px;">
+            <svg class="actor-icon" viewBox="0 0 24 24" style="stroke: #38bdf8;">
+              <circle cx="12" cy="7" r="4"/>
+              <path d="M5.5 21v-2a6.5 6.5 0 0 1 13 0v2"/>
+            </svg>
+            <div class="actor-name">Barbeiro</div>
+            <div class="actor-role" style="color: #38bdf8;">Profissional</div>
+          </div>
+          <div class="actor-box" style="padding: 16px;">
+            <svg class="actor-icon" viewBox="0 0 24 24" style="stroke: #10b981;">
+              <rect x="3" y="4" width="18" height="16" rx="2"/>
+              <line x1="8" y1="10" x2="16" y2="10"/>
+              <line x1="8" y1="14" x2="12" y2="14"/>
+            </svg>
+            <div class="actor-name">Gateway Pagamento</div>
+            <div class="actor-role" style="color: #10b981;">Ator Externo</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 2: DIAGRAMA DE CLASSES NOS 3 COMPARTIMENTOS -->
+    <div class="slide-view" id="slide-2">
+      <div class="slide-header">
+        <div class="slide-category">Estrutura Orientada a Objetos • Padrão Canônico</div>
+        <div class="slide-title">Diagrama de Classes nos Três Compartimentos Oficiais</div>
+        <div class="slide-subtitle">Atributos Privados com Tipagem Estrita e Assinaturas de Métodos Puros</div>
+      </div>
+      <div class="classes-grid">
+        <!-- AGENDAMENTO -->
+        <div class="uml-class-box">
+          <div class="class-header">
+            <div class="class-stereotype">&lt;&lt;aggregate root&gt;&gt;</div>
+            <div class="class-name">Agendamento</div>
+          </div>
+          <div class="class-attrs">
+            <div><span class="vis-priv">-</span> id: UUID</div>
+            <div><span class="vis-priv">-</span> clienteId: UUID</div>
+            <div><span class="vis-priv">-</span> barbeiroId: UUID</div>
+            <div><span class="vis-priv">-</span> slotHorario: IntervaloTempo</div>
+            <div><span class="vis-priv">-</span> status: StatusAgendamento</div>
+          </div>
+          <div class="class-methods">
+            <div><span class="vis-pub">+</span> confirmarAgendamento(): Void</div>
+            <div><span class="vis-pub">+</span> cancelar(motivo): Result&lt;Void&gt;</div>
+            <div><span class="vis-pub">+</span> iniciarAtendimento(): Void</div>
+            <div><span class="vis-pub">+</span> getDuracaoTotal(): Minutos</div>
+          </div>
+        </div>
+
+        <!-- BARBEIRO -->
+        <div class="uml-class-box" style="border-color: #38bdf8;">
+          <div class="class-header" style="background: linear-gradient(135deg, #0284c7, #2563eb);">
+            <div class="class-stereotype">&lt;&lt;domain entity&gt;&gt;</div>
+            <div class="class-name">Barbeiro</div>
+          </div>
+          <div class="class-attrs">
+            <div><span class="vis-priv">-</span> id: UUID</div>
+            <div><span class="vis-priv">-</span> nome: String</div>
+            <div><span class="vis-priv">-</span> taxaComissao: Decimal</div>
+            <div><span class="vis-priv">-</span> agendaSlots: List&lt;Slot&gt;</div>
+          </div>
+          <div class="class-methods">
+            <div><span class="vis-pub">+</span> isDisponivel(slot): Boolean</div>
+            <div><span class="vis-pub">+</span> calcularComissao(total): Centavos</div>
+            <div><span class="vis-pub">+</span> bloquearSlot(intervalo): Void</div>
+          </div>
+        </div>
+
+        <!-- COMANDA_ATENDIMENTO -->
+        <div class="uml-class-box" style="border-color: #10b981;">
+          <div class="class-header" style="background: linear-gradient(135deg, #059669, #10b981);">
+            <div class="class-stereotype">&lt;&lt;immutable value object&gt;&gt;</div>
+            <div class="class-name">ComandaAtendimento</div>
+          </div>
+          <div class="class-attrs">
+            <div><span class="vis-priv">-</span> id: UUID</div>
+            <div><span class="vis-priv">-</span> agendamentoId: UUID</div>
+            <div><span class="vis-priv">-</span> totalCentavos: BigInt</div>
+            <div><span class="vis-priv">-</span> snapshotComissaoCentavos: BigInt</div>
+          </div>
+          <div class="class-methods">
+            <div><span class="vis-pub">+</span> faturarComanda(): Result</div>
+            <div><span class="vis-pub">+</span> adicionarServico(servico): Void</div>
+            <div><span class="vis-pub">+</span> emitirReciboFiscal(): JSON</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 3: MÁQUINA DE ESTADOS & TERMINAL -->
+    <div class="slide-view" id="slide-3">
+      <div class="slide-header">
+        <div class="slide-category">Dinâmica e Ciclo de Vida • Statechart IDD</div>
+        <div class="slide-title">Máquina de Estados do Agendamento & Terminal da IA</div>
+        <div class="slide-subtitle">Transições Válidas, Guardas de Cadeira e Homologação de Contratos</div>
+      </div>
+      <div class="statechart-container">
+        <div class="states-visual-card">
+          <div style="font-size: 13px; font-weight: 800; color: #c084fc; text-transform: uppercase; margin-bottom: 12px;">
+            Ciclo de Vida do Agendamento (Statechart)
+          </div>
+          <div class="states-flow">
+            <div class="state-node-row">
+              <div style="width: 20px; height: 20px; border-radius: 50%; background: #ffffff;"></div>
+              <div class="state-arrow"></div>
+              <div class="state-pill">Solicitado</div>
+            </div>
+            <div class="state-node-row">
+              <div class="state-guard">[cadeira livre &amp;&amp; barbeiro livre] / confirmar()</div>
+              <div class="state-arrow"></div>
+              <div class="state-pill">Confirmado</div>
+            </div>
+            <div class="state-node-row">
+              <div class="state-guard">[cliente presente] / iniciarAtendimento()</div>
+              <div class="state-arrow"></div>
+              <div class="state-pill">EmAtendimento</div>
+            </div>
+            <div class="state-node-row">
+              <div class="state-guard">[comanda 100% paga] / faturar()</div>
+              <div class="state-arrow"></div>
+              <div class="state-pill" style="border-color: #10b981; color: #6ee7b7;">Concluido</div>
+              <div style="width: 22px; height: 22px; border-radius: 50%; border: 2px solid white; display: flex; align-items: center; justify-content: center;">
+                <div style="width: 12px; height: 12px; border-radius: 50%; background: white;"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="terminal-window">
+          <div class="terminal-header">
+            <div class="t-dot t-red"></div>
+            <div class="t-dot t-yellow"></div>
+            <div class="t-dot t-green"></div>
+            <span style="margin-left: 10px; font-size: 12px; color: #64748b;">ai-compiler@barbershop-uml:~/state-guards</span>
+          </div>
+          <div class="terminal-body">
+            <p style="color: #c084fc;">[MATRIZ DE INVARIANTES COMPORTAMENTAIS UML]</p>
+            <br>
+            <p style="color: #4ade80;">✓ GUARDA_01 (Confirmação de Slot):</p>
+            <p style="color: #94a3b8;">  canConfirm(a) = isChairFree(a.slot) &amp;&amp; isBarberFree(a.barbeiroId, a.slot)</p>
+            <br>
+            <p style="color: #4ade80;">✓ GUARDA_02 (Política de No-Show):</p>
+            <p style="color: #94a3b8;">  cancel(a) APPLIES NoShowFee IF (now() - a.slot.start) &lt; 2h</p>
+            <br>
+            <p style="color: #4ade80;">✓ GUARDA_03 (Liquidação e Faturamento):</p>
+            <p style="color: #94a3b8;">  canFinish(a) = a.comanda.status === 'PAGA' &amp;&amp; a.snapshotComissao != NULL</p>
+            <br>
+            <p style="color: #fde047;">[STATUS] Aguardando homologação do Orquestrador Eliézer Rosa...</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 4: SÍNTESE & RUMO AO CÓDIGO VIVO (EP. 4C) -->
+    <div class="slide-view" id="slide-4">
+      <div class="slide-header">
+        <div class="slide-category">Consolidação Arquitetural • Paradigma IDD</div>
+        <div class="slide-title">Do UML Oficial ao Código Vivo Compilado</div>
+        <div class="slide-subtitle">A Especificação Comportamental Pronta para o Motor de Execução</div>
+      </div>
+      <div class="cards-grid">
+        <div class="feature-card">
+          <div class="card-icon">📐</div>
+          <div class="card-title">OMG UML Standard</div>
+          <div class="card-desc">Diagrama de Casos de Uso, Classes em 3 compartimentos e Statecharts com guardas matemáticas.</div>
+          <div class="card-tag">OMG Standard</div>
+        </div>
+        <div class="feature-card">
+          <div class="card-icon">⚡</div>
+          <div class="card-title">Próximo Passo: Ep. 4C</div>
+          <div class="card-desc">No Episódio 4C, vamos dissecar o Código Vivo da Barbearia: Funções Puras com o decorador @invariant em runtime!</div>
+          <div class="card-tag">Código Compilado</div>
+        </div>
+        <div class="feature-card">
+          <div class="card-icon">🎯</div>
+          <div class="card-title">Governança Invencível</div>
+          <div class="card-desc">Intenções (1B) -> MER (2C) -> UML (3C) -> Código (4C). Precisão cirúrgica no Salão!</div>
+          <div class="card-tag">Paradigma IDD</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BOTTOM BAR -->
+  <div class="bottom-bar">
+    <div class="avatars-container">
+      <div class="avatar-card" id="av-leigo">
+        <div class="avatar-circle">
+          <img src="../../avatares/avatar_usuaria_leiga.png" alt="Usuária Leiga">
+        </div>
+        <div class="avatar-name">Usuária Leiga</div>
+        <div class="avatar-role">Validadora de Domínio</div>
+      </div>
+      <div class="avatar-card" id="av-eliezer">
+        <div class="avatar-circle">
+          <img src="../../avatares/avatar_eliezer_oficial.png" alt="Eliézer Rosa">
+        </div>
+        <div class="avatar-name">Eliézer Rosa</div>
+        <div class="avatar-role">Orquestrador IDD</div>
+      </div>
+      <div class="avatar-card" id="av-ia">
+        <div class="avatar-circle">
+          <img src="../../avatares/avatar_ia_compilador.png" alt="IA Compilador">
+        </div>
+        <div class="avatar-name">IA Compilador</div>
+        <div class="avatar-role">Arquitetura Comportamental</div>
+      </div>
+    </div>
+    <div class="subtitles-container">
+      <div class="sub-speaker" id="sub-speaker">USUÁRIA LEIGA</div>
+      <div class="sub-text" id="sub-text">Iniciando episódio 3C: UML Completo da Barbearia...</div>
+    </div>
+  </div>
+
+  <script>
+    let timelineItems = [];
+    let isRunning = false;
+    let startTimeMs = 0;
+
+    window.setTimeline = function(items) { timelineItems = items; };
+    window.stopPresentation = function() {
+      isRunning = false;
+    };
+    window.startPresentation = function() {
+      const curtain = document.getElementById('black-curtain');
+      if (curtain) {
+        curtain.style.opacity = '0';
+        setTimeout(() => curtain.remove(), 80);
+      }
+      isRunning = true;
+      startTimeMs = performance.now();
+      requestAnimationFrame(renderLoop);
+    };
+
+    function renderLoop(now) {
+      if (!isRunning) return;
+      const elapsedSec = (now - startTimeMs) / 1000;
+      const minutes = Math.floor(elapsedSec / 60);
+      const seconds = (elapsedSec % 60).toFixed(1);
+      document.getElementById('clock-display').innerText =
+        String(minutes).padStart(2, '0') + ':' + String(seconds).padStart(4, '0');
+
+      const curSeg = timelineItems.find(item => elapsedSec >= item.startSec && elapsedSec < item.endSec);
+      if (curSeg) {
+        const targetSlideId = 'slide-' + curSeg.slide;
+        document.querySelectorAll('.slide-view').forEach(s => {
+          if (s.id === targetSlideId) {
+            if (!s.classList.contains('active')) s.classList.add('active');
+          } else {
+            s.classList.remove('active');
+          }
+        });
+
+        ['leigo', 'eliezer', 'ia'].forEach(who => {
+          const el = document.getElementById('av-' + who);
+          if (el) {
+            if (curSeg.who === who) el.classList.add('active');
+            else el.classList.remove('active');
+          }
+        });
+
+        const speakerEl = document.getElementById('sub-speaker');
+        const textEl = document.getElementById('sub-text');
+        speakerEl.className = 'sub-speaker speaker-' + curSeg.who;
+        speakerEl.innerText = curSeg.actor;
+        textEl.innerText = curSeg.text;
+      }
+      requestAnimationFrame(renderLoop);
+    }
+  </script>
+</body>
+</html>

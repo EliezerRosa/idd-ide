@@ -1,0 +1,10 @@
+Move checkpoint: C:\Antigravity - RVM Designações\IDD Paradigma\_checkpoint\move-20260518-101816-part3
+Manifest: C:\Antigravity - RVM Designações\IDD Paradigma\_checkpoint\move-20260518-101816-part3\move_manifest.csv
+Rollback: C:\Antigravity - RVM Designações\IDD Paradigma\_checkpoint\move-20260518-101816-part3\rollback.ps1
+
+Status counts:
+ - MOVED_WITH_LOCK_RESIDUE: 1
+
+Notes:
+ - The directory rvm-designacoes-unified\docs\graphs\visual remained present but empty due an OS lock on the root folder handle.
+ - All files under that tree were moved to IDD Paradigma\IDD\apresentacoes\rvm-visual-pipeline.

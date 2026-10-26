@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Diagrama Gráfico MER — IDD Refrigeração (HVAC-R)</title>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, sans-serif; }
+    body {
+      background: #070d18;
+      color: #f1f5f9;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 30px;
+    }
+    header {
+      text-align: center;
+      margin-bottom: 25px;
+    }
+    .badge {
+      display: inline-block;
+      background: linear-gradient(135deg, #0284c7, #38bdf8);
+      color: white;
+      font-weight: 800;
+      font-size: 13px;
+      padding: 4px 14px;
+      border-radius: 999px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+    h1 {
+      font-size: 32px;
+      font-weight: 900;
+      color: #ffffff;
+      letter-spacing: -0.5px;
+    }
+    p {
+      color: #94a3b8;
+      font-size: 16px;
+      margin-top: 6px;
+    }
+    .container {
+      width: 100%;
+      max-width: 1400px;
+      background: rgba(15, 23, 42, 0.85);
+      border: 1.5px solid rgba(56, 189, 248, 0.3);
+      border-radius: 20px;
+      padding: 30px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7);
+      display: flex;
+      justify-content: center;
+    }
+    .mermaid {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="badge">Paradigma IDD • Refrigeração (HVAC-R)</div>
+    <h1>Modelo Entidade-Relacionamento (MER Canônico)</h1>
+    <p>Estrutura Lógica do Banco de Dados, Isolamento Multi-tenant e Conformidade com o PMOC (Lei 13.589/2018)</p>
+  </header>
+
+  <div class="container">
+    <div class="mermaid">
+erDiagram
+    TENANT ||--o{ CLIENTE : "possui"
+    TENANT ||--o{ TECNICO : "emprega"
+    
+    CLIENTE ||--o{ LOCAL_INSTALACAO : "possui"
+    CLIENTE ||--o{ CONTRATO : "assina"
+    
+    LOCAL_INSTALACAO ||--o{ EQUIPAMENTO : "abriga"
+    CONTRATO ||--o{ EQUIPAMENTO : "cobre"
+    
+    EQUIPAMENTO ||--o{ ORDEM_SERVICO : "alvo de"
+    TECNICO ||--o{ ORDEM_SERVICO : "executa"
+    
+    ORDEM_SERVICO ||--o| LAUDO_PMOC : "gera"
+    ORDEM_SERVICO ||--o{ MEDICAO_TECNICA : "contem"
+    
+    EQUIPAMENTO {
+        uuid id PK
+        uuid local_id FK
+        string qr_code_id "Identificador único da etiqueta"
+        string categoria "Split, Chiller, Câmara Fria"
+        string fabricante
+        string modelo
+        int capacidade_btu
+        string tipo_fluido "R410A, R404A, R22"
+        string tensao "220V, 380V"
+    }
+
+    ORDEM_SERVICO {
+        uuid id PK
+        uuid equipamento_id FK
+        uuid tecnico_id FK
+        string tipo "Preventiva PMOC, Corretiva, Instalacao"
+        string status "Agendada, Em_Atendimento, Concluida"
+        datetime data_agendamento
+        datetime data_conclusao
+        text relato_cliente
+        text diagnostico_tecnico
+        string foto_antes_url
+        string foto_depois_url
+        string assinatura_cliente_url
+    }
+
+    MEDICAO_TECNICA {
+        uuid id PK
+        uuid ordem_servico_id FK
+        float pressao_sucao_psi "Baixa Pressão"
+        float pressao_descarga_psi "Alta Pressão"
+        float temp_insuflamento_c
+        float temp_retorno_c
+        float corrente_operacao_a
+        float superaquecimento_calculado
+        float subresfriamento_calculado
+    }
+
+    LAUDO_PMOC {
+        uuid id PK
+        uuid ordem_servico_id FK
+        boolean filtro_higienizado
+        boolean dreno_desobstruido
+        boolean bandeja_limpa
+        boolean serpentina_higienizada
+        boolean vazamento_detectado
+        float gas_recolhido_kg "Sustentabilidade"
+        float gas_adicionado_kg "Norma"
+        string status_conformidade "Conforme, Requer_Acao"
+    }
+    
+    CONTRATO {
+        uuid id PK
+        uuid cliente_id FK
+        date data_inicio
+        date data_fim
+        int frequencia_pmoc_meses
+        boolean ativo
+    }
+    </div>
+  </div>
+
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: 'dark',
+      themeVariables: {
+        darkMode: true,
+        background: '#070d18',
+        primaryColor: '#0284c7',
+        primaryBorderColor: '#38bdf8',
+        primaryTextColor: '#f8fafc',
+        lineColor: '#38bdf8'
+      }
+    });
+  </script>
+</body>
+</html>

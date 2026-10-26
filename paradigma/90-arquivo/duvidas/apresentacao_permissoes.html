@@ -1,0 +1,1219 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sistema de Permissões — RVM Designações</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg-primary: #0f172a;
+    --bg-secondary: #1e293b;
+    --bg-card: #1e293b;
+    --text-primary: #e2e8f0;
+    --text-secondary: #94a3b8;
+    --text-muted: #64748b;
+    --green: #22c55e;
+    --green-light: #86efac;
+    --green-bg: #1a2e1a;
+    --blue: #3b82f6;
+    --blue-light: #93c5fd;
+    --blue-bg: #1a1a2e;
+    --amber: #f59e0b;
+    --amber-light: #fcd34d;
+    --amber-bg: #2a2a1a;
+    --red: #ef4444;
+    --red-light: #fca5a5;
+    --red-bg: #2a1a1a;
+    --purple: #a78bfa;
+    --purple-light: #c4b5fd;
+    --border: #334155;
+    --slide-width: 1200px;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: #080e1e;
+    color: var(--text-primary);
+    line-height: 1.6;
+  }
+
+  /* Navigation */
+  .nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    background: rgba(15, 23, 42, 0.95);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 0.75rem 2rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  .nav-logo {
+    font-weight: 800;
+    font-size: 1rem;
+    color: var(--purple);
+    white-space: nowrap;
+  }
+  .nav-dots {
+    display: flex;
+    gap: 0.5rem;
+    flex: 1;
+    justify-content: center;
+  }
+  .nav-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--border);
+    cursor: pointer;
+    transition: all 0.3s;
+    border: none;
+  }
+  .nav-dot:hover, .nav-dot.active {
+    background: var(--purple);
+    transform: scale(1.3);
+  }
+  .nav-label {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    white-space: nowrap;
+  }
+
+  /* Slide container */
+  .slides {
+    padding-top: 60px;
+  }
+  .slide {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4rem 2rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .slide::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 50% 0%, rgba(99,102,241,0.08) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .slide-inner {
+    width: 100%;
+    max-width: var(--slide-width);
+    position: relative;
+    z-index: 1;
+  }
+  .slide-number {
+    position: absolute;
+    top: 2rem;
+    right: 2rem;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    font-weight: 600;
+    letter-spacing: 0.1em;
+  }
+
+  /* Typography */
+  h1 {
+    font-size: 2.8rem;
+    font-weight: 900;
+    line-height: 1.15;
+    margin-bottom: 1rem;
+    background: linear-gradient(135deg, var(--text-primary), var(--purple-light));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  h2 {
+    font-size: 2rem;
+    font-weight: 800;
+    margin-bottom: 1.5rem;
+    color: var(--text-primary);
+  }
+  h3 {
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+  }
+  .subtitle {
+    font-size: 1.2rem;
+    color: var(--text-secondary);
+    margin-bottom: 2.5rem;
+    max-width: 700px;
+  }
+
+  /* Cards */
+  .card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.5rem;
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+  .card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px rgba(0,0,0,0.3);
+  }
+  .card.green  { border-color: var(--green); }
+  .card.blue   { border-color: var(--blue); }
+  .card.amber  { border-color: var(--amber); }
+  .card.red    { border-color: var(--red); }
+  .card.purple { border-color: var(--purple); }
+
+  /* Grids */
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+  .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+  .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; }
+
+  /* Badge */
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.2rem 0.6rem;
+    border-radius: 6px;
+    font-size: 0.75rem;
+    font-weight: 600;
+  }
+  .badge.green  { background: rgba(34,197,94,0.15); color: var(--green-light); }
+  .badge.blue   { background: rgba(59,130,246,0.15); color: var(--blue-light); }
+  .badge.amber  { background: rgba(245,158,11,0.15); color: var(--amber-light); }
+  .badge.red    { background: rgba(239,68,68,0.15); color: var(--red-light); }
+  .badge.purple { background: rgba(167,139,250,0.15); color: var(--purple-light); }
+
+  /* Feature items */
+  .feature-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  .feature-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+  }
+  .feature-list .icon {
+    flex-shrink: 0;
+    width: 28px;
+    height: 28px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.85rem;
+    background: rgba(167,139,250,0.15);
+  }
+
+  /* Flow step */
+  .flow {
+    display: flex;
+    align-items: center;
+    gap: 0;
+  }
+  .flow-step {
+    flex: 1;
+    background: var(--bg-card);
+    border-radius: 12px;
+    padding: 1.25rem;
+    text-align: center;
+    position: relative;
+  }
+  .flow-arrow {
+    flex-shrink: 0;
+    width: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--amber);
+    font-size: 1.5rem;
+    font-weight: 700;
+  }
+  .flow-step .step-num {
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 0.5rem;
+  }
+  .flow-step h4 {
+    font-size: 1rem;
+    font-weight: 700;
+    margin-bottom: 0.4rem;
+  }
+  .flow-step p {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    line-height: 1.4;
+  }
+
+  /* Tab grid */
+  .tab-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.75rem;
+  }
+  .tab-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1rem;
+    text-align: center;
+    transition: transform 0.2s;
+  }
+  .tab-card:hover { transform: scale(1.03); }
+  .tab-card .tab-icon { font-size: 1.8rem; margin-bottom: 0.4rem; }
+  .tab-card .tab-name { font-weight: 600; font-size: 0.9rem; margin-bottom: 0.5rem; }
+  .tab-card .tab-access {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    font-size: 0.7rem;
+  }
+  .access-tag {
+    padding: 0.15rem 0.4rem;
+    border-radius: 4px;
+    font-weight: 600;
+  }
+  .access-tag.yes { background: rgba(34,197,94,0.2); color: var(--green-light); }
+  .access-tag.no  { background: rgba(239,68,68,0.2); color: var(--red-light); }
+
+  /* Policy cards */
+  .policy-card {
+    background: var(--bg-card);
+    border-radius: 10px;
+    padding: 1.25rem;
+    border-left: 4px solid;
+    transition: transform 0.2s;
+  }
+  .policy-card:hover { transform: translateX(4px); }
+  .policy-card .policy-title {
+    font-weight: 700;
+    font-size: 0.95rem;
+    margin-bottom: 0.5rem;
+  }
+  .policy-card .policy-meta {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin-bottom: 0.4rem;
+  }
+  .policy-card .policy-desc {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    margin-top: 0.5rem;
+  }
+
+  /* Scenario cards */
+  .scenario-card {
+    border-radius: 16px;
+    padding: 2rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .scenario-card::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 120px;
+    height: 120px;
+    border-radius: 0 16px 0 100%;
+    opacity: 0.08;
+  }
+  .scenario-card.green  { background: var(--green-bg); border: 2px solid var(--green); }
+  .scenario-card.green::after  { background: var(--green); }
+  .scenario-card.amber  { background: var(--amber-bg); border: 2px solid var(--amber); }
+  .scenario-card.amber::after  { background: var(--amber); }
+  .scenario-card.red    { background: var(--red-bg); border: 2px solid var(--red); }
+  .scenario-card.red::after    { background: var(--red); }
+  .scenario-card .scenario-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+  }
+  .scenario-card .scenario-avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+  }
+  .scenario-card.green .scenario-avatar { background: rgba(34,197,94,0.2); }
+  .scenario-card.amber .scenario-avatar { background: rgba(245,158,11,0.2); }
+  .scenario-card.red   .scenario-avatar { background: rgba(239,68,68,0.2); }
+  .scenario-card .scenario-name { font-weight: 700; font-size: 1.1rem; }
+  .scenario-card .scenario-role { font-size: 0.8rem; color: var(--text-muted); }
+  .scenario-card .scenario-items {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+  .scenario-card .scenario-items li {
+    font-size: 0.88rem;
+    color: var(--text-secondary);
+    padding-left: 1.2rem;
+    position: relative;
+  }
+  .scenario-card .scenario-items li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--text-muted);
+  }
+  .scenario-card .scenario-quote {
+    margin-top: 1rem;
+    font-style: italic;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    border-top: 1px solid rgba(255,255,255,0.08);
+    padding-top: 0.75rem;
+  }
+
+  /* Admin panels */
+  .admin-panel {
+    background: var(--bg-card);
+    border-radius: 12px;
+    padding: 1.5rem;
+    border-top: 3px solid;
+  }
+  .admin-panel.blue  { border-color: var(--blue); }
+  .admin-panel.amber { border-color: var(--amber); }
+  .admin-panel h3 { margin-bottom: 1rem; }
+  .admin-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.6rem;
+    margin-bottom: 0.75rem;
+    font-size: 0.88rem;
+  }
+  .admin-item .admin-icon { font-size: 1.1rem; flex-shrink: 0; margin-top: 0.1rem; }
+  .admin-item strong { display: block; color: var(--text-primary); margin-bottom: 0.15rem; }
+  .admin-item span { color: var(--text-secondary); font-size: 0.82rem; }
+
+  /* Resolution flow */
+  .resolution {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-top: 2rem;
+    padding: 1.25rem;
+    background: rgba(167,139,250,0.06);
+    border: 1px solid rgba(167,139,250,0.2);
+    border-radius: 12px;
+    flex-wrap: wrap;
+  }
+  .resolution-step {
+    padding: 0.4rem 1rem;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-weight: 600;
+  }
+  .resolution-step.active { background: rgba(167,139,250,0.2); color: var(--purple-light); }
+  .resolution-step.dim { color: var(--text-muted); }
+  .resolution-arrow { color: var(--amber); font-weight: 700; }
+
+  /* Summary */
+  .summary-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    margin-top: 1.5rem;
+  }
+  .summary-stat {
+    text-align: center;
+    padding: 1.5rem;
+    background: var(--bg-card);
+    border-radius: 12px;
+    border: 1px solid var(--border);
+  }
+  .summary-stat .stat-num {
+    font-size: 2.5rem;
+    font-weight: 900;
+    line-height: 1;
+    margin-bottom: 0.3rem;
+  }
+  .summary-stat .stat-label {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  /* Footer */
+  .slide-footer {
+    margin-top: 2.5rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.75rem;
+    color: var(--text-muted);
+  }
+
+  /* Denied branch */
+  .denied-branch {
+    margin-top: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  .denied-line {
+    width: 2px;
+    height: 60px;
+    background: var(--red);
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .denied-box {
+    background: var(--red-bg);
+    border: 2px solid var(--red);
+    border-radius: 10px;
+    padding: 1rem 1.5rem;
+    text-align: center;
+    max-width: 350px;
+    margin: 0 auto;
+  }
+
+  /* Notes hint */
+  .notes-hint {
+    background: rgba(167,139,250,0.06);
+    border: 1px dashed rgba(167,139,250,0.3);
+    border-radius: 10px;
+    padding: 1rem 1.25rem;
+    margin-top: 2rem;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    text-align: center;
+  }
+
+  /* Actions table */
+  .actions-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+    margin-top: 1.5rem;
+  }
+  .action-group {
+    background: var(--bg-card);
+    border-radius: 10px;
+    padding: 1rem 1.25rem;
+    border-left: 3px solid var(--border);
+  }
+  .action-group h4 {
+    font-size: 0.85rem;
+    font-weight: 700;
+    margin-bottom: 0.4rem;
+  }
+  .action-group .actions-list {
+    font-size: 0.78rem;
+    color: var(--text-secondary);
+    font-family: 'Courier New', monospace;
+    line-height: 1.6;
+  }
+
+  /* Animations */
+  .fade-in {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .delay-1 { transition-delay: 0.1s; }
+  .delay-2 { transition-delay: 0.2s; }
+  .delay-3 { transition-delay: 0.3s; }
+  .delay-4 { transition-delay: 0.4s; }
+  .delay-5 { transition-delay: 0.5s; }
+
+  /* Responsive */
+  @media (max-width: 900px) {
+    .grid-2, .grid-3, .grid-4, .tab-grid, .actions-grid, .summary-grid {
+      grid-template-columns: 1fr;
+    }
+    .flow { flex-direction: column; }
+    .flow-arrow { transform: rotate(90deg); }
+    h1 { font-size: 2rem; }
+    h2 { font-size: 1.5rem; }
+    .slide { padding: 3rem 1rem; }
+  }
+
+  /* Print */
+  @media print {
+    .nav { display: none; }
+    .slide { min-height: auto; page-break-after: always; }
+    body { background: #fff; color: #1a1a1a; }
+  }
+</style>
+</head>
+<body>
+<div id="idd-status-banner" role="note" style="position:fixed;bottom:6px;left:6px;z-index:2147483000;max-width:min(92vw,560px);padding:3px 8px;font:11px/1.35 system-ui,-apple-system,Segoe UI,sans-serif;color:#fde68a;background:rgba(17,17,17,.82);border:1px solid rgba(253,230,138,.35);border-radius:6px;pointer-events:none;">📜 Peça histórica (versão anterior ao Cânone v1.0-rc1). Afirmações podem não refletir o status atual — ver paradigma/00-canone/AFIRMACOES.md</div>
+
+<!-- Navigation -->
+<nav class="nav">
+  <div class="nav-logo">🔐 RVM Permissões</div>
+  <div class="nav-dots">
+    <button class="nav-dot active" data-slide="0" title="Visão Geral"></button>
+    <button class="nav-dot" data-slide="1" title="Arquitetura"></button>
+    <button class="nav-dot" data-slide="2" title="Políticas"></button>
+    <button class="nav-dot" data-slide="3" title="Tab Gating"></button>
+    <button class="nav-dot" data-slide="4" title="Agent Actions"></button>
+    <button class="nav-dot" data-slide="5" title="Admin UI"></button>
+    <button class="nav-dot" data-slide="6" title="Cenários"></button>
+  </div>
+  <div class="nav-label">← → para navegar</div>
+</nav>
+
+<!-- SLIDES -->
+<div class="slides">
+
+  <!-- ========== SLIDE 1: Visão Geral ========== -->
+  <section class="slide" id="slide-0">
+    <div class="slide-inner">
+      <span class="slide-number">01 / 07</span>
+
+      <h1 class="fade-in">🔐 Sistema de Permissões<br>RVM Designações</h1>
+      <p class="subtitle fade-in delay-1">Controle granular de acesso por papel, privilégio e utilizador — configurável em tempo real, sem deploy.</p>
+
+      <div class="summary-grid fade-in delay-2">
+        <div class="summary-stat">
+          <div class="stat-num" style="color:var(--green)">7</div>
+          <div class="stat-label">Políticas Seed</div>
+        </div>
+        <div class="summary-stat">
+          <div class="stat-num" style="color:var(--blue)">23</div>
+          <div class="stat-label">Ações Controladas</div>
+        </div>
+        <div class="summary-stat">
+          <div class="stat-num" style="color:var(--purple)">3</div>
+          <div class="stat-label">Níveis de Dados</div>
+        </div>
+      </div>
+
+      <ul class="feature-list fade-in delay-3" style="margin-top:2rem">
+        <li><span class="icon">🛡️</span> <span><strong style="color:var(--text-primary)">Tab Gating</strong> — Cada papel vê apenas as abas permitidas</span></li>
+        <li><span class="icon">🤖</span> <span><strong style="color:var(--text-primary)">Agent Actions</strong> — Dupla verificação: prompt injection + action gate</span></li>
+        <li><span class="icon">👤</span> <span><strong style="color:var(--text-primary)">Overrides</strong> — Exceções individuais por utilizador</span></li>
+        <li><span class="icon">⚡</span> <span><strong style="color:var(--text-primary)">Tempo real</strong> — Alterações via Admin sem código</span></li>
+        <li><span class="icon">🔒</span> <span><strong style="color:var(--text-primary)">RLS</strong> — Segurança a nível de base de dados (Supabase)</span></li>
+      </ul>
+
+      <div class="slide-footer fade-in delay-4">
+        <span>Commit 631c41c · main</span>
+        <span>Abril 2026</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== SLIDE 2: Arquitetura ========== -->
+  <section class="slide" id="slide-1">
+    <div class="slide-inner">
+      <span class="slide-number">02 / 07</span>
+
+      <h2 class="fade-in">🏗️ Arquitetura em 3 Camadas</h2>
+      <p class="subtitle fade-in delay-1">Do Supabase ao React — cada camada com responsabilidade clara.</p>
+
+      <!-- Layer 1: DB -->
+      <div class="card blue fade-in delay-1" style="margin-bottom:1rem">
+        <div style="display:flex;align-items:center;gap:1rem;">
+          <span style="font-size:2rem">🗄️</span>
+          <div>
+            <h3 style="color:var(--blue-light);margin-bottom:0.2rem">Camada 1 — Supabase (PostgreSQL)</h3>
+            <p style="font-size:0.9rem;color:var(--text-secondary)">
+              <code style="color:var(--blue-light)">permission_policies</code> — Políticas por (funcao, privilegio) com prioridade<br>
+              <code style="color:var(--blue-light)">user_permission_overrides</code> — Exceções individuais por user_id<br>
+              <span style="color:var(--text-muted)">Row Level Security (RLS) ativo · Índices compostos · 7 seed policies</span>
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Arrow -->
+      <div style="text-align:center;color:var(--amber);font-size:1.5rem;margin:0.5rem 0">▼</div>
+
+      <!-- Layer 2: Service -->
+      <div class="card amber fade-in delay-2" style="margin-bottom:1rem">
+        <div style="display:flex;align-items:center;gap:1rem;">
+          <span style="font-size:2rem">⚙️</span>
+          <div>
+            <h3 style="color:var(--amber-light);margin-bottom:0.2rem">Camada 2 — permissionService.ts</h3>
+            <p style="font-size:0.9rem;color:var(--text-secondary)">
+              Cache inteligente (5 min) · Resolução por prioridade · Override &gt; Política específica &gt; Política genérica<br>
+              <span style="color:var(--text-muted)">getPermissions() · canUserPerformAction() · clearCache()</span>
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Arrow -->
+      <div style="text-align:center;color:var(--amber);font-size:1.5rem;margin:0.5rem 0">▼</div>
+
+      <!-- Layer 3: Hook -->
+      <div class="card green fade-in delay-3" style="margin-bottom:1.5rem">
+        <div style="display:flex;align-items:center;gap:1rem;">
+          <span style="font-size:2rem">⚛️</span>
+          <div>
+            <h3 style="color:var(--green-light);margin-bottom:0.2rem">Camada 3 — usePermissions() Hook</h3>
+            <p style="font-size:0.9rem;color:var(--text-secondary)">
+              Expõe ao React: <code style="color:var(--green-light)">accessLevel</code>, <code style="color:var(--green-light)">canPerformAction()</code>, <code style="color:var(--green-light)">permissionGate</code><br>
+              <span style="color:var(--text-muted)">Reativo · Invalidação automática · Loading state</span>
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4 consumers -->
+      <h3 class="fade-in delay-4" style="color:var(--text-muted);font-size:0.85rem;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:0.75rem">4 Consumidores</h3>
+      <div class="grid-4 fade-in delay-4">
+        <div class="card" style="text-align:center;padding:1rem">
+          <div style="font-size:1.3rem;margin-bottom:0.3rem">📱</div>
+          <div style="font-weight:600;font-size:0.85rem">App.tsx</div>
+          <div style="font-size:0.75rem;color:var(--text-muted)">Tab Gating</div>
+        </div>
+        <div class="card" style="text-align:center;padding:1rem">
+          <div style="font-size:1.3rem;margin-bottom:0.3rem">🧠</div>
+          <div style="font-weight:600;font-size:0.85rem">agentService</div>
+          <div style="font-size:0.75rem;color:var(--text-muted)">Prompt Injection</div>
+        </div>
+        <div class="card" style="text-align:center;padding:1rem">
+          <div style="font-size:1.3rem;margin-bottom:0.3rem">🚨</div>
+          <div style="font-weight:600;font-size:0.85rem">actionService</div>
+          <div style="font-size:0.75rem;color:var(--text-muted)">Action Gate</div>
+        </div>
+        <div class="card" style="text-align:center;padding:1rem">
+          <div style="font-size:1.3rem;margin-bottom:0.3rem">⚙️</div>
+          <div style="font-weight:600;font-size:0.85rem">PermissionMgr</div>
+          <div style="font-size:0.75rem;color:var(--text-muted)">Admin CRUD</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== SLIDE 3: Políticas ========== -->
+  <section class="slide" id="slide-2">
+    <div class="slide-inner">
+      <span class="slide-number">03 / 07</span>
+
+      <h2 class="fade-in">📊 Matriz de Permissões — 7 Políticas Seed</h2>
+      <p class="subtitle fade-in delay-1">Cada política define ações, acesso a dados e prioridade de resolução.</p>
+
+      <div style="display:flex;flex-direction:column;gap:0.75rem;">
+
+        <!-- Priority 10 -->
+        <div class="fade-in delay-1">
+          <div style="font-size:0.7rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--text-muted);margin-bottom:0.4rem;font-weight:600">⬆ Prioridade 10 — Acesso Total</div>
+          <div class="grid-3">
+            <div class="policy-card" style="border-color:var(--green)">
+              <div class="policy-title" style="color:var(--green-light)">🟢 Ancião geral</div>
+              <div class="policy-meta">
+                <span class="badge green">all</span>
+                <span class="badge green">sensível ✅</span>
+                <span class="badge green">22 ações</span>
+              </div>
+              <div class="policy-desc">Acesso completo + dados sensíveis</div>
+            </div>
+            <div class="policy-card" style="border-color:var(--blue)">
+              <div class="policy-title" style="color:var(--blue-light)">🔵 Ancião + Sup. RVM</div>
+              <div class="policy-meta">
+                <span class="badge blue">all</span>
+                <span class="badge blue">sensível ✅</span>
+                <span class="badge blue">22 ações</span>
+              </div>
+              <div class="policy-desc">Supervisão total do RVM</div>
+            </div>
+            <div class="policy-card" style="border-color:var(--blue)">
+              <div class="policy-title" style="color:var(--blue-light)">🔵 Ancião + Coordenador</div>
+              <div class="policy-meta">
+                <span class="badge blue">all</span>
+                <span class="badge blue">sensível ✅</span>
+                <span class="badge blue">22 ações</span>
+              </div>
+              <div class="policy-desc">Coordenação de vida e ministério</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Priority 8 -->
+        <div class="fade-in delay-2">
+          <div style="font-size:0.7rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--text-muted);margin-bottom:0.4rem;font-weight:600">⬆ Prioridade 8</div>
+          <div class="policy-card" style="border-color:var(--amber);max-width:400px">
+            <div class="policy-title" style="color:var(--amber-light)">🟡 SM + Ajudante Sup. RVM</div>
+            <div class="policy-meta">
+              <span class="badge amber">filtered</span>
+              <span class="badge red">sensível ❌</span>
+              <span class="badge amber">17 ações</span>
+            </div>
+            <div class="policy-desc">Operações RVM sem admin</div>
+          </div>
+        </div>
+
+        <!-- Priority 5 -->
+        <div class="fade-in delay-3">
+          <div style="font-size:0.7rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--text-muted);margin-bottom:0.4rem;font-weight:600">⬆ Prioridade 5</div>
+          <div class="policy-card" style="border-color:var(--blue);max-width:400px">
+            <div class="policy-title" style="color:var(--blue-light)">🔵 Ancião + Ajudante Sup. RVM</div>
+            <div class="policy-meta">
+              <span class="badge blue">all</span>
+              <span class="badge blue">sensível ✅</span>
+              <span class="badge blue">22 ações</span>
+            </div>
+            <div class="policy-desc">Acesso total com sensível</div>
+          </div>
+        </div>
+
+        <!-- Priority 3 + 1 -->
+        <div class="fade-in delay-4">
+          <div style="font-size:0.7rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--text-muted);margin-bottom:0.4rem;font-weight:600">⬇ Prioridades 3 e 1 — Acesso Restrito</div>
+          <div class="grid-2" style="max-width:820px">
+            <div class="policy-card" style="border-color:var(--amber)">
+              <div class="policy-title" style="color:var(--amber-light)">🟡 SM geral</div>
+              <div class="policy-meta">
+                <span class="badge amber">filtered</span>
+                <span class="badge red">sensível ❌</span>
+                <span class="badge amber">14 ações</span>
+              </div>
+              <div class="policy-desc">Prioridade 3 — Leitura + básico RVM</div>
+            </div>
+            <div class="policy-card" style="border-color:var(--red)">
+              <div class="policy-title" style="color:var(--red-light)">🔴 Publicador</div>
+              <div class="policy-meta">
+                <span class="badge red">self</span>
+                <span class="badge red">sensível ❌</span>
+                <span class="badge red">7 ações</span>
+              </div>
+              <div class="policy-desc">Prioridade 1 — Somente leitura própria</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== SLIDE 4: Tab Gating ========== -->
+  <section class="slide" id="slide-3">
+    <div class="slide-inner">
+      <span class="slide-number">04 / 07</span>
+
+      <h2 class="fade-in">🚪 Tab Gating — Controle de Abas por Papel</h2>
+      <p class="subtitle fade-in delay-1">Cada papel vê apenas as abas relevantes para a sua função.</p>
+
+      <div class="tab-grid fade-in delay-2">
+        <div class="tab-card">
+          <div class="tab-icon">📅</div>
+          <div class="tab-name">Designações</div>
+          <div class="tab-access">
+            <span class="access-tag yes">Ancião</span>
+            <span class="access-tag yes">SM</span>
+            <span class="access-tag no">Pub</span>
+          </div>
+        </div>
+        <div class="tab-card">
+          <div class="tab-icon">👥</div>
+          <div class="tab-name">Publicadores</div>
+          <div class="tab-access">
+            <span class="access-tag yes">Ancião</span>
+            <span class="access-tag no">SM</span>
+            <span class="access-tag no">Pub</span>
+          </div>
+        </div>
+        <div class="tab-card">
+          <div class="tab-icon">📊</div>
+          <div class="tab-name">Histórico</div>
+          <div class="tab-access">
+            <span class="access-tag yes">Ancião</span>
+            <span class="access-tag yes">SM</span>
+            <span class="access-tag no">Pub</span>
+          </div>
+        </div>
+        <div class="tab-card">
+          <div class="tab-icon">🤖</div>
+          <div class="tab-name">Agente IA</div>
+          <div class="tab-access">
+            <span class="access-tag yes">Ancião</span>
+            <span class="access-tag yes">SM</span>
+            <span class="access-tag yes">Pub</span>
+          </div>
+        </div>
+        <div class="tab-card">
+          <div class="tab-icon">📋</div>
+          <div class="tab-name">S-140</div>
+          <div class="tab-access">
+            <span class="access-tag yes">Ancião</span>
+            <span class="access-tag yes">SM</span>
+            <span class="access-tag no">Pub</span>
+          </div>
+        </div>
+        <div class="tab-card">
+          <div class="tab-icon">📖</div>
+          <div class="tab-name">Apostila</div>
+          <div class="tab-access">
+            <span class="access-tag yes">Ancião</span>
+            <span class="access-tag yes">SM</span>
+            <span class="access-tag yes">Pub</span>
+          </div>
+        </div>
+        <div class="tab-card">
+          <div class="tab-icon">📑</div>
+          <div class="tab-name">PDF Pauta</div>
+          <div class="tab-access">
+            <span class="access-tag yes">Ancião</span>
+            <span class="access-tag yes">SM</span>
+            <span class="access-tag no">Pub</span>
+          </div>
+        </div>
+        <div class="tab-card" style="border-color:var(--red)">
+          <div class="tab-icon">⚙️</div>
+          <div class="tab-name">Admin</div>
+          <div class="tab-access">
+            <span class="access-tag yes">Ancião</span>
+            <span class="access-tag no">SM</span>
+            <span class="access-tag no">Pub</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Flow -->
+      <div class="flow fade-in delay-3" style="margin-top:2.5rem">
+        <div class="flow-step" style="border:1px solid var(--blue)">
+          <div class="step-num">Passo 1</div>
+          <h4 style="color:var(--blue-light)">Login</h4>
+          <p><code style="color:var(--blue-light);font-size:0.8rem">usePermissions()</code> carrega accessLevel do Supabase</p>
+        </div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step" style="border:1px solid var(--amber)">
+          <div class="step-num">Passo 2</div>
+          <h4 style="color:var(--amber-light)">Verificação</h4>
+          <p><code style="color:var(--amber-light);font-size:0.8rem">App.tsx</code> verifica accessLevel para cada aba</p>
+        </div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step" style="border:1px solid var(--green)">
+          <div class="step-num">Resultado</div>
+          <h4 style="color:var(--green-light)">Interface Limpa</h4>
+          <p>Utilizador vê apenas as abas permitidas ✅</p>
+        </div>
+      </div>
+
+      <div class="notes-hint fade-in delay-4">
+        💡 A aba <strong>Admin</strong> só aparece para Anciãos — nela se gerem políticas e overrides
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== SLIDE 5: Agent Actions ========== -->
+  <section class="slide" id="slide-4">
+    <div class="slide-inner">
+      <span class="slide-number">05 / 07</span>
+
+      <h2 class="fade-in">🤖 Agent Actions — Controle de Ações do Agente IA</h2>
+      <p class="subtitle fade-in delay-1">Dupla verificação: o agente sabe o que pode, e o sistema confirma antes de executar.</p>
+
+      <!-- Flow -->
+      <div class="flow fade-in delay-2">
+        <div class="flow-step" style="border:1px solid var(--purple)">
+          <div class="step-num">Input</div>
+          <h4 style="color:var(--purple-light)">👤 Pedido</h4>
+          <p>"Criar designação<br>para o João"</p>
+        </div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step" style="border:1px solid var(--amber)">
+          <div class="step-num">Gate 1</div>
+          <h4 style="color:var(--amber-light)">🧠 Prompt Injection</h4>
+          <p>agentService injeta lista de ações permitidas no system prompt</p>
+        </div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step" style="border:1px solid var(--red)">
+          <div class="step-num">Gate 2</div>
+          <h4 style="color:var(--red-light)">🚨 Action Gate</h4>
+          <p>executeAction() verifica whitelist ANTES de executar</p>
+        </div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step" style="border:1px solid var(--green)">
+          <div class="step-num">Output</div>
+          <h4 style="color:var(--green-light)">✅ Execução</h4>
+          <p>"Designação criada com sucesso!"</p>
+        </div>
+      </div>
+
+      <!-- Denied branch -->
+      <div class="fade-in delay-3" style="text-align:center;margin-top:1.5rem">
+        <div style="color:var(--red);font-size:1.5rem;margin-bottom:0.5rem">↓</div>
+        <div class="denied-box">
+          <div style="font-size:1.2rem;margin-bottom:0.3rem">❌</div>
+          <div style="font-weight:700;color:var(--red-light);margin-bottom:0.3rem">Ação Negada</div>
+          <div style="font-size:0.85rem;color:var(--text-secondary)">"Não tens permissão para criar designações"</div>
+        </div>
+      </div>
+
+      <!-- 23 Actions -->
+      <div class="actions-grid fade-in delay-4">
+        <div class="action-group" style="border-color:var(--green)">
+          <h4 style="color:var(--green-light)">📅 Designações (5)</h4>
+          <div class="actions-list">create_designation<br>update_designation<br>delete_designation<br>swap_designation<br>auto_assign_all</div>
+        </div>
+        <div class="action-group" style="border-color:var(--blue)">
+          <h4 style="color:var(--blue-light)">👥 Publicadores (5)</h4>
+          <div class="actions-list">create_publisher<br>update_publisher<br>delete_publisher<br>update_availability<br>view_sensitive_data</div>
+        </div>
+        <div class="action-group" style="border-color:var(--amber)">
+          <h4 style="color:var(--amber-light)">📊 Hist / S-140 / PDF (4+)</h4>
+          <div class="actions-list">view_history<br>export_s140<br>generate_pdf<br>send_whatsapp</div>
+        </div>
+        <div class="action-group" style="border-color:var(--red)">
+          <h4 style="color:var(--red-light)">⚙️ Admin (3+)</h4>
+          <div class="actions-list">manage_permissions<br>manage_overrides<br>backup_data</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== SLIDE 6: Admin UI ========== -->
+  <section class="slide" id="slide-5">
+    <div class="slide-inner">
+      <span class="slide-number">06 / 07</span>
+
+      <h2 class="fade-in">⚙️ Admin UI — Gestão de Permissões em Tempo Real</h2>
+      <p class="subtitle fade-in delay-1">Dois painéis: políticas gerais e exceções individuais.</p>
+
+      <div class="grid-2 fade-in delay-2">
+        <!-- Policies Panel -->
+        <div class="admin-panel blue">
+          <h3 style="color:var(--blue-light)">📜 Painel de Políticas</h3>
+          <div style="font-size:0.75rem;color:var(--text-muted);margin-bottom:1rem;font-family:monospace">permission_policies</div>
+
+          <div class="admin-item">
+            <span class="admin-icon">✏️</span>
+            <div><strong>Criar nova política</strong><span>Definir funcao + privilegio, escolher allowed_actions (multi-select), data_access_level, toggle sensível, prioridade</span></div>
+          </div>
+          <div class="admin-item">
+            <span class="admin-icon">📝</span>
+            <div><strong>Editar existente</strong><span>Alterar qualquer campo, reordenar prioridade</span></div>
+          </div>
+          <div class="admin-item">
+            <span class="admin-icon">🗑️</span>
+            <div><strong>Excluir política</strong><span>Com diálogo de confirmação</span></div>
+          </div>
+          <div class="admin-item">
+            <span class="admin-icon">🔄</span>
+            <div><strong>Efeito imediato</strong><span>Cache invalidado automaticamente, sem restart</span></div>
+          </div>
+        </div>
+
+        <!-- Overrides Panel -->
+        <div class="admin-panel amber">
+          <h3 style="color:var(--amber-light)">👤 Painel de Overrides</h3>
+          <div style="font-size:0.75rem;color:var(--text-muted);margin-bottom:1rem;font-family:monospace">user_permission_overrides</div>
+
+          <div class="admin-item">
+            <span class="admin-icon">🎯</span>
+            <div><strong>Dar mais permissões</strong><span>SM "Carlos" precisa ver dados sensíveis → Override: can_access_sensitive = true</span></div>
+          </div>
+          <div class="admin-item">
+            <span class="admin-icon">🔒</span>
+            <div><strong>Restringir permissões</strong><span>Ancião "Manuel" não pode usar agente → Override: allowed_actions = []</span></div>
+          </div>
+          <div class="admin-item">
+            <span class="admin-icon">⚡</span>
+            <div><strong>Prioridade superior</strong><span>Override sempre vence a política base, pode ter data de expiração</span></div>
+          </div>
+          <div class="admin-item">
+            <span class="admin-icon">📊</span>
+            <div><strong>Auditoria</strong><span>Histórico: quem criou, quando, porquê (created_by)</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Resolution order -->
+      <div class="resolution fade-in delay-3">
+        <span style="font-size:0.85rem;color:var(--text-muted);margin-right:0.5rem">🔀 Ordem:</span>
+        <span class="resolution-step active">Override do User</span>
+        <span class="resolution-arrow">→</span>
+        <span class="resolution-step active">Política (funcao + privilegio)</span>
+        <span class="resolution-arrow">→</span>
+        <span class="resolution-step active">Política (funcao)</span>
+        <span class="resolution-arrow">→</span>
+        <span class="resolution-step dim">Default (sem acesso)</span>
+      </div>
+
+      <div class="notes-hint fade-in delay-4">
+        💡 Tudo gerido pelo Ancião na aba Admin, sem necessidade de código ou deploy!
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== SLIDE 7: Cenários ========== -->
+  <section class="slide" id="slide-6">
+    <div class="slide-inner">
+      <span class="slide-number">07 / 07</span>
+
+      <h2 class="fade-in">🎭 Cenários de Uso — Exemplos Reais</h2>
+      <p class="subtitle fade-in delay-1">Como cada papel experimenta a aplicação no dia-a-dia.</p>
+
+      <div class="grid-3">
+        <!-- Ancião -->
+        <div class="scenario-card green fade-in delay-1">
+          <div class="scenario-header">
+            <div class="scenario-avatar">👨‍💼</div>
+            <div>
+              <div class="scenario-name" style="color:var(--green-light)">Irmão António</div>
+              <div class="scenario-role">Ancião · Supervisor RVM</div>
+            </div>
+          </div>
+          <ul class="scenario-items">
+            <li>Vê <strong>todas as 8 abas</strong></li>
+            <li>Agente executa <strong>22 ações</strong></li>
+            <li>Acessa <strong>dados sensíveis</strong> (telefone)</li>
+            <li>Gere permissões na <strong>Admin</strong></li>
+            <li>Cria/edita/apaga designações</li>
+            <li>Gera S-140 e envia WhatsApp</li>
+          </ul>
+          <div class="scenario-quote">"O controle total para quem precisa"</div>
+        </div>
+
+        <!-- SM -->
+        <div class="scenario-card amber fade-in delay-2">
+          <div class="scenario-header">
+            <div class="scenario-avatar">👨‍🔧</div>
+            <div>
+              <div class="scenario-name" style="color:var(--amber-light)">Irmão Carlos</div>
+              <div class="scenario-role">SM · Ajudante Sup. RVM</div>
+            </div>
+          </div>
+          <ul class="scenario-items">
+            <li>Vê <strong>6 abas</strong> (sem Admin, sem Pub.)</li>
+            <li>Agente executa <strong>17 ações</strong></li>
+            <li><strong>NÃO</strong> acessa dados sensíveis</li>
+            <li>Pode criar/editar designações</li>
+            <li>Pode ver histórico e S-140</li>
+            <li>Não pode gerir permissões</li>
+          </ul>
+          <div class="scenario-quote">"Acesso operacional focado no RVM"</div>
+        </div>
+
+        <!-- Publicador -->
+        <div class="scenario-card red fade-in delay-3">
+          <div class="scenario-header">
+            <div class="scenario-avatar">👩</div>
+            <div>
+              <div class="scenario-name" style="color:var(--red-light)">Irmã Maria</div>
+              <div class="scenario-role">Publicadora</div>
+            </div>
+          </div>
+          <ul class="scenario-items">
+            <li>Vê apenas <strong>2 abas</strong> (Agente + Apostila)</li>
+            <li>Agente executa <strong>7 ações</strong> (leitura)</li>
+            <li><strong>NÃO</strong> acessa dados sensíveis</li>
+            <li>Não pode criar/editar nada</li>
+            <li>Só consulta as suas designações</li>
+            <li>Interface limpa e simples</li>
+          </ul>
+          <div class="scenario-quote">"Segurança: cada um vê o que pode"</div>
+        </div>
+      </div>
+
+      <!-- Summary -->
+      <div class="card purple fade-in delay-4" style="margin-top:2rem;text-align:center;padding:2rem">
+        <h3 style="color:var(--purple-light);margin-bottom:1rem">🏆 Sistema Pronto para Produção</h3>
+        <div style="display:flex;justify-content:center;gap:1.5rem;flex-wrap:wrap;margin-bottom:1rem">
+          <span class="badge green" style="font-size:0.85rem;padding:0.4rem 0.8rem">✅ 7 políticas seed</span>
+          <span class="badge blue" style="font-size:0.85rem;padding:0.4rem 0.8rem">✅ 23 ações controladas</span>
+          <span class="badge amber" style="font-size:0.85rem;padding:0.4rem 0.8rem">✅ 3 níveis de dados</span>
+          <span class="badge purple" style="font-size:0.85rem;padding:0.4rem 0.8rem">✅ RLS + Cache</span>
+        </div>
+        <div style="font-size:0.9rem;color:var(--text-secondary)">
+          Dupla verificação no agente · Override individual · Admin UI sem código · Tempo real
+        </div>
+        <div style="margin-top:1rem;font-family:monospace;font-size:0.8rem;color:var(--text-muted)">
+          Commit <span style="color:var(--green-light)">631c41c</span> · Branch main · Abril 2026
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div><!-- /slides -->
+
+<script>
+  // Intersection Observer for fade-in animations
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.15 });
+
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+  // Navigation dots
+  const dots = document.querySelectorAll('.nav-dot');
+  const slides = document.querySelectorAll('.slide');
+
+  dots.forEach(dot => {
+    dot.addEventListener('click', () => {
+      const idx = parseInt(dot.dataset.slide);
+      slides[idx].scrollIntoView({ behavior: 'smooth' });
+    });
+  });
+
+  // Update active dot on scroll
+  const slideObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const idx = Array.from(slides).indexOf(entry.target);
+        dots.forEach(d => d.classList.remove('active'));
+        dots[idx].classList.add('active');
+      }
+    });
+  }, { threshold: 0.5 });
+
+  slides.forEach(s => slideObserver.observe(s));
+
+  // Keyboard navigation
+  let currentSlide = 0;
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') {
+      e.preventDefault();
+      currentSlide = Math.min(currentSlide + 1, slides.length - 1);
+      slides[currentSlide].scrollIntoView({ behavior: 'smooth' });
+    } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+      e.preventDefault();
+      currentSlide = Math.max(currentSlide - 1, 0);
+      slides[currentSlide].scrollIntoView({ behavior: 'smooth' });
+    }
+  });
+
+  // Sync currentSlide with scroll
+  const scrollObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        currentSlide = Array.from(slides).indexOf(entry.target);
+      }
+    });
+  }, { threshold: 0.5 });
+  slides.forEach(s => scrollObserver.observe(s));
+</script>
+
+</body>
+</html>

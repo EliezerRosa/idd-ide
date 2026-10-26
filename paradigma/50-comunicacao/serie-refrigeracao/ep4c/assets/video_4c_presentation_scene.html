@@ -1,0 +1,837 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=1920, height=1080, initial-scale=1.0">
+  <title>Episódio 4C — Metodologia IDD: Máquina de Diff de Intenções & Evolução de Esquema</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-dark: #050811;
+      --bg-card: rgba(11, 20, 38, 0.90);
+      --bg-card-border: rgba(56, 189, 248, 0.25);
+      --cyan-frost: #38bdf8;
+      --cyan-glow: rgba(56, 189, 248, 0.45);
+      --ice-blue: #0284c7;
+      --emerald-ok: #10b981;
+      --amber-alert: #f59e0b;
+      --purple-tech: #a855f7;
+      --rose-warn: #f43f5e;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      width: 1920px;
+      height: 1080px;
+      overflow: hidden;
+      background: #050811;
+      color: var(--text-main);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      position: relative;
+    }
+
+    #bg-canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 1920px;
+      height: 1080px;
+      z-index: 1;
+    }
+
+    .app-container {
+      position: relative;
+      z-index: 10;
+      width: 1920px;
+      height: 1080px;
+      display: flex;
+      flex-direction: column;
+      padding: 30px 45px;
+      justify-content: space-between;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 18px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .brand-wrap {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .brand-logo {
+      width: 50px;
+      height: 50px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #059669, #0284c7);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 26px;
+      box-shadow: 0 0 20px rgba(16, 185, 129, 0.5);
+    }
+    .brand-text h1 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 22px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      color: #fff;
+    }
+    .brand-text span {
+      font-size: 13px;
+      color: #38bdf8;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+    }
+
+    .header-badges {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .h-badge {
+      padding: 8px 18px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      background: rgba(56, 189, 248, 0.15);
+      border: 1px solid rgba(56, 189, 248, 0.35);
+      color: #38bdf8;
+    }
+    .h-badge.live {
+      background: rgba(16, 185, 129, 0.15);
+      border-color: rgba(16, 185, 129, 0.4);
+      color: #34d399;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .pulse-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #34d399;
+      box-shadow: 0 0 10px #34d399;
+      animation: pulse 1.5s infinite;
+    }
+    @keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.4; transform: scale(0.85); } }
+
+    /* Main Stage */
+    .stage-row {
+      display: grid;
+      grid-template-columns: 1180px 610px;
+      gap: 35px;
+      height: 720px;
+      align-items: stretch;
+    }
+
+    /* Left: Slides Viewport */
+    .slides-viewport {
+      background: var(--bg-card);
+      border: 1.5px solid var(--bg-card-border);
+      border-radius: 24px;
+      padding: 26px 32px;
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6);
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .slide-badge-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+    .s-badge {
+      padding: 5px 14px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      background: rgba(56, 189, 248, 0.15);
+      color: var(--cyan-frost);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+    }
+    .slide-num-pill {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      color: #94a3b8;
+      font-weight: 700;
+    }
+
+    .slide-title-wrap h2 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 26px;
+      font-weight: 900;
+      color: #fff;
+      letter-spacing: -0.5px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .slide-title-wrap p {
+      font-size: 14.5px;
+      color: #94a3b8;
+      margin-top: 4px;
+      line-height: 1.4;
+    }
+
+    .slide-content-area {
+      flex: 1;
+      margin-top: 20px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .slide-view {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(20px);
+      transition: opacity 0.4s ease, transform 0.4s ease;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .slide-view.active {
+      opacity: 1;
+      pointer-events: all;
+      transform: translateY(0);
+    }
+
+    .inner-grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+      height: 100%;
+    }
+    .inner-grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      height: 100%;
+    }
+
+    .info-card {
+      background: rgba(15, 23, 42, 0.85);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 16px;
+      padding: 18px 22px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .info-card.highlight {
+      border-color: rgba(56, 189, 248, 0.35);
+      box-shadow: 0 0 25px rgba(56, 189, 248, 0.1);
+    }
+    .card-head {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 16px;
+      font-weight: 800;
+      color: #38bdf8;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      padding-bottom: 8px;
+    }
+    .card-head.amber { color: #fbbf24; }
+    .card-head.green { color: #34d399; }
+    .card-head.purple { color: #c084fc; }
+
+    .bullet-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      font-size: 13.5px;
+      color: #cbd5e1;
+      line-height: 1.45;
+    }
+    .bullet-list li {
+      position: relative;
+      padding-left: 18px;
+    }
+    .bullet-list li::before {
+      content: '▹';
+      position: absolute;
+      left: 0;
+      color: #38bdf8;
+    }
+    .bullet-list strong { color: #fff; }
+
+    /* Timeline visual dos 5 passos do Diff */
+    .timeline-5steps {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 10px;
+      margin-top: 8px;
+    }
+    .step-box {
+      background: rgba(5, 8, 17, 0.85);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .step-box.active {
+      border-color: #38bdf8;
+      box-shadow: 0 0 15px rgba(56, 189, 248, 0.25);
+    }
+    .step-label {
+      font-size: 10.5px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: #38bdf8;
+    }
+    .step-title {
+      font-size: 12.5px;
+      font-weight: 800;
+      color: #fff;
+    }
+    .step-desc {
+      font-size: 11.5px;
+      color: #94a3b8;
+      line-height: 1.35;
+    }
+
+    /* Right: Host Avatars and Live Speech Card */
+    .hosts-panel {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .avatars-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .avatar-card {
+      background: rgba(15, 23, 42, 0.7);
+      border: 1.5px solid rgba(255, 255, 255, 0.08);
+      border-radius: 18px;
+      padding: 16px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      transition: all 0.3s ease;
+    }
+    .avatar-circle {
+      width: 58px;
+      height: 58px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 26px;
+      font-weight: 900;
+      color: white;
+      flex-shrink: 0;
+      transition: all 0.3s ease;
+    }
+    .avatar-circle.eliezer {
+      background: linear-gradient(135deg, #0284c7, #0369a1);
+      border: 2px solid #38bdf8;
+    }
+    .avatar-circle.leigo {
+      background: linear-gradient(135deg, #d97706, #b45309);
+      border: 2px solid #fbbf24;
+    }
+
+    .avatar-info h4 {
+      font-size: 15px;
+      font-weight: 800;
+      color: #fff;
+    }
+    .avatar-info span {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: #94a3b8;
+    }
+    .avatar-card.talking {
+      background: rgba(30, 41, 59, 0.9);
+      transform: translateY(-3px);
+    }
+    .avatar-card.eliezer.talking {
+      border-color: #38bdf8;
+      box-shadow: 0 0 25px rgba(56, 189, 248, 0.35);
+    }
+    .avatar-card.eliezer.talking .avatar-circle {
+      box-shadow: 0 0 20px rgba(56, 189, 248, 0.7);
+    }
+    .avatar-card.leigo.talking {
+      border-color: #fbbf24;
+      box-shadow: 0 0 25px rgba(251, 191, 36, 0.35);
+    }
+    .avatar-card.leigo.talking .avatar-circle {
+      box-shadow: 0 0 20px rgba(251, 191, 36, 0.7);
+    }
+
+    .speech-card {
+      background: rgba(11, 20, 38, 0.95);
+      border: 1.5px solid var(--bg-card-border);
+      border-radius: 20px;
+      padding: 24px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+    }
+    .speech-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 14px;
+    }
+    .spk-pill {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 16px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    .spk-pill.eliezer { background: rgba(56, 189, 248, 0.15); border: 1px solid rgba(56, 189, 248, 0.4); color: #38bdf8; }
+    .spk-pill.leigo { background: rgba(245, 158, 11, 0.15); border: 1px solid rgba(245, 158, 11, 0.4); color: #fbbf24; }
+
+    .wave-bars {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      height: 20px;
+    }
+    .wave-bar {
+      width: 3.5px;
+      height: 4px;
+      background: #38bdf8;
+      border-radius: 2px;
+      transition: height 0.15s ease;
+    }
+    .wave-bars.active .wave-bar:nth-child(1) { animation: waveA 0.6s infinite 0.1s; }
+    .wave-bars.active .wave-bar:nth-child(2) { animation: waveA 0.6s infinite 0.25s; }
+    .wave-bars.active .wave-bar:nth-child(3) { animation: waveA 0.6s infinite 0.15s; }
+    .wave-bars.active .wave-bar:nth-child(4) { animation: waveA 0.6s infinite 0.3s; }
+    .wave-bars.active .wave-bar:nth-child(5) { animation: waveA 0.6s infinite 0.2s; }
+    @keyframes waveA { 0%, 100% { height: 4px; } 50% { height: 20px; } }
+
+    .speech-body {
+      font-size: 17px;
+      line-height: 1.55;
+      color: #f1f5f9;
+      font-weight: 500;
+      flex: 1;
+      display: flex;
+      align-items: center;
+    }
+    .speech-foot {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      padding-top: 14px;
+      font-size: 12px;
+      color: #94a3b8;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 14px;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      font-size: 13px;
+      color: #94a3b8;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="bg-canvas" width="1920" height="1080"></canvas>
+
+  <div class="app-container">
+    <header>
+      <div class="brand-wrap">
+        <div class="brand-logo">🔄</div>
+        <div class="brand-text">
+          <h1>Paradigma IDD • Série Oficial na Prática</h1>
+          <span>Episódio 4C: Máquina de Diff de Intenções &amp; Evolução de Esquema</span>
+        </div>
+      </div>
+
+      <div class="header-badges">
+        <div class="h-badge">Semantic Intent Diff</div>
+        <div class="h-badge live">
+          <div class="pulse-dot"></div>
+          Evolução sem Quebra
+        </div>
+      </div>
+    </header>
+
+    <div class="stage-row">
+      <!-- SLIDES VIEWPORT -->
+      <div class="slides-viewport">
+        <div class="slide-badge-row">
+          <span class="s-badge">Metodologia IDD</span>
+          <span class="slide-num-pill">Slide <span id="slideIndicator">1</span> de 4</span>
+        </div>
+
+        <div class="slide-title-wrap">
+          <h2 id="mainSlideTitle"><span>🔄</span> A Máquina de Diff de Intenções no IDD</h2>
+          <p id="mainSlideSubtitle">Por que o Git não basta e como o IDD compara grafos semânticos de domínio em vez de texto.</p>
+        </div>
+
+        <div class="slide-content-area">
+          <!-- SLIDE 1 -->
+          <div class="slide-view active" id="view-slide-1">
+            <div class="inner-grid-2">
+              <div class="info-card highlight">
+                <div class="card-head amber">⚠️ O Limite do Git e das Migrações Clássicas</div>
+                <p style="font-size: 13.5px; color: #cbd5e1; line-height: 1.5;">
+                  No mundo convencional, alterações de código geram scripts cegos:
+                </p>
+                <ul class="bullet-list">
+                  <li><strong>Diff Textual Cego:</strong> O Git só enxerga linhas alteradas, ignorando as regras de negócio.</li>
+                  <li><strong>Quebra Silenciosa:</strong> Um <code>ALTER TABLE</code> com <code>NOT NULL</code> quebra milhares de registros antigos no banco.</li>
+                  <li><strong>Alucinação de IA:</strong> Se a IA recompilar do zero, gera schemas incompatíveis com a base em produção.</li>
+                </ul>
+              </div>
+
+              <div class="info-card highlight">
+                <div class="card-head green">🛡️ O Diff Semântico do Paradigma IDD</div>
+                <p style="font-size: 13.5px; color: #cbd5e1; line-height: 1.5;">
+                  No IDD, a fonte primária da verdade é a Intenção:
+                </p>
+                <ul class="bullet-list">
+                  <li><strong>Intent AST Graph:</strong> A máquina compara árvores de intenção entre a versão atual e a nova versão.</li>
+                  <li><strong>Impacto Transversal:</strong> Mapeia instantaneamente quais tabelas do MER, UCs e métodos são impactados.</li>
+                  <li><strong>Preservação Absoluta:</strong> Zero risco de perda de dados históricos ou corrupção de laudos auditáveis.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <!-- SLIDE 2 -->
+          <div class="slide-view" id="view-slide-2">
+            <div class="inner-grid-3">
+              <div class="info-card">
+                <div class="card-head green">🟢 Classe A: Aditivas</div>
+                <p style="font-size: 12.5px; color: #34d399; font-weight: 700;">100% Seguras e Compatíveis</p>
+                <ul class="bullet-list">
+                  <li>Novos sub-módulos e Bounded Contexts.</li>
+                  <li>Novos Casos de Uso de 2º Nível.</li>
+                  <li>Colunas novas opcionais (NULL).</li>
+                  <li>Compilação imediata sem impacto no legado.</li>
+                </ul>
+              </div>
+
+              <div class="info-card">
+                <div class="card-head amber">🟡 Classe B: Endurecimento</div>
+                <p style="font-size: 12.5px; color: #fbbf24; font-weight: 700;">Constraint Hardening</p>
+                <ul class="bullet-list">
+                  <li>Regra de negócio que passa a ser estrita.</li>
+                  <li>Exigência de nova portaria ou lei sanitária.</li>
+                  <li>Requer Invariantes Temporizadas.</li>
+                  <li>Passado permanece válido; futuro é travado.</li>
+                </ul>
+              </div>
+
+              <div class="info-card">
+                <div class="card-head purple">🔴 Classe C: Estruturais</div>
+                <p style="font-size: 12.5px; color: #c084fc; font-weight: 700;">Breaking Changes</p>
+                <ul class="bullet-list">
+                  <li>Mudança de cardinalidade (1:N para N:N).</li>
+                  <li>Divisão ou fusão de entidades no MER.</li>
+                  <li>Exige padrão Expand &amp; Contract.</li>
+                  <li>Dual-write e backfill sem downtime.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <!-- SLIDE 3 -->
+          <div class="slide-view" id="view-slide-3">
+            <div style="display: flex; flex-direction: column; gap: 14px; height: 100%;">
+              <div class="info-card highlight" style="flex: none;">
+                <div class="card-head">🔄 O Ciclo Operacional de 5 Etapas da Máquina de Diff</div>
+                <p style="font-size: 13px; color: #cbd5e1;">
+                  Protocolo determinístico antes de aplicar qualquer alteração sobre a base de dados de produção:
+                </p>
+              </div>
+
+              <div class="timeline-5steps" style="flex: 1;">
+                <div class="step-box active">
+                  <span class="step-label">Etapa 1</span>
+                  <span class="step-title">Parsing AST</span>
+                  <span class="step-desc">Extração do grafo semântico da nova intenção.</span>
+                </div>
+
+                <div class="step-box active">
+                  <span class="step-label">Etapa 2</span>
+                  <span class="step-title">Raio de Impacto</span>
+                  <span class="step-desc">Mapeia tabelas do MER e UCs afetados.</span>
+                </div>
+
+                <div class="step-box active">
+                  <span class="step-label">Etapa 3</span>
+                  <span class="step-title">Plano IMP</span>
+                  <span class="step-desc">Intent Migration Plan legível para aprovação.</span>
+                </div>
+
+                <div class="step-box active">
+                  <span class="step-label">Etapa 4</span>
+                  <span class="step-title">Síntese DDL</span>
+                  <span class="step-desc">Geração de migração Expand &amp; Contract.</span>
+                </div>
+
+                <div class="step-box active">
+                  <span class="step-label">Etapa 5</span>
+                  <span class="step-title">Não-Regressão</span>
+                  <span class="step-desc">Bateria de testes provando zero dados corrompidos.</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- SLIDE 4 -->
+          <div class="slide-view" id="view-slide-4">
+            <div class="inner-grid-2">
+              <div class="info-card highlight">
+                <div class="card-head green">📋 A Vitória da Governança Contínua</div>
+                <p style="font-size: 13.5px; color: #cbd5e1; line-height: 1.5;">
+                  O software evolui com a empresa ao longo dos anos:
+                </p>
+                <ul class="bullet-list">
+                  <li><strong>Human-in-the-Loop Gate:</strong> O gestor aprova o plano de migração antes da execução da IA.</li>
+                  <li><strong>Rastreabilidade Total:</strong> Cada versão do schema é ancorada em uma versão formal de intenção.</li>
+                  <li><strong>Zero Degeneração:</strong> O código não vira espaguete com o passar do tempo.</li>
+                </ul>
+              </div>
+
+              <div class="info-card highlight">
+                <div class="card-head purple">🚀 Próximo Passo: Episódio 4D</div>
+                <p style="font-size: 13.5px; color: #cbd5e1; line-height: 1.5;">
+                  No Episódio 4D nós veremos a solução matemática da atomicidade temporal:
+                </p>
+                <ul class="bullet-list">
+                  <li><strong>Invariantes Temporizadas:</strong> Preservação de dados antigos sob novas leis.</li>
+                  <li><strong>Expand and Contract:</strong> Dual-write e migração sem downtime.</li>
+                  <li><strong>Validação de Campo:</strong> Como a climatização opera com segurança total.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT: HOSTS & SPEECH CARD -->
+      <div class="hosts-panel">
+        <div class="avatars-row">
+          <div class="avatar-card eliezer" id="card-eliezer">
+            <div class="avatar-circle eliezer">ER</div>
+            <div class="avatar-info">
+              <h4>Eliézer Rosa</h4>
+              <span>Orquestrador IDD</span>
+            </div>
+          </div>
+
+          <div class="avatar-card leigo" id="card-leigo">
+            <div class="avatar-circle leigo">UL</div>
+            <div class="avatar-info">
+              <h4>Usuária Leiga</h4>
+              <span>Visão de Negócio</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="speech-card">
+          <div class="speech-head">
+            <div class="spk-pill leigo" id="speakerPill">
+              <span id="speakerName">Usuária Leiga</span>
+            </div>
+            <div class="wave-bars active" id="waveBars">
+              <div class="wave-bar"></div>
+              <div class="wave-bar"></div>
+              <div class="wave-bar"></div>
+              <div class="wave-bar"></div>
+              <div class="wave-bar"></div>
+            </div>
+          </div>
+
+          <div class="speech-body" id="speechContent">
+            "Carregando apresentação do Episódio 4C..."
+          </div>
+
+          <div class="speech-foot">
+            <span>PARADIGMA IDD · SÉRIE METODOLÓGICA</span>
+            <span id="timeReadout">00:00 / 02:05</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      <span>IDD: Intent-Driven Development • Máquina de Diff de Intenções &amp; Evolução de Esquema</span>
+      <span>Metodologia IDD Oficial @EliézerJPRosa</span>
+    </footer>
+  </div>
+
+  <script>
+    const canvas = document.getElementById('bg-canvas');
+    const ctx = canvas.getContext('2d');
+    const particles = [];
+    for (let i = 0; i < 40; i++) {
+      particles.push({
+        x: Math.random() * 1920,
+        y: Math.random() * 1080,
+        speedY: -0.2 - Math.random() * 0.4,
+        speedX: (Math.random() - 0.5) * 0.3,
+        radius: 1 + Math.random() * 2,
+        alpha: 0.2 + Math.random() * 0.5,
+        color: Math.random() > 0.5 ? '#38bdf8' : '#34d399'
+      });
+    }
+
+    function animateBg() {
+      ctx.fillStyle = '#050811';
+      ctx.fillRect(0, 0, 1920, 1080);
+      particles.forEach(p => {
+        p.x += p.speedX; p.y += p.speedY;
+        if (p.y < 0) p.y = 1080;
+        if (p.x < 0) p.x = 1920;
+        if (p.x > 1920) p.x = 0;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+        ctx.fillStyle = p.color;
+        ctx.globalAlpha = p.alpha;
+        ctx.fill();
+      });
+      requestAnimationFrame(animateBg);
+    }
+    requestAnimationFrame(animateBg);
+
+    window.timelineItems = [
+      {
+        "index": 0, "id": "seg_00_leigo", "who": "leigo", "actor": "Usuária Leiga",
+        "slide": 1, "startSec": 0.5, "durSec": 15.936, "endSec": 16.436,
+        "text": "Eliézer, nós já colocamos o aplicativo em produção e o sistema está rodando com milhares de ordens de serviço. Mas e quando o negócio muda? Quando surge uma nova lei ou um novo processo, como o IDD atualiza o sistema sem apagar o banco de dados?"
+      },
+      {
+        "index": 1, "id": "seg_01_eliezer", "who": "eliezer", "actor": "Eliézer Rosa",
+        "slide": 1, "startSec": 17.086, "durSec": 20.952, "endSec": 38.038,
+        "text": "Esse é o coração da sustentabilidade no Paradigma IDD! No desenvolvimento convencional, as migrações olham linhas de código no Git. Mas no IDD, a fonte da verdade é a Intenção. Por isso nós criamos a Máquina de Diff de Intenções, que compara grafos semânticos de domínio em vez de apenas texto."
+      },
+      {
+        "index": 2, "id": "seg_02_leigo", "who": "leigo", "actor": "Usuária Leiga",
+        "slide": 2, "startSec": 38.688, "durSec": 14.016, "endSec": 52.704,
+        "text": "Veja no Slide dois a inteligência dessa análise! A Máquina de Diff classifica qualquer mudança em três categorias: Classe A para adições seguras, Classe B para endurecimento de regras e Classe C para quebras estruturais."
+      },
+      {
+        "index": 3, "id": "seg_03_eliezer", "who": "eliezer", "actor": "Eliézer Rosa",
+        "slide": 2, "startSec": 53.354, "durSec": 17.448, "endSec": 70.802,
+        "text": "Exatamente! Se a mudança for uma nova tabela ou campo opcional, a IA compila diretamente. Mas se for uma mudança crítica, a máquina calcula o raio de alcance e gera o Plano de Migração de Intenção para aprovação humana antes de qualquer execução."
+      },
+      {
+        "index": 4, "id": "seg_04_leigo", "who": "leigo", "actor": "Usuária Leiga",
+        "slide": 3, "startSec": 71.452, "durSec": 10.728, "endSec": 82.18,
+        "text": "E no Slide três nós vemos o ciclo em cinco etapas: do parsing semântico do grafo até a suíte de não-regressão de invariantes. Nada vai para produção no escuro!"
+      },
+      {
+        "index": 5, "id": "seg_05_eliezer", "who": "eliezer", "actor": "Eliézer Rosa",
+        "slide": 3, "startSec": 82.83, "durSec": 14.424, "endSec": 97.254,
+        "text": "Com certeza! O compilador do IDD gera o plano declarativo, simula os impactos sobre os dados em produção e garante que o histórico de manutenções nunca seja destruído por uma refatoração inconsequente da IA."
+      },
+      {
+        "index": 6, "id": "seg_06_leigo", "who": "leigo", "actor": "Usuária Leiga",
+        "slide": 4, "startSec": 97.904, "durSec": 13.368, "endSec": 111.272,
+        "text": "Fantástico! E no próximo episódio, o quatro D, nós vamos ver como resolver o maior pesadelo dos bancos de dados: como aplicar regras novas sem invalidar o histórico antigo usando Invariantes Temporizadas!"
+      },
+      {
+        "index": 7, "id": "seg_07_eliezer", "who": "eliezer", "actor": "Eliézer Rosa",
+        "slide": 4, "startSec": 111.922, "durSec": 12.024, "endSec": 123.946,
+        "text": "Perfeito! A evolução contínua é o que torna o software vivo e longevo. Acompanhe a nossa série e domine a engenharia de software orientada à intenção!"
+      }
+    ];
+
+    const slideTitles = [
+      { t: "A Máquina de Diff de Intenções no IDD", s: "Por que o Git não basta e como o IDD compara grafos semânticos de domínio em vez de texto." },
+      { t: "Classificação Tripartida de Mutações", s: "Classe A (Aditiva), Classe B (Endurecimento) e Classe C (Estrutural Expand-Contract)." },
+      { t: "O Ciclo Operacional em 5 Etapas", s: "Do parsing da AST até a suíte de não-regressão de invariantes antes do deploy." },
+      { t: "A Governança da Evolução Contínua", s: "Human-in-the-Loop, rastreabilidade e preparação para o Episódio 4D." }
+    ];
+
+    window.updateFrameAtTime = function(timeSec) {
+      const curtain = document.getElementById('sync-curtain');
+      if (curtain && curtain.style.display !== 'none') curtain.style.display = 'none';
+
+      const m = Math.floor(timeSec / 60);
+      const s = Math.floor(timeSec % 60);
+      const timeStr = `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+      const timeEl = document.getElementById('timeReadout');
+      if (timeEl) timeEl.innerText = `${timeStr} / 02:05`;
+
+      if (!window.timelineItems || window.timelineItems.length === 0) return;
+
+      const currentSeg = window.timelineItems.find(it => timeSec >= it.startSec && timeSec <= it.endSec)
+        || window.timelineItems.filter(it => it.startSec <= timeSec).pop()
+        || window.timelineItems[0];
+
+      const speakingSeg = window.timelineItems.find(it => timeSec >= it.startSec && timeSec <= it.endSec);
+
+      document.querySelectorAll('.slide-view').forEach(sv => sv.classList.remove('active'));
+      const activeView = document.getElementById(`view-slide-${currentSeg.slide}`);
+      if (activeView) activeView.classList.add('active');
+
+      document.getElementById('slideIndicator').innerText = currentSeg.slide;
+      const tInfo = slideTitles[currentSeg.slide - 1];
+      if (tInfo) {
+        document.getElementById('mainSlideTitle').innerHTML = `<span>🔄</span> ${tInfo.t}`;
+        document.getElementById('mainSlideSubtitle').innerText = tInfo.s;
+      }
+
+      document.getElementById('speechContent').innerText = `"${currentSeg.text}"`;
+      document.getElementById('speakerName').innerText = currentSeg.actor;
+      const pill = document.getElementById('speakerPill');
+      pill.className = `spk-pill ${currentSeg.who}`;
+
+      const cardEliezer = document.getElementById('card-eliezer');
+      const cardLeigo = document.getElementById('card-leigo');
+      const waveBars = document.getElementById('waveBars');
+
+      if (speakingSeg) {
+        cardEliezer.classList.toggle('talking', speakingSeg.who === 'eliezer');
+        cardLeigo.classList.toggle('talking', speakingSeg.who === 'leigo');
+        waveBars.classList.add('active');
+      } else {
+        cardEliezer.classList.remove('talking');
+        cardLeigo.classList.remove('talking');
+        waveBars.classList.remove('active');
+      }
+    };
+  </script>
+</body>
+</html>

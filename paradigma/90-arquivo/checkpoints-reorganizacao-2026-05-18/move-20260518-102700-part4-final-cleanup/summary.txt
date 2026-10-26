@@ -1,0 +1,11 @@
+Cleanup checkpoint: C:\Antigravity - RVM Designações\IDD Paradigma\_checkpoint\move-20260518-102700-part4-final-cleanup
+Manifest: C:\Antigravity - RVM Designações\IDD Paradigma\_checkpoint\move-20260518-102700-part4-final-cleanup\move_manifest.csv
+Rollback: C:\Antigravity - RVM Designações\IDD Paradigma\_checkpoint\move-20260518-102700-part4-final-cleanup\rollback.ps1
+
+Result:
+ - REMOVE_VISUAL=SUCCESS
+ - VISUAL_EXISTS=False
+
+Lock context:
+ - Previous lockholders were local http.server processes and iniciar-apresentacao-local.cmd.
+ - Lock was released and empty source directory was removed.

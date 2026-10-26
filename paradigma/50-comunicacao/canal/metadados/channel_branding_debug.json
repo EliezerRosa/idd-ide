@@ -1,0 +1,50 @@
+{
+  "kind": "youtube#channelListResponse",
+  "etag": "_7x8BH4YF-tA9ck4-U29t4bY65M",
+  "pageInfo": {
+    "totalResults": 1,
+    "resultsPerPage": 5
+  },
+  "items": [
+    {
+      "kind": "youtube#channel",
+      "etag": "iy1KC63249EHRn-WXKK5h7y4HVo",
+      "id": "UCmXhQsrKa5wlO46etZKDkeA",
+      "snippet": {
+        "title": "Eliézer Rosa",
+        "description": "🎙 Engenharia de Software com IA Autônoma | Eliezer Rosa\n\nIDD (Intent-Driven Development): o paradigma onde a intenção humana em linguagem natural governa todo o código. O humano retém o Comando Epistêmico; a IA executa o Comando Operacional. Augmenting, não automating.\n\n📺 Série: Base de Conhecimento IDD\nEp.1 — O que é IDD? (23 min) | Ep.2 — Genealogia (em breve) | Ep.3 — AEON (em breve)\n\n💻 Projeto real em produção: RVM Designações\ngithub.com/EliezerRosa/rvm-designacoes-antigravity\n\n#IDD #IntentDrivenDevelopment #GitHubCopilot #VibeCoding #EngenhariaDeSoftware #IA #LLM #AEON",
+        "customUrl": "@eliezerjprosa",
+        "publishedAt": "2026-02-22T00:17:21.676293Z",
+        "thumbnails": {
+          "default": {
+            "url": "https://yt3.ggpht.com/90za9GiLve04f5nfULWxLqVse3E8Sst1rGDbETWTUuw8OtSIpOvMJBghc3gJuC7BDByNQDMq=s88-c-k-c0x00ffffff-no-rj",
+            "width": 88,
+            "height": 88
+          },
+          "medium": {
+            "url": "https://yt3.ggpht.com/90za9GiLve04f5nfULWxLqVse3E8Sst1rGDbETWTUuw8OtSIpOvMJBghc3gJuC7BDByNQDMq=s240-c-k-c0x00ffffff-no-rj",
+            "width": 240,
+            "height": 240
+          },
+          "high": {
+            "url": "https://yt3.ggpht.com/90za9GiLve04f5nfULWxLqVse3E8Sst1rGDbETWTUuw8OtSIpOvMJBghc3gJuC7BDByNQDMq=s800-c-k-c0x00ffffff-no-rj",
+            "width": 800,
+            "height": 800
+          }
+        },
+        "defaultLanguage": "en",
+        "localized": {
+          "title": "Eliézer Rosa",
+          "description": "🎙 Engenharia de Software com IA Autônoma | Eliezer Rosa\n\nIDD (Intent-Driven Development): o paradigma onde a intenção humana em linguagem natural governa todo o código. O humano retém o Comando Epistêmico; a IA executa o Comando Operacional. Augmenting, não automating.\n\n📺 Série: Base de Conhecimento IDD\nEp.1 — O que é IDD? (23 min) | Ep.2 — Genealogia (em breve) | Ep.3 — AEON (em breve)\n\n💻 Projeto real em produção: RVM Designações\ngithub.com/EliezerRosa/rvm-designacoes-antigravity\n\n#IDD #IntentDrivenDevelopment #GitHubCopilot #VibeCoding #EngenhariaDeSoftware #IA #LLM #AEON"
+        }
+      },
+      "brandingSettings": {
+        "channel": {
+          "title": "Eliézer Rosa",
+          "description": "🎙 Engenharia de Software com IA Autônoma | Eliezer Rosa\n\nIDD (Intent-Driven Development): o paradigma onde a intenção humana em linguagem natural governa todo o código. O humano retém o Comando Epistêmico; a IA executa o Comando Operacional. Augmenting, não automating.\n\n📺 Série: Base de Conhecimento IDD\nEp.1 — O que é IDD? (23 min) | Ep.2 — Genealogia (em breve) | Ep.3 — AEON (em breve)\n\n💻 Projeto real em produção: RVM Designações\ngithub.com/EliezerRosa/rvm-designacoes-antigravity\n\n#IDD #IntentDrivenDevelopment #GitHubCopilot #VibeCoding #EngenhariaDeSoftware #IA #LLM #AEON",
+          "defaultLanguage": "en"
+        }
+      }
+    }
+  ]
+}

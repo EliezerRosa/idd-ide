@@ -1,0 +1,213 @@
+Abaixo está o plano arquitetural de fluxo, etapas e ajustes para o **IDD IDE**, integrando a compilação de primeiro nível para Linguagem Ubíqua via alinhamento de ambiguidade (baseado na metodologia SHALA-LLM), a circunscrição comportamental a Métodos de Classes de Negócio, e a verificação estrita de coesão, desacoplamento e visibilidade.
+
+---
+
+```
+┌────────────────────────────────────────────────────────────────────────────────────────┐
+│                        PIPELINE DE COMPILAÇÃO E AJUSTES IDD IDE                         │
+└────────────────────────────────────────────────────────────────────────────────────────┘
+
+ [Entrada: LN Ambígua]
+          │
+          ▼
+┌────────────────────────────────────────────────────────────────────────────────────────┐
+│  FASE 1: Compilador L1 (Linguagem Ubíqua via Desambiguação Distribuída - SHALA-LLM)    │
+│  • Avaliação de Entropia H(p_q)  • Distribuições Verbalizadas  • Diálogo de Convergência   │
+└─────────────────────────────────────────┬──────────────────────────────────────────────┘
+                                          │ Output: Intenção Ubíqua (.intent.yaml)
+                                          ▼
+┌────────────────────────────────────────────────────────────────────────────────────────┐
+│  FASE 2: Circunscrição Comportamental (Mapeamento 1:1 a Método de Classe de Negócio)    │
+│  • Enquadramento em DDD Aggregate/Class  • Contratos de Assinatura, Invariantes e Estado │
+└─────────────────────────────────────────┬──────────────────────────────────────────────┘
+                                          │ Output: Class Method Intent Specification
+                                          ▼
+┌────────────────────────────────────────────────────────────────────────────────────────┐
+│  FASE 3: Verificador de Coesão, Desacoplamento e Diffs de Acesso (AST Structural Lock) │
+│  • Checagem de Visibilidade/Permissões  • Leis de Demeter/LSP  • Métricas CBO/LCOM     │
+└────────────────────────────────────────────────────────────────────────────────────────┘
+
+```
+
+---
+
+## FASE 1: Compilador L1 — Conversão de LN Ambígua em LN Ubíqua via Interação Agêntica
+
+A primeira fase atua como um **front-end do compilador IDD**, onde a entrada em Linguagem Natural (LN) humana é submetida a um processo de desambiguação rigoroso antes de gerar qualquer artefato de código.
+
+### 1.1. Fundamentação Científica (SHALA-LLM Integration)
+
+Em vez de forçar um colapso prematuro da frase do desenvolvedor em uma única interpretação "mais provável" (majority voting), o motor IDD adota os princípios do algoritmo **SHALA-LLM**:
+
+1. **Tratar a Ambiguidade como Informação (não ruído):** Divergências e múltiplas interpretações plausíveis revelam requisitos ocultos ou imprecisões de domínio.
+
+
+2. **Entropia da Ambiguidade ($\tilde{H}$):** Para cada intenção $q$ em LN, o agente avalia a entropia normalizada da distribuição de interpretações $p_q$:
+
+
+
+$$\tilde{H}(p_q) = \frac{-\sum_{c=1}^{C} p_{q,c} \log p_{q,c}}{\log C} \in [0, 1]$$
+
+
+
+3. **Distribuições Verbalizadas:** O agente de IA explicita em texto uma distribuição de probabilidade sobre as possíveis interpretações de negócio candidato $c \in \{c_1, c_2, \dots, c_C\}$.
+
+
+
+### 1.2. Etapas do Fluxo da Fase 1 (`idd capture --ubiquitous`)
+
+1. **Amostragem de Interpretações Plausíveis:**
+O desenvolvedor digita a intenção bruta (ex: *"Bloquear usuário após muitas tentativas de acesso incorretas"*). O motor L1 gera as variantes semânticas:
+* *Interpretação A ($c_1$):* Bloqueio temporário (ex: 15 min) por IP após 5 falhas no login.
+* *Interpretação B ($c_2$):* Inativação permanente da conta (`status = BLOCKED`) exigindo reset de senha por e-mail.
+* *Interpretação C ($c_3$):* Exigência de verificação CAPTCHA/MFA a partir da 3ª tentativa.
+
+
+2. **Diálogo Interativo de Convergência (Redução do $D_{JS}$):**
+Se $\tilde{H}(p_q) > \epsilon$ (alta ambiguidade detectada), o IDD abre uma sessão interativa no terminal/IDE apresentando a distribuição e solicitando que o dev dirima as lacunas:
+
+
+> ⚠️ **Ambiguidade de Domínio Detectada ($\tilde{H} = 0.82$)**
+> 
+> 1. O bloqueio é por **conta** ou por **endereço IP**?
+> 2. O estado bloqueado é **temporário** ou **definitivo**?
+> 3. Qual o limite exato de tentativas e a janela de tempo?
+> 
+> 
+
+
+3. **Congelamento da Linguagem Ubíqua (Ubiquitous Language Freeze):**
+A resposta do desenvolvedor elimina a entropia ($\tilde{H} \to 0$). O sistema registra os termos no **Dicionário Ubíquo do Projeto** (garantindo que termos como `BloqueioTemporario`, `TentativaInvalida` e `JanelaDeJanela` tenham definição única e imutável no sistema).
+
+
+
+---
+
+## FASE 2: Circunscrição Comportamental a Métodos de Classe de Negócio
+
+Uma intenção funcional ($I_{func}$) normalizada **não pode existir de forma solta ou procedimental**. Ela deve ser obrigatoriamente vinculada a uma propriedade/método comportamental de uma **Classe de Negócio** (Domain Entity / Aggregate Root).
+
+### 2.1. Princípio de Localização de Comportamento
+
+Toda $I_{func}$ resolvida na Fase 1 é traduzida para o contrato de uma assinatura de método:
+
+
+$$\text{IntençãoFuncional } (I_{func}) \implies \text{ClasseDeNegocio.MetodoComportamental}()$$
+
+### 2.2. Estrutura do Artefato Circurscrito (`auth/user.intent.yaml`)
+
+```yaml
+version: "1.0"
+target_class: "Domain.Auth.UserAccount"   # Classe de Negócio circunscrita
+target_method: "registerFailedLoginAttempt" # Método que encapsula o comportamento
+
+intent: >
+  Registrar uma tentativa incorreta de senha, incrementando o contador interno 
+  e alterando o estado da conta para BloqueadoTemporariamente se atingido o limite.
+
+behavioral_contract:
+  visibility: "public"
+  state_mutation:
+    allowed_fields: ["failedAttemptsCount", "lockoutExpiration", "accountStatus"]
+    read_only_fields: ["id", "email", "passwordHash"]
+  
+constraints:
+  - id: C-METH-01
+    type: invariant
+    severity: critical
+    description: "A transição para BLOCKED_TEMPORARY só ocorre se failedAttemptsCount >= 5."
+    enforcement: strict
+
+  - id: C-METH-02
+    type: encapsulation
+    severity: critical
+    description: "O atributo failedAttemptsCount não pode ser modificado diretamente por setters externos."
+
+acceptance:
+  - id: A-01
+    given: "Uma conta com failedAttemptsCount = 4"
+    when: "O método registerFailedLoginAttempt() for executado"
+    then: "failedAttemptsCount passa para 5 e accountStatus altera para BLOCKED_TEMPORARY."
+
+```
+
+### 2.3. Regras de Circunscrição
+
+1. **Unicidade de Responsabilidade de Estado:** O método só possui permissão para alterar atributos pertencentes à sua própria Classe de Negócio ou Agregado.
+2. **Eliminação de Serviços Anêmicos:** Nenhuma intenção funcional pode ser alocada em classes do tipo `UserService` ou `UserHelper` se a operação for uma mutação de estado de domínio interno de `UserAccount`.
+
+---
+
+## FASE 3: Verificador de Coesão, Desacoplamento e Diffs de Acesso
+
+Com as intenções circunscritas aos métodos das classes, a Fase 3 executa uma análise estática e estrutural na Árvore de Sintaxe Abstrata (AST) do código-fonte para barrar qualquer violação de encapsulamento, visibilidade ou acoplamento indireto.
+
+### 3.1. Diffs de Visibilidade e Permissões de Acesso
+
+O mecanismo `idd diff --structural` intercepta o código implementado e valida três eixos de isolamento:
+
+1. **Evasão de Visibilidade (Encapsulation Leaks):**
+* *Violação:* Atributos internos da classe marcados como `public` ou expostos via mutadores genéricos (`setFailedAttemptsCount(...)`).
+* *Ação do IDD:* Bloqueio de compilação com diagnóstico:
+> 🛑 **Encapsulation Breach:** A alteração do estado de `failedAttemptsCount` deve ocorrer exclusivamente via chamada ao método `registerFailedLoginAttempt()`.
+
+
+
+
+2. **Políticas de Herança e Polimorfismo (Princípio de Substituição de Liskov - LSP):**
+* *Violação:* Uma subclasse de `UserAccount` sobrescrever o método enfraquecendo as *constraints* (ex: alterando o limite de tentativas de 5 para 10 sem atualizar a intenção).
+* *Ação do IDD:* O Verificador detecta a divergência entre a AST da subclasse e o `.intent.yaml` circunscrito da classe pai, abortando o *pre-commit*.
+
+
+3. **Quebra de Contratos de Permissão de Domínio:**
+* Garantia de que métodos com comportamento crítico verifiquem autorização no contexto da chamada, impedindo que partes do código ignorem políticas de segurança através de *bypasses* internos.
+
+
+
+### 3.2. Métricas de Coesão e Acoplamento no Engine de Verification
+
+O IDD calcula automaticamente duas métricas clássicas de Engenharia de Software sobre a AST do método:
+
+* **Lack of Cohesion of Methods (LCOM):** Valida se o método circunscrito utiliza os atributos da classe em que reside. Se um método não acessa nenhum estado da classe, o IDD sugere realocá-lo ou convertê-lo em uma função pura fora da entidade.
+* **Coupling Between Objects (CBO) / Lei de Demeter:**
+* O método circunscrito **só pode chamar**:
+1. Outros métodos da própria classe.
+2. Métodos de objetos passados como parâmetro direto.
+3. Objetos que ele próprio instanciou.
+
+
+* *Violação:* Chamadas encadeadas do tipo `user.getProfile().getSettings().updateLockout()`.
+* *Ação do IDD:* O Verificador gera um *Drift Warning* indicando violação da Lei de Demeter e quebra de desacoplamento.
+
+
+
+---
+
+## Fluxo Completo de Execução Integrada no IDD IDE
+
+```text
+[Desenvolvedor] ──> idd capture "Adicionar regra de bloqueio de conta"
+                        │
+                        ▼
+            [FASE 1: SHALA-LLM L1 Compiler]
+            • Avalia entropia H(p_q) e exibe interpretações
+            • Dev seleciona/confirma os limites exatos
+            • Gera entrada na Linguagem Ubíqua
+                        │
+                        ▼
+            [FASE 2: Domain Scoping Engine]
+            • Modifica/Gera auth/user.intent.yaml
+            • Binda a intenção a UserAccount.registerFailedLoginAttempt()
+                        │
+                        ▼
+            [Geração de Código / Implementação]
+                        │
+                        ▼
+            [FASE 3: AST Structural Verifier & Diffs]
+            • Line-by-line AST check no VS Code / Pre-commit
+            • Checa visibilidade, LCOM, CBO e Lei de Demeter
+            • Aponta violações diretamente na linha do código
+
+```
+
+Com este fluxo de 3 estágios, o IDD IDE garante que a ambiguidade seja eliminada na origem (Fase 1 via alinhamento de distribuição), que o comportamento seja estritamente OO/DDD (Fase 2) e que a arquitetura do código não se degrade por acoplamento ou vazamento de permissões (Fase 3).

@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Diagrama Gráfico UML Canônico — Barbearia & Salão VIP (IDD)</title>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, sans-serif; }
+    body {
+      background: #090d16;
+      color: #f8fafc;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 30px;
+    }
+    header {
+      text-align: center;
+      margin-bottom: 25px;
+    }
+    .badge {
+      display: inline-block;
+      background: linear-gradient(135deg, #d97706, #f59e0b);
+      color: white;
+      font-weight: 800;
+      font-size: 13px;
+      padding: 5px 16px;
+      border-radius: 999px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+      box-shadow: 0 0 15px rgba(245, 158, 11, 0.4);
+    }
+    h1 {
+      font-size: 32px;
+      font-weight: 900;
+      color: #ffffff;
+      letter-spacing: -0.5px;
+    }
+    p {
+      color: #94a3b8;
+      font-size: 16px;
+      margin-top: 6px;
+    }
+
+    /* FILTRO DE PERSPECTIVAS */
+    .controls {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 25px;
+      background: rgba(15, 23, 42, 0.85);
+      padding: 8px;
+      border-radius: 14px;
+      border: 1px solid rgba(245, 158, 11, 0.3);
+    }
+    .btn-filter {
+      background: transparent;
+      border: none;
+      color: #cbd5e1;
+      padding: 8px 18px;
+      border-radius: 10px;
+      font-weight: 700;
+      font-size: 14px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .btn-filter:hover {
+      background: rgba(245, 158, 11, 0.15);
+      color: #fbbf24;
+    }
+    .btn-filter.active {
+      background: #d97706;
+      color: white;
+      box-shadow: 0 0 12px rgba(217, 119, 6, 0.5);
+    }
+
+    .container {
+      width: 100%;
+      max-width: 1400px;
+      background: rgba(15, 23, 42, 0.9);
+      border: 1.5px solid rgba(245, 158, 11, 0.35);
+      border-radius: 20px;
+      padding: 30px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 30px;
+    }
+
+    .section-title {
+      font-size: 22px;
+      font-weight: 800;
+      color: #fbbf24;
+      margin-bottom: 20px;
+      align-self: flex-start;
+      border-left: 4px solid #f59e0b;
+      padding-left: 12px;
+    }
+
+    .mermaid {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="badge">PARADIGMA IDD · MODELO UML DINÂMICO</div>
+    <h1>Modelo UML Canônico — Barbearia & Salão VIP</h1>
+    <p>Casos de Uso por Ator, Diagrama de Classes OMG de 3 Compartimentos e Statechart da Cadeira</p>
+  </header>
+
+  <div class="controls">
+    <button class="btn-filter active" id="btn-all" onclick="filterView('all')">Todos os Casos de Uso</button>
+    <button class="btn-filter" id="btn-cliente" onclick="filterView('cliente')">Visão: Cliente (Agendamento & App)</button>
+    <button class="btn-filter" id="btn-barbeiro" onclick="filterView('barbeiro')">Visão: Barbeiro / Especialista</button>
+    <button class="btn-filter" id="btn-caixa" onclick="filterView('caixa')">Visão: Recepção & Caixa</button>
+    <button class="btn-filter" id="btn-gestor" onclick="filterView('gestor')">Visão: Gestor (Lei Salão Parceiro)</button>
+  </div>
+
+  <!-- CASOS DE USO -->
+  <div class="container" id="usecase-container">
+    <div class="section-title">1. Diagrama de Casos de Uso com Perspectivas Múltiplas</div>
+    <div class="mermaid" id="usecase-diagram">
+flowchart LR
+    subgraph Atores ["Atores do Sistema de Barbearia"]
+        CL["👤 Cliente VIP"]
+        BB["✂️ Barbeiro / Profissional Parceiro"]
+        RC["🛎️ Recepcionista / Caixa"]
+        GT["👔 Gestor / Contador"]
+    end
+
+    subgraph ModuloCliente ["Módulo Experiência do Cliente"]
+        UC01(["UC01: Escolher Barbeiro & Serviço"])
+        UC02(["UC02: Selecionar Horário Vago (Zero Overbooking)"])
+        UC03(["UC03: Receber Confirmação WhatsApp com ICS"])
+        UC04(["UC04: Pagar Sinal / Check-in Antecipado"])
+    end
+
+    subgraph ModuloBarbeiro ["Módulo Cadeira do Profissional"]
+        UC05(["UC05: Visualizar Agenda do Dia no Celular"])
+        UC06(["UC06: Iniciar Atendimento na Cadeira"])
+        UC07(["UC07: Adicionar Serviço Extra (Barba Terapia)"])
+        UC08(["UC08: Lançar Produto Consumido (Pomada/Cerveja)"])
+        UC09(["UC09: Acompanhar Extrato de Comissões"])
+    end
+
+    subgraph ModuloRecepcao ["Módulo Recepção & Caixa"]
+        UC10(["UC10: Abrir Comanda de Balcão (Walk-in)"])
+        UC11(["UC11: Conferir Comanda & Itens Executados"])
+        UC12(["UC12: Liquidar Pagamento Pix / Cartão"])
+        UC13(["UC13: Liberar Cadeira no Sistema"])
+    end
+
+    subgraph ModuloGestao ["Módulo Gestão & Lei Salão Parceiro"]
+        UC14(["UC14: Segregar Cotas (Salão x Profissional)"])
+        UC15(["UC15: Gerar Lote de Repasse Pix para Profissionais"])
+        UC16(["UC16: Emitir NFS-e da Cota do Salão (Lei 13.352)"])
+    end
+
+    CL --> UC01
+    CL --> UC02
+    CL --> UC03
+    CL --> UC04
+
+    BB --> UC05
+    BB --> UC06
+    BB --> UC07
+    BB --> UC08
+    BB --> UC09
+
+    RC --> UC10
+    RC --> UC11
+    RC --> UC12
+    RC --> UC13
+
+    GT --> UC14
+    GT --> UC15
+    GT --> UC16
+    UC14 -.->|«include»| UC15
+    </div>
+  </div>
+
+  <!-- DIAGRAMA DE CLASSES OMG -->
+  <div class="container" id="classes-container">
+    <div class="section-title">2. Diagrama de Classes OMG Standard (3 Compartimentos)</div>
+    <div class="mermaid">
+classDiagram
+    class Agendamento {
+        +UUID id
+        +UUID profissionalId
+        +UUID clienteId
+        +DateTime inicio
+        +DateTime fim
+        +StatusAgendamento status
+        +validarConflitoHorario() Boolean
+        +confirmarReserva() void
+        +iniciarAtendimento() ComandaSalao
+        +cancelarComAntecedencia() Boolean
+    }
+
+    class ComandaSalao {
+        +UUID id
+        +UUID clienteId
+        +StatusComanda status
+        +DateTime abertaEm
+        +DateTime encerradaEm
+        +Decimal totalServicos
+        +Decimal totalProdutos
+        +adicionarItem(ItemComandaSalao item) void
+        +calcularSubtotais() void
+        +liquidarComanda(PagamentoSalao pagto) void
+    }
+
+    class ItemComandaSalao {
+        +UUID id
+        +UUID comandaId
+        +UUID profissionalExecutorId
+        +TipoItem tipo
+        +Decimal preco
+        +Decimal taxaComissao
+        +calcularPartilhaLeiSalao() PartilhaComissao
+    }
+
+    class PartilhaComissao {
+        +UUID id
+        +UUID itemComandaId
+        +UUID profissionalId
+        +Decimal valorBruto
+        +Decimal cotaSalao
+        +Decimal cotaProfissional
+        +StatusRepasse statusRepasse
+        +gerarRepassePix() String
+        +emitirComprovanteFiscal() void
+    }
+
+    class PagamentoSalao {
+        +UUID id
+        +UUID comandaId
+        +FormaPagto forma
+        +Decimal valor
+        +String txidPix
+        +StatusTransacao status
+        +conciliarTransacao() Boolean
+    }
+
+    Agendamento --> "1" ComandaSalao : gera
+    ComandaSalao "1" *-- "1..*" ItemComandaSalao : contem
+    ItemComandaSalao --> "1" PartilhaComissao : origina
+    ComandaSalao "1" *-- "1..*" PagamentoSalao : quita
+    </div>
+  </div>
+
+  <!-- STATECHART DA CADEIRA & AGENDAMENTO -->
+  <div class="container" id="statechart-container">
+    <div class="section-title">3. Máquina de Estados Finita (Statechart FSM do Atendimento)</div>
+    <div class="mermaid">
+stateDiagram-v2
+    [*] --> SOLICITADO : Cliente agenda horário no app
+
+    SOLICITADO --> CONFIRMADO : Confirmação automática via WhatsApp
+    SOLICITADO --> CANCELADO : Cliente cancela com antecedência
+
+    CONFIRMADO --> EM_ATENDIMENTO : Barbeiro bipa cliente na cadeira (Abertura Comanda)
+    CONFIRMADO --> NO_SHOW : Cliente não comparece em 15 minutos
+
+    state EM_ATENDIMENTO {
+        [*] --> EXECUTANDO_SERVICO
+        EXECUTANDO_SERVICO --> CONSUMO_ADICIONAL : Barba / Pomada / Cerveja
+        CONSUMO_ADICIONAL --> EXECUTANDO_SERVICO : Adicionado na comanda
+        EXECUTANDO_SERVICO --> SERVICO_CONCLUIDO : Cliente levanta da cadeira
+    }
+
+    EM_ATENDIMENTO --> CONFERINDO : Recepção chama comanda no caixa
+    CONFERINDO --> PAGA : Quitação Pix / Cartão
+    PAGA --> ENCERRADA : Partilha Lei do Salão segregada & Cadeira liberada
+    ENCERRADA --> [*]
+    </div>
+  </div>
+
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: 'dark',
+      themeVariables: {
+        darkMode: true,
+        background: '#090d16',
+        primaryColor: '#d97706',
+        primaryTextColor: '#f8fafc',
+        primaryBorderColor: '#f59e0b',
+        lineColor: '#f59e0b',
+        secondaryColor: '#0f172a',
+        tertiaryColor: '#1e293b'
+      }
+    });
+
+    function filterView(actor) {
+      document.querySelectorAll('.btn-filter').forEach(b => b.classList.remove('active'));
+      const btn = document.getElementById('btn-' + actor);
+      if (btn) btn.classList.add('active');
+
+      const container = document.getElementById('usecase-diagram');
+      let graphCode = '';
+
+      if (actor === 'cliente') {
+        graphCode = `flowchart LR
+          CL["👤 Cliente VIP"]
+          subgraph ModuloCliente ["Visão Exclusiva: Experiência do Cliente VIP"]
+              UC01(["UC01: Escolher Barbeiro & Serviço"])
+              UC02(["UC02: Selecionar Horário Vago (Zero Overbooking)"])
+              UC03(["UC03: Receber Confirmação WhatsApp com ICS"])
+              UC04(["UC04: Pagar Sinal / Check-in Antecipado"])
+          end
+          CL --> UC01
+          CL --> UC02
+          CL --> UC03
+          CL --> UC04`;
+      } else if (actor === 'barbeiro') {
+        graphCode = `flowchart LR
+          BB["✂️ Barbeiro / Profissional Parceiro"]
+          subgraph ModuloBarbeiro ["Visão Exclusiva: Cadeira do Profissional"]
+              UC05(["UC05: Visualizar Agenda do Dia no Celular"])
+              UC06(["UC06: Iniciar Atendimento na Cadeira"])
+              UC07(["UC07: Adicionar Serviço Extra"])
+              UC08(["UC08: Lançar Produto Consumido"])
+              UC09(["UC09: Acompanhar Extrato de Comissões"])
+          end
+          BB --> UC05
+          BB --> UC06
+          BB --> UC07
+          BB --> UC08
+          BB --> UC09`;
+      } else if (actor === 'caixa') {
+        graphCode = `flowchart LR
+          RC["🛎️ Recepcionista / Caixa"]
+          subgraph ModuloRecepcao ["Visão Exclusiva: Recepção & Caixa"]
+              UC10(["UC10: Abrir Comanda de Balcão (Walk-in)"])
+              UC11(["UC11: Conferir Comanda & Itens Executados"])
+              UC12(["UC12: Liquidar Pagamento Pix / Cartão"])
+              UC13(["UC13: Liberar Cadeira no Sistema"])
+          end
+          RC --> UC10
+          RC --> UC11
+          RC --> UC12
+          RC --> UC13`;
+      } else if (actor === 'gestor') {
+        graphCode = `flowchart LR
+          GT["👔 Gestor / Contador"]
+          subgraph ModuloGestao ["Visão Exclusiva: Gestão & Lei Salão Parceiro"]
+              UC14(["UC14: Segregar Cotas (Salão x Profissional)"])
+              UC15(["UC15: Gerar Lote de Repasse Pix para Profissionais"])
+              UC16(["UC16: Emitir NFS-e da Cota do Salão (Lei 13.352)"])
+          end
+          GT --> UC14
+          GT --> UC15
+          GT --> UC16
+          UC14 -.->|«include»| UC15`;
+      } else {
+        graphCode = `flowchart LR
+          subgraph Atores ["Atores do Sistema de Barbearia"]
+              CL["👤 Cliente VIP"]
+              BB["✂️ Barbeiro / Profissional Parceiro"]
+              RC["🛎️ Recepcionista / Caixa"]
+              GT["👔 Gestor / Contador"]
+          end
+          subgraph ModuloCliente ["Módulo Experiência do Cliente"]
+              UC01(["UC01: Escolher Barbeiro & Serviço"])
+              UC02(["UC02: Selecionar Horário Vago (Zero Overbooking)"])
+              UC03(["UC03: Receber Confirmação WhatsApp com ICS"])
+              UC04(["UC04: Pagar Sinal / Check-in Antecipado"])
+          end
+          subgraph ModuloBarbeiro ["Módulo Cadeira do Profissional"]
+              UC05(["UC05: Visualizar Agenda do Dia no Celular"])
+              UC06(["UC06: Iniciar Atendimento na Cadeira"])
+              UC07(["UC07: Adicionar Serviço Extra"])
+              UC08(["UC08: Lançar Produto Consumido"])
+              UC09(["UC09: Acompanhar Extrato de Comissões"])
+          end
+          subgraph ModuloRecepcao ["Módulo Recepção & Caixa"]
+              UC10(["UC10: Abrir Comanda de Balcão (Walk-in)"])
+              UC11(["UC11: Conferir Comanda & Itens Executados"])
+              UC12(["UC12: Liquidar Pagamento Pix / Cartão"])
+              UC13(["UC13: Liberar Cadeira no Sistema"])
+          end
+          subgraph ModuloGestao ["Módulo Gestão & Lei Salão Parceiro"]
+              UC14(["UC14: Segregar Cotas (Salão x Profissional)"])
+              UC15(["UC15: Gerar Lote de Repasse Pix para Profissionais"])
+              UC16(["UC16: Emitir NFS-e da Cota do Salão (Lei 13.352)"])
+          end
+          CL --> UC01
+          CL --> UC02
+          CL --> UC03
+          CL --> UC04
+          BB --> UC05
+          BB --> UC06
+          BB --> UC07
+          BB --> UC08
+          BB --> UC09
+          RC --> UC10
+          RC --> UC11
+          RC --> UC12
+          RC --> UC13
+          GT --> UC14
+          GT --> UC15
+          GT --> UC16
+          UC14 -.->|«include»| UC15`;
+      }
+
+      container.removeAttribute('data-processed');
+      container.innerHTML = graphCode;
+      mermaid.init(undefined, container);
+    }
+  </script>
+</body>
+</html>

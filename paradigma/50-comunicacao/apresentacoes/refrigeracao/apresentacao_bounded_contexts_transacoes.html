@@ -1,0 +1,1280 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Modularidade & Atomicidade no Paradigma IDD — Bounded Contexts, Transações e Classes UML</title>
+  
+  <!-- Fontes Google Modernas -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Mermaid.js para renderização de diagramas UML e fluxos -->
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+
+  <style>
+    :root {
+      --bg-dark: #050811;
+      --bg-card: rgba(11, 20, 38, 0.92);
+      --bg-card-border: rgba(56, 189, 248, 0.22);
+      --cyan-frost: #38bdf8;
+      --cyan-glow: rgba(56, 189, 248, 0.4);
+      --ice-blue: #0284c7;
+      --emerald-ok: #10b981;
+      --amber-alert: #f59e0b;
+      --purple-tech: #a855f7;
+      --rose-warn: #f43f5e;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --font-display: 'Outfit', sans-serif;
+      --font-body: 'Plus Jakarta Sans', sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    
+    html, body {
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+      background: #050811;
+      color: var(--text-main);
+      font-family: var(--font-body);
+      user-select: none;
+    }
+
+    /* Background com iluminação ambiente sutil */
+    .ambient-glow {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      background: radial-gradient(circle at 15% 20%, rgba(2, 132, 199, 0.12) 0%, transparent 45%),
+                  radial-gradient(circle at 85% 80%, rgba(16, 185, 129, 0.08) 0%, transparent 45%),
+                  radial-gradient(circle at 50% 50%, rgba(168, 85, 247, 0.06) 0%, transparent 55%);
+      z-index: 1;
+    }
+
+    /* Container Principal */
+    .app-layout {
+      position: relative;
+      z-index: 10;
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* BARRA SUPERIOR */
+    header {
+      height: 56px;
+      min-height: 56px;
+      background: rgba(7, 13, 24, 0.95);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(56, 189, 248, 0.2);
+      padding: 0 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .brand-wrap {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .brand-logo {
+      width: 34px;
+      height: 34px;
+      border-radius: 9px;
+      background: linear-gradient(135deg, #059669, #0284c7);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      box-shadow: 0 0 15px rgba(16, 185, 129, 0.4);
+    }
+    .brand-titles h1 {
+      font-family: var(--font-display);
+      font-size: 16px;
+      font-weight: 800;
+      color: #fff;
+      letter-spacing: -0.3px;
+    }
+    .brand-titles span {
+      font-size: 11px;
+      color: var(--cyan-frost);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    /* BARRAS DE NAVEGAÇÃO DE SLIDES */
+    .nav-tabs {
+      display: flex;
+      gap: 6px;
+      align-items: center;
+      background: rgba(15, 23, 42, 0.8);
+      padding: 4px;
+      border-radius: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .nav-tab {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      font-family: var(--font-body);
+      font-size: 12px;
+      font-weight: 700;
+      padding: 6px 12px;
+      border-radius: 7px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      white-space: nowrap;
+    }
+    .nav-tab:hover {
+      color: #fff;
+      background: rgba(255, 255, 255, 0.06);
+    }
+    .nav-tab.active {
+      background: linear-gradient(135deg, #0284c7, #059669);
+      color: #ffffff;
+      box-shadow: 0 0 12px rgba(56, 189, 248, 0.35);
+    }
+
+    .top-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .btn-action {
+      background: rgba(15, 23, 42, 0.85);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      color: var(--cyan-frost);
+      padding: 6px 12px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
+    }
+    .btn-action:hover {
+      background: var(--ice-blue);
+      color: white;
+    }
+
+    /* PALCO DE SLIDES */
+    .stage-container {
+      flex: 1;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      padding: 16px 24px;
+    }
+
+    .slide {
+      position: absolute;
+      top: 16px;
+      left: 24px;
+      right: 24px;
+      bottom: 16px;
+      opacity: 0;
+      pointer-events: none;
+      transform: translateX(30px);
+      transition: opacity 0.35s ease, transform 0.35s ease;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .slide.active {
+      opacity: 1;
+      pointer-events: all;
+      transform: translateX(0);
+    }
+
+    /* CABEÇALHO DO SLIDE */
+    .slide-header {
+      background: rgba(11, 20, 38, 0.8);
+      border: 1px solid var(--bg-card-border);
+      border-radius: 12px;
+      padding: 12px 18px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      backdrop-filter: blur(8px);
+    }
+    .slide-title-wrap h2 {
+      font-family: var(--font-display);
+      font-size: 20px;
+      font-weight: 800;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .slide-title-wrap p {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+    .slide-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 12px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+    }
+    .badge-cyan { background: rgba(56, 189, 248, 0.15); color: var(--cyan-frost); border: 1px solid rgba(56, 189, 248, 0.3); }
+    .badge-emerald { background: rgba(16, 185, 129, 0.15); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.3); }
+    .badge-amber { background: rgba(245, 158, 11, 0.15); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.3); }
+    .badge-purple { background: rgba(168, 85, 247, 0.15); color: #c084fc; border: 1px solid rgba(168, 85, 247, 0.3); }
+
+    /* CORPO DO SLIDE (GRID FLEXÍVEL) */
+    .slide-body {
+      flex: 1;
+      display: grid;
+      gap: 16px;
+      overflow: hidden;
+    }
+    .grid-2col {
+      grid-template-columns: 1.15fr 0.85fr;
+    }
+    .grid-3col {
+      grid-template-columns: repeat(3, 1fr);
+    }
+    .grid-full {
+      grid-template-columns: 1fr;
+    }
+
+    /* CARTÕES ERGONÔMICOS */
+    .card-panel {
+      background: var(--bg-card);
+      border: 1px solid var(--bg-card-border);
+      border-radius: 14px;
+      padding: 16px 20px;
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    }
+    .card-panel::-webkit-scrollbar { width: 6px; }
+    .card-panel::-webkit-scrollbar-thumb { background: rgba(56, 189, 248, 0.25); border-radius: 3px; }
+
+    .card-title {
+      font-size: 15px;
+      font-weight: 800;
+      color: var(--cyan-frost);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      padding-bottom: 8px;
+    }
+
+    /* DIAGRAMA MERMAID ESTILIZADO */
+    .diagram-box {
+      background: rgba(5, 8, 17, 0.85);
+      border-radius: 10px;
+      padding: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 220px;
+      flex: 1;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      overflow: auto;
+    }
+    .diagram-box svg {
+      max-width: 100%;
+      height: auto;
+    }
+
+    /* ITENS DE LISTA E INVARIANTES */
+    .inv-item {
+      background: rgba(15, 23, 42, 0.65);
+      border-left: 3px solid var(--amber-alert);
+      padding: 10px 14px;
+      border-radius: 0 8px 8px 0;
+      margin-bottom: 8px;
+      font-size: 12.5px;
+      line-height: 1.45;
+    }
+    .inv-item.ok { border-left-color: var(--emerald-ok); }
+    .inv-item.critical { border-left-color: var(--rose-warn); }
+    .inv-item strong { color: #fff; }
+    .inv-item code {
+      font-family: var(--font-mono);
+      color: #fde047;
+      background: rgba(250, 204, 21, 0.12);
+      padding: 2px 5px;
+      border-radius: 4px;
+      font-size: 11.5px;
+    }
+
+    /* TABELA DE MÉTODO COMPORTAMENTAL (UML CLASS) */
+    .method-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12px;
+      margin-top: 6px;
+    }
+    .method-table th {
+      background: rgba(14, 165, 233, 0.15);
+      color: var(--cyan-frost);
+      text-transform: uppercase;
+      font-weight: 800;
+      font-size: 11px;
+      padding: 8px 10px;
+      text-align: left;
+      border-bottom: 1px solid rgba(56, 189, 248, 0.3);
+    }
+    .method-table td {
+      padding: 8px 10px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      color: #cbd5e1;
+    }
+    .method-table tr:hover { background: rgba(255, 255, 255, 0.03); }
+    .method-name {
+      font-family: var(--font-mono);
+      font-weight: 700;
+      color: #38bdf8;
+    }
+    .method-role {
+      font-size: 10.5px;
+      font-weight: 800;
+      padding: 2px 6px;
+      border-radius: 4px;
+      display: inline-block;
+    }
+    .role-guard { background: rgba(245, 158, 11, 0.2); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.4); }
+    .role-mutate { background: rgba(16, 185, 129, 0.2); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.4); }
+    .role-post { background: rgba(168, 85, 247, 0.2); color: #c084fc; border: 1px solid rgba(168, 85, 247, 0.4); }
+    .role-compensate { background: rgba(244, 63, 94, 0.2); color: #fda4af; border: 1px solid rgba(244, 63, 94, 0.4); }
+
+    /* SIMULADOR INTERATIVO DE TRANSAÇÃO ATÔMICA */
+    .sim-panel {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      background: rgba(5, 8, 17, 0.7);
+      border-radius: 12px;
+      padding: 16px;
+      border: 1px solid rgba(56, 189, 248, 0.2);
+    }
+    .sim-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .sim-controls {
+      display: flex;
+      gap: 8px;
+    }
+    .btn-sim {
+      padding: 8px 14px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 800;
+      cursor: pointer;
+      border: none;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .btn-sim-success {
+      background: linear-gradient(135deg, #059669, #0284c7);
+      color: white;
+      box-shadow: 0 0 12px rgba(16, 185, 129, 0.3);
+    }
+    .btn-sim-fail {
+      background: rgba(244, 63, 94, 0.2);
+      border: 1px solid rgba(244, 63, 94, 0.4);
+      color: #fda4af;
+    }
+    .btn-sim:hover { transform: translateY(-1px); filter: brightness(1.15); }
+
+    .tx-timeline {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      margin-top: 6px;
+    }
+    .tx-step {
+      background: rgba(15, 23, 42, 0.85);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+    .tx-step.active {
+      border-color: var(--cyan-frost);
+      box-shadow: 0 0 16px rgba(56, 189, 248, 0.3);
+      transform: scale(1.02);
+    }
+    .tx-step.done {
+      border-color: var(--emerald-ok);
+      background: rgba(16, 185, 129, 0.1);
+    }
+    .tx-step.failed {
+      border-color: var(--rose-warn);
+      background: rgba(244, 63, 94, 0.15);
+    }
+    .tx-step-header {
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .tx-step-title {
+      font-size: 13px;
+      font-weight: 800;
+      color: #fff;
+    }
+    .tx-step-desc {
+      font-size: 11.5px;
+      color: var(--text-muted);
+      line-height: 1.35;
+    }
+
+    /* BARRA INFERIOR DE CONTROLES */
+    footer {
+      height: 48px;
+      min-height: 48px;
+      background: rgba(7, 13, 24, 0.95);
+      border-top: 1px solid rgba(56, 189, 248, 0.15);
+      padding: 0 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+    .footer-left {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .footer-nav {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .btn-nav {
+      background: rgba(15, 23, 42, 0.8);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      color: #fff;
+      padding: 5px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 700;
+      transition: all 0.15s;
+    }
+    .btn-nav:hover { background: var(--ice-blue); }
+  </style>
+  <style id="idd-selos-style">
+    .idd-selo{display:inline-block;vertical-align:middle;font:700 11px/1.4 system-ui,"Segoe UI",sans-serif;letter-spacing:.02em;text-transform:none;padding:2px 8px;border-radius:999px;margin:0 6px;white-space:nowrap;-webkit-text-fill-color:currentColor;-webkit-background-clip:border-box;background-clip:border-box;}
+    .idd-selo-proposta{color:#f3e8ff;background:rgba(88,28,135,.88);border:1px solid #c084fc;}
+    .idd-selo-demo{color:#fef3c7;background:rgba(120,53,15,.88);border:1px solid #fbbf24;}
+    .idd-selo-impl{color:#d1fae5;background:rgba(6,78,59,.88);border:1px solid #34d399;}
+    .idd-nota{font:italic 500 11px/1.4 system-ui,"Segoe UI",sans-serif;color:#cbd5e1;text-transform:none;letter-spacing:0;-webkit-text-fill-color:currentColor;}
+  </style>
+</head>
+<body>
+  <div id="idd-status-banner" role="note" aria-label="Status do conteúdo" style="position:fixed;left:50%;bottom:6px;transform:translateX(-50%);z-index:2147483000;pointer-events:none;max-width:min(46vw,640px);white-space:normal;text-align:center;font:600 11px/1.3 system-ui,'Segoe UI',sans-serif;color:#f8fafc;-webkit-text-fill-color:#f8fafc;background:rgba(15,23,42,.9);border:1px solid rgba(148,163,184,.65);border-radius:10px;padding:3px 10px;box-shadow:0 2px 8px rgba(0,0,0,.4);text-transform:none;letter-spacing:0;">🔭 PROPOSTA — método especificado (BCs, UCs, UML); sem implementação de referência · Cânone v1.0-rc1 · ✅ implementado · 🧪 demonstração · 🔭 proposta</div>
+
+  <div class="ambient-glow"></div>
+
+  <div class="app-layout">
+    <!-- HEADER -->
+    <header>
+      <div class="brand-wrap">
+        <div class="brand-logo">📐</div>
+        <div class="brand-titles">
+          <h1>Paradigma IDD • Bounded Contexts &amp; Atomicidade</h1>
+          <span>Desafios Práticos: Modularidade Estrita &amp; Transações de 2º Nível</span>
+        </div>
+      </div>
+
+      <nav class="nav-tabs" id="navTabs">
+        <button class="nav-tab active" onclick="goToSlide(0)"><span>1</span> O Desafio</button>
+        <button class="nav-tab" onclick="goToSlide(1)"><span>2</span> Arquitetura 4 Níveis</button>
+        <button class="nav-tab" onclick="goToSlide(2)"><span>3</span> BC1: Ativos</button>
+        <button class="nav-tab" onclick="goToSlide(3)"><span>4</span> BC2: PMOC</button>
+        <button class="nav-tab" onclick="goToSlide(4)"><span>5</span> BC3: Termodinâmica</button>
+        <button class="nav-tab" onclick="goToSlide(5)"><span>6</span> BC4: Field Service</button>
+        <button class="nav-tab" onclick="goToSlide(6)"><span>7</span> Simulador Atômico</button>
+        <button class="nav-tab" onclick="goToSlide(7)"><span>8</span> Rastreabilidade &amp; Vídeos</button>
+      </nav>
+
+      <div class="top-actions">
+        <button class="btn-action" onclick="toggleFullScreen()">⛶ Tela Cheia</button>
+      </div>
+    </header>
+
+    <!-- PALCO DOS SLIDES -->
+    <main class="stage-container">
+
+      <!-- SLIDE 1: O DESAFIO DA MODULARIDADE -->
+      <section class="slide active" id="slide-0">
+        <div class="slide-header">
+          <div class="slide-title-wrap">
+            <h2><span>🎯</span> O Desafio da Modularidade no Paradigma IDD <span class="idd-selo idd-selo-proposta">🔭 PROPOSTA</span></h2>
+            <p>Por que Bounded Contexts rígidos e UCs atômicos são propostos como barreira contra o "código espaguete gerado por IA".</p>
+          </div>
+          <span class="slide-badge badge-amber">Fundamento Epistêmico</span>
+        </div>
+
+        <div class="slide-body grid-2col">
+          <div class="card-panel">
+            <div class="card-title">⚠️ O Risco do Desenvolvimento Assistido por IA sem Fronteiras</div>
+            <div style="font-size: 13.5px; line-height: 1.6; color: #cbd5e1; display: flex; flex-direction: column; gap: 12px;">
+              <p>
+                Quando solicitamos a uma IA generativa para <em>"criar a rotina de encerramento da Ordem de Serviço"</em> sem isolamento semântico rígido, a IA tende a <strong>acoplar tudo no mesmo bloco de código</strong>:
+              </p>
+              <div class="inv-item critical">
+                <strong>O Efeito Monolítico Oculto:</strong> A IA mistura validação de fotos, baixa de estoque móvel, cálculo termodinâmico de superaquecimento, emissão de laudo do PMOC e disparo de mensagem no WhatsApp no mesmo endpoint!
+              </div>
+              <p>
+                <strong>Consequência Grave:</strong> Se a API do WhatsApp falhar, a baixa de estoque falha pela metade, a OS não fecha, e o banco entra em estado inconsistente ou o técnico fica travado sem saber se o compressor foi baixado.
+              </p>
+              <div class="inv-item ok">
+                <strong>A Solução do Paradigma IDD:</strong> Estabelecer <strong>Bounded Contexts Rígidos</strong> ancorados em Casos de Uso de 1º Nível, desdobrados em <strong>Casos de Uso de 2º Nível Transacionais</strong> (Two-Phase Transactions / Unit of Work), onde as Classes UML possuem métodos estritos de garantia de atomicidade.
+              </div>
+            </div>
+          </div>
+
+          <div class="card-panel">
+            <div class="card-title">🧩 Comparativo de Arquitetura no Paradigma IDD</div>
+            <div class="diagram-box">
+              <pre class="mermaid">
+flowchart TD
+    subgraph Caos["Abordagem Ingênua com IA"]
+      Prompt["Prompt Genérico: Fechar OS"] --> Mono["Função Monolítica Gigante\n(SQL + Foto + Estoque + WhatsApp)"]
+      Mono -.->|Falha Parcial| Corrupcao["Estado Corrompido no Banco"]
+    end
+    subgraph IDD["Abordagem Paradigma IDD"]
+      UC1["UC 1º Nível: Bounded Context"] --> UC2["UC 2º Nível: Transação Atômica"]
+      UC2 --> Invariantes["Invariantes MER + Regras Rígidas"]
+      Invariantes --> MetodosUML["Classes UML com Métodos 4-Fases\n(Guard, Mutate, Post, Compensate)"]
+    end
+              </pre>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 2: ARQUITETURA DE 4 NÍVEIS -->
+      <section class="slide" id="slide-1">
+        <div class="slide-header">
+          <div class="slide-title-wrap">
+            <h2><span>🏛️</span> A Hierarquia Canônica de Decomposição (4 Níveis) <span class="idd-selo idd-selo-proposta">🔭 PROPOSTA</span></h2>
+            <p>Do Caso de Uso de 1º Nível à assinatura atômica dos métodos comportamentais em classes UML.</p>
+          </div>
+          <span class="slide-badge badge-cyan">Engenharia de Domínio</span>
+        </div>
+
+        <div class="slide-body grid-2col">
+          <div class="card-panel">
+            <div class="card-title">📐 A Cadeia de Rastreabilidade Proposta</div>
+            <div style="display: flex; flex-direction: column; gap: 10px; font-size: 13px;">
+              <div class="inv-item ok">
+                <strong>Nível 1 — Bounded Context (UC de 1º Nível):</strong><br>
+                Define a fronteira soberana de regras e autoridade de domínio (ex: <em>Gestão de Ativos</em>, <em>PMOC Normativo</em>, <em>Física Térmica</em>, <em>Field Service</em>).
+              </div>
+              <div class="inv-item ok">
+                <strong>Nível 2 — Transação Atômica (UC de 2º Nível):</strong><br>
+                Operação atômica indivisível (Unit of Work / Saga Transacional). Tudo comita ou nada comita sem efeitos colaterais.<br><span class="idd-nota">Posição canônica (A21): transação ACID local dentro de um contexto; entre contextos, Saga com compensação declarada.</span>
+              </div>
+              <div class="inv-item ok">
+                <strong>Nível 3 — Invariantes Profundas de Domínio:</strong><br>
+                Preservação estrita das relações derivadas do MER (integridade referencial, limites de cardinalidade e invariantes físicas/sanitárias).
+              </div>
+              <div class="inv-item ok">
+                <strong>Nível 4 — Classes UML &amp; Métodos Sub-componentes:</strong><br>
+                Métodos comportamentais em classes puras estruturados em 4 momentos: <code>validarPreCondicoes()</code>, <code>executarMutacao()</code>, <code>assegurarInvariantes()</code> e <code>compensarRollback()</code>.
+              </div>
+            </div>
+          </div>
+
+          <div class="card-panel">
+            <div class="card-title">🗺️ Mapa dos 4 Bounded Contexts em HVAC-R</div>
+            <div class="diagram-box">
+              <pre class="mermaid">
+flowchart TB
+    subgraph BC1["BC1: Ativos & Prontuário"]
+      UC10["UC-1.0: Gestão do Parque de Máquinas"]
+      UC11["UC-1.1-TX: Provisionar Tag QR"]
+      UC12["UC-1.2-TX: Retrofit de Gás/Óleo"]
+      UC10 --> UC11 & UC12
+    end
+    subgraph BC2["BC2: PMOC & Compliance"]
+      UC20["UC-2.0: Governança do PMOC"]
+      UC21["UC-2.1-TX: Cron Preventivas"]
+      UC23["UC-2.3-TX: Selar Laudo com Hash"]
+      UC20 --> UC21 & UC23
+    end
+    subgraph BC3["BC3: Física & Fluidos"]
+      UC30["UC-3.0: Manobras Termodinâmicas"]
+      UC31["UC-3.1-TX: Diagnóstico Manométrico"]
+      UC32["UC-3.2-TX: Recarga com Estanqueidade"]
+      UC30 --> UC31 & UC32
+    end
+    subgraph BC4["BC4: Field Service"]
+      UC40["UC-4.0: Execução em Campo"]
+      UC42["UC-4.2-TX: Consumir Peça Veículo"]
+      UC43["UC-4.3-TX: Fechamento Bi-Partite"]
+      UC40 --> UC42 & UC43
+    end
+              </pre>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 3: BOUNDED CONTEXT 1 - ATIVOS & PRONTUÁRIO -->
+      <section class="slide" id="slide-2">
+        <div class="slide-header">
+          <div class="slide-title-wrap">
+            <h2><span>📦</span> BC1: Ativos &amp; Prontuário Técnico Digital <span class="idd-selo idd-selo-proposta">🔭 PROPOSTA</span></h2>
+            <p>Soberania sobre identificação física, placa nominal, local de instalação e retrofits térmicos.</p>
+          </div>
+          <span class="slide-badge badge-cyan">Sub-Módulo 1</span>
+        </div>
+
+        <div class="slide-body grid-2col">
+          <div class="card-panel">
+            <div class="card-title">📋 UCs Transacionais de 2º Nível &amp; Invariantes do MER</div>
+            <div style="font-size: 13px; display: flex; flex-direction: column; gap: 8px;">
+              <div class="inv-item">
+                <strong>UC-1.1-TX: Provisionar Ativo com Tag QR Code</strong><br>
+                <code>INV-BC1-01 (Unicidade de Tag):</code> <code>UNIQUE(qr_code_id)</code> impede tags duplicadas.<br>
+                <code>INV-BC1-02 (Proibição de Órfão):</code> Rejeita criação sem <code>local_instalacao_id</code> ativo.
+              </div>
+              <div class="inv-item critical">
+                <strong>UC-1.2-TX: Retrofit Crítico de Fluido e Compressor</strong><br>
+                <code>INV-BC1-03 (Imutabilidade de Placa):</code> O tipo de gás e BTUs não aceitam UPDATE direto. A transação exige arquivo em <code>HISTORICO_RETROFIT</code> com ART/TRT anexada.<br>
+                <code>INV-BC1-04 (Química de Óleo):</code> Rejeita transação se o óleo do compressor for incompatível com o novo refrigerante.
+              </div>
+              <div class="inv-item ok">
+                <strong>UC-1.3-TX: Descomissionamento Preservado</strong><br>
+                Impede <code>DELETE</code> físico no banco; o ativo passa para <code>DESCOMISSIONADO</code> congelando o histórico.
+              </div>
+            </div>
+          </div>
+
+          <div class="card-panel">
+            <div class="card-title">💻 Métodos Comportamentais de Atomicidade (UML)</div>
+            <table class="method-table">
+              <thead>
+                <tr>
+                  <th>Classe</th>
+                  <th>Método Comportamental</th>
+                  <th>Fase / Papel</th>
+                  <th>Garantia Atômica</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><code>Equipamento</code></td>
+                  <td><span class="method-name">validarPreCondicoesRetrofit()</span></td>
+                  <td><span class="method-role role-guard">Guarda</span></td>
+                  <td>Testa suporte térmico e ART válida antes de mutação.</td>
+                </tr>
+                <tr>
+                  <td><code>Equipamento</code></td>
+                  <td><span class="method-name">executarRetrofit()</span></td>
+                  <td><span class="method-role role-mutate">Mutação</span></td>
+                  <td>Altera fluido e cria nó em <code>HistoricoRetrofit</code>.</td>
+                </tr>
+                <tr>
+                  <td><code>Equipamento</code></td>
+                  <td><span class="method-name">assegurarInvariantes()</span></td>
+                  <td><span class="method-role role-post">Pós-Condição</span></td>
+                  <td>Verifica consistência relacional pós-alteração.</td>
+                </tr>
+                <tr>
+                  <td><code>Equipamento</code></td>
+                  <td><span class="method-name">compensarTransacaoFalha()</span></td>
+                  <td><span class="method-role role-compensate">Rollback</span></td>
+                  <td>Reverte especificações em caso de falha de persistência.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 4: BOUNDED CONTEXT 2 - PMOC NORMATIVO -->
+      <section class="slide" id="slide-3">
+        <div class="slide-header">
+          <div class="slide-title-wrap">
+            <h2><span>📜</span> BC2: PMOC Normativo &amp; Governança Sanitária <span class="idd-selo idd-selo-proposta">🔭 PROPOSTA</span></h2>
+            <p>Conformidade estrita com a Lei Federal 13.589/2018 e Portaria MS 3.523/1998 com selagem por Hash SHA-256.</p>
+          </div>
+          <span class="slide-badge badge-emerald">Sub-Módulo 2</span>
+        </div>
+
+        <div class="slide-body grid-2col">
+          <div class="card-panel">
+            <div class="card-title">📋 UCs Transacionais de 2º Nível &amp; Invariantes Sanitárias</div>
+            <div style="font-size: 13px; display: flex; flex-direction: column; gap: 8px;">
+              <div class="inv-item">
+                <strong>UC-2.1-TX: Gerar Lote de Preventivas Periódicas (Cron)</strong><br>
+                Gera idempotentemente as OSs do mês sem duplicidades para ativos sob contrato.
+              </div>
+              <div class="inv-item critical">
+                <strong>UC-2.2-TX: Checklist Sanitário Normativo (Portaria 3.523)</strong><br>
+                <code>INV-BC2-01 (Quarteto Sanitário):</code> A transação rejeita fechamento se qualquer um dos 4 itens for nulo:<br>
+                <code>filtro_ok ∧ bandeja_ok ∧ dreno_ok ∧ serpentina_ok ≠ NULL</code>.
+              </div>
+              <div class="inv-item ok">
+                <strong>UC-2.3-TX: Selar Laudo PMOC com Hash Criptográfico</strong><br>
+                <code>INV-BC2-02 (Exigência de RT):</code> Parque &gt; 60.000 BTU/h exige RT no CREA/CFT.<br>
+                <code>INV-BC2-04 (Imutabilidade):</code> Geração de Hash SHA-256 do payload completo.
+              </div>
+            </div>
+          </div>
+
+          <div class="card-panel">
+            <div class="card-title">💻 Métodos Comportamentais de Atomicidade (UML)</div>
+            <table class="method-table">
+              <thead>
+                <tr>
+                  <th>Classe</th>
+                  <th>Método Comportamental</th>
+                  <th>Fase / Papel</th>
+                  <th>Garantia Atômica</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><code>ChecklistSanitario</code></td>
+                  <td><span class="method-name">validarConformidadePortaria3523()</span></td>
+                  <td><span class="method-role role-guard">Guarda</span></td>
+                  <td>Impede avanço se faltar inspeção de qualquer item.</td>
+                </tr>
+                <tr>
+                  <td><code>LaudoPMOC</code></td>
+                  <td><span class="method-name">calcularHashImutabilidade()</span></td>
+                  <td><span class="method-role role-mutate">Mutação</span></td>
+                  <td>Gera assinatura SHA-256 dos dados sanitários.</td>
+                </tr>
+                <tr>
+                  <td><code>LaudoPMOC</code></td>
+                  <td><span class="method-name">selarLaudoDefinitivo()</span></td>
+                  <td><span class="method-role role-post">Pós-Condição</span></td>
+                  <td>Grava status imutável e anexa ART em bloco atômico.</td>
+                </tr>
+                <tr>
+                  <td><code>LaudoPMOC</code></td>
+                  <td><span class="method-name">compensarFalhaEmissao()</span></td>
+                  <td><span class="method-role role-compensate">Rollback</span></td>
+                  <td>Descarta PDF temporário e desfaz selagem se ocorrer erro.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 5: BOUNDED CONTEXT 3 - FÍSICA & TERMODINÂMICA -->
+      <section class="slide" id="slide-4">
+        <div class="slide-header">
+          <div class="slide-title-wrap">
+            <h2><span>🌡️</span> BC3: Física Térmica, Fluidos &amp; Ciclo Frigorífico <span class="idd-selo idd-selo-proposta">🔭 PROPOSTA</span></h2>
+            <p>Governança de pressões manométricas, rendimento térmico e normas ambientais (CONAMA / Protocolo de Montreal).</p>
+          </div>
+          <span class="slide-badge badge-purple">Sub-Módulo 3</span>
+        </div>
+
+        <div class="slide-body grid-2col">
+          <div class="card-panel">
+            <div class="card-title">📋 UCs Transacionais de 2º Nível &amp; Invariantes Termodinâmicas</div>
+            <div style="font-size: 13px; display: flex; flex-direction: column; gap: 8px;">
+              <div class="inv-item">
+                <strong>UC-3.1-TX: Registrar Diagnóstico Manométrico</strong><br>
+                <code>INV-BC3-01 (Invariante Fundamental do Ciclo):</code><br>
+                <code>pressao_descarga_psi &gt; pressao_sucao_psi</code>. Especificação: o banco e o modelo devem rejeitar medições com pressões invertidas.
+              </div>
+              <div class="inv-item critical">
+                <strong>UC-3.2-TX: Recarga de Fluido com Teste Prévio de Estanqueidade</strong><br>
+                <code>INV-BC3-03 (Precedência Obrigatória):</code> O sistema bloqueia a injeção de gás se não houver registro de <code>teste_estanqueidade_id</code> aprovado com nitrogênio sob pressão &ge; 150 PSI. Proibida recarga em máquina com vazamento ativo!
+              </div>
+              <div class="inv-item ok">
+                <strong>UC-3.3-TX: Recolhimento Ecológico de Gás</strong><br>
+                <code>INV-BC3-04 (Balanço de Massa do Cilindro):</code> A massa debitada do circuito frigorífico é creditada no cilindro sem ultrapassar a capacidade máxima de segurança (80% da tara).
+              </div>
+            </div>
+          </div>
+
+          <div class="card-panel">
+            <div class="card-title">💻 Métodos Comportamentais de Atomicidade (UML)</div>
+            <table class="method-table">
+              <thead>
+                <tr>
+                  <th>Classe</th>
+                  <th>Método Comportamental</th>
+                  <th>Fase / Papel</th>
+                  <th>Garantia Atômica</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><code>OperacaoFluido</code></td>
+                  <td><span class="method-name">validarPreRequisitoEstanqueidade()</span></td>
+                  <td><span class="method-role role-guard">Guarda</span></td>
+                  <td>Rejeita recarga sem laudo prévio de estanqueidade.</td>
+                </tr>
+                <tr>
+                  <td><code>OperacaoFluido</code></td>
+                  <td><span class="method-name">executarTransferenciaFluido()</span></td>
+                  <td><span class="method-role role-mutate">Mutação</span></td>
+                  <td>Registra recarga e credita massa no circuito.</td>
+                </tr>
+                <tr>
+                  <td><code>MedicaoTecnica</code></td>
+                  <td><span class="method-name">validarConsistenciaFisica()</span></td>
+                  <td><span class="method-role role-post">Pós-Condição</span></td>
+                  <td>Verifica estabilização do Delta T (&ge; 8°C a 12°C).</td>
+                </tr>
+                <tr>
+                  <td><code>CilindroDestinacao</code></td>
+                  <td><span class="method-name">estornarCredito()</span></td>
+                  <td><span class="method-role role-compensate">Rollback</span></td>
+                  <td>Restaura saldo do cilindro em caso de falha de conexão.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 6: BOUNDED CONTEXT 4 - FIELD SERVICE & OPERAÇÃO -->
+      <section class="slide" id="slide-5">
+        <div class="slide-header">
+          <div class="slide-title-wrap">
+            <h2><span>🚚</span> BC4: Field Service &amp; Operação de Campo <span class="idd-selo idd-selo-proposta">🔭 PROPOSTA</span></h2>
+            <p>Orquestração de técnicos em campo, baixa atômica de peças e fechamento bi-partite com Outbox Pattern.</p>
+          </div>
+          <span class="slide-badge badge-amber">Sub-Módulo 4</span>
+        </div>
+
+        <div class="slide-body grid-2col">
+          <div class="card-panel">
+            <div class="card-title">📋 UCs Transacionais de 2º Nível &amp; Invariantes Operacionais</div>
+            <div style="font-size: 13px; display: flex; flex-direction: column; gap: 8px;">
+              <div class="inv-item">
+                <strong>UC-4.1-TX: Despacho com Bloqueio de Concorrência</strong><br>
+                <code>INV-BC4-01 (Máquina de Estados Estrita):</code><br>
+                <code>RASCUNHO → AGENDADA → EM_DESLOCAMENTO → EM_ATENDIMENTO → CONCLUIDA</code>.
+                Impede que dois mecânicos aceitem a mesma ordem de serviço.
+              </div>
+              <div class="inv-item critical">
+                <strong>UC-4.2-TX: Consumo de Peça do Estoque Móvel</strong><br>
+                <code>INV-BC4-03 (Saldo Positivo):</code> A baixa do capacitor/relé no veículo do técnico é atômica; o sistema rejeita se <code>saldo_veiculo - qtd &lt; 0</code>.
+              </div>
+              <div class="inv-item ok">
+                <strong>UC-4.3-TX: Fechamento Bi-Partite &amp; Transactional Outbox</strong><br>
+                <code>INV-BC4-02 (Evidência Bi-Partite):</code> Exige foto Antes, foto Depois e assinatura do cliente.<br>
+                <code>INV-BC4-04 (Outbox WhatsApp):</code> O envio da mensagem no WhatsApp é gravado na tabela <code>OUTBOX</code> dentro do mesmo commit da OS, para entrega resiliente (padrão Outbox).
+              </div>
+            </div>
+          </div>
+
+          <div class="card-panel">
+            <div class="card-title">💻 Métodos Comportamentais de Atomicidade (UML)</div>
+            <table class="method-table">
+              <thead>
+                <tr>
+                  <th>Classe</th>
+                  <th>Método Comportamental</th>
+                  <th>Fase / Papel</th>
+                  <th>Garantia Atômica</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><code>OrdemServico</code></td>
+                  <td><span class="method-name">validarRequisitosConclusao()</span></td>
+                  <td><span class="method-role role-guard">Guarda</span></td>
+                  <td>Checa checklist completo, fotos e assinatura do cliente.</td>
+                </tr>
+                <tr>
+                  <td><code>EstoqueMovelTecnico</code></td>
+                  <td><span class="method-name">baixarEstoqueMovel()</span></td>
+                  <td><span class="method-role role-mutate">Mutação</span></td>
+                  <td>Deduz estoque do carro do mecânico de forma atômica.</td>
+                </tr>
+                <tr>
+                  <td><code>TransacaoOutbox</code></td>
+                  <td><span class="method-name">enfileirarEvento()</span></td>
+                  <td><span class="method-role role-post">Pós-Condição</span></td>
+                  <td>Insere disparo WhatsApp no mesmo commit da OS.</td>
+                </tr>
+                <tr>
+                  <td><code>EstoqueMovelTecnico</code></td>
+                  <td><span class="method-name">estornarSaldo()</span></td>
+                  <td><span class="method-role role-compensate">Rollback</span></td>
+                  <td>Devolve peças ao carro se o commit principal falhar.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 7: SIMULADOR INTERATIVO DE TRANSAÇÃO ATÔMICA -->
+      <section class="slide" id="slide-6">
+        <div class="slide-header">
+          <div class="slide-title-wrap">
+            <h2><span>⚡</span> Laboratório Interativo de Transação Atômica (Two-Phase / Unit of Work) <span class="idd-selo idd-selo-demo">🧪 DEMONSTRAÇÃO</span></h2>
+            <p>Simule (roteiro ilustrativo) a execução de um UC de 2º Nível observando a ação das 4 fases em classes UML puras.</p>
+          </div>
+          <span class="slide-badge badge-cyan">Simulação Interativa</span>
+        </div>
+
+        <div class="slide-body grid-full">
+          <div class="card-panel">
+            <div class="sim-panel">
+              <div class="sim-header">
+                <div>
+                  <div style="font-size: 15px; font-weight: 800; color: #fff;">
+                    Transação Alvo: <code>UC-4.3-TX: Fechamento Bi-Partite de OS com PMOC e Baixa de Peças</code>
+                  </div>
+                  <div style="font-size: 12px; color: var(--text-muted); margin-top: 2px;">
+                    Envolve agregados: <code>OrdemServico</code> + <code>ChecklistSanitario</code> + <code>EstoqueMovelTecnico</code> + <code>TransacaoOutbox</code>
+                  </div>
+                </div>
+
+                <div class="sim-controls">
+                  <button class="btn-sim btn-sim-success" onclick="runSimulation(true)">
+                    ▶ Simular Transação Sucesso (Commit 100%)
+                  </button>
+                  <button class="btn-sim btn-sim-fail" onclick="runSimulation(false)">
+                    ⚠️ Forçar Violação de Invariante (Rollback Automático)
+                  </button>
+                </div>
+              </div>
+
+              <!-- TIMELINE DOS 4 PASSOS -->
+              <div class="tx-timeline">
+                <div class="tx-step" id="step-1">
+                  <div class="tx-step-header">
+                    <span style="color: var(--amber-alert);">Fase 1</span>
+                    <span class="method-role role-guard">Guarda</span>
+                  </div>
+                  <div class="tx-step-title">validarPreCondicoes()</div>
+                  <div class="tx-step-desc">
+                    Valida checklist sanitário da Portaria 3.523, presença de fotos Antes/Depois e saldo em estoque.
+                  </div>
+                </div>
+
+                <div class="tx-step" id="step-2">
+                  <div class="tx-step-header">
+                    <span style="color: var(--emerald-ok);">Fase 2</span>
+                    <span class="method-role role-mutate">Mutação</span>
+                  </div>
+                  <div class="tx-step-title">executarMutacao()</div>
+                  <div class="tx-step-desc">
+                    Aplica assinatura do cliente, deduz peça do veículo do mecânico e altera status para CONCLUIDA.
+                  </div>
+                </div>
+
+                <div class="tx-step" id="step-3">
+                  <div class="tx-step-header">
+                    <span style="color: var(--purple-tech);">Fase 3</span>
+                    <span class="method-role role-post">Pós-Condição</span>
+                  </div>
+                  <div class="tx-step-title">assegurarInvariantes()</div>
+                  <div class="tx-step-desc">
+                    Gera Hash SHA-256 do laudo, enfileira evento na tabela OUTBOX e comita no banco de dados.
+                  </div>
+                </div>
+
+                <div class="tx-step" id="step-4">
+                  <div class="tx-step-header">
+                    <span style="color: var(--rose-warn);">Fase 4</span>
+                    <span class="method-role role-compensate">Compensação</span>
+                  </div>
+                  <div class="tx-step-title">compensarRollback()</div>
+                  <div class="tx-step-desc">
+                    Se ocorrer erro ou violação, estorna saldo de peças, cancela mensagem e reverte OS para EM_ATENDIMENTO.
+                  </div>
+                </div>
+              </div>
+
+              <!-- LOG DE EXECUÇÃO EM TEMPO REAL -->
+              <div style="background: #02050b; border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 8px; padding: 12px; font-family: var(--font-mono); font-size: 12px; color: #38bdf8; min-height: 110px; max-height: 140px; overflow-y: auto;" id="simLog">
+                <span style="color: #64748b;">// Simulação ilustrativa: o log é roteirizado e nenhum banco real é acessado. Aguardando disparo...</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 8: RASTREABILIDADE & ROTEIRO DOS VÍDEOS -->
+      <section class="slide" id="slide-7">
+        <div class="slide-header">
+          <div class="slide-title-wrap">
+            <h2><span>🎬</span> Matriz de Rastreabilidade &amp; Roteiro de Gravação <span class="idd-selo idd-selo-proposta">🔭 PROPOSTA</span></h2>
+            <p>Conexão ponta a ponta entre Sub-módulos, Transações Atômicas, MER e Estrutura dos Novos Vídeos.</p>
+          </div>
+          <span class="slide-badge badge-emerald">Entrega Editorial</span>
+        </div>
+
+        <div class="slide-body grid-2col">
+          <div class="card-panel">
+            <div class="card-title">📋 Matriz Geral de Decomposição IDD</div>
+            <div style="overflow-x: auto;">
+              <table class="method-table">
+                <thead>
+                  <tr>
+                    <th>Sub-Módulo (BC)</th>
+                    <th>UC 1º Nível</th>
+                    <th>UC 2º Nível Transacional</th>
+                    <th>Invariante MER / Física</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong style="color: #38bdf8;">BC1: Ativos</strong></td>
+                    <td>UC-1.0: Gestão Parque</td>
+                    <td><code>UC-1.2-TX: Retrofit</code></td>
+                    <td>Imutabilidade Placa + Óleo/Gás</td>
+                  </tr>
+                  <tr>
+                    <td><strong style="color: #34d399;">BC2: PMOC</strong></td>
+                    <td>UC-2.0: Governança PMOC</td>
+                    <td><code>UC-2.3-TX: Selar Laudo</code></td>
+                    <td>Quarteto Portaria 3.523 + Hash SHA</td>
+                  </tr>
+                  <tr>
+                    <td><strong style="color: #c084fc;">BC3: Fluidos</strong></td>
+                    <td>UC-3.0: Física Térmica</td>
+                    <td><code>UC-3.2-TX: Recarga Gás</code></td>
+                    <td>Alta &gt; Baixa + Teste Estanqueidade</td>
+                  </tr>
+                  <tr>
+                    <td><strong style="color: #fbbf24;">BC4: Campo</strong></td>
+                    <td>UC-4.0: Field Service</td>
+                    <td><code>UC-4.3-TX: Fechar OS</code></td>
+                    <td>Evidência Bi-Partite + Outbox Z-API</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="card-panel">
+            <div class="card-title">🎥 Roteiro para os 2 Novos Vídeos da Playlist IDD</div>
+            <div style="display: flex; flex-direction: column; gap: 10px; font-size: 13px;">
+              <div class="inv-item ok">
+                <strong>Vídeo A — "A Anatomia da Modularidade no IDD"</strong><br>
+                • <em>Bloco 1:</em> O risco de deixar a IA criar código monolítico espaguete.<br>
+                • <em>Bloco 2:</em> Como os UCs de 1º Nível definem os 4 Bounded Contexts.<br>
+                • <em>Bloco 3:</em> A proteção das fronteiras de contexto com o modelo relacional (MER).
+              </div>
+              <div class="inv-item ok">
+                <strong>Vídeo B — "Transações Atômicas de 2º Nível &amp; Métodos UML"</strong><br>
+                • <em>Bloco 1:</em> O que é atomicidade de negócio (Unit of Work e Two-Phase Transactions).<br>
+                • <em>Bloco 2:</em> As 4 fases: Guarda, Mutação, Pós-condição e Compensação.<br>
+                • <em>Bloco 3:</em> Estudo de caso (especificação, sem implementação) do fechamento de OS com PMOC e WhatsApp sem corrupção de estado.
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer>
+      <div class="footer-left">
+        <span>Slide <strong id="currentSlideNum">1</strong> de <strong>8</strong></span>
+        <span>•</span>
+        <span id="currentSlideTitle" style="color: var(--cyan-frost); font-weight: 700;">O Desafio da Modularidade</span>
+      </div>
+
+      <div class="footer-nav">
+        <button class="btn-nav" onclick="prevSlide()">◀ Anterior [←]</button>
+        <button class="btn-nav" onclick="nextSlide()">Próximo [→] ▶</button>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    // INICIALIZAÇÃO DO MERMAID
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: 'dark',
+      themeVariables: {
+        darkMode: true,
+        background: 'transparent',
+        primaryColor: '#0284c7',
+        primaryTextColor: '#f8fafc',
+        primaryBorderColor: '#38bdf8',
+        lineColor: '#38bdf8',
+        secondaryColor: '#059669',
+        tertiaryColor: '#1e293b'
+      }
+    });
+
+    // CONTROLE DE NAVEGAÇÃO ENTRE SLIDES
+    var currentSlide = 0;
+    var totalSlides = 8;
+    var slideTitles = [
+      "O Desafio da Modularidade",
+      "Hierarquia Canônica de 4 Níveis",
+      "BC1: Ativos & Prontuário Técnico",
+      "BC2: PMOC Normativo & Compliance Sanitário",
+      "BC3: Física Térmica & Fluidos",
+      "BC4: Field Service & Operação em Campo",
+      "Laboratório de Transação Atômica",
+      "Matriz de Rastreabilidade & Roteiro"
+    ];
+
+    function goToSlide(index) {
+      if (index < 0 || index >= totalSlides) return;
+      
+      document.querySelectorAll('.slide').forEach((el, idx) => {
+        el.classList.toggle('active', idx === index);
+      });
+
+      document.querySelectorAll('.nav-tab').forEach((el, idx) => {
+        el.classList.toggle('active', idx === index);
+      });
+
+      currentSlide = index;
+      document.getElementById('currentSlideNum').textContent = index + 1;
+      document.getElementById('currentSlideTitle').textContent = slideTitles[index];
+    }
+
+    function nextSlide() {
+      if (currentSlide < totalSlides - 1) {
+        goToSlide(currentSlide + 1);
+      }
+    }
+
+    function prevSlide() {
+      if (currentSlide > 0) {
+        goToSlide(currentSlide - 1);
+      }
+    }
+
+    // NAVEGAÇÃO POR TECLADO
+    window.addEventListener('keydown', function(e) {
+      if (e.key === 'ArrowRight' || e.key === 'PageDown' || e.key === ' ') {
+        nextSlide();
+      } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+        prevSlide();
+      } else if (e.key === 'f' || e.key === 'F') {
+        toggleFullScreen();
+      }
+    });
+
+    function toggleFullScreen() {
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen().catch(err => console.log(err));
+      } else {
+        if (document.exitFullscreen) {
+          document.exitFullscreen();
+        }
+      }
+    }
+
+    // SIMULADOR INTERATIVO DE TRANSAÇÃO ATÔMICA
+    function runSimulation(isSuccess) {
+      var log = document.getElementById('simLog');
+      var step1 = document.getElementById('step-1');
+      var step2 = document.getElementById('step-2');
+      var step3 = document.getElementById('step-3');
+      var step4 = document.getElementById('step-4');
+
+      // Reset
+      [step1, step2, step3, step4].forEach(s => {
+        s.className = 'tx-step';
+      });
+      log.innerHTML = `<span style="color: #64748b;">[00:00.000] Disparando transação UC-4.3-TX (Unit of Work)...</span><br>`;
+
+      // FASE 1: GUARDA
+      setTimeout(() => {
+        step1.classList.add('active');
+        log.innerHTML += `<span style="color: #fbbf24;">[00:00.250] [FASE 1: GUARDA] OrdemServico.validarRequisitosConclusao(): fotos Antes e Depois OK.</span><br>`;
+        log.innerHTML += `<span style="color: #fbbf24;">[00:00.310] [FASE 1: GUARDA] ChecklistSanitario.validarConformidadePortaria3523(): 4 itens sanitários verificados.</span><br>`;
+        log.innerHTML += `<span style="color: #fbbf24;">[00:00.380] [FASE 1: GUARDA] EstoqueMovelTecnico.validarSaldo(pecaId='CAP-45UF'): saldo disponível no veículo = 3.</span><br>`;
+        log.scrollTop = log.scrollHeight;
+      }, 300);
+
+      // FASE 2: MUTAÇÃO
+      setTimeout(() => {
+        step1.classList.remove('active');
+        step1.classList.add('done');
+        step2.classList.add('active');
+        log.innerHTML += `<span style="color: #34d399;">[00:00.650] [FASE 2: MUTAÇÃO] EstoqueMovelTecnico.baixarEstoqueMovel(qtd=1): saldo novo = 2.</span><br>`;
+        log.innerHTML += `<span style="color: #34d399;">[00:00.720] [FASE 2: MUTAÇÃO] OrdemServico.executarFechamentoBiPartite(assinatura='...'): status -> CONCLUIDA.</span><br>`;
+        log.scrollTop = log.scrollHeight;
+      }, 1000);
+
+      // FASE 3: PÓS-CONDIÇÃO E COMMIT OU FALHA
+      setTimeout(() => {
+        step2.classList.remove('active');
+
+        if (isSuccess) {
+          step2.classList.add('done');
+          step3.classList.add('active');
+          log.innerHTML += `<span style="color: #c084fc;">[00:01.100] [FASE 3: PÓS-CONDIÇÃO] LaudoPMOC.calcularHashImutabilidade(): Hash SHA-256 gerado: 'e3b0c44298fc...'.</span><br>`;
+          log.innerHTML += `<span style="color: #c084fc;">[00:01.180] [FASE 3: PÓS-CONDIÇÃO] TransacaoOutbox.enfileirarEvento('OS_CONCLUIDA_WHATSAPP'): gravado na tabela OUTBOX.</span><br>`;
+          
+          setTimeout(() => {
+            step3.classList.remove('active');
+            step3.classList.add('done');
+            log.innerHTML += `<strong style="color: #34d399;">[00:01.500] [COMMIT 100%] Transação Atômica concluída com sucesso! Nenhuma invariante violada.</strong><br>`;
+            log.scrollTop = log.scrollHeight;
+          }, 600);
+
+        } else {
+          // FORÇANDO FALHA
+          step2.classList.add('failed');
+          step4.classList.add('active');
+          log.innerHTML += `<span style="color: #f43f5e; font-weight: 800;">[00:01.100] [ALERTA DE INVARIANTE] Erro: Queda de integridade no banco ou Delta T termodinâmico negativo!</span><br>`;
+          log.innerHTML += `<span style="color: #fda4af;">[00:01.150] [FASE 4: COMPENSAÇÃO] Disparando EstoqueMovelTecnico.estornarSaldo(pecaId='CAP-45UF'): saldo restaurado para 3.</span><br>`;
+          log.innerHTML += `<span style="color: #fda4af;">[00:01.210] [FASE 4: COMPENSAÇÃO] OrdemServico.compensarFechamento(): OS restaurada para EM_ATENDIMENTO.</span><br>`;
+          log.innerHTML += `<span style="color: #fda4af;">[00:01.270] [FASE 4: COMPENSAÇÃO] Cancelamento da publicação no Outbox: nenhum WhatsApp falso enviado.</span><br>`;
+          
+          setTimeout(() => {
+            step4.classList.remove('active');
+            step4.classList.add('failed');
+            log.innerHTML += `<strong style="color: #f43f5e;">[00:01.550] [ROLLBACK TOTAL] Estado íntegro preservado! Zero poluição de dados no banco.</strong><br>`;
+            log.scrollTop = log.scrollHeight;
+          }, 600);
+        }
+      }, 1800);
+    }
+  </script>
+</body>
+</html>

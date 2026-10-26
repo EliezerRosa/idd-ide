@@ -1,0 +1,1432 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nova Proposta: Gestão Ágil de Refrigeração — Renato</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --bg-dark: #070d18;
+      --bg-card: rgba(15, 23, 42, 0.88);
+      --bg-card-border: rgba(56, 189, 248, 0.22);
+      --cyan-frost: #38bdf8;
+      --cyan-glow: rgba(56, 189, 248, 0.35);
+      --ice-blue: #0284c7;
+      --deep-navy: #0b1528;
+      --emerald-ok: #10b981;
+      --amber-alert: #f59e0b;
+      --rose-warn: #f43f5e;
+      --text-main: #f1f5f9;
+      --text-muted: #94a3b8;
+      --handwriting-font: 'Caveat', cursive, sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      width: 100vw;
+      height: 100vh;
+      max-height: 100vh;
+      overflow: hidden; /* Zero scroll */
+      background: radial-gradient(circle at 50% 10%, #102647 0%, #070d18 65%, #02050b 100%);
+      color: var(--text-main);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      display: flex;
+      flex-direction: column;
+      user-select: none;
+    }
+
+    /* Top Navigation Bar */
+    header {
+      height: 52px;
+      min-height: 52px;
+      background: rgba(7, 13, 24, 0.94);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(56, 189, 248, 0.18);
+      padding: 0 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      z-index: 50;
+      gap: 12px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .brand-icon {
+      width: 34px;
+      height: 34px;
+      background: linear-gradient(135deg, #10b981, #0284c7);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      box-shadow: 0 0 12px rgba(16, 185, 129, 0.4);
+      flex-shrink: 0;
+    }
+
+    .brand-title {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 700;
+      font-size: 1.05rem;
+      letter-spacing: -0.01em;
+      color: #fff;
+      line-height: 1.1;
+    }
+
+    .brand-subtitle {
+      font-size: 0.7rem;
+      color: var(--cyan-frost);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-weight: 600;
+    }
+
+    /* Controls */
+    .controls-container {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn {
+      background: rgba(30, 41, 59, 0.85);
+      border: 1px solid rgba(56, 189, 248, 0.28);
+      color: var(--text-main);
+      padding: 6px 12px;
+      border-radius: 7px;
+      cursor: pointer;
+      font-size: 0.78rem;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+    }
+
+    .btn:hover {
+      background: rgba(56, 189, 248, 0.18);
+      border-color: var(--cyan-frost);
+      transform: translateY(-1px);
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #0284c7, #0369a1);
+      border-color: #38bdf8;
+      box-shadow: 0 0 10px rgba(2, 132, 199, 0.4);
+    }
+
+    .btn-primary:hover {
+      background: linear-gradient(135deg, #0369a1, #0284c7);
+      box-shadow: 0 0 16px var(--cyan-glow);
+    }
+
+    .mode-pill {
+      display: flex;
+      background: #0b1528;
+      border: 1px solid rgba(56, 189, 248, 0.25);
+      border-radius: 16px;
+      padding: 2px;
+      font-size: 0.72rem;
+    }
+
+    .mode-btn {
+      padding: 4px 10px;
+      border-radius: 14px;
+      border: none;
+      background: transparent;
+      color: var(--text-muted);
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.2s;
+    }
+
+    .mode-btn.active {
+      background: var(--cyan-frost);
+      color: #070d18;
+      box-shadow: 0 0 8px var(--cyan-glow);
+    }
+
+    .voice-select {
+      background: #0b1528;
+      border: 1px solid rgba(56, 189, 248, 0.25);
+      color: #e2e8f0;
+      border-radius: 7px;
+      padding: 5px 8px;
+      font-size: 0.74rem;
+      max-width: 140px;
+      outline: none;
+      cursor: pointer;
+    }
+
+    /* Voice Animation Wave */
+    .audio-wave {
+      display: inline-flex;
+      align-items: center;
+      gap: 2.5px;
+      height: 14px;
+    }
+
+    .audio-wave span {
+      width: 2.5px;
+      height: 4px;
+      background: var(--cyan-frost);
+      border-radius: 2px;
+      transition: height 0.2s ease;
+    }
+
+    .audio-wave.speaking span:nth-child(1) { animation: wave 0.7s infinite 0.1s; }
+    .audio-wave.speaking span:nth-child(2) { animation: wave 0.7s infinite 0.25s; }
+    .audio-wave.speaking span:nth-child(3) { animation: wave 0.7s infinite 0.15s; }
+    .audio-wave.speaking span:nth-child(4) { animation: wave 0.7s infinite 0.3s; }
+
+    @keyframes wave {
+      0%, 100% { height: 3px; }
+      50% { height: 14px; }
+    }
+
+    /* Progress bar */
+    .presentation-progress {
+      width: 100%;
+      height: 3px;
+      background: rgba(255, 255, 255, 0.08);
+      position: relative;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #10b981, #38bdf8, #0284c7);
+      width: 14.28%;
+      transition: width 0.35s ease;
+    }
+
+    /* Main Slides Viewport - Strict Zero Scroll */
+    main {
+      flex: 1;
+      min-height: 0;
+      height: calc(100vh - 52px - 3px - 82px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 10px 22px;
+      max-width: 1320px;
+      margin: 0 auto;
+      width: 100%;
+      overflow: hidden;
+    }
+
+    .slide {
+      display: none;
+      width: 100%;
+      height: 100%;
+      animation: fadeInSlide 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .slide.active {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+
+    @keyframes fadeInSlide {
+      from {
+        opacity: 0;
+        transform: translateY(8px) scale(0.995);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    /* Unified Slide Panel Card */
+    .card-panel {
+      background: var(--bg-card);
+      border: 1px solid var(--bg-card-border);
+      border-radius: 16px;
+      padding: 18px 26px;
+      backdrop-filter: blur(20px);
+      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      overflow: hidden;
+      box-sizing: border-box;
+    }
+
+    .slide-header {
+      flex-shrink: 0;
+      margin-bottom: 10px;
+    }
+
+    .slide-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 2px 10px;
+      background: rgba(56, 189, 248, 0.12);
+      border: 1px solid rgba(56, 189, 248, 0.28);
+      border-radius: 20px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--cyan-frost);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 5px;
+    }
+
+    .slide-badge.badge-green {
+      background: rgba(16, 185, 129, 0.15);
+      border-color: rgba(16, 185, 129, 0.35);
+      color: #34d399;
+    }
+
+    .slide-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: clamp(1.35rem, 2.1vw, 1.85rem);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+      margin-bottom: 4px;
+      background: linear-gradient(135deg, #ffffff 60%, var(--cyan-frost) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .slide-subtitle {
+      font-size: clamp(0.78rem, 1.05vw, 0.92rem);
+      color: var(--text-muted);
+      line-height: 1.35;
+      max-width: 980px;
+    }
+
+    .slide-body {
+      flex: 1;
+      min-height: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 12px;
+      overflow: hidden;
+    }
+
+    /* Grids & Cards */
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      height: 100%;
+      align-items: stretch;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      height: 100%;
+      align-items: stretch;
+    }
+
+    .grid-4 {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      grid-template-rows: repeat(2, 1fr);
+      gap: 12px;
+      height: 100%;
+    }
+
+    .grid-5-flow {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 10px;
+      height: 100%;
+      align-items: stretch;
+    }
+
+    /* Feature Box */
+    .feature-box {
+      background: rgba(11, 21, 40, 0.85);
+      border: 1px solid rgba(56, 189, 248, 0.16);
+      border-radius: 12px;
+      padding: 12px 16px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      transition: all 0.2s;
+    }
+
+    .feature-box:hover {
+      border-color: rgba(56, 189, 248, 0.4);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    .feature-box.box-red {
+      border-left: 4px solid var(--rose-warn);
+      background: rgba(244, 63, 94, 0.05);
+    }
+
+    .feature-box.box-green {
+      border-left: 4px solid var(--emerald-ok);
+      background: rgba(16, 185, 129, 0.05);
+    }
+
+    .feature-box.box-cyan {
+      border-left: 4px solid var(--cyan-frost);
+      background: rgba(56, 189, 248, 0.05);
+    }
+
+    .feature-icon {
+      font-size: 1.35rem;
+      margin-bottom: 6px;
+    }
+
+    .feature-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.96rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .feature-desc {
+      font-size: 0.79rem;
+      color: var(--text-muted);
+      line-height: 1.35;
+    }
+
+    /* Comparison Box */
+    .scope-column {
+      background: rgba(11, 21, 40, 0.9);
+      border-radius: 12px;
+      padding: 14px 18px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      height: 100%;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .scope-column.discarded {
+      border-top: 3px solid var(--rose-warn);
+    }
+
+    .scope-column.approved {
+      border-top: 3px solid var(--emerald-ok);
+      background: rgba(16, 185, 129, 0.04);
+      box-shadow: 0 0 25px rgba(16, 185, 129, 0.08);
+    }
+
+    .scope-header {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.05rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .scope-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .scope-list li {
+      font-size: 0.8rem;
+      line-height: 1.35;
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      color: #cbd5e1;
+    }
+
+    .scope-list li strong {
+      color: #fff;
+    }
+
+    /* Flow Step Card */
+    .flow-step-card {
+      background: rgba(11, 21, 40, 0.9);
+      border: 1px solid rgba(56, 189, 248, 0.2);
+      border-radius: 12px;
+      padding: 12px 10px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      position: relative;
+      height: 100%;
+      justify-content: center;
+      transition: all 0.2s;
+    }
+
+    .flow-step-card:hover {
+      border-color: var(--cyan-frost);
+      transform: translateY(-2px);
+    }
+
+    .flow-num {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #0284c7, #38bdf8);
+      color: #070d18;
+      font-weight: 800;
+      font-size: 0.85rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 8px;
+      box-shadow: 0 0 10px var(--cyan-glow);
+    }
+
+    .flow-step-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 4px;
+    }
+
+    .flow-step-desc {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      line-height: 1.3;
+    }
+
+    /* Sketch Note & Excalidraw Style */
+    .sketch-banner {
+      font-family: var(--handwriting-font);
+      font-size: 1.15rem;
+      color: #ffd166;
+      background: rgba(245, 158, 11, 0.08);
+      border: 1px dashed rgba(245, 158, 11, 0.35);
+      border-radius: 8px;
+      padding: 6px 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* Comparison Table Compact */
+    .comp-table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      border-radius: 10px;
+      overflow: hidden;
+      font-size: 0.79rem;
+    }
+
+    .comp-table th {
+      background: #0d1a30;
+      padding: 8px 12px;
+      font-size: 0.74rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+      border-bottom: 1px solid rgba(56, 189, 248, 0.2);
+      text-align: left;
+    }
+
+    .comp-table td {
+      padding: 7px 12px;
+      background: rgba(15, 23, 42, 0.6);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+      vertical-align: middle;
+    }
+
+    .comp-table tr:hover td {
+      background: rgba(56, 189, 248, 0.06);
+    }
+
+    .col-highlight {
+      background: rgba(16, 185, 129, 0.08) !important;
+      border-left: 2px solid var(--emerald-ok);
+      font-weight: 600;
+      color: #a7f3d0;
+    }
+
+    /* Questions 3-Cards */
+    .q-grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      height: 100%;
+    }
+
+    .q-card-simple {
+      background: rgba(11, 21, 40, 0.88);
+      border: 1px solid rgba(56, 189, 248, 0.2);
+      border-radius: 12px;
+      padding: 14px 16px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .q-card-simple .q-num-badge {
+      width: 26px;
+      height: 26px;
+      background: rgba(56, 189, 248, 0.2);
+      border: 1px solid var(--cyan-frost);
+      color: var(--cyan-frost);
+      font-weight: 800;
+      font-size: 0.8rem;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 8px;
+    }
+
+    .q-card-simple h4 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.95rem;
+      color: #fff;
+      margin-bottom: 6px;
+    }
+
+    .q-card-simple p {
+      font-size: 0.77rem;
+      color: var(--text-muted);
+      line-height: 1.35;
+    }
+
+    /* Subtitle & Caption Bar */
+    .caption-box {
+      height: 34px;
+      min-height: 34px;
+      background: rgba(6, 11, 20, 0.92);
+      border-top: 1px solid rgba(56, 189, 248, 0.15);
+      display: flex;
+      align-items: center;
+      padding: 0 20px;
+      gap: 10px;
+      z-index: 40;
+    }
+
+    .caption-icon {
+      font-size: 0.95rem;
+    }
+
+    .caption-text {
+      font-size: 0.76rem;
+      color: #cbd5e1;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      font-style: italic;
+    }
+
+    /* Bottom Bar */
+    footer {
+      height: 48px;
+      min-height: 48px;
+      background: rgba(7, 13, 24, 0.96);
+      backdrop-filter: blur(14px);
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 0 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      z-index: 50;
+    }
+
+    .slide-counter {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .slide-counter strong {
+      color: #fff;
+    }
+
+    .nav-buttons {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 1000px) {
+      .grid-3, .grid-5-flow, .q-grid-3 {
+        grid-template-columns: 1fr;
+      }
+      .grid-4 {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+  </style>
+  <style id="idd-selos-style">
+    .idd-selo{display:inline-block;vertical-align:middle;font:700 11px/1.4 system-ui,"Segoe UI",sans-serif;letter-spacing:.02em;text-transform:none;padding:2px 8px;border-radius:999px;margin:0 6px;white-space:nowrap;-webkit-text-fill-color:currentColor;-webkit-background-clip:border-box;background-clip:border-box;}
+    .idd-selo-proposta{color:#f3e8ff;background:rgba(88,28,135,.88);border:1px solid #c084fc;}
+    .idd-selo-demo{color:#fef3c7;background:rgba(120,53,15,.88);border:1px solid #fbbf24;}
+    .idd-selo-impl{color:#d1fae5;background:rgba(6,78,59,.88);border:1px solid #34d399;}
+    .idd-nota{font:italic 500 11px/1.4 system-ui,"Segoe UI",sans-serif;color:#cbd5e1;text-transform:none;letter-spacing:0;-webkit-text-fill-color:currentColor;}
+  </style>
+</head>
+<body>
+  <div id="idd-status-banner" role="note" aria-label="Status do conteúdo" style="position:fixed;left:50%;bottom:6px;transform:translateX(-50%);z-index:2147483000;pointer-events:none;max-width:min(46vw,640px);white-space:normal;text-align:center;font:600 11px/1.3 system-ui,'Segoe UI',sans-serif;color:#f8fafc;-webkit-text-fill-color:#f8fafc;background:rgba(15,23,42,.9);border:1px solid rgba(148,163,184,.65);border-radius:10px;padding:3px 10px;box-shadow:0 2px 8px rgba(0,0,0,.4);text-transform:none;letter-spacing:0;">🔭 PROPOSTA — proposta enxuta ao cliente; não há app de refrigeração implementado · Cânone v1.0-rc1 · ✅ implementado · 🧪 demonstração · 🔭 proposta</div>
+
+  <!-- Top Navigation Bar -->
+  <header>
+    <div class="brand">
+      <div class="brand-icon">❄️</div>
+      <div>
+        <div class="brand-title">IDD Refrigeração — Proposta Ágil</div>
+        <div class="brand-subtitle">Alinhamento Estratégico com Renato</div>
+      </div>
+    </div>
+
+    <!-- Presentation Controls -->
+    <div class="controls-container">
+      <button class="btn btn-primary" id="btnPlayPause" title="Reproduzir ou pausar áudio">
+        <span id="playIcon">▶</span>
+        <span id="playLabel">Apresentar com Voz</span>
+      </button>
+
+      <div class="audio-wave" id="audioWave" title="Status da narração">
+        <span></span><span></span><span></span><span></span>
+      </div>
+
+      <div class="mode-pill" title="Modo de Avanço dos Slides">
+        <button class="mode-btn active" id="btnModeContinuous">Contínuo</button>
+        <button class="mode-btn" id="btnModePaused">Pausado</button>
+      </div>
+
+      <select class="voice-select" id="voiceSelect" title="Selecionar voz em português">
+        <option value="">Carregando vozes...</option>
+      </select>
+
+      <button class="btn" id="btnVoiceToggle" title="Mutar/Desmutar áudio">
+        <span id="voiceMuteIcon">🔊</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Progress Bar -->
+  <div class="presentation-progress">
+    <div class="progress-fill" id="progressFill"></div>
+  </div>
+
+  <!-- Main Presentation Slides (Strict Zero Scroll) -->
+  <main>
+
+    <!-- SLIDE 1: A Nova Direção Estratégica -->
+    <div class="slide active" data-slide="1" data-title="Nova Direção">
+      <div class="card-panel">
+        <div class="slide-header">
+          <span class="slide-badge badge-green">Decisão Estratégica do Cliente</span><span class="idd-selo idd-selo-proposta">🔭 PROPOSTA</span><span class="idd-nota">proposta enxuta ao cliente; não há app implementado</span>
+          <h2 class="slide-title">Gestão de Refrigeração: Simplicidade e Foco no Campo</h2>
+          <p class="slide-subtitle">
+            Apresentação da nova proposta desenhada sob medida para a decisão do Renato: eliminar burocracias, cortar travas teóricas e entregar um sistema direto, funcional e até certo ponto informal.
+          </p>
+        </div>
+
+        <div class="slide-body">
+          <div class="grid-3">
+            <div class="feature-box box-green">
+              <div class="feature-icon">⚡</div>
+              <div class="feature-title">Zero Fricção no Campo</div>
+              <p class="feature-desc">
+                O mecânico não precisa preencher dezenas de campos nem saber termos complexos de engenharia. Ele abre a OS, anota o que fez e encerra.
+              </p>
+            </div>
+
+            <div class="feature-box box-cyan">
+              <div class="feature-icon">📋</div>
+              <div class="feature-title">Fim das Ordens em Papel</div>
+              <p class="feature-desc">
+                Acaba o risco de perder anotações de peças trocadas, valores cobrados ou histórico do que foi feito no cliente no mês anterior.
+              </p>
+            </div>
+
+            <div class="feature-box box-green">
+              <div class="feature-icon">🚀</div>
+              <div class="feature-title">Entrega em Poucas Semanas</div>
+              <p class="feature-desc">
+                Ao retirar travas regulatórias pesadas, a estimativa é ter o sistema pronto para uso em 2 a 3 semanas, rodando direto no celular da equipe.
+              </p>
+            </div>
+          </div>
+
+          <div class="sketch-banner">
+            <span>💡</span>
+            <span>"O melhor software de refrigeração não é o mais complexo, mas aquele que o técnico realmente usa todos os dias sem reclamar."</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 2: O Que Mudou? Sai vs Fica -->
+    <div class="slide" data-slide="2" data-title="O Que Mudou">
+      <div class="card-panel">
+        <div class="slide-header">
+          <span class="slide-badge">Desburocratização</span><span class="idd-selo idd-selo-proposta">🔭 PROPOSTA</span>
+          <h2 class="slide-title">O Que Sai vs. O Que Fica na Nova Proposta</h2>
+          <p class="slide-subtitle">
+            Comparamos a proposta corporativa inicial com o modelo direto, enxuto e prático aprovado pelo Renato.
+          </p>
+        </div>
+
+        <div class="slide-body">
+          <div class="grid-2">
+            <!-- O Que Sai -->
+            <div class="scope-column discarded">
+              <div class="scope-header" style="color: #f43f5e;">
+                <span>❌</span> O Que Foi Removido (Burocracia)
+              </div>
+              <ul class="scope-list">
+                <li>
+                  <span>🚫</span>
+                  <div><strong>Módulo PMOC Legal Rígido:</strong> Sem exigência de CREA/CFT, ART/TRT obrigatória ou laudos de auditoria pesados.</div>
+                </li>
+                <li>
+                  <span>🚫</span>
+                  <div><strong>Travas Termodinâmicas:</strong> Sem bloqueios forçando cálculo de superaquecimento, sub-resfriamento ou microns de vácuo.</div>
+                </li>
+                <li>
+                  <span>🚫</span>
+                  <div><strong>Rastreio Serial de Botijas:</strong> Sem controle de balanço químico e máquinas recolhedoras no almoxarifado.</div>
+                </li>
+                <li>
+                  <span>🚫</span>
+                  <div><strong>Máquina de Estados Engessada:</strong> Sem obrigar o técnico a passar por 6 status burocráticos para fechar um serviço.</div>
+                </li>
+              </ul>
+            </div>
+
+            <!-- O Que Fica -->
+            <div class="scope-column approved">
+              <div class="scope-header" style="color: #34d399;">
+                <span>✅</span> O Que Fica e Dá Resultado (Prática)
+              </div>
+              <ul class="scope-list">
+                <li>
+                  <span>✔️</span>
+                  <div><strong>Cadastro Direto:</strong> Cliente + WhatsApp + Aparelho cadastrados em 1 tela rápida.</div>
+                </li>
+                <li>
+                  <span>✔️</span>
+                  <div><strong>Abertura e Fechamento Ágil de OS:</strong> Registrar conserto, preventiva ou emergência (meta: menos de 1 minuto).</div>
+                </li>
+                <li>
+                  <span>✔️</span>
+                  <div><strong>Fotos Antes/Depois & Peças:</strong> Registro visual do serviço e anotação prática de peças e gás aplicados.</div>
+                </li>
+                <li>
+                  <span>✔️</span>
+                  <div><strong>Comprovante no WhatsApp:</strong> Envio imediato do resumo e valor para o cliente final com 1 toque.</div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 3: As Novas Intenções do Negócio -->
+    <div class="slide" data-slide="3" data-title="Intenções">
+      <div class="card-panel">
+        <div class="slide-header">
+          <span class="slide-badge badge-green">Capacidades do Sistema</span><span class="idd-selo idd-selo-proposta">🔭 PROPOSTA</span>
+          <h2 class="slide-title">As 4 Intenções Fundamentais do Novo Sistema</h2>
+          <p class="slide-subtitle">
+            Sob o paradigma IDD, definimos apenas as 4 capacidades que realmente geram valor diário para a empresa do Renato.
+          </p>
+        </div>
+
+        <div class="slide-body">
+          <div class="grid-4">
+            <div class="feature-box box-cyan">
+              <div class="feature-title">
+                <span style="font-size: 1.2rem;">👤</span> 1. Clientes e Aparelhos em 1 Toque
+              </div>
+              <p class="feature-desc">
+                Localizar ou cadastrar o cliente na hora (Nome, WhatsApp, Endereço) e vincular o aparelho (ex.: "Split 12k Sala", "Balcão Açougue"). QR Code disponível se quiser usar.
+              </p>
+            </div>
+
+            <div class="feature-box box-green">
+              <div class="feature-title">
+                <span style="font-size: 1.2rem;">🛠️</span> 2. Ordem de Serviço Direta de Campo
+              </div>
+              <p class="feature-desc">
+                Descrever o problema em linguagem simples ("não gela", "vazando água", "manutenção"). Anotar peças trocadas (capacitor, sensor) e gás reposto sem fórmulas.
+              </p>
+            </div>
+
+            <div class="feature-box box-green">
+              <div class="feature-title">
+                <span style="font-size: 1.2rem;">📸</span> 3. Fotos Antes/Depois e Valor
+              </div>
+              <p class="feature-desc">
+                Tirar foto rápida da serpentina suja e higienizada. Lançar o valor cobrado (mão de obra + materiais) para gerar transparência com o cliente.
+              </p>
+            </div>
+
+            <div class="feature-box box-cyan">
+              <div class="feature-title">
+                <span style="font-size: 1.2rem;">💬</span> 4. Comprovante WhatsApp & Painel
+              </div>
+              <p class="feature-desc">
+                Disparar o recibo do atendimento direto no WhatsApp do cliente com 1 toque. Painel simples para o Renato ver o que foi feito no dia e o faturamento.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 4: Invariantes Pragmáticas -->
+    <div class="slide" data-slide="4" data-title="Regras Práticas">
+      <div class="card-panel">
+        <div class="slide-header">
+          <span class="slide-badge">Invariantes Redefinidas</span><span class="idd-selo idd-selo-proposta">🔭 PROPOSTA</span>
+          <h2 class="slide-title">Regras Mínimas: Segurança Sem Bloquear o Trabalho</h2>
+          <p class="slide-subtitle">
+            Invariantes são condições do sistema. Em vez de regras burocráticas que travam a tela, adotamos regras que protegem a consistência e respeitam a informalidade.
+          </p>
+        </div>
+
+        <div class="slide-body">
+          <div class="grid-2">
+            <div style="display: flex; flex-direction: column; gap: 10px;">
+              <div class="feature-box" style="border-left: 4px solid var(--cyan-frost);">
+                <div class="feature-title" style="color: var(--cyan-frost);">1. Vinculação Clara de Cliente</div>
+                <p class="feature-desc">Toda OS tem um cliente ou local de referência. Pode ser criado rapidamente no ato do atendimento (meta: cerca de 15 segundos).</p>
+              </div>
+
+              <div class="feature-box" style="border-left: 4px solid var(--emerald-ok);">
+                <div class="feature-title" style="color: #34d399;">2. Ciclo de Vida Sem Engessamento</div>
+                <p class="feature-desc">A OS pode ser aberta e concluída no mesmo instante. Se o mecânico fez o serviço e só lançou à noite, o sistema aceita sem travas.</p>
+              </div>
+
+              <div class="feature-box" style="border-left: 4px solid var(--amber-alert);">
+                <div class="feature-title" style="color: #fbbf24;">3. Princípio do Não-Bloqueio</div>
+                <p class="feature-desc">Campos técnicos são opcionais. Se o técnico não mediu pressão ou não tirou foto, a OS conclui normalmente sem impedir o trabalho.</p>
+              </div>
+            </div>
+
+            <div style="display: flex; flex-direction: column; gap: 10px;">
+              <div class="feature-box" style="border-left: 4px solid var(--emerald-ok);">
+                <div class="feature-title" style="color: #34d399;">4. Transparência Financeira Básica</div>
+                <p class="feature-desc">Peças + mão de obra somam automaticamente no valor final, evitando erros de cálculo de cabeça na hora de cobrar o cliente.</p>
+              </div>
+
+              <div class="feature-box" style="border-left: 4px solid var(--cyan-frost);">
+                <div class="feature-title" style="color: var(--cyan-frost);">5. Facilidade de Correção pelo Gestor</div>
+                <p class="feature-desc">Se o Renato precisar ajustar o preço, a descrição ou o técnico de um serviço já finalizado, ele faz isso direto, sem termos burocráticos de auditoria.</p>
+              </div>
+
+              <div class="sketch-banner" style="margin-top: 4px;">
+                <span>🛡️</span>
+                <span style="font-size: 0.95rem;">"O sistema se adapta à rotina real da empresa, e não o contrário."</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 5: Fluxo Visual Operacional do Mecânico -->
+    <div class="slide" data-slide="5" data-title="Fluxo de Campo">
+      <div class="card-panel">
+        <div class="slide-header">
+          <span class="slide-badge badge-green">Rotina Sem Complicação</span><span class="idd-selo idd-selo-proposta">🔭 PROPOSTA</span>
+          <h2 class="slide-title">Como o Mecânico Trabalha: Fluxo em 5 Passos Rápidos</h2>
+          <p class="slide-subtitle">
+            Todo o atendimento é concluído em poucos toques na tela do celular, sem preenchimento demorado de papel ou formulários infinitos.
+          </p>
+        </div>
+
+        <div class="slide-body">
+          <div class="grid-5-flow">
+            <div class="flow-step-card">
+              <div class="flow-num">1</div>
+              <div class="flow-step-title">Abre a OS</div>
+              <div class="flow-step-desc">Seleciona o cliente ou cadastra rápido. Escolhe o tipo de serviço.</div>
+            </div>
+
+            <div class="flow-step-card">
+              <div class="flow-num">2</div>
+              <div class="flow-step-title">Executa o Serviço</div>
+              <div class="flow-step-desc">Faz a limpeza, conserto, troca de capacitor ou carga de gás.</div>
+            </div>
+
+            <div class="flow-step-card">
+              <div class="flow-num">3</div>
+              <div class="flow-step-title">Fotos Rápidas</div>
+              <div class="flow-step-desc">Tira foto Antes/Depois da máquina com a câmera do celular.</div>
+            </div>
+
+            <div class="flow-step-card">
+              <div class="flow-num">4</div>
+              <div class="flow-step-title">Lança Peças & Valor</div>
+              <div class="flow-step-desc">Anota peças usadas, gás e valor total acordado com o cliente.</div>
+            </div>
+
+            <div class="flow-step-card" style="border-color: var(--emerald-ok); background: rgba(16, 185, 129, 0.08);">
+              <div class="flow-num" style="background: var(--emerald-ok);">5</div>
+              <div class="flow-step-title" style="color: #34d399;">Recibo WhatsApp</div>
+              <div class="flow-step-desc">Clica em Concluir e dispara o comprovante formatado no WhatsApp.</div>
+            </div>
+          </div>
+
+          <!-- Sketch Note Diagram Bar -->
+          <div style="background: #091322; border: 1px dashed rgba(56, 189, 248, 0.35); border-radius: 10px; padding: 10px 16px; display: flex; align-items: center; justify-content: space-between;">
+            <div style="display: flex; align-items: center; gap: 10px;">
+              <span style="font-size: 1.3rem;">📲</span>
+              <span style="font-size: 0.82rem; color: #cbd5e1;">
+                <strong>Meta de tempo no app (estimativa, não medida):</strong> menos de 90 segundos por atendimento.
+              </span>
+            </div>
+            <div class="sketch-banner" style="padding: 2px 10px; font-size: 1.05rem;">
+              Mais tempo consertando máquinas, menos tempo preenchendo tela!
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 6: Comparativo de Impacto e Prazos -->
+    <div class="slide" data-slide="6" data-title="Comparativo">
+      <div class="card-panel">
+        <div class="slide-header">
+          <span class="slide-badge">Ganhos Esperados</span><span class="idd-selo idd-selo-proposta">🔭 PROPOSTA</span>
+          <h2 class="slide-title">Comparativo Direto: Proposta Anterior vs. Nova Proposta</h2>
+          <p class="slide-subtitle">
+            A decisão do Renato favorece um produto mais rápido de colocar em produção e de fácil adoção pela equipe (valores abaixo são estimativas).
+          </p>
+        </div>
+
+        <div class="slide-body">
+          <table class="comp-table">
+            <thead>
+              <tr>
+                <th style="width: 25%;">Critério de Avaliação</th>
+                <th style="width: 37%;">Proposta Anterior (Corporativa / PMOC)</th>
+                <th style="width: 38%;" class="col-highlight">Nova Proposta Renato (Ágil & Prática)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Prazo de Entrega do MVP</strong></td>
+                <td>8 a 10 semanas de desenvolvimento</td>
+                <td class="col-highlight"><strong>2 a 3 semanas</strong> (estimativa; protótipo funcional rápido)</td>
+              </tr>
+              <tr>
+                <td><strong>Treinamento dos Técnicos</strong></td>
+                <td>Exigia capacitação em medições e regras</td>
+                <td class="col-highlight"><strong>~10 minutos</strong> (estimativa; intuitivo como o WhatsApp)</td>
+              </tr>
+              <tr>
+                <td><strong>Complexidade de Telas</strong></td>
+                <td>Mais de 25 telas com formulários longos</td>
+                <td class="col-highlight"><strong>Apenas 4 telas principais</strong> diretas ao ponto</td>
+              </tr>
+              <tr>
+                <td><strong>Risco de Rejeição em Campo</strong></td>
+                <td>Alto (técnicos tendem a abandonar apps burocráticos)</td>
+                <td class="col-highlight"><strong>Menor</strong> (fluxo sem campos impeditivos)</td>
+              </tr>
+              <tr>
+                <td><strong>Comprovante para o Cliente</strong></td>
+                <td>Laudo formal PDF com termos de engenharia</td>
+                <td class="col-highlight"><strong>Mensagem com fotos no WhatsApp</strong> ou recibo simples</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="sketch-banner" style="justify-content: center; font-size: 1.1rem;">
+            🎯 "Entregamos o essencial primeiro, validamos na prática com o Renato, e expandimos apenas se houver necessidade real."
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 7: Perguntas Finais para o Renato -->
+    <div class="slide" data-slide="7" data-title="Próximos Passos">
+      <div class="card-panel">
+        <div class="slide-header">
+          <span class="slide-badge badge-green">Início do Desenvolvimento</span>
+          <h2 class="slide-title">3 Perguntas Práticas para Fechar a Construção</h2>
+          <p class="slide-subtitle">
+            Para começarmos a desenhar as telas imediatamente, precisamos apenas do seu alinhamento nestes 3 pontos objetivos:
+          </p>
+        </div>
+
+        <div class="slide-body">
+          <div class="q-grid-3">
+            <div class="q-card-simple">
+              <div>
+                <div class="q-num-badge">1</div>
+                <h4>Envio do Comprovante</h4>
+                <p>
+                  Prefere que o sistema gere um texto pronto para enviar no WhatsApp do cliente com 1 toque, ou faz questão de um botão para baixar PDF de recibo?
+                </p>
+              </div>
+              <div style="font-size: 0.72rem; color: var(--cyan-frost); margin-top: 8px;">
+                💡 Dica: O WhatsApp é o mais rápido e os clientes adoram!
+              </div>
+            </div>
+
+            <div class="q-card-simple">
+              <div>
+                <div class="q-num-badge">2</div>
+                <h4>Formato de Uso em Campo</h4>
+                <p>
+                  O formato Web App (aberto direto no navegador do celular, sem precisar instalar pela loja de aplicativos) atende perfeitamente à equipe técnica?
+                </p>
+              </div>
+              <div style="font-size: 0.72rem; color: var(--cyan-frost); margin-top: 8px;">
+                💡 Dica: Funciona em qualquer celular Android ou iPhone na hora.
+              </div>
+            </div>
+
+            <div class="q-card-simple">
+              <div>
+                <div class="q-num-badge">3</div>
+                <h4>Controle de Pagamento</h4>
+                <p>
+                  Deseja que a Ordem de Serviço tenha um botão simples de status financeiro (ex.: "Pago no Pix", "Pendente", "Pago em Dinheiro")?
+                </p>
+              </div>
+              <div style="font-size: 0.72rem; color: var(--cyan-frost); margin-top: 8px;">
+                💡 Dica: Ajuda muito a saber quem ainda está devendo na semana.
+              </div>
+            </div>
+          </div>
+
+          <div style="text-align: center; padding: 10px; background: rgba(16, 185, 129, 0.12); border: 1px solid rgba(16, 185, 129, 0.35); border-radius: 10px; display: flex; align-items: center; justify-content: space-between;">
+            <div style="text-align: left;">
+              <h3 style="color: #34d399; font-family: 'Outfit'; font-size: 1rem;">Pronto para iniciar a construção do MVP!</h3>
+              <p style="color: #94a3b8; font-size: 0.78rem;">
+                Com o seu sinal verde, partiremos diretamente para a montagem das telas do novo aplicativo.
+              </p>
+            </div>
+            <button class="btn btn-primary" onclick="alert('Excelente decisão! Iniciando a especificação e desenvolvimento das telas ágeis.');" style="padding: 8px 16px; font-size: 0.82rem;">
+              🚀 Iniciar Desenvolvimento
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Closed Caption / Subtitle Box -->
+  <div class="caption-box">
+    <span class="caption-icon">🎙️</span>
+    <span class="caption-text" id="captionText">
+      Clique em "Apresentar com Voz" ou use as setas do teclado para navegar nos slides.
+    </span>
+  </div>
+
+  <!-- Bottom Bar: Counter & Navigation -->
+  <footer>
+    <div class="slide-counter">
+      Slide <span id="currentSlideNum">1</span> de <span id="totalSlidesNum">7</span>: 
+      <strong id="slideTitleDisplay" style="color: #fff; margin-left: 4px;">Nova Direção</strong>
+    </div>
+
+    <div class="nav-buttons">
+      <button class="btn" id="btnPrevSlide">← Anterior</button>
+      <button class="btn btn-primary" id="btnNextSlide">Próximo →</button>
+    </div>
+  </footer>
+
+  <!-- Script: Slide Engine + Speech Synthesis Voice System with Subtitles -->
+  <script>
+    const slideScripts = {
+      1: "Olá Renato! Esta é a nova proposta de gestão de refrigeração desenhada exatamente para a sua decisão estratégica. Nosso objetivo agora é focar naquilo que realmente importa no dia a dia: simplicidade, agilidade em campo, zero papel e entrega rápida, com estimativa de duas a três semanas.",
+      2: "Veja o que mudou na prática: removemos completamente a burocracia de PMOC formal, exigências de CREA e CFT, travas de cálculos termodinâmicos e etapas engessadas de ordens de serviço. Em troca, potencializamos o essencial: cadastro em uma tela, abertura e fechamento ágil de chamados, fotos de antes e depois e envio de comprovante no WhatsApp.",
+      3: "O novo sistema é fundamentado em quatro intenções diretas: localizar ou cadastrar clientes e aparelhos em segundos, abrir e preencher a ordem de serviço em linguagem simples sem fórmulas complicadas, registrar fotos do serviço e materiais usados, e disparar o comprovante na hora para o cliente com painel de controle para você.",
+      4: "As nossas regras agora são práticas e respeitam a rotina real. Toda ordem de serviço aponta para um cliente, mas pode ser aberta e fechada no mesmo minuto, ideal para quando o técnico faz o serviço e lança depois. Nenhum campo técnico é obrigatório ou trava o fechamento, e você tem total liberdade para editar valores quando quiser.",
+      5: "Neste fluxo visual, vemos como o mecânico trabalha em cinco passos simples no celular: abre a ordem, realiza o reparo, fotografa o antes e depois, informa as peças e o valor, e com apenas um clique envia o comprovante para o WhatsApp do cliente. A meta é ficar menos de noventa segundos no aplicativo.",
+      6: "Comparando a proposta anterior com a nova, o ganho é evidente: a estimativa de prazo cai de dois meses para duas a três semanas. O treinamento do técnico deve levar cerca de dez minutos e a equipe terá quatro telas diretas, o que favorece a aceitação e a eliminação do papel na sua empresa.",
+      7: "Para começarmos a construir as telas agora mesmo, só precisamos do seu alinhamento em três decisões rápidas: se prefere o comprovante em texto no WhatsApp ou botão para PDF, se o formato web no navegador atende à sua equipe, e se quer o botão de status de pagamento na ordem de serviço. Muito obrigado e vamos em frente!"
+    };
+
+    let currentSlide = 1;
+    const totalSlides = 7;
+    let isPlaying = false;
+    let isContinuous = true;
+    let isVoiceMuted = false;
+    let synth = window.speechSynthesis;
+    let currentUtterance = null;
+    let advanceTimeout = null;
+    let speechHeartbeat = null;
+    let availableVoices = [];
+
+    // Elements
+    const slides = document.querySelectorAll('.slide');
+    const currentSlideNumEl = document.getElementById('currentSlideNum');
+    const totalSlidesNumEl = document.getElementById('totalSlidesNum');
+    const slideTitleDisplayEl = document.getElementById('slideTitleDisplay');
+    const progressFillEl = document.getElementById('progressFill');
+    const captionTextEl = document.getElementById('captionText');
+    const btnPlayPause = document.getElementById('btnPlayPause');
+    const playIcon = document.getElementById('playIcon');
+    const playLabel = document.getElementById('playLabel');
+    const audioWave = document.getElementById('audioWave');
+    const btnModeContinuous = document.getElementById('btnModeContinuous');
+    const btnModePaused = document.getElementById('btnModePaused');
+    const btnVoiceToggle = document.getElementById('btnVoiceToggle');
+    const voiceMuteIcon = document.getElementById('voiceMuteIcon');
+    const voiceSelectEl = document.getElementById('voiceSelect');
+    const btnPrevSlide = document.getElementById('btnPrevSlide');
+    const btnNextSlide = document.getElementById('btnNextSlide');
+
+    totalSlidesNumEl.textContent = totalSlides;
+
+    // Populate Voice Selection List
+    function populateVoices() {
+      if (!synth) return;
+      availableVoices = synth.getVoices();
+      voiceSelectEl.innerHTML = '';
+
+      const ptVoices = availableVoices.filter(v => v.lang.startsWith('pt'));
+      const voicesToUse = ptVoices.length > 0 ? ptVoices : availableVoices;
+
+      voicesToUse.forEach((voice, index) => {
+        const option = document.createElement('option');
+        option.value = voice.name;
+        option.textContent = `${voice.name.replace(/Microsoft|Google/g, '').trim()} (${voice.lang})`;
+        if (voice.lang === 'pt-BR' && (option.value.includes('Maria') || option.value.includes('Luciana') || option.value.includes('Daniel') || index === 0)) {
+          option.selected = true;
+        }
+        voiceSelectEl.appendChild(option);
+      });
+    }
+
+    if (synth) {
+      populateVoices();
+      if (synth.onvoiceschanged !== undefined) {
+        synth.onvoiceschanged = populateVoices;
+      }
+    }
+
+    function getSelectedVoice() {
+      if (!synth || availableVoices.length === 0) return null;
+      const selectedName = voiceSelectEl.value;
+      const found = availableVoices.find(v => v.name === selectedName);
+      if (found) return found;
+      const ptBR = availableVoices.find(v => v.lang === 'pt-BR');
+      return ptBR || availableVoices[0] || null;
+    }
+
+    // Switch Slide
+    function showSlide(index, autoSpeak = true) {
+      if (index < 1) index = 1;
+      if (index > totalSlides) index = totalSlides;
+
+      currentSlide = index;
+
+      slides.forEach((slide) => {
+        slide.classList.remove('active');
+        if (parseInt(slide.getAttribute('data-slide')) === currentSlide) {
+          slide.classList.add('active');
+          const title = slide.getAttribute('data-title');
+          slideTitleDisplayEl.textContent = title;
+        }
+      });
+
+      currentSlideNumEl.textContent = currentSlide;
+      const progressPercent = (currentSlide / totalSlides) * 100;
+      progressFillEl.style.width = `${progressPercent}%`;
+
+      btnPrevSlide.disabled = currentSlide === 1;
+      btnNextSlide.disabled = currentSlide === totalSlides;
+
+      stopNarration();
+
+      if (autoSpeak && isPlaying && !isVoiceMuted) {
+        speakCurrentSlide();
+      } else {
+        captionTextEl.textContent = slideScripts[currentSlide] || '';
+      }
+    }
+
+    // Speak current slide script
+    function speakCurrentSlide() {
+      if (!synth) {
+        captionTextEl.textContent = slideScripts[currentSlide] || '';
+        return;
+      }
+
+      stopNarration();
+
+      const text = slideScripts[currentSlide];
+      if (!text) return;
+
+      currentUtterance = new SpeechSynthesisUtterance(text);
+      currentUtterance.lang = 'pt-BR';
+      currentUtterance.rate = 1.05;
+      currentUtterance.pitch = 1.0;
+
+      const voice = getSelectedVoice();
+      if (voice) {
+        currentUtterance.voice = voice;
+      }
+
+      currentUtterance.onstart = () => {
+        audioWave.classList.add('speaking');
+        captionTextEl.textContent = text;
+      };
+
+      currentUtterance.onend = () => {
+        audioWave.classList.remove('speaking');
+        clearInterval(speechHeartbeat);
+
+        if (isPlaying && isContinuous && currentSlide < totalSlides) {
+          advanceTimeout = setTimeout(() => {
+            showSlide(currentSlide + 1, true);
+          }, 1400);
+        } else if (currentSlide === totalSlides) {
+          isPlaying = false;
+          updatePlayPauseButton();
+        }
+      };
+
+      currentUtterance.onerror = (e) => {
+        console.warn('SpeechSynthesis error:', e);
+        audioWave.classList.remove('speaking');
+        clearInterval(speechHeartbeat);
+      };
+
+      if (!isVoiceMuted) {
+        synth.speak(currentUtterance);
+
+        // Chrome SpeechSynthesis auto-pause bug workaround
+        speechHeartbeat = setInterval(() => {
+          if (synth.speaking) {
+            synth.pause();
+            synth.resume();
+          }
+        }, 10000);
+      }
+    }
+
+    function stopNarration() {
+      if (advanceTimeout) {
+        clearTimeout(advanceTimeout);
+        advanceTimeout = null;
+      }
+      if (speechHeartbeat) {
+        clearInterval(speechHeartbeat);
+        speechHeartbeat = null;
+      }
+      if (synth && synth.speaking) {
+        synth.cancel();
+      }
+      audioWave.classList.remove('speaking');
+    }
+
+    function updatePlayPauseButton() {
+      if (isPlaying) {
+        playIcon.textContent = '⏸';
+        playLabel.textContent = 'Pausar Voz';
+        btnPlayPause.classList.add('btn-primary');
+      } else {
+        playIcon.textContent = '▶';
+        playLabel.textContent = 'Apresentar com Voz';
+        btnPlayPause.classList.remove('btn-primary');
+      }
+    }
+
+    // Event Listeners
+    btnPlayPause.addEventListener('click', () => {
+      if (isPlaying) {
+        isPlaying = false;
+        stopNarration();
+      } else {
+        isPlaying = true;
+        speakCurrentSlide();
+      }
+      updatePlayPauseButton();
+    });
+
+    btnModeContinuous.addEventListener('click', () => {
+      isContinuous = true;
+      btnModeContinuous.classList.add('active');
+      btnModePaused.classList.remove('active');
+    });
+
+    btnModePaused.addEventListener('click', () => {
+      isContinuous = false;
+      btnModePaused.classList.add('active');
+      btnModeContinuous.classList.remove('active');
+    });
+
+    btnVoiceToggle.addEventListener('click', () => {
+      isVoiceMuted = !isVoiceMuted;
+      if (isVoiceMuted) {
+        voiceMuteIcon.textContent = '🔇';
+        stopNarration();
+      } else {
+        voiceMuteIcon.textContent = '🔊';
+        if (isPlaying) speakCurrentSlide();
+      }
+    });
+
+    voiceSelectEl.addEventListener('change', () => {
+      if (isPlaying) {
+        speakCurrentSlide();
+      }
+    });
+
+    btnPrevSlide.addEventListener('click', () => {
+      if (currentSlide > 1) {
+        showSlide(currentSlide - 1, isPlaying);
+      }
+    });
+
+    btnNextSlide.addEventListener('click', () => {
+      if (currentSlide < totalSlides) {
+        showSlide(currentSlide + 1, isPlaying);
+      }
+    });
+
+    // Keyboard Navigation
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight' || e.key === 'PageDown') {
+        if (currentSlide < totalSlides) showSlide(currentSlide + 1, isPlaying);
+      } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+        if (currentSlide > 1) showSlide(currentSlide - 1, isPlaying);
+      } else if (e.key === ' ' || e.key === 'Spacebar') {
+        e.preventDefault();
+        btnPlayPause.click();
+      }
+    });
+
+    // Initialize First Slide
+    showSlide(1, false);
+  </script>
+</body>
+</html>

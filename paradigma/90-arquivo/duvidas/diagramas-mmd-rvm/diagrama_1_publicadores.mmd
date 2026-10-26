@@ -1,0 +1,82 @@
+%%{init: {
+  'theme': 'base',
+  'themeVariables': {
+    'fontSize': '20px',
+    'fontFamily': 'Arial, sans-serif',
+    'primaryColor': '#1565C0',
+    'primaryTextColor': '#ffffff',
+    'primaryBorderColor': '#0D47A1',
+    'lineColor': '#37474F',
+    'textColor': '#212121'
+  }
+}}%%
+
+classDiagram
+    direction TB
+
+    class Publisher["🧑 PUBLISHER"] {
+        +String id
+        +String name
+        +Gender gender
+        +Condition condition
+        +String phone
+        +Boolean isBaptized
+        +Boolean isServing
+        +AgeGroup ageGroup
+        +String[] parentIds
+        +Boolean isHelperOnly
+        +Boolean canPairWithNonParent
+        +String[] aliases
+        +Boolean isNotQualified
+        +Boolean requestedNoParticipation
+        +String source
+        +String createdAt
+    }
+
+    class PublisherPrivileges["⚙️ PRIVILEGES"] {
+        +Boolean canGiveTalks
+        +Boolean canConductCBS
+        +Boolean canReadCBS
+        +Boolean canPray
+        +Boolean canPreside
+    }
+
+    class PublisherPrivilegesBySection["📑 PRIVILEGES BY SECTION"] {
+        +Boolean canParticipateInTreasures
+        +Boolean canParticipateInMinistry
+        +Boolean canParticipateInLife
+    }
+
+    class PublisherAvailability["📅 AVAILABILITY"] {
+        +String mode
+        +String[] exceptionDates
+        +String[] availableDates
+    }
+
+    class Gender {
+        <<enumeration>>
+        🔵 brother
+        🔴 sister
+    }
+
+    class Condition {
+        <<enumeration>>
+        🏆 Ancião
+        ⭐ Servo Ministerial
+        👤 Publicador
+    }
+
+    class AgeGroup {
+        <<enumeration>>
+        👨 Adulto
+        🧑 Jovem
+        👶 Criança
+    }
+
+    Publisher "1" *-- "1" PublisherPrivileges : possui
+    Publisher "1" *-- "1" PublisherPrivilegesBySection : possui
+    Publisher "1" *-- "1" PublisherAvailability : possui
+    Publisher --> Gender : é
+    Publisher --> Condition : tem
+    Publisher --> AgeGroup : pertence
+    Publisher "0..*" --> "0..2" Publisher : pais

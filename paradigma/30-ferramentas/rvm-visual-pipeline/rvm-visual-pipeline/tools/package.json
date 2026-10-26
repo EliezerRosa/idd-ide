@@ -1,0 +1,15 @@
+{
+  "name": "eleicao-video-tools",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Pipeline de geração de vídeo para eleicao-candidatos-apresentacao-interativa.html",
+  "scripts": {
+    "build:video":    "node build_video.mjs",
+    "synth:preview":  "node synth_audio.mjs --preview",
+    "synth:audio":    "node synth_audio.mjs",
+    "record:video":   "node record_eleicao_video.mjs"
+  },
+  "dependencies": {
+    "playwright": "^1.44.0"
+  }
+}

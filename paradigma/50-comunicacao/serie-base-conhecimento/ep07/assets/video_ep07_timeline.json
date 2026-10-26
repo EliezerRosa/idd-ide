@@ -1,0 +1,110 @@
+{
+  "projectName": "IDD_Base_Conhecimento_Ep07",
+  "totalDurationSec": 147.96,
+  "items": [
+    {
+      "index": 0,
+      "id": "seg_00_leigo",
+      "who": "leigo",
+      "actor": "Usuária Leiga",
+      "avatar": "leigo",
+      "slide": 1,
+      "text": "Eliézer, no episódio seis nós vimos que as invariantes atuam como leis matemáticas. E isso lembra muito um dos conceitos mais discutidos recentemente por laboratórios como a Anthropic: a Constitutional AI, ou Inteligência Artificial Constitucional. Como o IDD expande essa ideia para a própria arquitetura do software?",
+      "wav": "C:\\Antigravity - IDD Refrigeração\\motion_graphics_renderer\\idd_teoria_ep07_assets\\audio\\seg_00_leigo.wav",
+      "startSec": 0.5,
+      "durSec": 20.808,
+      "endSec": 21.308
+    },
+    {
+      "index": 1,
+      "id": "seg_01_eliezer",
+      "who": "eliezer",
+      "actor": "Eliézer Rosa",
+      "avatar": "eliezer",
+      "slide": 1,
+      "text": "Essa conexão é profunda! Enquanto a Anthropic usa princípios constitucionais para alinhar o comportamento ético dos modelos, o IDD estabelece a Engenharia de Software Constitucional: as regras e invariantes de domínio são a Constituição Inegociável da empresa! Nenhum agente autônomo e nenhum desenvolvedor tem autoridade para cometer código que fira essa constituição.",
+      "wav": "C:\\Antigravity - IDD Refrigeração\\motion_graphics_renderer\\idd_teoria_ep07_assets\\audio\\seg_01_eliezer.wav",
+      "startSec": 21.958,
+      "durSec": 23.4,
+      "endSec": 45.358
+    },
+    {
+      "index": 2,
+      "id": "seg_02_leigo",
+      "who": "leigo",
+      "actor": "Usuária Leiga",
+      "avatar": "leigo",
+      "slide": 2,
+      "text": "E quando o negócio evolui, nós nos deparamos com o limite das ferramentas tradicionais. Veja no Slide dois por que o Git é cego para a inteligência artificial!",
+      "wav": "C:\\Antigravity - IDD Refrigeração\\motion_graphics_renderer\\idd_teoria_ep07_assets\\audio\\seg_02_leigo.wav",
+      "startSec": 46.008,
+      "durSec": 10.2,
+      "endSec": 56.208
+    },
+    {
+      "index": 3,
+      "id": "seg_03_eliezer",
+      "who": "eliezer",
+      "actor": "Eliézer Rosa",
+      "avatar": "eliezer",
+      "slide": 2,
+      "text": "Exatamente! O Git compara caracteres e linhas de texto em arquivos ASCII. Ele não tem a menor ideia se uma linha alterada mudou uma cardinalidade no banco de dados ou quebrou uma chave estrangeira em produção. Por isso o IDD opera a Máquina de Diff de Intenções: uma análise semântica sobre o grafo de domínio, e não sobre texto cego!",
+      "wav": "C:\\Antigravity - IDD Refrigeração\\motion_graphics_renderer\\idd_teoria_ep07_assets\\audio\\seg_03_eliezer.wav",
+      "startSec": 56.858,
+      "durSec": 22.008,
+      "endSec": 78.866
+    },
+    {
+      "index": 4,
+      "id": "seg_04_leigo",
+      "who": "leigo",
+      "actor": "Usuária Leiga",
+      "avatar": "leigo",
+      "slide": 3,
+      "text": "E veja no Slide três a sabedoria da Classificação Tripartida de Mutações! Classe A para adições seguras compiladas direto; Classe B para endurecimento de regras com raio de alcance; e Classe C para quebras estruturais que exigem o padrão Expand and Contract!",
+      "wav": "C:\\Antigravity - IDD Refrigeração\\motion_graphics_renderer\\idd_teoria_ep07_assets\\audio\\seg_04_leigo.wav",
+      "startSec": 79.516,
+      "durSec": 16.752,
+      "endSec": 96.268
+    },
+    {
+      "index": 5,
+      "id": "seg_05_eliezer",
+      "who": "eliezer",
+      "actor": "Eliézer Rosa",
+      "avatar": "eliezer",
+      "slide": 3,
+      "text": "Perfeito! A IA pode gerar a migração, mas mudanças de Classe B e C passam obrigatoriamente pelo tribunal Human-in-the-Loop. O ser humano retém a soberania do comando epistêmico, aprovando o plano declarativo antes de qualquer alteração no banco real.",
+      "wav": "C:\\Antigravity - IDD Refrigeração\\motion_graphics_renderer\\idd_teoria_ep07_assets\\audio\\seg_05_eliezer.wav",
+      "startSec": 96.918,
+      "durSec": 18.408,
+      "endSec": 115.326
+    },
+    {
+      "index": 6,
+      "id": "seg_06_leigo",
+      "who": "leigo",
+      "actor": "Usuária Leiga",
+      "avatar": "leigo",
+      "slide": 4,
+      "text": "Incrível! E no nosso próximo episódio, o zero oito, nós vamos fechar com chave de ouro a série fundamental: a Teoria da Ação Atômica, Sagas de domínio e o Protocolo Canônico em Quatro Fases para métodos comportamentais!",
+      "wav": "C:\\Antigravity - IDD Refrigeração\\motion_graphics_renderer\\idd_teoria_ep07_assets\\audio\\seg_06_leigo.wav",
+      "startSec": 115.976,
+      "durSec": 14.52,
+      "endSec": 130.496
+    },
+    {
+      "index": 7,
+      "id": "seg_07_eliezer",
+      "who": "eliezer",
+      "actor": "Eliézer Rosa",
+      "avatar": "eliezer",
+      "slide": 4,
+      "text": "Sensacional! A evolução contínua sem quebra de patrimônio é a maior vitória da engenharia de software no Paradigma IDD. Acompanhe a nossa Base de Conhecimento e revolucione o seu modo de pensar sistemas!",
+      "wav": "C:\\Antigravity - IDD Refrigeração\\motion_graphics_renderer\\idd_teoria_ep07_assets\\audio\\seg_07_eliezer.wav",
+      "startSec": 131.146,
+      "durSec": 14.664,
+      "endSec": 145.81
+    }
+  ]
+}

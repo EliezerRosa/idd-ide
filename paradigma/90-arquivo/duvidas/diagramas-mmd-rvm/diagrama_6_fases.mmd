@@ -1,0 +1,43 @@
+flowchart TB
+    subgraph METODOLOGIA["🔄 METODOLOGIA ES-IA - 6 FASES"]
+        direction TB
+        
+        subgraph F1["FASE 1: REQUISITOS"]
+            F1_LEADER["🧠 HUMANO LIDERA"]
+            F1_DESC["Define O QUÊ o sistema deve fazer"]
+        end
+        
+        subgraph F2["FASE 2: MODELAGEM"]
+            F2_LEADER["🤝 COLABORATIVO"]
+            F2_DESC["Humano esboça / IA formaliza"]
+        end
+        
+        subgraph F3["FASE 3: DESIGN"]
+            F3_LEADER["🤖 IA LIDERA"]
+            F3_DESC["Propõe arquitetura e stack"]
+        end
+        
+        subgraph F4["FASE 4: IMPLEMENTAÇÃO"]
+            F4_LEADER["🤖 IA AUTÔNOMA"]
+            F4_DESC["Desenvolve código autonomamente"]
+        end
+        
+        subgraph F5["FASE 5: VALIDAÇÃO"]
+            F5_LEADER["🤝 COLABORATIVO"]
+            F5_DESC["Humano testa / IA corrige"]
+        end
+        
+        subgraph F6["FASE 6: DEPLOY"]
+            F6_LEADER["🤖 IA EXECUTA"]
+            F6_DESC["Deploy automático"]
+        end
+    end
+    
+    F1 --> F2 --> F3 --> F4 --> F5 --> F6
+    
+    style F1 fill:#2E7D32,color:#FFF
+    style F2 fill:#00897B,color:#FFF
+    style F3 fill:#7B1FA2,color:#FFF
+    style F4 fill:#C62828,color:#FFF
+    style F5 fill:#F57C00,color:#FFF
+    style F6 fill:#1565C0,color:#FFF

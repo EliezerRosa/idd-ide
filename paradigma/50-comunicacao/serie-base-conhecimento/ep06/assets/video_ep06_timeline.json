@@ -1,0 +1,110 @@
+{
+  "projectName": "IDD_Base_Conhecimento_Ep06",
+  "totalDurationSec": 144.24,
+  "items": [
+    {
+      "index": 0,
+      "id": "seg_00_leigo",
+      "who": "leigo",
+      "actor": "Usuária Leiga",
+      "avatar": "leigo",
+      "slide": 1,
+      "text": "Eliézer, no desenvolvimento tradicional todo mundo se apoia em testes unitários para garantir que o código funciona. Mas na era da inteligência artificial, por que gigantes como Amazon AWS e Microsoft afirmam que apenas escrever testes unitários comuns não é mais suficiente?",
+      "wav": "C:\\Antigravity - IDD Refrigeração\\motion_graphics_renderer\\idd_teoria_ep06_assets\\audio\\seg_00_leigo.wav",
+      "startSec": 0.5,
+      "durSec": 17.424,
+      "endSec": 17.924
+    },
+    {
+      "index": 1,
+      "id": "seg_01_eliezer",
+      "who": "eliezer",
+      "actor": "Eliézer Rosa",
+      "avatar": "eliezer",
+      "slide": 1,
+      "text": "Porque testes unitários convencionais testam apenas os poucos exemplos que o programador lembrou de escrever! Se a IA gerar um código com um caminho não previsto, o teste passa em silêncio e o sistema quebra em produção. Para sistemas de missão crítica, a ciência da computação moderna exige Raciocínio Automatizado e Provas Formais!",
+      "wav": "C:\\Antigravity - IDD Refrigeração\\motion_graphics_renderer\\idd_teoria_ep06_assets\\audio\\seg_01_eliezer.wav",
+      "startSec": 18.574,
+      "durSec": 21.912,
+      "endSec": 40.486
+    },
+    {
+      "index": 2,
+      "id": "seg_02_leigo",
+      "who": "leigo",
+      "actor": "Usuária Leiga",
+      "avatar": "leigo",
+      "slide": 2,
+      "text": "E isso nos leva diretamente ao coração do IDD: a Teoria das Invariantes Formais! Veja no Slide dois como isso se conecta aos provadores matemáticos mais avançados do mundo, como os SMT Solvers e a linguagem Dafny da Microsoft!",
+      "wav": "C:\\Antigravity - IDD Refrigeração\\motion_graphics_renderer\\idd_teoria_ep06_assets\\audio\\seg_02_leigo.wav",
+      "startSec": 41.136,
+      "durSec": 15.552,
+      "endSec": 56.688
+    },
+    {
+      "index": 3,
+      "id": "seg_03_eliezer",
+      "who": "eliezer",
+      "actor": "Eliézer Rosa",
+      "avatar": "eliezer",
+      "slide": 2,
+      "text": "Exatamente! Em vez de jogar dados aleatórios para ver se quebra, o compilador IDD formula as regras de negócio como teoremas matemáticos de contorno. Usando solucionadores de teorias como o Z3, o sistema prova que sob qualquer combinação de dados, uma lei inviolável de negócio jamais será violada!",
+      "wav": "C:\\Antigravity - IDD Refrigeração\\motion_graphics_renderer\\idd_teoria_ep06_assets\\audio\\seg_03_eliezer.wav",
+      "startSec": 57.338,
+      "durSec": 20.616,
+      "endSec": 77.954
+    },
+    {
+      "index": 4,
+      "id": "seg_04_leigo",
+      "who": "leigo",
+      "actor": "Usuária Leiga",
+      "avatar": "leigo",
+      "slide": 3,
+      "text": "E no Slide três nós temos a tríade das invariantes do IDD: Invariantes Estruturais do MER, Invariantes Comportamentais de Máquinas de Estados e as brilhantes Invariantes Temporizadas, que protegem dados históricos de mudanças de regras no futuro!",
+      "wav": "C:\\Antigravity - IDD Refrigeração\\motion_graphics_renderer\\idd_teoria_ep06_assets\\audio\\seg_04_leigo.wav",
+      "startSec": 78.604,
+      "durSec": 15.192,
+      "endSec": 93.796
+    },
+    {
+      "index": 5,
+      "id": "seg_05_eliezer",
+      "who": "eliezer",
+      "actor": "Eliézer Rosa",
+      "avatar": "eliezer",
+      "slide": 3,
+      "text": "Isso mesmo! O passado da empresa permanece inviolável sob as leis da sua época, e o presente cumpre a norma nova com guardas temporais. Isso não é um teste que roda e dá verde ou vermelho: é uma garantia matemática formal de conservação do patrimônio de dados do cliente.",
+      "wav": "C:\\Antigravity - IDD Refrigeração\\motion_graphics_renderer\\idd_teoria_ep06_assets\\audio\\seg_05_eliezer.wav",
+      "startSec": 94.446,
+      "durSec": 18.408,
+      "endSec": 112.854
+    },
+    {
+      "index": 6,
+      "id": "seg_06_leigo",
+      "who": "leigo",
+      "actor": "Usuária Leiga",
+      "avatar": "leigo",
+      "slide": 4,
+      "text": "Sensacional! E no próximo episódio, o zero sete, nós vamos ver como o IDD aplica a Engenharia Constitucional inspirada na Anthropic e a Máquina de Diff de Intenções para evoluir sistemas vivos com total controle humano!",
+      "wav": "C:\\Antigravity - IDD Refrigeração\\motion_graphics_renderer\\idd_teoria_ep06_assets\\audio\\seg_06_leigo.wav",
+      "startSec": 113.504,
+      "durSec": 14.232,
+      "endSec": 127.736
+    },
+    {
+      "index": 7,
+      "id": "seg_07_eliezer",
+      "who": "eliezer",
+      "actor": "Eliézer Rosa",
+      "avatar": "eliezer",
+      "slide": 4,
+      "text": "Com certeza! A matemática das invariantes é o escudo supremo do desenvolvimento com inteligência artificial. Acompanhe a nossa Base de Conhecimento e construa software matematicamente inabalável!",
+      "wav": "C:\\Antigravity - IDD Refrigeração\\motion_graphics_renderer\\idd_teoria_ep06_assets\\audio\\seg_07_eliezer.wav",
+      "startSec": 128.386,
+      "durSec": 13.704,
+      "endSec": 142.09
+    }
+  ]
+}

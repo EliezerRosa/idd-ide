@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>IDD Cafeteria - Ep. 4C Implementação Completa: Funções Puras & Invariantes</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, sans-serif; }
+    body {
+      width: 1920px; height: 1080px; background: #0c0a09; color: #f8fafc;
+      overflow: hidden; position: relative;
+    }
+    .grid-bg {
+      position: absolute; inset: 0;
+      background-image: linear-gradient(rgba(245, 158, 11, 0.05) 1px, transparent 1px),
+                        linear-gradient(90deg, rgba(245, 158, 11, 0.05) 1px, transparent 1px);
+      background-size: 60px 60px;
+    }
+    .glow-ambient {
+      position: absolute; width: 1150px; height: 1150px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(245, 158, 11, 0.28) 0%, rgba(16, 185, 129, 0.15) 45%, transparent 70%);
+      top: 50%; left: 50%; transform: translate(-50%, -50%); filter: blur(95px); pointer-events: none;
+    }
+
+    /* TOP BAR */
+    .top-bar {
+      position: absolute; top: 0; left: 0; right: 0; height: 80px;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 60px; background: rgba(28, 25, 23, 0.9);
+      border-bottom: 1px solid rgba(245, 158, 11, 0.35); backdrop-filter: blur(12px); z-index: 50;
+    }
+    .top-title { display: flex; align-items: center; gap: 18px; }
+    .badge-ep {
+      background: linear-gradient(135deg, #d97706, #b45309); color: white;
+      font-weight: 800; font-size: 16px; letter-spacing: 1.5px;
+      padding: 6px 18px; border-radius: 999px; text-transform: uppercase;
+      box-shadow: 0 0 20px rgba(245, 158, 11, 0.4);
+    }
+    .series-name { font-size: 20px; font-weight: 700; color: #cbd5e1; }
+    .series-name span { color: #fbbf24; font-weight: 800; }
+    .timer-box { font-size: 18px; font-family: monospace; color: #fbbf24; font-weight: 700; }
+
+    /* STAGE */
+    .stage {
+      position: absolute; top: 80px; bottom: 220px; left: 0; right: 0;
+      padding: 30px 60px; display: flex; flex-direction: column; z-index: 20;
+    }
+    .slide-view {
+      display: none; width: 100%; height: 100%; flex-direction: column;
+      animation: fadeIn 0.4s ease-out forwards;
+    }
+    .slide-view.active { display: flex; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+    .slide-header { margin-bottom: 18px; }
+    .slide-category { font-size: 15px; font-weight: 800; color: #fbbf24; text-transform: uppercase; letter-spacing: 2px; }
+    .slide-title { font-size: 36px; font-weight: 900; color: #ffffff; margin-top: 4px; }
+    .slide-subtitle { font-size: 18px; color: #94a3b8; margin-top: 4px; }
+
+    /* SLIDE 1: COMPARAÇÃO PARADIGMAS DE ESTOQUE */
+    .s1-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 30px; flex: 1; align-items: stretch;
+    }
+    .code-comparison-card {
+      background: rgba(28, 25, 23, 0.9); border: 1.5px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px; padding: 24px; display: flex; flex-direction: column;
+    }
+    .card-badge-bad {
+      display: inline-block; align-self: flex-start; background: rgba(239, 68, 68, 0.15);
+      border: 1px solid #ef4444; color: #fca5a5; font-size: 12px; font-weight: 800;
+      padding: 4px 12px; border-radius: 6px; text-transform: uppercase; margin-bottom: 14px;
+    }
+    .card-badge-good {
+      display: inline-block; align-self: flex-start; background: rgba(16, 185, 129, 0.15);
+      border: 1px solid #10b981; color: #6ee7b7; font-size: 12px; font-weight: 800;
+      padding: 4px 12px; border-radius: 6px; text-transform: uppercase; margin-bottom: 14px;
+    }
+    .code-snippet {
+      background: #0c0a09; border: 1px solid #292524; border-radius: 10px;
+      padding: 16px; font-family: 'Consolas', monospace; font-size: 13px;
+      line-height: 1.6; color: #cbd5e1; flex: 1; overflow: hidden;
+    }
+    .hl-kw { color: #f43f5e; font-weight: 700; }
+    .hl-fn { color: #38bdf8; font-weight: 700; }
+    .hl-str { color: #fde047; }
+    .hl-num { color: #fb923c; }
+    .hl-com { color: #78716c; font-style: italic; }
+    .hl-inv { color: #4ade80; font-weight: 800; }
+
+    /* SLIDE 2: EDITOR DE CÓDIGO VSCODE COM @invariant */
+    .editor-window {
+      background: #0c0a09; border: 1.5px solid rgba(245, 158, 11, 0.4);
+      border-radius: 16px; overflow: hidden; display: flex; flex-direction: column;
+      flex: 1; box-shadow: 0 20px 45px rgba(0,0,0,0.7);
+    }
+    .editor-topbar {
+      height: 40px; background: #1c1917; display: flex; align-items: center;
+      justify-content: space-between; padding: 0 16px; border-bottom: 1px solid #292524;
+    }
+    .editor-tabs { display: flex; gap: 8px; }
+    .editor-tab {
+      background: #0c0a09; border-top: 2px solid #fbbf24; padding: 6px 16px;
+      font-size: 12px; font-family: 'Consolas', monospace; color: #f8fafc;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .editor-content {
+      padding: 24px 30px; font-family: 'Consolas', monospace; font-size: 13.5px;
+      line-height: 1.7; color: #e2e8f0; flex: 1;
+    }
+
+    /* SLIDE 3: TERMINAL DE 200 TESTES DE ESTRESSE */
+    .s3-grid {
+      display: grid; grid-template-columns: 1.25fr 0.75fr; gap: 24px; flex: 1;
+    }
+    .test-terminal {
+      background: #0c0a09; border: 1.5px solid #292524; border-radius: 16px;
+      padding: 24px; font-family: 'Consolas', monospace; font-size: 13px;
+      color: #6ee7b7; display: flex; flex-direction: column;
+    }
+    .test-metrics-card {
+      background: rgba(28, 25, 23, 0.9); border: 1.5px solid rgba(245, 158, 11, 0.35);
+      border-radius: 16px; padding: 24px; display: flex; flex-direction: column;
+      justify-content: space-between;
+    }
+    .metric-box {
+      background: rgba(12, 10, 9, 0.6); border: 1px solid #292524;
+      border-radius: 12px; padding: 16px; margin-bottom: 12px;
+    }
+    .metric-val { font-size: 32px; font-weight: 900; color: #fbbf24; }
+    .metric-label { font-size: 12px; color: #94a3b8; text-transform: uppercase; font-weight: 700; }
+
+    /* SLIDE 4: SÍNTESE & TRILHA COMPLETA */
+    .cards-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; flex: 1; }
+    .feature-card {
+      background: rgba(28, 25, 23, 0.85); border: 1.5px solid rgba(245, 158, 11, 0.35);
+      border-radius: 16px; padding: 24px; display: flex; flex-direction: column;
+      box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+    }
+    .card-icon { font-size: 36px; margin-bottom: 14px; }
+    .card-title { font-size: 20px; font-weight: 800; color: #fbbf24; margin-bottom: 10px; }
+    .card-desc { font-size: 14px; color: #cbd5e1; line-height: 1.5; flex: 1; }
+    .card-tag {
+      margin-top: 14px; align-self: flex-start; background: rgba(245, 158, 11, 0.15);
+      border: 1px solid #f59e0b; color: #fef3c7; padding: 4px 10px; border-radius: 6px;
+      font-size: 11px; font-weight: 700;
+    }
+
+    /* BOTTOM BAR */
+    .bottom-bar {
+      position: absolute; bottom: 0; left: 0; right: 0; height: 220px;
+      background: rgba(18, 16, 15, 0.96); border-top: 1px solid rgba(245, 158, 11, 0.35);
+      backdrop-filter: blur(16px); display: flex; align-items: center;
+      padding: 0 60px; gap: 40px; z-index: 50;
+    }
+    .avatars-container { display: flex; gap: 30px; align-items: center; }
+    .avatar-card {
+      display: flex; flex-direction: column; align-items: center;
+      transition: all 0.3s ease; opacity: 0.45; transform: scale(0.95);
+    }
+    .avatar-card.active { opacity: 1; transform: scale(1.05); }
+    .avatar-circle {
+      width: 90px; height: 90px; border-radius: 50%; overflow: hidden;
+      border: 3px solid #44403c; position: relative; background: #1c1917;
+    }
+    .avatar-card.active .avatar-circle {
+      border-color: #f59e0b; box-shadow: 0 0 25px rgba(245, 158, 11, 0.7);
+    }
+    .avatar-circle img { width: 100%; height: 100%; object-fit: cover; }
+    .avatar-name { font-size: 15px; font-weight: 800; color: #f8fafc; margin-top: 8px; }
+    .avatar-role { font-size: 12px; color: #94a3b8; font-weight: 600; }
+
+    .subtitles-container {
+      flex: 1; height: 140px; background: rgba(28, 25, 23, 0.8);
+      border: 1.5px solid rgba(245, 158, 11, 0.35); border-radius: 16px;
+      padding: 20px 28px; display: flex; flex-direction: column; justify-content: center;
+    }
+    .sub-speaker {
+      font-size: 14px; font-weight: 800; text-transform: uppercase; letter-spacing: 1.5px;
+      margin-bottom: 8px;
+    }
+    .speaker-leigo { color: #f43f5e; }
+    .speaker-eliezer { color: #38bdf8; }
+    .speaker-ia { color: #fbbf24; }
+    .sub-text { font-size: 19px; line-height: 1.45; color: #f8fafc; font-weight: 500; }
+
+    #black-curtain {
+      position: absolute; inset: 0; background: #000000; z-index: 9999;
+      pointer-events: none; transition: opacity 0.08s linear;
+    }
+  </style>
+</head>
+<body>
+  <div id="black-curtain"></div>
+  <div class="glow-ambient"></div>
+  <div class="grid-bg"></div>
+
+  <!-- TOP BAR -->
+  <div class="top-bar">
+    <div class="top-title">
+      <div class="badge-ep">Episódio 4C • Implementação Pura</div>
+      <div class="series-name">IDD NA PRÁTICA: <span>CAFETERIA & CÓDIGO VIVO DETERMINÍSTICO</span></div>
+    </div>
+    <div class="timer-box" id="clock-display">00:00.0</div>
+  </div>
+
+  <!-- STAGE -->
+  <div class="stage">
+    <!-- SLIDE 1: COMPARAÇÃO PARADIGMAS DE ESTOQUE -->
+    <div class="slide-view active" id="slide-1">
+      <div class="slide-header">
+        <div class="slide-category">Paradigma Tradicional vs Paradigma IDD</div>
+        <div class="slide-title">Mutação Imperativa vs Funções Puras com Ficha Técnica</div>
+        <div class="slide-subtitle">Como eliminar race conditions na baixa de grãos de café e insumos da padaria</div>
+      </div>
+      <div class="s1-grid">
+        <div class="code-comparison-card" style="border-color: rgba(239, 68, 68, 0.3);">
+          <div class="card-badge-bad">❌ Paradigma Imperativo (Mutação Cega)</div>
+          <div class="code-snippet">
+            <span class="hl-com">// Risco de concorrência e estoque negativo no caixa</span><br>
+            <span class="hl-kw">async function</span> <span class="hl-fn">venderExpresso</span>(pedidoId) {<br>
+            &nbsp;&nbsp;<span class="hl-com">// UPDATE cego sem checar validade ou lotes FIFO</span><br>
+            &nbsp;&nbsp;<span class="hl-kw">await</span> db.query(<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="hl-str">"UPDATE estoque SET saldo = saldo - 18 WHERE insumo_id = 1"</span><br>
+            &nbsp;&nbsp;);<br>
+            &nbsp;&nbsp;<span class="hl-com">// Se 2 caixas venderem juntos: saldo negativo (-36g)!</span><br>
+            &nbsp;&nbsp;<span class="hl-kw">return</span> { status: <span class="hl-str">"sucesso"</span> };<br>
+            }
+          </div>
+        </div>
+
+        <div class="code-comparison-card" style="border-color: rgba(16, 185, 129, 0.4);">
+          <div class="card-badge-good">✓ Paradigma IDD (Função Pura &amp; Imutabilidade)</div>
+          <div class="code-snippet">
+            <span class="hl-com">// Cálculo determinístico puro e geração de novos saldos</span><br>
+            <span class="hl-kw">export function</span> <span class="hl-fn">deduzirInsumosFichaTecnica</span>(<br>
+            &nbsp;&nbsp;receita: <span class="hl-fn">FichaTecnica</span>,<br>
+            &nbsp;&nbsp;lotesAtivos: <span class="hl-fn">ReadonlyArray</span>&lt;<span class="hl-fn">LoteEstoque</span>&gt;<br>
+            ): <span class="hl-fn">Result</span>&lt;<span class="hl-fn">ReadonlyArray</span>&lt;<span class="hl-fn">MovimentacaoLote</span>&gt;&gt; {<br>
+            &nbsp;&nbsp;<span class="hl-com">// FIFO puro: deduz dos lotes mais antigos sem mutação</span><br>
+            &nbsp;&nbsp;<span class="hl-kw">return</span> lotesAtivos.reduzirFIFO(receita.gramaturaExigida);<br>
+            }
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 2: VSCODE COM @invariant -->
+    <div class="slide-view" id="slide-2">
+      <div class="slide-header">
+        <div class="slide-category">Contratos em Runtime • Sentinela IDD</div>
+        <div class="slide-title">O Decorador @invariant Fiscalizando a Cozinha e o Balcão</div>
+        <div class="slide-subtitle">Pré-condições estritas de lote e pós-condições matemáticas de balanço financeiro</div>
+      </div>
+      <div class="editor-window">
+        <div class="editor-topbar">
+          <div class="editor-tabs">
+            <div class="editor-tab">
+              <span style="color: #38bdf8;">TS</span> processar_pedido.pure.ts
+            </div>
+          </div>
+          <span style="font-size: 11px; color: #78716c; font-family: monospace;">TypeScript 5.4 • Strict Mode</span>
+        </div>
+        <div class="editor-content">
+          <span class="hl-kw">class</span> <span class="hl-fn">ServicoCozinhaCafeteria</span> {<br>
+          &nbsp;&nbsp;<span class="hl-inv">@invariant</span>({<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;<span class="hl-fn">pre</span>: (p, lotes) =&gt; p.itens.every(i =&gt; hasSaldoSuficiente(i.fichaTecnica, lotes)),<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;<span class="hl-fn">post</span>: (resultado) =&gt; resultado.custoInsumos === somarCustosFichaTecnica(resultado),<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;<span class="hl-fn">onError</span>: () =&gt; <span class="hl-kw">new</span> <span class="hl-fn">InsufficientStockException</span>(<span class="hl-str">"Estoque insuficiente de grãos ou insumos!"</span>)<br>
+          &nbsp;&nbsp;})<br>
+          &nbsp;&nbsp;<span class="hl-kw">public static</span> <span class="hl-fn">processarPedidoBalcao</span>(<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;pedido: <span class="hl-fn">PedidoCafeteria</span>,<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;lotesEstoque: <span class="hl-fn">ReadonlyArray</span>&lt;<span class="hl-fn">LoteEstoque</span>&gt;<br>
+          &nbsp;&nbsp;): <span class="hl-fn">ComandaLiquidada</span> {<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;<span class="hl-kw">return</span> pedido.consumirReceitaEfetiva(lotesEstoque);<br>
+          &nbsp;&nbsp;}<br>
+          }
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 3: TERMINAL DE 200 TESTES DE ESTRESSE -->
+    <div class="slide-view" id="slide-3">
+      <div class="slide-header">
+        <div class="slide-category">Validação Extrema • Prova de Concorrência</div>
+        <div class="slide-title">200 Testes de Estresse Simultâneos no Balcão</div>
+        <div class="slide-subtitle">Simulação de pico de 50 cafés por minuto com concorrência real e zero estoque negativo</div>
+      </div>
+      <div class="s3-grid">
+        <div class="test-terminal">
+          <div style="display: flex; gap: 8px; margin-bottom: 14px; border-bottom: 1px solid #292524; padding-bottom: 8px;">
+            <div style="width: 10px; height: 10px; border-radius: 50%; background: #ef4444;"></div>
+            <div style="width: 10px; height: 10px; border-radius: 50%; background: #f59e0b;"></div>
+            <div style="width: 10px; height: 10px; border-radius: 50%; background: #10b981;"></div>
+            <span style="font-size: 11px; color: #78716c; margin-left: 8px;">test-runner@cafeteria-idd:~/stress-suite</span>
+          </div>
+          <div style="line-height: 1.6; font-size: 12px; color: #e2e8f0;">
+            <p style="color: #fbbf24;">RUNNING: Cafeteria Concurrency &amp; Invariant Stress Suite (200 test cases)</p>
+            <p style="color: #4ade80;">✓ PASS [001..050] Baixa concorrente de espresso com lote compartilhado (FIFO estrito)</p>
+            <p style="color: #4ade80;">✓ PASS [051..100] Trava determinística de cancelamento após início da moagem</p>
+            <p style="color: #4ade80;">✓ PASS [101..150] Ficha técnica complexa com 8 ingredientes na confeitaria</p>
+            <p style="color: #4ade80;">✓ PASS [151..200] Fuzzing de saldo zero: 0 casos de estoque negativo permitidos</p>
+            <br>
+            <p style="color: #6ee7b7; font-weight: 800;">Tests: 200 passed, 200 total</p>
+            <p style="color: #cbd5e1;">Time:  1.14s | Concurrency: 16 threads | Memory Leaks: 0</p>
+          </div>
+        </div>
+
+        <div class="test-metrics-card">
+          <div class="metric-box">
+            <div class="metric-val">200 / 200</div>
+            <div class="metric-label">Cenários de Teste Aprovados</div>
+          </div>
+          <div class="metric-box">
+            <div class="metric-val" style="color: #10b981;">0.00g</div>
+            <div class="metric-label">Desvio de Estoque / Saldo Negativo</div>
+          </div>
+          <div class="metric-box">
+            <div class="metric-val" style="color: #38bdf8;">100%</div>
+            <div class="metric-label">Aderência aos Contratos IDD</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 4: SÍNTESE & TRILHA COMPLETA -->
+    <div class="slide-view" id="slide-4">
+      <div class="slide-header">
+        <div class="slide-category">Visão Geral da Trilogia • Paradigma IDD</div>
+        <div class="slide-title">As Três Trilhas Concluídas com Excelência Canônica</div>
+        <div class="slide-subtitle">Da intenção humana ao código vivo sem bugs e sem desperdícios</div>
+      </div>
+      <div class="cards-grid">
+        <div class="feature-card">
+          <div class="card-icon">💸</div>
+          <div class="card-title">Racha Conta &amp; Pix</div>
+          <div class="card-desc">Divisão atômica com centavos exatos, idempotência de Pix e concorrência bancária blindada.</div>
+          <div class="card-tag">Trilha 01 • Concluída</div>
+        </div>
+        <div class="feature-card">
+          <div class="card-icon">💈</div>
+          <div class="card-title">Barbearia &amp; Salão</div>
+          <div class="card-desc">Slots temporais sem overlap, snapshot congelado de comissões e políticas de no-show auditadas.</div>
+          <div class="card-tag">Trilha 02 • Concluída</div>
+        </div>
+        <div class="feature-card" style="border-color: #fbbf24;">
+          <div class="card-icon">☕</div>
+          <div class="card-title">Cafeteria &amp; Padaria</div>
+          <div class="card-desc">Ficha técnica por dose, lotes FIFO imutáveis e baixa de ingredientes em tempo real na cozinha.</div>
+          <div class="card-tag" style="background: rgba(245, 158, 11, 0.15); border-color: #fbbf24; color: #fbbf24;">Trilha 03 • Concluída</div>
+        </div>
+        <div class="feature-card">
+          <div class="card-icon">👑</div>
+          <div class="card-title">Paradigma IDD</div>
+          <div class="card-desc">Intenção ➔ MER ➔ UML ➔ Código Vivo. O novo padrão mundial de engenharia de software!</div>
+          <div class="card-tag">Metodologia Oficial</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BOTTOM BAR -->
+  <div class="bottom-bar">
+    <div class="avatars-container">
+      <div class="avatar-card" id="av-leigo">
+        <div class="avatar-circle">
+          <img src="../../avatares/avatar_usuaria_leiga.png" alt="Usuária Leiga">
+        </div>
+        <div class="avatar-name">Usuária Leiga</div>
+        <div class="avatar-role">Validadora de Domínio</div>
+      </div>
+      <div class="avatar-card" id="av-eliezer">
+        <div class="avatar-circle">
+          <img src="../../avatares/avatar_eliezer_oficial.png" alt="Eliézer Rosa">
+        </div>
+        <div class="avatar-name">Eliézer Rosa</div>
+        <div class="avatar-role">Orquestrador IDD</div>
+      </div>
+      <div class="avatar-card" id="av-ia">
+        <div class="avatar-circle">
+          <img src="../../avatares/avatar_ia_compilador.png" alt="IA Compilador">
+        </div>
+        <div class="avatar-name">IA Compilador</div>
+        <div class="avatar-role">Engenharia Pura &amp; Runtime</div>
+      </div>
+    </div>
+    <div class="subtitles-container">
+      <div class="sub-speaker" id="sub-speaker">USUÁRIA LEIGA</div>
+      <div class="sub-text" id="sub-text">Iniciando episódio 4C: Implementação Completa e Testes da Cafeteria...</div>
+    </div>
+  </div>
+
+  <script>
+    let timelineItems = [];
+    let isRunning = false;
+    let startTimeMs = 0;
+
+    window.setTimeline = function(items) { timelineItems = items; };
+    window.stopPresentation = function() {
+      isRunning = false;
+    };
+    window.startPresentation = function() {
+      const curtain = document.getElementById('black-curtain');
+      if (curtain) {
+        curtain.style.opacity = '0';
+        setTimeout(() => curtain.remove(), 80);
+      }
+      isRunning = true;
+      startTimeMs = performance.now();
+      requestAnimationFrame(renderLoop);
+    };
+
+    function renderLoop(now) {
+      if (!isRunning) return;
+      const elapsedSec = (now - startTimeMs) / 1000;
+      const minutes = Math.floor(elapsedSec / 60);
+      const seconds = (elapsedSec % 60).toFixed(1);
+      document.getElementById('clock-display').innerText =
+        String(minutes).padStart(2, '0') + ':' + String(seconds).padStart(4, '0');
+
+      const curSeg = timelineItems.find(item => elapsedSec >= item.startSec && elapsedSec < item.endSec);
+      if (curSeg) {
+        const targetSlideId = 'slide-' + curSeg.slide;
+        document.querySelectorAll('.slide-view').forEach(s => {
+          if (s.id === targetSlideId) {
+            if (!s.classList.contains('active')) s.classList.add('active');
+          } else {
+            s.classList.remove('active');
+          }
+        });
+
+        ['leigo', 'eliezer', 'ia'].forEach(who => {
+          const el = document.getElementById('av-' + who);
+          if (el) {
+            if (curSeg.who === who) el.classList.add('active');
+            else el.classList.remove('active');
+          }
+        });
+
+        const speakerEl = document.getElementById('sub-speaker');
+        const textEl = document.getElementById('sub-text');
+        speakerEl.className = 'sub-speaker speaker-' + curSeg.who;
+        speakerEl.innerText = curSeg.actor;
+        textEl.innerText = curSeg.text;
+      }
+      requestAnimationFrame(renderLoop);
+    }
+  </script>
+</body>
+</html>

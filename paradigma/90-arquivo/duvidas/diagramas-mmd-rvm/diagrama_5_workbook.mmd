@@ -1,0 +1,62 @@
+%%{init: {
+  'theme': 'base',
+  'themeVariables': {
+    'fontSize': '20px',
+    'fontFamily': 'Arial, sans-serif',
+    'primaryColor': '#00838F',
+    'primaryTextColor': '#ffffff',
+    'primaryBorderColor': '#006064',
+    'lineColor': '#37474F',
+    'textColor': '#212121'
+  }
+}}%%
+
+classDiagram
+    direction TB
+
+    class WorkbookBatch["📦 WORKBOOK BATCH"] {
+        +String id
+        +String fileName
+        +String uploadDate
+        +Int totalParts
+        +Int draftCount
+        +Int refinedCount
+        +Int promotedCount
+        +String weekRange
+        +Boolean isActive
+        +String promotedAt
+        +String[] promotedToParticipationIds
+    }
+
+    class WorkbookPart["📄 WORKBOOK PART"] {
+        +String id
+        +String batchId
+        +String weekId
+        +String weekDisplay
+        +String date
+        +String section
+        +String tipoParte
+        +String partTitle
+        +String descricao
+        +Int seq
+        +Funcao funcao
+        +String duracao
+        +String horaInicio
+        +String horaFim
+        +String rawPublisherName
+        +String resolvedPublisherId
+        +String resolvedPublisherName
+        +Float matchConfidence
+        +WorkbookStatus status
+        +String createdAt
+    }
+
+    class WorkbookStatus {
+        <<enumeration>>
+        📝 DRAFT
+        ✏️ REFINED
+        🚀 PROMOTED
+    }
+
+    WorkbookBatch "1" *-- "1..*" WorkbookPart : contém
+    WorkbookPart --> WorkbookStatus : tem

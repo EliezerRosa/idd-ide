@@ -1,0 +1,110 @@
+{
+  "projectName": "IDD_Base_Conhecimento_Ep09",
+  "totalDurationSec": 186.82,
+  "items": [
+    {
+      "index": 0,
+      "id": "seg_00_leigo",
+      "who": "leigo",
+      "actor": "Usuária Leiga",
+      "avatar": "leigo",
+      "slide": 1,
+      "text": "Eliézer, se você abrir o Twitter ou o LinkedIn hoje, vai ver todo mundo dizendo que o problema do desenvolvimento com IA foi 100% resolvido! O Claude tem o MCP para plugar qualquer banco de dados, e o Google Antigravity opera o terminal e o navegador de forma totalmente autônoma. Se nós já temos essa montanha de ferramentas mágicas, por que raios você insiste que ainda precisamos do Paradigma IDD?",
+      "wav": "C:\\Antigravity - IDD Refrigeração\\motion_graphics_renderer\\idd_teoria_ep09_assets\\audio\\seg_00_leigo.wav",
+      "startSec": 0.5,
+      "durSec": 26.064,
+      "endSec": 26.564
+    },
+    {
+      "index": 1,
+      "id": "seg_01_eliezer",
+      "who": "eliezer",
+      "actor": "Eliézer Rosa",
+      "avatar": "eliezer",
+      "slide": 1,
+      "text": "Essa é a maior ilusão da nossa indústria no momento! Comprar o Antigravity e o MCP achando que resolveu a engenharia de software é exatamente como comprar a escavadeira hidráulica mais veloz do mundo e entregar a chave na mão de um operador vendado! O Antigravity é uma escavadeira brilhante, e o MCP é uma tubulação fantástica. Mas quem avisa o operador que ele está prestes a romper o cano de gás de alta pressão da empresa? O MCP transporta a chamada, mas quem cuida do cálculo estrutural e da integridade da fundação é a ontologia do IDD!",
+      "wav": "C:\\Antigravity - IDD Refrigeração\\motion_graphics_renderer\\idd_teoria_ep09_assets\\audio\\seg_01_eliezer.wav",
+      "startSec": 27.214,
+      "durSec": 34.368,
+      "endSec": 61.582
+    },
+    {
+      "index": 2,
+      "id": "seg_02_leigo",
+      "who": "leigo",
+      "actor": "Usuária Leiga",
+      "avatar": "leigo",
+      "slide": 2,
+      "text": "Muito forte! E veja no Slide dois a pergunta provocativa que não quer calar: quantas vezes uma IA autônoma gerou um código que compilou lindo, passou no linter sem chiar, mas corrompeu silenciosamente o faturamento e o estoque do seu cliente em produção?",
+      "wav": "C:\\Antigravity - IDD Refrigeração\\motion_graphics_renderer\\idd_teoria_ep09_assets\\audio\\seg_02_leigo.wav",
+      "startSec": 62.232,
+      "durSec": 17.088,
+      "endSec": 79.32
+    },
+    {
+      "index": 3,
+      "id": "seg_03_eliezer",
+      "who": "eliezer",
+      "actor": "Eliézer Rosa",
+      "avatar": "eliezer",
+      "slide": 2,
+      "text": "Inúmeras vezes! O protocolo MCP é estritamente uma camada de transporte JSON-RPC. Se o modelo de IA decidir invocar a ferramenta execute_sql com uma exclusão sem WHERE, o MCP vai executar com perfeição e rapidez! Ele não tem moral, não tem noção de domínio e não sabe dizer não! No Paradigma IDD, a IA não conversa direto com a ferramenta bruta: toda intenção passa primeiro pelo tribunal de invariantes formais e pela guarda constitucional do sistema.",
+      "wav": "C:\\Antigravity - IDD Refrigeração\\motion_graphics_renderer\\idd_teoria_ep09_assets\\audio\\seg_03_eliezer.wav",
+      "startSec": 79.97,
+      "durSec": 34.536,
+      "endSec": 114.506
+    },
+    {
+      "index": 4,
+      "id": "seg_04_leigo",
+      "who": "leigo",
+      "actor": "Usuária Leiga",
+      "avatar": "leigo",
+      "slide": 3,
+      "text": "E no Slide três nós vemos outro pesadelo dos arquitetos: e quando o agente precisa encadear três ferramentas pelo MCP e a terceira falha no meio do caminho? O que acontece com o estado do sistema?",
+      "wav": "C:\\Antigravity - IDD Refrigeração\\motion_graphics_renderer\\idd_teoria_ep09_assets\\audio\\seg_04_leigo.wav",
+      "startSec": 115.156,
+      "durSec": 12.912,
+      "endSec": 128.068
+    },
+    {
+      "index": 5,
+      "id": "seg_05_eliezer",
+      "who": "eliezer",
+      "actor": "Eliézer Rosa",
+      "avatar": "eliezer",
+      "slide": 3,
+      "text": "Caos total! O MCP não implementa rollback simétrico nem Sagas distribuídas. Ele deixa o banco no que chamamos de estado órfão. É aqui que o IDD brilha: o IDD não compete com o MCP ou o Antigravity, ele os governa! O Antigravity e o MCP são os músculos e as veias de execução; o IDD é o cérebro que garante o protocolo atômico em quatro fases com reversão garantida.",
+      "wav": "C:\\Antigravity - IDD Refrigeração\\motion_graphics_renderer\\idd_teoria_ep09_assets\\audio\\seg_05_eliezer.wav",
+      "startSec": 128.718,
+      "durSec": 26.76,
+      "endSec": 155.478
+    },
+    {
+      "index": 6,
+      "id": "seg_06_leigo",
+      "who": "leigo",
+      "actor": "Usuária Leiga",
+      "avatar": "leigo",
+      "slide": 4,
+      "text": "Sensacional! E no nosso próximo episódio, o dez, nós vamos desmontar outro mito do mercado: o GitHub Copilot Workspace, o Aider e a ilusão do Spec-Driven baseado em texto solto!",
+      "wav": "C:\\Antigravity - IDD Refrigeração\\motion_graphics_renderer\\idd_teoria_ep09_assets\\audio\\seg_06_leigo.wav",
+      "startSec": 156.128,
+      "durSec": 12.768,
+      "endSec": 168.896
+    },
+    {
+      "index": 7,
+      "id": "seg_07_eliezer",
+      "who": "eliezer",
+      "actor": "Eliézer Rosa",
+      "avatar": "eliezer",
+      "slide": 4,
+      "text": "Não percam! Vamos mostrar por que fazer remendo e rezar não é ciência da computação. Inscreva-se no canal, comente a sua experiência com o MCP e venha liderar o futuro da engenharia de software com o Paradigma IDD!",
+      "wav": "C:\\Antigravity - IDD Refrigeração\\motion_graphics_renderer\\idd_teoria_ep09_assets\\audio\\seg_07_eliezer.wav",
+      "startSec": 169.546,
+      "durSec": 15.12,
+      "endSec": 184.666
+    }
+  ]
+}

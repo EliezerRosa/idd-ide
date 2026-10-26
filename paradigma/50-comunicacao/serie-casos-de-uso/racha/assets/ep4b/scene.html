@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>IDD Racha de Pix - Ep. 4B Metodologia: Amarração do Código às Invariantes</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, sans-serif; }
+    body {
+      width: 1920px; height: 1080px; background: #030712; color: #f8fafc;
+      overflow: hidden; position: relative;
+    }
+    .grid-bg {
+      position: absolute; inset: 0;
+      background-image: linear-gradient(rgba(168, 85, 247, 0.05) 1px, transparent 1px),
+                        linear-gradient(90deg, rgba(168, 85, 247, 0.05) 1px, transparent 1px);
+      background-size: 60px 60px;
+    }
+    .glow-ambient {
+      position: absolute; width: 1100px; height: 1100px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(168, 85, 247, 0.28) 0%, rgba(6, 182, 212, 0.16) 45%, transparent 70%);
+      top: 50%; left: 50%; transform: translate(-50%, -50%); filter: blur(90px); pointer-events: none;
+    }
+
+    /* TOP BAR */
+    .top-bar {
+      position: absolute; top: 0; left: 0; right: 0; height: 80px;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 60px; background: rgba(15, 23, 42, 0.88);
+      border-bottom: 1px solid rgba(168, 85, 247, 0.35); backdrop-filter: blur(12px); z-index: 50;
+    }
+    .top-title { display: flex; align-items: center; gap: 18px; }
+    .badge-ep {
+      background: linear-gradient(135deg, #7e22ce, #6b21a8); color: white;
+      font-weight: 800; font-size: 16px; letter-spacing: 1.5px;
+      padding: 6px 18px; border-radius: 999px; text-transform: uppercase;
+      box-shadow: 0 0 20px rgba(168, 85, 247, 0.4);
+    }
+    .series-name { font-size: 20px; font-weight: 700; color: #cbd5e1; }
+    .series-name span { color: #c084fc; font-weight: 800; }
+    .timer-box { font-size: 18px; font-family: monospace; color: #c084fc; font-weight: 700; }
+
+    /* STAGE */
+    .stage {
+      position: absolute; top: 80px; bottom: 220px; left: 0; right: 0;
+      padding: 40px 60px; display: flex; flex-direction: column; z-index: 20;
+    }
+    .slide-view {
+      display: none; width: 100%; height: 100%; flex-direction: column;
+      animation: fadeIn 0.4s ease-out forwards;
+    }
+    .slide-view.active { display: flex; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+    .slide-header { margin-bottom: 25px; }
+    .slide-category { font-size: 16px; font-weight: 800; color: #c084fc; text-transform: uppercase; letter-spacing: 2px; }
+    .slide-title { font-size: 40px; font-weight: 900; color: #ffffff; margin-top: 4px; }
+    .slide-subtitle { font-size: 20px; color: #94a3b8; margin-top: 6px; }
+
+    .cards-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; flex: 1; }
+    .feature-card {
+      background: rgba(15, 23, 42, 0.85); border: 1.5px solid rgba(168, 85, 247, 0.35);
+      border-radius: 18px; padding: 28px; display: flex; flex-direction: column;
+      backdrop-filter: blur(14px); box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+    }
+    .card-icon { font-size: 38px; margin-bottom: 16px; }
+    .card-title { font-size: 24px; font-weight: 800; color: #c084fc; margin-bottom: 12px; }
+    .card-desc { font-size: 17px; color: #e2e8f0; line-height: 1.5; flex: 1; }
+    .card-tag {
+      margin-top: 15px; align-self: flex-start; background: rgba(168, 85, 247, 0.15);
+      border: 1px solid #a855f7; color: #e9d5ff; padding: 4px 12px; border-radius: 8px;
+      font-size: 13px; font-weight: 700;
+    }
+
+    /* SLIDE 2: TRÍADE DA AMARRAÇÃO */
+    .edge-cases-container { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; flex: 1; }
+    .edge-card {
+      background: rgba(15, 23, 42, 0.9); border: 1.5px solid rgba(168, 85, 247, 0.35);
+      border-radius: 18px; padding: 26px; display: flex; flex-direction: column;
+    }
+    .edge-badge {
+      display: inline-block; padding: 4px 12px; border-radius: 6px; font-size: 12px; font-weight: 800;
+      text-transform: uppercase; margin-bottom: 14px; align-self: flex-start;
+    }
+    .b-purple { background: rgba(168, 85, 247, 0.2); border: 1px solid #a855f7; color: #d8b4fe; }
+    .b-blue { background: rgba(2, 132, 199, 0.2); border: 1px solid #0284c7; color: #38bdf8; }
+    .b-green { background: rgba(16, 185, 129, 0.2); border: 1px solid #10b981; color: #6ee7b7; }
+
+    /* SLIDE 3: TERMINAL & CHAT */
+    .terminal-container { display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 28px; flex: 1; }
+    .terminal-window {
+      background: #020617; border: 1.5px solid #1e293b; border-radius: 16px;
+      padding: 24px; font-family: 'Consolas', monospace; font-size: 14px;
+      color: #c084fc; display: flex; flex-direction: column;
+    }
+    .terminal-header { display: flex; gap: 8px; margin-bottom: 16px; border-bottom: 1px solid #1e293b; padding-bottom: 12px; }
+    .t-dot { width: 12px; height: 12px; border-radius: 50%; }
+    .t-red { background: #ef4444; } .t-yellow { background: #f59e0b; } .t-green { background: #10b981; }
+    .terminal-body { flex: 1; line-height: 1.6; color: #e2e8f0; font-size: 13px; }
+
+    .chat-card {
+      background: rgba(15, 23, 42, 0.85); border: 1.5px solid rgba(168, 85, 247, 0.35);
+      border-radius: 16px; padding: 22px; display: flex; flex-direction: column;
+    }
+    .chat-bubble {
+      background: rgba(30, 41, 59, 0.85); border: 1px solid rgba(168, 85, 247, 0.25);
+      border-radius: 14px; padding: 16px; margin-bottom: 14px; line-height: 1.45; font-size: 15px;
+    }
+    .chat-author { font-size: 14px; font-weight: 800; margin-bottom: 6px; }
+    .author-ia { color: #c084fc; }
+    .author-eliezer { color: #38bdf8; }
+
+    /* BOTTOM BAR */
+    .bottom-bar {
+      position: absolute; bottom: 0; left: 0; right: 0; height: 220px;
+      background: rgba(10, 15, 29, 0.96); border-top: 1px solid rgba(168, 85, 247, 0.35);
+      backdrop-filter: blur(16px); display: flex; align-items: center;
+      padding: 0 60px; gap: 40px; z-index: 50;
+    }
+    .avatars-container { display: flex; gap: 30px; align-items: center; }
+    .avatar-card {
+      display: flex; flex-direction: column; align-items: center;
+      transition: all 0.3s ease; opacity: 0.45; transform: scale(0.95);
+    }
+    .avatar-card.active { opacity: 1; transform: scale(1.05); }
+    .avatar-circle {
+      width: 90px; height: 90px; border-radius: 50%; overflow: hidden;
+      border: 3px solid #334155; position: relative; background: #0f172a;
+    }
+    .avatar-card.active .avatar-circle {
+      border-color: #a855f7; box-shadow: 0 0 25px rgba(168, 85, 247, 0.7);
+    }
+    .avatar-circle img { width: 100%; height: 100%; object-fit: cover; }
+    .avatar-name { font-size: 15px; font-weight: 800; color: #f8fafc; margin-top: 8px; }
+    .avatar-role { font-size: 12px; color: #94a3b8; font-weight: 600; }
+
+    .subtitles-container {
+      flex: 1; height: 140px; background: rgba(15, 23, 42, 0.8);
+      border: 1.5px solid rgba(168, 85, 247, 0.35); border-radius: 16px;
+      padding: 20px 28px; display: flex; flex-direction: column; justify-content: center;
+    }
+    .sub-speaker {
+      font-size: 14px; font-weight: 800; text-transform: uppercase; letter-spacing: 1.5px;
+      margin-bottom: 8px;
+    }
+    .speaker-leigo { color: #f43f5e; }
+    .speaker-eliezer { color: #38bdf8; }
+    .speaker-ia { color: #c084fc; }
+    .sub-text { font-size: 19px; line-height: 1.45; color: #f8fafc; font-weight: 500; }
+
+    #black-curtain {
+      position: absolute; inset: 0; background: #000000; z-index: 9999;
+      pointer-events: none; transition: opacity 0.08s linear;
+    }
+  </style>
+</head>
+<body>
+  <div id="black-curtain"></div>
+  <div class="glow-ambient"></div>
+  <div class="grid-bg"></div>
+
+  <!-- TOP BAR -->
+  <div class="top-bar">
+    <div class="top-title">
+      <div class="badge-ep">Episódio 4B • O 4º Passo Sagrado</div>
+      <div class="series-name">METODOLOGIA IDD: <span>AMARRAÇÃO DO CÓDIGO ÀS INVARIANTES</span></div>
+    </div>
+    <div class="timer-box" id="clock-display">00:00.0</div>
+  </div>
+
+  <!-- STAGE -->
+  <div class="stage">
+    <!-- SLIDE 1: O ABISMO ENTRE O DIAGRAMA E O CÓDIGO -->
+    <div class="slide-view active" id="slide-1">
+      <div class="slide-header">
+        <div class="slide-category">Metodologia IDD • O 4º Passo Sagrado</div>
+        <div class="slide-title">Superando o Abismo entre Arquitetura e Código</div>
+        <div class="slide-subtitle">A IA como Compiladora de Contratos Formais: Sem Gambiarras e Sem Alucinações</div>
+      </div>
+      <div class="cards-grid">
+        <div class="feature-card">
+          <div class="card-icon">🎯</div>
+          <div class="card-title">Código Sem Alucinação</div>
+          <div class="card-desc">No Paradigma IDD, a IA não escreve código solto. Cada função implementa contratos matemáticos derivados diretamente das intenções.</div>
+          <div class="card-tag">Compilação Guiada</div>
+        </div>
+        <div class="feature-card">
+          <div class="card-icon">🧬</div>
+          <div class="card-title">Rastreabilidade Total</div>
+          <div class="card-desc">Cada linha executável conecta as intenções do usuário (1B), as entidades do MER (2B) e os estados da UML (3B) em uma amarração viva.</div>
+          <div class="card-tag">Fio Condutor Único</div>
+        </div>
+        <div class="feature-card">
+          <div class="card-icon">🛡️</div>
+          <div class="card-title">Contratos em Runtime</div>
+          <div class="card-desc">As invariantes são ativas em tempo de execução: se houver tentativa de corrupção contábil, a transação aborta antes de tocar o banco.</div>
+          <div class="card-tag">Fail-Fast Seguro</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 2: A TRÍADE DA AMARRAÇÃO -->
+    <div class="slide-view" id="slide-2">
+      <div class="slide-header">
+        <div class="slide-category">Engenharia de Software IDD • Tríade da Amarração</div>
+        <div class="slide-title">Intenção -> Invariante -> Código Executável</div>
+        <div class="slide-subtitle">A Função Pura de Rateio com Blindagem Contábil Ativa</div>
+      </div>
+      <div class="edge-cases-container">
+        <div class="edge-card">
+          <div class="edge-badge b-purple">1. Intenção Sagrada</div>
+          <div class="card-title">Rateio Justo & Fracionário</div>
+          <div class="card-desc">A intenção declarada: "Dividir despesas apenas entre participantes ativos sem prejuízo para quem consumiu menos."</div>
+          <div class="card-tag">Requisito Puro</div>
+        </div>
+        <div class="edge-card">
+          <div class="edge-badge b-blue">2. Invariante Matemática</div>
+          <div class="card-title">@invariant Soma Zero</div>
+          <div class="card-desc">Contrato formal no código: `assert(sum(cotas) === mesa.totalLiquido)` com distribuição determinística do centavo indivisível.</div>
+          <div class="card-tag">Contrato Formal</div>
+        </div>
+        <div class="edge-card">
+          <div class="edge-badge b-green">3. Código Compilado</div>
+          <div class="card-title">Snapshot Imutável & Pix</div>
+          <div class="card-desc">A cota é gravada com hash de fechamento e gera payload EMV Pix dinâmico para liquidação sem risco de cobrança duplicada.</div>
+          <div class="card-tag">Execução Auditada</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 3: TERMINAL DA IA & DECISÃO CRÍTICA -->
+    <div class="slide-view" id="slide-3">
+      <div class="slide-header">
+        <div class="slide-category">Governança Arquitetural • Decisão no Terminal</div>
+        <div class="slide-title">Governança no Terminal: Dilema de Integração Pix</div>
+        <div class="slide-subtitle">A IA Submete Alternativas e o Orquestrador Garante a Blindagem</div>
+      </div>
+      <div class="terminal-container">
+        <div class="terminal-window">
+          <div class="terminal-header">
+            <div class="t-dot t-red"></div>
+            <div class="t-dot t-yellow"></div>
+            <div class="t-dot t-green"></div>
+            <span style="margin-left: 10px; font-size: 12px; color: #64748b;">ai-compiler@governance-daemon:~/core-engine</span>
+          </div>
+          <div class="terminal-body">
+            <p style="color: #c084fc;">[DILEMA ARQUITETURAL] Amarração CotaRateio -> Provedor Pix:</p>
+            <p style="color: #94a3b8; margin-top: 6px;">[OPÇÃO A] QR Code Estático por Participante:</p>
+            <p style="color: #64748b;">  - Valor livre preenchido pelo usuário</p>
+            <p style="color: #ef4444;">  - RISCO: Pagamentos parciais, duplicados ou valores divergentes</p>
+            <br>
+            <p style="color: #94a3b8;">[OPÇÃO B] QR Code Dinâmico com Payload EMV + Webhook Idempotente:</p>
+            <p style="color: #4ade80;">  - Valor fixado exatamente na cota calculada com expiração de 15 min</p>
+            <p style="color: #4ade80;">  - BLINDAGEM: Conciliação automática e garantia de Soma Zero</p>
+            <br>
+            <p style="color: #38bdf8;">[ORQUESTRADOR ELIÉZER] Decisão: Compilar estritamente OPÇÃO B.</p>
+            <p style="color: #4ade80; margin-top: 6px;">✓ Core engine compilado com QR Code Dinâmico e Webhook idempotente.</p>
+          </div>
+        </div>
+        <div class="chat-card">
+          <div class="chat-bubble">
+            <div class="chat-author author-ia">🤖 IA Compilador</div>
+            Durante a amarração da entidade CotaRateio ao provedor de Pix, identifiquei duas alternativas: QR Code estático ou dinâmico com payload EMV. Qual estratégia deve ser compilada no core?
+          </div>
+          <div class="chat-bubble">
+            <div class="chat-author author-eliezer">👨‍💻 Eliézer Rosa</div>
+            Decisão do Orquestrador: compile estritamente QR Code dinâmico com payload EMV e webhook idempotente! QR Code estático abre brechas que violam a Invariante da Soma Zero.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 4: OS 4 PASSOS SAGRADOS CONCLUÍDOS -->
+    <div class="slide-view" id="slide-4">
+      <div class="slide-header">
+        <div class="slide-category">Visão Metodológica Completa • Paradigma IDD</div>
+        <div class="slide-title">A Trilha dos 4 Passos Sagrados Concluída!</div>
+        <div class="slide-subtitle">Da Linguagem Natural ao Software de Alta Fidelidade com IA</div>
+      </div>
+      <div class="cards-grid">
+        <div class="feature-card">
+          <div class="card-icon">📜</div>
+          <div class="card-title">1B: Intenções & Invariantes</div>
+          <div class="card-desc">Captura das regras sagradas do negócio sem viés técnico e formalização das invariantes inquebráveis.</div>
+          <div class="card-tag">Fundação</div>
+        </div>
+        <div class="feature-card">
+          <div class="card-icon">🗄️</div>
+          <div class="card-title">2B & 3B: MER & UML</div>
+          <div class="card-desc">Modelagem do banco de dados relacional puro e desenho da máquina de estados antes de qualquer código.</div>
+          <div class="card-tag">Estrutura & Fluxo</div>
+        </div>
+        <div class="feature-card">
+          <div class="card-icon">🏆</div>
+          <div class="card-title">Episódio 5: Grande Síntese</div>
+          <div class="card-desc">No próximo episódio: A Grande Síntese Final de toda a trilha IDD no canal do YouTube!</div>
+          <div class="card-tag">Grande Encerramento</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BOTTOM BAR -->
+  <div class="bottom-bar">
+    <div class="avatars-container">
+      <div class="avatar-card" id="av-leigo">
+        <div class="avatar-circle">
+          <img src="../../avatares/avatar_usuaria_leiga.png" alt="Usuária Leiga">
+        </div>
+        <div class="avatar-name">Usuária Leiga</div>
+        <div class="avatar-role">Validadora de Domínio</div>
+      </div>
+      <div class="avatar-card" id="av-eliezer">
+        <div class="avatar-circle">
+          <img src="../../avatares/avatar_eliezer_oficial.png" alt="Eliézer Rosa">
+        </div>
+        <div class="avatar-name">Eliézer Rosa</div>
+        <div class="avatar-role">Orquestrador IDD</div>
+      </div>
+      <div class="avatar-card" id="av-ia">
+        <div class="avatar-circle">
+          <img src="../../avatares/avatar_ia_compilador.png" alt="IA Compilador">
+        </div>
+        <div class="avatar-name">IA Compilador</div>
+        <div class="avatar-role">Execução de Contratos</div>
+      </div>
+    </div>
+    <div class="subtitles-container">
+      <div class="sub-speaker" id="sub-speaker">USUÁRIA LEIGA</div>
+      <div class="sub-text" id="sub-text">Iniciando episódio 4B metodológico: Amarração do Código às Invariantes...</div>
+    </div>
+  </div>
+
+  <script>
+    let timelineItems = [];
+    let isRunning = false;
+    let startTimeMs = 0;
+
+    window.setTimeline = function(items) { timelineItems = items; };
+    window.stopPresentation = function() {
+      isRunning = false;
+    };
+    window.startPresentation = function() {
+      const curtain = document.getElementById('black-curtain');
+      if (curtain) {
+        curtain.style.opacity = '0';
+        setTimeout(() => curtain.remove(), 80);
+      }
+      isRunning = true;
+      startTimeMs = performance.now();
+      requestAnimationFrame(renderLoop);
+    };
+
+    function renderLoop(now) {
+      if (!isRunning) return;
+      const elapsedSec = (now - startTimeMs) / 1000;
+      const minutes = Math.floor(elapsedSec / 60);
+      const seconds = (elapsedSec % 60).toFixed(1);
+      document.getElementById('clock-display').innerText =
+        String(minutes).padStart(2, '0') + ':' + String(seconds).padStart(4, '0');
+
+      const curSeg = timelineItems.find(item => elapsedSec >= item.startSec && elapsedSec < item.endSec);
+      if (curSeg) {
+        const targetSlideId = 'slide-' + curSeg.slide;
+        document.querySelectorAll('.slide-view').forEach(s => {
+          if (s.id === targetSlideId) {
+            if (!s.classList.contains('active')) s.classList.add('active');
+          } else {
+            s.classList.remove('active');
+          }
+        });
+
+        ['leigo', 'eliezer', 'ia'].forEach(who => {
+          const el = document.getElementById('av-' + who);
+          if (el) {
+            if (curSeg.who === who) el.classList.add('active');
+            else el.classList.remove('active');
+          }
+        });
+
+        const speakerEl = document.getElementById('sub-speaker');
+        const textEl = document.getElementById('sub-text');
+        speakerEl.className = 'sub-speaker speaker-' + curSeg.who;
+        speakerEl.innerText = curSeg.actor;
+        textEl.innerText = curSeg.text;
+      }
+      requestAnimationFrame(renderLoop);
+    }
+  </script>
+</body>
+</html>

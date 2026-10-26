@@ -1,0 +1,115 @@
+{
+  "episode": "2C",
+  "title": "MER Completo: Entidades Derivadas, Ficha Técnica & Invariantes de Dados",
+  "totalDurationSec": 143.39,
+  "items": [
+    {
+      "id": "seg_01_leigo",
+      "who": "leigo",
+      "actor": "Usuária Leiga",
+      "slide": 1,
+      "chat": false,
+      "startSec": 0.5,
+      "endSec": 14.4,
+      "durationSec": 13.9,
+      "text": "Eliézer, no negócio da Cafeteria e Padaria nós temos insumos, fichas técnicas de cafés e pães, e pedidos rápidos de balcão. Como desenhar o MER COMPLETO com padrão oficial pé de galinha para não perder o controle do estoque?",
+      "file": "audio/seg_01_leigo.mp3"
+    },
+    {
+      "id": "seg_02_eliezer",
+      "who": "eliezer",
+      "actor": "Eliézer Rosa",
+      "slide": 1,
+      "chat": false,
+      "startSec": 15.05,
+      "endSec": 36.75,
+      "durationSec": 21.7,
+      "text": "Vejam na tela o Diagrama Entidade-Relacionamento Canônico na notação Crow's Foot! Temos as entidades mestres: Cliente, ItemCardapio e Insumo. Observem a cardinalidade pé de galinha: um item do cardápio consome muitos insumos através da Ficha Técnica, e cada insumo é controlado por lotes de validade estritos!",
+      "file": "audio/seg_02_eliezer.mp3"
+    },
+    {
+      "id": "seg_03_leigo",
+      "who": "leigo",
+      "actor": "Usuária Leiga",
+      "slide": 2,
+      "chat": false,
+      "startSec": 37.4,
+      "endSec": 44.24,
+      "durationSec": 6.84,
+      "text": "E como o banco trata o pedido do cliente quando ele pede um cappuccino especial com leite vegetal e dose extra de café?",
+      "file": "audio/seg_03_leigo.mp3"
+    },
+    {
+      "id": "seg_04_ia",
+      "who": "ia",
+      "actor": "IA Compilador",
+      "slide": 2,
+      "chat": false,
+      "startSec": 44.89,
+      "endSec": 67.28,
+      "durationSec": 22.39,
+      "text": "Exibindo a modelagem de entidades derivadas e normalização em Terceira Forma Normal! O Pedido se decompõe em ItemPedido. Cada item invoca a associativa FichaTecnica para deduzir gramas de pó de café e mililitros de leite dos Lotes de Estoque. O custo do insumo é congelado em snapshot na venda, eliminando qualquer dependência transitiva contábil!",
+      "file": "audio/seg_04_ia.mp3"
+    },
+    {
+      "id": "seg_05_leigo",
+      "who": "leigo",
+      "actor": "Usuária Leiga",
+      "slide": 3,
+      "chat": false,
+      "startSec": 67.93,
+      "endSec": 78.95,
+      "durationSec": 11.02,
+      "text": "Vejam no terminal da IA a Matriz de Invariantes de Dados da Cafeteria: Primeira, Segunda, Terceira Forma Normal e a proibição matemática de estoque negativo!",
+      "file": "audio/seg_05_leigo.mp3"
+    },
+    {
+      "id": "seg_06_ia",
+      "who": "ia",
+      "actor": "IA Compilador",
+      "slide": 3,
+      "chat": true,
+      "startSec": 79.6,
+      "endSec": 106.53,
+      "durationSec": 26.93,
+      "text": "Submetendo a Matriz de Invariantes de Dados da Padaria. Invariante 1: Atomicidade de insumos em 1FN. Invariante 2: Chave composta na Ficha Técnica em 2FN. Invariante 3: Snapshot auditável de custo em 3FN. Invariante 4: Restrição de Estoque Positivo, impedindo a confirmação de pedidos se a receita exigir insumo indisponível. Posso homologar o modelo de dados?",
+      "file": "audio/seg_06_ia.mp3"
+    },
+    {
+      "id": "seg_07_eliezer",
+      "who": "eliezer",
+      "actor": "Eliézer Rosa",
+      "slide": 3,
+      "chat": true,
+      "startSec": 107.18,
+      "endSec": 118.72,
+      "durationSec": 11.54,
+      "text": "Modelo Entidade-Relacionamento e Matriz de Invariantes homologados! Com essa base relacional, a padaria nunca vende o que não tem e controla cada grama de farinha e grão de café.",
+      "file": "audio/seg_07_eliezer.mp3"
+    },
+    {
+      "id": "seg_08_leigo",
+      "who": "leigo",
+      "actor": "Usuária Leiga",
+      "slide": 4,
+      "chat": false,
+      "startSec": 119.37,
+      "endSec": 125.83,
+      "durationSec": 6.46,
+      "text": "Com a estrutura de dados imune a furos de estoque, o caminho está aberto para a engenharia de software no UML!",
+      "file": "audio/seg_08_leigo.mp3"
+    },
+    {
+      "id": "seg_09_eliezer",
+      "who": "eliezer",
+      "actor": "Eliézer Rosa",
+      "slide": 4,
+      "chat": false,
+      "startSec": 126.48,
+      "endSec": 141.24,
+      "durationSec": 14.76,
+      "text": "Com certeza! No Episódio 3C, vamos explorar o Diagrama UML Completo da Cafeteria: Casos de Uso, Classes nos 3 compartimentos e o Statechart de preparo na cozinha. Acompanhem a série!",
+      "file": "audio/seg_09_eliezer.mp3"
+    }
+  ]
+}

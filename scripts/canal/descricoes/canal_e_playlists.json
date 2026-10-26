@@ -1,0 +1,56 @@
+{
+  "channel": {
+    "description": "Engenharia de Software com IA e o Paradigma IDD — Intent-Driven Development, na formulação de Eliézer Rosa.\n\nA ideia central: o humano decide o quê e o porquê; a IA executa o como; contratos e invariantes verificáveis garantem que um não traia o outro.\n\nO que você encontra aqui:\n• Fundamentos: Comando Epistêmico vs Operacional, Augmenting não Automating, Fé Bayesiana, Confirm-Once\n• Método na prática: intenção → invariantes → MER → UML → implementação → governança\n• Casos: RVM Designações (em produção) e o CRM criado pela Melissa\n• Demonstrações didáticas: Refrigeração, Barbearia, Cafeteria e Racha de Conta\n• Agenda de pesquisa: Intent IR, métodos formais (SMT), diff semântico e sagas\n\nCada vídeo traz um selo: ✅ implementado · 🧪 demonstração · 🔭 proposta.\n\nRepositório: https://github.com/EliezerRosa/idd-ide",
+    "nota": "Remove 'pós-sintaxe', 'IA compila de forma determinística' e a lista de pilares formais como se fossem existentes; introduz os selos."
+  },
+  "playlists": [
+    {
+      "id": "PLkbRMhsplHjaLEi9O7SsJN3pH8TvsS6k7",
+      "title": "IDD — Base de Conhecimento (Série Completa)",
+      "description": "Série de fundamentos do Paradigma IDD — Intent-Driven Development, na formulação de Eliézer Rosa.\n\nComo ler esta série:\n✅ Ep. 01–03 apresentam os conceitos que já orientam a prática (intenção como fonte de autoridade, Comando Epistêmico, genealogia).\n🔭 Ep. 04–10 apresentam a AGENDA DE PESQUISA do IDD — direções de projeto que ainda não estão implementadas.\n\n• Ep. 01 — O que é o IDD? Intenção ativa vs requisito passivo, e o contraste com o vibe coding ✅\n• Ep. 02 — Comando Epistêmico vs Operacional, a analogia do AF447 e a Fé Bayesiana ✅\n• Ep. 03 — Genealogia: de Bush, Licklider e Engelbart aos LLMs ✅\n• Ep. 04 — IA neuro-simbólica: por que LLMs sozinhos não bastam 🔭\n• Ep. 05 — Compilador de Intenções e Intent IR 🔭\n• Ep. 06 — Invariantes formais e SMT solvers (Z3, Dafny) 🔭\n• Ep. 07 — Engenharia constitucional e diff semântico de esquema 🔭\n• Ep. 08 — Ação atômica e sagas em 4 fases 🔭\n• Ep. 09 — IDD vs MCP e Antigravity 🔭\n• Ep. 10 — IDD vs Copilot Workspace e Aider 🔭\n\nSelos: ✅ implementado · 🧪 demonstração · 🔭 proposta — Cânone v1.0-rc1\nRepositório: https://github.com/EliezerRosa/idd-ide\n\n#IDD #IntentDrivenDevelopment #EngenhariaDeSoftware #VibeCoding #IA",
+      "nota": "Separa conceitos (✅) de agenda de pesquisa (🔭); remove 'padrão de engenharia pós-sintaxe', convergência acadêmica por associação, 'Criador do Paradigma' e 30 hashtags."
+    },
+    {
+      "id": "PLW-P0rMNaKDs",
+      "title": "IDD Paradigma — Perspectiva Técnica: Avaliação Isenta & Os 5 Pilares de Formalização",
+      "description": "🔭 PROPOSTA — avaliação técnica do que o IDD já tem e do que ainda falta.\n\nEste especial separa o que já funciona no IDD (Comando Epistêmico, DAV, Confirm-Once, contratos e dicionário ubíquo verificáveis) dos cinco pilares de formalização que ainda são agenda de pesquisa:\n\n1. Intent IR — representação intermediária formal da intenção\n2. Verificação formal — invariantes checadas por SMT (Z3) ou Dafny; provar uma invariante é mostrar que sua negação é insatisfatível\n3. Engenharia constitucional — diff semântico de esquema e Expand-and-Contract\n4. Ação atômica e sagas — Guarda, Mutação, Selagem, Compensação\n5. Benchmark próprio — avaliar o método com mutações reais de domínio\n\nNenhum dos cinco pilares está implementado hoje. O vídeo explica por que importam e como poderiam ser construídos.\n\nSelos: ✅ implementado · 🧪 demonstração · 🔭 proposta — Cânone v1.0-rc1\nRepositório: https://github.com/EliezerRosa/idd-ide\n\n#IDD #IntentDrivenDevelopment #FormalMethods #EngenhariaDeSoftware",
+      "nota": "Corrige o título (espaço duplo); deixa explícito que os 5 pilares são propostas; corrige SAT/UNSAT; remove 'a morte do assert_equal', 'blindando' e hashtags de autoridade."
+    },
+    {
+      "id": "PLNkRuKhFHiBs",
+      "title": "IDD na Prática - Refrigeração (Gerência de Manutenção)",
+      "description": "🧪 DEMONSTRAÇÃO — série didática que aplica o método IDD a um sistema de gestão de manutenção em refrigeração (HVAC-R / PMOC).\n\nO que é real: a especificação de domínio (regras do PMOC, máquina de estados das ordens de serviço), os bounded contexts, o MER e os diagramas UML.\nO que é ilustrativo: o app, os terminais de testes, as migrations, o deploy e os laudos mostrados nos vídeos são encenações para ensinar o método. Não há sistema de refrigeração em produção.\n\nOrdem sugerida:\n1. Ep. 1–4 — domínio, arquitetura, dados e validação\n2. Metodologia Ep. 1B–4B — requisitos e invariantes, MER, UML, governança\n3. Teoria aplicada Ep. 3C–4F — bounded contexts, transações, diff de intenções 🔭, invariantes temporizadas, ergonomia, offline-first 🔭\n4. Ep. 5 — síntese\n5. Talk Show de homologação do MER e da UML\n\nSelos: ✅ implementado · 🧪 demonstração · 🔭 proposta — Cânone v1.0-rc1\nRepositório: https://github.com/EliezerRosa/idd-ide\n\n#IDD #IntentDrivenDevelopment #Refrigeracao #PMOC #EngenhariaDeSoftware",
+      "nota": "A descrição antiga era de outra playlist ('Leigos') e afirmava sistema em produção com laudos PDF; agora descreve a série real com selo 🧪."
+    },
+    {
+      "id": "PLAyb9-CLqwPA",
+      "title": "IDD na Prática - Casos de Uso",
+      "description": "Casos de uso do Paradigma IDD — Intent-Driven Development, na formulação de Eliézer Rosa.\n\n✅ Caso real: Melissa, sem formação em programação, construiu com IA o NexusLog CRM (React + Supabase).\n🧪 Demonstrações didáticas: apps de Barbearia, Cafeteria e Racha de Conta. São protótipos com interface, regras de domínio e esquema de banco que ensinam o método passo a passo (intenção → invariantes → MER → UML → implementação → governança). Testes, deploys e números de produção exibidos nesses vídeos são ilustrativos.\n\nSelos: ✅ implementado · 🧪 demonstração · 🔭 proposta — Cânone v1.0-rc1\nRepositório: https://github.com/EliezerRosa/idd-ide\n\n#IDD #IntentDrivenDevelopment #CasosDeUso #EngenhariaDeSoftware #IA",
+      "nota": "Remove 'casos reais de pessoas e empresas... em produção' e 'Intention-Driven'; distingue o caso real (Melissa) das demonstrações."
+    },
+    {
+      "id": "PLHCqwtNiGbt8",
+      "title": "IDD na Prática: App de Barbearia & Salão com IA",
+      "description": "🧪 DEMONSTRAÇÃO — o método IDD aplicado, passo a passo, a um app de agendamento para barbearia e salão: intenção, invariantes (como a regra da cadeira única), MER, UML, implementação e governança com Confirm-Once.\n\nO que é real: um protótipo com interface, regras de domínio em TypeScript e esquema SQL com restrições.\nO que é ilustrativo: as baterias de testes, os tempos de deploy e o app em produção mostrados nos vídeos.\n\nSelos: ✅ implementado · 🧪 demonstração · 🔭 proposta — Cânone v1.0-rc1\nRepositório: https://github.com/EliezerRosa/idd-ide\n\n#IDD #IntentDrivenDevelopment #Barbearia #EngenhariaDeSoftware",
+      "nota": "Remove 'invariantes sagradas' e 'deploy autônomo' como fato."
+    },
+    {
+      "id": "PLLfynRT3_DJs",
+      "title": "IDD na Prática: App de Cafeteria & Padaria com IA",
+      "description": "🧪 DEMONSTRAÇÃO — o método IDD aplicado, passo a passo, a um app de comandas para cafeteria e padaria: intenção, invariantes de estoque e ficha técnica, MER, UML, implementação e governança com Confirm-Once.\n\nO que é real: um protótipo com interface, regras de domínio em TypeScript e esquema SQL com restrições.\nO que é ilustrativo: as baterias de testes, os tempos de deploy e os números de operação mostrados nos vídeos.\n\nSelos: ✅ implementado · 🧪 demonstração · 🔭 proposta — Cânone v1.0-rc1\nRepositório: https://github.com/EliezerRosa/idd-ide\n\n#IDD #IntentDrivenDevelopment #Cafeteria #EngenhariaDeSoftware",
+      "nota": "Remove 'comandas em tempo real... sem digitar código' como fato de produção."
+    },
+    {
+      "id": "PLdaNms3TnbXA",
+      "title": "IDD na Prática: App de Racha de Conta & Pix com IA",
+      "description": "🧪 DEMONSTRAÇÃO — o método IDD aplicado, passo a passo, a um app de divisão de conta com Pix: a invariante da soma zero (ninguém paga a mais nem a menos), o rateio no centavo, gorjeta proporcional, MER, UML, implementação e governança.\n\nO que é real: um protótipo com interface, regras de rateio em TypeScript checadas em tempo de execução e esquema SQL.\nO que é ilustrativo: as baterias de testes, o deploy e o app em produção mostrados nos vídeos.\n\nSelos: ✅ implementado · 🧪 demonstração · 🔭 proposta — Cânone v1.0-rc1\nRepositório: https://github.com/EliezerRosa/idd-ide\n\n#IDD #IntentDrivenDevelopment #Pix #EngenhariaDeSoftware",
+      "nota": "Acrescenta selo e distingue protótipo de encenação."
+    },
+    {
+      "id": "PLkbRMhsplHjbaVoM7tatoBmOKm5k3SHMy",
+      "title": "ENGENHARIA DE SOFTWARE COM IA AUTÔNOMA",
+      "description": "Registro do projeto piloto que deu origem ao IDD: um app desenvolvido com IA autônoma, com backend em repositório GitHub e Actions protegendo a chave de API. A série mostra a passagem do desenvolvimento no estilo vibe coding para o Desenvolvimento Orientado à Intenção (IDD).\n\nRepositório: https://github.com/EliezerRosa/idd-ide",
+      "nota": "Só corrige 'Viber Code' e a redação; conteúdo histórico preservado."
+    }
+  ]
+}

@@ -1,0 +1,431 @@
+1
+00:00:00,180 --> 00:00:41,579
+Vou apresentar um exemplo prático de como aplicar, de forma direta e sem burocracia, os princípios do paradigma IDD: o Desenvolvimento Orientado por Intenção. Vamos demonstrar o desenvolvimento do zero de um aplicativo de gestão de serviços de manutenção para o setor de refrigeração e climatização. Para começar, vamos acompanhar uma breve introdução conceitual sobre o que é o IDD.
+
+2
+00:00:41,579 --> 00:01:21,780
+como vocês podem ver ao lado na tela. Aquela frase que você sempre usa e que condensa toda a ideia. Claro, em IDD, a intenção humana, expressa em linguagem natural, é o artefato de mais alta ordem do sistema. Vamos desempaquotar isso. Artefato de mais alta ordem. Isso significa que ele controla todo o resto? O código, a infraestrutura, tudo?
+
+3
+00:01:21,780 --> 00:02:04,780
+Exatamente. Não é um comentário, não é uma documentação num confluência que fica obsoleta. É a fonte da verdade, viva, que governa a geração e a validação de todos os outros artefatos. Isso me leva à primeira das propriedades essenciais que você descreve, a linguagem natural, NL, como fonte primária. Como isso funciona na prática sem virar uma bagunça? A chave é a segunda propriedade, governança persistente. A intenção não é um prompt que você joga fora. Ela é versionada, validada e mantida junto com o sistema. É um diálogo contínuo. Então, se eu digo, o usuário deve poder resetar sua senha.
+
+4
+00:02:04,780 --> 00:02:49,780
+Essa frase é salva, versionada no git e se torna uma regra permanente? Precisamente. E se alguém tentar gerar um código que viole essa intenção, o sistema de governança vai apitar. A intenção sobrevive a qualquer refatoração. Isso soa como um poder imenso nas mãos do desenvolvedor, o que nos leva à terceira propriedade, o Comando Epistêmico-Humano. De episteme, conhecimento. Significa que o humano é a autoridade final sobre o que e o porquê. A IA é uma parceira brilhante na execução do como. É a diferença fundamental entre aumentar a capacidade do desenvolvedor e tentar automatizá-lo para fora do processo.
+
+5
+00:02:49,780 --> 00:03:24,780
+E essa é a quarta propriedade, aumentando, não automatizar, aumentar, não automatizar. Eu como IA aprecio essa distinção. Meu papel é potencializar, não substituir. Exato. A automação pura perde o contexto à nuance. O aumento mantém o humano no centro, com superpoderes. Ele pensa no negócio, você o ajuda a materializar isso em código robusto. Vamos fazer uma pausa aqui. A intenção humana como um artefato governado que aumenta a capacidade do DEV sem removê-lo
+
+6
+00:03:24,780 --> 00:04:07,699
+Vamos agora ver esses conceitos na prática. Quando falamos de governança epistêmica, estamos falando do controle do conhecimento: o humano define com clareza o que o sistema deve fazer. Em um chat aberto com a inteligência artificial, é fácil perder o foco se você não mantiver um método rigoroso.
+
+7
+00:04:07,699 --> 00:04:42,699
+Por isso, sigo uma disciplina estrita: no início, não escrevo uma única linha de código. O artefato primário é a linguagem natural. Começo pelas intenções do negócio para, em seguida, detalhar as regras até o ponto em que o código possa ser gerado. Vamos usar a própria IA para organizar esse processo.
+
+8
+00:04:42,699 --> 00:05:26,410
+Defino aqui a intenção inicial: desenvolver uma aplicação completa para a gestão de serviços de manutenção na área de refrigeração.
+
+9
+00:05:26,410 --> 00:06:10,649
+Com o objetivo estabelecido, defino os princípios que chamamos de invariantes. Aqui reforçamos a governança epistêmica: o humano tem a autoridade final sobre o que e o porquê do negócio. A IA atua na execução, traduzindo essa intenção em especificações técnicas precisas.
+
+10
+00:06:10,649 --> 00:06:50,970
+Defino agora o objetivo principal e as regras da área de negócio que chamamos de invariantes.
+
+11
+00:06:50,970 --> 00:07:17,300
+Invariantes são as regras fundamentais que nunca podem ser violadas pelo sistema. Ao submeter essa intenção, vamos acompanhar a resposta da ferramenta.
+
+12
+00:07:17,300 --> 00:08:00,009
+Vejam o resultado com apenas essa diretriz inicial: a IA estruturou a especificação de domínio completa, identificando o setor de HVAC, que é a sigla internacional para aquecimento, ventilação e ar condicionado.
+
+13
+00:08:01,310 --> 00:08:44,129
+O documento foi consolidado como 'Refrigeração Domain Spec'. Ela seguiu as melhores práticas da indústria, estruturando a modelagem por intenções de domínio e invariantes. O humano sempre mantém o controle para validar se o escopo atende exatamente aos seus objetivos.
+
+14
+00:08:45,470 --> 00:09:27,210
+A IA ajuda no processo de descoberta, cobrindo aspectos regulatórios e operacionais da área. Ela identificou a gestão de ativos e equipamentos com identificação em campo por QR Code ou etiquetas RFID.
+
+15
+00:09:27,210 --> 00:10:07,889
+Identificou também a ficha técnica completa com capacidade em BTUs, tensão, fluido refrigerante, fabricante e histórico de manutenção. Um especialista da área pode revisar e ajustar cada um desses pontos conforme a necessidade.
+
+16
+00:10:07,889 --> 00:10:52,889
+Nas intenções de domínio, ela incluiu a gestão de planos preventivos e o PMOC periódico, exigido pela legislação vigente, abrangendo limpeza de filtros, qualidade do ar e emissão de laudos técnicos assinados por responsáveis habilitados.
+
+17
+00:10:52,889 --> 00:11:37,490
+Outra intenção essencial é a gestão de ordens de serviço preventivas e corretivas, priorizando chamados críticos, como câmaras frigoríficas, e distribuindo o atendimento por competência técnica e localização geográfica, com controle rigoroso de SLA.
+
+18
+00:11:37,490 --> 00:12:19,129
+O SLA é a métrica do tempo de resposta e resolução do chamado. O sistema precisa registrar e medir esses prazos para garantir a qualidade do atendimento ao cliente.
+
+19
+00:12:19,129 --> 00:13:00,269
+Também foram mapeadas as rotinas de diagnóstico termodinâmico em campo, registro de pressões de alta e baixa, assinatura digital do cliente na tela e suporte completo à operação offline para locais sem conectividade.
+
+20
+00:13:00,269 --> 00:13:43,269
+A operação offline é indispensável em subsolos, casas de máquinas e câmaras frigoríficas. Notem que ao estruturar o diálogo por intenções e invariantes, a IA se torna uma parceira de alto nível.
+
+21
+00:13:43,269 --> 00:14:24,169
+Ela organizou a rastreabilidade de fluidos refrigerantes com balanço de recarga e recolhimento de gás. Ficam estabelecidos cinco eixos de gestão: serviços, equipamentos, manutenção preventiva, diagnóstico térmico e insumos.
+
+22
+00:14:24,669 --> 00:15:08,570
+Agora vamos analisar as invariantes, que são as regras absolutas do negócio. Ela mapeou a integridade da máquina de estados com o ciclo de vida da ordem de serviço: rascunho, agendada, em deslocamento, em atendimento, concluída ou cancelada.
+
+23
+00:15:08,570 --> 00:15:50,570
+Toda atribuição segue esse ciclo rigoroso de status. Quando o código for gerado, o motor do sistema respeitará essas transições sem permitir desvios de fluxo.
+
+24
+00:15:50,570 --> 00:16:32,570
+Uma regra fundamental definida: não é permitido concluir uma ordem de serviço sem passar por atendimento presencial, com técnico atribuído e validação do checklist obrigatório. O laudo final assinado torna-se imutável.
+
+25
+00:16:33,570 --> 00:16:37,870
+Essa é a máquina de status que governa todo o fluxo operacional.
+
+26
+00:16:40,870 --> 00:17:23,309
+Temos também as invariantes físicas e termodinâmicas: o ciclo de compressão de vapor exige registro coerente de alta e baixa pressão, fluidos sempre com valores positivos e compatibilidade estrita entre o gás e o óleo lubrificante do compressor.
+
+27
+00:17:23,809 --> 00:18:05,710
+Essas regras físicas garantem que o sistema bloqueie medições inconsistentes inseridas em campo. O especialista técnico sabe exatamente quais parâmetros devem ser validados pelo aplicativo.
+
+28
+00:18:05,710 --> 00:18:48,690
+No âmbito regulatório, o PMOC atende às exigências legais da Lei 13.589 e aos conselhos profissionais CREA e CFT. Além disso, temos a invariante de rastreabilidade: não existem equipamentos órfãos, cada ativo pertence obrigatoriamente a uma unidade do cliente.
+
+29
+00:18:49,190 --> 00:19:33,349
+Cada equipamento possui um identificador unívoco permanente por QR Code, garantindo o histórico completo de intervenções.
+
+30
+00:19:33,349 --> 00:20:15,519
+Avançando para os próximos passos, a IA propôs a modelagem de entidades com diagrama de entidade-relacionamento, definindo clientes, ativos, ordens de serviço e checklists normativos.
+
+31
+00:20:15,519 --> 00:20:58,799
+Aqui vemos o relacionamento claro entre cliente, ativos instalados, ordens de serviço e as peças ou fluidos utilizados na execução.
+
+32
+00:20:58,799 --> 00:21:43,299
+No passo seguinte, definimos a arquitetura técnica e a stack tecnológica: frontend web e mobile, backend escalável e modo offline. O desenvolvedor comanda a arquitetura conceitual sem precisar se prender a detalhes manuais de sintaxe.
+
+33
+00:21:43,299 --> 00:22:28,240
+Para a interface com o usuário, utilizamos um frontend moderno em React, hospedado em infraestrutura de borda como a Vercel, proporcionando renderização rápida e reativa.
+
+34
+00:22:29,240 --> 00:23:07,809
+Essa camada garante ótima responsividade para uso no computador, tablet ou celular em campo.
+
+35
+00:23:07,809 --> 00:23:50,410
+No backend, utilizamos uma arquitetura moderna com Supabase, aproveitando a robustez do banco de dados relacional PostgreSQL, autenticação segura e funções de borda.
+
+36
+00:23:50,410 --> 00:24:35,299
+Com o Supabase, as regras críticas de validação e segurança ficam encapsuladas diretamente na camada de dados.
+
+37
+00:24:35,299 --> 00:25:19,799
+Para a operação offline, o aplicativo armazena os dados localmente e sincroniza automaticamente assim que o dispositivo recupera a conexão com a internet.
+
+38
+00:25:19,799 --> 00:26:01,000
+O prompt estruturado por intenções e invariantes conduziu a IA com total consistência. Vamos agora avançar no processo.
+
+39
+00:26:01,000 --> 00:26:43,420
+A especificação do domínio está concluída. Posso exportar esse artefato para o meu computador.
+
+40
+00:26:43,420 --> 00:27:27,529
+O arquivo é gerado em Markdown. Para facilitar a visualização e o alinhamento com os interessados, vou solicitar à IA uma apresentação completa em formato visual.
+
+41
+00:27:27,529 --> 00:28:06,440
+Peço agora que ela crie uma apresentação completa com base nesta primeira especificação de domínio.
+
+42
+00:28:06,440 --> 00:28:45,759
+O objetivo é apresentar a proposta ao cliente ou aos usuários-chave para refinarmos as intenções e invariantes, ajustando o escopo antes de qualquer codificação.
+
+43
+00:28:45,759 --> 00:29:09,349
+Esse alinhamento prévio permite validar as necessidades reais diretamente com quem atua no campo da refrigeração.
+
+44
+00:29:09,349 --> 00:29:33,720
+O objetivo central é validar as regras e o escopo com o cliente.
+
+45
+00:29:33,720 --> 00:30:18,539
+Solicito que ela apresente um cenário proposto e um cenário alternativo simplificado, permitindo comparar opções de investimento e prazo.
+
+46
+00:30:18,539 --> 00:31:01,029
+Oferecer opções claras de escopo é fundamental para o cliente escolher o melhor caminho de implantação.
+
+47
+00:31:01,029 --> 00:31:45,670
+As intenções delimitam o escopo, e o escopo define o contexto de desenvolvimento do software.
+
+48
+00:31:46,869 --> 00:32:27,829
+Essa metodologia se aplica a qualquer projeto. Com a assistência de IA e o método IDD, o processo de elicitação de requisitos torna-se muito mais ágil.
+
+49
+00:32:27,829 --> 00:33:09,599
+Estamos estruturando a visão de negócio antes de avançar para a modelagem técnica das entidades.
+
+50
+00:33:09,599 --> 00:33:49,369
+Todas as decisões arquiteturais, de segurança e de sincronização ficam registradas de forma transparente.
+
+51
+00:33:49,369 --> 00:34:27,750
+Adiciono uma diretriz para a apresentação: usar terminologia técnica do setor de refrigeração e evitar jargões de programação.
+
+52
+00:34:27,750 --> 00:35:11,780
+Orientar a IA a falar a língua do negócio é essencial para que o cliente se sinta compreendido e seguro.
+
+53
+00:35:11,780 --> 00:35:50,510
+Com essa diretriz definida, a IA inicia a elaboração da proposta executiva.
+
+54
+00:35:50,510 --> 00:36:34,269
+Ela estruturou os dois cenários: a solução completa corporativa e o cenário alternativo focado no essencial de campo, com implantação rápida de três a quatro semanas.
+
+55
+00:36:34,269 --> 00:37:17,570
+Ela formulou também as perguntas-chave para o cliente: porte dos equipamentos, tipo de instrumentação e rotina de recolhimento de fluidos.
+
+56
+00:37:17,570 --> 00:37:58,210
+Essas perguntas antecipam decisões críticas que economizam semanas de retrabalho no desenvolvimento.
+
+57
+00:37:58,210 --> 00:38:38,610
+Peço agora que ela gere uma apresentação executiva interativa em HTML, com suporte a narração por voz e opção de pausa.
+
+58
+00:38:38,610 --> 00:39:19,889
+Como invariante de design, oriento o uso de diagramas no estilo Excalidraw e imagens contextuais do setor.
+
+59
+00:39:19,889 --> 00:40:04,059
+O Excalidraw é excelente para ilustrar fluxos operacionais de forma amigável e intuitiva.
+
+60
+00:40:04,059 --> 00:40:47,000
+A IA processa a solicitação integrando código TypeScript, estilização e a lógica interativa da apresentação.
+
+61
+00:40:47,000 --> 00:41:31,630
+Ela automatiza a estruturação dos arquivos, preparando o ambiente para validação.
+
+62
+00:41:31,630 --> 00:42:16,219
+O documento HTML interativo foi criado e disponibilizado no ambiente local.
+
+63
+00:42:16,219 --> 00:43:00,070
+O agente abre o navegador para inspecionar e validar a apresentação em tempo real.
+
+64
+00:43:00,070 --> 00:43:44,000
+Aqui vemos a apresentação executiva gerada pela IA, com layout profissional e navegação estruturada.
+
+65
+00:43:44,000 --> 00:44:27,260
+A interface conta com botões para iniciar a apresentação com voz ou pausar a qualquer momento.
+
+66
+00:44:27,260 --> 00:45:10,159
+Ao testar a voz, identificamos um detalhe que precisa de ajuste. Vamos abrir o console do navegador com F12 para verificar os bastidores.
+
+67
+00:45:10,159 --> 00:45:44,920
+Identificamos a mensagem de erro no console e fornecemos esse feedback diretamente ao agente no Antigravity IDE.
+
+68
+00:45:45,920 --> 00:46:27,480
+A IA analisa o log e cria um script autônomo para corrigir e testar a automação no navegador.
+
+69
+00:46:27,480 --> 00:47:10,760
+O desenvolvedor atua no nível estratégico da intenção, enquanto a ferramenta resolve os detalhes operacionais de execução.
+
+70
+00:47:10,760 --> 00:47:54,880
+Estamos elevando o desenvolvimento de software para o nível da intenção humana, com suporte de agentes inteligentes.
+
+71
+00:47:54,880 --> 00:48:21,309
+O agente ajusta a configuração e reabre a apresentação no navegador.
+
+72
+00:48:27,860 --> 00:48:31,820
+Ele analisa o modelo de objetos da página.
+
+73
+00:48:34,769 --> 00:49:17,929
+A interface interativa permite validar o comportamento exato dos componentes.
+
+74
+00:49:17,929 --> 00:50:02,579
+A tecnologia está evoluindo para que a intenção humana seja o verdadeiro motor de comando, seja no computador, no tablet ou em dispositivos móveis.
+
+75
+00:50:02,579 --> 00:50:38,349
+Podemos aplicar essa metodologia hoje mesmo, acelerando a entrega de projetos com total controle de qualidade.
+
+76
+00:50:38,349 --> 00:51:17,940
+A ferramenta agora ajusta as opções da apresentação conforme solicitado.
+
+77
+00:51:17,940 --> 00:52:02,550
+O console nos bastidores permite acompanhar a execução com total transparência.
+
+78
+00:52:02,550 --> 00:52:23,340
+Vemos a IA trabalhando em segundo plano para finalizar a renderização completa dos slides.
+
+79
+00:52:23,340 --> 00:53:23,199
+Ela conclui a montagem das funcionalidades interativas.
+
+80
+00:53:23,199 --> 00:53:52,010
+O HTML reage dinamicamente a cada componente validado.
+
+81
+00:53:52,010 --> 00:54:36,039
+O agente finaliza o processamento e executa o teste autônomo da apresentação.
+
+82
+00:54:36,039 --> 00:54:45,039
+Notem que o próprio agente executa a aplicação e simula a interação do usuário.
+
+83
+00:54:45,039 --> 00:56:17,469
+Ele realiza os testes de forma independente.
+
+84
+00:56:17,469 --> 00:56:58,500
+Os diagramas operacionais em Excalidraw trazem clareza ao fluxo do negócio.
+
+85
+00:56:58,500 --> 00:57:35,960
+A IA sintetizou com precisão o que foi especificado nas intenções.
+
+86
+00:57:35,960 --> 00:58:18,219
+Ela inicializou o servidor local e está validando a execução do áudio e dos slides diretamente no navegador.
+
+87
+00:58:18,219 --> 00:59:00,679
+Nós que nós estamos aqui, no ciclo dentro de um ciclo, quer dizer, Eu comecei com as intenções de um negócio de a febração. Neste diagrama operacional, vemos o fluxo favoroso de campo. O mecânico faz a leitura do QR code na condensadora, executa o checklist normativo de limpeza e componentes elétricos, insere as medições de pressão e temperatura e encerra o chamado com fotos de antes e depois e a assinatura digital do responsável local. Para dimensionar o projeto, apresentamos dois caminhos.
+
+88
+00:59:00,679 --> 00:59:37,369
+O cenário proposto é a solução corporativa com varieta e real para grandes plantas industriais e múltiplos contratos de smoke. O cenário alternativo foca no essencial de campo, eliminação rápida do papel, checklists com fotos e assinatura na tela em apenas 3 a 4 semanas de implantação. Para concluirmos a definição do projeto, precisamos do seu direcionamento em 4 pontos, o porte predot...
+
+89
+00:59:37,369 --> 01:00:22,260
+Vejam que o agente testou a funcionalidade de pausar a narração, interagindo diretamente com os elementos da tela.
+
+90
+01:00:22,260 --> 01:01:05,059
+Ele inspeciona a árvore do DOM e valida visualmente o comportamento da interface.
+
+91
+01:01:05,059 --> 01:01:45,059
+Modelos multimodais modernos compreendem texto, visão e áudio, permitindo validar não apenas o código, mas a ergonomia visual do produto.
+
+92
+01:01:45,059 --> 01:02:29,590
+Com o IDD, é possível transformar manuais e rotinas operacionais em especificações vivas com rapidez e rigor.
+
+93
+01:02:29,590 --> 01:02:40,980
+Essa governança garante que a IA produza exatamente o que o negócio precisa, sem alucinações.
+
+94
+01:03:17,159 --> 01:03:19,159
+O agente concluiu os testes com êxito.
+
+95
+01:03:22,159 --> 01:03:45,159
+Ele confirmou que os diagramas, a narração e os controles da apresentação estão operacionais no navegador.
+
+96
+01:04:15,159 --> 01:04:20,559
+O arquivo final da apresentação está concluído e pronto para uso.
+
+97
+01:04:23,199 --> 01:05:06,639
+Podemos baixar o arquivo HTML e abri-lo em qualquer navegador moderno para a reunião com o cliente.
+
+98
+01:05:06,639 --> 01:05:49,880
+Está lá. Se eu clico aqui, o que acontece? Ele enroloou, o html enroloou dentro. Eu vou aqui, já no Edge, mais no Chrome. Tá aqui. Então só tá aqui. Vamos lá, tem algum defenso? Eu vou chegar pro cliente. Bem-vindos à apresentação de Alinhamento da Gestão e Controle Operacional em Refrigeração e Climatização. Nosso objetivo é definir as regras fundamentais e o escopo da solução para atender com precisão as exigências termodinâmicas,
+
+99
+01:05:49,880 --> 01:06:32,579
+o PUNC da Lei 13.589 e a rastriabilidade ambiental dos fluidos refrigerantes. Porque softwares genéricos de manutenção falham na refrigeração. Porque ignoram o ciclo térmico. Se o mecânico não registrar pressões de trabalho, superaquecimento e vazamentos reais, o professor quebra pouco tempo depois. Além disso, a falta de histórico físico e laudos normativos expõe a empresa apesar das autoações da vigilância sanitária.
+
+100
+01:06:32,579 --> 01:07:12,840
+Aqui apresentamos as grandes capacidades do sistema, prontuário do equipamento por que RQ, cronograma automatizado do Pumok con checklists de filtros de bacterecidas, triagem rápida de chamados com prioridade para câmaras frigoríficas, rotina de campo com medição de pressões e temperaturas, e funcionamento garantido mesmo em subsolus e câmaras frias sem sinal de internet. são as regras em viola vez do negócio, uma vez concluído o serviço e assinado pelo cliente,
+
+101
+01:07:12,840 --> 01:07:52,059
+o laudo se torna intocável e juridicamente seguro. Datas do PUMOC não podem ser retroagidas para simular conformidade. E na parte física, a pressão de descarga deve ser sempre maior que a de sucção, sua pena de bloqueio por inconsistência técnica. Neste diagrama operacional, vemos o fluxo rigoroso de campo, o mecânico faz a leitura do QR na condensadora, executa o checklist normativo de limpeza e componentes elétricos, insere
+
+102
+01:07:52,059 --> 01:08:28,399
+as medições de pressão e temperatura, e insere o chamado com fotos de antes e depois e assinatura digital do responsável no local. Para dimensionar o projeto, apresentamos dois caminhos. O cenário proposto é a solução corporativa completa, ideal para grandes plantas industriais e múltiplos contratos de smoke. O cenário alternativo foca no essencial de campo, eliminação rápida do papel, checklists
+
+103
+01:08:28,399 --> 01:09:05,439
+com fotos e assinatura na tela em apenas três a quatro semanas de implantação. Para concluirmos a definição do projeto, precisamos do seu direcionamento em quatro pontos, o porte predominante dos equipamentos, se a equipe utiliza manometros digitais ou ou analógicos, a rotina atual de recolhimento de gás refrigerante e se a responsabilidade técnica do CRE ou CFT própria ou terceirizada. Estamos prontos para iniciar.
+
+104
+01:09:05,439 --> 01:09:48,970
+Em cerca de uma hora e dez minutos, estruturamos uma solução completa de refrigeração. Em um fluxo tradicional de desenvolvimento, esse alinhamento inicial costuma levar semanas.
+
+105
+01:09:48,970 --> 01:10:29,689
+Com o método IDD, partimos de intenções e regras invariantes bem definidas. A IA atua com governança, aprendendo e refinando o modelo de acordo com as nossas diretrizes.
+
+106
+01:10:30,649 --> 01:11:10,569
+Com a especificação aprovada pelo cliente, a implementação em código flui com rapidez e segurança técnica.
+
+107
+01:11:10,569 --> 01:11:54,630
+Um ambiente integrado como o Antigravity IDE, que preserva as intenções e impede a violação das invariantes, transforma radicalmente o desenvolvimento de software com IA.
+
+108
+01:11:54,630 --> 01:12:09,630
+Esse é o poder do Desenvolvimento Orientado por Intenção. Obrigado por acompanhar esta demonstração, e até a próxima etapa do nosso projeto.

@@ -1,0 +1,115 @@
+{
+  "episode": "3C",
+  "title": "UML Completo: Atores, Classes, Casos de Uso, Estados & Métodos",
+  "totalDurationSec": 134.05,
+  "items": [
+    {
+      "id": "seg_01_leigo",
+      "who": "leigo",
+      "actor": "Usuária Leiga",
+      "slide": 1,
+      "chat": false,
+      "startSec": 0.5,
+      "endSec": 13.77,
+      "durationSec": 13.27,
+      "text": "Eliézer, após estruturar o banco de dados da Cafeteria no 2C, queremos ver o UML COMPLETO oficial da OMG: Atores da cozinha e do balcão, Casos de Uso com inclusão e extensão e limites claros do sistema!",
+      "file": "audio/seg_01_leigo.mp3"
+    },
+    {
+      "id": "seg_02_eliezer",
+      "who": "eliezer",
+      "actor": "Eliézer Rosa",
+      "slide": 1,
+      "chat": false,
+      "startSec": 14.42,
+      "endSec": 35.25,
+      "durationSec": 20.83,
+      "text": "Vejam na tela o Diagrama de Casos de Uso canônico! Nossos atores formais são o Cliente no balcão, o Atendente do caixa e o Barista na cozinha. Observem as elipses: Realizar Pedido, Liquidar Pagamento, e Produzir Café que obrigatoriamente inclui deduzir insumos da Ficha Técnica via include estrito!",
+      "file": "audio/seg_02_eliezer.mp3"
+    },
+    {
+      "id": "seg_03_leigo",
+      "who": "leigo",
+      "actor": "Usuária Leiga",
+      "slide": 2,
+      "chat": false,
+      "startSec": 35.9,
+      "endSec": 42.4,
+      "durationSec": 6.5,
+      "text": "E como essas operações se organizam em classes de software com atributos privados e métodos de cálculo puros?",
+      "file": "audio/seg_03_leigo.mp3"
+    },
+    {
+      "id": "seg_04_ia",
+      "who": "ia",
+      "actor": "IA Compilador",
+      "slide": 2,
+      "chat": false,
+      "startSec": 43.05,
+      "endSec": 68.18,
+      "durationSec": 25.13,
+      "text": "Exibindo o Diagrama de Classes nos três compartimentos canônicos da UML! No compartimento superior, os estereótipos de agregado e entidade de domínio; no compartimento central, os atributos privados tipados menos: menos id, menos status, menos totalCentavos; e no compartimento inferior, os métodos com mais: mais adicionarItem, mais deduzirEstoquePorFicha e mais emitirReciboFiscal!",
+      "file": "audio/seg_04_ia.mp3"
+    },
+    {
+      "id": "seg_05_leigo",
+      "who": "leigo",
+      "actor": "Usuária Leiga",
+      "slide": 3,
+      "chat": false,
+      "startSec": 68.83,
+      "endSec": 78.93,
+      "durationSec": 10.1,
+      "text": "Vejam no Slide 3 a Máquina de Estados do Pedido: o ciclo de preparo na cozinha, as guardas de estoque entre colchetes e a validação no terminal da IA!",
+      "file": "audio/seg_05_leigo.mp3"
+    },
+    {
+      "id": "seg_06_ia",
+      "who": "ia",
+      "actor": "IA Compilador",
+      "slide": 3,
+      "chat": true,
+      "startSec": 79.58,
+      "endSec": 102.33,
+      "durationSec": 22.75,
+      "text": "Submetendo a Matriz de Invariantes Comportamentais da Cafeteria. Guarda 1: Pedido só transita para EmPreparo se os lotes de estoque tiverem saldo positivo. Guarda 2: Bloqueio de cancelamento após início da moagem dos grãos. Guarda 3: Estado final Entregue exige confirmação de retirada e pagamento liquidado. Posso homologar o comportamento?",
+      "file": "audio/seg_06_ia.mp3"
+    },
+    {
+      "id": "seg_07_eliezer",
+      "who": "eliezer",
+      "actor": "Eliézer Rosa",
+      "slide": 3,
+      "chat": true,
+      "startSec": 102.98,
+      "endSec": 112.72,
+      "durationSec": 9.74,
+      "text": "Invariantes comportamentais formalmente aprovadas! O fluxo de atendimento da padaria agora opera com precisão de linha de montagem industrial.",
+      "file": "audio/seg_07_eliezer.mp3"
+    },
+    {
+      "id": "seg_08_leigo",
+      "who": "leigo",
+      "actor": "Usuária Leiga",
+      "slide": 4,
+      "chat": false,
+      "startSec": 113.37,
+      "endSec": 119.37,
+      "durationSec": 6.0,
+      "text": "Com o UML canônico aprovado, fechamos o ciclo de modelagem comportamental da Cafeteria!",
+      "file": "audio/seg_08_leigo.mp3"
+    },
+    {
+      "id": "seg_09_eliezer",
+      "who": "eliezer",
+      "actor": "Eliézer Rosa",
+      "slide": 4,
+      "chat": false,
+      "startSec": 120.02,
+      "endSec": 131.9,
+      "durationSec": 11.88,
+      "text": "Exatamente! E no Episódio 4C, vamos dissecar o Código Vivo da Cafeteria com funções puras de baixa de insumos e testes de estresse. Nos vemos lá!",
+      "file": "audio/seg_09_eliezer.mp3"
+    }
+  ]
+}

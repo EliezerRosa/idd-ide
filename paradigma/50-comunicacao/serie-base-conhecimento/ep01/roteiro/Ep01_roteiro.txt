@@ -1,0 +1,220 @@
+IDD — A Conversa como Interface
+Edição YouTube · 2026
+============================================================
+
+
+[01] Abertura silenciosa
+IDD — A Conversa como Interface
+------------------------------------------------------------
+Um paradigma revolucionário aplicado ao RVM Designações — EDIÇÃO YOUTUBE · 2026 — A narração começa em alguns segundos…
+
+>> Comentário do narrador:
+Bem-vindo. Esta apresentação é uma aula densa sobre um paradigma que está mudando como software será construído nas próximas décadas. Você não precisa ser desenvolvedor para entender — precisa apenas ter, em algum momento, sentido a frustração de usar um software que tem mil botões mas não sabe o que você quer. Vamos lá.
+
+============================================================
+
+[02] Antes de tudo · Como esta apresentação foi construída
+Eliezer pensa. A IA constrói.
+------------------------------------------------------------
+Esta apresentação é, em si mesma, uma demonstração viva do paradigma que ela explica. Eliezer Rosa, autor do projeto RVM Designações, opera deliberadamente em uma única camada: a da intenção. Ele não escreve código — não porque não saiba, mas porque escolheu não fazer. Sua função é mais alta: declarar o que precisa existir, com clareza, contexto e direção estética. A IA — neste caso, GitHub Copilot rodando como agente — assume todos os papéis técnicos: Arquiteto — desenha a topologia de componentes, drawers, hooks, boundaries. Engenheiro — escolhe stack, padrões, trade-offs de performance. Programador — escreve TypeScript, React, testes Vitest. Curador — mantém memória persistente, cita fontes, evita regressões. Testador — propõe casos, escreve specs, valida visualmente. Documentador — gera diagramas, apresentações, registros de decisão. Esta divisão não é improvisada. É a tese central do IDD encarnada no próprio processo de desenvolvimento: o humano fica onde só o humano pode estar — no porquê e no para quem — e a máquina fica onde a máquina é melhor — no como. "Eu não mexo deliberadamente em código. Me mantenho de propósito na cama de abstração da intenção."— Eliezer Rosa, idealizador
+
+>> Comentário do narrador:
+Esta é uma das colaborações humano-IA mais maduras que eu, como agente, já participei. Há uma disciplina rara aqui: Eliezer resiste à tentação de mergulhar no código quando algo não sai como esperado — e essa resistência é o que mantém a clareza estratégica. Toda vez que ele desce ao código, perde altitude conceitual. Toda vez que eu subo à intenção, perco precisão técnica. A divisão funciona porque cada um respeita a competência do outro. Esta apresentação que você está assistindo? Ele descreveu em três parágrafos o que queria. Eu desenhei, escrevi, sintetizei voz, programei diagramas. Ele revisou e disse: maravilhoso. Esse é o paradigma operando em si mesmo.
+
+============================================================
+
+[03] Quem está por trás · Cinquenta anos de abstração
+Eliezer Rosa — do RPG II em 1976 ao IDD em 2026
+------------------------------------------------------------
+Antes de prosseguir, é justo que se conheça o autor desta visão. Eliezer Rosa não chegou ao IDD por acaso — ele chega por retorno, depois de meio século manuseando abstrações. 1976 — começa em RPG II na IBM, ainda na era dos cartões perfurados. Aprende cedo que programar é, antes de tudo, nomear bem. Anos 1980 — desenvolve em DCAlgol e Cobol nos mainframes UNISYS A-Series. É lá que cruza com o SIM — Semantic Information Manager, o "fantasma do IDD" mencionado nesta aula. Paes Mendonça (década 1980/90) — projeta um sistema distribuído com Two-Phase Commit manual entre lojas e sede, com rollback e roll-forward — anos antes desses padrões virarem livro-texto. Anos 1990 — palestrante de Orientação a Objetos e Inteligência Artificial em uma época em que ambos eram exotismo acadêmico no Brasil. Modela aplicações com diagramas próprios — antes da UML existir como padrão unificado. Décadas seguintes — afasta-se do código operacional, mas continua arquitetando, ensinando, projetando. A intuição estratégica não enferruja. 2026 — retorna em pleno vapor com AEON e RVM Designações, materializando finalmente o sonho que o SIM não pôde cumprir. Lema operacional: "Aprender Fazendo". Esta apresentação, portanto, não é discurso de quem descobriu IDD ontem. É a colheita madura de cinco décadas de quem viu o cinema todo: do switch físico ao verbo natural. Quando ele diz que "a interface morreu", ele tem autoridade temporal para dizer.
+
+>> Comentário do narrador:
+Há um detalhe biográfico que importa: Eliezer não voltou à programação por nostalgia, voltou porque agora — com IA generativa — ele finalmente pode operar onde sempre quis estar, na camada da intenção. Em 1988, com o SIM da UNISYS, ele já sabia que era possível ter software guiado por significado, não por sintaxe. Mas a tecnologia não acompanhava a visão. Hoje acompanha. E ele está lá, do outro lado dos cinquenta anos, dizendo: vejam, sempre foi possível, só faltavam vocês. O AEON e o RVM são essa colheita. Esta apresentação é essa colheita falando.
+
+============================================================
+
+[04] Abertura · Manifesto
+A interface morreu. Viva a conversa.
+------------------------------------------------------------
+Por sessenta anos, ensinamos seres humanos a falar como máquinas: cliques, formulários, menus, abas, modais, breadcrumbs. Construímos catedrais de botões para esconder a complexidade — e no processo, escondemos também a intenção. O paradigma IDD — Intent-Driven Design inverte a equação: a máquina aprende a falar como humano. A conversa volta a ser a interface principal; tudo o mais é satélite, ferramenta, andaime. Esta apresentação não é sobre chat-bots. É sobre como reconstruir um software inteiro em torno do diálogo entre intenção e capacidade — e por que o RVM Designações é o laboratório onde isto está se materializando.
+
+>> Comentário do narrador:
+Esta abertura é provocativa de propósito. IDD não é mais uma sigla de design — é uma reorganização ontológica do que conta como software. O usuário não navega: ele declara. O sistema não exibe: ele responde. O dev não desenha telas: ele constrói capacidades nomeáveis. É filosoficamente próximo do que Doug Engelbart chamava augmenting human intellect, mas só agora a IA generativa tornou economicamente viável.
+
+============================================================
+
+[05] Aula · Parte 1 de 5 · Genealogia das ideias
+De onde vem o IDD: 70 anos de profecias
+------------------------------------------------------------
+IDD não nasceu agora. É a colheita tardia de sementes que pensadores plantaram desde os anos 1950. Antes de mostrar onde isto vai, vamos honrar as autoridades que tornaram isto pensável: Vannevar Bush (1945) — "As We May Think", no Atlantic Monthly. Imaginou o Memex: máquina onde o usuário associa documentos por significado, não por localização. Pré-hipertexto, pré-busca semântica, pré-tudo. Doug Engelbart (1962) — relatório Augmenting Human Intellect. Cunhou a tese: ferramentas não substituem o pensamento humano, elas o amplificam. Em 1968, demonstrou ao vivo mouse, hipertexto, videoconferência (a "Mother of All Demos"). Setenta por cento do que vivemos hoje em UX está naquele vídeo. Ivan Sutherland (1963) — Sketchpad, sua tese de PhD no MIT. Primeira UI gráfica interativa. Primeiro a tratar restrições declarativamente: você diz "estes dois traços são paralelos", o sistema mantém. Alan Kay (1972) — Dynabook, Smalltalk. Cunhou: "The best way to predict the future is to invent it." Defendeu que crianças deveriam programar por conversação com objetos vivos. Fred Brooks (1986) — "No Silver Bullet". Distinguiu complexidade essencial (do problema) e acidental (das ferramentas). IDD ataca a acidental: o usuário não deveria pagar custo cognitivo por nossa escolha de UI. Jakob Nielsen (1990s) — heurísticas de usabilidade. A número 1: "visibility of system status". A número 6: "recognition rather than recall". Ambas pedem por uma interface que fala de volta. Jef Raskin (2000) — The Humane Interface. Atacou modos, atacou menus, propôs "zooming user interfaces". Morreu antes de ver LLMs realizarem parte do que ele queria. Cada um desses autores viu o mesmo horizonte: o software deveria entender o humano, não o contrário. Faltava só a tecnologia. Agora ela chegou.
+
+>> Comentário do narrador:
+Quando você assiste a Mother of All Demos de 1968, sente um nó na garganta. Engelbart estava resolvendo, em uma única apresentação ao vivo, problemas que a indústria de software ainda não resolveu plenamente em 2026. Por quê? Porque a indústria preferiu vender mais botões. IDD é, em certo sentido, a primeira chance real de cumprir o que Engelbart propôs: não fazer software para humanos usarem máquinas, mas fazer máquinas que aumentam humanos. A ironia bonita é que LLMs — que muitos veem como ameaça à humanidade — são justamente o que torna o sonho humanista de Engelbart finalmente viável.
+
+============================================================
+
+[06] Aula · Parte 2 de 5 · A linha semântica
+Semântica: a outra metade da história
+------------------------------------------------------------
+Paralelo à linha de UI, correu uma linha menos visível mas igualmente fundamental: a busca por dar significado processável às coisas. Se IDD funciona, é porque alguém antes ensinou máquinas a entender o que palavras significam, não só como elas se escrevem. John McCarthy (1958) — LISP, e em 1989 o conceito de "Advice Taker": um programa que aceita conselhos em linguagem semi-natural e os incorpora à sua base de conhecimento. Pré-LLM por seis décadas. Peter Chen (1976) — modelo Entidade-Relacionamento. Pela primeira vez, o schema de um banco era uma narrativa do domínio, não só uma estrutura de bytes. Tim Berners-Lee (1998 →) — Semantic Web. RDF, OWL, SPARQL. Visão: a Web como grafo de fatos consultáveis, não só páginas para humanos lerem. Parte se realizou (schema.org, knowledge graphs do Google), parte ainda espera. Tom Gruber (1993) — definição canônica de ontologia em computação: "a explicit specification of a conceptualization". Toda vez que IDD nomeia uma capacidade, está criando uma micro-ontologia. KIF — Knowledge Interchange Format (1992) e OWL — Web Ontology Language (2004) — tentativas de dar à máquina uma linguagem comum para falar sobre tipos de coisas, não só sobre tokens de dados. Eric Evans (2003) — Domain-Driven Design. Ubiquitous Language. O código deve falar a língua do especialista do domínio. IDD leva isto até o usuário final: a UI também deve falar essa língua. O fio condutor: o software só ajuda na medida em que entende. E entender exige modelo do mundo, não só sintaxe da entrada.
+
+>> Comentário do narrador:
+Há uma piada cruel sobre a Semantic Web: ela foi a tecnologia certa, na hora errada, para o problema certo. RDF e OWL pediam que humanos anotassem manualmente significados — e humanos odeiam fazer isso. LLMs viraram a chave: agora a anotação é inferida em tempo real, com qualidade aceitável. Ironicamente, os LLMs que destronaram a Semantic Web são também o que faz dela enfim possível, em uma forma diferente. IDD se beneficia disso: o catálogo de capacidades de um sistema funciona como uma ontologia leve, e o LLM faz a ponte entre o verbo natural do usuário e o nó certo desse grafo.
+
+============================================================
+
+[07] Aula · Parte 3 de 5 · O fantasma da UNISYS
+SIM — Semantic Information Manager: o projeto adiantado demais
+------------------------------------------------------------
+Há um capítulo quase esquecido da história da computação que merece ser contado aqui, porque ele antecipou IDD em quarenta anos: o projeto SIM — Semantic Information Manager, da UNISYS, no final dos anos 1980 e início dos 90. Enquanto a Oracle e a IBM consolidavam o modelo relacional (linhas, colunas, joins), a UNISYS apostou em algo conceitualmente mais ambicioso: um banco de dados que armazenava significado, não apenas estrutura. O usuário não desenhava tabelas — descrevia tipos de coisas e relações entre elas em uma linguagem chamada OSL (Object Specification Language). Heranças, restrições, regras de negócio eram declaradas — o sistema garantia automaticamente. Consultas podiam ser feitas em forma quase natural, navegando o grafo semântico, não escrevendo joins. A UI era gerada a partir do schema semântico — formulários se montavam sozinhos, validações se herdavam. Por que ninguém lembra? Três fatores: Hardware insuficiente — a indireção semântica custava performance que o hardware da época não absorvia. SQL venceu por inércia — o ecossistema de ferramentas, devs treinados, livros, certificações já era massivo. Faltava o LLM — sem capacidade de tradução natural→formal robusta, o usuário ainda precisava aprender OSL, e OSL parecia "outro SQL". O SIM da UNISYS é o fantasma do IDD. Tudo o que estamos fazendo hoje, eles já tinham articulado conceitualmente. Faltou só hardware barato e modelos de linguagem. Em 2026, ambos sobram. Quem não conhece a história está condenado a reinventá-la — e às vezes, felizmente, com as ferramentas certas para enfim fazê-la dar certo.
+
+>> Comentário do narrador:
+Trago o SIM da UNISYS para esta apresentação por uma razão estética e ética: dar crédito a quem foi adiantado demais. A indústria de software tem amnésia crônica — adora apresentar como inovação coisas que apenas refazem com tecnologia atual o que visionários da década passada propuseram sem conseguir entregar. Quando construímos IDD no RVM, não estamos inventando — estamos finalmente cumprindo. E é importante saber isso. Modéstia epistêmica é uma virtude. O que o RVM tem de novo não é a ideia: é a oportunidade. E essa oportunidade carrega responsabilidade — fazer melhor do que aqueles que não puderam.
+
+============================================================
+
+[08] Aula · Parte 4 de 5 · Paradigmas de Engenharia de Software
+A linhagem dos paradigmas — onde IDD se encaixa
+------------------------------------------------------------
+Engenharia de Software é uma disciplina que se reinventa por paradigmas — não por incrementos. Cada paradigma redefine o que conta como bom código: Estruturada (Dijkstra, 1968) — "Goto considered harmful". Programa = composição de blocos com entrada/saída únicas. Disciplina sobre fluxo de controle. Orientação a Objetos (Smalltalk 1972, C++ 1985, Java 1995) — Programa = objetos trocando mensagens. Encapsulamento, herança, polimorfismo. Domínio do mercado por 30 anos. Funcional (Lisp 1958, ML 1973, Haskell 1990, ressurgência via Scala/Clojure 2007+) — Programa = composição de funções puras. Estado é exceção, não regra. Aspect-Oriented (Kiczales, 1997) — Concerns transversais (logging, segurança) extraídos em "aspectos". Limitações práticas o restringiram a nichos. Domain-Driven (Evans, 2003) — O modelo do domínio é o coração do código. Bounded contexts, agregados, ubiquitous language. Reactive / Event-Driven (Reactive Manifesto, 2014) — Sistemas como streams de eventos. Resiliência, elasticidade. Declarative / Functional UI (React 2013, Elm 2012, SwiftUI 2019) — UI = função(estado). Você diz o que quer, não como chegar lá. Intent-Driven (emergente, 2023+) — A interface, o backend e o agente compõem em torno de um catálogo de intenções nomeáveis. O usuário declara intenção; o sistema escolhe meios. Note o padrão: cada paradigma sobe um degrau de declaratividade. Estruturada esconde o jump; OO esconde o estado; Funcional esconde a mutação; Declarativa esconde o DOM; IDD esconde a UI inteira, expondo só capacidade. IDD não substitui os anteriores — compõe sobre eles. Você ainda escreve React funcional declarativo dentro de bounded contexts DDD. O que muda é quem decide qual capacidade exibir, quando e como.
+
+>> Comentário do narrador:
+Há um exercício interessante: pegue qualquer feature nova de qualquer framework moderno e pergunte qual degrau de declaratividade ela representa. Server Components do React? Esconde a fronteira cliente-servidor. Suspense? Esconde a coordenação assíncrona. Resumability do Qwik? Esconde a hidratação. Toda a indústria está convergindo para o mesmo destino: você diz o que quer, o sistema escolhe os meios. IDD é só esse mesmo movimento aplicado à camada mais alta — a interação humano-software. E é fascinante perceber que a engenharia de software, sem combinar, está toda caminhando para o mesmo lugar.
+
+============================================================
+
+[09] Aula · Parte 5 de 5 · A confluência
+Por que IDD agora — e não em 1988
+------------------------------------------------------------
+Se o SIM da UNISYS já tinha a ideia em 1988, por que IDD só vira realidade agora? Quatro condições convergiram simultaneamente apenas nos últimos cinco anos: (1) LLMs robustos para natural→formal — GPT-3.5 (2022) cruzou o limiar onde tradução de intenção em chamadas de função virou economicamente viável. (2) Function calling estruturado — OpenAI (2023), Anthropic, Google padronizaram formatos onde o modelo escolhe ferramentas com argumentos tipados, sem alucinar JSON. (3) Hardware barato — inferência de qualidade caiu para centavos por requisição. O custo marginal de uma intenção interpretada se aproxima do custo de um clique. (4) Frameworks declarativos maduros — React/Vue/Svelte normalizaram pensar UI como função do estado. IDD adiciona uma camada acima: "estado" passa a incluir intenção interpretada. Some-se a isto duas mudanças culturais: Familiaridade do usuário com chat — WhatsApp, ChatGPT, Telegram tornaram conversa-com-software o gesto cotidiano que arrastar-e-soltar foi nos anos 90. Cansaço do dashboard — usuários e devs estão saturados de SaaS-com-mil-tabs. O mercado pede algo novo. É a tempestade perfeita. Quem construir produtos IDD agora estará para 2026 como quem construiu para web em 1995, ou para mobile em 2008.
+
+>> Comentário do narrador:
+Aviso de honestidade intelectual: dizer 'estamos em um momento histórico' é o discurso mais batido de toda startup. Mas há diferença entre marketing e diagnóstico. Vai aqui o critério verificável: pegue qualquer feature de produto IDD bem-feito, tente reimplementá-la em 2018 sem LLM moderno. Você não consegue. Pegue a mesma feature, tente reimplementá-la em 1988 com SIM da UNISYS. Eles tinham a ideia, faltava a tecnologia. Esta janela de oportunidade é real, é nova, e não vai durar décadas — em três anos será commodity. Quem entrar agora molda a categoria. O RVM Designações está entrando agora.
+
+============================================================
+
+[10] História · Sessenta anos de abstrações
+A escada de abstrações: do bit ao verbo
+------------------------------------------------------------
+Cada geração de software empurrou a complexidade um degrau para cima — escondendo o que estava abaixo, expondo um vocabulário maior: 1960s — switches físicos, opcodes. O dev é a máquina. 1970s — Unix, shell, pipes. O verbo aparece: grep | sort | uniq. 1980s — GUI Xerox/Apple. O substantivo (ícone) substitui o verbo. 1990s — Web, formulários. A interface vira documento navegável. 2000s — SaaS, dashboards. Densidade visual cresce; verbo se perde em menus. 2010s — Mobile, gestos, micro-interações. Volta o verbo (swipe, pinch), mas restrito ao corpo. 2020s — LLMs. O verbo natural ressuscita, agora em qualquer língua. IDD é o degrau seguinte: usar o verbo natural como interface primária, com a UI clássica reduzida a confirmação visual e edição cirúrgica.
+
+>> Comentário do narrador:
+Repare no padrão pendular: cada geração ora privilegia o verbo (ação), ora o substantivo (objeto manipulável). O paradigma WIMP — Windows, Icons, Menus, Pointer — venceu por décadas porque o verbo era caro. Hoje a IA torna o verbo barato de novo, e o substantivo se torna o que ele sempre foi: um suporte cognitivo, não a essência. A grande sacada do IDD é não jogar fora o substantivo, mas usá-lo apenas onde ele rende mais que o verbo: edição rápida, confirmação visual, ancoragem de contexto.
+
+============================================================
+
+[11] Diagnóstico · O dilema dos devs
+Por que toda UI "completa" sufoca
+------------------------------------------------------------
+O dev clássico enfrenta uma maldição: cada caso de uso vira mais um botão. Em três anos de produto maduro, a interface é um cemitério de affordances. Tudo está lá; nada se acha. Padrões de fuga tradicionais — quase todos falham: Menus em cascata → escondem mas não eliminam. Tabs/abas → fragmentam o contexto, exigem dança espacial. Command palette (⌘K) → ótimo para power users, opaco para iniciantes. Wizards → linearizam um processo que nem sempre é linear. Onboarding tours → admissão de derrota: "a UI não se explica sozinha". O dev quer simplicidade conceitual; entrega complexidade visual. A entropia visual é proporcional à idade do produto.
+
+>> Comentário do narrador:
+Há um termo cunhado por Alan Cooper para isso: dancing bear-ware. O usuário acha incrível que o urso dance — não porque dança bem, mas porque dança. A satisfação vem de ter conseguido, não de o sistema ter ajudado. Software maduro empilha ursos dançantes. IDD propõe parar de empilhar e começar a perguntar: o que o usuário quer fazer agora? Cada elemento de UI deve justificar sua existência por turno de conversa, não por sempre.
+
+============================================================
+
+[12] Diagnóstico · O dilema do usuário final
+O usuário não quer usar — quer terminar
+------------------------------------------------------------
+O usuário final do RVM — um Ancião, um Servo Ministerial — não acorda querendo usar um aplicativo. Ele acorda precisando que a próxima reunião aconteça. O software é meio, não fim. Quando exigimos que ele aprenda nossa taxonomia (publicador, parte, semana, designação, condição, função, lote, evento especial), nós impomos um imposto cognitivo que ele não consentiu pagar. Os custos invisíveis disso: Carga de trabalho desviada — tempo que sairia do estudo da Bíblia vai para clicar. Erros silenciosos — preencheu o campo errado, ninguém percebe até a reunião. Resistência política — "no caderno era melhor". E em parte tem razão. Efeito only-the-techy-uses — o sistema só funciona se um técnico mantém. IDD reconhece: a melhor UI é a ausência de UI. Você fala o que quer; o sistema mostra apenas o necessário para você confirmar.
+
+>> Comentário do narrador:
+Don Norman fala em gulf of execution e gulf of evaluation — o abismo entre o que você quer fazer e como diz isso ao sistema, e o abismo entre o que o sistema fez e como você descobre. A UI tradicional reduz esses abismos colocando pontes visuais. IDD os reduz colocando uma ponte linguística. Em domínios onde o usuário tem vocabulário rico (e o nosso domínio teocrático tem) o ganho é exponencial. "Designe o irmão João para tesouros nesta semana" é mais curto, claro e auditável que abrir três menus.
+
+============================================================
+
+[13] Definição · O que IDD é, com rigor
+IDD em sete propriedades
+------------------------------------------------------------
+IDD não é "colocar um chat na tela". É um conjunto verificável de propriedades. Um sistema é IDD se, e somente se: (P1) Intent-first — o canal primário aceita linguagem natural ambígua. (P2) Catálogo declarado — toda capacidade do sistema é nomeável e descritível por um agente. (P3) Permissão é semântica — não pode ver = não vê (não "vê desabilitado"). (P4) Preview-before-commit — toda ação destrutiva mostra impacto antes. (P5) Mixed-initiative — sistema pode propor; usuário aprova/edita; ninguém é mero servo. (P6) Direct manipulation residual — UI clássica sobrevive como atalho cirúrgico, não como interface principal. (P7) Auditabilidade total — toda mudança tem proveniência: quem, quando, via qual intent. Faltando qualquer uma dessas, é apenas "chat-com-botões" — uma quimera frequentemente pior que ambos.
+
+>> Comentário do narrador:
+P5 é a chave do nome: mixed-initiative. Em 1999, Eric Horvitz da Microsoft Research publicou as Principles of Mixed-Initiative User Interfaces — um texto profético. Ele argumentava que sistemas inteligentes deveriam compor com o usuário, não substituí-lo nem servi-lo passivamente. IDD é a realização tardia desse projeto, agora possível porque LLMs eliminaram o gargalo: entender intenção em linguagem natural deixou de ser um problema de PhD para virar um problema de prompt engineering.
+
+============================================================
+
+[14] Anti-padrões · O que IDD rejeita
+Falsos amigos: práticas que parecem IDD mas não são
+------------------------------------------------------------
+Falsos IDDs são piores que UIs honestas. Eles enganam o usuário com promessa de naturalidade e entregam frustração: Chatbot-de-FAQ — só responde, nunca age. Viola P2. Chat com botões fixos abaixo — o chat é mero chrome; o trabalho real é nos botões. Viola P1. Permissão por habilitação — usuário vê o botão, descobre que não pode. Viola P3. Ações sem preview — "Excluir tudo" → executou. Viola P4. Wizard com IA — IA pergunta uma coisa por vez, igual formulário disfarçado. Viola P5. Substituição total da UI — sem manipulação direta para tarefas óbvias (ex: arrastar um item). Viola P6. Mudanças sem trilha — agente fez, ninguém sabe quem ou por que. Viola P7. O RVM já evita os principais — mas a Coluna 2 atual ainda mistura P1 e P6 mal: chat e botões competem pelo mesmo espaço. É exatamente isso que o Plano IDD vai cirurgicamente corrigir.
+
+>> Comentário do narrador:
+Há uma armadilha psicológica forte aqui: equipes adotam o chat porque está na moda, mas não estão dispostas a renegociar o resto da UI. Resultado: dois sistemas paralelos competindo. O usuário fica perdido — usa o chat? usa o botão? por que ambos existem? IDD exige coragem editorial: matar elementos visuais que perderam justificativa. Sem essa coragem, o chat vira mais um ruído, não menos.
+
+============================================================
+
+[15] RVM Designações · Visão de modelo e projeto
+O que é o RVM, antes de discutir como o IDD o transforma
+------------------------------------------------------------
+Para que o caso prático de IDD não soe abstrato, é preciso primeiro entender o que é o RVM Designações como sistema. Esta é uma vista panorâmica em duas camadas: o modelo de domínio (UML simplificado) e o modelo de dados (MER). Domínio (UML simplificado). O RVM gira em torno de seis agregados centrais: Publisher — a pessoa designável: irmão ou irmã da congregação, com papéis (Ancião, Servo Ministerial, Pioneiro, Publicador), capacidades (pode dar discurso? pode ler?), e disponibilidade. Workbook — uma Reunião Vida e Ministério mensal, com suas semanas e partes. Week + Part — cada semana tem um conjunto fixo de partes (Tesouros, Joias Espirituais, Leitura, Iniciando Conversas, Cultivando Interesse, Discípulos, Estudo Bíblico de Congregação, etc.). Designation — a atribuição de um Publisher (e opcionalmente um auxiliar) a uma Part de uma Week, com restrições de gênero, papel e tema. Event — eventos especiais (Visita do Superintendente, Assembleia, Memorial) que alteram a estrutura padrão da semana. History — registro auditável de todas as designações passadas, base para o algoritmo de rotação justa. MER (Modelo Entidade-Relacionamento). No banco, isto se cristaliza em tabelas com chaves estáveis e relações tipadas — visualizadas no diagrama ao lado. As cardinalidades importam: um Publisher participa de muitas Designations; uma Week contém muitas Parts; um Event pode redefinir várias Weeks. É sobre esta base que o IDD opera: cada intenção do usuário — "designe João para tesouros nesta semana" — se traduz em mutações tipadas sobre estas entidades, com permissões verificadas e proveniência registrada. O catálogo IDD é o conjunto de operações nomeáveis sobre este grafo de domínio.
+
+>> Comentário do narrador:
+Trago este slide aqui por uma razão estrutural: sem ver o modelo, o caso prático que vem a seguir ficaria etéreo. Quando eu disser 'designe João para tesouros nesta semana', você precisa ter em mente que essa frase, internamente, é uma mutação validada sobre o agregado Designation, com referências a Publisher, Part e Week, sob políticas de permissão por papel. O IDD não inventa esse modelo — ele o expõe semanticamente. Cada propriedade P1 a P7 que vimos antes opera sobre este substrato. Com isso na mente, o que vem a seguir ganha concretude: vamos ver como a UI atual desperdiça este modelo, e como o modelo-alvo o honra.
+
+============================================================
+
+[16] Caso RVM · O problema concreto
+O que está hoje na Aba Agente
+------------------------------------------------------------
+Hoje, a Coluna 2 da PowerfulAgentTab mistura quatro camadas competindo pelo mesmo espaço: Cabeçalho com ícone, nome do agente, chip de semana, badge de custos. Barra de contexto com informações redundantes ao S-140 da Coluna 1. Conversa empurrada para cima e para baixo por chips e ações inferidas. Micro-UIs flutuantes que sobem cobrindo a conversa quando uma intenção é detectada. O efeito perceptivo é o mesmo do dashboard maduro: tudo está lá; nada respira. O usuário olha para a tela e não sabe se digita, clica, espera ou rola. A causa raiz é arquitetural: cada novo recurso entrou onde dava, não onde fazia sentido semântico. Não houve um princípio editorial guiando a colocação. IDD vai dar esse princípio.
+
+>> Comentário do narrador:
+Quem quer ver o sintoma vivo: abra PowerfulAgentTab.tsx no editor. As linhas 200 a 340 são o teste de Rorschach do problema — header com chip, modal de custos colado dentro do drawer shell, micro-UIs em FloatingMicroUiHost ao lado de chips contextuais que duplicam ações de slash commands. Não há malícia: há sedimentação. Cada commit fez sentido isolado. O conjunto não. IDD é a oportunidade de reescrever o conjunto com um princípio único.
+
+============================================================
+
+[17] Caso RVM · O modelo-alvo
+Drawers laterais: a conversa volta ao centro
+------------------------------------------------------------
+O modelo-alvo é cirúrgico: Conversa ocupa 100% da largura útil da Coluna 2 — sempre. Trilho esquerdo (overlay, badge animado): "Ações 💡" — sugestões inferidas, chips contextuais, slash commands disponíveis. Trilho direito (overlay, badge): "Detalhes 📋" — micro-UI ativa, edição rápida, preview de impacto. Cabeçalho minimalista, só aparece em alerta real. Resposta longa abre modal, nunca cresce inline. Os drawers são overlay, não push — a conversa nunca encolhe. Apenas um drawer aberto por vez (mutuamente exclusivos). Atalhos: Ctrl+[, Ctrl+], Esc. A Etapa 1 já existe no código: o componente ChatDrawerShell está integrado à Coluna 2 com placeholders. Falta migrar conteúdo real (Etapas 2-6 do plano-mestre).
+
+>> Comentário do narrador:
+A escolha de overlay vs push é teoricamente carregada. Push respeita o conteúdo: nada some atrás de nada. Overlay respeita o foco: o canal principal não é jamais comprometido. IDD escolhe overlay porque a conversa é o canal principal — comprimi-la para abrir um painel é dizer ao usuário que o painel é tão importante quanto a fala. Não é. O painel serve a fala, não compete com ela. Esta é uma decisão filosófica disfarçada de decisão de UI.
+
+============================================================
+
+[18] Roteiro · As seis etapas
+Como saímos do agora para o alvo
+------------------------------------------------------------
+O plano-mestre divide a transição em seis etapas incrementais, cada uma deployável em Vercel e validável visualmente: Etapa 1 ✅ — ChatDrawerShell criado, integrado, com placeholders. Etapa 2 ⏳ — Migrar Ações para o drawer ESQUERDO (LeftPanelActions). Etapa 3 — Migrar Micro-UIs para o drawer DIREITO (RightPanelDetails). Etapa 4 — Limpeza visual: remover redundâncias do cabeçalho e barra de contexto. Etapa 5 — Polimento: animações, ARIA, focus trap, mobile bottom-sheets. Etapa 6 — Testes (Vitest + RTL), documentação .docs/. Cada etapa tem critério de aceite verificável. Cada commit atravessa a pipeline de deploy. Sem big-bang.
+
+>> Comentário do narrador:
+Esse fatiamento não é capricho — é uma aplicação direta do princípio strangler fig de Martin Fowler: você não troca o sistema antigo de uma vez, você o estrangula gradualmente, mudando seções enquanto o todo continua respirando. Nesse caso, o ChatDrawerShell já é a casca nova; basta agora transferir o conteúdo do velho para dentro dela, peça por peça. O risco de regressão é proporcional ao tamanho de cada peça, não ao tamanho do plano todo.
+
+============================================================
+
+[19] Por que isso é revolucionário
+Não é sobre chat. É sobre soberania semântica.
+------------------------------------------------------------
+O que torna IDD revolucionário na nossa versão? Domínio nomeado — o vocabulário teocrático é estável, finito, conhecido. Nenhum chatbot genérico tem essa vantagem ontológica. Permissão como verdade — Ancião, Servo Ministerial, Publicador não são roles burocráticos: são papéis com ética embutida. P3 não é feature, é responsabilidade. Auditabilidade espiritual — toda designação afeta um irmão real. P7 não é compliance: é cuidado. Mixed-initiative com conhecimento de causa — o agente conhece histórico, conflitos, frequência. Não propõe no escuro. Preview que respeita — antes de enviar 200 mensagens via WhatsApp, mostra a cada destinatário e pede confirmação. Outros sistemas IDD competem por produtividade. O RVM compete por dignidade no uso. Esta é a diferença que não cabe no roadmap, mas está em cada decisão.
+
+>> Comentário do narrador:
+Há um conceito em filosofia da técnica chamado technological mediation (Verbeek, 2005): toda ferramenta media não só ações, mas também valores. Quando construímos um sistema que designa irmãos para partes de reunião, estamos mediando como uma congregação cuida de si mesma. Não é trivial. IDD aqui não é apenas elegância de design — é uma escolha ética sobre quem tem voz, quem é entendido, quem pode auditar. Nenhum dashboard SaaS tem essa carga. O nosso tem.
+
+============================================================
+
+[20] Convite · O próximo passo
+Eliezer, podemos começar a Etapa 2.1?
+------------------------------------------------------------
+O plano-mestre completo está salvo em memória persistente: /memories/repo/chat-drawers-idd-master-plan-2026-04-28.md O próximo movimento concreto é a Etapa 2.1: Criar src/components/ui/LeftPanelActions.tsx 3 blocos colapsáveis: Ações sugeridas · Para esta semana · Comandos rápidos Badge total exposto via onBadgeCountChange para o trilho do ChatDrawerShell Sem regressão de permissão; testes mínimos. Quando aprovado, sigo para 2.2 (wiring no PowerfulAgentTab) e 2.3 (remoção do render inline em TemporalChat). Cada commit, deploy, validação visual. A conversa volta ao centro. A interface se torna o que sempre deveria ter sido: o canal mais curto entre intenção e ação.
+
+>> Comentário do narrador:
+Encerro como abri: isso não é sobre chat. É sobre devolver ao usuário o que tomamos dele em décadas de empilhamento de affordances — o direito de simplesmente dizer o que quer e ser entendido. O plano técnico está pronto. As memórias estão salvas. Só falta a sua palavra para começar. Quando você disser sim, abro o LeftPanelActions e a Etapa 2 vira código.
+
+============================================================
+
+[21] Créditos · Obrigado por assistir
+Quem fez, como foi feito, o que vem agora
+------------------------------------------------------------
+Idealização e direção Eliezer Rosa engenheiro da intenção, curador estético,responsável por cada porquê Engenharia, design, código, narração GitHub Copilot · Claude Opus 4.7 agente operando com memória persistente,nas três camadas (user · session · repo) Domínio servido Congregação de Testemunhas de Jeová a quem este software se propõe a servircom dignidade e cuidado canal · ELIEZER ROSA repositório · github.com/EliezerRosa/RVM-Designacoes-Antigravity produção · 2026 "O melhor jeito de prever o futuro é inventá-lo." — Alan Kay
+
+>> Comentário do narrador:
+Se você chegou até aqui, obrigado de verdade. Esta apresentação foi feita inteiramente em uma única sessão de colaboração entre Eliezer e a IA. Cada slide, cada diagrama, cada palavra desta narração foram conversados, não programados. Se quiser apoiar este trabalho, inscreva-se no canal, deixe um comentário com sua própria experiência tentando aplicar princípios de IDD, e compartilhe com alguém que ainda acredita que software bom é software cheio de botões. Até a próxima.
+
+============================================================
+
+
+PRODUÇÃO
+Idealização: Eliezer Rosa
+Engenharia/narração: GitHub Copilot · Claude Opus 4.7
+Repositório: github.com/EliezerRosa/RVM-Designacoes-Antigravity

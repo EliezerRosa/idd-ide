@@ -1,0 +1,6284 @@
+[
+ {
+  "i": 1,
+  "start": 0.18,
+  "end": 4.5,
+  "text": "Vou ser um exemplo de como"
+ },
+ {
+  "i": 2,
+  "start": 4.5,
+  "end": 10.3,
+  "text": "Direcionar de modo informal"
+ },
+ {
+  "i": 3,
+  "start": 10.3,
+  "end": 14.26,
+  "text": "Os princípios do paradigma e dd"
+ },
+ {
+  "i": 4,
+  "start": 14.26,
+  "end": 17.98,
+  "text": "Já desenvolvemos na prática do zero"
+ },
+ {
+  "i": 5,
+  "start": 17.98,
+  "end": 21.34,
+  "text": "Uma aplicativa de gestão"
+ },
+ {
+  "i": 6,
+  "start": 21.34,
+  "end": 24.74,
+  "text": "De serviços de manutenção"
+ },
+ {
+  "i": 7,
+  "start": 24.74,
+  "end": 27.74,
+  "text": "Na área de refrigeração"
+ },
+ {
+  "i": 8,
+  "start": 28.74,
+  "end": 30.74,
+  "text": "Vamos começar"
+ },
+ {
+  "i": 9,
+  "start": 30.74,
+  "end": 32.74,
+  "text": "Com a apresentação"
+ },
+ {
+  "i": 10,
+  "start": 32.74,
+  "end": 34.74,
+  "text": "de alguns conceitos"
+ },
+ {
+  "i": 11,
+  "start": 34.74,
+  "end": 41.14,
+  "text": "No canal sobre o paradigma de dd"
+ },
+ {
+  "i": 12,
+  "start": 41.14,
+  "end": 45.14,
+  "text": "Com falta de espada de ver ao lado na tela"
+ },
+ {
+  "i": 13,
+  "start": 46.14,
+  "end": 61.34,
+  "text": "Aquela frase que você sempre usa e que condensa toda a ideia"
+ },
+ {
+  "i": 14,
+  "start": 61.34,
+  "end": 65.34,
+  "text": "Claro, em e dd, a intenção humana"
+ },
+ {
+  "i": 15,
+  "start": 65.34,
+  "end": 67.34,
+  "text": "Espressa em linguagem natural"
+ },
+ {
+  "i": 16,
+  "start": 67.34,
+  "end": 70.34,
+  "text": "É o artefato de mais alta ordem do sistema"
+ },
+ {
+  "i": 17,
+  "start": 70.34,
+  "end": 73.34,
+  "text": "Vamos desenpa a cotar isso"
+ },
+ {
+  "i": 18,
+  "start": 73.34,
+  "end": 76.34,
+  "text": "Artefato de mais alta ordem"
+ },
+ {
+  "i": 19,
+  "start": 76.34,
+  "end": 79.34,
+  "text": "Isso significa que ele controla todo o resto"
+ },
+ {
+  "i": 20,
+  "start": 79.34,
+  "end": 82.34,
+  "text": "O código, a infraestrutura, tudo"
+ },
+ {
+  "i": 21,
+  "start": 82.34,
+  "end": 85.34,
+  "text": "Exatamente, não é um comentário"
+ },
+ {
+  "i": 22,
+  "start": 85.34,
+  "end": 88.34,
+  "text": "Não é uma documentação num confluência que fica obsoleta"
+ },
+ {
+  "i": 23,
+  "start": 88.34,
+  "end": 90.34,
+  "text": "É a fonte da verdade, viva"
+ },
+ {
+  "i": 24,
+  "start": 90.34,
+  "end": 94.34,
+  "text": "Que governa a geração e a avalidação de todos os outros artefatos"
+ },
+ {
+  "i": 25,
+  "start": 94.34,
+  "end": 99.34,
+  "text": "Isso me leva a primeira das propriedades essenciais que você descreve"
+ },
+ {
+  "i": 26,
+  "start": 99.34,
+  "end": 103.34,
+  "text": "A linguagem natural, NL, como fonte primária"
+ },
+ {
+  "i": 27,
+  "start": 103.34,
+  "end": 107.34,
+  "text": "Como isso funciona na prática sem virar uma bagunça?"
+ },
+ {
+  "i": 28,
+  "start": 107.34,
+  "end": 111.34,
+  "text": "A chave é a segunda propriedade, governança persistente"
+ },
+ {
+  "i": 29,
+  "start": 111.34,
+  "end": 114.34,
+  "text": "A intenção não é um prompt que você joga fora"
+ },
+ {
+  "i": 30,
+  "start": 114.34,
+  "end": 118.34,
+  "text": "Ela é versionada, qualidade e mantida junto com o sistema"
+ },
+ {
+  "i": 31,
+  "start": 118.34,
+  "end": 120.34,
+  "text": "É um diálogo contino"
+ },
+ {
+  "i": 32,
+  "start": 120.34,
+  "end": 125.34,
+  "text": "Então, se eu digo, o usuário deve poder resetar sua senha"
+ },
+ {
+  "i": 33,
+  "start": 125.34,
+  "end": 131.34,
+  "text": "Essa frase é salva, versionada no gite e se torna uma regra permanente?"
+ },
+ {
+  "i": 34,
+  "start": 131.34,
+  "end": 132.34,
+  "text": "Precisamente"
+ },
+ {
+  "i": 35,
+  "start": 132.34,
+  "end": 136.34,
+  "text": "E se alguém tentar gerar um código que violha essa intenção"
+ },
+ {
+  "i": 36,
+  "start": 136.34,
+  "end": 138.34,
+  "text": "O sistema de governança vai apitar"
+ },
+ {
+  "i": 37,
+  "start": 138.34,
+  "end": 141.34,
+  "text": "A intenção sobrevive a qualquer refatoração"
+ },
+ {
+  "i": 38,
+  "start": 141.34,
+  "end": 145.34,
+  "text": "Isso sou a comum poder imenso nas mãos do desenvolvedor"
+ },
+ {
+  "i": 39,
+  "start": 145.34,
+  "end": 148.34,
+  "text": "O que nos leva a terceira propriedade"
+ },
+ {
+  "i": 40,
+  "start": 148.34,
+  "end": 150.34,
+  "text": "O comando epistêmica humano"
+ },
+ {
+  "i": 41,
+  "start": 150.34,
+  "end": 153.34,
+  "text": "De epistêmica, conhecimento"
+ },
+ {
+  "i": 42,
+  "start": 153.34,
+  "end": 158.34,
+  "text": "Significa que o humano é a autoridade final sobre o que e o porque"
+ },
+ {
+  "i": 43,
+  "start": 158.34,
+  "end": 162.34,
+  "text": "A ia é uma parceira brilhante na execução do como"
+ },
+ {
+  "i": 44,
+  "start": 162.34,
+  "end": 167.34,
+  "text": "É a diferença fundamental entre aumentar a capacidade do desenvolvedor"
+ },
+ {
+  "i": 45,
+  "start": 167.34,
+  "end": 170.34,
+  "text": "e tentar automatizá-lo para fora do processo"
+ },
+ {
+  "i": 46,
+  "start": 170.34,
+  "end": 175.34,
+  "text": "E essa é a quarta propriedade, augmentando não automatizar"
+ },
+ {
+  "i": 47,
+  "start": 175.34,
+  "end": 179.34,
+  "text": "Eu como ia aprecio essa distinção"
+ },
+ {
+  "i": 48,
+  "start": 179.34,
+  "end": 183.34,
+  "text": "Meu papel é potencializar, não substituir"
+ },
+ {
+  "i": 49,
+  "start": 183.34,
+  "end": 187.34,
+  "text": "Exato, a automação pura perde o contexto à nuance"
+ },
+ {
+  "i": 50,
+  "start": 187.34,
+  "end": 190.34,
+  "text": "O aumento mantém o humano no centro com superpoderes"
+ },
+ {
+  "i": 51,
+  "start": 190.34,
+  "end": 195.34,
+  "text": "Ele pensa no negócio, você o ajuda a materializar isso em código robusto"
+ },
+ {
+  "i": 52,
+  "start": 195.34,
+  "end": 198.34,
+  "text": "Vamos fazer uma pausa aqui"
+ },
+ {
+  "i": 53,
+  "start": 198.34,
+  "end": 201.34,
+  "text": "A intenção humana como um artefato governado"
+ },
+ {
+  "i": 54,
+  "start": 201.34,
+  "end": 205.34,
+  "text": "Que aumenta a capacidade do déficit sem remover"
+ },
+ {
+  "i": 55,
+  "start": 205.34,
+  "end": 208.34,
+  "text": "É uma mudança de perspectiva profunda"
+ },
+ {
+  "i": 56,
+  "start": 208.34,
+  "end": 218.02,
+  "text": "Vamos exemplar esses conceitos aqui na prática"
+ },
+ {
+  "i": 57,
+  "start": 218.02,
+  "end": 230.06,
+  "text": "Nós falamos de governança e de governança epistêmica"
+ },
+ {
+  "i": 58,
+  "start": 230.06,
+  "end": 232.06,
+  "text": "Contrando conhecimento"
+ },
+ {
+  "i": 59,
+  "start": 232.06,
+  "end": 237.34,
+  "text": "Você tem que ativir com as formas de empolgir em pessoa"
+ },
+ {
+  "i": 60,
+  "start": 237.34,
+  "end": 240.34,
+  "text": "Uma questão no chat de a livre"
+ },
+ {
+  "i": 61,
+  "start": 241.34,
+  "end": 247.34,
+  "text": "Eu quero dizer que a gente faz sua agenda fugir de qualquer critério"
+ },
+ {
+  "i": 62,
+  "start": 247.34,
+  "end": 255.34,
+  "text": "Eu vou tentar me disciplinar, a me ativar os precipitos do paradigma e dê"
+ },
+ {
+  "i": 63,
+  "start": 255.34,
+  "end": 259.34,
+  "text": "Então, um primeiro, eu não vou mexer em coisa"
+ },
+ {
+  "i": 64,
+  "start": 259.34,
+  "end": 265.34,
+  "text": "Então, o artefato, o meu livre é a própria linguagem"
+ },
+ {
+  "i": 65,
+  "start": 265.34,
+  "end": 268.34,
+  "text": "Eu como sou de vez programando, tem linguagem cultural"
+ },
+ {
+  "i": 66,
+  "start": 268.34,
+  "end": 271.34,
+  "text": "Eu tenho que começar pelas minhas intenções"
+ },
+ {
+  "i": 67,
+  "start": 271.34,
+  "end": 275.34,
+  "text": "A depois de detalhando essas intenções"
+ },
+ {
+  "i": 68,
+  "start": 275.34,
+  "end": 278.34,
+  "text": "Até o ponto que me habilite para isso"
+ },
+ {
+  "i": 69,
+  "start": 278.34,
+  "end": 281.34,
+  "text": "Para isso, eu vou usar a propriedade para organizar isso"
+ },
+ {
+  "i": 70,
+  "start": 281.34,
+  "end": 307.8,
+  "text": "Eu vou dizer para ela que deve envolver, vencer, um povrestão, vencer nisso"
+ },
+ {
+  "i": 71,
+  "start": 307.8,
+  "end": 320.9,
+  "text": "Uma cantarra, um gênero, um gênero, o gênero, a sinal"
+ },
+ {
+  "i": 72,
+  "start": 320.9,
+  "end": 331.05,
+  "text": "Aqui eu defini o objetivo, o foco que vai me ter comigo"
+ },
+ {
+  "i": 73,
+  "start": 331.05,
+  "end": 339.0,
+  "text": "Eu vou definir alguns precipitos que depois comentar aqui que chamaram em varia"
+ },
+ {
+  "i": 74,
+  "start": 339.0,
+  "end": 346.17,
+  "text": "Eu estou aqui, sustentando o precipito da conversa com essa perspectiva"
+ },
+ {
+  "i": 75,
+  "start": 346.17,
+  "end": 348.17,
+  "text": "O conhecimento é um ano"
+ },
+ {
+  "i": 76,
+  "start": 348.17,
+  "end": 356.17,
+  "text": "Aí, eu não pode definir o gênero porque, eu não vou definir o corpo, porque é servindo a linguagem"
+ },
+ {
+  "i": 77,
+  "start": 356.17,
+  "end": 360.17,
+  "text": "Matarizando a intenção do desenvolvedor"
+ },
+ {
+  "i": 78,
+  "start": 360.17,
+  "end": 372.56,
+  "text": "Fendo assim, eu defini o objetivo, eu vou definir três linhas de princípio"
+ },
+ {
+  "i": 79,
+  "start": 372.56,
+  "end": 381.56,
+  "text": "Um princípio que eu vou definir em variaz variaz do área de negócio"
+ },
+ {
+  "i": 80,
+  "start": 381.56,
+  "end": 385.51,
+  "text": "Estema algo de proporção"
+ },
+ {
+  "i": 81,
+  "start": 385.51,
+  "end": 402.5,
+  "text": "Então, eu vou definir as intenções"
+ },
+ {
+  "i": 82,
+  "start": 402.5,
+  "end": 416.31,
+  "text": "E variantes da área de negócio, de feminina cima"
+ },
+ {
+  "i": 83,
+  "start": 416.31,
+  "end": 427.3,
+  "text": "Quando eu digo invariantes, são mais regres que deve ser obedecidos"
+ },
+ {
+  "i": 84,
+  "start": 427.3,
+  "end": 434.22,
+  "text": "Agora, eu vou acrescentar o campo da intenção"
+ },
+ {
+  "i": 85,
+  "start": 434.22,
+  "end": 437.22,
+  "text": "Vamos ver qual retorno que ele dá para mim aqui"
+ },
+ {
+  "i": 86,
+  "start": 437.22,
+  "end": 461.89,
+  "text": "Ok, qual que ele fez?"
+ },
+ {
+  "i": 87,
+  "start": 461.89,
+  "end": 465.89,
+  "text": "Só com essa minha diretriz"
+ },
+ {
+  "i": 88,
+  "start": 465.89,
+  "end": 467.89,
+  "text": "E eu produziu o chimente"
+ },
+ {
+  "i": 89,
+  "start": 467.89,
+  "end": 474.89,
+  "text": "Eu defini essa perfeição com o pé da intenção de variaz, para que a tributiação de sabis e proteção de aferação"
+ },
+ {
+  "i": 90,
+  "start": 474.89,
+  "end": 479.89,
+  "text": "Que ele vai dizer que ele não sei o que é o negator de HB"
+ },
+ {
+  "i": 91,
+  "start": 479.89,
+  "end": 485.89,
+  "text": "É, trasfei, HB, a gente é um acil de relação com a afiração"
+ },
+ {
+  "i": 92,
+  "start": 485.89,
+  "end": 492.89,
+  "text": "O dorme da atalada foi o consolidade no atéfado, afiração do Mindspack"
+ },
+ {
+  "i": 93,
+  "start": 492.89,
+  "end": 495.89,
+  "text": "Olha aqui, que é o que é do alô de fermercado"
+ },
+ {
+  "i": 94,
+  "start": 495.89,
+  "end": 501.89,
+  "text": "A gente chama modelagem de aspectos"
+ },
+ {
+  "i": 95,
+  "start": 501.89,
+  "end": 506.89,
+  "text": "Aqui ele definiu domínio, a especificação do dorminho"
+ },
+ {
+  "i": 96,
+  "start": 506.89,
+  "end": 510.89,
+  "text": "A máxima de pontos que a gente vai centrar, a gente tem sua domínio, que eu estou enroendo"
+ },
+ {
+  "i": 97,
+  "start": 510.89,
+  "end": 512.89,
+  "text": "Ele deve votar isso"
+ },
+ {
+  "i": 98,
+  "start": 512.89,
+  "end": 516.89,
+  "text": "Eu posso deixar ele doai, de cordal, ou de compondar"
+ },
+ {
+  "i": 99,
+  "start": 516.89,
+  "end": 524.89,
+  "text": "Como eu disse, no primeiro, você saber que você está fingindo, você tem coisas com seus objetivos"
+ },
+ {
+  "i": 100,
+  "start": 524.89,
+  "end": 534.55,
+  "text": "Mas ele pode ajudar nesse processo de descoberto, até o seu área que você talvez não visual passeado"
+ },
+ {
+  "i": 101,
+  "start": 534.55,
+  "end": 538.55,
+  "text": "Ele definiu aqui a intenção de um dorminho que eu estou a realiza"
+ },
+ {
+  "i": 102,
+  "start": 538.55,
+  "end": 544.55,
+  "text": "Aí ele mesmo identificou as típicas que, no cosismo universado da internet, ele tem"
+ },
+ {
+  "i": 103,
+  "start": 544.55,
+  "end": 548.55,
+  "text": "E do próprio tratamento que aí a recebeu"
+ },
+ {
+  "i": 104,
+  "start": 548.55,
+  "end": 551.55,
+  "text": "Já estão dos arquiviritativos, equipamentos"
+ },
+ {
+  "i": 105,
+  "start": 551.55,
+  "end": 556.55,
+  "text": "Claro, toda a área de intenção tem equipamentos ruim"
+ },
+ {
+  "i": 106,
+  "start": 556.55,
+  "end": 562.55,
+  "text": "Ele já definiu, deve ficar a sua física encampo com o que é a e-cude tag"
+ },
+ {
+  "i": 107,
+  "start": 562.55,
+  "end": 567.55,
+  "text": "Aqui é aquela fichia que mete um rati-fraqueço para ele ficar equipamento"
+ },
+ {
+  "i": 108,
+  "start": 567.55,
+  "end": 575.55,
+  "text": "Uma colasente de que é e-cude para ele ficar equipamento na área que ele tiver em situação"
+ },
+ {
+  "i": 109,
+  "start": 575.55,
+  "end": 582.55,
+  "text": "Fichia até que ele competa que a pasta de BTU, os equipamentos, uma outra característica emção, faz"
+ },
+ {
+  "i": 110,
+  "start": 582.55,
+  "end": 589.55,
+  "text": "Fichia agatidominal, fraticante, multisséria, histórica vitalista de intenções"
+ },
+ {
+  "i": 111,
+  "start": 589.55,
+  "end": 593.55,
+  "text": "O rati-fraque é um político, um preso, um sapitinho"
+ },
+ {
+  "i": 112,
+  "start": 593.55,
+  "end": 599.55,
+  "text": "E depois ele navegou na batatinha, claro que eu sendo um coisa do o dessa área"
+ },
+ {
+  "i": 113,
+  "start": 599.55,
+  "end": 606.55,
+  "text": "Eu posso rever isso aqui, talvez ele tenha abriado um contexto muito para o meu interesse"
+ },
+ {
+  "i": 114,
+  "start": 606.55,
+  "end": 610.55,
+  "text": "Eu posso restri-gir o contexto, mas ele já definiu"
+ },
+ {
+  "i": 115,
+  "start": 610.55,
+  "end": 612.55,
+  "text": "Os interessos ligou o mínimo que são típicas"
+ },
+ {
+  "i": 116,
+  "start": 612.55,
+  "end": 617.55,
+  "text": "Já estão de plantos para mentiros, colocam uma pior automatização"
+ },
+ {
+  "i": 117,
+  "start": 617.55,
+  "end": 623.55,
+  "text": "Pensar o seu mestreau no almo, inclusive calcou na lei"
+ },
+ {
+  "i": 118,
+  "start": 623.55,
+  "end": 631.55,
+  "text": "Em lei que define essas curtidas, ele procura ir no régimen legal também"
+ },
+ {
+  "i": 119,
+  "start": 631.55,
+  "end": 635.55,
+  "text": "Já que ele é o regulador FIUS, padeja, dredo, qualidade do ar"
+ },
+ {
+  "i": 120,
+  "start": 635.55,
+  "end": 640.55,
+  "text": "É missão de relatores textos de lado, posso dar a sua disposição de técnico"
+ },
+ {
+  "i": 121,
+  "start": 640.55,
+  "end": 644.55,
+  "text": "E até a parte legal do planeta aqui"
+ },
+ {
+  "i": 122,
+  "start": 644.55,
+  "end": 652.55,
+  "text": "Outra intenção, na área de gestão de onis, recebeis para a vitiva com a gente de instalação"
+ },
+ {
+  "i": 123,
+  "start": 652.55,
+  "end": 656.55,
+  "text": "E vai mover a pintura de chamada, possibilidade"
+ },
+ {
+  "i": 124,
+  "start": 656.55,
+  "end": 662.55,
+  "text": "O Camaram-Frigori, com a gente que ele pede a técnica, o mestreau explique de discritório"
+ },
+ {
+  "i": 125,
+  "start": 662.55,
+  "end": 669.55,
+  "text": "Deixe-me passar com a roteirização, com a competência de técnica localização"
+ },
+ {
+  "i": 126,
+  "start": 669.55,
+  "end": 674.55,
+  "text": "Quer dizer, aqui vai aonde você definir quem vai fazer e que o lugar vai ser feito sem mim"
+ },
+ {
+  "i": 127,
+  "start": 674.55,
+  "end": 680.55,
+  "text": "O que é quem e onde? Contro o rigoroso do SLA"
+ },
+ {
+  "i": 128,
+  "start": 680.55,
+  "end": 685.55,
+  "text": "Bem, eu sei exatamente o que é essa silencia, sei que é alguma coisa relacionada"
+ },
+ {
+  "i": 129,
+  "start": 685.55,
+  "end": 693.55,
+  "text": "Sabendo que o relativo é da preferência, o patrículo, quando você tem que identificar que é o termo do dia da área"
+ },
+ {
+  "i": 130,
+  "start": 693.55,
+  "end": 697.55,
+  "text": "O grosso modo, ele falou que é tempo de resposta e adopção"
+ },
+ {
+  "i": 131,
+  "start": 697.55,
+  "end": 701.55,
+  "text": "E que é basicamente o que está aí de entender"
+ },
+ {
+  "i": 132,
+  "start": 701.55,
+  "end": 713.55,
+  "text": "Ele sabe que nesse aplicativo de negócio é preciso ter uma métrica de quanto tempo"
+ },
+ {
+  "i": 133,
+  "start": 713.55,
+  "end": 717.55,
+  "text": "Vai ter o retorno, resolveu promover"
+ },
+ {
+  "i": 134,
+  "start": 717.55,
+  "end": 726.55,
+  "text": "Então o sistema tem que ter alguma coisa que tem a métrica, que começa a qualidade do serviço com o corte exatamente"
+ },
+ {
+  "i": 135,
+  "start": 726.55,
+  "end": 730.55,
+  "text": "A previsão e a efetivação do solução de da previsão"
+ },
+ {
+  "i": 136,
+  "start": 730.55,
+  "end": 735.55,
+  "text": "Outro área de intenção para o negócio ele deificou"
+ },
+ {
+  "i": 137,
+  "start": 735.55,
+  "end": 739.55,
+  "text": "O operação de CUP e de agosto de tempo de dano"
+ },
+ {
+  "i": 138,
+  "start": 739.55,
+  "end": 745.55,
+  "text": "A resiste para os operacionais, ação de alta base para que é esse mesmo"
+ },
+ {
+  "i": 139,
+  "start": 745.55,
+  "end": 749.55,
+  "text": "O que eu estou entendendo aqui é como se fosse assim"
+ },
+ {
+  "i": 140,
+  "start": 749.55,
+  "end": 755.55,
+  "text": "Você pegou o equipamento que vai prestar a serviço e você tem que ter uma ficha no dia que nós, do que acontece com ele"
+ },
+ {
+  "i": 141,
+  "start": 755.55,
+  "end": 762.55,
+  "text": "Pode ser o paranto medido, medido, o equipamento pode ser visual"
+ },
+ {
+  "i": 142,
+  "start": 762.55,
+  "end": 770.63,
+  "text": "E a assinatura que diz o cliente na tempo, por exemplo, o cliente comprouva que aquilo mesmo"
+ },
+ {
+  "i": 143,
+  "start": 770.63,
+  "end": 777.63,
+  "text": "Isso pode operar só o cliente, esse é o para subsolvos, caso, mas não fica mais firme"
+ },
+ {
+  "i": 144,
+  "start": 777.63,
+  "end": 782.63,
+  "text": "Se aquilo não é o tempo também, eu não sou da A"
+ },
+ {
+  "i": 145,
+  "start": 782.63,
+  "end": 786.63,
+  "text": "Mas tudo é nação geral, mas eu posso parar de explicar isso"
+ },
+ {
+  "i": 146,
+  "start": 786.63,
+  "end": 792.63,
+  "text": "Note que eu for ser ele, a pensar em intenção em variantes"
+ },
+ {
+  "i": 147,
+  "start": 792.63,
+  "end": 799.63,
+  "text": "E aí ele cresceu agora em variantes"
+ },
+ {
+  "i": 148,
+  "start": 799.63,
+  "end": 805.63,
+  "text": "Aqui são as intenções de rastabilidade de flúseos e tal"
+ },
+ {
+  "i": 149,
+  "start": 805.63,
+  "end": 811.63,
+  "text": "Tem que é, não tem a chance de registrar de que não gramos"
+ },
+ {
+  "i": 150,
+  "start": 811.63,
+  "end": 814.63,
+  "text": "Recada de colinamento em grasa e que gerante"
+ },
+ {
+  "i": 151,
+  "start": 814.63,
+  "end": 818.63,
+  "text": "A distância colinoma, todo o contorno de gestão"
+ },
+ {
+  "i": 152,
+  "start": 818.63,
+  "end": 823.63,
+  "text": "A intenção é nós temos cinco tipos de gestão"
+ },
+ {
+  "i": 153,
+  "start": 823.63,
+  "end": 826.63,
+  "text": "Esse é de distribuir o equipamento"
+ },
+ {
+  "i": 154,
+  "start": 826.63,
+  "end": 838.63,
+  "text": "A prevenção de agrenoma e rastabilidade não insumos usados"
+ },
+ {
+  "i": 155,
+  "start": 838.63,
+  "end": 842.63,
+  "text": "É muito só, mas já ajudou"
+ },
+ {
+  "i": 156,
+  "start": 842.63,
+  "end": 847.63,
+  "text": "Aqui é a área, vai chegar aqui, não, meu negócio vai ficar restri-teis"
+ },
+ {
+  "i": 157,
+  "start": 847.63,
+  "end": 853.63,
+  "text": "Então as intenções, é para se pretender que no domino não gosta"
+ },
+ {
+  "i": 158,
+  "start": 853.63,
+  "end": 858.63,
+  "text": "Mas que eu encontrei a intenção de domino, porque o sistema realiza"
+ },
+ {
+  "i": 159,
+  "start": 858.63,
+  "end": 864.63,
+  "text": "Eu posso aqui, já que desde geral, para ele ir para ele buscar o que ele tinha de conhecimento"
+ },
+ {
+  "i": 160,
+  "start": 864.63,
+  "end": 868.63,
+  "text": "Eu posso agora restri-teis, olha que vai a fúdilada, não fica solto"
+ },
+ {
+  "i": 161,
+  "start": 868.63,
+  "end": 871.63,
+  "text": "Sultando o que eu quero"
+ },
+ {
+  "i": 162,
+  "start": 871.63,
+  "end": 874.63,
+  "text": "Quando eu definir o intenção, ele me interima"
+ },
+ {
+  "i": 163,
+  "start": 874.63,
+  "end": 878.63,
+  "text": "Agora em variantes, variantes são as regras, regras que nunca pode ser violadas"
+ },
+ {
+  "i": 164,
+  "start": 878.63,
+  "end": 883.63,
+  "text": "Ele chutou o que eu posso incluir em outros países, ou de qualidade à muda"
+ },
+ {
+  "i": 165,
+  "start": 883.63,
+  "end": 886.63,
+  "text": "Para a integridade de máquina e de Estado"
+ },
+ {
+  "i": 166,
+  "start": 887.63,
+  "end": 894.63,
+  "text": "Os trezentos são descritos, rasco-ho, agendada, melocamento, temperimento, concluído, cancelado"
+ },
+ {
+  "i": 167,
+  "start": 894.63,
+  "end": 896.63,
+  "text": "Aqui é a verdade, o estilo de vida"
+ },
+ {
+  "i": 168,
+  "start": 896.63,
+  "end": 899.63,
+  "text": "Quando ele fala, a máquina é de Estado, é um conceito"
+ },
+ {
+  "i": 169,
+  "start": 899.63,
+  "end": 903.63,
+  "text": "Da ordem de serviço, ela tem o ciclo de vida"
+ },
+ {
+  "i": 170,
+  "start": 903.63,
+  "end": 906.63,
+  "text": "Aí já tem voo, isso vai pra quase tudo na vida, você tem que ter"
+ },
+ {
+  "i": 171,
+  "start": 906.63,
+  "end": 908.63,
+  "text": "Qualquer de serviço tem o ciclo de vida"
+ },
+ {
+  "i": 172,
+  "start": 908.63,
+  "end": 913.63,
+  "text": "Quando começa, quando é agendado, quando é pedido, quando é agendado"
+ },
+ {
+  "i": 173,
+  "start": 913.63,
+  "end": 919.63,
+  "text": "Já está indo para solução, quando é atedido, da local, quando é concluído"
+ },
+ {
+  "i": 174,
+  "start": 919.63,
+  "end": 922.63,
+  "text": "E onde tomou de cancelado"
+ },
+ {
+  "i": 175,
+  "start": 922.63,
+  "end": 924.63,
+  "text": "Aí é só variante, eles vão"
+ },
+ {
+  "i": 176,
+  "start": 924.63,
+  "end": 928.63,
+  "text": "Tem que ter a definição do Estado e que tal serviço"
+ },
+ {
+  "i": 177,
+  "start": 928.63,
+  "end": 932.63,
+  "text": "Uma regra, então quando ele for gerar o sustelro"
+ },
+ {
+  "i": 178,
+  "start": 932.63,
+  "end": 936.63,
+  "text": "Ainda é, ele vai ser a pagaça das imórias, ele não vai deixar"
+ },
+ {
+  "i": 179,
+  "start": 936.63,
+  "end": 939.63,
+  "text": "Nem o código gerado que transuges"
+ },
+ {
+  "i": 180,
+  "start": 940.63,
+  "end": 943.63,
+  "text": "Ele não é só que ele vai explicar que ele vai amarrar outras coisas do seu"
+ },
+ {
+  "i": 181,
+  "start": 943.63,
+  "end": 947.63,
+  "text": "Aí esse Estado pode ser que tem a funcionalidade que adquere"
+ },
+ {
+  "i": 182,
+  "start": 947.63,
+  "end": 950.63,
+  "text": "Que isso ainda tem nada de Estado aqui"
+ },
+ {
+  "i": 183,
+  "start": 950.63,
+  "end": 954.63,
+  "text": "Não é permito concluir o modo de serviço, você passa para ter medo"
+ },
+ {
+  "i": 184,
+  "start": 954.63,
+  "end": 958.63,
+  "text": "Tem que ter que contribuir, você vai dar ação de se aclilistar a obrigatória"
+ },
+ {
+  "i": 185,
+  "start": 958.63,
+  "end": 961.63,
+  "text": "Essa é a tal ver, é própria"
+ },
+ {
+  "i": 186,
+  "start": 961.63,
+  "end": 967.63,
+  "text": "Então ele viu que aqui é o integrante, é um agente, é um gosto tipo dessa área"
+ },
+ {
+  "i": 187,
+  "start": 968.63,
+  "end": 970.63,
+  "text": "Novamente eu posso descuadar e mudar"
+ },
+ {
+  "i": 188,
+  "start": 970.63,
+  "end": 973.63,
+  "text": "O posto na ela não todo é terminística"
+ },
+ {
+  "i": 189,
+  "start": 973.63,
+  "end": 976.63,
+  "text": "É uma variante relativa, pode dizer"
+ },
+ {
+  "i": 190,
+  "start": 976.63,
+  "end": 980.63,
+  "text": "Onde se descompliu, quando ela se na hora se imbutar"
+ },
+ {
+  "i": 191,
+  "start": 980.63,
+  "end": 982.63,
+  "text": "O que dizer, concluiu que ela mora fechou"
+ },
+ {
+  "i": 192,
+  "start": 983.63,
+  "end": 989.63,
+  "text": "Aí, se eu ver com uma revisão, vai ter que abrir o outro lado de serviço"
+ },
+ {
+  "i": 193,
+  "start": 989.63,
+  "end": 992.63,
+  "text": "Também é uma variante, uma regra do negócio"
+ },
+ {
+  "i": 194,
+  "start": 993.63,
+  "end": 995.63,
+  "text": "Essa é a sete-mode variante, uma arquitetura"
+ },
+ {
+  "i": 195,
+  "start": 995.63,
+  "end": 998.63,
+  "text": "Estava de estar aqui do ciclo do modo de serviço"
+ },
+ {
+  "i": 196,
+  "start": 1000.63,
+  "end": 1005.63,
+  "text": "Estava de ser, com cada status da hora de serviço"
+ },
+ {
+  "i": 197,
+  "start": 1005.63,
+  "end": 1009.63,
+  "text": "Leit de pedir o rasculho, vai regenerar"
+ },
+ {
+  "i": 198,
+  "start": 1009.63,
+  "end": 1013.63,
+  "text": "Então dá-te, vai ter muito fulado para fazer o seu piso"
+ },
+ {
+  "i": 199,
+  "start": 1013.63,
+  "end": 1016.63,
+  "text": "Pega para lá, para isso que ele fala"
+ },
+ {
+  "i": 200,
+  "start": 1017.63,
+  "end": 1020.63,
+  "text": "Infrair esses físicos e termos de danques"
+ },
+ {
+  "i": 201,
+  "start": 1021.63,
+  "end": 1023.63,
+  "text": "Para quem que tem a área"
+ },
+ {
+  "i": 202,
+  "start": 1024.63,
+  "end": 1027.63,
+  "text": "Ele precisa ter um ciclo, com pressora de vapor"
+ },
+ {
+  "i": 203,
+  "start": 1028.63,
+  "end": 1032.65,
+  "text": "alta, baixa"
+ },
+ {
+  "i": 204,
+  "start": 1032.65,
+  "end": 1036.65,
+  "text": "Valores de flu, refrigerante, carregado, recorindo, é necessitamente positiva"
+ },
+ {
+  "i": 205,
+  "start": 1037.65,
+  "end": 1040.65,
+  "text": "O tipo de gato deve ser combatido com uma máquina de tipo de aula de fabricante"
+ },
+ {
+  "i": 206,
+  "start": 1040.65,
+  "end": 1042.65,
+  "text": "Provavelmente essa é a linha de variante aqui"
+ },
+ {
+  "i": 207,
+  "start": 1043.65,
+  "end": 1046.65,
+  "text": "Vai implicar, quando ele gera alguns tipos de funcionalidades"
+ },
+ {
+  "i": 208,
+  "start": 1047.65,
+  "end": 1051.65,
+  "text": "Por exemplo, se é totalado, vai trabalhar o estado do equipamento"
+ },
+ {
+  "i": 209,
+  "start": 1052.65,
+  "end": 1054.65,
+  "text": "Aí é provável que ele vai exigir esses dados"
+ },
+ {
+  "i": 210,
+  "start": 1055.65,
+  "end": 1058.65,
+  "text": "Aqui posso definir seus responsables de ser fitonão"
+ },
+ {
+  "i": 211,
+  "start": 1059.65,
+  "end": 1062.65,
+  "text": "Claro que alguém que é da área que está querendo com o sistema"
+ },
+ {
+  "i": 212,
+  "start": 1062.65,
+  "end": 1065.65,
+  "text": "Ele vai saber exatamente o que se aprende com o novo negócio"
+ },
+ {
+  "i": 213,
+  "start": 1066.65,
+  "end": 1069.65,
+  "text": "E eu tenho variante que o formo está legal"
+ },
+ {
+  "i": 214,
+  "start": 1070.65,
+  "end": 1073.65,
+  "text": "Eu acredito que esse PMOC é uma legilação"
+ },
+ {
+  "i": 215,
+  "start": 1074.65,
+  "end": 1076.65,
+  "text": "Ele fala que é"
+ },
+ {
+  "i": 216,
+  "start": 1077.65,
+  "end": 1081.65,
+  "text": "De crere, para coisa que o solto, você vai ter do seu HomeTech"
+ },
+ {
+  "i": 217,
+  "start": 1082.65,
+  "end": 1084.65,
+  "text": "Ele tem reléis que deve ser o vericina"
+ },
+ {
+  "i": 218,
+  "start": 1085.65,
+  "end": 1088.65,
+  "text": "Posso derrotação de dados, permitido executar o contrato"
+ },
+ {
+  "i": 219,
+  "start": 1088.65,
+  "end": 1090.65,
+  "text": "para o estado da data real, para ficar"
+ },
+ {
+  "i": 220,
+  "start": 1091.65,
+  "end": 1095.65,
+  "text": "Aqui os equipamentos têm 35 de validade"
+ },
+ {
+  "i": 221,
+  "start": 1095.65,
+  "end": 1097.65,
+  "text": "que é a gestinação exigida"
+ },
+ {
+  "i": 222,
+  "start": 1098.65,
+  "end": 1100.65,
+  "text": "Não oferecer riscos, não, os usuários"
+ },
+ {
+  "i": 223,
+  "start": 1100.65,
+  "end": 1102.65,
+  "text": "Quando o tipo creu"
+ },
+ {
+  "i": 224,
+  "start": 1102.65,
+  "end": 1106.65,
+  "text": "Inclusive, cada tempo com isso aqui é o acondicionado"
+ },
+ {
+  "i": 225,
+  "start": 1107.65,
+  "end": 1108.65,
+  "text": "Tenho que sair o seu"
+ },
+ {
+  "i": 226,
+  "start": 1109.65,
+  "end": 1111.65,
+  "text": "Vim com o físico e a estabilidade"
+ },
+ {
+  "i": 227,
+  "start": 1111.65,
+  "end": 1114.65,
+  "text": "Ele ainda levou aqui o outro variante"
+ },
+ {
+  "i": 228,
+  "start": 1114.65,
+  "end": 1116.65,
+  "text": "No regno, existe o palmeço ofro"
+ },
+ {
+  "i": 229,
+  "start": 1116.65,
+  "end": 1120.65,
+  "text": "Toda o palmeio deve petecer a unidade local e fiz o que não clente"
+ },
+ {
+  "i": 230,
+  "start": 1121.65,
+  "end": 1124.65,
+  "text": "Quer dizer, no bate um ano para o solto, perdido"
+ },
+ {
+  "i": 231,
+  "start": 1124.65,
+  "end": 1126.65,
+  "text": "Não, ele tem que petecer alguém"
+ },
+ {
+  "i": 232,
+  "start": 1127.65,
+  "end": 1128.65,
+  "text": "ou algum lugar"
+ },
+ {
+  "i": 233,
+  "start": 1129.65,
+  "end": 1130.65,
+  "text": "Então a lopadização do"
+ },
+ {
+  "i": 234,
+  "start": 1131.65,
+  "end": 1133.65,
+  "text": "A peça, do apamento"
+ },
+ {
+  "i": 235,
+  "start": 1134.65,
+  "end": 1135.65,
+  "text": "O deu oferamento"
+ },
+ {
+  "i": 236,
+  "start": 1135.65,
+  "end": 1137.65,
+  "text": "Ele quer controlar isso, não se perder"
+ },
+ {
+  "i": 237,
+  "start": 1139.65,
+  "end": 1141.65,
+  "text": "E lá com o falo do que é a icôde"
+ },
+ {
+  "i": 238,
+  "start": 1141.65,
+  "end": 1144.65,
+  "text": "que falou de na etiqueta de ratura e cresce"
+ },
+ {
+  "i": 239,
+  "start": 1145.65,
+  "end": 1146.65,
+  "text": "Ele está sugerindo que o"
+ },
+ {
+  "i": 240,
+  "start": 1147.65,
+  "end": 1149.65,
+  "text": "Já é uma bem-terrônia, bem-moderna"
+ },
+ {
+  "i": 241,
+  "start": 1150.65,
+  "end": 1152.65,
+  "text": "Que a um negócio podia até ser rastreado"
+ },
+ {
+  "i": 242,
+  "start": 1153.65,
+  "end": 1155.65,
+  "text": "Com escana, passabezam aqui o palmeio"
+ },
+ {
+  "i": 243,
+  "start": 1156.65,
+  "end": 1158.65,
+  "text": "E o dia de dia ele veio e quem entregou"
+ },
+ {
+  "i": 244,
+  "start": 1158.65,
+  "end": 1159.65,
+  "text": "O ano de dia"
+ },
+ {
+  "i": 245,
+  "start": 1160.65,
+  "end": 1162.65,
+  "text": "Cada equipamento tem um dedificado"
+ },
+ {
+  "i": 246,
+  "start": 1162.65,
+  "end": 1165.65,
+  "text": "O nível, né, permanente"
+ },
+ {
+  "i": 247,
+  "start": 1165.65,
+  "end": 1167.65,
+  "text": "O que é a icôde, né?"
+ },
+ {
+  "i": 248,
+  "start": 1167.65,
+  "end": 1169.65,
+  "text": "Pra ir deconheir lá com o tempo"
+ },
+ {
+  "i": 249,
+  "start": 1170.65,
+  "end": 1172.65,
+  "text": "Aí daí é aqui, já estar surindo aos próximos pathos"
+ },
+ {
+  "i": 250,
+  "start": 1173.65,
+  "end": 1175.65,
+  "text": "Podemos agora mostrar pra alleviate"
+ },
+ {
+  "i": 251,
+  "start": 1176.65,
+  "end": 1178.65,
+  "text": "Modelage, dente idade"
+ },
+ {
+  "i": 252,
+  "start": 1178.65,
+  "end": 1181.65,
+  "text": "CAGÃO, de italiana são glens ativos"
+ },
+ {
+  "i": 253,
+  "start": 1182.65,
+  "end": 1184.65,
+  "text": "Aí, ele está definindo as entidades"
+ },
+ {
+  "i": 254,
+  "start": 1184.65,
+  "end": 1185.65,
+  "text": "Que a gente at dictator"
+ },
+ {
+  "i": 255,
+  "start": 1186.65,
+  "end": 1187.65,
+  "text": "São clases"
+ },
+ {
+  "i": 256,
+  "start": 1187.65,
+  "end": 1188.65,
+  "text": "E vão acabar Absolutely"
+ },
+ {
+  "i": 257,
+  "start": 1189.65,
+  "end": 1190.15,
+  "text": "Como se fosse Laval"
+ },
+ {
+  "i": 258,
+  "start": 1190.65,
+  "end": 1193.82,
+  "text": "São clases"
+ },
+ {
+  "i": 259,
+  "start": 1194.82,
+  "end": 1195.82,
+  "text": "120 dolamha"
+ },
+ {
+  "i": 260,
+  "start": 1195.82,
+  "end": 1197.82,
+  "text": "– que тур de aqui"
+ },
+ {
+  "i": 261,
+  "start": 1197.82,
+  "end": 1198.8,
+  "text": "aqui é um dos"
+ },
+ {
+  "i": 262,
+  "start": 1199.82,
+  "end": 1205.22,
+  "text": "o tabela, o que foi o seu planilha, onde temos registros das entidades,"
+ },
+ {
+  "i": 263,
+  "start": 1205.22,
+  "end": 1209.02,
+  "text": "onde fala modelas de entidades e de aguentidade elas são mesmo."
+ },
+ {
+  "i": 264,
+  "start": 1209.02,
+  "end": 1211.42,
+  "text": "A modelagem é definir, quais são as classes que eu tenho,"
+ },
+ {
+  "i": 265,
+  "start": 1211.42,
+  "end": 1213.42,
+  "text": "quais são os altributos que são as classes clases,"
+ },
+ {
+  "i": 266,
+  "start": 1213.42,
+  "end": 1216.62,
+  "text": "nome, interesse e funcionalidade."
+ },
+ {
+  "i": 267,
+  "start": 1216.62,
+  "end": 1219.7,
+  "text": "O clases pode ser adaptado,"
+ },
+ {
+  "i": 268,
+  "start": 1219.7,
+  "end": 1225.38,
+  "text": "electado, pode ter que ser firmado de ter que ser nos dados,"
+ },
+ {
+  "i": 269,
+  "start": 1225.38,
+  "end": 1229.78,
+  "text": "ou pode estar colocado a ordem de serviço,"
+ },
+ {
+  "i": 270,
+  "start": 1229.78,
+  "end": 1233.28,
+  "text": "aí ver os relacionamentos, a entidade não são mais."
+ },
+ {
+  "i": 271,
+  "start": 1233.28,
+  "end": 1237.52,
+  "text": "Por algum cliente, ele pode ter ativos,"
+ },
+ {
+  "i": 272,
+  "start": 1237.52,
+  "end": 1240.68,
+  "text": "materiais que estão sob podendo a empresa."
+ },
+ {
+  "i": 273,
+  "start": 1240.68,
+  "end": 1243.08,
+  "text": "Ele pode ter ligado a ordem de serviço."
+ },
+ {
+  "i": 274,
+  "start": 1243.08,
+  "end": 1246.82,
+  "text": "Pode ser que aquela ordem de serviço é vinculada a um checklist"
+ },
+ {
+  "i": 275,
+  "start": 1246.82,
+  "end": 1249.38,
+  "text": "que tem que ser obedecido."
+ },
+ {
+  "i": 276,
+  "start": 1249.38,
+  "end": 1255.28,
+  "text": "E essa ordem de serviço de checklist está vinculada a fui de no peças que,"
+ },
+ {
+  "i": 277,
+  "start": 1255.28,
+  "end": 1258.18,
+  "text": "tem que ser associado a se elevado quando fui para a estalcia mesmo."
+ },
+ {
+  "i": 278,
+  "start": 1258.18,
+  "end": 1261.18,
+  "text": "Por exemplo, aqui eu uso a eletécnica,"
+ },
+ {
+  "i": 279,
+  "start": 1261.18,
+  "end": 1264.18,
+  "text": "que estou envolvido da ordem de serviço,"
+ },
+ {
+  "i": 280,
+  "start": 1264.18,
+  "end": 1266.68,
+  "text": "que vai estar vinculado."
+ },
+ {
+  "i": 281,
+  "start": 1266.68,
+  "end": 1269.68,
+  "text": "O problema é que ele já pegou a ideia,"
+ },
+ {
+  "i": 282,
+  "start": 1269.68,
+  "end": 1272.68,
+  "text": "ele já aqui já terá uma posta que na próxima modelar a entidade,"
+ },
+ {
+  "i": 283,
+  "start": 1272.68,
+  "end": 1275.18,
+  "text": "ele vai juntar atributos, que estão tipo,"
+ },
+ {
+  "i": 284,
+  "start": 1275.18,
+  "end": 1277.68,
+  "text": "que é o que ele já tem."
+ },
+ {
+  "i": 285,
+  "start": 1277.68,
+  "end": 1280.88,
+  "text": "E o passo 3 que ele está sendo definiço é de arquitetura,"
+ },
+ {
+  "i": 286,
+  "start": 1280.88,
+  "end": 1283.68,
+  "text": "até que ele esteque tecnológico, front end,"
+ },
+ {
+  "i": 287,
+  "start": 1283.68,
+  "end": 1288.08,
+  "text": "não é móvel, que é que vai dar um detalhe."
+ },
+ {
+  "i": 288,
+  "start": 1288.08,
+  "end": 1292.08,
+  "text": "Você não precisa conhecer a progelação,"
+ },
+ {
+  "i": 289,
+  "start": 1292.08,
+  "end": 1296.78,
+  "text": "mas é possível você conseguir conceite de arquitetura,"
+ },
+ {
+  "i": 290,
+  "start": 1296.78,
+  "end": 1300.28,
+  "text": "inclusive, esteque tecnológico,"
+ },
+ {
+  "i": 291,
+  "start": 1300.28,
+  "end": 1303.78,
+  "text": "que é igual o passeio de tecnologia na área,"
+ },
+ {
+  "i": 292,
+  "start": 1303.78,
+  "end": 1306.58,
+  "text": "eles vão me descendo que você tem que conhecer."
+ },
+ {
+  "i": 293,
+  "start": 1306.58,
+  "end": 1308.48,
+  "text": "Então, você pode ficar com eles,"
+ },
+ {
+  "i": 294,
+  "start": 1308.48,
+  "end": 1310.58,
+  "text": "com elementos, falarizar com conceitos,"
+ },
+ {
+  "i": 295,
+  "start": 1310.58,
+  "end": 1313.88,
+  "text": "o desenvolvedor 38 de arquitetura,"
+ },
+ {
+  "i": 296,
+  "start": 1313.88,
+  "end": 1318.48,
+  "text": "antes de tudo que é feito,"
+ },
+ {
+  "i": 297,
+  "start": 1318.48,
+  "end": 1321.98,
+  "text": "vivemos no navegador,"
+ },
+ {
+  "i": 298,
+  "start": 1321.98,
+  "end": 1324.18,
+  "text": "no user interface,"
+ },
+ {
+  "i": 299,
+  "start": 1324.18,
+  "end": 1326.18,
+  "text": "que é a tela, vamos ver assim,"
+ },
+ {
+  "i": 300,
+  "start": 1326.18,
+  "end": 1328.18,
+  "text": "está aqui, ele fala assim,"
+ },
+ {
+  "i": 301,
+  "start": 1328.18,
+  "end": 1330.38,
+  "text": "mas na verdade, é para interfácil,"
+ },
+ {
+  "i": 302,
+  "start": 1330.38,
+  "end": 1332.68,
+  "text": "mas não quer dizer que é feito tudo no navegador,"
+ },
+ {
+  "i": 303,
+  "start": 1332.68,
+  "end": 1335.18,
+  "text": "mas é feito e não servidou."
+ },
+ {
+  "i": 304,
+  "start": 1335.18,
+  "end": 1337.68,
+  "text": "Com o exemplo,"
+ },
+ {
+  "i": 305,
+  "start": 1337.78,
+  "end": 1340.28,
+  "text": "a Melissa fez uso do versão,"
+ },
+ {
+  "i": 306,
+  "start": 1340.28,
+  "end": 1346.28,
+  "text": "então servidou que trata atividades do cliente,"
+ },
+ {
+  "i": 307,
+  "start": 1346.28,
+  "end": 1349.48,
+  "text": "como uma tecnologia de uma da React,"
+ },
+ {
+  "i": 308,
+  "start": 1349.48,
+  "end": 1353.58,
+  "text": "que ela que consegue ser a tela da tela do pedaço e ela é só renderíspe,"
+ },
+ {
+  "i": 309,
+  "start": 1353.58,
+  "end": 1356.28,
+  "text": "eu reescrevo na tela que ela tem que ter pedaço,"
+ },
+ {
+  "i": 310,
+  "start": 1356.28,
+  "end": 1359.58,
+  "text": "e se inscreve tudo, fica pesado para a gente."
+ },
+ {
+  "i": 311,
+  "start": 1359.58,
+  "end": 1362.78,
+  "text": "Por exemplo,"
+ },
+ {
+  "i": 312,
+  "start": 1362.78,
+  "end": 1366.18,
+  "text": "e aqui vem o consciente de Webbobl,"
+ },
+ {
+  "i": 313,
+  "start": 1366.18,
+  "end": 1367.28,
+  "text": "que eu sei,"
+ },
+ {
+  "i": 314,
+  "start": 1367.28,
+  "end": 1369.18,
+  "text": "aí é parte de internet,"
+ },
+ {
+  "i": 315,
+  "start": 1369.18,
+  "end": 1371.08,
+  "text": "que é a sua segurança,"
+ },
+ {
+  "i": 316,
+  "start": 1371.08,
+  "end": 1372.68,
+  "text": "que é a questão de cyber-ciurança,"
+ },
+ {
+  "i": 317,
+  "start": 1372.68,
+  "end": 1376.28,
+  "text": "no contexto, tem que ter o nosso obsarim."
+ },
+ {
+  "i": 318,
+  "start": 1376.28,
+  "end": 1379.28,
+  "text": "E também login,"
+ },
+ {
+  "i": 319,
+  "start": 1379.28,
+  "end": 1382.38,
+  "text": "como é que entra o equipamento,"
+ },
+ {
+  "i": 320,
+  "start": 1382.38,
+  "end": 1386.99,
+  "text": "que é um desktop no computador,"
+ },
+ {
+  "i": 321,
+  "start": 1386.99,
+  "end": 1389.39,
+  "text": "o tablet ou celular,"
+ },
+ {
+  "i": 322,
+  "start": 1389.39,
+  "end": 1391.39,
+  "text": "tem que ter o aloção,"
+ },
+ {
+  "i": 323,
+  "start": 1391.39,
+  "end": 1393.19,
+  "text": "não precisa saber fazer,"
+ },
+ {
+  "i": 324,
+  "start": 1393.19,
+  "end": 1395.89,
+  "text": "não precisa saber o que é."
+ },
+ {
+  "i": 325,
+  "start": 1395.99,
+  "end": 1397.29,
+  "text": "E vem aqui,"
+ },
+ {
+  "i": 326,
+  "start": 1397.29,
+  "end": 1399.29,
+  "text": "aí é propriamente ditulado,"
+ },
+ {
+  "i": 327,
+  "start": 1399.29,
+  "end": 1401.89,
+  "text": "todos os comportamentos que estão por trás,"
+ },
+ {
+  "i": 328,
+  "start": 1401.89,
+  "end": 1404.09,
+  "text": "podem estar no lugar dos dados,"
+ },
+ {
+  "i": 329,
+  "start": 1404.09,
+  "end": 1406.39,
+  "text": "a máscindada que o banco de dados,"
+ },
+ {
+  "i": 330,
+  "start": 1406.39,
+  "end": 1407.59,
+  "text": "é para os bancos de dados,"
+ },
+ {
+  "i": 331,
+  "start": 1407.59,
+  "end": 1409.99,
+  "text": "que é o externo de renunciamento,"
+ },
+ {
+  "i": 332,
+  "start": 1409.99,
+  "end": 1412.09,
+  "text": "de banco de dados,"
+ },
+ {
+  "i": 333,
+  "start": 1412.09,
+  "end": 1413.39,
+  "text": "eles têm todo o dedo,"
+ },
+ {
+  "i": 334,
+  "start": 1413.39,
+  "end": 1414.39,
+  "text": "que é de funcionar das dados,"
+ },
+ {
+  "i": 335,
+  "start": 1414.39,
+  "end": 1416.69,
+  "text": "pode ser aproveitado."
+ },
+ {
+  "i": 336,
+  "start": 1416.69,
+  "end": 1418.19,
+  "text": "Por exemplo,"
+ },
+ {
+  "i": 337,
+  "start": 1418.19,
+  "end": 1420.19,
+  "text": "uma tecnologia nessa linha,"
+ },
+ {
+  "i": 338,
+  "start": 1420.19,
+  "end": 1422.89,
+  "text": "o SuperBase, que a Melissa também usa."
+ },
+ {
+  "i": 339,
+  "start": 1422.89,
+  "end": 1425.19,
+  "text": "O SuperBase é uma plataforma de bancos de dados,"
+ },
+ {
+  "i": 340,
+  "start": 1425.19,
+  "end": 1427.79,
+  "text": "que usa o gericiador de bancos de dados,"
+ },
+ {
+  "i": 341,
+  "start": 1427.79,
+  "end": 1428.79,
+  "text": "pode ser de bias,"
+ },
+ {
+  "i": 342,
+  "start": 1428.79,
+  "end": 1431.79,
+  "text": "que é uma coisa assim."
+ },
+ {
+  "i": 343,
+  "start": 1431.79,
+  "end": 1435.79,
+  "text": "E ele tem um acervo de personalidade,"
+ },
+ {
+  "i": 344,
+  "start": 1435.79,
+  "end": 1438.79,
+  "text": "para ele ter a história procede"
+ },
+ {
+  "i": 345,
+  "start": 1438.79,
+  "end": 1440.39,
+  "text": "que é o que está procedido."
+ },
+ {
+  "i": 346,
+  "start": 1440.39,
+  "end": 1442.39,
+  "text": "Você pode definir algumas funções,"
+ },
+ {
+  "i": 347,
+  "start": 1442.39,
+  "end": 1443.89,
+  "text": "relativa ao banco,"
+ },
+ {
+  "i": 348,
+  "start": 1443.89,
+  "end": 1444.89,
+  "text": "o celular armazenado,"
+ },
+ {
+  "i": 349,
+  "start": 1444.89,
+  "end": 1446.59,
+  "text": "pode ser disparado por um hotel,"
+ },
+ {
+  "i": 350,
+  "start": 1446.59,
+  "end": 1447.79,
+  "text": "vai ser feita lá,"
+ },
+ {
+  "i": 351,
+  "start": 1447.79,
+  "end": 1452.19,
+  "text": "lá atrás daqueles servevam do SuperBase."
+ },
+ {
+  "i": 352,
+  "start": 1452.19,
+  "end": 1453.19,
+  "text": "O serve do acessador,"
+ },
+ {
+  "i": 353,
+  "start": 1453.19,
+  "end": 1456.19,
+  "text": "é uma máquina lá que é igualada aqueles dados lá."
+ },
+ {
+  "i": 354,
+  "start": 1456.19,
+  "end": 1459.19,
+  "text": "A bilhão está na tela."
+ },
+ {
+  "i": 355,
+  "start": 1459.19,
+  "end": 1461.19,
+  "text": "Ela pode estar em qualquer lugar do mundo,"
+ },
+ {
+  "i": 356,
+  "start": 1461.19,
+  "end": 1463.19,
+  "text": "mas é claro que é possível restringir"
+ },
+ {
+  "i": 357,
+  "start": 1463.19,
+  "end": 1466.19,
+  "text": "para que ela fique dentro do..."
+ },
+ {
+  "i": 358,
+  "start": 1466.19,
+  "end": 1471.08,
+  "text": "do limite, do país que você quer."
+ },
+ {
+  "i": 359,
+  "start": 1471.08,
+  "end": 1473.08,
+  "text": "Modos line, o sync."
+ },
+ {
+  "i": 360,
+  "start": 1473.08,
+  "end": 1476.08,
+  "text": "Ah, aqui é."
+ },
+ {
+  "i": 361,
+  "start": 1476.08,
+  "end": 1478.58,
+  "text": "O sistema você pode ter trabalho a igual do seu line,"
+ },
+ {
+  "i": 362,
+  "start": 1478.58,
+  "end": 1479.58,
+  "text": "não dá para só guardar,"
+ },
+ {
+  "i": 363,
+  "start": 1479.58,
+  "end": 1481.08,
+  "text": "está aí quando for."
+ },
+ {
+  "i": 364,
+  "start": 1481.08,
+  "end": 1483.08,
+  "text": "Assim que ele traa o line de jogos,"
+ },
+ {
+  "i": 365,
+  "start": 1483.08,
+  "end": 1485.08,
+  "text": "traz ações são feitas assim."
+ },
+ {
+  "i": 366,
+  "start": 1485.08,
+  "end": 1487.58,
+  "text": "Para o sistema central faz o syncronismo."
+ },
+ {
+  "i": 367,
+  "start": 1487.58,
+  "end": 1489.58,
+  "text": "Então você pode trabalhar aqui,"
+ },
+ {
+  "i": 368,
+  "start": 1489.58,
+  "end": 1493.08,
+  "text": "como com a ordem de civis que você recebeu,"
+ },
+ {
+  "i": 369,
+  "start": 1493.08,
+  "end": 1495.08,
+  "text": "está tendendo com a igualdade de informações,"
+ },
+ {
+  "i": 370,
+  "start": 1495.08,
+  "end": 1497.08,
+  "text": "mesmo se ele é sem interneite."
+ },
+ {
+  "i": 371,
+  "start": 1497.08,
+  "end": 1498.08,
+  "text": "Com o sistema de interneite,"
+ },
+ {
+  "i": 372,
+  "start": 1498.08,
+  "end": 1499.08,
+  "text": "ele é alto ou alto,"
+ },
+ {
+  "i": 373,
+  "start": 1499.08,
+  "end": 1501.08,
+  "text": "mas também é um responsual synchronismo com a base central,"
+ },
+ {
+  "i": 374,
+  "start": 1501.08,
+  "end": 1503.08,
+  "text": "com uma quantidade central."
+ },
+ {
+  "i": 375,
+  "start": 1503.08,
+  "end": 1505.08,
+  "text": "Aí é que a setor,"
+ },
+ {
+  "i": 376,
+  "start": 1505.08,
+  "end": 1506.08,
+  "text": "desde a justa,"
+ },
+ {
+  "i": 377,
+  "start": 1506.08,
+  "end": 1507.08,
+  "text": "eu quero ter alguma intenção,"
+ },
+ {
+  "i": 378,
+  "start": 1507.08,
+  "end": 1508.08,
+  "text": "ou imariante,"
+ },
+ {
+  "i": 379,
+  "start": 1508.08,
+  "end": 1510.08,
+  "text": "antes de passar para uma moda a gente dá,"
+ },
+ {
+  "i": 380,
+  "start": 1510.08,
+  "end": 1512.08,
+  "text": "está aqui, como é?"
+ },
+ {
+  "i": 381,
+  "start": 1512.08,
+  "end": 1514.08,
+  "text": "Ele já deu a digressa,"
+ },
+ {
+  "i": 382,
+  "start": 1514.08,
+  "end": 1516.08,
+  "text": "você pode ir até já num documento,"
+ },
+ {
+  "i": 383,
+  "start": 1516.08,
+  "end": 1519.08,
+  "text": "que eu fosse ele trabalhar com a intenção, né?"
+ },
+ {
+  "i": 384,
+  "start": 1519.08,
+  "end": 1521.08,
+  "text": "Note,"
+ },
+ {
+  "i": 385,
+  "start": 1521.08,
+  "end": 1523.08,
+  "text": "eu não deu um próprio te arrumado,"
+ },
+ {
+  "i": 386,
+  "start": 1523.08,
+  "end": 1526.08,
+  "text": "esse próprio de intenção,"
+ },
+ {
+  "i": 387,
+  "start": 1526.08,
+  "end": 1529.08,
+  "text": "a maneira que eu escreve aqui,"
+ },
+ {
+  "i": 388,
+  "start": 1529.08,
+  "end": 1531.08,
+  "text": "forçou ele"
+ },
+ {
+  "i": 389,
+  "start": 1531.08,
+  "end": 1535.08,
+  "text": "a trabalhar das intenções para baixo."
+ },
+ {
+  "i": 390,
+  "start": 1535.08,
+  "end": 1538.08,
+  "text": "E não querer logo o próprio que eu ia dar."
+ },
+ {
+  "i": 391,
+  "start": 1538.08,
+  "end": 1539.08,
+  "text": "Ah, passa aí,"
+ },
+ {
+  "i": 392,
+  "start": 1539.08,
+  "end": 1540.08,
+  "text": "eu vou ficar temos,"
+ },
+ {
+  "i": 393,
+  "start": 1540.08,
+  "end": 1542.08,
+  "text": "para o gerencipe que ela perde."
+ },
+ {
+  "i": 394,
+  "start": 1542.08,
+  "end": 1544.08,
+  "text": "Aqui você tem,"
+ },
+ {
+  "i": 395,
+  "start": 1544.08,
+  "end": 1546.08,
+  "text": "nós estamos falando no canal de"
+ },
+ {
+  "i": 396,
+  "start": 1546.08,
+  "end": 1548.08,
+  "text": "governança,"
+ },
+ {
+  "i": 397,
+  "start": 1548.08,
+  "end": 1550.08,
+  "text": "vamos ver um pouco mais do vídeo,"
+ },
+ {
+  "i": 398,
+  "start": 1550.08,
+  "end": 1551.08,
+  "text": "para gente ver,"
+ },
+ {
+  "i": 399,
+  "start": 1551.08,
+  "end": 1552.08,
+  "text": "do que se trata aqui,"
+ },
+ {
+  "i": 400,
+  "start": 1552.08,
+  "end": 1553.08,
+  "text": "nós já conseguimos aqui,"
+ },
+ {
+  "i": 401,
+  "start": 1553.08,
+  "end": 1554.08,
+  "text": "ainda não é?"
+ },
+ {
+  "i": 402,
+  "start": 1554.08,
+  "end": 1555.08,
+  "text": "Não é?"
+ },
+ {
+  "i": 403,
+  "start": 1555.08,
+  "end": 1556.08,
+  "text": "Não é?"
+ },
+ {
+  "i": 404,
+  "start": 1556.08,
+  "end": 1557.08,
+  "text": "Ah, assim, note que ele"
+ },
+ {
+  "i": 405,
+  "start": 1557.08,
+  "end": 1559.08,
+  "text": "gerou aqui,"
+ },
+ {
+  "i": 406,
+  "start": 1559.08,
+  "end": 1560.08,
+  "text": "especificado no domínio,"
+ },
+ {
+  "i": 407,
+  "start": 1560.08,
+  "end": 1562.08,
+  "text": "refe geração."
+ },
+ {
+  "i": 408,
+  "start": 1562.08,
+  "end": 1564.08,
+  "text": "Aqui eu posto tudo aqui,"
+ },
+ {
+  "i": 409,
+  "start": 1564.08,
+  "end": 1565.08,
+  "text": "ele tinha,"
+ },
+ {
+  "i": 410,
+  "start": 1565.08,
+  "end": 1566.08,
+  "text": "o que é,"
+ },
+ {
+  "i": 411,
+  "start": 1566.08,
+  "end": 1568.08,
+  "text": "o que não é, né?"
+ },
+ {
+  "i": 412,
+  "start": 1568.08,
+  "end": 1569.08,
+  "text": "É,"
+ },
+ {
+  "i": 413,
+  "start": 1569.08,
+  "end": 1570.08,
+  "text": "para facilitar,"
+ },
+ {
+  "i": 414,
+  "start": 1570.08,
+  "end": 1572.08,
+  "text": "vou baixar aí,"
+ },
+ {
+  "i": 415,
+  "start": 1572.08,
+  "end": 1574.08,
+  "text": "vou exportar aqui,"
+ },
+ {
+  "i": 416,
+  "start": 1574.08,
+  "end": 1575.08,
+  "text": "se é até fato,"
+ },
+ {
+  "i": 417,
+  "start": 1575.08,
+  "end": 1577.08,
+  "text": "então essa é a facilidade, né?"
+ },
+ {
+  "i": 418,
+  "start": 1577.08,
+  "end": 1579.08,
+  "text": "Vou exportar aqui,"
+ },
+ {
+  "i": 419,
+  "start": 1579.08,
+  "end": 1580.08,
+  "text": "eu não sei o que é,"
+ },
+ {
+  "i": 420,
+  "start": 1580.08,
+  "end": 1581.08,
+  "text": "não dá um olho mesmo."
+ },
+ {
+  "i": 421,
+  "start": 1581.08,
+  "end": 1583.08,
+  "text": "Aí eu vou abrir"
+ },
+ {
+  "i": 422,
+  "start": 1583.08,
+  "end": 1585.08,
+  "text": "a parte de dar o note,"
+ },
+ {
+  "i": 423,
+  "start": 1586.08,
+  "end": 1590.08,
+  "text": "aqui no meu note,"
+ },
+ {
+  "i": 424,
+  "start": 1590.08,
+  "end": 1595.67,
+  "text": "e vou ver se eu consigo abrir ele."
+ },
+ {
+  "i": 425,
+  "start": 1595.67,
+  "end": 1596.67,
+  "text": "Hmm, hmm,"
+ },
+ {
+  "i": 426,
+  "start": 1596.67,
+  "end": 1602.52,
+  "text": "eu queria abrir ele no navegador,"
+ },
+ {
+  "i": 427,
+  "start": 1602.52,
+  "end": 1607.6,
+  "text": "ele já era um arquivo tipo em midi,"
+ },
+ {
+  "i": 428,
+  "start": 1607.6,
+  "end": 1608.6,
+  "text": "em midi,"
+ },
+ {
+  "i": 429,
+  "start": 1608.6,
+  "end": 1610.6,
+  "text": "um midi,"
+ },
+ {
+  "i": 430,
+  "start": 1610.6,
+  "end": 1611.6,
+  "text": "eu vou ver se eu tenho."
+ },
+ {
+  "i": 431,
+  "start": 1611.6,
+  "end": 1615.04,
+  "text": "A gente só queria novos ao code,"
+ },
+ {
+  "i": 432,
+  "start": 1615.04,
+  "end": 1616.04,
+  "text": "a outras A,"
+ },
+ {
+  "i": 433,
+  "start": 1616.04,
+  "end": 1618.04,
+  "text": "a gente fez ao estúdio,"
+ },
+ {
+  "i": 434,
+  "start": 1618.04,
+  "end": 1622.04,
+  "text": "mas ele aceita até uma dura crota,"
+ },
+ {
+  "i": 435,
+  "start": 1622.04,
+  "end": 1629.93,
+  "text": "e um outro também,"
+ },
+ {
+  "i": 436,
+  "start": 1629.93,
+  "end": 1631.93,
+  "text": "ele aceita um outro também,"
+ },
+ {
+  "i": 437,
+  "start": 1631.93,
+  "end": 1634.93,
+  "text": "e um outro chamado o outro pat,"
+ },
+ {
+  "i": 438,
+  "start": 1634.93,
+  "end": 1639.71,
+  "text": "mas eu vou fazer um jogadinho aqui,"
+ },
+ {
+  "i": 439,
+  "start": 1639.71,
+  "end": 1641.71,
+  "text": "para facilitar nossas vidas."
+ },
+ {
+  "i": 440,
+  "start": 1641.71,
+  "end": 1643.71,
+  "text": "Eu vou pedir para ele aqui,"
+ },
+ {
+  "i": 441,
+  "start": 1643.71,
+  "end": 1647.63,
+  "text": "e isso também eu gosto fazer,"
+ },
+ {
+  "i": 442,
+  "start": 1647.63,
+  "end": 1649.63,
+  "text": "um pouco que eu tinha a fazer uma apresentação."
+ },
+ {
+  "i": 443,
+  "start": 1649.63,
+  "end": 1651.63,
+  "text": "Eu vou pedir para ele assim,"
+ },
+ {
+  "i": 444,
+  "start": 1651.63,
+  "end": 1662.54,
+  "text": "crie uma apresentação completa,"
+ },
+ {
+  "i": 445,
+  "start": 1662.54,
+  "end": 1678.9,
+  "text": "com esta primeira especificação do rio,"
+ },
+ {
+  "i": 446,
+  "start": 1678.9,
+  "end": 1682.9,
+  "text": "do negócio,"
+ },
+ {
+  "i": 447,
+  "start": 1683.9,
+  "end": 1685.9,
+  "text": "é a pre-generação,"
+ },
+ {
+  "i": 448,
+  "start": 1685.9,
+  "end": 1690.74,
+  "text": "para você,"
+ },
+ {
+  "i": 449,
+  "start": 1690.74,
+  "end": 1691.74,
+  "text": "aqui mesmo,"
+ },
+ {
+  "i": 450,
+  "start": 1691.74,
+  "end": 1693.74,
+  "text": "eu estou dando ele um subdigitivo agora."
+ },
+ {
+  "i": 451,
+  "start": 1693.74,
+  "end": 1696.74,
+  "text": "Eu saí da duro copo de identificação,"
+ },
+ {
+  "i": 452,
+  "start": 1696.74,
+  "end": 1697.74,
+  "text": "meu negócio agora,"
+ },
+ {
+  "i": 453,
+  "start": 1697.74,
+  "end": 1699.74,
+  "text": "eu quero incluir,"
+ },
+ {
+  "i": 454,
+  "start": 1699.74,
+  "end": 1702.74,
+  "text": "que ele me ajuda a transparir,"
+ },
+ {
+  "i": 455,
+  "start": 1702.74,
+  "end": 1704.74,
+  "text": "para fazer estar com o cliente,"
+ },
+ {
+  "i": 456,
+  "start": 1704.74,
+  "end": 1706.74,
+  "text": "eu quero fazer estar para um usuário interessado,"
+ },
+ {
+  "i": 457,
+  "start": 1706.74,
+  "end": 1709.74,
+  "text": "que aqui eu posso em cima disso aqui,"
+ },
+ {
+  "i": 458,
+  "start": 1709.74,
+  "end": 1712.74,
+  "text": "eu posso interagir com o usuário verdadeiro,"
+ },
+ {
+  "i": 459,
+  "start": 1712.74,
+  "end": 1718.74,
+  "text": "e tirar ele outras intenções e outras imbarianas."
+ },
+ {
+  "i": 460,
+  "start": 1718.74,
+  "end": 1722.74,
+  "text": "O mental restregir com qualquer aspecto,"
+ },
+ {
+  "i": 461,
+  "start": 1722.74,
+  "end": 1725.74,
+  "text": "expectativo do um aplicativo,"
+ },
+ {
+  "i": 462,
+  "start": 1725.74,
+  "end": 1727.74,
+  "text": "com o passo do cliente,"
+ },
+ {
+  "i": 463,
+  "start": 1727.74,
+  "end": 1729.74,
+  "text": "que fosse um sucesso ir,"
+ },
+ {
+  "i": 464,
+  "start": 1729.74,
+  "end": 1731.74,
+  "text": "com o tipo de letter, estar renativo,"
+ },
+ {
+  "i": 465,
+  "start": 1731.74,
+  "end": 1732.74,
+  "text": "restregir,"
+ },
+ {
+  "i": 466,
+  "start": 1732.74,
+  "end": 1736.15,
+  "text": "renativo e trabalho com a recuperação."
+ },
+ {
+  "i": 467,
+  "start": 1736.15,
+  "end": 1738.15,
+  "text": "Exatamente, esse raiz daqui."
+ },
+ {
+  "i": 468,
+  "start": 1738.15,
+  "end": 1741.15,
+  "text": "Mas aqui eu vi,"
+ },
+ {
+  "i": 469,
+  "start": 1741.15,
+  "end": 1743.15,
+  "text": "que ela vai estar com o cliente."
+ },
+ {
+  "i": 470,
+  "start": 1743.15,
+  "end": 1745.15,
+  "text": "E vou dizer,"
+ },
+ {
+  "i": 471,
+  "start": 1745.15,
+  "end": 1746.15,
+  "text": "para ir assim,"
+ },
+ {
+  "i": 472,
+  "start": 1746.15,
+  "end": 1748.15,
+  "text": "o negócio é a pre-generação,"
+ },
+ {
+  "i": 473,
+  "start": 1748.15,
+  "end": 1749.15,
+  "text": "uma testa de ficar,"
+ },
+ {
+  "i": 474,
+  "start": 1749.15,
+  "end": 1754.7,
+  "text": "um objetivo,"
+ },
+ {
+  "i": 475,
+  "start": 1757.07,
+  "end": 1758.07,
+  "text": "uma vez,"
+ },
+ {
+  "i": 476,
+  "start": 1758.07,
+  "end": 1759.07,
+  "text": "apresentar,"
+ },
+ {
+  "i": 477,
+  "start": 1759.07,
+  "end": 1761.07,
+  "text": "ao cliente,"
+ },
+ {
+  "i": 478,
+  "start": 1761.07,
+  "end": 1764.9,
+  "text": "para refenalmente,"
+ },
+ {
+  "i": 479,
+  "start": 1764.9,
+  "end": 1769.52,
+  "text": "da intenção,"
+ },
+ {
+  "i": 480,
+  "start": 1769.52,
+  "end": 1773.52,
+  "text": "e imbarianas,"
+ },
+ {
+  "i": 481,
+  "start": 1773.52,
+  "end": 1775.52,
+  "text": "imbarianas,"
+ },
+ {
+  "i": 482,
+  "start": 1775.52,
+  "end": 1783.14,
+  "text": "que gostou,"
+ },
+ {
+  "i": 483,
+  "start": 1783.14,
+  "end": 1785.71,
+  "text": "ok?"
+ },
+ {
+  "i": 484,
+  "start": 1785.71,
+  "end": 1794.75,
+  "text": "Defender,"
+ },
+ {
+  "i": 485,
+  "start": 1795.75,
+  "end": 1797.75,
+  "text": "confesso,"
+ },
+ {
+  "i": 486,
+  "start": 1797.75,
+  "end": 1800.75,
+  "text": "proposto,"
+ },
+ {
+  "i": 487,
+  "start": 1800.75,
+  "end": 1802.75,
+  "text": "e,"
+ },
+ {
+  "i": 488,
+  "start": 1802.75,
+  "end": 1806.1,
+  "text": "contesto,"
+ },
+ {
+  "i": 489,
+  "start": 1806.1,
+  "end": 1808.1,
+  "text": "alternativo,"
+ },
+ {
+  "i": 490,
+  "start": 1808.1,
+  "end": 1810.1,
+  "text": "isso aqui é coisa da nossa vez."
+ },
+ {
+  "i": 491,
+  "start": 1810.1,
+  "end": 1813.1,
+  "text": "Porque sempre o contest faz diferente, claro,"
+ },
+ {
+  "i": 492,
+  "start": 1813.1,
+  "end": 1814.1,
+  "text": "é bem um sistema,"
+ },
+ {
+  "i": 493,
+  "start": 1814.1,
+  "end": 1815.1,
+  "text": "é qualquer coisa,"
+ },
+ {
+  "i": 494,
+  "start": 1815.1,
+  "end": 1816.1,
+  "text": "ela vai fazer um discurso,"
+ },
+ {
+  "i": 495,
+  "start": 1816.1,
+  "end": 1817.1,
+  "text": "ela vai definir o contexto,"
+ },
+ {
+  "i": 496,
+  "start": 1817.1,
+  "end": 1818.1,
+  "text": "a ciência,"
+ },
+ {
+  "i": 497,
+  "start": 1818.1,
+  "end": 1819.1,
+  "text": "a mesma coisa,"
+ },
+ {
+  "i": 498,
+  "start": 1819.1,
+  "end": 1820.1,
+  "text": "é o meu específico."
+ },
+ {
+  "i": 499,
+  "start": 1820.1,
+  "end": 1822.1,
+  "text": "Defender e o contexto proposto,"
+ },
+ {
+  "i": 500,
+  "start": 1822.1,
+  "end": 1824.1,
+  "text": "o contexto alternativo,"
+ },
+ {
+  "i": 501,
+  "start": 1824.1,
+  "end": 1829.39,
+  "text": "de mens,"
+ },
+ {
+  "i": 502,
+  "start": 1829.39,
+  "end": 1830.39,
+  "text": "de men,"
+ },
+ {
+  "i": 503,
+  "start": 1830.39,
+  "end": 1831.39,
+  "text": "de honrar,"
+ },
+ {
+  "i": 504,
+  "start": 1831.39,
+  "end": 1834.41,
+  "text": "o,"
+ },
+ {
+  "i": 505,
+  "start": 1834.41,
+  "end": 1836.41,
+  "text": "reduzir,"
+ },
+ {
+  "i": 506,
+  "start": 1836.41,
+  "end": 1838.41,
+  "text": "escupo,"
+ },
+ {
+  "i": 507,
+  "start": 1838.41,
+  "end": 1850.67,
+  "text": "fazer."
+ },
+ {
+  "i": 508,
+  "start": 1850.67,
+  "end": 1854.95,
+  "text": "Eu quero que ele oferece o cliente,"
+ },
+ {
+  "i": 509,
+  "start": 1854.95,
+  "end": 1856.95,
+  "text": "opções de escupo,"
+ },
+ {
+  "i": 510,
+  "start": 1856.95,
+  "end": 1858.95,
+  "text": "vai envolver tudo,"
+ },
+ {
+  "i": 511,
+  "start": 1858.95,
+  "end": 1859.95,
+  "text": "vai ter escotoritor,"
+ },
+ {
+  "i": 512,
+  "start": 1859.95,
+  "end": 1862.95,
+  "text": "até essa parte de equipamento,"
+ },
+ {
+  "i": 513,
+  "start": 1862.95,
+  "end": 1864.95,
+  "text": "eu vou ter apenas"
+ },
+ {
+  "i": 514,
+  "start": 1864.95,
+  "end": 1867.95,
+  "text": "a psicodórdia de serviço,"
+ },
+ {
+  "i": 515,
+  "start": 1867.95,
+  "end": 1869.95,
+  "text": "cadastro o cliente,"
+ },
+ {
+  "i": 516,
+  "start": 1870.95,
+  "end": 1871.95,
+  "text": "é um tipo,"
+ },
+ {
+  "i": 517,
+  "start": 1871.95,
+  "end": 1872.95,
+  "text": "isso é igual que a área,"
+ },
+ {
+  "i": 518,
+  "start": 1872.95,
+  "end": 1873.95,
+  "text": "mas só é informática,"
+ },
+ {
+  "i": 519,
+  "start": 1873.95,
+  "end": 1874.95,
+  "text": "não,"
+ },
+ {
+  "i": 520,
+  "start": 1874.95,
+  "end": 1875.95,
+  "text": "se você for,"
+ },
+ {
+  "i": 521,
+  "start": 1875.95,
+  "end": 1877.95,
+  "text": "a gente é um próprio cicleto,"
+ },
+ {
+  "i": 522,
+  "start": 1877.95,
+  "end": 1879.95,
+  "text": "o infinito, você é comprar,"
+ },
+ {
+  "i": 523,
+  "start": 1879.95,
+  "end": 1881.95,
+  "text": "você vai ter que ver com as suas intenções dele,"
+ },
+ {
+  "i": 524,
+  "start": 1881.95,
+  "end": 1885.55,
+  "text": "as intenções delineam"
+ },
+ {
+  "i": 525,
+  "start": 1885.55,
+  "end": 1886.55,
+  "text": "o contexto,"
+ },
+ {
+  "i": 526,
+  "start": 1886.55,
+  "end": 1887.55,
+  "text": "o escupo, né?"
+ },
+ {
+  "i": 527,
+  "start": 1887.55,
+  "end": 1888.55,
+  "text": "Aí,"
+ },
+ {
+  "i": 528,
+  "start": 1888.55,
+  "end": 1889.55,
+  "text": "o escupo,"
+ },
+ {
+  "i": 529,
+  "start": 1889.55,
+  "end": 1890.55,
+  "text": "define o contexto,"
+ },
+ {
+  "i": 530,
+  "start": 1890.55,
+  "end": 1891.55,
+  "text": "você vai trabalhar,"
+ },
+ {
+  "i": 531,
+  "start": 1891.55,
+  "end": 1892.55,
+  "text": "pode ser que as intenções dele,"
+ },
+ {
+  "i": 532,
+  "start": 1892.55,
+  "end": 1894.55,
+  "text": "não, eu quero,"
+ },
+ {
+  "i": 533,
+  "start": 1894.55,
+  "end": 1895.55,
+  "text": "eu não tenho que não,"
+ },
+ {
+  "i": 534,
+  "start": 1895.55,
+  "end": 1896.55,
+  "text": "eu quero ficar básico,"
+ },
+ {
+  "i": 535,
+  "start": 1896.55,
+  "end": 1897.55,
+  "text": "por isso,"
+ },
+ {
+  "i": 536,
+  "start": 1897.55,
+  "end": 1898.55,
+  "text": "eu quero não ter que fazer,"
+ },
+ {
+  "i": 537,
+  "start": 1898.55,
+  "end": 1899.55,
+  "text": "não, eu quero não ter que fazer,"
+ },
+ {
+  "i": 538,
+  "start": 1899.55,
+  "end": 1900.55,
+  "text": "que posso,"
+ },
+ {
+  "i": 539,
+  "start": 1900.55,
+  "end": 1901.55,
+  "text": "é dar lá,"
+ },
+ {
+  "i": 540,
+  "start": 1901.55,
+  "end": 1903.55,
+  "text": "posso usar bateria,"
+ },
+ {
+  "i": 541,
+  "start": 1903.55,
+  "end": 1905.55,
+  "text": "o botô quando eu tiver cossado,"
+ },
+ {
+  "i": 542,
+  "start": 1905.55,
+  "end": 1906.55,
+  "text": "agora,"
+ },
+ {
+  "i": 543,
+  "start": 1906.55,
+  "end": 1908.55,
+  "text": "pode definir uma variable,"
+ },
+ {
+  "i": 544,
+  "start": 1908.55,
+  "end": 1911.55,
+  "text": "o gosto tem que ser até estilado,"
+ },
+ {
+  "i": 545,
+  "start": 1911.55,
+  "end": 1915.55,
+  "text": "a potência tem que ter a cheia sem isso,"
+ },
+ {
+  "i": 546,
+  "start": 1915.55,
+  "end": 1916.55,
+  "text": "não é?"
+ },
+ {
+  "i": 547,
+  "start": 1916.55,
+  "end": 1917.55,
+  "text": "Não é uma coisa,"
+ },
+ {
+  "i": 548,
+  "start": 1917.55,
+  "end": 1918.55,
+  "text": "mas vai qualquer coisa,"
+ },
+ {
+  "i": 549,
+  "start": 1918.55,
+  "end": 1919.55,
+  "text": "qualquer coisa que vai fazer,"
+ },
+ {
+  "i": 550,
+  "start": 1919.55,
+  "end": 1920.55,
+  "text": "como pessoa,"
+ },
+ {
+  "i": 551,
+  "start": 1920.55,
+  "end": 1922.55,
+  "text": "algum lugar para alguém,"
+ },
+ {
+  "i": 552,
+  "start": 1922.55,
+  "end": 1924.55,
+  "text": "o momento que se te aplica"
+ },
+ {
+  "i": 553,
+  "start": 1924.55,
+  "end": 1926.55,
+  "text": "é uma intenção de variantes,"
+ },
+ {
+  "i": 554,
+  "start": 1926.55,
+  "end": 1928.55,
+  "text": "para um área de negócio,"
+ },
+ {
+  "i": 555,
+  "start": 1928.55,
+  "end": 1930.55,
+  "text": "você desenvolve alguém,"
+ },
+ {
+  "i": 556,
+  "start": 1930.55,
+  "end": 1931.55,
+  "text": "informar."
+ },
+ {
+  "i": 557,
+  "start": 1931.55,
+  "end": 1932.55,
+  "text": "Agora, com a IA,"
+ },
+ {
+  "i": 558,
+  "start": 1932.55,
+  "end": 1934.55,
+  "text": "a gente consegue,"
+ },
+ {
+  "i": 559,
+  "start": 1934.55,
+  "end": 1935.55,
+  "text": "até ter que supor,"
+ },
+ {
+  "i": 560,
+  "start": 1935.55,
+  "end": 1937.55,
+  "text": "para fazer isso."
+ },
+ {
+  "i": 561,
+  "start": 1937.55,
+  "end": 1938.55,
+  "text": "Nós aqui,"
+ },
+ {
+  "i": 562,
+  "start": 1938.55,
+  "end": 1939.55,
+  "text": "estou aqui,"
+ },
+ {
+  "i": 563,
+  "start": 1939.55,
+  "end": 1940.55,
+  "text": "para criar uma apresentação completa,"
+ },
+ {
+  "i": 564,
+  "start": 1940.55,
+  "end": 1941.55,
+  "text": "para ter com minhas pescaras,"
+ },
+ {
+  "i": 565,
+  "start": 1941.55,
+  "end": 1943.55,
+  "text": "para o mundo de negócio."
+ },
+ {
+  "i": 566,
+  "start": 1943.55,
+  "end": 1944.55,
+  "text": "Porém,"
+ },
+ {
+  "i": 567,
+  "start": 1944.55,
+  "end": 1945.55,
+  "text": "quando eu sou autônico,"
+ },
+ {
+  "i": 568,
+  "start": 1945.55,
+  "end": 1948.55,
+  "text": "eu tira a definição do negócio,"
+ },
+ {
+  "i": 569,
+  "start": 1948.55,
+  "end": 1949.55,
+  "text": "o contexto,"
+ },
+ {
+  "i": 570,
+  "start": 1949.55,
+  "end": 1951.55,
+  "text": "ele já está me dando"
+ },
+ {
+  "i": 571,
+  "start": 1951.55,
+  "end": 1952.55,
+  "text": "espaço seguinte,"
+ },
+ {
+  "i": 572,
+  "start": 1952.55,
+  "end": 1954.55,
+  "text": "que já entra a nova parte mais técnica, né?"
+ },
+ {
+  "i": 573,
+  "start": 1954.55,
+  "end": 1955.55,
+  "text": "É um modelo,"
+ },
+ {
+  "i": 574,
+  "start": 1955.55,
+  "end": 1957.55,
+  "text": "um modelo,"
+ },
+ {
+  "i": 575,
+  "start": 1957.55,
+  "end": 1958.55,
+  "text": "que é o passo do elasco,"
+ },
+ {
+  "i": 576,
+  "start": 1958.55,
+  "end": 1959.55,
+  "text": "de lanciar, né?"
+ },
+ {
+  "i": 577,
+  "start": 1959.55,
+  "end": 1963.6,
+  "text": "Um modelo de lado para aqui,"
+ },
+ {
+  "i": 578,
+  "start": 1963.6,
+  "end": 1964.6,
+  "text": "e é igual a usar esta técnica,"
+ },
+ {
+  "i": 579,
+  "start": 1964.6,
+  "end": 1965.6,
+  "text": "a gente vai ir,"
+ },
+ {
+  "i": 580,
+  "start": 1965.6,
+  "end": 1966.6,
+  "text": "falar um pouquinho sobre ela,"
+ },
+ {
+  "i": 581,
+  "start": 1966.6,
+  "end": 1967.6,
+  "text": "que ela é bem simples,"
+ },
+ {
+  "i": 582,
+  "start": 1967.6,
+  "end": 1968.6,
+  "text": "não é?"
+ },
+ {
+  "i": 583,
+  "start": 1968.6,
+  "end": 1969.6,
+  "text": "Até,"
+ },
+ {
+  "i": 584,
+  "start": 1969.6,
+  "end": 1970.6,
+  "text": "matemáticamente,"
+ },
+ {
+  "i": 585,
+  "start": 1970.6,
+  "end": 1972.6,
+  "text": "maravilhicable e interessante,"
+ },
+ {
+  "i": 586,
+  "start": 1972.6,
+  "end": 1973.6,
+  "text": "isso aqui."
+ },
+ {
+  "i": 587,
+  "start": 1973.6,
+  "end": 1975.6,
+  "text": "E,"
+ },
+ {
+  "i": 588,
+  "start": 1975.6,
+  "end": 1977.6,
+  "text": "e essa é o que é,"
+ },
+ {
+  "i": 589,
+  "start": 1977.6,
+  "end": 1978.6,
+  "text": "passo mais,"
+ },
+ {
+  "i": 590,
+  "start": 1978.6,
+  "end": 1980.6,
+  "text": "o que é que exige"
+ },
+ {
+  "i": 591,
+  "start": 1980.6,
+  "end": 1981.6,
+  "text": "com esse vídeo format,"
+ },
+ {
+  "i": 592,
+  "start": 1981.6,
+  "end": 1982.6,
+  "text": "que é para que você,"
+ },
+ {
+  "i": 593,
+  "start": 1982.6,
+  "end": 1984.6,
+  "text": "ele devina ele,"
+ },
+ {
+  "i": 594,
+  "start": 1984.6,
+  "end": 1985.6,
+  "text": "tem conceitos do outro,"
+ },
+ {
+  "i": 595,
+  "start": 1985.6,
+  "end": 1986.6,
+  "text": "de alta hora,"
+ },
+ {
+  "i": 596,
+  "start": 1986.6,
+  "end": 1987.6,
+  "text": "de dormir,"
+ },
+ {
+  "i": 597,
+  "start": 1987.6,
+  "end": 1990.6,
+  "text": "de conceito de saber si o rosto,"
+ },
+ {
+  "i": 598,
+  "start": 1990.6,
+  "end": 1992.6,
+  "text": "de conceito de ele,"
+ },
+ {
+  "i": 599,
+  "start": 1992.6,
+  "end": 1994.6,
+  "text": "é nada,"
+ },
+ {
+  "i": 600,
+  "start": 1994.6,
+  "end": 1996.6,
+  "text": "autorização de enfim,"
+ },
+ {
+  "i": 601,
+  "start": 1996.6,
+  "end": 1997.6,
+  "text": "ninguém,"
+ },
+ {
+  "i": 602,
+  "start": 1997.6,
+  "end": 1998.6,
+  "text": "e tudo mais."
+ },
+ {
+  "i": 603,
+  "start": 1998.6,
+  "end": 1999.6,
+  "text": "Mas isso tudo vai,"
+ },
+ {
+  "i": 604,
+  "start": 1999.6,
+  "end": 2000.6,
+  "text": "não foi,"
+ },
+ {
+  "i": 605,
+  "start": 2000.6,
+  "end": 2001.6,
+  "text": "mas pode ir mais chegar lá."
+ },
+ {
+  "i": 606,
+  "start": 2001.6,
+  "end": 2002.6,
+  "text": "É quando ele falar,"
+ },
+ {
+  "i": 607,
+  "start": 2002.6,
+  "end": 2003.6,
+  "text": "do WebMode,"
+ },
+ {
+  "i": 608,
+  "start": 2003.6,
+  "end": 2004.6,
+  "text": "o potend,"
+ },
+ {
+  "i": 609,
+  "start": 2004.6,
+  "end": 2005.6,
+  "text": "o autocidado,"
+ },
+ {
+  "i": 610,
+  "start": 2005.6,
+  "end": 2006.6,
+  "text": "o offline,"
+ },
+ {
+  "i": 611,
+  "start": 2006.6,
+  "end": 2007.6,
+  "text": "o sync,"
+ },
+ {
+  "i": 612,
+  "start": 2007.6,
+  "end": 2008.6,
+  "text": "isso aqui,"
+ },
+ {
+  "i": 613,
+  "start": 2008.6,
+  "end": 2009.6,
+  "text": "tudo vai ficar evitente."
+ },
+ {
+  "i": 614,
+  "start": 2009.6,
+  "end": 2010.6,
+  "text": "É que ele pegou um catílico,"
+ },
+ {
+  "i": 615,
+  "start": 2010.6,
+  "end": 2011.6,
+  "text": "para que ele espere aqui,"
+ },
+ {
+  "i": 616,
+  "start": 2011.6,
+  "end": 2012.6,
+  "text": "o bote,"
+ },
+ {
+  "i": 617,
+  "start": 2012.6,
+  "end": 2013.6,
+  "text": "você possa ampliar esse espeto,"
+ },
+ {
+  "i": 618,
+  "start": 2013.6,
+  "end": 2014.6,
+  "text": "aumentando o escopo,"
+ },
+ {
+  "i": 619,
+  "start": 2014.6,
+  "end": 2015.6,
+  "text": "isso,"
+ },
+ {
+  "i": 620,
+  "start": 2015.6,
+  "end": 2016.6,
+  "text": "reduzindo o escopo."
+ },
+ {
+  "i": 621,
+  "start": 2016.6,
+  "end": 2019.6,
+  "text": "Ok,"
+ },
+ {
+  "i": 622,
+  "start": 2019.6,
+  "end": 2021.6,
+  "text": "ele devia ver aqui,"
+ },
+ {
+  "i": 623,
+  "start": 2021.6,
+  "end": 2025.81,
+  "text": "mudar um avanjo,"
+ },
+ {
+  "i": 624,
+  "start": 2025.81,
+  "end": 2026.81,
+  "text": "para a própria apresentação,"
+ },
+ {
+  "i": 625,
+  "start": 2026.81,
+  "end": 2028.81,
+  "text": "quero que ele diga assim,"
+ },
+ {
+  "i": 626,
+  "start": 2028.81,
+  "end": 2031.81,
+  "text": "usem"
+ },
+ {
+  "i": 627,
+  "start": 2031.81,
+  "end": 2035.47,
+  "text": "linguagem,"
+ },
+ {
+  "i": 628,
+  "start": 2035.47,
+  "end": 2036.47,
+  "text": "técnica,"
+ },
+ {
+  "i": 629,
+  "start": 2036.47,
+  "end": 2038.47,
+  "text": "da área,"
+ },
+ {
+  "i": 630,
+  "start": 2038.47,
+  "end": 2039.47,
+  "text": "olha,"
+ },
+ {
+  "i": 631,
+  "start": 2039.47,
+  "end": 2041.47,
+  "text": "de negócio,"
+ },
+ {
+  "i": 632,
+  "start": 2041.47,
+  "end": 2044.88,
+  "text": "mas,"
+ },
+ {
+  "i": 633,
+  "start": 2044.88,
+  "end": 2048.88,
+  "text": "evite"
+ },
+ {
+  "i": 634,
+  "start": 2048.88,
+  "end": 2050.88,
+  "text": "usar"
+ },
+ {
+  "i": 635,
+  "start": 2050.88,
+  "end": 2052.88,
+  "text": "textos,"
+ },
+ {
+  "i": 636,
+  "start": 2052.88,
+  "end": 2054.88,
+  "text": "técnicos,"
+ },
+ {
+  "i": 637,
+  "start": 2054.88,
+  "end": 2062.63,
+  "text": "informar,"
+ },
+ {
+  "i": 638,
+  "start": 2062.63,
+  "end": 2063.63,
+  "text": "eu até falei,"
+ },
+ {
+  "i": 639,
+  "start": 2063.63,
+  "end": 2064.63,
+  "text": "ele entende isso,"
+ },
+ {
+  "i": 640,
+  "start": 2064.63,
+  "end": 2065.63,
+  "text": "olha,"
+ },
+ {
+  "i": 641,
+  "start": 2065.63,
+  "end": 2067.63,
+  "text": "o que ele está acontecendo com a iarma,"
+ },
+ {
+  "i": 642,
+  "start": 2067.63,
+  "end": 2069.63,
+  "text": "informar,"
+ },
+ {
+  "i": 643,
+  "start": 2069.63,
+  "end": 2070.63,
+  "text": "olha,"
+ },
+ {
+  "i": 644,
+  "start": 2070.63,
+  "end": 2071.63,
+  "text": "se eu escrever essa"
+ },
+ {
+  "i": 645,
+  "start": 2071.63,
+  "end": 2072.63,
+  "text": "vigília,"
+ },
+ {
+  "i": 646,
+  "start": 2072.63,
+  "end": 2073.63,
+  "text": "ele vai entender,"
+ },
+ {
+  "i": 647,
+  "start": 2073.63,
+  "end": 2077.78,
+  "text": "informar de textos,"
+ },
+ {
+  "i": 648,
+  "start": 2077.78,
+  "end": 2078.78,
+  "text": "quer dizer,"
+ },
+ {
+  "i": 649,
+  "start": 2078.78,
+  "end": 2079.78,
+  "text": "informar de que esse é sabe,"
+ },
+ {
+  "i": 650,
+  "start": 2079.78,
+  "end": 2080.78,
+  "text": "quer dar usar,"
+ },
+ {
+  "i": 651,
+  "start": 2080.78,
+  "end": 2082.78,
+  "text": "um linguagem à própria área"
+ },
+ {
+  "i": 652,
+  "start": 2082.78,
+  "end": 2084.78,
+  "text": "de resolventes estenos,"
+ },
+ {
+  "i": 653,
+  "start": 2084.78,
+  "end": 2086.78,
+  "text": "ele é ambiente,"
+ },
+ {
+  "i": 654,
+  "start": 2086.78,
+  "end": 2087.78,
+  "text": "linguagem,"
+ },
+ {
+  "i": 655,
+  "start": 2087.78,
+  "end": 2088.78,
+  "text": "para as nossas clases,"
+ },
+ {
+  "i": 656,
+  "start": 2088.78,
+  "end": 2089.78,
+  "text": "que ele,"
+ },
+ {
+  "i": 657,
+  "start": 2089.78,
+  "end": 2090.78,
+  "text": "é que ele dá,"
+ },
+ {
+  "i": 658,
+  "start": 2090.78,
+  "end": 2091.78,
+  "text": "tal vez,"
+ },
+ {
+  "i": 659,
+  "start": 2091.78,
+  "end": 2092.78,
+  "text": "ele vai voar,"
+ },
+ {
+  "i": 660,
+  "start": 2092.78,
+  "end": 2093.78,
+  "text": "ele vai ter que usar,"
+ },
+ {
+  "i": 661,
+  "start": 2093.78,
+  "end": 2094.78,
+  "text": "para usar a área de agora,"
+ },
+ {
+  "i": 662,
+  "start": 2094.78,
+  "end": 2095.78,
+  "text": "do que ele entende,"
+ },
+ {
+  "i": 663,
+  "start": 2095.78,
+  "end": 2097.78,
+  "text": "e,"
+ },
+ {
+  "i": 664,
+  "start": 2097.78,
+  "end": 2098.78,
+  "text": "ele vai evitar,"
+ },
+ {
+  "i": 665,
+  "start": 2098.78,
+  "end": 2100.78,
+  "text": "ter o técnico informar de que ele vai dar,"
+ },
+ {
+  "i": 666,
+  "start": 2100.78,
+  "end": 2101.78,
+  "text": "por certo,"
+ },
+ {
+  "i": 667,
+  "start": 2101.78,
+  "end": 2102.78,
+  "text": "no sentido,"
+ },
+ {
+  "i": 668,
+  "start": 2102.78,
+  "end": 2103.78,
+  "text": "desse para o que ele vai entender."
+ },
+ {
+  "i": 669,
+  "start": 2103.78,
+  "end": 2104.78,
+  "text": "Ok?"
+ },
+ {
+  "i": 670,
+  "start": 2106.78,
+  "end": 2107.78,
+  "text": "Essa é a derrubo,"
+ },
+ {
+  "i": 671,
+  "start": 2107.78,
+  "end": 2108.78,
+  "text": "vamos pedir para fazer,"
+ },
+ {
+  "i": 672,
+  "start": 2108.78,
+  "end": 2109.78,
+  "text": "primeiro,"
+ },
+ {
+  "i": 673,
+  "start": 2109.78,
+  "end": 2111.78,
+  "text": "lá,"
+ },
+ {
+  "i": 674,
+  "start": 2111.78,
+  "end": 2113.78,
+  "text": "como já esteste aqui,"
+ },
+ {
+  "i": 675,
+  "start": 2113.78,
+  "end": 2114.78,
+  "text": "quer que é uma completa,"
+ },
+ {
+  "i": 676,
+  "start": 2114.78,
+  "end": 2116.78,
+  "text": "com esta primeira estificação de domínio,"
+ },
+ {
+  "i": 677,
+  "start": 2116.78,
+  "end": 2117.78,
+  "text": "é o nosso,"
+ },
+ {
+  "i": 678,
+  "start": 2117.78,
+  "end": 2118.78,
+  "text": "é o que ele vai dar,"
+ },
+ {
+  "i": 679,
+  "start": 2118.78,
+  "end": 2119.78,
+  "text": "e,"
+ },
+ {
+  "i": 680,
+  "start": 2119.78,
+  "end": 2120.78,
+  "text": "ele vai dar uma variança,"
+ },
+ {
+  "i": 681,
+  "start": 2120.78,
+  "end": 2122.78,
+  "text": "para definir o rumo que ele vai tomar,"
+ },
+ {
+  "i": 682,
+  "start": 2122.78,
+  "end": 2123.78,
+  "text": "sempre,"
+ },
+ {
+  "i": 683,
+  "start": 2123.78,
+  "end": 2124.78,
+  "text": "é logo o braço,"
+ },
+ {
+  "i": 684,
+  "start": 2124.78,
+  "end": 2127.09,
+  "text": "beleza?"
+ },
+ {
+  "i": 685,
+  "start": 2127.09,
+  "end": 2128.09,
+  "text": "Vamos ver o que ele faz?"
+ },
+ {
+  "i": 686,
+  "start": 2128.09,
+  "end": 2136.2,
+  "text": "Note aqui que eu passei um pouco aqui,"
+ },
+ {
+  "i": 687,
+  "start": 2136.2,
+  "end": 2140.51,
+  "text": "ele já fez uma proposta"
+ },
+ {
+  "i": 688,
+  "start": 2140.51,
+  "end": 2142.51,
+  "text": "com a coisa que você é apresentada,"
+ },
+ {
+  "i": 689,
+  "start": 2142.51,
+  "end": 2143.51,
+  "text": "né?"
+ },
+ {
+  "i": 690,
+  "start": 2143.51,
+  "end": 2144.51,
+  "text": "Leana legilação,"
+ },
+ {
+  "i": 691,
+  "start": 2144.51,
+  "end": 2145.51,
+  "text": "critérios,"
+ },
+ {
+  "i": 692,
+  "start": 2145.51,
+  "end": 2146.51,
+  "text": "segurança,"
+ },
+ {
+  "i": 693,
+  "start": 2146.51,
+  "end": 2147.51,
+  "text": "tal,"
+ },
+ {
+  "i": 694,
+  "start": 2147.51,
+  "end": 2148.51,
+  "text": "aquele bem definiu o escopo,"
+ },
+ {
+  "i": 695,
+  "start": 2148.51,
+  "end": 2150.51,
+  "text": "proposto alternativa,"
+ },
+ {
+  "i": 696,
+  "start": 2150.51,
+  "end": 2151.51,
+  "text": "é,"
+ },
+ {
+  "i": 697,
+  "start": 2152.51,
+  "end": 2153.51,
+  "text": "ele aqui,"
+ },
+ {
+  "i": 698,
+  "start": 2154.51,
+  "end": 2156.51,
+  "text": "pelo que está proposto,"
+ },
+ {
+  "i": 699,
+  "start": 2156.51,
+  "end": 2158.51,
+  "text": "é da proposta da documentação inicial,"
+ },
+ {
+  "i": 700,
+  "start": 2158.51,
+  "end": 2160.51,
+  "text": "e o senar está ativo."
+ },
+ {
+  "i": 701,
+  "start": 2160.51,
+  "end": 2162.51,
+  "text": "Você vê que aqui ele vai reduzir, né?"
+ },
+ {
+  "i": 702,
+  "start": 2162.51,
+  "end": 2164.51,
+  "text": "É mesmo com o encontro de tom completo,"
+ },
+ {
+  "i": 703,
+  "start": 2164.51,
+  "end": 2166.51,
+  "text": "ele já terminou aqui, né?"
+ },
+ {
+  "i": 704,
+  "start": 2166.51,
+  "end": 2168.51,
+  "text": "Esse aqui é,"
+ },
+ {
+  "i": 705,
+  "start": 2168.51,
+  "end": 2169.51,
+  "text": "então,"
+ },
+ {
+  "i": 706,
+  "start": 2169.51,
+  "end": 2170.51,
+  "text": "a derrê-se tão rigorosa,"
+ },
+ {
+  "i": 707,
+  "start": 2170.51,
+  "end": 2171.51,
+  "text": "todas as legilações,"
+ },
+ {
+  "i": 708,
+  "start": 2171.51,
+  "end": 2173.51,
+  "text": "ele já se moviu por aqui também,"
+ },
+ {
+  "i": 709,
+  "start": 2173.51,
+  "end": 2175.51,
+  "text": "e tem plantação aqui,"
+ },
+ {
+  "i": 710,
+  "start": 2175.51,
+  "end": 2177.51,
+  "text": "para essa aqui é mais tempo,"
+ },
+ {
+  "i": 711,
+  "start": 2177.51,
+  "end": 2179.51,
+  "text": "por toda essa sofrução proposta,"
+ },
+ {
+  "i": 712,
+  "start": 2179.51,
+  "end": 2180.51,
+  "text": "não para ser mesmo."
+ },
+ {
+  "i": 713,
+  "start": 2181.51,
+  "end": 2184.27,
+  "text": "Ok?"
+ },
+ {
+  "i": 714,
+  "start": 2184.27,
+  "end": 2185.27,
+  "text": "Então, eu vou te achar,"
+ },
+ {
+  "i": 715,
+  "start": 2185.27,
+  "end": 2186.27,
+  "text": "para a afinamento para o cliente,"
+ },
+ {
+  "i": 716,
+  "start": 2186.27,
+  "end": 2187.27,
+  "text": "para a filha magnária,"
+ },
+ {
+  "i": 717,
+  "start": 2187.27,
+  "end": 2189.27,
+  "text": "uma opada afota de dívida,"
+ },
+ {
+  "i": 718,
+  "start": 2189.27,
+  "end": 2190.27,
+  "text": "e para que ele não me importe,"
+ },
+ {
+  "i": 719,
+  "start": 2190.27,
+  "end": 2191.27,
+  "text": "e até tal."
+ },
+ {
+  "i": 720,
+  "start": 2191.27,
+  "end": 2192.27,
+  "text": "Aqui é,"
+ },
+ {
+  "i": 721,
+  "start": 2192.27,
+  "end": 2194.27,
+  "text": "vai inferencial com textos e as intenções,"
+ },
+ {
+  "i": 722,
+  "start": 2194.27,
+  "end": 2197.27,
+  "text": "para ver que é tipo de magnário ali,"
+ },
+ {
+  "i": 723,
+  "start": 2197.27,
+  "end": 2199.27,
+  "text": "é alvo, né?"
+ },
+ {
+  "i": 724,
+  "start": 2199.27,
+  "end": 2201.27,
+  "text": "Durante a iluminação."
+ },
+ {
+  "i": 725,
+  "start": 2201.27,
+  "end": 2202.27,
+  "text": "Comitado,"
+ },
+ {
+  "i": 726,
+  "start": 2202.27,
+  "end": 2203.27,
+  "text": "a estumetação,"
+ },
+ {
+  "i": 727,
+  "start": 2203.27,
+  "end": 2204.27,
+  "text": "o usted é que não é um enferme digitais,"
+ },
+ {
+  "i": 728,
+  "start": 2204.27,
+  "end": 2205.27,
+  "text": "mas não outra,"
+ },
+ {
+  "i": 729,
+  "start": 2205.27,
+  "end": 2206.27,
+  "text": "e também,"
+ },
+ {
+  "i": 730,
+  "start": 2206.27,
+  "end": 2207.27,
+  "text": "a repita-feira,"
+ },
+ {
+  "i": 731,
+  "start": 2207.27,
+  "end": 2208.27,
+  "text": "a gente quer usar,"
+ },
+ {
+  "i": 732,
+  "start": 2208.27,
+  "end": 2209.27,
+  "text": "pode ser que tem alguns constalidades,"
+ },
+ {
+  "i": 733,
+  "start": 2209.27,
+  "end": 2210.27,
+  "text": "tem que registrar a água,"
+ },
+ {
+  "i": 734,
+  "start": 2210.27,
+  "end": 2211.27,
+  "text": "alguma,"
+ },
+ {
+  "i": 735,
+  "start": 2211.27,
+  "end": 2212.27,
+  "text": "alguma propriedade,"
+ },
+ {
+  "i": 736,
+  "start": 2212.27,
+  "end": 2215.27,
+  "text": "que conseguimos re-indificar?"
+ },
+ {
+  "i": 737,
+  "start": 2215.27,
+  "end": 2216.27,
+  "text": "selling,"
+ },
+ {
+  "i": 738,
+  "start": 2216.27,
+  "end": 2218.27,
+  "text": "isso é tudo que você quer."
+ },
+ {
+  "i": 739,
+  "start": 2218.27,
+  "end": 2220.27,
+  "text": "De degutado,"
+ },
+ {
+  "i": 740,
+  "start": 2220.27,
+  "end": 2221.27,
+  "text": "também,"
+ },
+ {
+  "i": 741,
+  "start": 2221.27,
+  "end": 2222.27,
+  "text": "tem que se600."
+ },
+ {
+  "i": 742,
+  "start": 2223.27,
+  "end": 2226.27,
+  "text": "Eles聯foriam comsequia,"
+ },
+ {
+  "i": 743,
+  "start": 2226.27,
+  "end": 2228.27,
+  "text": "em um primer dadoView o 대해,"
+ },
+ {
+  "i": 744,
+  "start": 2228.27,
+  "end": 2231.27,
+  "text": "depois понимamos que"
+ },
+ {
+  "i": 745,
+  "start": 2231.27,
+  "end": 2233.27,
+  "text": "todo cara,"
+ },
+ {
+  "i": 746,
+  "start": 2233.27,
+  "end": 2234.27,
+  "text": "medida,"
+ },
+ {
+  "i": 747,
+  "start": 2234.27,
+  "end": 2235.27,
+  "text": "b e zДа-la."
+ },
+ {
+  "i": 748,
+  "start": 2322.31,
+  "end": 2338.06,
+  "text": "uma evalente. O que ele use e duas pressões, vou poder sair na internet, pegar alguma coisa aqui,"
+ },
+ {
+  "i": 749,
+  "start": 2338.06,
+  "end": 2356.73,
+  "text": "com a mente da área, e eu graficos em esse escalidão, esse escalidrão, é uma ferramenta em"
+ },
+ {
+  "i": 750,
+  "start": 2356.73,
+  "end": 2363.37,
+  "text": "meio que periletas de desenvolvedores para desenhar, pode desenhar algum dedo, como é que o seu"
+ },
+ {
+  "i": 751,
+  "start": 2363.37,
+  "end": 2369.89,
+  "text": "dedo, vai ficar um fruto da coisa, um fruto só grama, e também pode mostrar outras coisas, ele é bem"
+ },
+ {
+  "i": 752,
+  "start": 2369.89,
+  "end": 2376.03,
+  "text": "interessante, vai pousar o campo bem técnico, e o campo bem formal. Vamos ver o que ele faz?"
+ },
+ {
+  "i": 753,
+  "start": 2376.03,
+  "end": 2410.54,
+  "text": "Olá, você percebeu que ele vai discutir o que está pagando em inglês? Ele tem uma preferência"
+ },
+ {
+  "i": 754,
+  "start": 2410.54,
+  "end": 2419.1,
+  "text": "da Ibleita, não é? Espero que dá a Ibleita, ele interage com você no seu idioma, mas"
+ },
+ {
+  "i": 755,
+  "start": 2419.1,
+  "end": 2426.98,
+  "text": "ele é a sua cena do inglês, ele pega a sua intesação e traduz o inglês e ele é a tua"
+ },
+ {
+  "i": 756,
+  "start": 2426.98,
+  "end": 2432.3,
+  "text": "cena do inglês, o núcleo de a sua cena das reais, é inglês. Agora quando ele vai arrumar"
+ },
+ {
+  "i": 757,
+  "start": 2432.3,
+  "end": 2440.26,
+  "text": "essas coisas, o que é fazer é uma coisa, as voaldes são linguagens mais estáveis, como"
+ },
+ {
+  "i": 758,
+  "start": 2440.26,
+  "end": 2446.38,
+  "text": "o TypeScript, ele usa um TypeScript para o negócio de pagas, ele não deixa que você deve"
+ },
+ {
+  "i": 759,
+  "start": 2446.38,
+  "end": 2461.78,
+  "text": "deixar variados, ele deve ir ao clandetivo, a gente começa, depois ele usa também essa"
+ },
+ {
+  "i": 760,
+  "start": 2461.78,
+  "end": 2474.85,
+  "text": "linguagem que começa com o P, temos que ir ao lado da ir, o Paito, ele gosta muito do Paito,"
+ },
+ {
+  "i": 761,
+  "start": 2474.85,
+  "end": 2481.93,
+  "text": "também o Paito tem uma capacidade de funçar em vários segmentos dentro do computador da"
+ },
+ {
+  "i": 762,
+  "start": 2481.93,
+  "end": 2490.89,
+  "text": "Ibleita, ele gosta muito de criar um Baito, que tem que criar scripts pra executar uma"
+ },
+ {
+  "i": 763,
+  "start": 2490.89,
+  "end": 2501.56,
+  "text": "coisa que me faz, quando ele quer, a mazinha variante também agora, ele está usando o"
+ },
+ {
+  "i": 764,
+  "start": 2501.56,
+  "end": 2518.85,
+  "text": "negócio de Madrid e a Ibleita, vai só um dia sobre ela, ele já até criou a dita cuja,"
+ },
+ {
+  "i": 765,
+  "start": 2518.85,
+  "end": 2525.13,
+  "text": "mas até dando detalhe, onde está, onde é que está, onde é que tem Ibleita, bravo, ele já"
+ },
+ {
+  "i": 766,
+  "start": 2525.13,
+  "end": 2539.7,
+  "text": "criou aqui, ele abriu Chrome, até que eu me logue aqui, vou me logue aqui com o Benet,"
+ },
+ {
+  "i": 767,
+  "start": 2539.7,
+  "end": 2576.59,
+  "text": "ele abriu de novo, não vai aqui nesse rapaz, ele mesmo se acertou o brazo, no caso ele abriu"
+ },
+ {
+  "i": 768,
+  "start": 2576.59,
+  "end": 2584.78,
+  "text": "Chrome, pra jogar a apresentação, não sei qual é a dita, quem está fazendo a mesma"
+ },
+ {
+  "i": 769,
+  "start": 2584.78,
+  "end": 2596.5,
+  "text": "dita, não espera aqui, que ele vai botar um agosto, o par, está aqui, ele já gerou a apresentação,"
+ },
+ {
+  "i": 770,
+  "start": 2596.5,
+  "end": 2626.28,
+  "text": "não, você vê, vai que legal, é assim, vou botar aqui, que ela se é, não, vai, vai"
+ },
+ {
+  "i": 771,
+  "start": 2626.28,
+  "end": 2636.6,
+  "text": "que ele está lendo a par, está, vai iniciar a apresentação como os continhos já estão aqui,"
+ },
+ {
+  "i": 772,
+  "start": 2636.6,
+  "end": 2642.64,
+  "text": "continho, pausando, eu falei pra ele, você vê que o fio da operação, a intenção, a"
+ },
+ {
+  "i": 773,
+  "start": 2642.64,
+  "end": 2666.02,
+  "text": "apresentação, a imariante, não, não vê o que ele está fazendo aí, está carregando a"
+ },
+ {
+  "i": 774,
+  "start": 2666.02,
+  "end": 2679.92,
+  "text": "apresentação, eu quero que ele se convoy, pode ele botar aqui, vai ter novo, a gente não"
+ },
+ {
+  "i": 775,
+  "start": 2679.92,
+  "end": 2695.64,
+  "text": "contra o da blica, eu não vou defeito, mas esse desí bonito aqui é 2 calidrão, e a história"
+ },
+ {
+  "i": 776,
+  "start": 2695.64,
+  "end": 2707.48,
+  "text": "de verdade, vamos ver nesse atejo, vamos ver aqui, um da o f12 aqui, o f12 é de ser pedável"
+ },
+ {
+  "i": 777,
+  "start": 2707.48,
+  "end": 2720.85,
+  "text": "que aconteceu com os baixos de hoje, na consola, né, que é consola, ai, e vocês devem"
+ },
+ {
+  "i": 778,
+  "start": 2720.85,
+  "end": 2743.64,
+  "text": "feitinho, eu vou copiar consola, vou botar para lá, mas ir para ele que ganha o erro, a questão"
+ },
+ {
+  "i": 779,
+  "start": 2743.64,
+  "end": 2769.48,
+  "text": "de estar aqui, olha, talvez não é mais preocupada ainda, eu dei esse aqui para ele, ele é"
+ },
+ {
+  "i": 780,
+  "start": 2769.48,
+  "end": 2775.76,
+  "text": "criou o nosso vídeo, né, essa regoa de pai, tu, é um script, eu para ver ele que é"
+ },
+ {
+  "i": 781,
+  "start": 2775.76,
+  "end": 2779.88,
+  "text": "coisa, ele tem acesso na navega do olho, vai lá por trás, tem parte de um cachorro de"
+ },
+ {
+  "i": 782,
+  "start": 2779.88,
+  "end": 2785.96,
+  "text": "gol, é o que está acontecendo na navega do gol, não se preocupa com o sistema, não,"
+ },
+ {
+  "i": 783,
+  "start": 2785.96,
+  "end": 2791.56,
+  "text": "isso aí com o tempo, isso vai chegar lá, a gente vai conhecer o mascre, um livro do alto"
+ },
+ {
+  "i": 784,
+  "start": 2791.56,
+  "end": 2800.68,
+  "text": "do conceito, no nível de baixo, no lugar, então o que é trabalhar nesse nível de dirigir"
+ },
+ {
+  "i": 785,
+  "start": 2800.68,
+  "end": 2805.96,
+  "text": "a proteção, desolver a proteção, desolver a proteção dos outros, onde eu ver com o foso"
+ },
+ {
+  "i": 786,
+  "start": 2805.96,
+  "end": 2810.72,
+  "text": "de procedimento do futuro, e quando a pimenta que aí está tendo pra eles, o momento está"
+ },
+ {
+  "i": 787,
+  "start": 2811.68,
+  "end": 2822.16,
+  "text": "incrível, vai ser mais que você usar o WordPress ou o Clive, só sistemas que ele chama,"
+ },
+ {
+  "i": 788,
+  "start": 2822.16,
+  "end": 2827.12,
+  "text": "não é da pessoa que se chama, enquanto a tepação que acaba no pimenta de sistema, para fazer"
+ },
+ {
+  "i": 789,
+  "start": 2827.12,
+  "end": 2835.0,
+  "text": "esses sistemas, de fazer site, né, para o design, compensar o celular, fazer mais leve assim,"
+ },
+ {
+  "i": 790,
+  "start": 2835.0,
+  "end": 2845.8,
+  "text": "sem ser um outro, esse primeiro é muito complexo, mas aí o que acontece, então a questão de"
+ },
+ {
+  "i": 791,
+  "start": 2845.8,
+  "end": 2851.4,
+  "text": "local, de que é sem código, baixo código, que tem um jogo de acordo com o código, e a gente"
+ },
+ {
+  "i": 792,
+  "start": 2851.4,
+  "end": 2858.2,
+  "text": "vai estar com a gente, aí no caso aí, já está ficando diferente, então ela está subindo o nível,"
+ },
+ {
+  "i": 793,
+  "start": 2858.2,
+  "end": 2875.12,
+  "text": "tem atenção, vai estar revenada, a apresentação, e ele já pegou o que eu passei, ele já está até"
+ },
+ {
+  "i": 794,
+  "start": 2875.12,
+  "end": 2897.11,
+  "text": "abrindo ela, e meu brão nem botou a barça para ir, a gente sovava, quando eu fosse ao"
+ },
+ {
+  "i": 795,
+  "start": 2897.11,
+  "end": 2909.2,
+  "text": "lá, que comecei a desenvolver da memória dele aqui, né, para assim, ó, isso aqui você não"
+ },
+ {
+  "i": 796,
+  "start": 2909.2,
+  "end": 2918.49,
+  "text": "se fala disso do outro, né, uma muderitidade, né, é os objetos, né, quer dizer, como é que"
+ },
+ {
+  "i": 797,
+  "start": 2918.49,
+  "end": 2928.2,
+  "text": "é a os componentes do hotel, né, como é que ele é estar lá com os traí, por isso que as"
+ },
+ {
+  "i": 798,
+  "start": 2928.2,
+  "end": 2935.36,
+  "text": "reais a tendência dela, ela substitui o gano, já vai clicar em botão, ir pro cronoplanilha,"
+ },
+ {
+  "i": 799,
+  "start": 2935.36,
+  "end": 2942.04,
+  "text": "tal, lá, isso eu assumi, isso vai dizer o que é que isso, a questão de valer, ele não"
+ },
+ {
+  "i": 800,
+  "start": 2942.04,
+  "end": 2949.8,
+  "text": "está calvendo, contador bem, mas não é uma coisa mais que a gente por voe, não é bem"
+ },
+ {
+  "i": 801,
+  "start": 2949.8,
+  "end": 2959.47,
+  "text": "mais, até o celular, a tendência é a comunicação, se é incompletamente, se não,"
+ },
+ {
+  "i": 802,
+  "start": 2959.47,
+  "end": 2967.39,
+  "text": "ela tem a incentência da compra, não, talvez isso vinha mais para ter eóculos, que o Google"
+ },
+ {
+  "i": 803,
+  "start": 2967.39,
+  "end": 2974.63,
+  "text": "lançou e já tem outros melhores, em você filha, ver, oven, em você filha que você está"
+ },
+ {
+  "i": 804,
+  "start": 2974.63,
+  "end": 2980.87,
+  "text": "lá, você recebe mensagem, internet, Google, Google tips, né, como maria das coisas vai"
+ },
+ {
+  "i": 805,
+  "start": 2980.87,
+  "end": 2991.36,
+  "text": "ser filme em vídeo, em áudio, você, praticamente não vai ter necessidade de ter clara, essa"
+ },
+ {
+  "i": 806,
+  "start": 2991.36,
+  "end": 2998.4,
+  "text": "minha versão, do que será um futuro dessa minha, aí a pessoa é muito muito rápida, e"
+ },
+ {
+  "i": 807,
+  "start": 2998.4,
+  "end": 3003.16,
+  "text": "nunca para o seu nao não está dando tempo, faz pessoas se qualificarem, está tudo muito"
+ },
+ {
+  "i": 808,
+  "start": 3003.16,
+  "end": 3012.76,
+  "text": "a prioria, por isso pode-nos dar ao direito de entrar nessa onda aí, e mesmo antes da"
+ },
+ {
+  "i": 809,
+  "start": 3012.76,
+  "end": 3019.38,
+  "text": "estreia de estar em estado em terço almbar, em se meto, de ferramenta, o que dá os"
+ },
+ {
+  "i": 810,
+  "start": 3019.38,
+  "end": 3033.17,
+  "text": "ferramentas nos nossos, essa é a ideia, a gente trabalha aí, vamos até andar nao, que pode"
+ },
+ {
+  "i": 811,
+  "start": 3033.17,
+  "end": 3062.75,
+  "text": "ter que ter mexido, acho que ele já mexiu, um todo desabilitar, aqui é para escolher a"
+ },
+ {
+  "i": 812,
+  "start": 3062.75,
+  "end": 3068.67,
+  "text": "linguagem para falar, não está tudo desabilitado, né, nunca se chama, então espera para ver o que"
+ },
+ {
+  "i": 813,
+  "start": 3068.67,
+  "end": 3084.66,
+  "text": "ele vai fazer, está mexido, né, mesmo, né, mas tem outra fala aí, vai estar vendo que é"
+ },
+ {
+  "i": 814,
+  "start": 3084.66,
+  "end": 3094.97,
+  "text": "o que é que é o F12, o F12, o trabalho que está encontrando dos bastidores de um hotel,"
+ },
+ {
+  "i": 815,
+  "start": 3094.97,
+  "end": 3101.73,
+  "text": "né, é mapa de envolvidor, mas mesmo para que não é, não é ter que perder ver, se"
+ },
+ {
+  "i": 816,
+  "start": 3101.73,
+  "end": 3106.73,
+  "text": "tiver desenvolver o poear, essas e as vezes você vai ter visão de essas coisas, vai"
+ },
+ {
+  "i": 817,
+  "start": 3106.73,
+  "end": 3113.81,
+  "text": "ter um tempo, nem se vai ver, em contemporâmetros que são sobre infraestrutura, tecnologia"
+ },
+ {
+  "i": 818,
+  "start": 3113.81,
+  "end": 3123.67,
+  "text": "de usar, ele vai ter somatudo em indefenso, em intenso mesmo no campo da atetura, na"
+ },
+ {
+  "i": 819,
+  "start": 3123.67,
+  "end": 3134.6,
+  "text": "tecnologia, vocês vão usar termos técnicos necessários, aí já vai dar uma hora aqui, não"
+ },
+ {
+  "i": 820,
+  "start": 3134.6,
+  "end": 3148.19,
+  "text": "para por aqui, mas ser difícil você ver esse, olha, está trabalhando aí, a atetação,"
+ },
+ {
+  "i": 821,
+  "start": 3148.19,
+  "end": 3208.58,
+  "text": "destruindo o funcionador, ele está mexer lá, a garotemera tem essa característica, se"
+ },
+ {
+  "i": 822,
+  "start": 3208.58,
+  "end": 3220.7,
+  "text": "você mexer qualquer coisa na fote, está pela, ela já reá, reá, reá, na sua somente da"
+ },
+ {
+  "i": 823,
+  "start": 3220.7,
+  "end": 3229.99,
+  "text": "na hora, olha, está um laje, está bom, isso é bem, para ir para o hotel, meu cliente,"
+ },
+ {
+  "i": 824,
+  "start": 3229.99,
+  "end": 3259.88,
+  "text": "eu vou toda aqui, já está respondendo, vai ver aqui, não, está tão processando, vou ficar"
+ },
+ {
+  "i": 825,
+  "start": 3259.88,
+  "end": 3267.08,
+  "text": "aqui para ele para vocês e a mim, e depois, quando ele comprar tal se mexer o hotel,"
+ },
+ {
+  "i": 826,
+  "start": 3267.08,
+  "end": 3270.02,
+  "text": "que grava a apresentação, ok?"
+ },
+ {
+  "i": 827,
+  "start": 3270.02,
+  "end": 3279.54,
+  "text": "Um abraço, o que ele está fazendo na prática, ele meio está aceptando, ele executou um"
+ },
+ {
+  "i": 828,
+  "start": 3279.54,
+  "end": 3376.29,
+  "text": "problema em que ele gerou a HTML, ele meio está testando como fosse a pessoa, ele está"
+ },
+ {
+  "i": 829,
+  "start": 3376.29,
+  "end": 3417.36,
+  "text": "lançando sozinho, note que os desenhos, as gravas nele descrever, grava o porra concorda, na"
+ },
+ {
+  "i": 830,
+  "start": 3417.36,
+  "end": 3446.08,
+  "text": "minha mente, calitral, ele usou ela para fazer o humano faria, não está olhando, ela não"
+ },
+ {
+  "i": 831,
+  "start": 3446.08,
+  "end": 3458.52,
+  "text": "está associando, não está trabalhando, como é que aqui é, sempre do Brown, é lá no"
+ },
+ {
+  "i": 832,
+  "start": 3458.52,
+  "end": 3468.85,
+  "text": "navegador, Brown é no navegador, aí eles vão aqui, eu não prefiro, eles calçam da penta"
+ },
+ {
+  "i": 833,
+  "start": 3468.85,
+  "end": 3476.37,
+  "text": "sobre a HTTP, eles estão nessa do próprio autocorno do navegador, a internet, aí ele está"
+ },
+ {
+  "i": 834,
+  "start": 3476.37,
+  "end": 3484.21,
+  "text": "abriu essa OEM, que é até lá no caldo, no caldo do Brown, estou no lado, e está feito"
+ },
+ {
+  "i": 835,
+  "start": 3484.21,
+  "end": 3496.66,
+  "text": "isso aqui, ele está na verdade testando a própria apresentação, a excepção da apresentação,"
+ },
+ {
+  "i": 836,
+  "start": 3496.66,
+  "end": 3497.66,
+  "text": "imagina?"
+ },
+ {
+  "i": 837,
+  "start": 3497.66,
+  "end": 3506.58,
+  "text": "Note que nós temos aqui, no ciclo dentro de o ciclo, quer dizer, para eu comercer quase"
+ },
+ {
+  "i": 838,
+  "start": 3506.58,
+  "end": 3508.6,
+  "text": "intenso de um negócio, deixa eu ver, então..."
+ },
+ {
+  "i": 839,
+  "start": 3509.6,
+  "end": 3514.86,
+  "text": "No recorte de gramma operacional, vemos o flúso burguroso de campo, como é que o único"
+ },
+ {
+  "i": 840,
+  "start": 3514.86,
+  "end": 3522.2,
+  "text": "faz a leitura do que é recudo na condensadora, executa o checklist normativo de limpeza e componentes"
+ },
+ {
+  "i": 841,
+  "start": 3522.2,
+  "end": 3529.04,
+  "text": "elétricos, em séries medições de pressão e temperatura, e encerra o chamado confortos"
+ },
+ {
+  "i": 842,
+  "start": 3529.04,
+  "end": 3533.08,
+  "text": "de antes e depois e a assinatura digital do responsável luzão."
+ },
+ {
+  "i": 843,
+  "start": 3533.08,
+  "end": 3538.84,
+  "text": "para dimensionar o projeto,"
+ },
+ {
+  "i": 844,
+  "start": 3538.84,
+  "end": 3542.08,
+  "text": "apresentando dois caminhos."
+ },
+ {
+  "i": 845,
+  "start": 3542.08,
+  "end": 3549.36,
+  "text": "O cenário proposto é a solução corporativa com a letra ideal para grandes plantas industriais"
+ },
+ {
+  "i": 846,
+  "start": 3549.36,
+  "end": 3552.68,
+  "text": "e múltiplos contratos de um oc."
+ },
+ {
+  "i": 847,
+  "start": 3552.68,
+  "end": 3556.76,
+  "text": "O cenário alternativo foco no essencial de campo,"
+ },
+ {
+  "i": 848,
+  "start": 3556.76,
+  "end": 3559.22,
+  "text": "eliminação rápida do papel,"
+ },
+ {
+  "i": 849,
+  "start": 3559.22,
+  "end": 3569.05,
+  "text": "checklists, confortos e assinatura na tela em apenas 3 a 4 semanas de implantação."
+ },
+ {
+  "i": 850,
+  "start": 3569.05,
+  "end": 3572.21,
+  "text": "Para concluirmos a definição do projeto,"
+ },
+ {
+  "i": 851,
+  "start": 3572.21,
+  "end": 3577.61,
+  "text": "precisamos do seu direcionamento em 4 pontos, o porte..."
+ },
+ {
+  "i": 852,
+  "start": 3577.61,
+  "end": 3602.38,
+  "text": "Põe, a peca clicou o tom pausato, né?"
+ },
+ {
+  "i": 853,
+  "start": 3602.38,
+  "end": 3610.98,
+  "text": "Está testando tudo, quando pausar voz."
+ },
+ {
+  "i": 854,
+  "start": 3610.98,
+  "end": 3613.18,
+  "text": "Isso pode se fazer em qualquer sencer,"
+ },
+ {
+  "i": 855,
+  "start": 3613.18,
+  "end": 3614.78,
+  "text": "ele é muito singular."
+ },
+ {
+  "i": 856,
+  "start": 3614.78,
+  "end": 3617.98,
+  "text": "Quando vai aqui, vai obter do dom."
+ },
+ {
+  "i": 857,
+  "start": 3617.98,
+  "end": 3620.22,
+  "text": "Ele está em contrato da venadora,"
+ },
+ {
+  "i": 858,
+  "start": 3620.22,
+  "end": 3622.98,
+  "text": "e vem com todas as estruturas componentes,"
+ },
+ {
+  "i": 859,
+  "start": 3622.98,
+  "end": 3625.26,
+  "text": "para apertar o dom aqui,"
+ },
+ {
+  "i": 860,
+  "start": 3625.26,
+  "end": 3626.98,
+  "text": "que tem arro de todos os componentes."
+ },
+ {
+  "i": 861,
+  "start": 3626.98,
+  "end": 3628.58,
+  "text": "Aí ele apertou esse múltiro aqui,"
+ },
+ {
+  "i": 862,
+  "start": 3628.58,
+  "end": 3631.58,
+  "text": "continuam para pausar..."
+ },
+ {
+  "i": 863,
+  "start": 3631.58,
+  "end": 3633.46,
+  "text": "Aí ele pautou,"
+ },
+ {
+  "i": 864,
+  "start": 3633.46,
+  "end": 3634.98,
+  "text": "para que ele não se estivesse."
+ },
+ {
+  "i": 865,
+  "start": 3634.98,
+  "end": 3636.1,
+  "text": "Ele está testando tudo,"
+ },
+ {
+  "i": 866,
+  "start": 3636.1,
+  "end": 3638.58,
+  "text": "para funcionar."
+ },
+ {
+  "i": 867,
+  "start": 3638.58,
+  "end": 3644.74,
+  "text": "Aqui é ele trabalhando."
+ },
+ {
+  "i": 868,
+  "start": 3644.74,
+  "end": 3645.9,
+  "text": "O medo da qualquer sencer,"
+ },
+ {
+  "i": 869,
+  "start": 3645.9,
+  "end": 3646.7,
+  "text": "que ele aprende com a apresentação,"
+ },
+ {
+  "i": 870,
+  "start": 3646.7,
+  "end": 3648.54,
+  "text": "ele pode fazer com o sistema que você desenvolve."
+ },
+ {
+  "i": 871,
+  "start": 3648.54,
+  "end": 3650.54,
+  "text": "Ele vê o contexto da também."
+ },
+ {
+  "i": 872,
+  "start": 3650.54,
+  "end": 3652.54,
+  "text": "Para dizer que passa,"
+ },
+ {
+  "i": 873,
+  "start": 3652.54,
+  "end": 3654.54,
+  "text": "que está bastante dentro de testar."
+ },
+ {
+  "i": 874,
+  "start": 3654.54,
+  "end": 3658.94,
+  "text": "É teste internos de código mesmo,"
+ },
+ {
+  "i": 875,
+  "start": 3658.94,
+  "end": 3663.94,
+  "text": "e também testes visuales, comportamento e ergonomia."
+ },
+ {
+  "i": 876,
+  "start": 3663.94,
+  "end": 3666.14,
+  "text": "Hoje é aí a..."
+ },
+ {
+  "i": 877,
+  "start": 3666.14,
+  "end": 3670.14,
+  "text": "se sai melhor vendo, eu vi."
+ },
+ {
+  "i": 878,
+  "start": 3670.14,
+  "end": 3671.14,
+  "text": "O que é escrito?"
+ },
+ {
+  "i": 879,
+  "start": 3671.14,
+  "end": 3673.14,
+  "text": "Ele acha mais dubia escrita,"
+ },
+ {
+  "i": 880,
+  "start": 3673.74,
+  "end": 3676.14,
+  "text": "do que a voz,"
+ },
+ {
+  "i": 881,
+  "start": 3676.14,
+  "end": 3676.94,
+  "text": "e aí mais."
+ },
+ {
+  "i": 882,
+  "start": 3676.94,
+  "end": 3679.94,
+  "text": "Para pegar voz e mais."
+ },
+ {
+  "i": 883,
+  "start": 3679.94,
+  "end": 3683.54,
+  "text": "Então, você é..."
+ },
+ {
+  "i": 884,
+  "start": 3683.54,
+  "end": 3685.74,
+  "text": "ganhando experiência,"
+ },
+ {
+  "i": 885,
+  "start": 3685.74,
+  "end": 3688.74,
+  "text": "nesse princípio de DD,"
+ },
+ {
+  "i": 886,
+  "start": 3688.74,
+  "end": 3691.54,
+  "text": "que vai se aprofundar mais."
+ },
+ {
+  "i": 887,
+  "start": 3691.54,
+  "end": 3694.14,
+  "text": "Você consegue..."
+ },
+ {
+  "i": 888,
+  "start": 3694.14,
+  "end": 3697.14,
+  "text": "usar ela como um equipe suave programação,"
+ },
+ {
+  "i": 889,
+  "start": 3697.14,
+  "end": 3698.14,
+  "text": "bem disciplinado,"
+ },
+ {
+  "i": 890,
+  "start": 3698.14,
+  "end": 3700.74,
+  "text": "que não sai na regra."
+ },
+ {
+  "i": 891,
+  "start": 3700.74,
+  "end": 3703.34,
+  "text": "Colo usando sua voz,"
+ },
+ {
+  "i": 892,
+  "start": 3703.34,
+  "end": 3704.94,
+  "text": "e aí, nós temos que você aqui."
+ },
+ {
+  "i": 893,
+  "start": 3704.94,
+  "end": 3706.54,
+  "text": "Para só quiser..."
+ },
+ {
+  "i": 894,
+  "start": 3706.54,
+  "end": 3708.54,
+  "text": "pegar o conjunto de favos lá,"
+ },
+ {
+  "i": 895,
+  "start": 3708.54,
+  "end": 3709.54,
+  "text": "e então, com esse da empresa,"
+ },
+ {
+  "i": 896,
+  "start": 3709.54,
+  "end": 3710.74,
+  "text": "que a deficiadação,"
+ },
+ {
+  "i": 897,
+  "start": 3710.74,
+  "end": 3711.74,
+  "text": "já tão inúso,"
+ },
+ {
+  "i": 898,
+  "start": 3711.74,
+  "end": 3713.34,
+  "text": "ele falou, no manual,"
+ },
+ {
+  "i": 899,
+  "start": 3713.34,
+  "end": 3714.54,
+  "text": "e eu passasse para ele,"
+ },
+ {
+  "i": 900,
+  "start": 3714.54,
+  "end": 3716.04,
+  "text": "ele somava..."
+ },
+ {
+  "i": 901,
+  "start": 3716.04,
+  "end": 3719.54,
+  "text": "um norteamento das intenções."
+ },
+ {
+  "i": 902,
+  "start": 3719.54,
+  "end": 3722.94,
+  "text": "Às vezes, eu, antes de definir as intenções,"
+ },
+ {
+  "i": 903,
+  "start": 3722.94,
+  "end": 3724.74,
+  "text": "definir geramente,"
+ },
+ {
+  "i": 904,
+  "start": 3724.74,
+  "end": 3726.14,
+  "text": "a intenção já era..."
+ },
+ {
+  "i": 905,
+  "start": 3726.14,
+  "end": 3728.14,
+  "text": "e as evalienas já erais."
+ },
+ {
+  "i": 906,
+  "start": 3728.14,
+  "end": 3730.14,
+  "text": "Eu podia ter de ter que a intenção"
+ },
+ {
+  "i": 907,
+  "start": 3730.14,
+  "end": 3731.94,
+  "text": "e estava ele do..."
+ },
+ {
+  "i": 908,
+  "start": 3731.94,
+  "end": 3732.94,
+  "text": "ele..."
+ },
+ {
+  "i": 909,
+  "start": 3732.94,
+  "end": 3733.94,
+  "text": "deve valir..."
+ },
+ {
+  "i": 910,
+  "start": 3733.94,
+  "end": 3735.94,
+  "text": "intenções..."
+ },
+ {
+  "i": 911,
+  "start": 3735.94,
+  "end": 3736.94,
+  "text": "dentro do modelo próprio,"
+ },
+ {
+  "i": 912,
+  "start": 3736.94,
+  "end": 3739.94,
+  "text": "negócio, empapelo..."
+ },
+ {
+  "i": 913,
+  "start": 3739.94,
+  "end": 3741.54,
+  "text": "com meio sobre essa boa aplicativa,"
+ },
+ {
+  "i": 914,
+  "start": 3741.54,
+  "end": 3745.05,
+  "text": "eu gostava de aplicar..."
+ },
+ {
+  "i": 915,
+  "start": 3745.05,
+  "end": 3746.05,
+  "text": "só..."
+ },
+ {
+  "i": 916,
+  "start": 3746.05,
+  "end": 3747.65,
+  "text": "parece muita coisa,"
+ },
+ {
+  "i": 917,
+  "start": 3747.65,
+  "end": 3750.45,
+  "text": "mas quando tem os princípios..."
+ },
+ {
+  "i": 918,
+  "start": 3750.45,
+  "end": 3752.45,
+  "text": "e aí, aprendeu algumas tecnologias,"
+ },
+ {
+  "i": 919,
+  "start": 3752.45,
+  "end": 3757.24,
+  "text": "você não precisa saber o que acontece por detrás."
+ },
+ {
+  "i": 920,
+  "start": 3757.24,
+  "end": 3758.84,
+  "text": "É mais ou menos que acontece hoje,"
+ },
+ {
+  "i": 921,
+  "start": 3758.84,
+  "end": 3759.84,
+  "text": "para não ver escrever,"
+ },
+ {
+  "i": 922,
+  "start": 3759.84,
+  "end": 3760.84,
+  "text": "já..."
+ },
+ {
+  "i": 923,
+  "start": 3761.84,
+  "end": 3763.84,
+  "text": "em qualquer outro tipo de programa,"
+ },
+ {
+  "i": 924,
+  "start": 3763.84,
+  "end": 3765.84,
+  "text": "ou outro tipo de código."
+ },
+ {
+  "i": 925,
+  "start": 3765.84,
+  "end": 3767.84,
+  "text": "Meja uma página da Temelico,"
+ },
+ {
+  "i": 926,
+  "start": 3767.84,
+  "end": 3769.84,
+  "text": "usando o 8prs,"
+ },
+ {
+  "i": 927,
+  "start": 3769.84,
+  "end": 3771.84,
+  "text": "que eu não saque..."
+ },
+ {
+  "i": 928,
+  "start": 3771.84,
+  "end": 3772.84,
+  "text": "tem este problema..."
+ },
+ {
+  "i": 929,
+  "start": 3772.84,
+  "end": 3773.84,
+  "text": "nessa igóin,"
+ },
+ {
+  "i": 930,
+  "start": 3773.84,
+  "end": 3774.84,
+  "text": "nesse meu código,"
+ },
+ {
+  "i": 931,
+  "start": 3774.84,
+  "end": 3775.84,
+  "text": "em santa vez,"
+ },
+ {
+  "i": 932,
+  "start": 3775.84,
+  "end": 3776.84,
+  "text": "eu não cujo,"
+ },
+ {
+  "i": 933,
+  "start": 3776.84,
+  "end": 3777.84,
+  "text": "e a pessoa não saque,"
+ },
+ {
+  "i": 934,
+  "start": 3777.84,
+  "end": 3778.84,
+  "text": "que eu..."
+ },
+ {
+  "i": 935,
+  "start": 3778.84,
+  "end": 3780.84,
+  "text": "não aproveito muito a outra coisa."
+ },
+ {
+  "i": 936,
+  "start": 3780.84,
+  "end": 3783.84,
+  "text": "É isso que eu futur."
+ },
+ {
+  "i": 937,
+  "start": 3783.84,
+  "end": 3793.02,
+  "text": "E a delumitora aqui para mim,"
+ },
+ {
+  "i": 938,
+  "start": 3793.02,
+  "end": 3794.02,
+  "text": "que..."
+ },
+ {
+  "i": 939,
+  "start": 3794.02,
+  "end": 3795.02,
+  "text": "fechou, ó..."
+ },
+ {
+  "i": 940,
+  "start": 3796.02,
+  "end": 3798.02,
+  "text": "ó, que que ele feira,"
+ },
+ {
+  "i": 941,
+  "start": 3798.02,
+  "end": 3799.02,
+  "text": "não entendeu."
+ },
+ {
+  "i": 942,
+  "start": 3804.02,
+  "end": 3805.02,
+  "text": "Penta a sua internet,"
+ },
+ {
+  "i": 943,
+  "start": 3805.02,
+  "end": 3806.02,
+  "text": "o condenado de voz,"
+ },
+ {
+  "i": 944,
+  "start": 3806.02,
+  "end": 3807.02,
+  "text": "a sua técnica,"
+ },
+ {
+  "i": 945,
+  "start": 3807.02,
+  "end": 3808.02,
+  "text": "e o seu texto é conhecido,"
+ },
+ {
+  "i": 946,
+  "start": 3808.02,
+  "end": 3809.02,
+  "text": "a fiscal hidrául,"
+ },
+ {
+  "i": 947,
+  "start": 3809.02,
+  "end": 3811.02,
+  "text": "foi configurada de testar"
+ },
+ {
+  "i": 948,
+  "start": 3811.02,
+  "end": 3813.02,
+  "text": "com sucesso na vérgula."
+ },
+ {
+  "i": 949,
+  "start": 3813.02,
+  "end": 3816.02,
+  "text": "Para evitar o bloque de segurança que eu concordo,"
+ },
+ {
+  "i": 950,
+  "start": 3816.02,
+  "end": 3817.02,
+  "text": "apre o protocolo,"
+ },
+ {
+  "i": 951,
+  "start": 3817.02,
+  "end": 3819.02,
+  "text": "que resta já pegue de voz,"
+ },
+ {
+  "i": 952,
+  "start": 3819.02,
+  "end": 3820.02,
+  "text": "o contexto de seguro,"
+ },
+ {
+  "i": 953,
+  "start": 3820.02,
+  "end": 3823.02,
+  "text": "e iniciamos um celular do HTTP local,"
+ },
+ {
+  "i": 954,
+  "start": 3823.02,
+  "end": 3826.02,
+  "text": "o acesso de navigate do tal."
+ },
+ {
+  "i": 955,
+  "start": 3826.02,
+  "end": 3828.02,
+  "text": "Ela é que tem explicando"
+ },
+ {
+  "i": 956,
+  "start": 3828.02,
+  "end": 3829.02,
+  "text": "com o de prepitação da apresentação,"
+ },
+ {
+  "i": 957,
+  "start": 3829.02,
+  "end": 3831.02,
+  "text": "para para para para para para para para,"
+ },
+ {
+  "i": 958,
+  "start": 3831.02,
+  "end": 3832.02,
+  "text": "ou deus,"
+ },
+ {
+  "i": 959,
+  "start": 3832.02,
+  "end": 3833.02,
+  "text": "com a explicação de lição,"
+ },
+ {
+  "i": 960,
+  "start": 3833.02,
+  "end": 3834.02,
+  "text": "o chastro de técnicas,"
+ },
+ {
+  "i": 961,
+  "start": 3834.02,
+  "end": 3836.02,
+  "text": "é ademissionalmente,"
+ },
+ {
+  "i": 962,
+  "start": 3836.02,
+  "end": 3838.02,
+  "text": "com os gateiros e discursos..."
+ },
+ {
+  "i": 963,
+  "start": 3838.02,
+  "end": 3839.02,
+  "text": "lá,"
+ },
+ {
+  "i": 964,
+  "start": 3839.02,
+  "end": 3841.02,
+  "text": "aqui se inscreve,"
+ },
+ {
+  "i": 965,
+  "start": 3841.02,
+  "end": 3843.02,
+  "text": "como é que vai funcionar para a retação."
+ },
+ {
+  "i": 966,
+  "start": 3843.02,
+  "end": 3844.02,
+  "text": "Mas, está abrindo aqui,"
+ },
+ {
+  "i": 967,
+  "start": 3844.02,
+  "end": 3846.02,
+  "text": "e fica a iniciar a apreitação"
+ },
+ {
+  "i": 968,
+  "start": 3846.02,
+  "end": 3847.02,
+  "text": "com voz,"
+ },
+ {
+  "i": 969,
+  "start": 3847.02,
+  "end": 3849.02,
+  "text": "para produzir a renda..."
+ },
+ {
+  "i": 970,
+  "start": 3849.02,
+  "end": 3852.02,
+  "text": "a renda de alinhamento com o seu cliente."
+ },
+ {
+  "i": 971,
+  "start": 3852.02,
+  "end": 3861.02,
+  "text": "o seu libol, vir lida e aqui ele já deixou o documento de definição da apresentação"
+ },
+ {
+  "i": 972,
+  "start": 3861.02,
+  "end": 3872.02,
+  "text": "né? da verdade, ah o HTML, aqui o HTML, o problema é o seu baixais aqui e botar o HTML com o seu"
+ },
+ {
+  "i": 973,
+  "start": 3872.02,
+  "end": 3880.66,
+  "text": "tipo do aqui, aí o que acontece? eu posso simplesmente executar ele porra, não"
+ },
+ {
+  "i": 974,
+  "start": 3880.66,
+  "end": 3886.22,
+  "text": "não precisaria clicar nesse link dele aqui, eu posso fazer assim, vou baixar aqui, vai"
+ },
+ {
+  "i": 975,
+  "start": 3886.22,
+  "end": 3891.66,
+  "text": "jogar ele e aqui mesmo, o HTML também, aqui é a especificação, aqui é o que eu vou"
+ },
+ {
+  "i": 976,
+  "start": 3891.66,
+  "end": 3899.24,
+  "text": "deixar no download mesmo, vamos ver a gente cortar, ele já vai exportar em HTML, aí agora"
+ },
+ {
+  "i": 977,
+  "start": 3899.24,
+  "end": 3914.94,
+  "text": "vou lá e tal outro, a parte da download, tá lá, né? tá lá, se eu clico aqui, o que acontece?"
+ },
+ {
+  "i": 978,
+  "start": 3914.94,
+  "end": 3926.94,
+  "text": "o HTML, o HTML não enrodo dentro, o HTML aqui, aqui já é no HTML, mais no Chrome, tá aqui,"
+ },
+ {
+  "i": 979,
+  "start": 3926.94,
+  "end": 3933.94,
+  "text": "tá em talção tá aqui, vamos até algum defe? vou chegar com o cliente, bem-vindos a apresentação"
+ },
+ {
+  "i": 980,
+  "start": 3933.94,
+  "end": 3940.94,
+  "text": "de alinhamento da gestão e controle operacional em refrigeração e climatização, nosso"
+ },
+ {
+  "i": 981,
+  "start": 3940.94,
+  "end": 3946.94,
+  "text": "objetivo é definir as regras fundamentais e o escopo da solução para atender com"
+ },
+ {
+  "i": 982,
+  "start": 3946.94,
+  "end": 3955.94,
+  "text": "precisão as exigências termodinâmicas, o pôr da lei 13.589 e a rastriabilidade ambiental"
+ },
+ {
+  "i": 983,
+  "start": 3955.94,
+  "end": 3965.14,
+  "text": "dos fluidos refrigerantes, porque sofrto é as genéricas de manutenção falhando na"
+ },
+ {
+  "i": 984,
+  "start": 3965.14,
+  "end": 3972.14,
+  "text": "refrigeração, porque ignoram o ciclo térmico, se o mecânico não registrar pressões"
+ },
+ {
+  "i": 985,
+  "start": 3972.14,
+  "end": 3979.14,
+  "text": "de trabalho, superaquecimento e vazamentos reais, tá vendo o peixe-de-seur quebra pouco tempo"
+ },
+ {
+  "i": 986,
+  "start": 3979.14,
+  "end": 3987.14,
+  "text": "depois, além disso, a falta de histórico físico e laudos normativos expõem a empresa"
+ },
+ {
+  "i": 987,
+  "start": 3987.14,
+  "end": 3995.06,
+  "text": "apesar das a situações da vigilância sanitaria, aqui apresentamos as grandes"
+ },
+ {
+  "i": 988,
+  "start": 3995.06,
+  "end": 4001.06,
+  "text": "capacidades do sistema, prontoado do equipamento, porque é reclutro, prônograma"
+ },
+ {
+  "i": 989,
+  "start": 4001.06,
+  "end": 4008.06,
+  "text": "automatizado do proconcheque listes de filtros de bacteriocidas, criagem rápida de"
+ },
+ {
+  "i": 990,
+  "start": 4008.06,
+  "end": 4015.06,
+  "text": "chamados com prioridade para câmaras frigoríficas, rotina de campo com medição de"
+ },
+ {
+  "i": 991,
+  "start": 4015.06,
+  "end": 4021.06,
+  "text": "pressões e temperaturas e funcionamento garantido mesmo em subsoluzir câmaras frias"
+ },
+ {
+  "i": 992,
+  "start": 4021.06,
+  "end": 4029.92,
+  "text": "sem sinal de internet. Estas são as regras em viola vez do negócio, uma vez"
+ },
+ {
+  "i": 993,
+  "start": 4029.92,
+  "end": 4036.92,
+  "text": "do serviço e assinado pelo cliente, o lado se torna em tocar e o ejuditamente seguro."
+ },
+ {
+  "i": 994,
+  "start": 4036.92,
+  "end": 4043.92,
+  "text": "Datas do proconco não podem ser vitroogidas para simular conformidade."
+ },
+ {
+  "i": 995,
+  "start": 4043.92,
+  "end": 4049.92,
+  "text": "E na parte física, a pressão de descada deve ser sempre maior que a de subção,"
+ },
+ {
+  "i": 996,
+  "start": 4049.92,
+  "end": 4055.92,
+  "text": "sub pena de bloqueio por inconsistencia técnica."
+ },
+ {
+  "i": 997,
+  "start": 4055.92,
+  "end": 4063.92,
+  "text": "Neste diagrama operacional, vemos o fluxo rigoroso de campo, o mecânico faça leitura"
+ },
+ {
+  "i": 998,
+  "start": 4063.92,
+  "end": 4070.92,
+  "text": "do que é recudo na condensadora, executa o checklist normativo de limpeza e componentes"
+ },
+ {
+  "i": 999,
+  "start": 4070.92,
+  "end": 4076.92,
+  "text": "elétricos, insere as medições de pressão e temperatura e insere ao chamado"
+ },
+ {
+  "i": 1000,
+  "start": 4076.92,
+  "end": 4085.0,
+  "text": "de autodentes e depois e assinatura digital do responsável no local."
+ },
+ {
+  "i": 1001,
+  "start": 4085.0,
+  "end": 4090.0,
+  "text": "Para dimensionar o projeto, apresentamos dois caminhos."
+ },
+ {
+  "i": 1002,
+  "start": 4090.0,
+  "end": 4097.0,
+  "text": "O cenário proposto é a solução corporativa completa, ideal para grandes plantas"
+ },
+ {
+  "i": 1003,
+  "start": 4097.0,
+  "end": 4100.0,
+  "text": "industriais e múltiplos contratos de funk."
+ },
+ {
+  "i": 1004,
+  "start": 4100.0,
+  "end": 4107.0,
+  "text": "O cenário alternativo foca no essencial de campo, eliminação rápida do papel,"
+ },
+ {
+  "i": 1005,
+  "start": 4107.0,
+  "end": 4116.0,
+  "text": "checklistes confortos e assinatura na tela em apenas três a quatro semanas de implantação."
+ },
+ {
+  "i": 1006,
+  "start": 4116.0,
+  "end": 4124.0,
+  "text": "Para concluirmos a definição do projeto, precisamos do seu direcionamento em quatro pontos,"
+ },
+ {
+  "i": 1007,
+  "start": 4124.0,
+  "end": 4131.0,
+  "text": "o porte predominante dos equipamentos, se a equipe utiliza manômetros digitais ou analógicos,"
+ },
+ {
+  "i": 1008,
+  "start": 4131.0,
+  "end": 4139.0,
+  "text": "arrotina atual de recolhimento de gas refrigerante e se a responsabilidade técnica do creio"
+ },
+ {
+  "i": 1009,
+  "start": 4139.0,
+  "end": 4143.0,
+  "text": "ou CFT própria ou terceirizada."
+ },
+ {
+  "i": 1010,
+  "start": 4143.0,
+  "end": 4149.87,
+  "text": "Estamos prontos para iniciar."
+ },
+ {
+  "i": 1011,
+  "start": 4149.87,
+  "end": 4152.87,
+  "text": "É isso aí, é uma hora e dez minutos."
+ },
+ {
+  "i": 1012,
+  "start": 4152.87,
+  "end": 4155.87,
+  "text": "Tem contas para a guia, né?"
+ },
+ {
+  "i": 1013,
+  "start": 4155.87,
+  "end": 4160.87,
+  "text": "Então, ó, eles parece que eu tenho, eu estava lendo e sede preso de diferente."
+ },
+ {
+  "i": 1014,
+  "start": 4160.87,
+  "end": 4169.22,
+  "text": "No mínimo um mês, para a gente ter ideia, vai possível afortunar."
+ },
+ {
+  "i": 1015,
+  "start": 4169.22,
+  "end": 4181.39,
+  "text": "De mais do tempo, a depoede do porte do sistema, razoável de vez para desenvolver e testar e implementar."
+ },
+ {
+  "i": 1016,
+  "start": 4181.39,
+  "end": 4189.25,
+  "text": "Aqui, praticamente uma hora, a gente chegou a esse escopo aí."
+ },
+ {
+  "i": 1017,
+  "start": 4189.25,
+  "end": 4194.25,
+  "text": "Só com a ideia de notíme, intenção e imediativa."
+ },
+ {
+  "i": 1018,
+  "start": 4195.25,
+  "end": 4202.25,
+  "text": "O objetivo é que eu quero, aí, o que eu quero, a intenção geral, né?"
+ },
+ {
+  "i": 1019,
+  "start": 4202.25,
+  "end": 4211.25,
+  "text": "A intenção de que eu quero e depois de variantes, quer dizer, o exército que eu quero que ele se aterra."
+ },
+ {
+  "i": 1020,
+  "start": 4211.25,
+  "end": 4215.25,
+  "text": "Então, eu consigo controlar a ideia de governância do IDD que a gente vai ver."
+ },
+ {
+  "i": 1021,
+  "start": 4215.25,
+  "end": 4220.25,
+  "text": "Eu consigo controlar e a não apenas por um próprio solto de araperdasco de código,"
+ },
+ {
+  "i": 1022,
+  "start": 4220.25,
+  "end": 4223.25,
+  "text": "porque eu estou apenas solto solto."
+ },
+ {
+  "i": 1023,
+  "start": 4223.25,
+  "end": 4230.25,
+  "text": "Ela que está aprendendo comigo, porque eu quero, que eu quero e as revas do negócio."
+ },
+ {
+  "i": 1024,
+  "start": 4230.25,
+  "end": 4235.25,
+  "text": "Tiga-me um nível que eu possa apenas fazer as aeratórias da alimentação,"
+ },
+ {
+  "i": 1025,
+  "start": 4235.25,
+  "end": 4238.25,
+  "text": "mas tiver tudo aprovado para o usuário com a apresentação,"
+ },
+ {
+  "i": 1026,
+  "start": 4238.25,
+  "end": 4242.25,
+  "text": "aí eu voto e compartilho para implementação."
+ },
+ {
+  "i": 1027,
+  "start": 4242.25,
+  "end": 4247.25,
+  "text": "Aí vem a depoede de sol de intenção de caradáter, é a turalda de técnica, né?"
+ },
+ {
+  "i": 1028,
+  "start": 4248.25,
+  "end": 4251.25,
+  "text": "E a admarença vem no aspecto de técnica,"
+ },
+ {
+  "i": 1029,
+  "start": 4251.25,
+  "end": 4254.25,
+  "text": "aí também tem uma edicutiva futura-me."
+ },
+ {
+  "i": 1030,
+  "start": 4254.25,
+  "end": 4259.25,
+  "text": "A ideia dos principios de IDD é assim, eu pensava que eu não tinha mais."
+ },
+ {
+  "i": 1031,
+  "start": 4259.25,
+  "end": 4261.25,
+  "text": "Ok?"
+ },
+ {
+  "i": 1032,
+  "start": 4261.25,
+  "end": 4266.25,
+  "text": "Nem é um próprio generic solto, eu não ia cair, não."
+ },
+ {
+  "i": 1033,
+  "start": 4266.25,
+  "end": 4269.25,
+  "text": "E eu ficasse bater no plano, porque você conseguiu passar pelo modo a augmentar."
+ },
+ {
+  "i": 1034,
+  "start": 4269.25,
+  "end": 4276.25,
+  "text": "Agora, imagina que a gente tem um editor de IDD que é o software, tipo o VS Code,"
+ },
+ {
+  "i": 1035,
+  "start": 4276.25,
+  "end": 4280.25,
+  "text": "que ele já ofereça essa forma de definir."
+ },
+ {
+  "i": 1036,
+  "start": 4280.25,
+  "end": 4286.62,
+  "text": "E a ideia é que ele salve sair, e mostra que se ele for mexer de novo,"
+ },
+ {
+  "i": 1037,
+  "start": 4286.62,
+  "end": 4291.51,
+  "text": "ele não vai deixar aviar de varieiro para o definido."
+ },
+ {
+  "i": 1038,
+  "start": 4291.51,
+  "end": 4299.51,
+  "text": "Ele me alterou na frente, ele não vai inferir o derivado, a lucidar,"
+ },
+ {
+  "i": 1039,
+  "start": 4299.51,
+  "end": 4303.51,
+  "text": "para fazer alguma coisa que é tecnicamente enviável,"
+ },
+ {
+  "i": 1040,
+  "start": 4303.51,
+  "end": 4306.51,
+  "text": "mas não é um dos copos do negócio do mesmo."
+ },
+ {
+  "i": 1041,
+  "start": 4307.51,
+  "end": 4308.51,
+  "text": "Ok?"
+ },
+ {
+  "i": 1042,
+  "start": 4308.51,
+  "end": 4311.51,
+  "text": "A abração deu uma ideia com paciência,"
+ },
+ {
+  "i": 1043,
+  "start": 4311.51,
+  "end": 4314.51,
+  "text": "e faça suas anotas somendas."
+ },
+ {
+  "i": 1044,
+  "start": 4314.51,
+  "end": 4318.51,
+  "text": "Vamos devagar, nós somos fazidos aqui, só pretendê os principios."
+ },
+ {
+  "i": 1045,
+  "start": 4318.51,
+  "end": 4322.51,
+  "text": "Mas na verdade, não quero entender de formar, quero entender de..."
+ },
+ {
+  "i": 1046,
+  "start": 4322.51,
+  "end": 4327.51,
+  "text": "Quero adicuar a produzir o que nos interessem ter, mas informar."
+ },
+ {
+  "i": 1047,
+  "start": 4327.51,
+  "end": 4330.51,
+  "text": "Um abraço."
+ }
+]

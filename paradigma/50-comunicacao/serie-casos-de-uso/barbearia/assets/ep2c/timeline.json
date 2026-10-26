@@ -1,0 +1,115 @@
+{
+  "episode": "2C",
+  "title": "MER Completo: Entidades Derivadas, Normalização & Invariantes de Dados",
+  "totalDurationSec": 149.28,
+  "items": [
+    {
+      "id": "seg_01_leigo",
+      "who": "leigo",
+      "actor": "Usuária Leiga",
+      "slide": 1,
+      "chat": false,
+      "startSec": 0.5,
+      "endSec": 16.36,
+      "durationSec": 15.86,
+      "text": "Eliézer, no sistema da Barbearia e Salão, nós vimos os conceitos no Episódio 2B. Mas para construir um banco de dados profissional, precisamos ver o MER COMPLETO com o padrão gráfico canônico pé de galinha, entidades derivadas e relacionamentos estritos!",
+      "file": "audio/seg_01_leigo.mp3"
+    },
+    {
+      "id": "seg_02_eliezer",
+      "who": "eliezer",
+      "actor": "Eliézer Rosa",
+      "slide": 1,
+      "chat": false,
+      "startSec": 17.01,
+      "endSec": 38.99,
+      "durationSec": 21.98,
+      "text": "Perfeito! Observem na tela a notação Crow's Foot oficial. Temos as entidades centrais: Cliente, Barbeiro, Serviço e a entidade associativa Agendamento. Um cliente pode possuir zero ou muitos agendamentos, mas cada agendamento pertence a um único cliente e a um único barbeiro no mesmo instante de tempo!",
+      "file": "audio/seg_02_eliezer.mp3"
+    },
+    {
+      "id": "seg_03_leigo",
+      "who": "leigo",
+      "actor": "Usuária Leiga",
+      "slide": 2,
+      "chat": false,
+      "startSec": 39.64,
+      "endSec": 46.24,
+      "durationSec": 6.6,
+      "text": "E como o modelo resolve o pagamento dos serviços e a comissão do barbeiro sem criar dependências perigosas no banco?",
+      "file": "audio/seg_03_leigo.mp3"
+    },
+    {
+      "id": "seg_04_ia",
+      "who": "ia",
+      "actor": "IA Compilador",
+      "slide": 2,
+      "chat": false,
+      "startSec": 46.89,
+      "endSec": 73.34,
+      "durationSec": 26.45,
+      "text": "Exibindo a modelagem de entidades derivadas e normalização até a Terceira Forma Normal! A entidade ComandaAtendimento se relaciona com a associativa ItemComanda para múltiplos serviços e insumos. Para eliminar dependências transitivas, a comissão do barbeiro é gravada como snapshot imutável na comanda. Se o percentual de comissão do barbeiro for renegociado no futuro, o histórico financeiro passado permanece inviolável!",
+      "file": "audio/seg_04_ia.mp3"
+    },
+    {
+      "id": "seg_05_leigo",
+      "who": "leigo",
+      "actor": "Usuária Leiga",
+      "slide": 3,
+      "chat": false,
+      "startSec": 73.99,
+      "endSec": 84.72,
+      "durationSec": 10.73,
+      "text": "Vejam no terminal da IA as Invariantes Universais de Projeto sendo validadas: Primeira, Segunda e Terceira Forma Normal e a exclusividade de horário da cadeira!",
+      "file": "audio/seg_05_leigo.mp3"
+    },
+    {
+      "id": "seg_06_ia",
+      "who": "ia",
+      "actor": "IA Compilador",
+      "slide": 3,
+      "chat": true,
+      "startSec": 85.37,
+      "endSec": 113.5,
+      "durationSec": 28.13,
+      "text": "Submetendo a Matriz de Invariantes de Dados do Salão. Regra 1: Atomicidade rigorosa de serviços em 1FN. Regra 2: Chave primária composta na associativa em 2FN. Regra 3: Snapshot financeiro auditável em 3FN. Regra 4: Invariante Temporal de Cadeira, impedindo sobreposição de agendamentos no mesmo slot de horário. Orquestrador Eliézer Rosa, posso homologar o modelo de dados?",
+      "file": "audio/seg_06_ia.mp3"
+    },
+    {
+      "id": "seg_07_eliezer",
+      "who": "eliezer",
+      "actor": "Eliézer Rosa",
+      "slide": 3,
+      "chat": true,
+      "startSec": 114.15,
+      "endSec": 125.14,
+      "durationSec": 10.99,
+      "text": "Modelo de Entidade-Relacionamento e Matriz de Invariantes de Dados formalmente aprovados! Nenhuma cadeira terá conflito de agenda e nenhuma comissão será perdida.",
+      "file": "audio/seg_07_eliezer.mp3"
+    },
+    {
+      "id": "seg_08_leigo",
+      "who": "leigo",
+      "actor": "Usuária Leiga",
+      "slide": 4,
+      "chat": false,
+      "startSec": 125.79,
+      "endSec": 132.13,
+      "durationSec": 6.34,
+      "text": "Com o banco de dados blindado pelo MER canônico, a fundação está pronta para a modelagem comportamental!",
+      "file": "audio/seg_08_leigo.mp3"
+    },
+    {
+      "id": "seg_09_eliezer",
+      "who": "eliezer",
+      "actor": "Eliézer Rosa",
+      "slide": 4,
+      "chat": false,
+      "startSec": 132.78,
+      "endSec": 147.13,
+      "durationSec": 14.35,
+      "text": "Com certeza! E no próximo episódio, o 3C, vamos mergulhar no Diagrama UML Completo da Barbearia, de Atores a Métodos, no padrão oficial da OMG. Continuem conosco!",
+      "file": "audio/seg_09_eliezer.mp3"
+    }
+  ]
+}

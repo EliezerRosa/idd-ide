@@ -1,0 +1,226 @@
+{
+  "title": "IDD Paradigma — Perspectiva Técnica: Avaliação Isenta & Os 5 Pilares de Formalização",
+  "totalDurationSec": 385.08,
+  "items": [
+    {
+      "index": 0,
+      "speaker": "leigo",
+      "actor": "Interlocutora Técnica",
+      "who": "leigo",
+      "slide": 1,
+      "text": "Eliézer, o Paradigma IDD já provou sua maturidade conceitual unindo ontologia, IA neuro-simbólica e comando epistêmico. Mas fazendo uma avaliação estritamente técnica e sem nenhuma condescendência: o que ainda falta para o IDD deixar de ser um quadro pioneiro e se tornar um padrão de engenharia global e adotado pela indústria, como o DDD ou o LLVM?",
+      "startSec": 1.0,
+      "endSec": 24.688,
+      "durationSec": 23.688
+    },
+    {
+      "index": 1,
+      "speaker": "eliezer",
+      "actor": "Eliézer Rosa",
+      "who": "eliezer",
+      "slide": 1,
+      "text": "Excelente provocação! Para a indústria e a academia adotarem o IDD em escala global, precisamos formalizar cinco pilares fundamentais de engenharia de software: uma Intent IR canônica, provadores formais SMT integrados no pipeline, diff semântico constitucional, sagas transacionais atômicas e um benchmark reprodutível. Vamos destrinchar cada um deles!",
+      "startSec": 25.138,
+      "endSec": 50.074,
+      "durationSec": 24.936
+    },
+    {
+      "index": 2,
+      "speaker": "leigo",
+      "actor": "Interlocutora Técnica",
+      "who": "leigo",
+      "slide": 2,
+      "text": "Perfeito! No Slide dois, vemos a comparação direta com o ecossistema do Model Context Protocol, o MCP da Anthropic, e ferramentas como o Antigravity. Onde essa abordagem converge e onde ela difere radicalmente do IDD?",
+      "startSec": 50.524,
+      "endSec": 65.5,
+      "durationSec": 14.976
+    },
+    {
+      "index": 3,
+      "speaker": "eliezer",
+      "actor": "Eliézer Rosa",
+      "who": "eliezer",
+      "slide": 2,
+      "text": "A convergência está na orquestração: ambos usam agentes e chamadas de ferramentas. Mas a divergência é abissal! O MCP é a infraestrutura de tubulação, o encanamento mecânico para conectar o LLM ao sistema operacional. Já o IDD é a engenharia de controle ontológico: ele decide o que tem validade epistêmica e bloqueia qualquer mutação que viole as invariantes de negócio antes de tocar o banco de dados!",
+      "startSec": 65.95,
+      "endSec": 92.95,
+      "durationSec": 27.0
+    },
+    {
+      "index": 4,
+      "speaker": "leigo",
+      "actor": "Interlocutora Técnica",
+      "who": "leigo",
+      "slide": 3,
+      "text": "E veja no Slide três o primeiro pilar que está faltando: a especificação canônica da Intent IR! Hoje o mercado vive de 'Vibe Coding', tentando programar com prompts em linguagem natural solta, onde o modelo acerta na terça e erra na sexta-feira.",
+      "startSec": 93.4,
+      "endSec": 109.168,
+      "durationSec": 15.768
+    },
+    {
+      "index": 5,
+      "speaker": "eliezer",
+      "actor": "Eliézer Rosa",
+      "who": "eliezer",
+      "slide": 3,
+      "text": "Exatamente! Prompts em prosa são frágeis e oscilam. Assim como o LLVM revolucionou a computação com uma Representação Intermediária, o IDD necessita de uma IDL formalizada: uma Árvore Sintática Abstrata do domínio, onde guardas, invariantes e mutações são declaradas de forma determinística e compiláveis para qualquer banco ou linguagem.",
+      "startSec": 109.618,
+      "endSec": 133.258,
+      "durationSec": 23.64
+    },
+    {
+      "index": 6,
+      "speaker": "leigo",
+      "actor": "Interlocutora Técnica",
+      "who": "leigo",
+      "slide": 4,
+      "text": "No Slide quatro chegamos ao segundo pilar: a morte do assert_equal! Por que testes unitários tradicionais baseados em amostragem finita não dão conta da inteligência artificial generativa?",
+      "startSec": 133.708,
+      "endSec": 146.452,
+      "durationSec": 12.744
+    },
+    {
+      "index": 7,
+      "speaker": "eliezer",
+      "actor": "Eliézer Rosa",
+      "who": "eliezer",
+      "slide": 4,
+      "text": "Porque testes por amostragem cobrem pontos isolados, enquanto a IA explora um espaço infinito de alucinação. O IDD adota o Raciocínio Automatizado, o mesmo padrão que a AWS e a Microsoft usam com o solver Z3 e Dafny: nós não rodamos amostras, provamos matematicamente que para qualquer entrada possível as invariantes de domínio se mantêm invioláveis!",
+      "startSec": 146.902,
+      "endSec": 171.022,
+      "durationSec": 24.12
+    },
+    {
+      "index": 8,
+      "speaker": "leigo",
+      "actor": "Interlocutora Técnica",
+      "who": "leigo",
+      "slide": 5,
+      "text": "E no Slide cinco abordamos a Engenharia Constitucional e o Diff Semântico. Por que ferramentas veneradas como o Git são totalmente cegas para a inteligência artificial?",
+      "startSec": 171.472,
+      "endSec": 182.2,
+      "durationSec": 10.728
+    },
+    {
+      "index": 9,
+      "speaker": "eliezer",
+      "actor": "Eliézer Rosa",
+      "who": "eliezer",
+      "slide": 5,
+      "text": "O Git compara apenas caracteres em linhas de texto ASCII: ele não entende cardinalidade, herança ou integridade relacional. No IDD, a Ontologia de Domínio é a Constituição da empresa. A Máquina de Diff compara grafos ontológicos, aplicando a Classificação Tripartida: adições simples passam direto, mas rupturas estruturais exigem o padrão Expand and Contract e a aprovação humana soberana!",
+      "startSec": 182.65,
+      "endSec": 208.33,
+      "durationSec": 25.68
+    },
+    {
+      "index": 10,
+      "speaker": "leigo",
+      "actor": "Interlocutora Técnica",
+      "who": "leigo",
+      "slide": 6,
+      "text": "No Slide seis temos o quarto pilar: a Teoria da Ação Atômica e as Sagas de Domínio! Qual é o maior perigo de um agente autônomo realizando mutações comportamentais sem controle de transação?",
+      "startSec": 208.78,
+      "endSec": 221.092,
+      "durationSec": 12.312
+    },
+    {
+      "index": 11,
+      "speaker": "eliezer",
+      "actor": "Eliézer Rosa",
+      "who": "eliezer",
+      "slide": 6,
+      "text": "O pesadelo da meia-transação! O agente debita o valor, o microserviço dá timeout e o sistema fica inconsistente. O IDD resolve isso com o Protocolo Canônico em Quatro Fases: Guarda com fail-fast, Mutação isolada e idempotente, Selagem com log de auditoria append-only e Ação Compensatória pré-declarada simétrica. Zero estado órfão!",
+      "startSec": 221.542,
+      "endSec": 245.758,
+      "durationSec": 24.216
+    },
+    {
+      "index": 12,
+      "speaker": "leigo",
+      "actor": "Interlocutora Técnica",
+      "who": "leigo",
+      "slide": 7,
+      "text": "E no Slide sete vemos o quinto pilar: o Benchmark Canônico do IDD! Por que os benchmarks de mercado como SWE-bench ou HumanEval não são suficientes para validar a confiabilidade em sistemas reais?",
+      "startSec": 246.208,
+      "endSec": 259.72,
+      "durationSec": 13.512
+    },
+    {
+      "index": 13,
+      "speaker": "eliezer",
+      "actor": "Eliézer Rosa",
+      "who": "eliezer",
+      "slide": 7,
+      "text": "Porque eles medem apenas se o código gerado passa em dois ou três testes pontuais. O benchmark do IDD submete o sistema a mil mutações consecutivas de domínio complexo, comparando o Vibe Coding direto com o compilador IDD. O objetivo é provar empiricamente para a comunidade científica alucinação de domínio rigorosamente zero!",
+      "startSec": 260.17,
+      "endSec": 281.65,
+      "durationSec": 21.48
+    },
+    {
+      "index": 14,
+      "speaker": "leigo",
+      "actor": "Interlocutora Técnica",
+      "who": "leigo",
+      "slide": 8,
+      "text": "E no Slide oito relembramos a linhagem histórica de setenta e nove anos que sustenta o IDD: desde o Memex de Vannevar Bush em 1945, Wiener, Licklider, a histórica demonstração de Douglas Engelbart em 1968, até Alan Kay e a computação orientada a objetos vivos!",
+      "startSec": 282.1,
+      "endSec": 301.996,
+      "durationSec": 19.896
+    },
+    {
+      "index": 15,
+      "speaker": "eliezer",
+      "actor": "Eliézer Rosa",
+      "who": "eliezer",
+      "slide": 8,
+      "text": "Essa linhagem é o nosso solo epistemológico! O IDD não é um modismo passageiro de prompts: é a consolidação de oito décadas de luta pela amplificação da inteligência humana, garantindo que o engenheiro mantenha o leme do software enquanto a máquina assume a força bruta mecânica.",
+      "startSec": 302.446,
+      "endSec": 319.63,
+      "durationSec": 17.184
+    },
+    {
+      "index": 16,
+      "speaker": "leigo",
+      "actor": "Interlocutora Técnica",
+      "who": "leigo",
+      "slide": 9,
+      "text": "E para quem quer acompanhar e discutir esse ecossistema, o Slide nove apresenta a nossa estratégia de descoberta e a matriz oficial de hashtags do canal, conectando as dores práticas do Vibe Coding aos grandes debates de ponta da computação!",
+      "startSec": 320.08,
+      "endSec": 334.888,
+      "durationSec": 14.808
+    },
+    {
+      "index": 17,
+      "speaker": "eliezer",
+      "actor": "Eliézer Rosa",
+      "who": "eliezer",
+      "slide": 9,
+      "text": "Com certeza! Convidamos engenheiros seniores, arquitetos e pesquisadores de conferências como ICSE, FSE e POPL a se conectarem. A discussão sobre métodos formais, invariantes e IA confiável é a fronteira mais urgente da nossa disciplina.",
+      "startSec": 335.338,
+      "endSec": 353.746,
+      "durationSec": 18.408
+    },
+    {
+      "index": 18,
+      "speaker": "leigo",
+      "actor": "Interlocutora Técnica",
+      "who": "leigo",
+      "slide": 10,
+      "text": "Sensacional! E no Slide dez fechamos com a grande mensagem: a programação manual de sintaxe virou commodity. O verdadeiro valor do engenheiro nos próximos cinquenta anos reside na clareza epistemológica e no rigor das intenções!",
+      "startSec": 354.196,
+      "endSec": 369.388,
+      "durationSec": 15.192
+    },
+    {
+      "index": 19,
+      "speaker": "eliezer",
+      "actor": "Eliézer Rosa",
+      "who": "eliezer",
+      "slide": 10,
+      "text": "Perfeito! A intenção governa, a inteligência artificial compila e o ser humano arbitra. Inscreva-se no canal, compartilhe essa visão e venha construir conosco as catedrais inabaláveis da Engenharia de Software 3.0!",
+      "startSec": 369.838,
+      "endSec": 385.63,
+      "durationSec": 15.792
+    }
+  ]
+}

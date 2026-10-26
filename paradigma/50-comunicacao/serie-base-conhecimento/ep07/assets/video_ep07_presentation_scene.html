@@ -1,0 +1,906 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=1920, height=1080, initial-scale=1.0">
+  <title>Episódio 07 — IDD Base de Conhecimento: Engenharia Constitucional & A Máquina de Diff</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-dark: #050811;
+      --bg-card: rgba(11, 20, 38, 0.90);
+      --purple-tech: #a855f7;
+      --purple-glow: rgba(168, 85, 247, 0.45);
+      --cyan-frost: #38bdf8;
+      --cyan-glow: rgba(56, 189, 248, 0.45);
+      --emerald-ok: #10b981;
+      --amber-alert: #f59e0b;
+      --rose-warn: #f43f5e;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      width: 1920px;
+      height: 1080px;
+      overflow: hidden;
+      background: #050811;
+      color: var(--text-main);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      position: relative;
+    }
+
+    #bg-canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 1920px;
+      height: 1080px;
+      z-index: 1;
+    }
+
+    .app-container {
+      position: relative;
+      z-index: 10;
+      width: 1920px;
+      height: 1080px;
+      display: flex;
+      flex-direction: column;
+      padding: 30px 45px;
+      justify-content: space-between;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 18px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .brand-wrap {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .brand-logo {
+      width: 50px;
+      height: 50px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #a855f7, #0284c7);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 26px;
+      box-shadow: 0 0 20px rgba(168, 85, 247, 0.5);
+    }
+    .brand-text h1 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 22px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      color: #fff;
+    }
+    .brand-text span {
+      font-size: 13px;
+      color: #c084fc;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+    }
+
+    .header-badges {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .h-badge {
+      padding: 8px 18px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: rgba(15, 23, 42, 0.7);
+    }
+    .h-badge.ep-tag {
+      background: linear-gradient(135deg, rgba(168, 85, 247, 0.25), rgba(14, 165, 233, 0.25));
+      border-color: rgba(168, 85, 247, 0.5);
+      color: #e9d5ff;
+    }
+    .h-badge.live-indicator {
+      border-color: rgba(56, 189, 248, 0.4);
+      color: #38bdf8;
+    }
+    .pulse-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #38bdf8;
+      box-shadow: 0 0 8px #38bdf8;
+    }
+
+    main {
+      flex: 1;
+      display: grid;
+      grid-template-columns: 1420px 380px;
+      gap: 30px;
+      margin: 20px 0;
+      min-height: 0;
+    }
+
+    .slide-panel {
+      background: var(--bg-card);
+      border: 1px solid rgba(168, 85, 247, 0.25);
+      border-radius: 24px;
+      padding: 32px 38px;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(16px);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .slide-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 24px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      padding-bottom: 16px;
+    }
+    .slide-title-area h2 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 32px;
+      font-weight: 800;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .slide-title-area h2 span {
+      color: #c084fc;
+    }
+    .slide-title-area p {
+      color: var(--text-muted);
+      font-size: 15px;
+      margin-top: 6px;
+    }
+    .slide-num-tag {
+      background: rgba(168, 85, 247, 0.15);
+      border: 1px solid #a855f7;
+      color: #c084fc;
+      padding: 6px 16px;
+      border-radius: 12px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .slide-content-viewport {
+      flex: 1;
+      position: relative;
+      min-height: 0;
+    }
+    .slide-view {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.4s ease, transform 0.4s ease;
+      transform: translateY(10px);
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .slide-view.active {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0);
+    }
+
+    /* SLIDE 1: ENGENHARIA CONSTITUCIONAL */
+    .const-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      flex: 1;
+    }
+    .c-card {
+      background: rgba(15, 23, 42, 0.7);
+      border-radius: 16px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .c-card.anthropic {
+      border-color: rgba(56, 189, 248, 0.4);
+      background: radial-gradient(circle at top right, rgba(56, 189, 248, 0.1), transparent 70%), rgba(15, 23, 42, 0.8);
+    }
+    .c-card.idd {
+      border-color: rgba(168, 85, 247, 0.4);
+      background: radial-gradient(circle at top right, rgba(168, 85, 247, 0.15), transparent 70%), rgba(15, 23, 42, 0.8);
+    }
+    .c-head {
+      font-family: 'Outfit', sans-serif;
+      font-size: 19px;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .c-head.anthropic { color: #38bdf8; }
+    .c-head.idd { color: #c084fc; }
+    .c-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      font-size: 15px;
+      line-height: 1.5;
+      color: #cbd5e1;
+    }
+    .c-item strong { color: #fff; }
+    .const-banner {
+      background: rgba(168, 85, 247, 0.12);
+      border: 1.5px dashed rgba(168, 85, 247, 0.5);
+      border-radius: 14px;
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      font-size: 15px;
+      color: #e2e8f0;
+    }
+    .const-banner span.icon { font-size: 28px; }
+
+    /* SLIDE 2: POR QUE O GIT É CEGO */
+    .git-vs-diff-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      flex: 1;
+    }
+    .diff-box {
+      background: rgba(15, 23, 42, 0.7);
+      border-radius: 16px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 22px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .diff-box.git {
+      border-color: rgba(244, 63, 94, 0.35);
+      background: radial-gradient(circle at top right, rgba(244, 63, 94, 0.08), transparent 70%), rgba(15, 23, 42, 0.8);
+    }
+    .diff-box.intent {
+      border-color: rgba(16, 185, 129, 0.35);
+      background: radial-gradient(circle at top right, rgba(16, 185, 129, 0.08), transparent 70%), rgba(15, 23, 42, 0.8);
+    }
+    .code-preview {
+      background: #030712;
+      border-radius: 10px;
+      padding: 14px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      line-height: 1.6;
+      color: #e2e8f0;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      flex: 1;
+    }
+    .code-line.red { color: #f43f5e; background: rgba(244, 63, 94, 0.1); display: block; border-left: 3px solid #f43f5e; padding-left: 6px; }
+    .code-line.green { color: #10b981; background: rgba(16, 185, 129, 0.1); display: block; border-left: 3px solid #10b981; padding-left: 6px; }
+    .code-line.blue { color: #38bdf8; }
+
+    /* SLIDE 3: CLASSIFICAÇÃO TRIPARTIDA */
+    .classes-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 18px;
+      flex: 1;
+    }
+    .class-card {
+      border-radius: 16px;
+      padding: 22px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      background: rgba(15, 23, 42, 0.7);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    .class-card.cl-a {
+      border-color: rgba(16, 185, 129, 0.4);
+      background: radial-gradient(circle at top, rgba(16, 185, 129, 0.12), transparent 80%), rgba(15, 23, 42, 0.8);
+    }
+    .class-card.cl-b {
+      border-color: rgba(245, 158, 11, 0.4);
+      background: radial-gradient(circle at top, rgba(245, 158, 11, 0.12), transparent 80%), rgba(15, 23, 42, 0.8);
+    }
+    .class-card.cl-c {
+      border-color: rgba(244, 63, 94, 0.4);
+      background: radial-gradient(circle at top, rgba(244, 63, 94, 0.12), transparent 80%), rgba(15, 23, 42, 0.8);
+    }
+    .cl-tag {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      align-self: flex-start;
+    }
+    .cl-a .cl-tag { background: rgba(16, 185, 129, 0.2); color: #34d399; }
+    .cl-b .cl-tag { background: rgba(245, 158, 11, 0.2); color: #fbbf24; }
+    .cl-c .cl-tag { background: rgba(244, 63, 94, 0.2); color: #fb7185; }
+    .cl-title { font-family: 'Outfit', sans-serif; font-size: 20px; font-weight: 800; color: #fff; }
+
+    /* SLIDE 4: SOBERANIA EPISTÊMICA & PRÓXIMO EPISÓDIO */
+    .sovereign-layout {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 24px;
+      flex: 1;
+    }
+    .sov-box {
+      background: rgba(15, 23, 42, 0.7);
+      border: 1px solid rgba(168, 85, 247, 0.3);
+      border-radius: 16px;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .next-ep-box {
+      background: linear-gradient(135deg, rgba(168, 85, 247, 0.2), rgba(14, 165, 233, 0.15));
+      border: 1.5px solid rgba(168, 85, 247, 0.5);
+      border-radius: 16px;
+      padding: 26px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      box-shadow: 0 10px 30px rgba(168, 85, 247, 0.2);
+    }
+
+    /* BARRA LATERAL DOS PARTICIPANTES */
+    .sidebar {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+    .host-card {
+      background: var(--bg-card);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 20px;
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    .host-card.talking {
+      border-color: #a855f7;
+      background: linear-gradient(135deg, rgba(168, 85, 247, 0.2), rgba(15, 23, 42, 0.9));
+      box-shadow: 0 0 30px rgba(168, 85, 247, 0.35);
+      transform: scale(1.02);
+    }
+    .host-card.talking.leigo-active {
+      border-color: #38bdf8;
+      background: linear-gradient(135deg, rgba(56, 189, 248, 0.2), rgba(15, 23, 42, 0.9));
+      box-shadow: 0 0 30px rgba(56, 189, 248, 0.35);
+    }
+    .avatar-wrap {
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      border: 2px solid rgba(255, 255, 255, 0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 32px;
+      background: #0b1426;
+      flex-shrink: 0;
+    }
+    .host-info h4 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 17px;
+      font-weight: 700;
+      color: #fff;
+    }
+    .host-info p {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 3px;
+    }
+    .talk-badge {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      font-size: 10px;
+      text-transform: uppercase;
+      font-weight: 800;
+      letter-spacing: 1px;
+      padding: 3px 8px;
+      border-radius: 999px;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .host-card.talking .talk-badge {
+      opacity: 1;
+      background: #a855f7;
+      color: #fff;
+    }
+    .host-card.talking.leigo-active .talk-badge {
+      background: #38bdf8;
+      color: #0b1426;
+    }
+
+    .telemetry-card {
+      background: var(--bg-card);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 20px;
+      padding: 20px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .tele-title {
+      font-size: 12px;
+      font-weight: 800;
+      color: var(--text-muted);
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .tele-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 13px;
+      padding: 8px 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+    .tele-val {
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 700;
+      color: #c084fc;
+    }
+
+    footer {
+      background: rgba(11, 20, 38, 0.95);
+      border: 1px solid rgba(168, 85, 247, 0.25);
+      border-radius: 18px;
+      padding: 16px 26px;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+    .spk-pill {
+      padding: 6px 14px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-shrink: 0;
+    }
+    .spk-pill.eliezer {
+      background: rgba(168, 85, 247, 0.2);
+      border: 1px solid #a855f7;
+      color: #c084fc;
+    }
+    .spk-pill.leigo {
+      background: rgba(56, 189, 248, 0.2);
+      border: 1px solid #38bdf8;
+      color: #38bdf8;
+    }
+    .speech-box {
+      flex: 1;
+      font-size: 16px;
+      color: #e2e8f0;
+      font-weight: 500;
+      line-height: 1.4;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .wave-bars {
+      display: flex;
+      gap: 4px;
+      align-items: center;
+      height: 24px;
+      opacity: 0.3;
+    }
+    .wave-bars.active { opacity: 1; }
+    .w-bar {
+      width: 3px;
+      background: #c084fc;
+      border-radius: 999px;
+      animation: wavePulse 0.8s infinite ease-in-out;
+    }
+    .w-bar:nth-child(2) { animation-delay: 0.15s; height: 18px; }
+    .w-bar:nth-child(3) { animation-delay: 0.3s; height: 24px; }
+    .w-bar:nth-child(4) { animation-delay: 0.45s; height: 14px; }
+    .w-bar:nth-child(5) { animation-delay: 0.2s; height: 20px; }
+    @keyframes wavePulse {
+      0%, 100% { height: 6px; }
+      50% { height: 22px; }
+    }
+  </style>
+</head>
+<body>
+  <canvas id="bg-canvas"></canvas>
+
+  <div class="app-container">
+    <header>
+      <div class="brand-wrap">
+        <div class="brand-logo">📜</div>
+        <div class="brand-text">
+          <h1>PARADIGMA IDD — BASE DE CONHECIMENTO</h1>
+          <span>ENGENHARIA CONSTITUCIONAL &amp; EVOLUÇÃO DE ESQUEMA</span>
+        </div>
+      </div>
+      <div class="header-badges">
+        <div class="h-badge ep-tag">
+          <span>EPISÓDIO 07</span>
+          <strong>A MÁQUINA DE DIFF DE INTENÇÕES</strong>
+        </div>
+        <div class="h-badge live-indicator">
+          <div class="pulse-dot"></div>
+          <span id="timeReadout">00:00 / 02:27</span>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section class="slide-panel">
+        <div class="slide-header">
+          <div class="slide-title-area">
+            <h2 id="mainSlideTitle"><span>📜</span> A Engenharia de Software Constitucional</h2>
+            <p id="mainSlideSubtitle">Alinhamento Ontológico: Anthropic Constitutional AI expandida para a integridade de sistemas.</p>
+          </div>
+          <div class="slide-num-tag">SLIDE <span id="slideIndicator">1</span>/4</div>
+        </div>
+
+        <div class="slide-content-viewport">
+          <!-- SLIDE 1: ENGENHARIA CONSTITUCIONAL -->
+          <div class="slide-view active" id="view-slide-1">
+            <div class="const-grid">
+              <div class="c-card anthropic">
+                <div class="c-head anthropic">🤖 Anthropic: Constitutional AI</div>
+                <div class="c-item">
+                  <span>🎯</span>
+                  <div><strong>Alinhamento Ético de LLMs:</strong> Conjunto de princípios explícitos para manter respostas não-nocivas e úteis.</div>
+                </div>
+                <div class="c-item">
+                  <span>⚖️</span>
+                  <div><strong>Crítica e Revisão:</strong> O modelo é instruído a autoavaliar suas saídas segundo uma constituição em linguagem natural.</div>
+                </div>
+                <div class="c-item">
+                  <span>⚠️</span>
+                  <div><strong>Limitação:</strong> Não garante corretude lógica de software ou regras determinísticas de negócio.</div>
+                </div>
+              </div>
+
+              <div class="c-card idd">
+                <div class="c-head idd">🏛️ IDD: Constitutional Software Engineering</div>
+                <div class="c-item">
+                  <span>📐</span>
+                  <div><strong>Constituição Inegociável de Domínio:</strong> Invariantes formais do negócio (MER/UML) atuam como cláusulas pétreas.</div>
+                </div>
+                <div class="c-item">
+                  <span>🛡️</span>
+                  <div><strong>Bloqueio Cripto-Lógico:</strong> Nenhum agente ou programador possui autoridade para cometer mutações que violem a constituição.</div>
+                </div>
+                <div class="c-item">
+                  <span>⚡</span>
+                  <div><strong>Execução Determinística:</strong> Prova formal automática antes do código chegar ao banco ou à produção.</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="const-banner">
+              <span class="icon">📜</span>
+              <div>
+                <strong>A Regra de Ouro do IDD:</strong> "O código gerado por IA é volátil e descartável. A Constituição de Intenções é o patrimônio perpétuo da corporação."
+              </div>
+            </div>
+          </div>
+
+          <!-- SLIDE 2: POR QUE O GIT É CEGO -->
+          <div class="slide-view" id="view-slide-2">
+            <div class="git-vs-diff-grid">
+              <div class="diff-box git">
+                <div class="c-head" style="color: #fb7185;">🚫 Git: O Diff Cego de Caracteres</div>
+                <div class="code-preview">
+                  <span class="code-line">// Linhas 42-45 de schema.sql</span>
+                  <span class="code-line red">- status VARCHAR(20) DEFAULT 'aberto'</span>
+                  <span class="code-line green">+ status_id INT REFERENCES status(id)</span>
+                  <br>
+                  <span class="code-line" style="color: #94a3b8;"># O Git enxerga: 1 linha removida, 1 adicionada.</span>
+                  <span class="code-line" style="color: #fb7185;"># O Git NÃO ENXERGA: Quebra de cardinalidade!</span>
+                  <span class="code-line" style="color: #fb7185;"># Bloqueio de tabelas em produção! Falha no deploy!</span>
+                </div>
+                <div style="font-size: 14px; color: #cbd5e1; line-height: 1.4;">
+                  O Git é um grafo cego de hashes SHA-1 sobre arquivos ASCII. Ele não entende semântica relacional.
+                </div>
+              </div>
+
+              <div class="diff-box intent">
+                <div class="c-head" style="color: #34d399;">🌲 IDD: A Máquina de Diff de Intenções</div>
+                <div class="code-preview">
+                  <span class="code-line blue">&lt;DomainMutation type="RELATION_MIGRATION"&gt;</span>
+                  <span class="code-line green">+ Invariant: PreserveHistoricalSnapshots()</span>
+                  <span class="code-line green">+ SMT_Check: Satisfiable (Z3 Verified)</span>
+                  <span class="code-line blue">+ Strategy: EXPAND_AND_CONTRACT_REQUIRED</span>
+                  <span class="code-line blue">&lt;/DomainMutation&gt;</span>
+                  <br>
+                  <span class="code-line" style="color: #34d399;"># Análise semântica sobre o grafo de intenções.</span>
+                  <span class="code-line" style="color: #38bdf8;"># Classificação automática de risco com raio de impacto.</span>
+                </div>
+                <div style="font-size: 14px; color: #cbd5e1; line-height: 1.4;">
+                  A Máquina de Diff compara grafos ontológicos, prevendo migrações de dados e impactos de retrocompatibilidade.
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- SLIDE 3: CLASSIFICAÇÃO TRIPARTIDA -->
+          <div class="slide-view" id="view-slide-3">
+            <div class="classes-grid">
+              <div class="class-card cl-a">
+                <div class="cl-tag">Risco Zero</div>
+                <div class="cl-title">Classe A: Aditiva</div>
+                <div style="font-size: 14px; color: #cbd5e1; line-height: 1.5;">
+                  <strong>Adições Puras:</strong> Novos atributos opcionais, novas tabelas ou novas intenções de consulta.
+                </div>
+                <div style="background: rgba(16, 185, 129, 0.15); border-radius: 8px; padding: 10px; font-size: 13px; color: #34d399; margin-top: auto;">
+                  ⚡ Compilação e deploy automáticos sem intervenção humana.
+                </div>
+              </div>
+
+              <div class="class-card cl-b">
+                <div class="cl-tag">Risco Moderado</div>
+                <div class="cl-title">Classe B: Restritiva</div>
+                <div style="font-size: 14px; color: #cbd5e1; line-height: 1.5;">
+                  <strong>Endurecimento de Regras:</strong> Novo validador NOT NULL com default, alteração de regras de transição de estado.
+                </div>
+                <div style="background: rgba(245, 158, 11, 0.15); border-radius: 8px; padding: 10px; font-size: 13px; color: #fbbf24; margin-top: auto;">
+                  ⚠️ Análise de Raio de Alcance + Aprovação Humana Obrigatória.
+                </div>
+              </div>
+
+              <div class="class-card cl-c">
+                <div class="cl-tag">Risco Crítico</div>
+                <div class="cl-title">Classe C: Ruptura</div>
+                <div style="font-size: 14px; color: #cbd5e1; line-height: 1.5;">
+                  <strong>Ruptura Estrutural:</strong> Mudança de 1:N para N:M, remoção de colunas ou quebra de chave estrangeira.
+                </div>
+                <div style="background: rgba(244, 63, 94, 0.15); border-radius: 8px; padding: 10px; font-size: 13px; color: #fb7185; margin-top: auto;">
+                  🚨 Exige padrão Expand and Contract (Zero Downtime) + Tribunal.
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- SLIDE 4: SOBERANIA EPISTÊMICA & PRÓXIMO EPISÓDIO -->
+          <div class="slide-view" id="view-slide-4">
+            <div class="sovereign-layout">
+              <div class="sov-box">
+                <div class="c-head" style="color: #c084fc;">👑 Soberania do Comando Epistêmico</div>
+                <div class="c-item">
+                  <span>🏛️</span>
+                  <div><strong>Tribunal de Mudança de Esquema:</strong> A IA propõe o script de migração; o humano assina com soberania epistêmica.</div>
+                </div>
+                <div class="c-item">
+                  <span>🔄</span>
+                  <div><strong>Zero Downtime Garantido:</strong> O padrão Expand and Contract garante que nenhuma versão antiga quebre durante a transição.</div>
+                </div>
+                <div class="c-item">
+                  <span>📈</span>
+                  <div><strong>Patrimônio Histórico Intacto:</strong> Snapshots de leitura histórica nunca são corrompidos por evoluções de esquema.</div>
+                </div>
+              </div>
+
+              <div class="next-ep-box">
+                <div>
+                  <div style="font-size: 13px; font-weight: 800; color: #38bdf8; letter-spacing: 1px; text-transform: uppercase;">
+                    A SEGUIR NO EPISÓDIO 08
+                  </div>
+                  <h3 style="font-family: 'Outfit', sans-serif; font-size: 26px; font-weight: 900; color: #fff; margin-top: 8px; line-height: 1.2;">
+                    A TEORIA DA AÇÃO ATÔMICA
+                  </h3>
+                  <p style="font-size: 14px; color: #cbd5e1; margin-top: 10px; line-height: 1.4;">
+                    Sagas de Domínio e o Protocolo Canônico em 4 Fases: Guarda, Mutação, Selagem e Compensação.
+                  </p>
+                </div>
+                <div style="background: rgba(15, 23, 42, 0.8); border-radius: 12px; padding: 12px; font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #c084fc;">
+                  Ep. 08: Fechamento da Série Fundamental IDD
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <aside class="sidebar">
+        <div class="host-card" id="card-eliezer">
+          <div class="avatar-wrap">👨‍💼</div>
+          <div class="host-info">
+            <h4>Eliézer Rosa</h4>
+            <p>Criador do Paradigma IDD</p>
+          </div>
+          <div class="talk-badge">FALANDO</div>
+        </div>
+
+        <div class="host-card" id="card-leigo">
+          <div class="avatar-wrap">👩‍💻</div>
+          <div class="host-info">
+            <h4>Usuária Leiga</h4>
+            <p>Voz da Ergonomia de Campo</p>
+          </div>
+          <div class="talk-badge">FALANDO</div>
+        </div>
+
+        <div class="telemetry-card">
+          <div class="tele-title">
+            <span>⚙️</span> CONSTITUIÇÃO &amp; SCHEMAS
+          </div>
+          <div class="tele-item">
+            <span style="color: var(--text-muted);">Constituição</span>
+            <span class="tele-val">INEGOCIÁVEL</span>
+          </div>
+          <div class="tele-item">
+            <span style="color: var(--text-muted);">Analisador Diff</span>
+            <span class="tele-val">INTENT GRAPH AST</span>
+          </div>
+          <div class="tele-item">
+            <span style="color: var(--text-muted);">Mutações Classe C</span>
+            <span class="tele-val">EXPAND &amp; CONTRACT</span>
+          </div>
+          <div class="tele-item">
+            <span style="color: var(--text-muted);">Comando Humano</span>
+            <span class="tele-val" style="color: #38bdf8;">SOBERANO</span>
+          </div>
+        </div>
+      </aside>
+    </main>
+
+    <footer>
+      <div class="spk-pill leigo" id="speakerPill">
+        <span>🎙️</span> <span id="speakerName">Usuária Leiga</span>
+      </div>
+      <div class="speech-box" id="speechContent">
+        "Eliézer, no episódio seis nós vimos que as invariantes atuam como leis matemáticas..."
+      </div>
+      <div class="wave-bars active" id="waveBars">
+        <div class="w-bar"></div>
+        <div class="w-bar"></div>
+        <div class="w-bar"></div>
+        <div class="w-bar"></div>
+        <div class="w-bar"></div>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    const canvas = document.getElementById('bg-canvas');
+    const ctx = canvas.getContext('2d');
+    canvas.width = 1920;
+    canvas.height = 1080;
+
+    const particles = [];
+    for (let i = 0; i < 70; i++) {
+      particles.push({
+        x: Math.random() * 1920,
+        y: Math.random() * 1080,
+        radius: Math.random() * 2 + 0.5,
+        speedX: (Math.random() - 0.5) * 0.3,
+        speedY: (Math.random() - 0.5) * 0.3,
+        color: Math.random() > 0.5 ? '#a855f7' : '#38bdf8',
+        alpha: Math.random() * 0.4 + 0.1
+      });
+    }
+
+    function animateBg() {
+      ctx.fillStyle = '#050811';
+      ctx.fillRect(0, 0, 1920, 1080);
+      particles.forEach(p => {
+        p.x += p.speedX; p.y += p.speedY;
+        if (p.y < 0) p.y = 1080;
+        if (p.x < 0) p.x = 1920;
+        if (p.x > 1920) p.x = 0;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+        ctx.fillStyle = p.color;
+        ctx.globalAlpha = p.alpha;
+        ctx.fill();
+      });
+      requestAnimationFrame(animateBg);
+    }
+    requestAnimationFrame(animateBg);
+
+    window.timelineItems = [];
+
+    window.setTimeline = function(items) {
+      if (items && items.length > 0) window.timelineItems = items;
+    };
+
+    const slideTitles = [
+      { t: "A Engenharia de Software Constitucional", s: "Alinhamento Ontológico: Anthropic Constitutional AI expandida para a integridade de sistemas." },
+      { t: "A Máquina de Diff de Intenções (Por que o Git é Cego)", s: "Diff de Caracteres ASCII line-by-line vs Diff Semântico sobre o Grafo de Domínio." },
+      { t: "Classificação Tripartida de Mutações de Domínio", s: "Classe A (Aditiva), Classe B (Restritiva com Raio) e Classe C (Ruptura Expand & Contract)." },
+      { t: "Soberania Epistêmica & Síntese Declarativa", s: "O ser humano como legislador supremo — introdução à Ação Atômica do Episódio 08." }
+    ];
+
+    window.updateFrameAtTime = function(timeSec) {
+      const curtain = document.getElementById('sync-curtain');
+      if (curtain && curtain.style.display !== 'none') curtain.style.display = 'none';
+
+      const m = Math.floor(timeSec / 60);
+      const s = Math.floor(timeSec % 60);
+      const timeStr = `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+      const timeEl = document.getElementById('timeReadout');
+      if (timeEl) timeEl.innerText = `${timeStr} / 02:27`;
+
+      if (!window.timelineItems || window.timelineItems.length === 0) return;
+
+      const currentSeg = window.timelineItems.find(it => timeSec >= it.startSec && timeSec <= it.endSec)
+        || window.timelineItems.filter(it => it.startSec <= timeSec).pop()
+        || window.timelineItems[0];
+
+      const speakingSeg = window.timelineItems.find(it => timeSec >= it.startSec && timeSec <= it.endSec);
+
+      document.querySelectorAll('.slide-view').forEach(sv => sv.classList.remove('active'));
+      const activeView = document.getElementById(`view-slide-${currentSeg.slide}`);
+      if (activeView) activeView.classList.add('active');
+
+      document.getElementById('slideIndicator').innerText = currentSeg.slide;
+      const tInfo = slideTitles[currentSeg.slide - 1];
+      if (tInfo) {
+        document.getElementById('mainSlideTitle').innerHTML = `<span>📜</span> ${tInfo.t}`;
+        document.getElementById('mainSlideSubtitle').innerText = tInfo.s;
+      }
+
+      document.getElementById('speechContent').innerText = `"${currentSeg.text}"`;
+      document.getElementById('speakerName').innerText = currentSeg.actor;
+      const pill = document.getElementById('speakerPill');
+      pill.className = `spk-pill ${currentSeg.who}`;
+
+      const cardEliezer = document.getElementById('card-eliezer');
+      const cardLeigo = document.getElementById('card-leigo');
+      const waveBars = document.getElementById('waveBars');
+
+      if (speakingSeg) {
+        cardEliezer.classList.toggle('talking', speakingSeg.who === 'eliezer');
+        cardLeigo.classList.toggle('talking', speakingSeg.who === 'leigo');
+        cardLeigo.classList.toggle('leigo-active', speakingSeg.who === 'leigo');
+        waveBars.classList.add('active');
+      } else {
+        cardEliezer.classList.remove('talking');
+        cardLeigo.classList.remove('talking');
+        cardLeigo.classList.remove('leigo-active');
+        waveBars.classList.remove('active');
+      }
+    };
+  </script>
+</body>
+</html>

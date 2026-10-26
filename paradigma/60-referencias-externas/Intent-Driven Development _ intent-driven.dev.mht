@@ -1,0 +1,1433 @@
+From: <Saved by Blink>
+Snapshot-Content-Location: https://intent-driven.dev/knowledge/intent-driven-development/?utm_source=copilot.com
+Subject: Intent-Driven Development | intent-driven.dev
+Date: Sat, 11 Jul 2026 10:02:42 -0300
+MIME-Version: 1.0
+Content-Type: multipart/related;
+	type="text/html";
+	boundary="----MultipartBoundary--Ot3bZbDUROdcxHt0QtBAxHmTL0okXtcrxhdgZZy5Eg----"
+
+
+------MultipartBoundary--Ot3bZbDUROdcxHt0QtBAxHmTL0okXtcrxhdgZZy5Eg----
+Content-Type: text/html
+Content-ID: <frame-9AA3B996F92620F013A480E3CFB10F4B@mhtml.blink>
+Content-Transfer-Encoding: binary
+Content-Location: https://intent-driven.dev/knowledge/intent-driven-development/?utm_source=copilot.com
+
+<!DOCTYPE html><html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Intent-Driven Development (IDD) explained: the umbrella practice of structuring intent and context so AI coding agents build the right thing â€” spanning context engineering, spec-driven development, harness engineering, and Ralph Loops.">
+
+  <!-- Canonical URL -->
+  <link rel="canonical" href="https://intent-driven.dev/knowledge/intent-driven-development/">
+
+  <!-- Open Graph meta tags -->
+  <meta property="og:title" content="Intent-Driven Development: Definition &amp; Practices">
+  <meta property="og:description" content="Intent-Driven Development (IDD) explained: the umbrella practice of structuring intent and context so AI coding agents build the right thing â€” spanning context engineering, spec-driven development, and harness engineering.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://intent-driven.dev/knowledge/intent-driven-development/">
+
+  <!-- Twitter Card meta tags -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Intent-Driven Development: Definition &amp; Practices">
+  <meta name="twitter:description" content="Intent-Driven Development (IDD) explained: the umbrella practice of structuring intent and context so AI coding agents build the right thing â€” spanning context engineering, spec-driven development, and harness engineering.">
+
+  <title>Intent-Driven Development | intent-driven.dev</title>
+
+  <!-- Favicons -->
+  <link rel="icon" type="image/png" sizes="32x32" href="https://intent-driven.dev/assets/favicons/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="https://intent-driven.dev/assets/favicons/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="https://intent-driven.dev/assets/favicons/apple-touch-icon.png">
+  <link rel="manifest" href="https://intent-driven.dev/site.webmanifest">
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="https://intent-driven.dev/styles/main.css">
+
+  <!-- Structured Data -->
+  
+  
+</head>
+<body>
+  <!-- Navigation Bar -->
+  <div id="navbar-placeholder"><header class="site-header">
+  <nav class="site-nav" aria-label="Main navigation">
+    <a href="https://intent-driven.dev/" class="site-logo">
+      <img src="https://intent-driven.dev/assets/logo.webp" alt="intent-driven.dev logo" class="site-logo-image" width="565" height="285">
+    </a>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-links" aria-label="Open menu">
+      <span class="nav-toggle-bar" aria-hidden="true"></span>
+      <span class="nav-toggle-bar" aria-hidden="true"></span>
+      <span class="nav-toggle-bar" aria-hidden="true"></span>
+    </button>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="https://intent-driven.dev/#featured-openspec" class="nav-link" data-event="nav_featured_click">Featured</a></li>
+      <li><a href="https://intent-driven.dev/#events" class="nav-link" data-event="nav_events_click">Events</a></li>
+      <li><a href="https://intent-driven.dev/blog/" class="nav-link" data-event="nav_blog_click">Blog</a></li>
+      <li><a href="https://intent-driven.dev/#insights" class="nav-link" data-event="nav_insights_click">Insights</a></li>
+      <li><a href="https://intent-driven.dev/about/" class="nav-link" data-event="nav_about_click" aria-label="About Hari Krishnan">About</a></li>
+      <li><a href="https://intent-driven.dev/services/" class="nav-link">Services</a></li>
+      <li>
+        <a href="https://www.linkedin.com/showcase/intent-driven-dev" target="_blank" rel="noopener noreferrer" class="nav-link nav-link-icon" aria-label="Connect on LinkedIn showcase page">
+          <svg width="18" height="18" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M16.667 2.5H3.333C2.875 2.5 2.5 2.875 2.5 3.333V16.667C2.5 17.125 2.875 17.5 3.333 17.5H16.667C17.125 17.5 17.5 17.125 17.5 16.667V3.333C17.5 2.875 17.125 2.5 16.667 2.5ZM6.667 15H4.583V7.917H6.667V15ZM5.625 6.958C4.958 6.958 4.417 6.417 4.417 5.75C4.417 5.083 4.958 4.542 5.625 4.542C6.292 4.542 6.833 5.083 6.833 5.75C6.833 6.417 6.292 6.958 5.625 6.958ZM15.417 15H13.333V11.542C13.333 10.75 13.317 9.733 12.233 9.733C11.133 9.733 10.967 10.592 10.967 11.483V15H8.883V7.917H10.883V8.858H10.917C11.208 8.308 11.942 7.725 13.042 7.725C15.158 7.725 15.417 9.108 15.417 10.892V15Z" fill="currentColor"></path>
+          </svg>
+          LinkedIn
+        </a>
+      </li>
+      <li>
+        <a href="https://www.youtube.com/@intent-driven-development" target="_blank" rel="noopener noreferrer" class="nav-link nav-link-icon" aria-label="Subscribe on YouTube">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" fill="currentColor"></path>
+          </svg>
+          YouTube
+        </a>
+      </li>
+      <li>
+        <a href="https://github.com/intent-driven-dev" target="_blank" rel="noopener noreferrer" class="nav-link nav-link-icon" aria-label="View on GitHub">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z" fill="currentColor"></path>
+          </svg>
+          GitHub
+        </a>
+      </li>
+    </ul>
+  </nav>
+</header>
+</div>
+  
+
+  <article class="knowledge-page">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="https://intent-driven.dev/">Home</a> &gt; <a href="https://intent-driven.dev/knowledge/">Knowledge</a> &gt; Intent-Driven Development
+    </nav>
+
+    <header class="knowledge-header">
+      <h1>Intent-Driven Development</h1>
+      <div class="knowledge-meta">
+        <span class="knowledge-meta-item">Category: Core Concepts</span>
+        <span class="knowledge-meta-item">Last updated: June 29, 2026</span>
+      </div>
+    </header>
+
+    <!-- Quick Links / On This Page -->
+    <nav id="quick-links" class="quick-links-nav" aria-label="On this page">
+      <h2>On This Page</h2>
+      <ul>
+        <li><a href="https://intent-driven.dev/knowledge/intent-driven-development/?utm_source=copilot.com#overview">Overview</a></li>
+        <li><a href="https://intent-driven.dev/knowledge/intent-driven-development/?utm_source=copilot.com#why-now">Why Intent-Driven Development</a></li>
+        <li><a href="https://intent-driven.dev/knowledge/intent-driven-development/?utm_source=copilot.com#principles">Core Principles</a></li>
+        <li><a href="https://intent-driven.dev/knowledge/intent-driven-development/?utm_source=copilot.com#practices">The Practices Under IDD</a></li>
+        <li><a href="https://intent-driven.dev/knowledge/intent-driven-development/?utm_source=copilot.com#workflow">From Idea to Implementation</a></li>
+        <li><a href="https://intent-driven.dev/knowledge/intent-driven-development/?utm_source=copilot.com#vs-vibe">IDD vs Vibe Coding</a></li>
+        <li><a href="https://intent-driven.dev/knowledge/intent-driven-development/?utm_source=copilot.com#getting-started">Getting Started</a></li>
+        <li><a href="https://intent-driven.dev/knowledge/intent-driven-development/?utm_source=copilot.com#resources">Resources</a></li>
+        <li><a href="https://intent-driven.dev/knowledge/intent-driven-development/?utm_source=copilot.com#related">Related Topics</a></li>
+      </ul>
+    </nav>
+
+    <section id="overview" class="knowledge-section">
+      <h2>What Is Intent-Driven Development?</h2>
+      <p>
+        <strong>Intent-Driven Development (IDD)</strong> is the practice of building software with AI coding agents by making your <em>intent</em> explicit and structuring the context around it, so agents produce what you actually meant rather than what they infer from an ambiguous prompt. It is an umbrella approach: where individual techniques solve one slice of the problem, IDD names the shared goal that connects them â€” keeping human intent at the center as work moves from a rough idea to working, verified code.
+      </p>
+      <p>
+        The premise is simple. AI agents are extraordinary at generating code, but they have no privileged access to your goals, constraints, or domain. Left to infer intent from short prompts, they drift. IDD treats intent as a first-class artifact you deliberately capture, structure, and carry forward â€” so the agent has something durable to build against. The practices that make this work, such as <a href="https://intent-driven.dev/knowledge/context-engineering/">context engineering</a>, <a href="https://intent-driven.dev/knowledge/spec-driven-development/">spec-driven development</a>, harness engineering, and Ralph Loops, are all expressions of the same idea: <strong>structure intent before you generate.</strong>
+      </p>
+    </section>
+
+    <section id="why-now" class="knowledge-section">
+      <h2>Why Intent-Driven Development</h2>
+      <p>
+        In AI-assisted development, the quality of your output depends directly on the quality of your input. When intent is left implicit, the gap between what you wanted and what got built â€” <strong>intent-to-implementation deviation</strong> â€” widens with every prompt. This is a property of the workflow, not the model: in an unstructured loop, each correction focuses on the current concern, and earlier constraints get weakened or forgotten until the developer is stuck in a sustained negotiation, restating the same intent to keep the output on track.
+      </p>
+      <p>
+        IDD addresses this at the root. Instead of relying on the agent to remember and reconcile scattered instructions, you give it a structured, durable representation of intent to work from. Deviations become visible early â€” before they compound â€” and the agent spends its capability executing a clear target rather than guessing at one. The result is the shift this site is built around: moving <strong>beyond vibe coding</strong> to engineering the harness that takes you from idea to implementation in an agent-native way.
+      </p>
+    </section>
+
+    <section id="principles" class="knowledge-section">
+      <h2>Core Principles</h2>
+      <p>
+        A few principles run through every IDD practice, regardless of which tool or technique you use.
+      </p>
+
+      <h3>Intent Is a First-Class Artifact</h3>
+      <p>
+        Intent is not a throwaway prompt â€” it is something you capture, structure, and keep. Whether it lives in a specification, a schema, or a harness, intent becomes a durable reference that both humans and agents can return to. This is what separates IDD from improvisation: the "why" and the "what" are written down before the "how" is generated.
+      </p>
+
+      <h3>Structure Over Improvisation</h3>
+      <p>
+        IDD favors deliberate structure over conversational drift. Structuring context, slicing work into reviewable units, and defining the artifacts an agent should produce all reduce ambiguity at the point where it is cheapest to fix. The goal is not heavyweight process for its own sake â€” it is just enough structure to keep intent intact as the system grows.
+      </p>
+
+      <h3>Agent-Native, Not Agent-Adjacent</h3>
+      <p>
+        IDD assumes AI agents are first-class participants in the development loop, not occasional helpers. Workflows are designed for how agents actually behave â€” their context limits, their tendency to optimize for the immediate prompt, their ability to run tasks in parallel â€” rather than retrofitting human-only processes around them.
+      </p>
+
+      <h3>Verifiable by Design</h3>
+      <p>
+        Because intent is explicit, you can check work against it. Validation â€” tests, reviews, spec-to-code comparison â€” closes the loop between intent and implementation, catching deviation while it is small. Intent that cannot be verified is just a wish; IDD insists on making it checkable.
+      </p>
+    </section>
+
+    <section id="practices" class="knowledge-section">
+      <h2>The Practices Under IDD</h2>
+      <p>
+        Intent-Driven Development is best understood through the practices it brings together. Each tackles a different part of the journey from idea to implementation, and they compose: you rarely use just one.
+      </p>
+
+      <h3>Context Engineering</h3>
+      <p>
+        <a href="https://intent-driven.dev/knowledge/context-engineering/">Context engineering</a> is the foundational practice of deliberately structuring the information an agent sees, so it understands what you need. It is the groundwork beneath everything else in IDD â€” without well-engineered context, even a good specification underperforms. Context engineering spans a spectrum from tactical (a well-formed prompt) to strategic (a durable, structured source of truth).
+      </p>
+
+      <h3>Spec-Driven Development</h3>
+      <p>
+        <a href="https://intent-driven.dev/knowledge/spec-driven-development/">Spec-driven development (SDD)</a> is the strategic end of that spectrum: you write a specification first, implement against it, then validate alignment. The spec becomes the source of truth that keeps design intent and the actual code synchronized. SDD is the most mature, well-tooled IDD practice, supported by tools such as <a href="https://intent-driven.dev/knowledge/openspec/">OpenSpec</a>, <a href="https://intent-driven.dev/knowledge/spec-kit/">GitHub Spec Kit</a>, and <a href="https://intent-driven.dev/knowledge/kiro/">Kiro</a>.
+      </p>
+
+      <h3>Harness Engineering</h3>
+      <p>
+        Between a human idea and an agent's execution there is a gap. <strong>Harness engineering</strong> is the practice of building the layer that transforms raw ideas into structured, durable instructions an agent can act on independently â€” the "intent harness." Rather than hand-holding the agent through each step, you engineer the scaffolding that carries intent reliably into execution. See <a href="https://intent-driven.dev/blog/2026/02/23/intent-harness/">The Intent Harness</a> for a deeper treatment.
+      </p>
+
+      <h3>Ralph Loops</h3>
+      <p>
+        <strong>Ralph Loops</strong> are structured, repeating agent loops that drive a task toward completion against a clear definition of done â€” the agent works, checks its output against intent, and iterates without a human in every cycle. They are an agent-native execution pattern: useful precisely because the intent and the checks are explicit enough that the loop can run on its own.
+      </p>
+    </section>
+
+    <section id="workflow" class="knowledge-section">
+      <h2>From Idea to Implementation</h2>
+      <p>
+        The IDD workflow can be read as three beats: <strong>idea â†’ intent â†’ implementation</strong>. A raw idea is fuzzy and underspecified. The work of IDD is to turn that idea into <em>structured intent</em> â€” context, specifications, and a harness an agent can act on â€” and then let the agent carry it to a verified implementation.
+      </p>
+      <ol>
+        <li><strong>Idea:</strong> Start from the thing you want, in plain terms. Keep it small enough to reason about; large, single-shot requests produce intent you cannot actually review.</li>
+        <li><strong>Intent:</strong> Structure it. Engineer the context, write the specification or schema, and define how the agent should produce its artifacts. This is where ambiguity is removed while it is still cheap.</li>
+        <li><strong>Implementation:</strong> Let the agent build against that structured intent, with validation closing the loop. Tests and reviews compare what was built to what was meant, so deviation surfaces early.</li>
+      </ol>
+      <p>
+        The same loop scales from a single feature to an enterprise rollout. For the workflow mechanics in depth, see the <a href="https://intent-driven.dev/knowledge/workflows/">spec-driven development workflows</a> guide; for choosing tooling, the <a href="https://intent-driven.dev/knowledge/tool-selection/">tool selection guide</a>.
+      </p>
+    </section>
+
+    <section id="vs-vibe" class="knowledge-section">
+      <h2>IDD vs Vibe Coding</h2>
+      <p>
+        The clearest way to understand IDD is by contrast with <strong>vibe coding</strong> â€” the informal, conversational approach where you nudge an agent through prompts until the result "feels right." Vibe coding optimizes for speed and is genuinely useful for quick prototypes and exploration. But it manages deviation reactively: you only course-correct once you notice the output has drifted from what you meant.
+      </p>
+      <p>
+        Intent-Driven Development optimizes for intent alignment instead. By making intent explicit, structured, and verifiable up front, it prevents deviation rather than chasing it. The trade-off is real â€” IDD frontloads clarity, which costs more than starting to type immediately â€” so the guiding rule is pragmatic: <strong>if intent matters beyond the next prompt, structure wins.</strong> For the full comparison, see <a href="https://intent-driven.dev/knowledge/vibe-coding-vs-sdd/">vibe coding vs spec-driven development</a>.
+      </p>
+    </section>
+
+    <section id="getting-started" class="knowledge-section">
+      <h2>Getting Started</h2>
+      <p>
+        You do not adopt all of IDD at once. Start where deviation hurts most and add structure incrementally.
+      </p>
+      <ul>
+        <li><strong>Begin with context engineering.</strong> Improve what the agent sees before changing how you work. The <a href="https://intent-driven.dev/knowledge/getting-started/">getting started guide</a> walks through the first steps.</li>
+        <li><strong>Add spec-driven development where intent is long-lived.</strong> For features that matter beyond the next prompt, write the spec first and let it anchor implementation. Pick a tool with the <a href="https://intent-driven.dev/knowledge/tool-selection/">tool selection guide</a>.</li>
+        <li><strong>Engineer a harness as your workflow matures.</strong> Once specs and context are habitual, invest in the scaffolding that carries intent into execution with less hand-holding.</li>
+        <li><strong>Keep intent reviewable.</strong> Slice work small. If you cannot reasonably review the intent you are handing the agent, it is too large.</li>
+      </ul>
+    </section>
+
+    <section id="resources" class="knowledge-section">
+      <h2>Resources</h2>
+      <ul class="resources-list">
+        <li class="resource-item">
+          <a href="https://intent-driven.dev/blog/2026/02/23/intent-harness/" class="resource-link" data-event="knowledge_resource_click">
+            The Intent Harness
+            <svg class="arrow-icon" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path d="M3.33334 8H12.6667M12.6667 8L8.00001 3.33333M12.6667 8L8.00001 12.6667" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+            </svg>
+          </a>
+          <p class="resource-description">The layer that transforms raw ideas into structured, durable instructions an agent can act on independently.</p>
+        </li>
+        <li class="resource-item">
+          <a href="https://intent-driven.dev/blog/2025/12/15/vibe-coding-vs-spec-driven-development/" class="resource-link" data-event="knowledge_resource_click">
+            Vibe Coding vs Spec-Driven Development
+            <svg class="arrow-icon" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path d="M3.33334 8H12.6667M12.6667 8L8.00001 3.33333M12.6667 8L8.00001 12.6667" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+            </svg>
+          </a>
+          <p class="resource-description">How structured intent prevents the intent-to-implementation deviation that unstructured prompting accumulates.</p>
+        </li>
+        <li class="resource-item">
+          <a href="https://intent-driven.dev/blog/2026/02/19/enterprise-spec-driven-development/" class="resource-link" data-event="knowledge_resource_click">
+            Spec-Driven Development at Enterprise Scale
+            <svg class="arrow-icon" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path d="M3.33334 8H12.6667M12.6667 8L8.00001 3.33333M12.6667 8L8.00001 12.6667" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+            </svg>
+          </a>
+          <p class="resource-description">Adopting intent-driven practices across a large organization as an operational and cultural shift.</p>
+        </li>
+        <li class="resource-item">
+          <a href="https://intent-driven.dev/blog/2026/05/10/spec-driven-development-openspec-opencode/" class="resource-link" data-event="knowledge_resource_click">
+            Spec-Driven Development with OpenSpec and OpenCode
+            <svg class="arrow-icon" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path d="M3.33334 8H12.6667M12.6667 8L8.00001 3.33333M12.6667 8L8.00001 12.6667" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+            </svg>
+          </a>
+          <p class="resource-description">Walkthrough of the intent-driven template combining OpenSpec, OpenCode skills, and a custom schema for end-to-end spec-driven development.</p>
+        </li>
+        <li class="resource-item">
+          <a href="https://intent-driven.dev/blog/2026/06/27/sdd-adversarial-authoring-glossary/" class="resource-link" data-event="knowledge_resource_click">
+            SDD with Multi-Model Spec Review and Glossary
+            <svg class="arrow-icon" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path d="M3.33334 8H12.6667M12.6667 8L8.00001 3.33333M12.6667 8L8.00001 12.6667" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+            </svg>
+          </a>
+          <p class="resource-description">Multi-model adversarial authoring of specifications plus glossary skills using Domain-Driven Design terminology for consistent specs.</p>
+        </li>
+        <li class="resource-item">
+          <a href="https://github.com/intent-driven-dev/intent-driven-template" target="_blank" rel="nofollow noopener" class="resource-link" data-event="knowledge_resource_click">
+            Intent-Driven Template Repository
+            <svg class="external-icon" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path d="M12 8.66667V12.6667C12 13.0203 11.8595 13.3594 11.6095 13.6095C11.3594 13.8595 11.0203 14 10.6667 14H3.33333C2.97971 14 2.64057 13.8595 2.39052 13.6095C2.14048 13.3594 2 13.0203 2 12.6667V5.33333C2 4.97971 2.14048 4.64057 2.39052 4.39052C2.64057 4.14048 2.97971 4 3.33333 4H7.33333M10 2H14M14 2V6M14 2L6.66667 9.33333" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+            </svg>
+          </a>
+          <p class="resource-description">GitHub template that wires OpenSpec setup, OpenCode skills, and the intent-driven custom schema into a ready-to-use project starting point.</p>
+        </li>
+      </ul>
+    </section>
+
+    <aside id="related" class="knowledge-related">
+      <h3>Related Topics</h3>
+      <ul class="related-topics-list">
+        <li class="related-topic-item">
+          <a href="https://intent-driven.dev/knowledge/context-engineering/" class="related-topic-link">Context Engineering</a>
+          <p class="related-topic-description">The foundational IDD practiceâ€”structuring information so AI agents understand intent.</p>
+        </li>
+        <li class="related-topic-item">
+          <a href="https://intent-driven.dev/knowledge/spec-driven-development/" class="related-topic-link">Spec-Driven Development</a>
+          <p class="related-topic-description">The strategic, specification-first practice within IDD: spec, implement, validate.</p>
+        </li>
+        <li class="related-topic-item">
+          <a href="https://intent-driven.dev/knowledge/workflows/" class="related-topic-link">Spec-Driven Development Workflows</a>
+          <p class="related-topic-description">The define â†’ implement â†’ validate loop and how to apply it.</p>
+        </li>
+        <li class="related-topic-item">
+          <a href="https://intent-driven.dev/knowledge/getting-started/" class="related-topic-link">Getting Started</a>
+          <p class="related-topic-description">Begin practicing intent-driven development step by step.</p>
+        </li>
+        <li class="related-topic-item">
+          <a href="https://intent-driven.dev/knowledge/tool-selection/" class="related-topic-link">Tool Selection Guide</a>
+          <p class="related-topic-description">Choose the right tooling for your workflow, team size, and integration needs.</p>
+        </li>
+        <li class="related-topic-item">
+          <a href="https://intent-driven.dev/knowledge/vibe-coding-vs-sdd/" class="related-topic-link">Vibe Coding vs SDD</a>
+          <p class="related-topic-description">Compare informal vibe coding with structured, intent-first development.</p>
+        </li>
+      </ul>
+    </aside>
+  </article>
+
+  <!-- Footer -->
+  <footer class="footer" id="about">
+    <div class="footer-content">
+      <div class="footer-mission">
+        <h2 class="footer-mission-heading">About intent-driven.dev</h2>
+        <p class="footer-mission-text">
+          intent-driven.dev is the home of Intent-Driven Developmentâ€”structuring intent and context so AI agents build what you actually meant. Master the practices that make it work: context engineering, spec-driven development, harness engineering, and more, with tool comparisons, expert insights, and professional training.
+        </p>
+      </div>
+
+      <div class="footer-credits">
+        <a href="https://polarizer.in/" target="_blank" rel="noopener noreferrer" aria-label="Polarizer Technologies">
+          <img src="https://intent-driven.dev/assets/footer-logos/polarizer-logo.webp" alt="Polarizer Technologies" class="footer-logo" width="154" height="28">
+        </a>
+        <a href="https://harikrishnan.io/" target="_blank" rel="noopener noreferrer" class="footer-credit-link">Hari Krishnan</a>
+      </div>
+
+      <div class="footer-social" style="margin-bottom: 1rem; display: flex; gap: 1.5rem; justify-content: center; align-items: center;">
+        <a href="https://www.linkedin.com/showcase/intent-driven-dev" target="_blank" rel="noopener noreferrer" aria-label="Connect on LinkedIn showcase page" style="color: white; text-decoration: none; display: flex; align-items: center; gap: 0.5rem;">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M16.667 2.5H3.333C2.875 2.5 2.5 2.875 2.5 3.333V16.667C2.5 17.125 2.875 17.5 3.333 17.5H16.667C17.125 17.5 17.5 17.125 17.5 16.667V3.333C17.5 2.875 17.125 2.5 16.667 2.5ZM6.667 15H4.583V7.917H6.667V15ZM5.625 6.958C4.958 6.958 4.417 6.417 4.417 5.75C4.417 5.083 4.958 4.542 5.625 4.542C6.292 4.542 6.833 5.083 6.833 5.75C6.833 6.417 6.292 6.958 5.625 6.958ZM15.417 15H13.333V11.542C13.333 10.75 13.317 9.733 12.233 9.733C11.133 9.733 10.967 10.592 10.967 11.483V15H8.883V7.917H10.883V8.858H10.917C11.208 8.308 11.942 7.725 13.042 7.725C15.158 7.725 15.417 9.108 15.417 10.892V15Z" fill="currentColor"></path>
+          </svg>
+          LinkedIn
+        </a>
+        <a href="https://www.youtube.com/@intent-driven-development" target="_blank" rel="noopener noreferrer" aria-label="Subscribe on YouTube" style="color: white; text-decoration: none; display: flex; align-items: center; gap: 0.5rem;">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" fill="currentColor"></path>
+          </svg>
+          YouTube
+        </a>
+        <a href="https://github.com/intent-driven-dev" target="_blank" rel="noopener noreferrer" aria-label="View on GitHub" style="color: white; text-decoration: none; display: flex; align-items: center; gap: 0.5rem;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z" fill="currentColor"></path>
+          </svg>
+          GitHub
+        </a>
+        <a href="https://intentdrivendev.substack.com/" target="_blank" rel="noopener noreferrer" aria-label="Read on Substack" style="color: white; text-decoration: none; display: flex; align-items: center; gap: 0.5rem;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M22.539 8.242H1.46V5.406h21.08v2.836zM1.46 10.812V24L12 18.11 22.54 24V10.812H1.46zM22.54 0H1.46v2.836h21.08V0z" fill="currentColor"></path>
+          </svg>
+          Substack
+        </a>
+        <a href="https://medium.com/intent-driven-dev" target="_blank" rel="noopener noreferrer" aria-label="Read on Medium" style="color: white; text-decoration: none; display: flex; align-items: center; gap: 0.5rem;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M13.54 12a6.8 6.8 0 01-6.77 6.82A6.8 6.8 0 010 12a6.8 6.8 0 016.77-6.82A6.8 6.8 0 0113.54 12zm7.42 0c0 3.54-1.51 6.42-3.38 6.42-1.87 0-3.39-2.88-3.39-6.42s1.52-6.42 3.39-6.42 3.38 2.88 3.38 6.42M24 12c0 3.17-.53 5.75-1.19 5.75-.66 0-1.19-2.58-1.19-5.75s.53-5.75 1.19-5.75C23.47 6.25 24 8.83 24 12z" fill="currentColor"></path>
+          </svg>
+          Medium
+        </a>
+      </div>
+
+      <p class="copyright">
+        Â© <span id="current-year">2026</span> intent-driven.dev. All rights reserved.
+      </p>
+    </div>
+  </footer>
+
+  
+
+
+</body></html>
+------MultipartBoundary--Ot3bZbDUROdcxHt0QtBAxHmTL0okXtcrxhdgZZy5Eg----
+Content-Type: image/webp
+Content-Transfer-Encoding: binary
+Content-Location: https://intent-driven.dev/assets/footer-logos/polarizer-logo.webp
+
+RIFF¸  WEBPVP8X
+      3 6  ALPHÎ  €•m{Öæ•	Ÿ$D	8hà u0ÁA$¼|ùƒvÛaDL ş°H2ü©Í¢ßg¢:½?ñ³Ö\ÀH{s-¡~¯-ïÏòŠ)xÛieÏ}ÿfçèä.$£ı«‘Ñİ‡üú“6ı&ÈÇ’|³ÇqlæwÁÇ}8†Ïy1Úû¤"#Åæ"’o#z™‘æeFª[ˆ~³ØÉ£~pQ£hvŞk÷e¼ ÷e,³sd°^ËæqĞÌ#$6Üg)±ó¨Ë½h¯HÆ$°q´"mn,<Õ¥weJlşÈH`éİ^×Ã¡9 ÙşëRä—6&Ş€§{NÊØcØ:ÿ¤štƒPÙ1Éµ’9Iä" Ë®É È.‹8ÜÉ±«ïtè)CZy‹ÀÚ‡Àƒ7Ì^äîô*9²%©S^Z<¥Ì±ªeÚ1iÉ@ÒöÉ•OQó bæXUs˜Tâï”´8»k”k I¡,u‡|QíW¢ „j4¨êwK–ë%m„¡.¨4I¯4œöÂÔ£àlµÕ¾`Ô6ÜÚİéAİbĞªWÍ50ƒk™±€×ü¾©oeK§ÍîÚV±%[—à«—%2k`µ­ÎkS•ìZâº™@}F6ó´ÕK×|¯½(r•®;úùš;_H"uªö¿w9Ëwaõ	¿¯ˆË½ŞÅD=Yü¾6s½¤ÍƒTï×zP~[Çlq´½nÖ\u4W2õ(h²¹ÖÃ‡YmÃA-™ª Mb‡á
+²SßÚ,èøQ<úß5u{•¨É†H}EµháW„Ccğ®pz2kšĞÔTú}%êõ&)~E>ÓxCEÒ£-IÛú=˜M¡ú÷ïwT¦¢t4œßŠôq5Akïº9vÜ ›)íWk‹64Ş¦jl§ˆn¡Á¾øvOSß%J¿W/óüSÉr/k›ÍB-ƒ‹Í’7èçzîçıÅ’¹[Õñ€±“_‹ı4dÍª+À0úµzöNWÕ–Œ«ê ¸µ½W ı¼æ«ÆUoõ`éÔæÏ}ùfñø?1øâyyFVÊÿ„cßˆÿ˜ù_Fşc<şavüÃl¦ÙèóSF|~(—=<Xï‡“x?æÄûQó~*³ó3Ì®ÌyoªÌ´„§—*»„0»ñ~Ì>/òx†§“w&´_™Ë¼+"Õ8æ<éN–\r–ä ±DÕ8–Rj¦Du1EC¤mÎ’KÎ1os_Ô·Û&ƒ»‰ù±[4uI?$ùÕãA2ı$’»)³ËU„d:HF¹M:¶uúÙI+"%›¨&É8Ø•;º1ÔEr@d’väl —ÈïœD2ZƒaÒì%ªÉLä\ÆH1®HAá	•Œ‚ó$à£Æ‘QpŞÉ¹]$=Î–¤É82
+Î‚f*=9€ÁuîÛ`—³ÉÒ¡ºY"i+^¤ƒjÉØLÈ=.³“ÕUO9›œ#ùt‚ïL_r94Iñ\³Ìd”²@š!ÙÌ’[Æ“>CÒvÓ}ÎDw÷;&ù
+ÉP¶“¢¡Ó«‘(SŒãE ë‰|| İmn'Ç&a]×5TAù]ô"Gm S³Œ™9eÒ)t­6w
+ 3®‘¤ù<*=4[æ ÀÖÁñ\0‘A[É¥ù¥IÉÌdè¶ V ÀÒ}<“È§ æ›+`®0‰\€o’ÒÎ“ÉH.È$¿À|I» x‘ãçaT§&’Ü÷DÒ^ÁìeIÆç’HzÅsÈ`'–@2Jd
+ÏHrl•¢:j&’K )H÷9L‰jr¸$•aŒÔ'”©1gVê» Ô3;£UÖi"uÖâKİ½Öã(¶¼+€Ì[J?Ş ?ÇxcÎÇ1Ÿ0ÇVñ[JÇ,(7}Íãë‡ÇæP)ëy¬ùá8æÜ¸åmp[bÚ,
+VP8 Ä   p *47 >1‡B¢!OÎ ‚Z[¸0 `€ü ı ş ‰~€ ü ı üıïğ¸LØòl>û­çÈŞnŸòœß<»|V{NìÕPÁ°X\}¿”ÈÕN'ûÇ2€b­~Í"]Gä w›Gı77ÔÀÅJµƒNm©Ùå|  õ‹\æ÷e]ÿõ–o/¨„¾<ªÏ?ÿşÔê/¨}æÿêd“/_~sœzü›ÿîQ Şµû ›ÿÿÚœZ&Tdı®ª    
+------MultipartBoundary--Ot3bZbDUROdcxHt0QtBAxHmTL0okXtcrxhdgZZy5Eg----
+Content-Type: image/webp
+Content-Transfer-Encoding: binary
+Content-Location: https://intent-driven.dev/assets/logo.webp
+
+RIFF.  WEBPVP8 .  P½ *5>Q$D£¢!–ùLˆ8±7~+¼`c?-uò—Lßûÿï½²»\ÿ	şÛû_î×ÎsûöŸîÿè·~Ğıî]Ñ|ÔüÇõ_õÿâÿ%şfÿqşsİêûşá?²?ñÂìKÿĞ¯ì—í§º¯üoÚÏxŸ¬Ÿú¿ÇÿÃùş§ş¿ÿG®w³ïîg°ó_÷ş½y?y~ ?¯ÎıÌö½ÿÿ¬¯å_ñŞ<Mşiıû·÷×ï}ú¿ûeñÑ„»KşõÇğ?Ü}³ÿcşçòÍ¿š‚şü“õwş÷üî¼3 úoê_íÿ¿vö±ùŸ2~µÄşóğüëùçùïëÿÚı#<6?şØøßó¿ù_Üımúÿ!şÏÖ×ÔşÄ­ÿ°ŞØşÇ¿x=š¿rÏ£Sxên¨%ïôu7T÷ú:›ª	s1
+K‹¹İ	¦k¶ê£—¦ê‚^ÿGSuA/£©º‹
+ƒ8eÚ½ğ¿1¤½ãşë&7Wc	Á)¼dlÑà.ÂY˜JoMºÂd,êÕÊJ«†ÔQ;“ßH«‘k‚cËö](ã JL…VSØmÚ-ˆeÈc¼–Ÿ¯õå6ÿn<‚›æ
+òcñ!È©	ÔİPKÛ}³‰ñÜ•#¹<_AègÊrlceqjùhÜV²ütÆ9}š³÷™ ÜğtF¼+| ï`´2~hf×CNôµ±¿Ù˜«‹¶_¸3ğe¸"c­ÔC`¼u7Sø‘¼aş9ÚRy/Š€­ƒ§ó?‹wu˜y™Ã%»ğkA›úIÿP‘ß\q¨YÎÊŒÌú,Jnë„tI
+»(&P*mÌ›ª	{ı\vy bM¡ÀÓöƒÌÂoC	ÛïÍIA+y V6}çÕ¥œ?šEõ3–wÕR±Ïg™LÆHpöiÁöqu‰31“M9yx¡pÆ­zkG	ŸÜóÖ0³£ïêêüv‰»9Æœª Æ	ºA©ù§¿Õt
+„œQÙùéş6<á—lBj¾4í¼ë=Eö£»/Î±ßÔïÿuªd¨DGxP²ıß.ÀË)dt·T92@ÀÍäÿPVCCqÁ`©Ò.¬ì—¸¢—M«âçÜŠ ~æ•ø!‚EÑËB€#\5¸´Îå|¨¶şßÀ‹A{†{µ‰÷‡œ<Æ›^ˆù)ŒŸºÊ–ªI<9êùŠ.ŞØ–ßbXşl›^İF®JÛ‰3ºè&øîƒÏê›ö6Sïºã³ÀE
+[İq;ã÷‰–¾2sæÕäÿ^¾‚Ş(?@nîKç~zH{%)ıÖmÒæy‹eèAQ)„"p`Jo0úİMÔ÷š‹ CÉŸ´ríÖŞİî¡ÍìgĞ¬Ş÷ÿ#íŠÄÕ‹6ˆTà­Ëè~´Iª`5Í«%óròñAâi‹óá°å%'xÊWö’ì8»™‹ƒ{ÿŒ',åQmAŞÛ‘Å6ØÆµ¥ólØ <¿¥‘„®ív(ŸƒşF9'¨¤`±~u;ÄJWx7÷ Sşs98ƒ†ù4Ç³s48/‡€³¼ĞëEª¿Å(CÎfù¨?)Ç1éÂ¿=nŸ™ZÃA¶~ge?,"šöfÿ¡=çğÏ]û¸yXç[:s	é¸ê÷öô•÷óc¦“İPKÚò9`ÄøéÿJEßé\ÒÀ”Öş˜ÒC e÷GÆĞAûWüW2÷²ŸØÄ¥ñö ÃÒ§²›iµı(;2æ«<éí İû	$æí/ù)ª»—£ênamó\¿m§5ú3ä²X­T^WïX‰ëê	­ğ3ü^"kÔÀ &ãO¡B+hV¯é
+ƒ(å'%ƒQiŠ²BiÛKD…peÆ2õ#~0q?‹¦éöBéş…>Y{Àõwñ>¡ÿÄg(İkÓš¤Úl7î¥g%fzœĞô¤ï•ŸV<r ÇIÑûDÎeıA¿Ù…W¦VBÉæ‹ËÅ
+h "p`JoMÕ½ş¦êy€ şúŠ    †æÕ[œ–kõ[iîg,ê1ğõ¤ûé)È¸p3V’µ–³:am“5»×uÜ¹'ñ¼°Š¯¥¿…×£8Eşq€50¤‰,'†úº¢øDbê>%nt8)	T¶7óéÛ[?sÁw.şS˜%RšŠ¶6®#64’   9ïÙ…Cí‚‹qô¦†eÚ ĞôÎ7ßIÜ±QÙ[ôÏcr’«n´%UcÂG†£h¤kÂî;gù›°`ã~4ÃÒ°4 ‘u%jœ 4±s"ò8Ü,„×;ƒóÖ¤ğ¯›…a_æ::ı>>¢ª{a`^ê‚¡€ö“h‹š«×$°JâûÉ06ü¦şÓCĞúÕ!´Â•EMjX
+*óâ2?,åou<â=XŸf°rüœŠghø|F”Bºœ.êëÛ¤êZÆ ù?" „”z%“cn¿¥Kªix>M¹äèGÆÿéu¹ìÑu€,ôÔ‘…²P§š1§™Ü¬ÌŒ±"ÃM5_*ÙV‡ıe–oQ5àäÔÕ1Î9ZÃ¾½õa¼K^F «ç[¾¤4%kàÃãqG‡³1¹èO˜=*x'“³’ŒëçOQB•}í)ÇL¿Ø ½e¨¥ìu_µkVÑsš,W1;ß)P÷¨gC]®VŠaàÊè†-ioÒpqÄJÀ¡:é$~›áD‹sZ˜™ú>ùbÿ1µ§=U%/å¡¤K†“oª]T3Ò¨<ª{0yŒi^vù†#Îİ.ØÛ+¼õ£ó
+À5`Á‚9l–™&2¶w™ˆªm}W{y@7EñÒÂ Ã®|+š¯“gIÖ&…ªß-œ`g'ÿµ(SNà	´]“Ø¥¯M¿xŠç5mR~k'Íş9–¶£D†~æöÍUÌ·¢ììë§Èæ"äŞyªa¸Ú`uéØĞ^ÉÜQ2Î 0!eõÔDY¨£ÍGä¥MYúNåmm2ğ¿^R]¶˜Ÿ1;¶i]££#„~­ª>êD[çRãe¿yº\TS›ıa$§©‘Rñ±¦¸ÏF†Ç{áR©›BÄ(àY¿»Ù¥Ì5Ôî«áŠ¥°›IÀ6?ˆèŸõ‰”È—nu1›væûàvìç[Ö‘¢À©ÆŒÌMµìÑª«Ş¢fA)«Z*Õ_©Ÿ¿o°y.êÂ
+%2^)hUB”üwD” “Gæ$N%X®o²ÅaÑ¢ašËXó»Ó£šúÇ†?ÂÚlv	´òwÿ¼e±DhC‡øÔ[{=õz¼uqAü¿%½™LJ©ÓçYş¢míÊ€"¼ÿÇğ]² )°ø›&K7:§"DF”QÃa™`éœbàŒÕ‰:}»IúáÈª™XMoûµ»ÑyxNAïQeíFøücƒtövß«€š;z‚.K•f
+røSLd%T·íbq9Ée:ƒ˜QÁ¨g¯£çHæ™»[Ë}ş¥ŒĞ—êù“~û«@aåœ‹…¤^å`UUŠ@œ« NîúñîÀØš•A›-V[n9ö&3Š^­®û(²3éşO	›«GlvsNYÊŞ$€¶íY®ü†ogC¦E²ÎEJÆÎ
+óıJĞ£ŞÙëT]qg^àU~YÂ?¿‹ìÍÜØâLáèîÜ£soŒ–³˜¡õèAöbbŞëÎb<½!¥O¥‡™ÀÖ—-›,”p¹ğøÉ%ÚÎÏdná" •r¥¦ô^½É&Ï£üQ@×®ß)²PÔß‚8lĞVs
+ 
+9@Ã§ñ4ßvµ’FLÁÁ­N¢‚˜ˆƒœÕú?i³z¾ãpéİ|Îó±&è•£:bèT®P:êÿéõ))82§ğEöÿÚÿ™9­®\“Aİü+%'>[_ü^”‹¥‚îÌ¿PHC@À*#İ_éX›ÿÆk³]×Ü=ÅÒğaÀê4—ÍÒ%?ªè ¨_c_zùÄÿµ²ŞêæEß–FòNV¸“ã™+1!—¨l¥½NZ”OÀøD–ƒ]ŸÉãj­õ¹ß…çYdgyu›BAôè-*t.Ø_èco3&®?–´%•¬$Ä6kµ_»2õè57ğ0	_t(¶åñˆvÊöN9]¬@NT[¢CŒÛ»<jl"× ¡+‡*ßÖC‚&…5nG¿É©´·äêvš=ëşU_ìíê}‚ê§’P½@ÍîË âRv‹¸Ğçâß;&ÅQâˆ¾ºl—Ö9Šx8càĞíjşaÍ©y²4Û¼+ ³Ùİ=·ûÖôqMûl_’Ç»è¯&]şO¢c_¼L×’J‹Öå’µUù±ÌpïÌËI‹?±ó9Lmv_
+ˆ ´”˜µRxšZN@2àO»i7-ê´<7M—x[= ¸ıÇ˜×Ìº¼ŠF”¿t•D¡÷¾¿²ëÁÜë/ãN@Q¤ìª>Ô»@ÅÆ3õ@›¶İ„+š,£âb6—û‰J¬—¡ù'×`†ùˆ4×sŸãÇ.ñ7,>µ'ìr†Ú)V0Š°·âæCÂÚ*T`ÕrëÃ~:Â`Jd=§­ Ä½}CcU°ªËîyB>Âu¾İÔô‘Ìşh¾ù\K}¶´‚·î­qÖ[p»×¸çÅ "¥òìÄÚ$Ëkû×‰~¬	fd©Ces@š«5xŸ³Q ş°æPPUÉ¾¤H+œï5DÇXŸ,i›ÿ/ A
+âõ*tÚÀÿîš:U`Ët–ÀÌ'}õ¾d9ÇpJ1ÿÊ@‘è“.„±Üàmßij­¬XŸáıƒ]7ÔØÜÚE©§ßT%	’ˆß±Çî÷ ´¥Cì(Ÿös6Â°÷ôÓ1²¿éXù„} ›…0 Æ'òšü8“Á÷ ‡!z’³q‹eÕ:{xby4„mFá5ñ=è­JúªaÜ³Ã ùj v:Â;µ9YhmC€ÜCçêÍå„´Ùï¢dN§Â:>¢\QÁ'ÉY¯×½î¢òô
+İ²<7¾|±Îº.ÕÍ:6É*é3˜Æf9g:·ˆ‹_­V,¯7û…³İR¶\Ú]ç˜Ğ)×ËßŠß‚ñ”à¡Ù9£¦z¥bhš£Ç(Ñ*¸ûğ&±Hz‘C ?Ä Êeã5çr¤ÁÒş€€ÀTŒ€@]Ä4²7F†¢İüì¼P¸2ÀévÎKWÈ9·ÿ[„@‰À¸7ó;f˜ëNcÉ<‹‹YaÁ.KRÔ…aÙeÃì0<zÏáËÓpá.Š­ŞtkÜRÔ%›†ô9Í8i³j1¸«^'C™‰yŞÇß¹>m—U™y-´G8jné³?'’À\À…û&à9mû#`HŠÅy° P9œtĞVrH
+p]q­†ŠA2BA=´İÕ0²Äâ9Î†Æp¶yå7#hvÖVñ]§£Póï{şÍ+º•³!mËõAjí‡ã^¹l½ô9 ËF¬NrPÒ@`KŒ²©WšÎjœ]^¡§ Ì*©qˆÁÜ›
+´ãÀKÛådbD (:"WHºGpœ[¬BÇ¢àÜŸsÏƒ†az7ñİ÷QüÖ+VånF;BT*j=–PuR}êá´g.:“"õlØµÑ&àû	:sÓ°/4”>â}¬$8‡Jd×m_jÃgu`xÚ"]<+O\û$K]€¥¯çW7vw3â˜;WGYEÈkÿÅ†G­–¯W†d973BĞš5á«ã-[&š «Ây}¢ôØ,­úZF{;#iü »]›ˆp!Ï€Íë#D0}ÙÔöğ¡u§‚û¿la·-
+%÷Xú_tødù¼ˆŞiÅàõjÕ×+zü{æu“g1qÏßë†Ô»C8/&B‘¢@&üØM2\=^†Ş‹ ÂU}¶ h–~1ŠÆæÏú-?Á“¥ÿÍ—ºÆÎÎF_½‚Iä2X¾yÓ(/øö,ÎVT‹®_š	¦òA•ÿü¯6`Ü}Ÿ¦:™æ}²½òÂeé{P
+V2£ĞV:Ïì Ij,÷ï’ô³´ê•V7’Pÿnò‹Å·=;Ãp1Ár]°
+ÍZJ5…W=ç²psJQüòÕjés¼:«µìĞ¢$OîúÊ2MtÂ…]\À¶ÜãµOû¥~_au:k%úÔï[Şğï¯¥DÖZi®ÏÍÊ=,eÌñèõÑMtdñVtfSşj1ÜFÊë`.è£„<®sËÀàÚáàl‹¾·u0bgÍdR´ƒ¶ùÛÍŒ:z%|À15ĞèÂ)‚-6-,0Ykx÷Ãñé×i,iåD¨\Ü*òØo^ÏÀS”,UJ„é2ËU¤ ôñ“Yx@%4	70Mnÿt+¨×„Tïı*6_Şß) %{‡÷bs'x'õ(ŞÒ~ï1[‚rÓå¡	³´ù&93d %%YˆH{6¯ÛÂ½*¸Ãñ<ŸzäB['*«ïæë|wFÙ¿ƒíd¨‹ŒÄì¨uÃx9,EZ¸Vl+ÕìŒõV¶ªrhşf˜…y-¯u†©,Û˜vÒ#‚ŒÇKœÃ
+JÍdsÄæÏˆyÒãíª€ãb­F»‘Ù»°L6˜Q€"ú3‡Ö³À,B‘Ï/NyË$³´w
+À·ˆè‘ßïKÅ,ÉÄxÿÆù` ‘ÄÉ[+EÂäXçQdôÁ.Ó’,Çb]QPªj”ânYx4ryÈhëû)ëë(f û>23†²|ÚË”ÅË]‡¦Å5¾Ò#ÇÃº
+33Ûß‘Œ¸a¾›}AÓtğe»v 2ØÕ‰<†æ+Ë5ÎşJy89oRÇÕ´DÙäZ‡d[Dà¡­m§å=÷«ıV=äÊØqòÜjïŒ¢+H­Wv¿¿âš)Éß˜¹¬ÂŞ,ªjâ;J3¶š:RÕtP{OI­p±ªäG}ı*K¸|Ğ Æ6Q2xÑh†fëĞ£©T9 ^p4òõäæ¿åö(Ó(4d™†…¢\Nl5åd‡n#½(å¬gşE0ğ×”h§µnhS0ÅM†-ƒÌ+ı–œ-Æ‘wÂ“UÍ„ßEy¼@[Î¯*a.2	ymcÌ™bì}kÆêX¥gcÚïÜèékÅyWêŒ­É=ÉB ÿû„İÄ":&UÓn¹Éh ï­·Ñ‹Ğ<©)–¯ŸÒÕLV?dãŠë6>³İ?Í:5¸¶Õcé™á*59ÈJÂâoúßª7<(’ÌC{½,õt:\ê´ïÇ[7Ñë¼×Šdn3[¨@.€\œù9¾kšŠ¹ŠØ×ªÌ›ìwÒ9ê‚…óòâ1øXŸ£ÿX{XbáX,2×{-±ï&„jÆ™#ÄªbÆƒ3[ÛÚ,æ—½zäıA\«qÆağk+Û—=+¶ÕÑö<êj¾nù·1e3„<“Ò#â†‘Î\çõlA¡Õ!$ËÒ¯g£<pyÊƒh‚*yòph2HÎªßK>0Ù¾îVbğ¨œ\øÛİœ´¶êèó9¯TÓ‚LçAëbËÄèQ£Ğ½Í_ºËhe€,Íæªàt\Ğ±I®Î/Â€…ßéãmœò»ø8vo•kå!¹âg™š- ƒÊba¶ßî 
+~Lî€d›'0Ôtâï”HbU.IÙ`W Ì4ÛòÍ¼¤ğå–Çı×ÿë	¢,­ Ğ£¾YƒlFiÇvV°é€Sä5$E5¼Á§Êá˜rf‡-ôÂŞ@fQ| u‚cË\®¯	û!·±óÉEèÜş\<RkkÇ$n’î˜.V$íöok^°y`œÎôœ•?À¬ÌşK•\tÒŠŸÉ_LÀáu(´Ó_;Ä]é›ú	Ï1l;Béã4'8¬aèëØàçÛà5B4	sıvN¡ƒ·±¥?Ÿ¦;;Cû‰yDüÙŞÙ•\›…Š· Ä¯•,êİúŠVGıç‚Šşí“4Ş`núwÇšèÇaeõ½JI{dÒÑM»ÛLÓ€°¿=Iô)^!´E 7ÎíLZ*Ma9kÃ•‘f$ì5$–›jM–ßÊ‚¦³‡D‹b¨=Ù—;%©ğz&†ùšÑo‹Ñ)v ÿÔ(m&®zV;‡”wËç"ìáJ•F_F/?º. zn Ì(ÿ3¯fG‡äëAHy0×ª5à‚ğ¦
+ê_:>^Ù%é ¯áïœ=É¹7_úPEDCt^"À»œqoÉ«¤töà„àS‡ºÂUP´îvD1€>ß,ÏÓ¤»ŠĞÕ1!»xhW…dU[éiêˆ^2<ºXiÀêdódJÙkª
+’æ6âòaåm¾Wïû²Uç©´Nk/ÒÒôa~¸XšEİ"ìhÌê&–UtÊ)Ø'ïyœdŸëšğ%Vúé_–˜Ò”RÖA¹g›5¾(ÿå„'3_':ÿòÙ‚W7×&Pl¡YKŒ¨J™œÛ†`:ä1TK"|ÉSÚõ 	`/º 9ĞC}Ñ(øår[’ŞT2ùHØº®*<°DTÀumW9Ğ2_Ò$°YpåÖæÔ?Œæéşå‚·Fñ„aÀqs,Ã5šÂ„ÂU­ õkıé^İÖ´¯ŞË½Ú:@86JêÃv!õíÕ¥Òt„¶‡¤y /şÎÿó¬$É_ö8æNÙ)ƒ]­¡¸l“İ(µ%eÆc­kä ÆoŸl(ŞhóıLË’ëÁ ñ#†
+§°Ô:°"šmÒ÷Âê‘ı“©<”§Ëö£I0[Sxmdªw.œ¼›|Ì·UÍ²ş,¯âÑ~¥Ñ¿›) uÕ,}Yiê:#Sî4‰H.ëõfá7òˆ^Â)q3f{9„ÕVØnJÊüŸ•õhñaR;Â€¤n„ŒzÄ%Ö¾;!Şt‚ŠH‡f]E¨íş•e’›Å=“¾¢ÔğñÏ{¸X¶XŞ±/2Tå–ÈeDN²P Å    ˜o…ä9ñ¬›gmòò,›zj/äKx‘Mùc÷s¯Í¸`Ğ½@Zş}˜î£$aæ`…Ò÷~Åª lP*{Ù÷EÏD®ñP«ú4FiîGv[{@Gÿ„qoå£àÈ#›"m'SÅuF†N\&°şV1MÓåÅğ‚œì­Ue=Rkş='ntÈq.|æ|öœk ˆ£Ò,zÇsmºæáyU_]’>±ŒNnkàÀ- ‡@I÷(JÃâv³3Z"ÉÓ¯µ„€>vÚĞQ÷ˆ}ûˆK4!Ód4*ã+šÂy¸aŞˆ[ó2¼µißäÈ¦İ¡¦GFJôË¶¸ÁÂ-¨ø¶Ë#m^åÒLgn#CHœF+otéüÀñø+t9+Ôj_(/L#2²uáe	bÿK…ûSº9k¿êÚ^ÖäÀ($.]ÂX\n¼+©fú«*J`-eCj…hD | Æ(±S•Õã•Š	Œ¨“ë$Ë¦Â&á¨<q¯
+…U92óNyøNÄD:îÂâ-š-²³É'õŸÕ”"Ó M4mŸàû úÀğ#·’ÃÀ XbşÀ¹<úüğÆ¸çaöĞ‰X.SZÃ·‘Ö\¸÷W”’´x–š¶Ã ’şìd}‰úÚ…õÍÃHYà‡KIbÆ`ŸˆÑÃ|W‡Ìt}‰ƒtí<0!%°O›` HVI.v(áDÇÇgòûO2Á˜İ°ê…x
+µz½¾º¹´aV¾¢“Æt‡<€Dhäe•ÂR~ÎÖ’ß
+f"Åê¸ş3_D4b·^'2¤<P:v¾¹*Ù²uT!GvÊ(4	n…Ë`e ŞÇÛÑ¨IRuÄ?˜í^‹Ãq¿ó¬ªø†©ôÀƒÌ%‘Ô»½ÒLxãÃŒ[§Úäø›PÚŒşr^@œ¹÷Œ¶­g²tzp`Õ9ÍàÂşïô)C=|zvŞ§~d5+Î(´¦î¾Æ‡L™wòóW¤eÑë^;iæzbÚWÊÏgv;ğ¸x›&wÊv¹—	¿oÕÄ…=–¬M\¼¸ë½ùVpg•ºòÚÿ`J¶å÷êûÛƒ4Ã¬«ô™É¥X¢JÜé=ĞÕ|[xHĞLu€÷äVê—ò›N…!ÚÌ¬°cíU¿Üù ˆÖ¸hæâ‚5ã¤Ùº™ön]CŒG³ºÃ=,›4‹­VÎî@E´á¼ÄÚ»“ú¶İY-4â¤"œC2¹_³JXÈàIW$I¥ˆy¨eéà¨œ×ûí&®õÌs^\ü:}	>Šu¿,¤jÕû®ï=Û¸Ùíò&¢¦f–Z8NŒÏÀ‘‘“VûxkbcX¯b«méCİ©=Sx€Õ!ğ5WP.„(ÅÿMğ çS	½ÀA/Æ)¤á`Ù1Æêû<ö$›3º<¥½7©Üt}Ò›†|ÄÑ	¿y_¦ªlIµ¯u“Ş]q(Œ.ê#Y"Ô‰)"2ëÂ)1jáÇ6VF]ğh“úa*Bpé±ı˜bÔÓO!üº\€¾„p<¢å“èœkSL¡«1Â\`Á"·Æ±š˜ç£Â¹QƒÈzZğäTñº?ö€È+şÌŞÁr˜³[ïâìfÍÀOÿ¥xzÇùâÈiNq6š?¦îcÁæºÆJ§ËşÛˆš@X]?<pÂcŠ0.@º_ÉÇ¾şTÙ(¿tû]ÛrÑ4u÷-?\Z©²ÖÆüa}‰ùÖW‡&@İ¦ÊŸ*9€HÃt\Ş˜ç¾“x±`"ß‡Ò	õ+Œ=0pŒ¯Shöœñ¼ùxl|-+·›EÏƒ4¹$WÜ¢ô	ÜUĞ¸=ô‘loŒOü÷rßğ3?wq°¥‹Th/:g]Á¤×ºrRã^ìdÈJi©ÿ ,ÏE÷¯Ê)¨.HĞí³-òa€ÍìM©œ“‘§ıÈã5E‘ICU&ÉÒÿ4ÿ-Æ]Â¨8í€¦nÅÒt/†¨ØGùÜ•Fù"ùU€éN_ß6ş4Ÿ>‹ İ]›àAc_#İ/ŞÅiÇg‡Ë8°˜»R>‡ yä™-tˆº„Æ9`$MÖ>’¬dØÑ›q’å}MÃnO‰)R×½á¼júkÈTt âüwëK6Ìk	(š®gêN,ŸîZ÷µƒíõÄh³ÿ\@$o>ì7¶Á@üoªüLvJ`¯ÀD¯KrxíşëZ}‹ÍU`^CëÎ”«@¼8M„»+Ùğ|:6•ÓJê4€¿ƒ¹  Uö•fóÅ¼ §±g©Q¨(óŸÇîB&PÀ	^K^«5–íPOK»Tñëí»ÿ=M=˜RßÇ’oåh§˜xÌmÊ¨÷·~ÅÌÁ/%I_.”]–oX(Ï7/g˜JlpÖÔZlıKxĞÖÅ R!X#Â–ñx‹øyLà®å£¡…lUQçåS
+S(îCÈÜÃ>¦‹„A¼¢Z²‰¦@€rwí~waàUáfãRŞ¥M¥×³DÿÑôik“³ò)Mœ¥4·Ú©–ğš¾ï?¼s¹L^AÎT{Š¼fÃ˜Údye{¯ô…?,ÅÂ
+œÜôü†?A3°Ríz›k{	Î&ÖÛ¾mÙ×Öí„_N©úwm _°ƒk©ND"Bş")èpDß·4áÕôÁéa
+LI†…\K‹#º²]ËÛ¡–¾ƒ˜“†5:ÑZ^YIkE3ú‹ŞEä!)'§ö' aÉ]Â*‘]‹Ú‘<b±ğ£»yx‘
+²±÷ŞÑ’ûW|aõ½)É!Dàç@`Àu(¯U¨#t«ß3Ô€N(TÏ.„Zfñßµ.¥¦ÿE»ïà÷|	~g­(O	fŒYF\¡âƒ’Wã”n.ï¬ô™‚ÖñİÂ”5ÇJ‘)Âñ–XŠ›-§ŠIµ½7ü¤§½¤vûzµlîôÉCã2uè‚¼É©‡Š§,V¿XÃÎ‘ÉbquEäÿlsûÆ•~BudupY[ŠÕúü÷rÛ«”áÕ-ÇÅjw(µ¦ê#Ëü'Îvk‚Ğ™'5U?â^@°ıMº	z¢O¤š9Iîº=êü¢¶Ç¬K©;aÚTÊpæÈè"sb ñÖëÍMŒ¨phgãO:aıÜîgşT4*ašÅúa6Q¿O™=Ö÷„Ô¬â‘òÔËc|†<@¥~x¿àXpú:~¬0uOèkÿy‡”Kåıû«½ÁùãÓ@ ÔC}!ªÈC6¨âºp¸çšş1-ÃKÁß7)4¦ùšÌ·›lo´€ j¼Ñ¤±Äuåì›6_Zôœ<lw…uGŞ(HÈÜÆeD•hâw¼®ôPu £CQI%ñÊc:İB*ÖÑ‡ÅŠ/}œÃÃºª4Ü±gÓöÙ\”2Ú,ŠˆË=+œÄ©®a™À"}m´š}[ lX=I“g3S•Ä;	Îa<W|·ÛéÀ{.£,d¶iKf.ÑrŸD¨aCÅMÔ¯½É@æ)O•bDõ3f³N©Üÿ]Íµ¡é¸ˆHgºÓ	<à`d…ZÿîWşşIÍ0—«u¥ç(ŒMı;	º„­:mÜŠÛá2Å£J{š–æ2ê­‰H)Ó@yu™°?ìs|ùƒLÆ0I§‹>]ÑJ>æw•x®'CßÛ:¬|AJhdrÃJğ;’O“YHfÛÛhê"«¢.4¶aÀÉhf®IDî7XëÆĞÀsºš5íµX¿ÉòËŠ„Ì("Z£°ÅLĞR.©²F§ƒ…7ı"‘ÕİŠiĞ€
+ØuÚD¾1«e½®Œ‘Ë4’¾àÀh3XÑ§–”@Yßª:_­÷k´¸;t+;I8}˜¶È}(¤8÷á"ÑdÓ·Â‘!ÚuyşV2TgOøÎ:&:Šd.Âˆ^İ/Uo0x.dJÖNC©ˆ¹kìşG¤À$Ê“ã…ÊÜE#pêG--­ª£ Î‹êÆKü‹bİkÑÁ‰ûx/Ÿ|…æ}æÂ'Óå	±<uñ=Ô›hß@¡òƒ9
+"’9§OÅ»ÕÒ’zDÕ!›‡;#EÊµ	«Ÿ…{vÓŞÎD¡ş g¨©ÿR="D¶ ñÁåßá¦Ø†‡Ùñä«»–wä…G¤"{3GZ^8ˆêEÁC¼cG”„½à;›‡>úÏ|voåĞ=É¥/´ô¹ænÑ¸ÆÇtÑˆ¢<@½àF4V*Ã;Á pš€6k¬ğ(´ K(¢xvhD†/ş³q"~Ù@ÈÏg—FÛó®Ü9n•aóhàÒ¢×†l<0Ø¡F=Æd»mujÒ-cÕ\¥ÚRA‘ñ¿˜ë„‹g³Şù*.Hï³õì“Ú"ÄSĞd:w€A¡$™¬”ëş;ë`^d¢ÍmÍB-‰9û®s”inğ¥ÆàĞ
+•B‡«`óv~í¸º‹?¶nĞ¬”r¹YvÌGjT(<´ÁTFçÿFE-oÔ)Úô7±%—÷U¡jC›N3¨Æ„Àu¦ğ$ş,s­	Ô×XÍeÚ2ëhĞĞ—©‡D°œØ/Áœ|¨¯ÕV£X@<Eƒìmö¸UwüG6ER`:‹ô1¿ÜrÖmºS‘Ü7ş$Û5p (5©Ó°ËÂpY0r>Ü&íì*š”Ô‡X›ŸÜ À~ÙÈ–ÔS×Ò21ğCn¶Î=0®ìx§}Ì=IÔ˜—ş,*·×åRî$ùæ_}LŠAíqŞ^C›½Úü\½y±g¸b¢?m&¥cy6ru˜ó?®ÁÆ+r¦=Ü¨n	(0fBæÀÄ†©'é4\¡¾ş§Ó€à¬Û¥VL\(EifNP"øNçïeôÀ“ÆY”ë°eÕY2ëÇ0‰WË"íºa ‚±VÕ=(¦Ò£/ÈøÂ_êø¢`!ß‰(Dho‰LBáMÖ2¼FOo^Iï’L›JUCŞ >CWš¹'2	Ú«ß±¦=´;Ş W¬³ÙrwÍäÆ1Îªna—ìáS«\õ·‚ÃèËe@k&ı©HÚãéOP}9×u˜ƒZä‹ÖQŸ„`ô”½*6=_”kHš?,Ô+:I8ğø®À-…?Sbñë$©˜İE	9·¿	×€ïŞiùVE'P|‘ëà¾íÌêÒ¨§HæÉí‹Ç¸^ó[%‚DyY"Z¦á|nÆ•¼+ŠayÃêeD¦cÒ‚C}è@Ñª¹HÎ´ÑúP†0y½Q¸ù™ŞD‚ AE¤¼,`·{0¬p„§eúÎvÊ{ô*›"¬O­ ƒz'OøL’V&&`#TsyŸ‡——™Ÿ”s@Rò»Qä ](ÿAõ.Çà,ÕKÊˆ SuËkËXì>]63ö¾Øw+·haôèRo›œØöŠÕ¿ã:Â.9×|¤ôt¹C*³ÿ;üÈøÚÓfNm‡˜F·v—³	:Ùİ¢zSé¾f¤~cZNß\¡øÍ*‚V{ÑQßf#şOˆk{—úºb`(zzÂe§Ú¼§U±@i~ğ³O4vHù$Ï¤Åd~8sı‹J;mTÏ¼–ÓNsÃlEâO£ÅqímÄÒüŸ±vqõåá“ä¯KÖôZ©À§)†Ø”¶lÀ ÖÎˆr÷ÓZÂøÀüÛc½‡‘şé°g“Çeæù¬Ïêm>şë¤a­¤Õ3“^<İš²±l¡‡ª–òjGòÒ¼7yrr‚?ì¯ü‘Ò( •2Tî`¶PÇ«4QZÜŒ:pÔjA¾,ûÍ¿xyµ=åà¯€7-Bv@áÌ€o²¨‘e¯¶ÿSu*M³^¤R)(_ààhuCœ!¯ñ]€]ù÷•ªÑ
+—3(Óqyğü ü5¡–8ğ1¤l3ŸËÿ0u§îóKã®VÊÍ™®åpïfBÉ¶5—+}­t¥9ÿòÄGİkÕ¥TéPš5z¡ß½È.²N2ÿ#”cÉõj×™kÕ€aé:FZ$—kß81ÓºØFR®Œ“O!êîSî.FRÂ?;'ÎzşÉd¼ÉİÉ°?¯)]XØúsÊê+x?aˆÌKèMÀÏËÈ¯œkGİ£É:7”Eú¸ÛSÔ¨WìåâíCDºA}K:J@6îçgbYì>{æÊ¼ÂÉØ]¾ÁX7Î(¹è7ô/ß=_©!&è±°M»r™f#)ìnº¼gBC„D¿ésUÿ9^"±ãvÚd#je\²É$Øµ×Öœ–Q¬ÏÂ‹†/¨K`H¼¼Ãİo!ú6Ğ’îüÁô“ÉiB$5®ºVú§ïqÌŸ
+›²|®9!«`s õbŒKØz ¢<¼º¶:·Ÿ˜",sÅFUTòâ P„Öëgúé¡Ù+›æI*ù/E0"<óŸvÓ …ˆ£   U£ø AÙ¹P   
+------MultipartBoundary--Ot3bZbDUROdcxHt0QtBAxHmTL0okXtcrxhdgZZy5Eg----
+Content-Type: text/css
+Content-Transfer-Encoding: binary
+Content-Location: https://intent-driven.dev/styles/main.css
+
+@charset "utf-8";
+
+@font-face { font-family: "Space Grotesk"; font-style: normal; font-weight: 500; font-display: swap; src: url("/assets/fonts/space-grotesk-500.woff2") format("woff2"); }
+
+@font-face { font-family: "Space Grotesk"; font-style: normal; font-weight: 700; font-display: swap; src: url("/assets/fonts/space-grotesk-700.woff2") format("woff2"); }
+
+:root { --color-primary: #2563eb; --color-primary-dark: #1e40af; --color-text: #1f2937; --color-text-light: #6b7280; --color-background: #ffffff; --color-background-alt: #f9fafb; --color-border: #e5e7eb; --color-infoq: #C0003E; --ink: #0B1220; --ink-2: #131C2E; --ink-line: #243049; --ink-muted: #8A97AD; --signal: #3B6CFF; --signal-dark: #2a52cc; --verified: #22C55E; --cta-consulting-bg: #f9fafb; --cta-consulting-border: #e5e7eb; --cta-consulting-highlight: var(--color-primary); --font-family-base: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; --font-display: 'Space Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; --font-mono: ui-monospace, 'SF Mono', 'JetBrains Mono', Menlo, Consolas, monospace; --font-size-base: 16px; --line-height-base: 1.6; --spacing-xs: 0.5rem; --spacing-sm: 1rem; --spacing-md: 1.5rem; --spacing-lg: 2rem; --spacing-xl: 3rem; --spacing-2xl: 4rem; --spacing-3xl: 6rem; --max-width: 1200px; --max-width-content: 800px; --transition-fast: 150ms ease-in-out; --transition-base: 300ms ease-in-out; }
+
+*, ::before, ::after { box-sizing: border-box; margin: 0px; padding: 0px; }
+
+html { scroll-behavior: smooth; }
+
+body { font-family: var(--font-family-base); font-size: var(--font-size-base); line-height: var(--line-height-base); color: var(--color-text); background-color: var(--color-background); -webkit-font-smoothing: antialiased; }
+
+main { display: block; }
+
+.skip-link { position: absolute; top: -100px; left: 50%; transform: translateX(-50%); background: var(--color-primary); color: white; padding: var(--spacing-sm) var(--spacing-lg); text-decoration: none; border-radius: 0px 0px 8px 8px; font-weight: 600; font-size: 0.875rem; box-shadow: rgba(0, 0, 0, 0.15) 0px 4px 12px; z-index: 1000; transition: top var(--transition-fast); }
+
+.skip-link:focus { top: 0px; outline: rgba(255, 255, 255, 0.8) solid 3px; outline-offset: 2px; }
+
+.site-header { background: white; border-bottom: 1px solid var(--color-border); position: sticky; top: 0px; z-index: 100; box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 3px; margin-bottom: 0px; }
+
+.site-nav { max-width: var(--max-width); margin: 0px auto; padding: var(--spacing-md) var(--spacing-lg); display: flex; align-items: center; justify-content: space-between; gap: var(--spacing-lg); }
+
+.site-logo { font-size: 1.25rem; font-weight: 700; color: var(--color-primary); text-decoration: none; white-space: nowrap; display: inline-block; line-height: 0; }
+
+.site-logo:hover { color: var(--color-primary-dark); opacity: 0.85; }
+
+.site-logo-image { display: block; height: auto; max-height: 50px; width: auto; transition: opacity var(--transition-fast); }
+
+@media (max-width: 768px) {
+  .site-logo-image { max-height: 40px; }
+}
+
+.nav-links { display: flex; align-items: center; gap: var(--spacing-lg); list-style: none; }
+
+.nav-link { color: var(--color-text); text-decoration: none; font-weight: 500; font-size: 0.9375rem; transition: color var(--transition-fast); white-space: nowrap; }
+
+.nav-link:hover { color: var(--color-primary); }
+
+.nav-link-icon { display: inline-flex; align-items: center; gap: var(--spacing-xs); color: var(--color-text-light); }
+
+.nav-link-icon svg { width: 18px; height: 18px; }
+
+.nav-link-icon:hover { color: var(--color-primary); }
+
+.nav-toggle { display: none; flex-direction: column; justify-content: center; gap: 5px; width: 44px; height: 44px; padding: 11px 9px; background: transparent; border: 1px solid var(--color-border); border-radius: 8px; cursor: pointer; }
+
+.nav-toggle-bar { display: block; width: 100%; height: 2px; background: var(--color-text); border-radius: 2px; transition: transform var(--transition-fast), opacity var(--transition-fast); }
+
+.nav-toggle[aria-expanded="true"] .nav-toggle-bar:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+
+.nav-toggle[aria-expanded="true"] .nav-toggle-bar:nth-child(2) { opacity: 0; }
+
+.nav-toggle[aria-expanded="true"] .nav-toggle-bar:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+.nav-toggle:focus-visible { outline: 2px solid var(--signal); outline-offset: 2px; }
+
+@media (max-width: 768px) {
+  .site-nav { padding: var(--spacing-sm) var(--spacing-md); flex-wrap: wrap; gap: var(--spacing-sm); }
+  .nav-links { gap: var(--spacing-sm); flex-wrap: wrap; justify-content: center; width: 100%; }
+  .nav-link { font-size: 0.8125rem; padding: var(--spacing-xs); min-width: 44px; min-height: 44px; display: inline-flex; align-items: center; justify-content: center; }
+  .nav-link-icon { font-size: 0.8125rem; }
+  .site-nav:has(.nav-toggle) { position: relative; flex-wrap: nowrap; }
+  .site-nav:has(.nav-toggle) .nav-toggle { display: flex; }
+  .site-nav:has(.nav-toggle) .nav-links { position: absolute; top: calc(100% + 1px); left: 0px; right: 0px; flex-direction: column; align-items: stretch; justify-content: flex-start; gap: 0px; width: auto; background: rgb(255, 255, 255); border-bottom: 1px solid var(--color-border); box-shadow: rgba(0, 0, 0, 0.08) 0px 12px 20px; padding: var(--spacing-xs) var(--spacing-md) var(--spacing-md); display: none; }
+  .site-nav:has(.nav-toggle).nav-open .nav-links { display: flex; }
+  .site-nav:has(.nav-toggle) .nav-link { width: 100%; justify-content: flex-start; font-size: 1rem; padding: 0 var(--spacing-xs); border-bottom: 1px solid var(--color-border); }
+  .site-nav:has(.nav-toggle) .nav-links > li:last-child .nav-link { border-bottom-width: medium; border-bottom-style: none; border-bottom-color: currentcolor; }
+}
+
+@media (max-width: 480px) {
+  .site-nav { padding: var(--spacing-xs) var(--spacing-sm); }
+  .site-logo-image { max-height: 32px; }
+  .nav-links { gap: 0.375rem; }
+  .nav-link { font-size: 0.75rem; padding: 0.375rem; }
+  .nav-link-icon svg { width: 16px; height: 16px; }
+}
+
+.construction-notice { background: linear-gradient(135deg, rgb(254, 243, 199) 0%, rgb(253, 230, 138) 100%); border-bottom: 1px solid rgb(251, 191, 36); padding: var(--spacing-sm) var(--spacing-md); }
+
+.construction-content { max-width: var(--max-width); margin: 0px auto; display: flex; align-items: center; justify-content: center; gap: var(--spacing-sm); }
+
+.construction-icon { flex-shrink: 0; color: rgb(217, 119, 6); }
+
+.construction-text { margin: 0px; font-size: 0.875rem; color: rgb(146, 64, 14); text-align: center; }
+
+.construction-text strong { font-weight: 700; color: rgb(120, 53, 15); }
+
+@media (min-width: 768px) {
+  .construction-text { font-size: 1rem; }
+}
+
+.hero { min-height: 60vh; display: flex; align-items: center; justify-content: center; padding: var(--spacing-lg); background: linear-gradient(135deg, rgb(102, 126, 234) 0%, rgb(118, 75, 162) 100%); color: white; }
+
+.hero-content { max-width: var(--max-width-content); text-align: center; }
+
+.hero h1 { font-size: 2rem; font-weight: 700; line-height: 1.2; margin-bottom: var(--spacing-md); }
+
+.hero-description { font-size: 1.125rem; line-height: 1.6; margin-bottom: var(--spacing-xl); opacity: 0.95; }
+
+.cta-buttons { display: flex; flex-direction: column; gap: var(--spacing-md); align-items: center; justify-content: center; }
+
+.cta-button { display: inline-flex; align-items: center; justify-content: center; gap: var(--spacing-xs); padding: var(--spacing-md) var(--spacing-xl); font-size: 1.125rem; font-weight: 600; color: var(--color-primary); background-color: white; border-width: medium; border-style: none; border-color: currentcolor; border-image: initial; border-radius: 8px; cursor: pointer; text-decoration: none; transition: transform var(--transition-fast), box-shadow var(--transition-fast); min-width: 44px; min-height: 44px; }
+
+.cta-button:hover { transform: translateY(-2px); box-shadow: rgba(0, 0, 0, 0.2) 0px 10px 25px; }
+
+.cta-button:focus { outline: rgba(255, 255, 255, 0.5) solid 3px; outline-offset: 4px; }
+
+.cta-button:active { transform: translateY(0px); }
+
+.cta-button-secondary { background-color: transparent; color: white; border: 2px solid white; }
+
+.cta-button-secondary:hover { background-color: rgba(255, 255, 255, 0.1); border-color: white; }
+
+@media (min-width: 640px) {
+  .cta-buttons { flex-direction: row; }
+}
+
+.hero-ce { position: relative; min-height: 64vh; display: flex; align-items: center; justify-content: flex-start; padding: var(--spacing-3xl) var(--spacing-lg); overflow: hidden; background: var(--ink); margin-top: 0px; }
+
+.hero-ce-bg { position: absolute; inset: 0px; pointer-events: none; background-image: linear-gradient(var(--ink-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--ink-line) 1px, transparent 1px); background-size: 48px 48px; opacity: 0.25; mask-image: radial-gradient(120% 90% at 15% 30%, rgb(0, 0, 0) 0%, transparent 70%); }
+
+.hero-ce-content { position: relative; z-index: 1; width: 100%; max-width: var(--max-width); margin: 0px auto; text-align: left; color: rgb(255, 255, 255); }
+
+.hero-ce-eyebrow { font-family: var(--font-mono); font-size: 0.875rem; letter-spacing: 0.04em; color: var(--ink-muted); margin-bottom: var(--spacing-md); }
+
+.hero-ce-title { font-family: var(--font-display); font-size: clamp(2.5rem, 6vw, 4.25rem); font-weight: 700; line-height: 1.05; margin-bottom: var(--spacing-md); letter-spacing: -0.03em; max-width: 16ch; }
+
+.hero-ce-title-highlight { position: relative; color: var(--signal); white-space: nowrap; }
+
+.hero-ce-title-highlight::after { content: ""; position: absolute; bottom: 0.06em; left: 0px; right: 0px; height: 3px; background: var(--signal); opacity: 0.55; border-radius: 2px; }
+
+.hero-ce-description { font-size: clamp(1rem, 2vw, 1.1875rem); line-height: 1.7; margin-bottom: var(--spacing-xl); color: rgba(255, 255, 255, 0.78); max-width: 56ch; font-weight: 400; }
+
+.hero-pipeline { display: flex; align-items: center; flex-wrap: wrap; gap: var(--spacing-xs); list-style: none; margin: 0 0 var(--spacing-2xl); padding: 0px; }
+
+.pipeline-step { display: flex; }
+
+.pipeline-chip { display: inline-block; font-family: var(--font-mono); font-size: 0.9375rem; color: rgb(232, 237, 247); background: var(--ink-2); border: 1px solid var(--ink-line); border-radius: 7px; padding: 0.4rem 0.85rem; white-space: nowrap; }
+
+.pipeline-chip-accent { color: var(--verified); border-color: rgba(34, 197, 94, 0.4); background: rgba(34, 197, 94, 0.08); }
+
+.pipeline-arrow { font-family: var(--font-mono); color: var(--ink-muted); font-size: 1rem; }
+
+.cta-buttons-ce { display: flex; gap: var(--spacing-md); justify-content: flex-start; flex-wrap: wrap; }
+
+.cta-button-ce { display: inline-flex; align-items: center; justify-content: center; padding: var(--spacing-md) var(--spacing-xl); font-size: 1.125rem; font-weight: 600; border-radius: 8px; border-width: medium; border-style: none; border-color: currentcolor; border-image: initial; cursor: pointer; transition: transform var(--transition-base), box-shadow var(--transition-base); text-decoration: none; white-space: nowrap; min-width: 44px; min-height: 44px; }
+
+.cta-button-ce-primary { background: var(--signal); color: rgb(255, 255, 255); box-shadow: rgba(59, 108, 255, 0.35) 0px 4px 16px; }
+
+.cta-button-ce-primary:hover { background: var(--signal-dark); transform: translateY(-2px); box-shadow: rgba(59, 108, 255, 0.45) 0px 6px 22px; }
+
+.cta-button-ce-primary:active { transform: translateY(0px); }
+
+.cta-button-ce-secondary { background: transparent; color: rgb(255, 255, 255); border: 1px solid rgba(255, 255, 255, 0.28); }
+
+.cta-button-ce-secondary:hover { background: rgba(255, 255, 255, 0.08); border-color: rgba(255, 255, 255, 0.5); transform: translateY(-2px); }
+
+.cta-button-ce-secondary:active { transform: translateY(0px); }
+
+@media (max-width: 768px) {
+  .hero-ce { min-height: auto; padding: var(--spacing-2xl) var(--spacing-md); }
+  .cta-buttons-ce { flex-direction: column; align-items: stretch; }
+  .cta-button-ce { width: 100%; }
+}
+
+@media (max-width: 480px) {
+  .hero-ce-title { font-size: clamp(2rem, 9vw, 2.75rem); }
+  .pipeline-chip { font-size: 0.8125rem; padding: 0.35rem 0.6rem; }
+}
+
+.featured-content > h2, .events-content > h2, .insights-content > h2, .enterprise-sdd-content > h2, .video-tutorials-heading { font-family: var(--font-display); letter-spacing: -0.02em; }
+
+.section-eyebrow { display: block; font-family: var(--font-mono); font-size: 0.8125rem; letter-spacing: 0.04em; color: var(--signal); margin-bottom: var(--spacing-xs); }
+
+.featured-section { padding: var(--spacing-3xl) var(--spacing-lg); background: linear-gradient(rgb(255, 255, 255) 0%, rgb(248, 250, 252) 100%); scroll-margin-top: 80px; }
+
+.featured-content { max-width: var(--max-width); margin: 0px auto; }
+
+.featured-section h2 { font-size: 2rem; font-weight: 700; margin-bottom: var(--spacing-md); color: var(--color-text); text-align: center; line-height: 1.3; }
+
+.featured-highlight { color: var(--signal); }
+
+.featured-description { font-size: 1.125rem; line-height: 1.7; color: var(--color-text-light); margin-bottom: var(--spacing-xl); text-align: center; max-width: var(--max-width-content); margin-left: auto; margin-right: auto; }
+
+.featured-description strong { color: var(--color-text); font-weight: 600; }
+
+.featured-media-grid { display: grid; grid-template-columns: 1fr; gap: var(--spacing-xl); margin-bottom: var(--spacing-xl); }
+
+.featured-media-card { background: white; border-radius: 12px; overflow: hidden; box-shadow: rgba(0, 0, 0, 0.08) 0px 2px 8px; transition: transform var(--transition-base), box-shadow var(--transition-base); border: 1px solid var(--color-border); }
+
+.featured-media-card:hover { transform: translateY(-4px); box-shadow: rgba(0, 0, 0, 0.1) 0px 12px 24px; }
+
+.featured-media-header { padding: var(--spacing-lg) var(--spacing-lg) var(--spacing-md); background: linear-gradient(135deg, rgb(248, 250, 252) 0%, rgb(255, 255, 255) 100%); border-bottom: 1px solid rgba(0, 0, 0, 0.06); }
+
+.featured-media-badge { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.375rem 0.75rem; border-radius: 20px; font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: var(--spacing-sm); }
+
+.featured-badge-video { background: linear-gradient(135deg, rgb(239, 68, 68) 0%, rgb(220, 38, 38) 100%); color: white; }
+
+.featured-badge-diagram { background: linear-gradient(135deg, rgb(139, 92, 246) 0%, rgb(124, 58, 237) 100%); color: white; }
+
+.featured-media-title { font-size: 1.25rem; font-weight: 700; color: var(--color-text); margin-bottom: 0.5rem; line-height: 1.3; }
+
+.featured-media-description { font-size: 0.9375rem; color: var(--color-text-light); line-height: 1.5; }
+
+.featured-video-container { border-radius: 0px; overflow: hidden; background: linear-gradient(135deg, rgb(0, 0, 0) 0%, rgb(26, 26, 26) 100%); }
+
+.featured-video-container iframe { width: 100%; aspect-ratio: 16 / 9; border-width: medium; border-style: none; border-color: currentcolor; border-image: initial; display: block; }
+
+.featured-image-container { position: relative; overflow: hidden; }
+
+.featured-image-link { display: block; position: relative; overflow: hidden; text-decoration: none; }
+
+.featured-image-link:focus { outline: 3px solid var(--color-primary); outline-offset: 4px; }
+
+.featured-image { width: 100%; height: auto; display: block; transition: transform 0.5s ease-out; }
+
+.featured-image-link:hover .featured-image { transform: scale(1.05); }
+
+.featured-image-overlay { position: absolute; inset: 0px; background: linear-gradient(135deg, rgba(37, 99, 235, 0.92) 0%, rgba(30, 64, 175, 0.95) 100%); display: flex; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.4s ease-out; }
+
+.featured-image-link:hover .featured-image-overlay { opacity: 1; }
+
+.featured-overlay-content { display: flex; flex-direction: column; align-items: center; gap: var(--spacing-sm); transform: translateY(10px); transition: transform var(--transition-base) ease-out; }
+
+.featured-image-link:hover .featured-overlay-content { transform: translateY(0px); }
+
+.featured-overlay-icon { color: white; filter: drop-shadow(rgba(0, 0, 0, 0.3) 0px 2px 8px); }
+
+.featured-overlay-text { color: white; font-size: 1.125rem; font-weight: 600; letter-spacing: 0.02em; text-shadow: rgba(0, 0, 0, 0.3) 0px 2px 8px; }
+
+.featured-cta { text-align: center; }
+
+.cta-button-primary { background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%); color: white; font-size: 1.125rem; padding: var(--spacing-md) var(--spacing-xl); border-radius: 8px; display: inline-flex; align-items: center; gap: var(--spacing-xs); text-decoration: none; font-weight: 600; transition: transform var(--transition-fast), box-shadow var(--transition-fast); box-shadow: rgba(37, 99, 235, 0.3) 0px 4px 12px; min-width: 44px; min-height: 44px; }
+
+.cta-button-primary:hover { transform: translateY(-2px); box-shadow: rgba(37, 99, 235, 0.4) 0px 8px 20px; }
+
+.cta-button-primary:focus { outline: rgba(37, 99, 235, 0.5) solid 3px; outline-offset: 4px; }
+
+.cta-button-primary:active { transform: translateY(0px); }
+
+.cta-button-consulting { background: transparent; color: var(--color-primary); font-size: 1.125rem; padding: var(--spacing-md) var(--spacing-xl); border-radius: 8px; display: inline-flex; align-items: center; gap: var(--spacing-xs); text-decoration: none; font-weight: 600; transition: transform var(--transition-fast), box-shadow var(--transition-fast), background-color var(--transition-fast); border: 2px solid var(--color-primary); min-width: 44px; min-height: 44px; }
+
+.cta-button-consulting:hover { background-color: var(--color-primary); color: white; transform: translateY(-2px); box-shadow: rgba(37, 99, 235, 0.4) 0px 8px 20px; }
+
+.cta-button-consulting:focus { outline: rgba(37, 99, 235, 0.5) solid 3px; outline-offset: 4px; }
+
+.cta-button-consulting:active { transform: translateY(0px); }
+
+.cta-button-group { display: flex; flex-direction: column; align-items: center; gap: var(--spacing-md); }
+
+@media (min-width: 768px) {
+  .cta-button-group { flex-direction: row; justify-content: center; }
+}
+
+@media (min-width: 768px) {
+  .featured-section { padding: var(--spacing-3xl) var(--spacing-xl); }
+  .featured-section h2 { font-size: 2.5rem; }
+  .featured-description { font-size: 1.25rem; }
+  .cta-button-primary { font-size: 1.25rem; }
+  .cta-button-consulting { font-size: 1.25rem; }
+}
+
+@media (min-width: 1024px) {
+  .featured-section { padding: var(--spacing-3xl) var(--spacing-2xl); }
+  .featured-section h2 { font-size: 3rem; }
+  .featured-description { font-size: 1.375rem; }
+  .featured-media-grid { grid-template-columns: 1.2fr 1fr; gap: var(--spacing-2xl); align-items: start; }
+  .featured-media-title { font-size: 1.5rem; }
+  .featured-media-description { font-size: 1rem; }
+  .featured-media-secondary { transform: translateY(60px); }
+}
+
+.enterprise-sdd-section { padding: var(--spacing-3xl) var(--spacing-lg); background: var(--color-background-alt); scroll-margin-top: 80px; }
+
+.enterprise-sdd-content { max-width: var(--max-width); margin: 0px auto; }
+
+.enterprise-sdd-section h2 { font-size: 2rem; font-weight: 700; margin-bottom: var(--spacing-md); color: var(--color-text); text-align: center; line-height: 1.3; }
+
+.enterprise-sdd-highlight { color: var(--color-infoq); }
+
+.enterprise-sdd-intro { font-size: 1.125rem; line-height: 1.7; color: var(--color-text-light); margin: 0 auto var(--spacing-xl); text-align: center; max-width: var(--max-width-content); }
+
+.esdd-card { background: white; border-right-color: ; border-right-style: ; border-right-width: ; border-bottom-color: ; border-bottom-style: ; border-bottom-width: ; border-left-color: ; border-left-style: ; border-left-width: ; border-image-source: ; border-image-slice: ; border-image-width: ; border-image-outset: ; border-image-repeat: ; border-top: 3px solid var(--color-infoq); border-radius: 12px; overflow: hidden; box-shadow: rgba(0, 0, 0, 0.08) 0px 2px 8px; transition: transform var(--transition-base), box-shadow var(--transition-base); }
+
+.esdd-card:hover { transform: translateY(-4px); box-shadow: rgba(0, 0, 0, 0.1) 0px 12px 24px; }
+
+.esdd-grid { display: grid; grid-template-columns: 1fr; }
+
+.esdd-media { display: block; overflow: hidden; aspect-ratio: 1200 / 630; background: linear-gradient(135deg, rgb(248, 250, 252) 0%, rgb(255, 255, 255) 100%); }
+
+.esdd-media picture, .esdd-media img { display: block; width: 100%; height: 100%; object-fit: cover; }
+
+.esdd-media img { transition: transform 0.5s ease-out; }
+
+.esdd-card:hover .esdd-media img { transform: scale(1.03); }
+
+.esdd-body { display: flex; flex-direction: column; padding: var(--spacing-lg); gap: var(--spacing-sm); }
+
+.esdd-eyebrow { display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: var(--color-text-light); }
+
+.esdd-title { font-size: 1.5rem; font-weight: 700; line-height: 1.25; color: var(--color-text); }
+
+.esdd-byline { font-size: 0.875rem; color: var(--color-text-light); }
+
+.esdd-description { font-size: 1rem; line-height: 1.6; color: var(--color-text-light); }
+
+.esdd-ctas { display: flex; flex-wrap: wrap; gap: var(--spacing-sm); margin-top: auto; padding-top: var(--spacing-xs); }
+
+.esdd-media:focus-visible { outline: 3px solid var(--color-infoq); outline-offset: -3px; }
+
+@media (min-width: 768px) {
+  .enterprise-sdd-section { padding: var(--spacing-3xl) var(--spacing-xl); }
+  .enterprise-sdd-section h2 { font-size: 2.5rem; }
+  .enterprise-sdd-intro { font-size: 1.25rem; }
+  .esdd-body { padding: var(--spacing-xl); }
+}
+
+@media (min-width: 1024px) {
+  .enterprise-sdd-section { padding: var(--spacing-3xl) var(--spacing-2xl); }
+  .enterprise-sdd-section h2 { font-size: 3rem; }
+  .esdd-grid { grid-template-columns: minmax(0px, 1.1fr) minmax(0px, 1fr); align-items: stretch; }
+  .esdd-media { aspect-ratio: auto; height: 100%; }
+  .esdd-title { font-size: 1.75rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .esdd-card, .esdd-media img { transition: none; }
+  .esdd-card:hover { transform: none; }
+  .esdd-card:hover .esdd-media img { transform: none; }
+}
+
+.insights { padding: var(--spacing-3xl) var(--spacing-lg); background-color: var(--color-background-alt); scroll-margin-top: 80px; }
+
+.insights-content { max-width: var(--max-width); margin: 0px auto; }
+
+.insights h2 { font-size: 2rem; font-weight: 700; margin-bottom: var(--spacing-sm); color: var(--color-text); text-align: center; }
+
+.insights-highlight { color: var(--signal); }
+
+.insights-intro { font-size: 1.125rem; color: var(--color-text-light); margin-bottom: var(--spacing-2xl); text-align: center; }
+
+.insights-grid { display: grid; grid-template-columns: 1fr; gap: var(--spacing-lg); margin-bottom: var(--spacing-2xl); }
+
+.insight-card { background-color: var(--color-background); border: 1px solid var(--color-border); border-radius: 12px; padding: var(--spacing-lg); transition: transform var(--transition-base), box-shadow var(--transition-base); display: flex; flex-direction: column; gap: var(--spacing-md); }
+
+.insight-card:hover { transform: translateY(-4px); box-shadow: rgba(0, 0, 0, 0.1) 0px 12px 24px; }
+
+.insight-date { display: flex; align-items: center; gap: var(--spacing-xs); font-size: 0.875rem; color: var(--color-text-light); }
+
+.date-icon { flex-shrink: 0; color: var(--color-text-light); }
+
+.insight-title { font-size: 1.25rem; font-weight: 700; line-height: 1.4; color: var(--color-text); margin: 0px; }
+
+.insight-description { font-size: 1rem; line-height: 1.6; color: var(--color-text-light); margin: 0px; flex-grow: 1; }
+
+.insight-link { display: inline-flex; align-items: center; gap: var(--spacing-xs); font-size: 1rem; font-weight: 600; color: var(--color-primary); text-decoration: none; transition: color var(--transition-base); padding: var(--spacing-xs) 0; }
+
+.insight-link:hover { color: var(--color-primary-dark); }
+
+.insight-link:focus { outline: 2px solid var(--color-primary); outline-offset: 4px; border-radius: 4px; }
+
+.external-icon { flex-shrink: 0; color: currentcolor; }
+
+.insights-footer { text-align: center; padding-top: var(--spacing-lg); }
+
+.view-all-link { display: inline-flex; align-items: center; gap: var(--spacing-xs); font-size: 1rem; font-weight: 600; color: var(--color-primary); text-decoration: none; transition: color var(--transition-base); padding: var(--spacing-sm) var(--spacing-md); border-radius: 8px; }
+
+.view-all-link:hover { color: var(--color-primary-dark); background-color: rgba(37, 99, 235, 0.05); }
+
+.view-all-link:focus { outline: 2px solid var(--color-primary); outline-offset: 4px; }
+
+.events-section { padding: var(--spacing-3xl) var(--spacing-lg); background-color: var(--color-background); scroll-margin-top: 80px; }
+
+.events-content { max-width: var(--max-width); margin: 0px auto; }
+
+.events-section h2 { font-size: 2rem; font-weight: 700; color: var(--color-text); margin-bottom: var(--spacing-sm); text-align: center; }
+
+.events-highlight { color: var(--signal); }
+
+.events-intro { font-size: 1.125rem; color: var(--color-text-light); text-align: center; margin-bottom: var(--spacing-2xl); max-width: 700px; margin-left: auto; margin-right: auto; }
+
+.events-grid { display: grid; grid-template-columns: 1fr; gap: var(--spacing-2xl); margin-top: var(--spacing-2xl); }
+
+@media (min-width: 768px) {
+  .events-section h2 { font-size: 2.5rem; }
+}
+
+@media (min-width: 1024px) {
+  .events-section h2 { font-size: 3rem; }
+  .events-grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+.event-card { background: white; border-radius: 12px; overflow: hidden; box-shadow: rgba(0, 0, 0, 0.08) 0px 2px 8px; transition: transform var(--transition-base), box-shadow var(--transition-base); display: flex; flex-direction: column; border: 1px solid var(--color-border); }
+
+.event-card:hover { box-shadow: rgba(0, 0, 0, 0.1) 0px 12px 24px; transform: translateY(-4px); }
+
+.event-link { text-decoration: none; color: inherit; display: flex; flex-direction: column; height: 100%; }
+
+.event-link:focus { outline: 3px solid var(--color-primary); outline-offset: 4px; border-radius: 12px; }
+
+.event-image-container { position: relative; width: 100%; overflow: hidden; background: linear-gradient(135deg, rgb(102, 126, 234) 0%, rgb(118, 75, 162) 100%); }
+
+.event-image { width: 100%; height: auto; display: block; object-fit: cover; }
+
+.event-badge { position: absolute; top: var(--spacing-md); right: var(--spacing-md); padding: var(--spacing-xs) var(--spacing-sm); border-radius: 20px; font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; backdrop-filter: blur(8px); }
+
+.event-badge-upcoming { background: rgba(37, 99, 235, 0.9); color: white; }
+
+.event-details { padding: var(--spacing-lg); flex: 1 1 0%; display: flex; flex-direction: column; }
+
+.event-title { font-size: 1.5rem; font-weight: 700; color: var(--color-text); margin-bottom: var(--spacing-xs); line-height: 1.3; }
+
+.event-host { font-size: 0.875rem; color: var(--color-text-light); margin-bottom: var(--spacing-md); }
+
+.event-session-title { font-size: 1.125rem; font-weight: 600; color: var(--color-primary); margin-bottom: var(--spacing-md); line-height: 1.4; }
+
+.event-description { font-size: 1rem; color: var(--color-text); line-height: 1.6; margin-bottom: var(--spacing-md); }
+
+.event-cta { display: inline-flex; align-items: center; gap: var(--spacing-xs); font-size: 0.9375rem; font-weight: 600; color: var(--color-primary); margin-top: auto; padding-top: var(--spacing-md); transition: color var(--transition-fast); }
+
+.event-card:hover .event-cta { color: var(--color-primary-dark); }
+
+@media (max-width: 767px) {
+  .events-section { padding: var(--spacing-2xl) var(--spacing-md); }
+  .events-intro { font-size: 1rem; }
+  .event-title { font-size: 1.25rem; }
+  .event-session-title { font-size: 1rem; }
+  .event-details { padding: var(--spacing-md); }
+}
+
+.podcast-stack-card, .university-stack-card { background: white; border-radius: 12px; overflow: hidden; box-shadow: rgba(0, 0, 0, 0.08) 0px 2px 8px, rgb(209, 213, 219) 4px 6px 0px -1px, rgb(156, 163, 175) 4px 6px 0px 0px; border: 1px solid var(--color-border); display: flex; flex-direction: column; transition: transform var(--transition-base), box-shadow var(--transition-base); }
+
+.podcast-stack-card:hover, .university-stack-card:hover { transform: translateY(-4px); box-shadow: rgba(0, 0, 0, 0.1) 0px 12px 24px, rgb(209, 213, 219) 4px 10px 0px -1px, rgb(156, 163, 175) 4px 10px 0px 0px; }
+
+.podcast-episode-primary, .university-episode-primary { display: flex; flex-direction: column; }
+
+.podcast-episode-primary .event-link, .university-episode-primary .event-link { display: flex; flex-direction: column; height: 100%; text-decoration: none; color: inherit; }
+
+.podcast-episode-primary .event-link:focus, .university-episode-primary .event-link:focus { outline: 3px solid var(--color-primary); outline-offset: -3px; }
+
+.podcast-episode-peek, .university-episode-peek { background: rgb(248, 250, 252); border-top: 1px solid var(--color-border); }
+
+.podcast-episode-peek { padding: 0px; }
+
+.university-episode-peek { padding: 0px; }
+
+.podcast-episode-peek .peek-link, .university-episode-peek .peek-link { display: flex; align-items: center; gap: 0.75rem; text-decoration: none; color: inherit; }
+
+.university-episode-peek .peek-link { flex-direction: column; align-items: stretch; gap: 0px; padding: 0px; }
+
+.university-peek-header { background: linear-gradient(135deg, rgb(30, 58, 95) 0%, rgb(15, 34, 64) 100%); padding: 0.875rem var(--spacing-md); display: flex; align-items: center; justify-content: center; }
+
+.university-peek-logo { height: 36px; width: auto; max-width: 220px; object-fit: contain; filter: brightness(0) invert(1); display: block; }
+
+.university-episode-peek .peek-body { display: flex; align-items: center; gap: 0.75rem; padding: 0.75rem var(--spacing-md); }
+
+.podcast-episode-peek .peek-link { flex-direction: column; align-items: center; text-align: center; gap: 0.5rem; padding: 1rem var(--spacing-md) 0.75rem; }
+
+.podcast-episode-peek .peek-thumb { width: 120px; height: 68px; border-radius: 6px; }
+
+.podcast-episode-peek .peek-info { text-align: center; }
+
+.podcast-episode-peek .peek-link:hover, .university-episode-peek .peek-link:hover { opacity: 0.8; }
+
+.peek-thumb { width: 56px; height: 36px; object-fit: cover; border-radius: 4px; flex-shrink: 0; background: rgb(229, 231, 235); }
+
+.peek-info { flex: 1 1 0%; min-width: 0px; }
+
+.peek-ep-label { font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: var(--color-primary); margin-bottom: 0.125rem; }
+
+.peek-title { font-size: 0.8rem; font-weight: 600; color: var(--color-text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+.peek-meta { font-size: 0.7rem; color: var(--color-text-light); margin-top: 0.1rem; }
+
+.peek-cta { font-size: 0.75rem; font-weight: 600; color: var(--color-primary); flex-shrink: 0; }
+
+.university-header { background: linear-gradient(135deg, rgb(30, 58, 95) 0%, rgb(15, 34, 64) 100%); padding: var(--spacing-lg); display: flex; flex-direction: column; align-items: center; gap: 0.75rem; min-height: 140px; justify-content: center; }
+
+.university-logo { width: 120px; height: auto; object-fit: contain; filter: brightness(0) invert(1); display: block; }
+
+.university-group-badge { display: inline-flex; align-items: center; gap: 0.4rem; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: rgb(148, 163, 184); padding: 0.25rem 0.625rem; background: rgba(255, 255, 255, 0.1); border-radius: 20px; }
+
+.knowledge-page { max-width: var(--max-width-content); margin: 0px auto; padding: var(--spacing-xl) var(--spacing-lg); }
+
+.breadcrumb { font-size: 0.875rem; color: var(--color-text-light); margin-bottom: var(--spacing-md); }
+
+.breadcrumb a { color: var(--color-primary); text-decoration: none; transition: color var(--transition-fast); }
+
+.breadcrumb a:hover { color: var(--color-primary-dark); text-decoration: underline; }
+
+.knowledge-header { margin-bottom: var(--spacing-xl); padding-bottom: var(--spacing-lg); border-bottom: 2px solid var(--color-border); }
+
+.knowledge-header h1 { font-size: 2.5rem; font-weight: 700; color: var(--color-text); margin-bottom: var(--spacing-sm); line-height: 1.2; }
+
+.knowledge-meta { font-size: 0.875rem; color: var(--color-text-light); display: flex; gap: var(--spacing-md); flex-wrap: wrap; }
+
+.knowledge-meta-item { display: flex; align-items: center; gap: var(--spacing-xs); }
+
+.knowledge-section { margin-bottom: var(--spacing-xl); }
+
+.knowledge-section h2 { font-size: 1.875rem; font-weight: 700; color: var(--color-text); margin-bottom: var(--spacing-md); }
+
+.knowledge-section h3 { font-size: 1.5rem; font-weight: 600; color: var(--color-text); margin-top: var(--spacing-lg); margin-bottom: var(--spacing-md); }
+
+.knowledge-section p { margin-bottom: var(--spacing-md); line-height: 1.7; }
+
+.knowledge-section ul, .knowledge-section ol { margin-bottom: var(--spacing-md); padding-left: var(--spacing-lg); }
+
+.knowledge-section li { margin-bottom: var(--spacing-sm); line-height: 1.6; }
+
+.source-attribution { background-color: var(--color-background-alt); border-left: 4px solid var(--color-primary); padding: var(--spacing-md); margin: var(--spacing-lg) 0; border-radius: 4px; }
+
+.source-attribution p { margin: 0px; font-size: 0.95rem; }
+
+.source-attribution a { color: var(--color-primary); font-weight: 600; text-decoration: none; transition: color var(--transition-fast); }
+
+.source-attribution a:hover { color: var(--color-primary-dark); text-decoration: underline; }
+
+.knowledge-related { background-color: var(--color-background-alt); border-radius: 8px; padding: var(--spacing-lg); margin-top: var(--spacing-2xl); }
+
+.knowledge-related h3 { font-size: 1.25rem; font-weight: 700; color: var(--color-text); margin-bottom: var(--spacing-md); }
+
+.related-topics-list { list-style: none; padding: 0px; margin: 0px; }
+
+.related-topic-item { margin-bottom: var(--spacing-md); }
+
+.related-topic-link { color: var(--color-primary); text-decoration: none; font-weight: 600; transition: color var(--transition-fast); display: block; }
+
+.related-topic-link:hover { color: var(--color-primary-dark); }
+
+.related-topic-description { font-size: 0.875rem; color: var(--color-text-light); margin-top: var(--spacing-xs); }
+
+.resources-list { list-style: none; padding: 0px; }
+
+.resource-item { margin-bottom: var(--spacing-md); padding: var(--spacing-md); background-color: var(--color-background-alt); border-radius: 4px; transition: background-color var(--transition-fast); }
+
+.resource-item:hover { background-color: var(--color-background-alt); }
+
+.resource-link { color: var(--color-primary); text-decoration: none; font-weight: 600; display: inline-flex; align-items: center; gap: var(--spacing-xs); transition: color var(--transition-fast); }
+
+.resource-link:hover { color: var(--color-primary-dark); }
+
+.resource-description { font-size: 0.875rem; color: var(--color-text-light); margin-top: var(--spacing-xs); }
+
+.personal-site-link { display: inline-block; margin-top: var(--spacing-xs); color: var(--color-text-light); font-size: 0.9375rem; text-decoration: none; border-bottom: 1px solid transparent; transition: color var(--transition-fast), border-color var(--transition-fast); }
+
+.personal-site-link:hover { color: var(--color-primary); border-bottom-color: var(--color-primary); }
+
+.personal-site-link:focus-visible { outline: 3px solid var(--color-primary); outline-offset: 4px; border-radius: 2px; }
+
+.connect-grid { display: grid; grid-template-columns: 1fr; gap: var(--spacing-lg); margin-top: var(--spacing-md); }
+
+.connect-card { display: flex; flex-direction: column; gap: var(--spacing-xs); background-color: var(--color-background); border: 1px solid var(--color-border); border-radius: 12px; padding: var(--spacing-lg); text-decoration: none; color: inherit; transition: transform var(--transition-base), box-shadow var(--transition-base), border-color var(--transition-base); }
+
+.connect-card:hover { transform: translateY(-4px); box-shadow: rgba(0, 0, 0, 0.1) 0px 12px 24px; border-color: var(--color-primary); }
+
+.connect-card:focus-visible { outline: 3px solid var(--color-primary); outline-offset: 4px; }
+
+.connect-card-header { display: flex; align-items: center; gap: var(--spacing-sm); }
+
+.connect-card-icon { flex-shrink: 0; color: var(--color-primary); }
+
+.connect-card-title { font-weight: 600; font-size: 1.125rem; color: var(--color-text); }
+
+.connect-card-description { font-size: 0.875rem; color: var(--color-text-light); line-height: 1.5; }
+
+.about-cta { text-align: center; }
+
+@media (min-width: 768px) {
+  .connect-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (min-width: 1024px) {
+  .connect-grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+@media (min-width: 768px) {
+  .knowledge-page { padding: var(--spacing-2xl) var(--spacing-xl); }
+  .knowledge-header h1 { font-size: 3rem; }
+  .knowledge-section h2 { font-size: 2.25rem; }
+}
+
+@media (min-width: 1024px) {
+  .knowledge-page { padding: var(--spacing-3xl) var(--spacing-2xl); }
+}
+
+.services-hero { padding: var(--spacing-3xl) var(--spacing-lg); background: linear-gradient(135deg, rgb(102, 126, 234) 0%, rgb(118, 75, 162) 100%); color: white; text-align: center; }
+
+.services-hero-content { max-width: var(--max-width-content); margin: 0px auto; }
+
+.services-hero h1 { font-size: 2rem; font-weight: 700; line-height: 1.2; margin-bottom: var(--spacing-md); }
+
+.services-hero-description { font-size: 1.125rem; line-height: 1.6; opacity: 0.95; }
+
+.services-about { padding: var(--spacing-3xl) var(--spacing-lg); background-color: var(--color-background-alt); }
+
+.services-about-content { max-width: var(--max-width-content); margin: 0px auto; }
+
+.services-about h2 { font-size: 2rem; font-weight: 700; color: var(--color-text); margin-bottom: var(--spacing-lg); text-align: center; }
+
+.services-about-text { font-size: 1.125rem; line-height: 1.7; color: var(--color-text); margin-bottom: var(--spacing-md); }
+
+@media (min-width: 768px) {
+  .services-hero h1 { font-size: 2.5rem; }
+  .services-hero-description { font-size: 1.25rem; }
+  .services-about h2 { font-size: 2.5rem; }
+}
+
+@media (min-width: 1024px) {
+  .services-hero h1 { font-size: 3rem; }
+  .services-hero-description { font-size: 1.375rem; }
+}
+
+.who-benefits { padding: var(--spacing-3xl) var(--spacing-lg); background-color: var(--color-background); }
+
+.who-benefits-content { max-width: var(--max-width); margin: 0px auto; }
+
+.who-benefits h2 { font-size: 2rem; font-weight: 700; color: var(--color-text); margin-bottom: var(--spacing-md); text-align: center; }
+
+.who-benefits-intro { font-size: 1.125rem; line-height: 1.7; color: var(--color-text-light); margin-bottom: var(--spacing-2xl); text-align: center; max-width: var(--max-width-content); margin-left: auto; margin-right: auto; }
+
+.benefits-grid { display: grid; grid-template-columns: 1fr; gap: var(--spacing-lg); margin-bottom: var(--spacing-2xl); }
+
+.benefit-card { background-color: var(--color-background-alt); border: 1px solid var(--color-border); border-radius: 12px; padding: var(--spacing-xl); text-align: center; transition: transform var(--transition-base), box-shadow var(--transition-base); }
+
+.benefit-card:hover { transform: translateY(-4px); box-shadow: rgba(0, 0, 0, 0.1) 0px 12px 24px; }
+
+.benefit-icon { display: inline-flex; align-items: center; justify-content: center; width: 80px; height: 80px; background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%); border-radius: 50%; margin-bottom: var(--spacing-md); color: white; }
+
+.benefit-icon svg { width: 48px; height: 48px; }
+
+.benefit-title { font-size: 1.375rem; font-weight: 700; color: var(--color-text); margin-bottom: var(--spacing-sm); }
+
+.benefit-description { font-size: 1rem; line-height: 1.6; color: var(--color-text-light); }
+
+.who-benefits-footer { font-size: 1.125rem; line-height: 1.7; color: var(--color-text); text-align: center; padding: var(--spacing-lg); background-color: var(--color-background-alt); border-radius: 8px; border-left: 4px solid var(--color-primary); }
+
+.who-benefits-footer strong { color: var(--color-primary); font-weight: 600; }
+
+@media (min-width: 768px) {
+  .benefits-grid { grid-template-columns: repeat(2, 1fr); }
+  .who-benefits h2 { font-size: 2.5rem; }
+}
+
+@media (min-width: 1024px) {
+  .benefits-grid { grid-template-columns: repeat(4, 1fr); }
+  .who-benefits h2 { font-size: 3rem; }
+}
+
+.cta-consulting { padding: var(--spacing-3xl) var(--spacing-lg); background-color: var(--cta-consulting-bg); border-top: 1px solid var(--cta-consulting-border); }
+
+.cta-consulting-content { max-width: var(--max-width-content); margin: 0px auto; text-align: center; }
+
+.cta-consulting h2 { font-size: 2rem; font-weight: 700; color: var(--color-text); margin-bottom: var(--spacing-md); line-height: 1.3; }
+
+.cta-consulting-subtext { font-size: 1.125rem; line-height: 1.6; color: var(--color-text-light); margin-bottom: var(--spacing-lg); }
+
+.cta-consulting-services { list-style: none; padding: 0px; margin: 0 0 var(--spacing-xl) 0; display: grid; grid-template-columns: 1fr; gap: var(--spacing-sm); }
+
+.cta-consulting-services li { font-size: 1rem; color: var(--color-text); padding: var(--spacing-xs) 0; }
+
+.cta-consulting-services li::before { content: "âœ“ "; color: var(--cta-consulting-highlight); font-weight: 700; margin-right: var(--spacing-xs); }
+
+.cta-consulting-credentials { font-size: 0.875rem; color: var(--color-text-light); margin-top: var(--spacing-md); font-style: italic; }
+
+.services-categories { display: grid; grid-template-columns: 1fr; gap: var(--spacing-lg); margin-bottom: var(--spacing-xl); text-align: left; }
+
+.service-category { background-color: var(--color-background-alt); border: 1px solid var(--color-border); border-radius: 8px; padding: var(--spacing-lg); }
+
+.service-category h3 { font-size: 1.25rem; font-weight: 700; color: var(--color-text); margin-bottom: var(--spacing-sm); }
+
+.service-category p { font-size: 1rem; line-height: 1.6; color: var(--color-text-light); margin: 0px; }
+
+.delivery-reach { padding: var(--spacing-2xl) var(--spacing-lg); background-color: var(--color-background-alt); }
+
+.delivery-reach-content { max-width: var(--max-width-content); margin: 0px auto; text-align: center; }
+
+.delivery-reach h2 { font-size: 2rem; font-weight: 700; color: var(--color-text); margin-bottom: var(--spacing-md); }
+
+.delivery-reach-description { font-size: 1.125rem; line-height: 1.7; color: var(--color-text-light); max-width: 700px; margin: 0px auto; }
+
+.cta-consulting-hero { background-color: rgba(255, 255, 255, 0.95); border: 1px solid rgba(255, 255, 255, 0.3); border-radius: 12px; margin-top: var(--spacing-xl); padding: var(--spacing-lg); box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px; }
+
+@media (min-width: 768px) {
+  .cta-consulting { padding: var(--spacing-3xl) var(--spacing-xl); }
+  .cta-consulting h2 { font-size: 2.5rem; }
+  .cta-consulting-subtext { font-size: 1.25rem; }
+  .cta-consulting-services { grid-template-columns: repeat(2, 1fr); gap: var(--spacing-md); }
+  .services-categories { grid-template-columns: repeat(2, 1fr); }
+  .cta-consulting-hero { padding: var(--spacing-xl); }
+}
+
+@media (min-width: 1024px) {
+  .cta-consulting { padding: var(--spacing-3xl) var(--spacing-2xl); }
+  .cta-consulting h2 { font-size: 3rem; }
+  .cta-consulting-subtext { font-size: 1.375rem; }
+}
+
+.footer { padding: var(--spacing-xl) var(--spacing-lg); background-color: var(--color-text); color: white; width: 100%; scroll-margin-top: 80px; }
+
+.footer-content { max-width: var(--max-width); margin: 0px auto; text-align: center; }
+
+.footer-social { flex-wrap: wrap; row-gap: 1rem; }
+
+.footer-mission { margin-bottom: var(--spacing-xl); max-width: 800px; margin-left: auto; margin-right: auto; }
+
+.footer-mission-heading { font-size: 1.5rem; font-weight: 600; margin-bottom: var(--spacing-md); color: white; }
+
+.footer-mission-text { font-size: 1rem; line-height: 1.6; color: rgba(255, 255, 255, 0.9); margin: 0px; }
+
+.footer-credits { display: flex; align-items: center; justify-content: center; gap: var(--spacing-lg); margin-bottom: var(--spacing-xl); flex-wrap: wrap; }
+
+.footer-logo { display: block; height: auto; max-height: 50px; width: auto; transition: opacity var(--transition-base); }
+
+.footer-logo:hover { opacity: 0.8; }
+
+.footer-credit-link { color: white; text-decoration: none; font-size: 1rem; font-weight: 500; transition: opacity var(--transition-base); border-bottom: 1px solid rgba(255, 255, 255, 0.3); padding-bottom: 2px; }
+
+.footer-credit-link:hover { opacity: 0.8; border-bottom-color: rgba(255, 255, 255, 0.6); }
+
+.footer-credit-link:focus { outline: white solid 2px; outline-offset: 4px; }
+
+@media (max-width: 768px) {
+  .footer-mission-heading { font-size: 1.25rem; }
+  .footer-mission-text { font-size: 0.9375rem; line-height: 1.5; }
+  .footer-logo { max-height: 40px; }
+  .footer-credits { gap: var(--spacing-md); }
+  .footer-credit-link { font-size: 0.9375rem; }
+}
+
+.copyright { font-size: 0.875rem; opacity: 0.8; }
+
+@media (min-width: 768px) {
+  .hero h1 { font-size: 3rem; }
+  .hero-description { font-size: 1.25rem; }
+  .insights { padding: var(--spacing-3xl) var(--spacing-xl); }
+  .insights h2 { font-size: 2.5rem; }
+  .insights-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (min-width: 1024px) {
+  .hero h1 { font-size: 3.5rem; }
+  .hero-description { font-size: 1.375rem; }
+  .insights { padding: var(--spacing-3xl) var(--spacing-2xl); }
+  .insights h2 { font-size: 3rem; }
+  .cta-button { font-size: 1.25rem; }
+  .insights-grid { grid-template-columns: repeat(3, 1fr); }
+  .insight-title { font-size: 1.375rem; }
+}
+
+:focus-visible { outline: 2px solid var(--color-primary); outline-offset: 4px; }
+
+.blog-post { max-width: var(--max-width-content); margin: 0px auto; padding: var(--spacing-3xl) var(--spacing-lg); }
+
+.post-header { margin-bottom: var(--spacing-2xl); padding-bottom: var(--spacing-lg); border-bottom: 2px solid var(--color-border); }
+
+.post-title { font-size: 2.5rem; font-weight: 800; color: var(--color-text); line-height: 1.2; margin-bottom: var(--spacing-md); }
+
+.post-meta { display: flex; flex-wrap: wrap; gap: var(--spacing-md); align-items: center; font-size: 0.9375rem; color: var(--color-text-light); margin-bottom: var(--spacing-sm); }
+
+.post-date { display: inline-flex; align-items: center; gap: 0.5rem; }
+
+.post-author { font-weight: 500; }
+
+.post-reading-time { color: var(--color-text-light); }
+
+.post-repost-notice { background: var(--color-background-alt); border-left: 4px solid var(--color-primary); padding: var(--spacing-md); margin: var(--spacing-md) 0; font-size: 0.9375rem; color: var(--color-text-light); }
+
+.post-repost-notice a { color: var(--color-primary); text-decoration: none; font-weight: 500; }
+
+.post-repost-notice a:hover { text-decoration: underline; }
+
+.post-categories { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: var(--spacing-md); }
+
+.post-category { display: inline-block; padding: 0.375rem 0.875rem; background: var(--color-primary); color: white; border-radius: 6px; font-size: 0.8125rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; }
+
+.post-featured-image { margin: var(--spacing-xl) 0; border-radius: 12px; overflow: visible; box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px; }
+
+.post-featured-image img { width: 100%; height: auto; max-height: none; display: block; border-radius: 12px; }
+
+.post-content .video-embed-container { margin: var(--spacing-xl) 0; border-radius: 12px; overflow: hidden; box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px; }
+
+.post-content .video-embed-container iframe { width: 100%; aspect-ratio: 16 / 9; display: block; border-width: medium; border-style: none; border-color: currentcolor; border-image: initial; }
+
+.post-content { font-size: 1.125rem; line-height: 1.8; color: var(--color-text); }
+
+.post-content h2 { font-size: 2rem; font-weight: 700; color: var(--color-text); margin-top: var(--spacing-2xl); margin-bottom: var(--spacing-md); line-height: 1.3; }
+
+.post-content h3 { font-size: 1.5rem; font-weight: 600; color: var(--color-text); margin-top: var(--spacing-xl); margin-bottom: var(--spacing-sm); line-height: 1.4; }
+
+.post-content p { margin-bottom: var(--spacing-md); }
+
+.post-content ul, .post-content ol { margin-bottom: var(--spacing-md); padding-left: var(--spacing-xl); }
+
+.post-content li { margin-bottom: var(--spacing-xs); }
+
+.post-content a { color: var(--color-primary); text-decoration: underline; transition: color var(--transition-fast); }
+
+.post-content a:hover { color: var(--color-primary-dark); }
+
+.post-content code { background: var(--color-background-alt); padding: 0.25rem 0.5rem; border-radius: 4px; font-size: 0.9em; font-family: Monaco, Consolas, monospace; }
+
+.post-content pre { background: var(--color-background-alt); border: 1px solid var(--color-border); border-radius: 8px; padding: var(--spacing-md); overflow-x: auto; margin-bottom: var(--spacing-md); }
+
+.post-content pre code { background: none; padding: 0px; font-size: 0.875rem; }
+
+.post-content blockquote { border-left: 4px solid var(--color-primary); padding-left: var(--spacing-md); margin: var(--spacing-lg) 0; font-style: italic; color: var(--color-text-light); }
+
+.post-content img { max-width: 100%; height: auto; display: block; margin: var(--spacing-xl) auto; border-radius: 8px; box-shadow: rgba(0, 0, 0, 0.1) 0px 2px 8px; }
+
+.post-content p + img, .post-content img + em { margin-top: var(--spacing-md); }
+
+.post-tags { margin-top: var(--spacing-2xl); padding-top: var(--spacing-lg); border-top: 1px solid var(--color-border); }
+
+.post-tags h3 { font-size: 1.125rem; font-weight: 600; color: var(--color-text); margin-bottom: var(--spacing-sm); }
+
+.tag-list { list-style: none; padding: 0px; display: flex; flex-wrap: wrap; gap: 0.5rem; }
+
+.tag-item { background: var(--color-background-alt); padding: 0.375rem 0.875rem; border-radius: 6px; font-size: 0.875rem; color: var(--color-text-light); }
+
+.related-posts { max-width: var(--max-width-content); margin: var(--spacing-3xl) auto; padding: 0 var(--spacing-lg); }
+
+.related-posts h2 { font-size: 2rem; font-weight: 700; color: var(--color-text); margin-bottom: var(--spacing-lg); text-align: center; }
+
+.related-posts-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: var(--spacing-lg); }
+
+.related-post-card { background: white; border: 1px solid var(--color-border); border-radius: 12px; padding: var(--spacing-lg); transition: all var(--transition-base); }
+
+.related-post-card:hover { box-shadow: rgba(0, 0, 0, 0.08) 0px 8px 24px; transform: translateY(-4px); border-color: var(--color-primary); }
+
+.related-post-card h3 { font-size: 1.25rem; font-weight: 600; margin-bottom: var(--spacing-xs); }
+
+.related-post-card h3 a { color: var(--color-text); text-decoration: none; transition: color var(--transition-fast); }
+
+.related-post-card h3 a:hover { color: var(--color-primary); }
+
+.related-post-card time { display: block; font-size: 0.875rem; color: var(--color-text-light); margin-bottom: var(--spacing-sm); }
+
+.related-post-card p { font-size: 0.9375rem; color: var(--color-text-light); line-height: 1.6; }
+
+@media (max-width: 768px) {
+  .blog-post { padding: var(--spacing-xl) var(--spacing-md); }
+  .post-title { font-size: 2rem; }
+  .post-content { font-size: 1rem; }
+  .post-content h2 { font-size: 1.5rem; }
+  .post-content h3 { font-size: 1.25rem; }
+  .related-posts { padding: 0 var(--spacing-md); }
+  .related-posts h2 { font-size: 1.5rem; }
+  .related-posts-grid { grid-template-columns: 1fr; }
+}
+
+.video-tutorials-section { padding: var(--spacing-3xl) var(--spacing-lg); background: linear-gradient(135deg, rgb(10, 10, 10) 0%, rgb(26, 26, 26) 100%); position: relative; overflow: hidden; }
+
+.video-tutorials-section::before { content: ""; position: absolute; inset: 0px; background-image: radial-gradient(circle at 20% 50%, rgba(99, 102, 241, 0.03) 0%, transparent 50%), radial-gradient(circle at 80% 80%, rgba(139, 92, 246, 0.03) 0%, transparent 50%); pointer-events: none; }
+
+.video-tutorials-content { max-width: 1400px; margin: 0px auto; position: relative; z-index: 1; }
+
+.video-tutorials-grid { display: grid; grid-template-columns: 1.85fr 1fr; gap: var(--spacing-2xl); align-items: center; }
+
+.video-tutorials-media { position: relative; }
+
+.playlist-embed-container { position: relative; width: 100%; aspect-ratio: 16 / 9; border-radius: 16px; overflow: hidden; box-shadow: rgba(0, 0, 0, 0.3) 0px 10px 40px, rgba(0, 0, 0, 0.2) 0px 1px 3px; transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); background: rgb(0, 0, 0); }
+
+.playlist-embed-container::before { content: ""; position: absolute; inset: 0px; border-radius: 16px; padding: 2px; background: linear-gradient(135deg, rgba(99, 102, 241, 0.4), rgba(139, 92, 246, 0.4)); mask: linear-gradient(rgb(255, 255, 255) 0px, rgb(255, 255, 255) 0px) content-box exclude, linear-gradient(rgb(255, 255, 255) 0px, rgb(255, 255, 255) 0px); opacity: 0; transition: opacity 0.4s; pointer-events: none; }
+
+.playlist-embed-container:hover { transform: translateY(-4px); box-shadow: rgba(0, 0, 0, 0.4) 0px 20px 60px, rgba(99, 102, 241, 0.2) 0px 5px 15px; }
+
+.playlist-embed-container:hover::before { opacity: 1; }
+
+.playlist-embed-container iframe { position: absolute; top: 0px; left: 0px; width: 100%; height: 100%; border-width: medium; border-style: none; border-color: currentcolor; border-image: initial; }
+
+.video-tutorials-text { display: flex; flex-direction: column; gap: var(--spacing-md); }
+
+.video-tutorials-badge { display: inline-flex; align-items: center; gap: var(--spacing-xs); padding: var(--spacing-xs) var(--spacing-sm); background: linear-gradient(135deg, rgba(99, 102, 241, 0.15), rgba(139, 92, 246, 0.15)); border: 1px solid rgba(99, 102, 241, 0.3); border-radius: 8px; color: rgb(165, 180, 252); font-size: 0.875rem; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; width: fit-content; backdrop-filter: blur(10px); }
+
+.video-tutorials-badge svg { width: 16px; height: 16px; color: rgb(129, 140, 248); }
+
+.video-tutorials-heading { font-size: clamp(2rem, 4vw, 2.75rem); font-weight: 700; line-height: 1.2; color: rgb(255, 255, 255); margin: 0px; }
+
+.video-tutorials-highlight { color: var(--signal); }
+
+.video-tutorials-description { font-size: 1.125rem; line-height: 1.7; color: rgb(209, 213, 219); margin: 0px; }
+
+.video-tutorials-ctas { display: flex; flex-direction: column; gap: var(--spacing-sm); margin-top: var(--spacing-xs); }
+
+.video-tutorials-ctas .cta-button { display: inline-flex; align-items: center; justify-content: center; gap: var(--spacing-xs); padding: var(--spacing-md) var(--spacing-xl); font-size: 1.125rem; font-weight: 600; text-decoration: none; border-radius: 8px; transition: 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); cursor: pointer; border-width: medium; border-style: none; border-color: currentcolor; border-image: initial; position: relative; overflow: hidden; min-height: 52px; }
+
+.video-tutorials-ctas .cta-button-primary { background: linear-gradient(135deg, rgb(99, 102, 241) 0%, rgb(139, 92, 246) 100%); color: rgb(255, 255, 255); box-shadow: rgba(99, 102, 241, 0.3) 0px 4px 12px; }
+
+.video-tutorials-ctas .cta-button-primary::before { content: ""; position: absolute; inset: 0px; background: linear-gradient(135deg, rgb(124, 58, 237) 0%, rgb(168, 85, 247) 100%); opacity: 0; transition: opacity 0.3s; }
+
+.video-tutorials-ctas .cta-button-primary:hover { transform: translateY(-2px); box-shadow: rgba(99, 102, 241, 0.4) 0px 8px 20px; }
+
+.video-tutorials-ctas .cta-button-primary:hover::before { opacity: 1; }
+
+.video-tutorials-ctas .cta-button-primary > * { position: relative; z-index: 1; }
+
+.video-tutorials-ctas .cta-button-secondary { background: rgba(99, 102, 241, 0.1); color: rgb(165, 180, 252); border: 2px solid rgba(99, 102, 241, 0.3); backdrop-filter: blur(10px); }
+
+.video-tutorials-ctas .cta-button-secondary:hover { background: rgba(99, 102, 241, 0.2); border-color: rgba(99, 102, 241, 0.5); transform: translateY(-2px); box-shadow: rgba(99, 102, 241, 0.2) 0px 4px 12px; }
+
+.video-tutorials-ctas .cta-button-secondary svg { width: 20px; height: 20px; }
+
+.video-tutorials-ctas .external-icon { width: 20px; height: 20px; transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); }
+
+.video-tutorials-ctas .cta-button:hover .external-icon { transform: translate(2px, -2px); }
+
+.video-tutorials-ctas .cta-button:focus-visible { outline: rgb(99, 102, 241) solid 3px; outline-offset: 3px; }
+
+@media (max-width: 1024px) {
+  .video-tutorials-section { padding: var(--spacing-3xl) var(--spacing-md); }
+  .video-tutorials-grid { grid-template-columns: 1fr; gap: var(--spacing-xl); }
+  .video-tutorials-text { max-width: 100%; }
+  .video-tutorials-heading { font-size: clamp(1.75rem, 5vw, 2.25rem); }
+  .video-tutorials-ctas { flex-flow: wrap; }
+  .video-tutorials-ctas .cta-button { flex: 1 1 0%; min-width: 200px; }
+}
+
+@media (max-width: 767px) {
+  .video-tutorials-section { padding: var(--spacing-2xl) var(--spacing-md); }
+  .video-tutorials-grid { gap: var(--spacing-lg); }
+  .video-tutorials-badge { font-size: 0.8125rem; padding: var(--spacing-xs) var(--spacing-sm); }
+  .video-tutorials-heading { font-size: clamp(1.5rem, 6vw, 2rem); }
+  .video-tutorials-description { font-size: 1rem; }
+  .video-tutorials-ctas { flex-direction: column; gap: var(--spacing-sm); }
+  .video-tutorials-ctas .cta-button { width: 100%; padding: var(--spacing-sm) var(--spacing-md); font-size: 1rem; }
+  .playlist-embed-container { border-radius: 12px; }
+  .playlist-embed-container:hover { transform: none; }
+}
+
+@media (max-width: 480px) {
+  .video-tutorials-section { padding: var(--spacing-xl) var(--spacing-sm); }
+  .video-tutorials-ctas .cta-button { padding: var(--spacing-sm) var(--spacing-md); min-height: 48px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, ::before, ::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+}
+
+.infoq-announcement-bar { background-color: rgb(15, 23, 42); width: 100%; padding: 0.65rem 1.5rem; }
+
+.infoq-announcement-inner { max-width: var(--max-width); margin: 0px auto; display: flex; align-items: center; gap: 0.875rem; flex-wrap: nowrap; }
+
+.infoq-badge { background-color: rgb(192, 0, 62); color: rgb(255, 255, 255); font-weight: 700; font-size: 0.75rem; padding: 0.2rem 0.65rem; border-radius: 999px; letter-spacing: 0.06em; text-transform: uppercase; white-space: nowrap; flex-shrink: 0; }
+
+.infoq-divider { width: 1px; height: 1.1rem; background-color: rgba(255, 255, 255, 0.2); flex-shrink: 0; }
+
+.infoq-new-article { display: flex; align-items: center; gap: 0.4rem; flex-shrink: 0; }
+
+.infoq-pulse-dot { width: 0.5rem; height: 0.5rem; border-radius: 50%; background-color: rgb(245, 158, 11); flex-shrink: 0; animation: 2s ease-in-out 0s infinite normal none running infoq-pulse; }
+
+.infoq-new-label { color: rgb(245, 158, 11); font-size: 0.75rem; font-weight: 600; white-space: nowrap; }
+
+.infoq-title { color: rgb(255, 255, 255); font-weight: 600; font-size: 0.875rem; flex: 1 1 0%; min-width: 0px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+.infoq-cta { color: rgb(192, 0, 62); border: 1.5px solid rgb(192, 0, 62); border-radius: 4px; padding: 0.25rem 0.8rem; font-size: 0.8rem; font-weight: 600; text-decoration: none; white-space: nowrap; flex-shrink: 0; transition: background-color var(--transition-fast), color var(--transition-fast); }
+
+.infoq-cta:hover, .infoq-cta:focus { background-color: rgb(192, 0, 62); color: rgb(255, 255, 255); outline: none; }
+
+@keyframes infoq-pulse { 
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.55; transform: scale(1.35); }
+}
+
+@media (max-width: 767px) {
+  .infoq-announcement-bar { padding: 0.75rem 1rem; }
+  .infoq-announcement-inner { flex-wrap: wrap; gap: 0.5rem; }
+  .infoq-divider { display: none; }
+  .infoq-title { white-space: normal; overflow: visible; text-overflow: unset; flex-basis: 100%; font-size: 0.8125rem; line-height: 1.4; }
+  .infoq-cta { font-size: 0.75rem; }
+}
+------MultipartBoundary--Ot3bZbDUROdcxHt0QtBAxHmTL0okXtcrxhdgZZy5Eg------

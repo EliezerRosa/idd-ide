@@ -1,0 +1,57 @@
+{
+  "kind": "youtube#playlistListResponse",
+  "etag": "-YoMWmNlsL3XzwSJ4lUQ21FMnmE",
+  "pageInfo": {
+    "totalResults": 1,
+    "resultsPerPage": 5
+  },
+  "items": [
+    {
+      "kind": "youtube#playlist",
+      "etag": "0zwoe45cqBIrLgzqbYRefu86inU",
+      "id": "PLkbRMhsplHjaLEi9O7SsJN3pH8TvsS6k7",
+      "snippet": {
+        "publishedAt": "2026-05-10T02:23:54.440693Z",
+        "channelId": "UCmXhQsrKa5wlO46etZKDkeA",
+        "title": "IDD — Base de Conhecimento (Série Completa)",
+        "description": "Série completa sobre Intent-Driven Development (IDD) — o paradigma de engenharia de software onde a intenção humana em linguagem natural governa todo o sistema.\n\nCriado por Eliezer Rosa em parceria com GitHub Copilot Agent.\n\n#IDD #IntentDrivenDevelopment #GitHubCopilot #EngenhariaDeSoftware #IA",
+        "thumbnails": {
+          "default": {
+            "url": "https://i.ytimg.com/vi/lNEr7vb0Gyo/default.jpg",
+            "width": 120,
+            "height": 90
+          },
+          "medium": {
+            "url": "https://i.ytimg.com/vi/lNEr7vb0Gyo/mqdefault.jpg",
+            "width": 320,
+            "height": 180
+          },
+          "high": {
+            "url": "https://i.ytimg.com/vi/lNEr7vb0Gyo/hqdefault.jpg",
+            "width": 480,
+            "height": 360
+          },
+          "standard": {
+            "url": "https://i.ytimg.com/vi/lNEr7vb0Gyo/sddefault.jpg",
+            "width": 640,
+            "height": 480
+          },
+          "maxres": {
+            "url": "https://i.ytimg.com/vi/lNEr7vb0Gyo/maxresdefault.jpg",
+            "width": 1280,
+            "height": 720
+          }
+        },
+        "channelTitle": "Eliézer Rosa",
+        "defaultLanguage": "pt",
+        "localized": {
+          "title": "IDD — Base de Conhecimento (Série Completa)",
+          "description": "Série completa sobre Intent-Driven Development (IDD) — o paradigma de engenharia de software onde a intenção humana em linguagem natural governa todo o sistema.\n\nCriado por Eliezer Rosa em parceria com GitHub Copilot Agent.\n\n#IDD #IntentDrivenDevelopment #GitHubCopilot #EngenhariaDeSoftware #IA"
+        }
+      },
+      "status": {
+        "privacyStatus": "public"
+      }
+    }
+  ]
+}

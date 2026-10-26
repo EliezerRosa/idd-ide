@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>paradigma_idd_aula_01</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body, html { width: 100%; height: 100%; overflow: hidden; background: #080c14; font-family: 'Segoe UI', system-ui, sans-serif; }
+    canvas { display: block; width: 100vw; height: 100vh; }
+  </style>
+</head>
+<body>
+  <canvas id="motionCanvas" width="1920" height="1080"></canvas>
+  <script>
+    const canvas = document.getElementById('motionCanvas');
+    const ctx = canvas.getContext('2d');
+    const W = canvas.width, H = canvas.height;
+
+    // Configuração de nós do Paradigma IDD
+    const nodes = [
+      { name: 'IDENTIFICAÇÃO', x: W * 0.2, y: H * 0.5, color: '#38bdf8' },
+      { name: 'DIAGNÓSTICO', x: W * 0.5, y: H * 0.35, color: '#818cf8' },
+      { name: 'DEFINIÇÃO', x: W * 0.8, y: H * 0.5, color: '#34d399' }
+    ];
+
+    window.renderFrame = function(timeMs) {
+      const t = timeMs / 1000;
+      ctx.fillStyle = '#090d16';
+      ctx.fillRect(0, 0, W, H);
+
+      // Fundo em grade sutil
+      ctx.strokeStyle = 'rgba(255, 255, 255, 0.04)';
+      ctx.lineWidth = 1;
+      for (let x = 0; x < W; x += 60) {
+        ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, H); ctx.stroke();
+      }
+      for (let y = 0; y < H; y += 60) {
+        ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(W, y); ctx.stroke();
+      }
+
+      // Linhas de conexão animadas
+      for (let i = 0; i < nodes.length - 1; i++) {
+        const n1 = nodes[i];
+        const n2 = nodes[i + 1];
+        const grad = ctx.createLinearGradient(n1.x, n1.y, n2.x, n2.y);
+        grad.addColorStop(0, n1.color);
+        grad.addColorStop(1, n2.color);
+        ctx.strokeStyle = grad;
+        ctx.lineWidth = 4 + Math.sin(t * 3 + i) * 1.5;
+        ctx.beginPath();
+        ctx.moveTo(n1.x, n1.y);
+        ctx.lineTo(n2.x, n2.y);
+        ctx.stroke();
+
+        // Pulso de dados
+        const pulseRatio = (t * 0.8 + i * 0.3) % 1.0;
+        const px = n1.x + (n2.x - n1.x) * pulseRatio;
+        const py = n1.y + (n2.y - n1.y) * pulseRatio;
+        ctx.fillStyle = '#ffffff';
+        ctx.beginPath();
+        ctx.arc(px, py, 7, 0, Math.PI * 2);
+        ctx.fill();
+      }
+
+      // Desenhar Nós
+      nodes.forEach((node, idx) => {
+        const pulse = Math.sin(t * 4 + idx) * 5;
+        // Halo de brilho
+        const glow = ctx.createRadialGradient(node.x, node.y, 10, node.x, node.y, 70 + pulse);
+        glow.addColorStop(0, node.color + 'aa');
+        glow.addColorStop(1, 'transparent');
+        ctx.fillStyle = glow;
+        ctx.beginPath();
+        ctx.arc(node.x, node.y, 70 + pulse, 0, Math.PI * 2);
+        ctx.fill();
+
+        // Círculo central
+        ctx.fillStyle = '#0f172a';
+        ctx.strokeStyle = node.color;
+        ctx.lineWidth = 4;
+        ctx.beginPath();
+        ctx.arc(node.x, node.y, 36, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.stroke();
+
+        // Texto do nó
+        ctx.fillStyle = '#ffffff';
+        ctx.font = 'bold 22px system-ui, sans-serif';
+        ctx.textAlign = 'center';
+        ctx.fillText(node.name, node.x, node.y + 70);
+      });
+
+      // Título principal com fade in
+      const titleAlpha = Math.min(1, t / 1.5);
+      ctx.fillStyle = `rgba(255, 255, 255, ${titleAlpha})`;
+      ctx.font = '900 48px system-ui, sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText("paradigma_idd_aula_01", W / 2, 120);
+
+      // Subtítulo
+      ctx.fillStyle = `rgba(148, 163, 184, ${titleAlpha})`;
+      ctx.font = '20px system-ui, sans-serif';
+      ctx.fillText("Pipeline de Renderização Programática de Vídeo & Motion Graphics", W / 2, 165);
+    };
+
+    window.renderFrame(0);
+  </script>
+</body>
+</html>

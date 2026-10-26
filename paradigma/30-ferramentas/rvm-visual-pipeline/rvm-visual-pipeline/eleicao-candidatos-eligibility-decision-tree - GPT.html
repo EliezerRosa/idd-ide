@@ -1,0 +1,139 @@
+```html
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Eligibility Decision Tree</title>
+
+  <script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: 'dark',
+      flowchart: {
+        curve: 'basis'
+      }
+    });
+  </script>
+
+  <style>
+    body{
+      margin:0;
+      background:#0f172a;
+      color:white;
+      font-family:Arial, Helvetica, sans-serif;
+    }
+
+    .container{
+      padding:20px;
+    }
+
+    h1{
+      text-align:center;
+      margin-bottom:20px;
+    }
+
+    .mermaid{
+      background:#111827;
+      border-radius:16px;
+      padding:20px;
+      overflow:auto;
+      box-shadow:0 0 20px rgba(0,0,0,.4);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h1>Eligibility Decision Tree</h1>
+
+    <div class="mermaid">
+
+flowchart TD
+  classDef gate fill:#0b4f6c,color:#fff,stroke:#083d56,stroke-width:1.2px
+  classDef decision fill:#d97706,color:#111827,stroke:#92400e,stroke-width:1.2px
+  classDef block fill:#9f1239,color:#fff,stroke:#881337,stroke-width:1.2px
+  classDef pass fill:#166534,color:#fff,stroke:#14532d,stroke-width:1.2px
+
+  S0[checkEligibility input<br/>publisher modalidade funcao context]:::gate
+  G1{isServing?}:::decision
+  G2{isNotQualified?}:::decision
+  G3{requestedNoParticipation?}:::decision
+  G4{available on date?<br/>skip if past week}:::decision
+  G5{isHelperOnly and not AJUDANTE?}:::decision
+  G6{section privileges ok?}:::decision
+  T1{textual gender/condition/funcao/baptism ok?}:::decision
+  H1{funcao == AJUDANTE?}:::decision
+
+  S0 --> G1
+  G1 -- no --> B1[BLOCK: not serving]:::block
+  G1 -- yes --> G2
+  G2 -- yes --> B2[BLOCK: not qualified]:::block
+  G2 -- no --> G3
+  G3 -- yes --> B3[BLOCK: no participation request]:::block
+  G3 -- no --> G4
+  G4 -- no --> B4[BLOCK: unavailable for week]:::block
+  G4 -- yes --> G5
+  G5 -- yes --> B5[BLOCK: helper-only]:::block
+  G5 -- no --> G6
+  G6 -- no --> B6[BLOCK: section privilege]:::block
+  G6 -- yes --> T1
+  T1 -- no --> B7[BLOCK: textual constraint]:::block
+  T1 -- yes --> H1
+
+  H1 -- yes --> H2{titularGender resolved?}:::decision
+  H2 -- no --> BH1[BLOCK: helper requires titular context]:::block
+  H2 -- yes --> H3{family bypass?<br/>spouse or parent child}:::decision
+  H3 -- yes --> P0[PASS helper]:::pass
+  H3 -- no --> H4{same gender as titular?}:::decision
+  H4 -- no --> BH2[BLOCK: helper gender rule]:::block
+  H4 -- yes --> P0
+
+  H1 -- no --> M0{Modalidade switch}:::decision
+
+  M0 -->|PRESIDENCIA| M1{canPreside?}:::decision
+  M1 -- no --> BM1[BLOCK]:::block
+  M1 -- yes --> P1[PASS]:::pass
+
+  M0 -->|ORACAO| M2{brother baptized canPray?}:::decision
+  M2 -- no --> BM2[BLOCK]:::block
+  M2 -- yes --> M2a{Oracao Inicial requires canPreside?}:::decision
+  M2a -- no --> BM2a[BLOCK]:::block
+  M2a -- yes --> M2b{Oracao Final not president?}:::decision
+  M2b -- no --> BM2b[BLOCK]:::block
+  M2b -- yes --> P2[PASS]:::pass
+
+  M0 -->|DISCURSO_ENSINO| M3{brother canGiveTalks elder or MS?}:::decision
+  M3 -- no --> BM3[BLOCK]:::block
+  M3 -- yes --> P3[PASS]:::pass
+
+  M0 -->|LEITURA_ESTUDANTE| M4{brother and student rules}:::decision
+  M4 -- no --> BM4[BLOCK]:::block
+  M4 -- yes --> P4[PASS]:::pass
+
+  M0 -->|DEMONSTRACAO| M5{student rules}:::decision
+  M5 -- no --> BM5[BLOCK]:::block
+  M5 -- yes --> P5[PASS]:::pass
+
+  M0 -->|DISCURSO_ESTUDANTE| M6{brother and canGiveStudentTalks?}:::decision
+  M6 -- no --> BM6[BLOCK]:::block
+  M6 -- yes --> P6[PASS]:::pass
+
+  M0 -->|DIRIGENTE_EBC| M7{elder and canConductCBS?}:::decision
+  M7 -- no --> BM7[BLOCK]:::block
+  M7 -- yes --> P7[PASS]:::pass
+
+  M0 -->|LEITOR_EBC| M8{brother baptized canReadCBS?}:::decision
+  M8 -- no --> BM8[BLOCK]:::block
+  M8 -- yes --> P8[PASS]:::pass
+
+  M0 -->|NECESSIDADES_LOCAIS| M9{elder and canGiveTalks?}:::decision
+  M9 -- no --> BM9[BLOCK]:::block
+  M9 -- yes --> P9[PASS]:::pass
+
+    </div>
+  </div>
+</body>
+</html>
+```

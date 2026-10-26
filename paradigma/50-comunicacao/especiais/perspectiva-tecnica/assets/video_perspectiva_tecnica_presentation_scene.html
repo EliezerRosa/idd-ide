@@ -1,0 +1,1455 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=1920, height=1080, initial-scale=1.0">
+  <title>IDD Paradigma — Perspectiva Técnica: Avaliação Isenta & Os 5 Pilares de Formalização</title>
+  
+  <!-- Fontes Google Modernas -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --bg-dark: #060a14;
+      --bg-card: rgba(13, 23, 44, 0.92);
+      --bg-card-border: rgba(56, 189, 248, 0.24);
+      --cyan-frost: #38bdf8;
+      --cyan-glow: rgba(56, 189, 248, 0.45);
+      --ice-blue: #0284c7;
+      --emerald-ok: #10b981;
+      --amber-alert: #f59e0b;
+      --purple-tech: #a855f7;
+      --rose-warn: #f43f5e;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --text-dim: #64748b;
+      --font-display: 'Outfit', sans-serif;
+      --font-body: 'Plus Jakarta Sans', sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+      --font-hand: 'Caveat', cursive;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html, body {
+      width: 1920px;
+      height: 1080px;
+      overflow: hidden;
+      background: #060a14;
+      color: var(--text-main);
+      font-family: var(--font-body);
+      user-select: none;
+    }
+
+    .ambient-glow {
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 100%;
+      pointer-events: none;
+      background: radial-gradient(circle at 10% 15%, rgba(2, 132, 199, 0.16) 0%, transparent 45%),
+                  radial-gradient(circle at 90% 85%, rgba(168, 85, 247, 0.12) 0%, transparent 45%),
+                  radial-gradient(circle at 50% 50%, rgba(16, 185, 129, 0.08) 0%, transparent 55%);
+      z-index: 1;
+    }
+
+    .app-layout {
+      position: relative;
+      z-index: 10;
+      width: 1920px;
+      height: 1080px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* BARRA SUPERIOR */
+    header {
+      height: 56px;
+      min-height: 56px;
+      background: rgba(8, 14, 27, 0.95);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(56, 189, 248, 0.2);
+      padding: 0 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+
+    .brand-wrap {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .brand-logo {
+      width: 36px;
+      height: 36px;
+      border-radius: 9px;
+      background: linear-gradient(135deg, #0284c7, #a855f7);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      box-shadow: 0 0 16px rgba(56, 189, 248, 0.4);
+    }
+    .brand-titles h1 {
+      font-family: var(--font-display);
+      font-size: 15px;
+      font-weight: 800;
+      color: #fff;
+      letter-spacing: -0.2px;
+    }
+    .brand-titles span {
+      font-size: 11px;
+      color: var(--cyan-frost);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+    }
+
+    .nav-tabs {
+      display: flex;
+      gap: 4px;
+      align-items: center;
+      max-width: 58vw;
+      padding: 4px 0;
+    }
+    .tab-btn {
+      background: rgba(15, 25, 48, 0.6);
+      border: 1px solid rgba(56, 189, 248, 0.15);
+      color: var(--text-muted);
+      padding: 6px 12px;
+      border-radius: 7px;
+      font-size: 11.5px;
+      font-family: var(--font-display);
+      font-weight: 600;
+      white-space: nowrap;
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .tab-btn.active {
+      background: linear-gradient(135deg, rgba(2, 132, 199, 0.35), rgba(168, 85, 247, 0.35));
+      border-color: var(--cyan-frost);
+      color: #fff;
+      box-shadow: 0 0 12px rgba(56, 189, 248, 0.3);
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .badge-live {
+      background: rgba(244, 63, 94, 0.15);
+      border: 1px solid rgba(244, 63, 94, 0.4);
+      color: #fda4af;
+      font-size: 10px;
+      font-weight: 800;
+      padding: 4px 10px;
+      border-radius: 20px;
+      letter-spacing: 0.5px;
+    }
+    .time-readout {
+      font-family: var(--font-mono);
+      font-size: 12.5px;
+      color: var(--cyan-frost);
+      font-weight: 700;
+      background: rgba(15, 23, 42, 0.8);
+      border: 1px solid rgba(56, 189, 248, 0.25);
+      padding: 4px 10px;
+      border-radius: 6px;
+    }
+
+    /* CORPO PRINCIPAL */
+    main {
+      flex: 1;
+      position: relative;
+      overflow: hidden;
+      padding: 16px 28px;
+    }
+
+    .slide {
+      position: absolute;
+      top: 16px; bottom: 16px; left: 28px; right: 28px;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.25s ease;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .slide.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .card-panel {
+      flex: 1;
+      background: var(--bg-card);
+      border: 1px solid var(--bg-card-border);
+      border-radius: 16px;
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.55);
+      padding: 22px 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      position: relative;
+      overflow: hidden;
+    }
+    .card-panel::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; height: 3px;
+      background: linear-gradient(90deg, #0284c7, #38bdf8, #a855f7, #10b981);
+    }
+
+    .slide-header {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      flex-shrink: 0;
+    }
+    .header-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .badge-pill-group {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+    .pill {
+      font-size: 10px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      padding: 3px 9px;
+      border-radius: 20px;
+    }
+    .pill-cyan { background: rgba(56, 189, 248, 0.15); color: var(--cyan-frost); border: 1px solid rgba(56, 189, 248, 0.35); }
+    .pill-purple { background: rgba(168, 85, 247, 0.15); color: #d8b4fe; border: 1px solid rgba(168, 85, 247, 0.35); }
+    .pill-amber { background: rgba(245, 158, 11, 0.15); color: #fcd34d; border: 1px solid rgba(245, 158, 11, 0.35); }
+    .pill-emerald { background: rgba(16, 185, 129, 0.15); color: #6ee7b7; border: 1px solid rgba(16, 185, 129, 0.35); }
+    .pill-rose { background: rgba(244, 63, 94, 0.15); color: #fda4af; border: 1px solid rgba(244, 63, 94, 0.35); }
+
+    .slide-number {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--text-dim);
+      font-weight: 600;
+    }
+
+    .slide-title {
+      font-family: var(--font-display);
+      font-size: 25px;
+      font-weight: 800;
+      color: #fff;
+      letter-spacing: -0.5px;
+      line-height: 1.25;
+    }
+    .slide-title .highlight {
+      background: linear-gradient(135deg, #38bdf8, #a855f7);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .slide-subtitle {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.45;
+    }
+
+    .slide-body {
+      flex: 1;
+      display: flex;
+      gap: 18px;
+      min-height: 0;
+    }
+
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; width: 100%; height: 100%; }
+    .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; width: 100%; height: 100%; }
+    .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; width: 100%; height: 100%; }
+
+    .box-card {
+      background: rgba(10, 18, 36, 0.7);
+      border: 1px solid rgba(56, 189, 248, 0.18);
+      border-radius: 12px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .box-card.danger { border-color: rgba(244, 63, 94, 0.3); background: rgba(30, 12, 22, 0.6); }
+    .box-card.success { border-color: rgba(16, 185, 129, 0.3); background: rgba(8, 28, 22, 0.6); }
+    .box-card.tech { border-color: rgba(168, 85, 247, 0.3); background: rgba(22, 14, 38, 0.6); }
+
+    .box-title {
+      font-family: var(--font-display);
+      font-size: 14.5px;
+      font-weight: 700;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .box-desc { font-size: 12px; color: var(--text-muted); line-height: 1.5; }
+
+    .tech-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .tech-list li {
+      font-size: 12px;
+      color: var(--text-main);
+      position: relative;
+      padding-left: 24px;
+      line-height: 1.5;
+    }
+    .tech-list li strong { color: var(--cyan-frost); }
+    .tech-list li .bullet-icon { position: absolute; left: 0; top: 1px; font-size: 13px; }
+
+    .code-box {
+      background: #040711;
+      border: 1px solid rgba(56, 189, 248, 0.2);
+      border-radius: 9px;
+      padding: 10px 12px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: #e2e8f0;
+      line-height: 1.45;
+    }
+    .code-box .kw { color: #f43f5e; font-weight: 600; }
+    .code-box .fn { color: #38bdf8; }
+    .code-box .str { color: #10b981; }
+    .code-box .cm { color: #64748b; font-style: italic; }
+    .code-box .typ { color: #a855f7; }
+
+    .humor-card {
+      background: linear-gradient(135deg, rgba(245, 158, 11, 0.12), rgba(168, 85, 247, 0.12));
+      border: 1px dashed rgba(245, 158, 11, 0.4);
+      border-radius: 10px;
+      padding: 10px 16px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      font-family: var(--font-hand);
+      font-size: 18px;
+      color: #fef08a;
+      line-height: 1.35;
+    }
+    .humor-icon { font-size: 24px; flex-shrink: 0; }
+
+    .question-card {
+      background: linear-gradient(135deg, rgba(56, 189, 248, 0.12), rgba(2, 132, 199, 0.2));
+      border: 1px solid rgba(56, 189, 248, 0.35);
+      border-radius: 10px;
+      padding: 10px 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .question-icon { font-size: 22px; flex-shrink: 0; color: var(--cyan-frost); }
+    .question-text { font-size: 12.5px; font-weight: 600; color: #f0f9ff; line-height: 1.45; }
+    .question-text em { color: var(--cyan-frost); font-style: normal; font-weight: 800; }
+
+    .footer-banner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(10, 18, 34, 0.75);
+      border: 1px solid rgba(56, 189, 248, 0.15);
+      border-radius: 8px;
+      padding: 8px 14px;
+      font-size: 11px;
+      color: var(--text-muted);
+      flex-shrink: 0;
+    }
+    .footer-tags { display: flex; gap: 8px; align-items: center; font-family: var(--font-mono); font-size: 10.5px; color: var(--cyan-frost); }
+
+    /* FOOTER BROADCAST COM ORADOR E FALA */
+    footer {
+      height: 64px;
+      min-height: 64px;
+      background: rgba(8, 14, 27, 0.96);
+      border-top: 1px solid rgba(56, 189, 248, 0.22);
+      padding: 0 28px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+
+    .spk-pill {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 800;
+      font-family: var(--font-display);
+      letter-spacing: 0.5px;
+      white-space: nowrap;
+      transition: all 0.3s;
+    }
+    .spk-pill.eliezer {
+      background: linear-gradient(135deg, rgba(2, 132, 199, 0.25), rgba(56, 189, 248, 0.25));
+      border: 1px solid var(--cyan-frost);
+      color: #fff;
+      box-shadow: 0 0 12px rgba(56, 189, 248, 0.35);
+    }
+    .spk-pill.leigo {
+      background: linear-gradient(135deg, rgba(168, 85, 247, 0.25), rgba(216, 180, 254, 0.25));
+      border: 1px solid var(--purple-tech);
+      color: #fff;
+      box-shadow: 0 0 12px rgba(168, 85, 247, 0.35);
+    }
+
+    .speech-box {
+      flex: 1;
+      font-size: 12.5px;
+      color: #f1f5f9;
+      line-height: 1.4;
+      font-style: italic;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .wave-bars {
+      display: flex;
+      align-items: center;
+      gap: 3px;
+      height: 20px;
+    }
+    .w-bar {
+      width: 3px;
+      height: 100%;
+      background: var(--cyan-frost);
+      border-radius: 2px;
+      animation: wave 1s infinite ease-in-out;
+    }
+    .w-bar:nth-child(2) { animation-delay: 0.2s; height: 70%; }
+    .w-bar:nth-child(3) { animation-delay: 0.4s; height: 90%; }
+    .w-bar:nth-child(4) { animation-delay: 0.1s; height: 50%; }
+    .w-bar:nth-child(5) { animation-delay: 0.3s; height: 80%; }
+    @keyframes wave {
+      0%, 100% { transform: scaleY(0.3); }
+      50% { transform: scaleY(1); }
+    }
+
+        /* DUAL REACTION SECTION (DEV vs USUÁRIO) - ATÉ 1/3 DA TELA (ALTA VISIBILIDADE) */
+    .dual-reactions-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      flex-shrink: 0;
+      height: 318px;
+      margin-top: 4px;
+    }
+
+    .reaction-card {
+      border-radius: 14px;
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(16px);
+      height: 100%;
+    }
+
+    .reaction-card.dev-card {
+      background: linear-gradient(135deg, rgba(15, 23, 42, 0.96), rgba(8, 28, 58, 0.92));
+      border: 1.5px solid rgba(56, 189, 248, 0.4);
+    }
+    .reaction-card.dev-card::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      width: 5px;
+      background: linear-gradient(180deg, #38bdf8, #818cf8);
+    }
+
+    .reaction-card.user-card {
+      background: linear-gradient(135deg, rgba(6, 28, 24, 0.96), rgba(15, 23, 42, 0.92));
+      border: 1.5px solid rgba(16, 185, 129, 0.4);
+    }
+    .reaction-card.user-card::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      width: 5px;
+      background: linear-gradient(180deg, #10b981, #f59e0b);
+    }
+
+    .reaction-gif-media {
+      width: 440px;
+      height: 248px;
+      border-radius: 10px;
+      object-fit: cover;
+      flex-shrink: 0;
+      border: 2px solid rgba(255, 255, 255, 0.2);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.75);
+      transition: transform 0.25s ease;
+    }
+    .reaction-card:hover .reaction-gif-media {
+      transform: scale(1.02);
+    }
+
+    .reaction-body {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 6px;
+      min-width: 0;
+      flex: 1;
+      height: 248px;
+    }
+
+    .reaction-top-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+
+    .reaction-role-tag {
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.7px;
+      padding: 3px 8px;
+      border-radius: 5px;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .dev-card .reaction-role-tag {
+      background: rgba(56, 189, 248, 0.25);
+      color: #38bdf8;
+      border: 1px solid rgba(56, 189, 248, 0.5);
+    }
+    .user-card .reaction-role-tag {
+      background: rgba(16, 185, 129, 0.25);
+      color: #34d399;
+      border: 1px solid rgba(16, 185, 129, 0.5);
+    }
+
+    .reaction-status-dot {
+      font-size: 11px;
+      color: var(--text-dim);
+      font-weight: 700;
+    }
+
+    .reaction-speech {
+      font-family: var(--font-hand);
+      font-size: 19px;
+      line-height: 1.25;
+      color: #fef08a;
+      text-shadow: 0 1px 3px rgba(0,0,0,0.9);
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+
+    .reaction-impact-text {
+      background: rgba(4, 8, 18, 0.75);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 8px;
+      padding: 8px 12px;
+      font-size: 11.5px;
+      color: #cbd5e1;
+      line-height: 1.4;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .reaction-impact-text strong {
+      color: #fff;
+    }
+
+  </style>
+</head>
+<body>
+  <div class="ambient-glow"></div>
+
+  <div class="app-layout">
+    <header>
+      <div class="brand-wrap">
+        <div class="brand-logo">🏛️</div>
+        <div class="brand-titles">
+          <h1>Paradigma IDD em Perspectiva</h1>
+          <span>Avaliação Técnica, Isenta & Os 5 Pilares de Formalização</span>
+        </div>
+      </div>
+
+      <nav class="nav-tabs" id="navTabs"></nav>
+
+      <div class="header-actions">
+        <div class="badge-live">BROADCAST MASTER</div>
+        <div class="time-readout" id="timeReadout">00:00 / 06:25</div>
+      </div>
+    </header>
+
+    <main id="slideContainer">
+      <!-- SLIDE 1 -->
+      <div class="slide active" data-slide="1" data-title="1. Diagnóstico Isento">
+        <div class="card-panel">
+          <div class="slide-header">
+            <div class="header-meta">
+              <div class="badge-pill-group">
+                <span class="pill pill-cyan">Sem Condescendência</span>
+                <span class="pill pill-purple">Engenharia de Software 3.0</span>
+                <span class="pill pill-rose">A Crise do Vibe Coding</span>
+              </div>
+              <span class="slide-number">01 / 10</span>
+            </div>
+            <h2 class="slide-title">Uma Avaliação Técnica e Isenta: <span class="highlight">O Que Realmente Falta no IDD?</span></h2>
+            <p class="slide-subtitle">
+              O Paradigma IDD já possui maturidade conceitual inegável. Mas o que separa um <em>quadro pioneiro</em> de um <em>padrão de engenharia global e adotável pela indústria</em> como o DDD ou o LLVM?
+            </p>
+          </div>
+          <div class="slide-body">
+            <div class="grid-2">
+              <div class="box-card success">
+                <div class="box-title"><span>✅</span> O Que o IDD Já Conquistou com Louvor</div>
+                <ul class="tech-list">
+                  <li><span class="bullet-icon">🏛️</span> <strong>Ontologia da Intenção:</strong> Superou a ilusão de que o código-fonte descartável é o patrimônio perpétuo da corporação.</li>
+                  <li><span class="bullet-icon">🧠</span> <strong>Comando Epistêmico vs Operacional:</strong> Estabeleceu formalmente a soberania humana na tomada de decisão arquitetural (augumenting vs automating).</li>
+                  <li><span class="bullet-icon">🛡️</span> <strong>Raciocínio Neuro-Simbólico:</strong> A união da intuição semântica do LLM com o rigor relacional do MER canônico.</li>
+                  <li><span class="bullet-icon">🔄</span> <strong>Projetos Reais em Produção:</strong> RVM Designações, IDD Refrigeração HVAC-R e aplicações auditadas.</li>
+                </ul>
+              </div>
+              <div class="box-card danger">
+                <div class="box-title"><span>⚡</span> Os 5 Pilares que Faltam para Adoção Global</div>
+                <ul class="tech-list">
+                  <li><span class="bullet-icon">1️⃣</span> <strong>Intent IR Canônica:</strong> Falta de uma IDL formal (Intermediate Representation) independente de linguagem.</li>
+                  <li><span class="bullet-icon">2️⃣</span> <strong>Provadores Formais SMT:</strong> Substituição total do "assert_equal" por Z3 e Dafny no pipeline.</li>
+                  <li><span class="bullet-icon">3️⃣</span> <strong>Engenharia Constitucional:</strong> A superação da cegueira de texto do Git com a Máquina de Diff Semântico.</li>
+                  <li><span class="bullet-icon">4️⃣</span> <strong>Teoria da Ação Atômica:</strong> Sagas em 4 fases blindando transações distribuídas sem estados órfãos.</li>
+                  <li><span class="bullet-icon">5️⃣</span> <strong>Benchmark & Metodologia:</strong> Um "SWE-bench do IDD" provando alucinação zero com ground truth de domínio.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+                    <!-- DUAL REACTIONS (DEV vs USUÁRIO) - 2 GIFS ANIMADOS -->
+          <div class="dual-reactions-grid">
+            <div class="reaction-card dev-card">
+              <img src="gifs/slide01_dev_reaction.gif" alt="💻 Reação do Desenvolvedor" class="reaction-gif-media" />
+              <div class="reaction-body">
+                <div class="reaction-top-row">
+                  <span class="reaction-role-tag">💻 Reação do Desenvolvedor</span>
+                  <span class="reaction-status-dot">● Pânico do Vibe Coding</span>
+                </div>
+                <div class="reaction-speech">"Socorro! O LLM cuspiu 400 linhas sem teste e quebrou a produção às 3h!"</div>
+                <div class="reaction-impact-text"><strong>Fim dos Plantões de Madrugada:</strong> Transição do caos empírico para uma arquitetura ontológica com regras formais invioláveis.</div>
+              </div>
+            </div>
+
+            <div class="reaction-card user-card">
+              <img src="gifs/slide01_user_reaction.gif" alt="👤 Reação do Usuário / Negócio" class="reaction-gif-media" />
+              <div class="reaction-body">
+                <div class="reaction-top-row">
+                  <span class="reaction-role-tag">👤 Reação do Usuário / Negócio</span>
+                  <span class="reaction-status-dot">● Decepção com Demos Frágeis</span>
+                </div>
+                <div class="reaction-speech">"Prometeram uma IA mágica, mas no primeiro clique de negócio deu Erro 500!"</div>
+                <div class="reaction-impact-text"><strong>Software Empresarial Confiável:</strong> Fim das promessas vazias; sistemas que entregam exatamente o que o negócio precisa com estabilidade.</div>
+              </div>
+            </div>
+          </div>
+          <div class="footer-banner">
+            <span>📺 Série Especial: Perspectiva Técnica | Autor: Eliézer Rosa</span>
+            <div class="footer-tags"><span>#IDD</span> <span>#SoftwareEngineering</span> <span>#FormalMethods</span> <span>#VibeCoding</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SLIDE 2 -->
+      <div class="slide" data-slide="2" data-title="2. MCP vs IDD: Encanamento vs Engenharia">
+        <div class="card-panel">
+          <div class="slide-header">
+            <div class="header-meta">
+              <div class="badge-pill-group">
+                <span class="pill pill-purple">Anthropic MCP</span>
+                <span class="pill pill-cyan">Paradigma IDD</span>
+                <span class="pill pill-amber">Convergência vs Divergência</span>
+              </div>
+              <span class="slide-number">02 / 10</span>
+            </div>
+            <h2 class="slide-title">Ambientes de Agentes (MCP & Antigravity) <span class="highlight">vs Paradigma IDD</span></h2>
+            <p class="slide-subtitle">
+              Onde convergem e onde diferem radicalmente? Por que o protocolo MCP é o encanamento, enquanto o IDD é a engenharia de tratamento e controle?
+            </p>
+          </div>
+          <div class="slide-body">
+            <div class="grid-2">
+              <div class="box-card tech">
+                <div class="box-title"><span>🔌</span> MCP & Ferramentas Experimentais (Antigravity / OS)</div>
+                <p class="box-desc">O <strong>Model Context Protocol (MCP)</strong> resolve a interoperabilidade mecânica: plugar o LLM a ferramentas e arquivos.</p>
+                <ul class="tech-list">
+                  <li><span class="bullet-icon">•</span> <strong>Foco:</strong> Conectividade, transporte JSON-RPC, permissões de OS e tool calling.</li>
+                  <li><span class="bullet-icon">•</span> <strong>Cegueira Semântica:</strong> O MCP não sabe se o comando viola regras de negócio ou corrompe dados.</li>
+                  <li><span class="bullet-icon">•</span> <strong>Papel:</strong> É a infraestrutura de tubulação (pipes & plumbing).</li>
+                </ul>
+              </div>
+              <div class="box-card success">
+                <div class="box-title"><span>🏛️</span> Paradigma IDD (A Engenharia Ontológica de Controle)</div>
+                <p class="box-desc">O <strong>IDD</strong> governa o significado epistêmico: se o agente pode realizar a mutação e sob qual prova matemática.</p>
+                <ul class="tech-list">
+                  <li><span class="bullet-icon">•</span> <strong>Foco:</strong> Soberania ontológica, invariantes de domínio, AST de intenção e Sagas atômicas.</li>
+                  <li><span class="bullet-icon">•</span> <strong>Governança Pétrea:</strong> Se o tool call violar o modelo relacional, o IDD bloqueia no pré-voo.</li>
+                  <li><span class="bullet-icon">•</span> <strong>Papel:</strong> É a autoridade constitucional de engenharia.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+                    <!-- DUAL REACTIONS (DEV vs USUÁRIO) - 2 GIFS ANIMADOS -->
+          <div class="dual-reactions-grid">
+            <div class="reaction-card dev-card">
+              <img src="gifs/slide02_dev_reaction.gif" alt="💻 Reação do Desenvolvedor" class="reaction-gif-media" />
+              <div class="reaction-body">
+                <div class="reaction-top-row">
+                  <span class="reaction-role-tag">💻 Reação do Desenvolvedor</span>
+                  <span class="reaction-status-dot">● MCP: Encanamento Cru</span>
+                </div>
+                <div class="reaction-speech">"O MCP conectou a API em segundos, mas o agente fez DROP TABLE sem pedir licença!"</div>
+                <div class="reaction-impact-text"><strong>Governança de Ação Real:</strong> Compreensão de que conectar ferramentas (pipes) não substitui a blindagem ontológica do domínio.</div>
+              </div>
+            </div>
+
+            <div class="reaction-card user-card">
+              <img src="gifs/slide02_user_reaction.gif" alt="👤 Reação do Usuário / Negócio" class="reaction-gif-media" />
+              <div class="reaction-body">
+                <div class="reaction-top-row">
+                  <span class="reaction-role-tag">👤 Reação do Usuário / Negócio</span>
+                  <span class="reaction-status-dot">● Blindagem de Domínio</span>
+                </div>
+                <div class="reaction-speech">"Finalmente meus dados de faturamento e clientes estão protegidos por leis invioláveis!"</div>
+                <div class="reaction-impact-text"><strong>Integridade & Auditoria Total:</strong> O usuário opera com tranquilidade sabendo que o agente não corrompe o patrimônio da empresa.</div>
+              </div>
+            </div>
+          </div>
+          <div class="footer-banner">
+            <span>Convergência: O IDD usa o MCP como motor de execução; o MCP precisa do IDD para não destruir a arquitetura.</span>
+            <div class="footer-tags"><span>#ModelContextProtocol</span> <span>#MCP</span> <span>#Antigravity</span> <span>#NeuroSymbolic</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SLIDE 3 -->
+      <div class="slide" data-slide="3" data-title="3. Pilar 1: Intent IR Canônica">
+        <div class="card-panel">
+          <div class="slide-header">
+            <div class="header-meta">
+              <div class="badge-pill-group">
+                <span class="pill pill-rose">Pilar 1 de 5</span>
+                <span class="pill pill-cyan">Compiladores & AST</span>
+                <span class="pill pill-purple">Tradição LLVM / DSPy</span>
+              </div>
+              <span class="slide-number">03 / 10</span>
+            </div>
+            <h2 class="slide-title">Pilar 1: <span class="highlight">A Necessidade de uma Intent IR Canônica (IDL Formal)</span></h2>
+            <p class="slide-subtitle">
+              A intenção humana não pode viver em prompts soltos de Markdown. O IDD necessita de uma Interface Definition Language (IDL) formalizada com gramática léxica e semântica rigorosa.
+            </p>
+          </div>
+          <div class="slide-body">
+            <div class="grid-2">
+              <div class="box-card">
+                <div class="box-title"><span>📜</span> O Problema do "Prompt Diluído"</div>
+                <p class="box-desc">Hoje a indústria tenta programar com instruções em prosa. Cada LLM interpreta de forma probabilística oscilante:</p>
+                <div class="code-box">
+<span class="cm">// Como o mercado faz hoje (Vibe Coding frágil):</span>
+"Por favor agente, garanta que a OS só possa ser fechada
+ se houver uma medição termodinâmica válida registrada."
+<span class="cm">↳ LLM: 85% de acerto na terça-feira, 40% de acerto na sexta após fine-tuning!</span>
+                </div>
+              </div>
+              <div class="box-card tech">
+                <div class="box-title"><span>⚡</span> A Solução IDD: Intent Intermediate Representation (IR)</div>
+                <p class="box-desc">Inspirado na revolução do LLVM e no Stanford DSPy, a intenção compila para uma Árvore Sintática Abstrata (AST) do domínio:</p>
+                <div class="code-box">
+<span class="kw">intent</span> <span class="fn">FecharOrdemServico</span>(os_id: <span class="typ">UUID</span>) {
+  <span class="kw">guard</span>:
+    <span class="kw">exists</span>(MedicaoTermodinamica m) 
+      <span class="kw">where</span> m.ordem_servico_id == os_id;
+    os.status == <span class="str">'EM_EXECUCAO'</span>;
+  <span class="kw">invariant</span>:
+    m.pressao_descarga > m.pressao_sucao;
+  <span class="kw">mutation</span>:
+    os.status = <span class="str">'CONCLUIDA'</span>;
+}
+                </div>
+              </div>
+            </div>
+          </div>
+                    <!-- DUAL REACTIONS (DEV vs USUÁRIO) - 2 GIFS ANIMADOS -->
+          <div class="dual-reactions-grid">
+            <div class="reaction-card dev-card">
+              <img src="gifs/slide03_dev_reaction.gif" alt="💻 Reação do Desenvolvedor" class="reaction-gif-media" />
+              <div class="reaction-body">
+                <div class="reaction-top-row">
+                  <span class="reaction-role-tag">💻 Reação do Desenvolvedor</span>
+                  <span class="reaction-status-dot">● Compilador Intent IR</span>
+                </div>
+                <div class="reaction-speech">"Pela 1ª vez tenho uma AST formal: compilo a intenção para React, Rust ou SQL sem retrabalho!"</div>
+                <div class="reaction-impact-text"><strong>Fim do Boilerplate Eterno:</strong> Código descartável e regenerável; o patrimônio perpétuo é a especificação formal do domínio.</div>
+              </div>
+            </div>
+
+            <div class="reaction-card user-card">
+              <img src="gifs/slide03_user_reaction.gif" alt="👤 Reação do Usuário / Negócio" class="reaction-gif-media" />
+              <div class="reaction-body">
+                <div class="reaction-top-row">
+                  <span class="reaction-role-tag">👤 Reação do Usuário / Negócio</span>
+                  <span class="reaction-status-dot">● Requisito Vivo</span>
+                </div>
+                <div class="reaction-speech">"O sistema fala rigorosamente os termos da minha empresa, sem jargão inútil!"</div>
+                <div class="reaction-impact-text"><strong>Sincronia Imediata:</strong> Regras de negócio viram software em tempo real sem o abismo de mal-entendidos entre negócio e TI.</div>
+              </div>
+            </div>
+          </div>
+          <div class="footer-banner">
+            <span>Meta Acadêmica: Publicação de especificação formal EBNF da linguagem Intent IR em fóruns como PLDI e POPL.</span>
+            <div class="footer-tags"><span>#IntentIR</span> <span>#ProgramSynthesis</span> <span>#CompilerDesign</span> <span>#StanfordDSPy</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SLIDE 4 -->
+      <div class="slide" data-slide="4" data-title="4. Pilar 2: Provadores Formais SMT">
+        <div class="card-panel">
+          <div class="slide-header">
+            <div class="header-meta">
+              <div class="badge-pill-group">
+                <span class="pill pill-rose">Pilar 2 de 5</span>
+                <span class="pill pill-emerald">Automated Reasoning</span>
+                <span class="pill pill-cyan">Microsoft Z3 & Dafny</span>
+              </div>
+              <span class="slide-number">04 / 10</span>
+            </div>
+            <h2 class="slide-title">Pilar 2: <span class="highlight">A Morte do Assert_Equal: SMT Solvers & Verificação Formal</span></h2>
+            <p class="slide-subtitle">
+              Por que testes unitários tradicionais baseados em amostragem pontual são insuficientes na era da IA, e como o Automated Reasoning da AWS se torna lei no IDD.
+            </p>
+          </div>
+          <div class="slide-body">
+            <div class="grid-2">
+              <div class="box-card danger">
+                <div class="box-title"><span>❌</span> A Ilusão dos Testes Unitários de Amostragem</div>
+                <p class="box-desc">Edsger Dijkstra avisou em 1972: <em>"Testes podem provar a presença de erros, nunca a sua ausência."</em></p>
+                <ul class="tech-list">
+                  <li><span class="bullet-icon">•</span> Um teste testa <code>assert(calcular(2, 3) == 5)</code> em pontos finitos.</li>
+                  <li><span class="bullet-icon">•</span> A IA aprende a passar no teste mockando o resultado, sem provar a consistência global.</li>
+                </ul>
+              </div>
+              <div class="box-card success">
+                <div class="box-title"><span>🛡️</span> A Prova Matemática Universal com SMT Solvers</div>
+                <p class="box-desc">Com provadores como <strong>Microsoft Z3</strong> e <strong>Dafny</strong> (usados pelo AWS Automated Reasoning Group para blindar a nuvem):</p>
+                <ul class="tech-list">
+                  <li><span class="bullet-icon">📐</span> <strong>Prova Universal (&forall;):</strong> O SMT Solver não roda amostras: ele prova por indução matemática que para qualquer entrada possível, a invariante se sustenta.</li>
+                  <li><span class="bullet-icon">🚫</span> <strong>Contra-Exemplo Automático:</strong> Se houver uma falha, o solver cospe o cenário exato que quebra o sistema.</li>
+                  <li><span class="bullet-icon">⚡</span> <strong>Deploy Bloqueado:</strong> Código gerado por IA com prova formal rejeitada não gera build. Fim da alucinação.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+                    <!-- DUAL REACTIONS (DEV vs USUÁRIO) - 2 GIFS ANIMADOS -->
+          <div class="dual-reactions-grid">
+            <div class="reaction-card dev-card">
+              <img src="gifs/slide04_dev_reaction.gif" alt="💻 Reação do Desenvolvedor" class="reaction-gif-media" />
+              <div class="reaction-body">
+                <div class="reaction-top-row">
+                  <span class="reaction-role-tag">💻 Reação do Desenvolvedor</span>
+                  <span class="reaction-status-dot">● Provadores SMT (Z3/Dafny)</span>
+                </div>
+                <div class="reaction-speech">"Chega de 500 testes unitários manuais: o Z3 Solver provou matematicamente ausência de bugs!"</div>
+                <div class="reaction-impact-text"><strong>Certeza Matemática Pré-Execução:</strong> Substituição de testes por amostragem por teoremas formais comprovados no pipeline.</div>
+              </div>
+            </div>
+
+            <div class="reaction-card user-card">
+              <img src="gifs/slide04_user_reaction.gif" alt="👤 Reação do Usuário / Negócio" class="reaction-gif-media" />
+              <div class="reaction-body">
+                <div class="reaction-top-row">
+                  <span class="reaction-role-tag">👤 Reação do Usuário / Negócio</span>
+                  <span class="reaction-status-dot">● 99.999% Zero Crash</span>
+                </div>
+                <div class="reaction-speech">"Uptime real e confiável! Nunca mais vi a tela travar bem no meio do fechamento de mês!"</div>
+                <div class="reaction-impact-text"><strong>Operação Crítica Sem Medo:</strong> Folha de pagamento, estoque e logística rodam com previsibilidade matemática absoluta.</div>
+              </div>
+            </div>
+          </div>
+          <div class="footer-banner">
+            <span>Invariantes do IDD: Invariantes Estruturais (MER), Comportamentais (UML) e Temporizadas (Audit Logs Imutáveis).</span>
+            <div class="footer-tags"><span>#SMTSolvers</span> <span>#Z3Solver</span> <span>#Dafny</span> <span>#AWSAutomatedReasoning</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SLIDE 5 -->
+      <div class="slide" data-slide="5" data-title="5. Pilar 3: Diff Semântico">
+        <div class="card-panel">
+          <div class="slide-header">
+            <div class="header-meta">
+              <div class="badge-pill-group">
+                <span class="pill pill-rose">Pilar 3 de 5</span>
+                <span class="pill pill-purple">Constitutional AI</span>
+                <span class="pill pill-cyan">Diff de Grafo Semântico</span>
+              </div>
+              <span class="slide-number">05 / 10</span>
+            </div>
+            <h2 class="slide-title">Pilar 3: <span class="highlight">Engenharia Constitucional & A Máquina de Diff de Intenções</span></h2>
+            <p class="slide-subtitle">
+              O Git foi concebido para texto em 2005. O IDD introduz a comparação semântica sobre o grafo de intenção e a Classificação Tripartida de Mutações de Banco.
+            </p>
+          </div>
+          <div class="slide-body">
+            <div class="grid-3">
+              <div class="box-card">
+                <div class="box-title"><span>🟢</span> Classe A: Adições Puras</div>
+                <p class="box-desc">Novas tabelas, novas rotas isoladas ou campos anuláveis.</p>
+                <ul class="tech-list">
+                  <li><span class="bullet-icon">✓</span> Risco zero para legados.</li>
+                  <li><span class="bullet-icon">✓</span> Compilação e deploy autônomo imediato via pipeline.</li>
+                </ul>
+              </div>
+              <div class="box-card tech">
+                <div class="box-title"><span>🟡</span> Classe B: Endurecimento</div>
+                <p class="box-desc">Novas validações ou restrições em fluxos existentes.</p>
+                <ul class="tech-list">
+                  <li><span class="bullet-icon">⚠️</span> Cálculo de raio de impacto sobre clientes e serviços dependentes.</li>
+                  <li><span class="bullet-icon">✓</span> Validação de compatibilidade retroativa.</li>
+                </ul>
+              </div>
+              <div class="box-card danger">
+                <div class="box-title"><span>🔴</span> Classe C: Rupturas</div>
+                <p class="box-desc">Remoção de colunas, mudança de cardinalidade (1:N para N:M).</p>
+                <ul class="tech-list">
+                  <li><span class="bullet-icon">🛑</span> <strong>Bloqueio Automático:</strong> Nenhuma IA tem permissão para merge autônomo.</li>
+                  <li><span class="bullet-icon">🔄</span> Aplicação obrigatória do padrão Expand and Contract e Tribunal Humano.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+                    <!-- DUAL REACTIONS (DEV vs USUÁRIO) - 2 GIFS ANIMADOS -->
+          <div class="dual-reactions-grid">
+            <div class="reaction-card dev-card">
+              <img src="gifs/slide05_dev_reaction.gif" alt="💻 Reação do Desenvolvedor" class="reaction-gif-media" />
+              <div class="reaction-body">
+                <div class="reaction-top-row">
+                  <span class="reaction-role-tag">💻 Reação do Desenvolvedor</span>
+                  <span class="reaction-status-dot">● Diff Semântico AST</span>
+                </div>
+                <div class="reaction-speech">"O Git não quebra mais por vírgulas ou prettier: o Diff Semântico só avisa violações de regras!"</div>
+                <div class="reaction-impact-text"><strong>Code Reviews 10x Mais Rápidos:</strong> Foco exclusivo na intenção e no impacto arquitetural, eliminando o ruído textual de arquivos.</div>
+              </div>
+            </div>
+
+            <div class="reaction-card user-card">
+              <img src="gifs/slide05_user_reaction.gif" alt="👤 Reação do Usuário / Negócio" class="reaction-gif-media" />
+              <div class="reaction-body">
+                <div class="reaction-top-row">
+                  <span class="reaction-role-tag">👤 Reação do Usuário / Negócio</span>
+                  <span class="reaction-status-dot">● Soberania Decisória</span>
+                </div>
+                <div class="reaction-speech">"Nenhuma IA ou dev altera regras de comissão sem validação no Painel Constitucional!"</div>
+                <div class="reaction-impact-text"><strong>Controle Soberano das Regras:</strong> As leis basilares da empresa ficam blindadas contra alterações acidentais ou não autorizadas.</div>
+              </div>
+            </div>
+          </div>
+          <div class="footer-banner">
+            <span>Princípio: A Ontologia de Domínio é a Constituição da Empresa. A IA é o cidadão que deve cumpri-la irrestritamente.</span>
+            <div class="footer-tags"><span>#ConstitutionalAI</span> <span>#SchemaEvolution</span> <span>#ExpandAndContract</span> <span>#GraphDiff</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SLIDE 6 -->
+      <div class="slide" data-slide="6" data-title="6. Pilar 4: Ação Atômica & Sagas">
+        <div class="card-panel">
+          <div class="slide-header">
+            <div class="header-meta">
+              <div class="badge-pill-group">
+                <span class="pill pill-rose">Pilar 4 de 5</span>
+                <span class="pill pill-emerald">Sistemas Concorrentes</span>
+                <span class="pill pill-amber">Pat Helland (Amazon/Salesforce)</span>
+              </div>
+              <span class="slide-number">06 / 10</span>
+            </div>
+            <h2 class="slide-title">Pilar 4: <span class="highlight">A Teoria da Ação Atômica: Sagas em 4 Fases</span></h2>
+            <p class="slide-subtitle">
+              Qual é o calcanhar de Aquiles dos agentes de IA? Gerar código com meias-transações, causando dados corrompidos e estados órfãos em sistemas distribuídos.
+            </p>
+          </div>
+          <div class="slide-body">
+            <div class="grid-4">
+              <div class="box-card">
+                <div class="box-title"><span>1️⃣</span> FASE DE GUARDA</div>
+                <p class="box-desc"><strong>Fail-Fast Pré-Voo</strong></p>
+                <ul class="tech-list">
+                  <li><span class="bullet-icon">•</span> Validação estrita de precondições.</li>
+                  <li><span class="bullet-icon">•</span> Checagem idempotente de duplicações.</li>
+                  <li><span class="bullet-icon">•</span> Aborta em 0ms sem efeitos colaterais.</li>
+                </ul>
+              </div>
+              <div class="box-card tech">
+                <div class="box-title"><span>2️⃣</span> FASE DE MUTAÇÃO</div>
+                <p class="box-desc"><strong>Execução Idempotente</strong></p>
+                <ul class="tech-list">
+                  <li><span class="bullet-icon">•</span> Escopo de escrita estritamente isolado.</li>
+                  <li><span class="bullet-icon">•</span> Uso de chaves idempotentes de transação.</li>
+                </ul>
+              </div>
+              <div class="box-card success">
+                <div class="box-title"><span>3️⃣</span> FASE DE SELAGEM</div>
+                <p class="box-desc"><strong>Auditoria & Eventos</strong></p>
+                <ul class="tech-list">
+                  <li><span class="bullet-icon">•</span> Verificação de pós-condições.</li>
+                  <li><span class="bullet-icon">•</span> Emissão de Domain Event append-only.</li>
+                </ul>
+              </div>
+              <div class="box-card danger">
+                <div class="box-title"><span>4️⃣</span> COMPENSAÇÃO</div>
+                <p class="box-desc"><strong>Reversão Sem Deadlock</strong></p>
+                <ul class="tech-list">
+                  <li><span class="bullet-icon">•</span> Ação compensatória pré-declarada simétrica.</li>
+                  <li><span class="bullet-icon">•</span> Consistência eventual garantida por design.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+                    <!-- DUAL REACTIONS (DEV vs USUÁRIO) - 2 GIFS ANIMADOS -->
+          <div class="dual-reactions-grid">
+            <div class="reaction-card dev-card">
+              <img src="gifs/slide06_dev_reaction.gif" alt="💻 Reação do Desenvolvedor" class="reaction-gif-media" />
+              <div class="reaction-body">
+                <div class="reaction-top-row">
+                  <span class="reaction-role-tag">💻 Reação do Desenvolvedor</span>
+                  <span class="reaction-status-dot">● Sagas em 4 Fases</span>
+                </div>
+                <div class="reaction-speech">"A API do banco caiu no meio do checkout? O orquestrador reverteu a transação sem deixar órfãos!"</div>
+                <div class="reaction-impact-text"><strong>Fim dos Scripts de Correção Noturna:</strong> Compensação determinística distribuída que garante consistência eventual sem drama.</div>
+              </div>
+            </div>
+
+            <div class="reaction-card user-card">
+              <img src="gifs/slide06_user_reaction.gif" alt="👤 Reação do Usuário / Negócio" class="reaction-gif-media" />
+              <div class="reaction-body">
+                <div class="reaction-top-row">
+                  <span class="reaction-role-tag">👤 Reação do Usuário / Negócio</span>
+                  <span class="reaction-status-dot">● Débito e Estoque Consistentes</span>
+                </div>
+                <div class="reaction-speech">"O cliente não foi cobrado duas vezes e a nota fiscal bateu perfeitamente com o envio!"</div>
+                <div class="reaction-impact-text"><strong>Zero Prejuízo e Zero Atrito no SAC:</strong> Fim das disputas financeiras e devoluções causadas por estados inconsistentes de banco.</div>
+              </div>
+            </div>
+          </div>
+          <div class="footer-banner">
+            <span>Fundamentação: Paper de Sagas (Garcia-Molina, 1987) e "Life beyond Distributed Transactions" (Pat Helland).</span>
+            <div class="footer-tags"><span>#DistributedSagas</span> <span>#PatHelland</span> <span>#EventSourcing</span> <span>#Idempotency</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SLIDE 7 -->
+      <div class="slide" data-slide="7" data-title="7. Pilar 5: Benchmark IDD">
+        <div class="card-panel">
+          <div class="slide-header">
+            <div class="header-meta">
+              <div class="badge-pill-group">
+                <span class="pill pill-rose">Pilar 5 de 5</span>
+                <span class="pill pill-cyan">Metodologia Científica</span>
+                <span class="pill pill-purple">O SWE-bench do IDD</span>
+              </div>
+              <span class="slide-number">07 / 10</span>
+            </div>
+            <h2 class="slide-title">Pilar 5: <span class="highlight">O Benchmark Padronizado do IDD (Além do SWE-bench)</span></h2>
+            <p class="slide-subtitle">
+              Para a academia e a indústria adotarem o IDD, não basta discurso: é preciso um benchmark reprodutível comparando agentes com e sem o rigor ontológico do IDD.
+            </p>
+          </div>
+          <div class="slide-body">
+            <div class="grid-2">
+              <div class="box-card danger">
+                <div class="box-title"><span>📉</span> O Limite dos Benchmarks Atuais</div>
+                <p class="box-desc">Benchmarks como SWE-bench ou HumanEval avaliam se o LLM resolve uma issue isolada ou passa em testes simples.</p>
+                <ul class="tech-list">
+                  <li><span class="bullet-icon">•</span> Não testam se o agente preservou a integridade do banco ao longo de 50 mutações consecutivas.</li>
+                  <li><span class="bullet-icon">•</span> Não testam se o agente gerou débitos técnicos ocultos que quebram o sistema depois.</li>
+                </ul>
+              </div>
+              <div class="box-card success">
+                <div class="box-title"><span>📊</span> A Proposta do Benchmark Canônico IDD</div>
+                <p class="box-desc">Um conjunto de 1.000 cenários de domínio complexos submetidos a duas esteiras em paralelo:</p>
+                <ul class="tech-list">
+                  <li><span class="bullet-icon">🤖</span> <strong>Esteira A (Vibe Coding convencional):</strong> Copilot / Claude 3.7 / GPT-4o gerando código direto com patches.</li>
+                  <li><span class="bullet-icon">🏛️</span> <strong>Esteira B (Compilador IDD):</strong> Os mesmos LLMs governados pela Intent IR, Invariantes SMT e Sagas.</li>
+                  <li><span class="bullet-icon">🏆</span> <strong>Métricas:</strong> Taxa de violação de invariantes, alucinação de relacionamentos e tempo de refatoração.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+                    <!-- DUAL REACTIONS (DEV vs USUÁRIO) - 2 GIFS ANIMADOS -->
+          <div class="dual-reactions-grid">
+            <div class="reaction-card dev-card">
+              <img src="gifs/slide07_dev_reaction.gif" alt="💻 Reação do Desenvolvedor" class="reaction-gif-media" />
+              <div class="reaction-body">
+                <div class="reaction-top-row">
+                  <span class="reaction-role-tag">💻 Reação do Desenvolvedor</span>
+                  <span class="reaction-status-dot">● Benchmark IDD</span>
+                </div>
+                <div class="reaction-speech">"Chega de promessas de 90% em benchmarks artificiais: agora medimos precisão em ground truth real!"</div>
+                <div class="reaction-impact-text"><strong>Engenharia Baseada em Fatos:</strong> Validação científica que expõe alucinações e afere precisão semântica com métricas rígidas.</div>
+              </div>
+            </div>
+
+            <div class="reaction-card user-card">
+              <img src="gifs/slide07_user_reaction.gif" alt="👤 Reação do Usuário / Negócio" class="reaction-gif-media" />
+              <div class="reaction-body">
+                <div class="reaction-top-row">
+                  <span class="reaction-role-tag">👤 Reação do Usuário / Negócio</span>
+                  <span class="reaction-status-dot">● Previsibilidade de Prazo</span>
+                </div>
+                <div class="reaction-speech">"Sabemos com precisão a eficácia do sistema antes de investir tempo e capital na implantação!"</div>
+                <div class="reaction-impact-text"><strong>Entregas no Prazo e no Orçamento:</strong> Fim do abismo entre o que foi orçado e o que realmente funciona no ambiente real.</div>
+              </div>
+            </div>
+          </div>
+          <div class="footer-banner">
+            <span>Alvo Acadêmico: Submissão para conferências internacionais ICSE, FSE e ASE 2026/2027.</span>
+            <div class="footer-tags"><span>#SWEbench</span> <span>#EmpiricalSE</span> <span>#FormalEvaluation</span> <span>#ICSE</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SLIDE 8 -->
+      <div class="slide" data-slide="8" data-title="8. A Genealogia Histórica">
+        <div class="card-panel">
+          <div class="slide-header">
+            <div class="header-meta">
+              <div class="badge-pill-group">
+                <span class="pill pill-purple">79 Anos de Linhagem</span>
+                <span class="pill pill-cyan">Origens Epistêmicas</span>
+                <span class="pill pill-emerald">De Bush a Eliézer Rosa</span>
+              </div>
+              <span class="slide-number">08 / 10</span>
+            </div>
+            <h2 class="slide-title">A Linhagem Histórica: <span class="highlight">O IDD como Herdeiro Legítimo da Computação Humanista</span></h2>
+            <p class="slide-subtitle">
+              O IDD não nasceu ontem com o boom dos LLMs. Ele é o ponto culminante de quase oito décadas de luta pela amplificação da inteligência humana.
+            </p>
+          </div>
+          <div class="slide-body">
+            <div class="grid-3">
+              <div class="box-card">
+                <div class="box-title"><span>⏳</span> 1945 — 1968: As Raízes</div>
+                <ul class="tech-list">
+                  <li><strong>Vannevar Bush (1945):</strong> O Memex e o armazenamento por trilhas de intenção.</li>
+                  <li><strong>Norbert Wiener (1948):</strong> Cibernética e Teoria do Controle.</li>
+                  <li><strong>J.C.R. Licklider (1960):</strong> Simbiose Homem-Computador.</li>
+                  <li><strong>Douglas Engelbart (1968):</strong> Augmentar, nunca automatizar cegamente.</li>
+                </ul>
+              </div>
+              <div class="box-card tech">
+                <div class="box-title"><span>💾</span> 1970 — 1990: A Formalização</div>
+                <ul class="tech-list">
+                  <li><strong>Alan Kay (1972):</strong> Smalltalk e objetos vivos orientados a intenção.</li>
+                  <li><strong>Ivan Sutherland (1963):</strong> Sketchpad e constraints declarativos.</li>
+                  <li><strong>Pat Helland & Garcia-Molina (1987):</strong> Sagas distribuídas.</li>
+                  <li><strong>Eliézer Rosa (Anos 90):</strong> 2PC determinístico para transações industriais.</li>
+                </ul>
+              </div>
+              <div class="box-card success">
+                <div class="box-title"><span>🚀</span> 2020 — 2026: O Paradigma IDD</div>
+                <ul class="tech-list">
+                  <li><strong>A Crise do Vibe Coding (2024):</strong> Proliferação estatística vs falência arquitetural.</li>
+                  <li><strong>A Síntese do IDD (2025/2026):</strong> Comando Epistêmico vs Operacional, Intent IR e SMT.</li>
+                  <li><strong>Projetos Canônicos:</strong> CRM de IA leiga a automações HVAC-R de alta complexidade.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+                    <!-- DUAL REACTIONS (DEV vs USUÁRIO) - 2 GIFS ANIMADOS -->
+          <div class="dual-reactions-grid">
+            <div class="reaction-card dev-card">
+              <img src="gifs/slide08_dev_reaction.gif" alt="💻 Reação do Desenvolvedor" class="reaction-gif-media" />
+              <div class="reaction-body">
+                <div class="reaction-top-row">
+                  <span class="reaction-role-tag">💻 Reação do Desenvolvedor</span>
+                  <span class="reaction-status-dot">● Salto Epistêmico</span>
+                </div>
+                <div class="reaction-speech">"Deixei de ser escovador de sintaxe para me tornar Arquiteto de Ontologia e Intenção Humana!"</div>
+                <div class="reaction-impact-text"><strong>Valorização Profissional Máxima:</strong> A engenharia de software ascende da labuta mecânica para o pensamento conceitual de alto nível.</div>
+              </div>
+            </div>
+
+            <div class="reaction-card user-card">
+              <img src="gifs/slide08_user_reaction.gif" alt="👤 Reação do Usuário / Negócio" class="reaction-gif-media" />
+              <div class="reaction-body">
+                <div class="reaction-top-row">
+                  <span class="reaction-role-tag">👤 Reação do Usuário / Negócio</span>
+                  <span class="reaction-status-dot">● Alinhamento Histórico</span>
+                </div>
+                <div class="reaction-speech">"Depois de décadas de desencontros, a TI finalmente opera como motor estratégico do negócio!"</div>
+                <div class="reaction-impact-text"><strong>Linguagem Ubíqua e Parceria Real:</strong> Tecnologia deixa de ser um 'centro de custo incompreensível' e vira acelerador empresarial.</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="footer-banner">
+            <span>"O futuro não é substituir o engenheiro, mas dar a ele a alavanca ontológica mais poderosa da história." — Eliézer Rosa</span>
+            <div class="footer-tags"><span>#DouglasEngelbart</span> <span>#AlanKay</span> <span>#Licklider</span> <span>#AugmentedIntelligence</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SLIDE 9 -->
+      <div class="slide" data-slide="9" data-title="9. Matriz de Hashtags do Canal">
+        <div class="card-panel">
+          <div class="slide-header">
+            <div class="header-meta">
+              <div class="badge-pill-group">
+                <span class="pill pill-cyan">Engenharia de Visibilidade</span>
+                <span class="pill pill-purple">Algoritmo do YouTube</span>
+                <span class="pill pill-emerald">Comunidade Global</span>
+              </div>
+              <span class="slide-number">09 / 10</span>
+            </div>
+            <h2 class="slide-title">Estratégia de Descoberta: <span class="highlight">A Matriz Acadêmica de Hashtags do Canal</span></h2>
+            <p class="slide-subtitle">
+              Como atrair tanto os desenvolvedores fascinados por IA quanto pesquisadores seniores e líderes de tecnologia que sofrem com as limitações do código probabilístico.
+            </p>
+          </div>
+          <div class="slide-body">
+            <div class="grid-2">
+              <div class="box-card">
+                <div class="box-title"><span>🎯</span> Para Engenheiros & Líderes Práticos</div>
+                <p class="box-desc">Captura os profissionais que já sentiram a dor da dívida técnica gerada por ferramentas de código probabilístico:</p>
+                <div class="code-box">
+#IDD #IntentDrivenDevelopment #VibeCoding
+#SoftwareEngineering #EngenhariaDeSoftware
+#DívidaTécnica #AIHallucination #ReliableAI
+#DomainDrivenDesign #DDD #CleanArchitecture
+#Software3_0 #EliezerRosa #EliezerJPRosa
+                </div>
+              </div>
+              <div class="box-card tech">
+                <div class="box-title"><span>🔬</span> Para Pesquisadores & Teóricos da Computação</div>
+                <p class="box-desc">Posiciona o canal nos debates mais avançados de verificação formal, síntese de programas e IA neuro-simbólica:</p>
+                <div class="code-box">
+#FormalMethods #AutomatedReasoning #SMTSolvers
+#Z3Solver #MicrosoftZ3 #Dafny #AWSAutomatedReasoning
+#NeuroSymbolicAI #StanfordDSPy #IntentIR
+#ConstitutionalAI #ProgramSynthesis #DistributedSagas
+#ComputerScience #ICSE #FSE #ASE #PLDI #POPL
+                </div>
+              </div>
+            </div>
+          </div>
+                    <!-- DUAL REACTIONS (DEV vs USUÁRIO) - 2 GIFS ANIMADOS -->
+          <div class="dual-reactions-grid">
+            <div class="reaction-card dev-card">
+              <img src="gifs/slide09_dev_reaction.gif" alt="💻 Reação do Desenvolvedor" class="reaction-gif-media" />
+              <div class="reaction-body">
+                <div class="reaction-top-row">
+                  <span class="reaction-role-tag">💻 Reação do Desenvolvedor</span>
+                  <span class="reaction-status-dot">● Comunidade de Rigor</span>
+                </div>
+                <div class="reaction-speech">"Que alívio debater com engenheiros que valorizam compiladores e métodos formais em vez de hype!"</div>
+                <div class="reaction-impact-text"><strong>Pertencimento a uma Nova Fronteira:</strong> Ecossistema de engenheiros dedicados a padrões industriais sólidos e perenes.</div>
+              </div>
+            </div>
+
+            <div class="reaction-card user-card">
+              <img src="gifs/slide09_user_reaction.gif" alt="👤 Reação do Usuário / Negócio" class="reaction-gif-media" />
+              <div class="reaction-body">
+                <div class="reaction-top-row">
+                  <span class="reaction-role-tag">👤 Reação do Usuário / Negócio</span>
+                  <span class="reaction-status-dot">● Software Duradouro</span>
+                </div>
+                <div class="reaction-speech">"Nosso sistema corporativo foi feito sobre rocha sólida: não vai quebrar na próxima moda tecnológica!"</div>
+                <div class="reaction-impact-text"><strong>Proteção do Investimento:</strong> Fim da necessidade de reconstruir sistemas do zero a cada mudança de framework.</div>
+              </div>
+            </div>
+          </div>
+          <div class="footer-banner">
+            <span>Indexado oficialmente em: Configurações do Canal (@eliezerjprosa) e Playlist "IDD — Base de Conhecimento".</span>
+            <div class="footer-tags"><span>#YouTubeSEO</span> <span>#TechInfluence</span> <span>#ComputerScience</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SLIDE 10 -->
+      <div class="slide" data-slide="10" data-title="10. O Futuro do Software">
+        <div class="card-panel">
+          <div class="slide-header">
+            <div class="header-meta">
+              <div class="badge-pill-group">
+                <span class="pill pill-emerald">Conclusão Soberana</span>
+                <span class="pill pill-cyan">Manifesto IDD</span>
+                <span class="pill pill-purple">O Próximo Passo</span>
+              </div>
+              <span class="slide-number">10 / 10</span>
+            </div>
+            <h2 class="slide-title">A Grande Síntese: <span class="highlight">O Futuro Pertence a Quem Governa a Intenção</span></h2>
+            <p class="slide-subtitle">
+              A programação manual de sintaxe está virando commodity. O verdadeiro valor do engenheiro de software nos próximos 50 anos reside na clareza epistemológica e no rigor das invariantes.
+            </p>
+          </div>
+          <div class="slide-body">
+            <div class="grid-3">
+              <div class="box-card success">
+                <div class="box-title"><span>1️⃣</span> Intenção Governa</div>
+                <p class="box-desc">O software deixa de ser um amontoado de arquivos soltos e passa a ser a projeção viva e matematicamente comprovada da intenção humana.</p>
+              </div>
+              <div class="box-card tech">
+                <div class="box-title"><span>2️⃣</span> A IA Compila</div>
+                <p class="box-desc">A inteligência artificial atua com sua força máxima como mecanismo de compilação sob a guarda inegociável de provadores formais.</p>
+              </div>
+              <div class="box-card">
+                <div class="box-title"><span>3️⃣</span> O Humano Arbitra</div>
+                <p class="box-desc">O ser humano nunca perde a consciência situacional. Ele retém o Comando Epistêmico soberano, assegurando propósito e longevidão.</p>
+              </div>
+            </div>
+          </div>
+                    <!-- DUAL REACTIONS (DEV vs USUÁRIO) - 2 GIFS ANIMADOS -->
+          <div class="dual-reactions-grid">
+            <div class="reaction-card dev-card">
+              <img src="gifs/slide10_dev_reaction.gif" alt="💻 Reação do Desenvolvedor" class="reaction-gif-media" />
+              <div class="reaction-body">
+                <div class="reaction-top-row">
+                  <span class="reaction-role-tag">💻 Reação do Desenvolvedor</span>
+                  <span class="reaction-status-dot">● Arquiteto da Mente</span>
+                </div>
+                <div class="reaction-speech">"Em vez de ter medo da IA, agora piloto 100 agentes com rédeas matemáticas e ontologia pura!"</div>
+                <div class="reaction-impact-text"><strong>Multiplicação de Produtividade com Segurança:</strong> Criação de sistemas industriais complexos com rigor e agilidade incomparáveis.</div>
+              </div>
+            </div>
+
+            <div class="reaction-card user-card">
+              <img src="gifs/slide10_user_reaction.gif" alt="👤 Reação do Usuário / Negócio" class="reaction-gif-media" />
+              <div class="reaction-body">
+                <div class="reaction-top-row">
+                  <span class="reaction-role-tag">👤 Reação do Usuário / Negócio</span>
+                  <span class="reaction-status-dot">● Inovação em Dias</span>
+                </div>
+                <div class="reaction-speech">"Minhas ideias inovadoras de produto agora viram sistemas reais em dias, sem risco de quebra!"</div>
+                <div class="reaction-impact-text"><strong>Competitividade Sem Precedentes:</strong> A corporação lidera o mercado lançando soluções auditadas e robustas em velocidade recorde.</div>
+              </div>
+            </div>
+          </div>
+          <div class="footer-banner">
+            <span>Inscreva-se no canal @eliezerjprosa | Assista à playlist completa "IDD — Base de Conhecimento"</span>
+            <div class="footer-tags"><span>#IDD</span> <span>#SoftwareEngineering3_0</span> <span>#EliezerRosa</span> <span>#TheFutureOfSoftware</span></div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- FOOTER BROADCAST COM ORADOR E FALA -->
+    <footer>
+      <div class="spk-pill leigo" id="speakerPill">
+        <span>🎙️</span> <span id="speakerName">Interlocutora Técnica</span>
+      </div>
+      <div class="speech-box" id="speechContent">
+        "Eliézer, o Paradigma IDD já provou sua maturidade conceitual..."
+      </div>
+      <div class="wave-bars active" id="waveBars">
+        <div class="w-bar"></div>
+        <div class="w-bar"></div>
+        <div class="w-bar"></div>
+        <div class="w-bar"></div>
+        <div class="w-bar"></div>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    let currentSlide = 1;
+    const totalSlides = 10;
+    const slides = document.querySelectorAll('.slide');
+    const navTabs = document.getElementById('navTabs');
+    window.timelineItems = [];
+
+    // Inicializa abas da navegação superior
+    slides.forEach((slide, idx) => {
+      const slideNum = idx + 1;
+      const title = slide.getAttribute('data-title') || `Slide ${slideNum}`;
+      const btn = document.createElement('button');
+      btn.className = `tab-btn ${slideNum === 1 ? 'active' : ''}`;
+      btn.innerHTML = `<span>${slideNum}.</span> ${title}`;
+      navTabs.appendChild(btn);
+    });
+
+    function updateView() {
+      slides.forEach(slide => {
+        const num = parseInt(slide.getAttribute('data-slide'));
+        if (num === currentSlide) {
+          slide.classList.add('active');
+        } else {
+          slide.classList.remove('active');
+        }
+      });
+
+      const tabBtns = document.querySelectorAll('.tab-btn');
+      tabBtns.forEach((btn, idx) => {
+        if (idx + 1 === currentSlide) {
+          btn.classList.add('active');
+        } else {
+          btn.classList.remove('active');
+        }
+      });
+    }
+
+    function goToSlide(num) {
+      if (num >= 1 && num <= totalSlides) {
+        currentSlide = num;
+        updateView();
+      }
+    }
+
+    window.setTimeline = function(items) {
+      if (items && items.length > 0) {
+        window.timelineItems = items;
+      }
+    };
+
+    window.updateFrameAtTime = function(timeSec) {
+      const m = Math.floor(timeSec / 60);
+      const s = Math.floor(timeSec % 60);
+      const timeStr = `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+      const timeEl = document.getElementById('timeReadout');
+      if (timeEl) timeEl.innerText = `${timeStr} / 06:25`;
+
+      if (!window.timelineItems || window.timelineItems.length === 0) return;
+
+      const currentSeg = window.timelineItems.find(it => timeSec >= it.startSec && timeSec <= it.endSec)
+        || window.timelineItems.filter(it => it.startSec <= timeSec).pop()
+        || window.timelineItems[0];
+
+      if (currentSeg && currentSeg.slide !== currentSlide) {
+        goToSlide(currentSeg.slide);
+      }
+
+      if (currentSeg) {
+        document.getElementById('speechContent').innerText = `"${currentSeg.text}"`;
+        document.getElementById('speakerName').innerText = currentSeg.actor;
+        const pill = document.getElementById('speakerPill');
+        pill.className = `spk-pill ${currentSeg.who}`;
+      }
+    };
+  </script>
+</body>
+</html>

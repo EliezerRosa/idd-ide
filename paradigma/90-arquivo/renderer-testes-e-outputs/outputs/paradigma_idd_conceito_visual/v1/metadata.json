@@ -1,0 +1,25 @@
+{
+  "schemaVersion": "1.0.0",
+  "createdAt": "2026-10-20T02:29:04.128Z",
+  "project": {
+    "name": "paradigma_idd_conceito_visual",
+    "width": 1920,
+    "height": 1080,
+    "frameRate": 30,
+    "totalFrames": 54000,
+    "durationSec": 1800,
+    "htmlPath": "C:\\Antigravity - IDD Refrigeração\\motion_graphics_renderer\\studio\\temp\\scene_job_prompt_1792455492933.html"
+  },
+  "deliverables": {
+    "videoFile": "final_video.mp4",
+    "videoSizeBytes": 52666209,
+    "videoSizeMB": "50.23",
+    "audioFile": null
+  },
+  "renderStats": {
+    "pipelineDurationSec": "7850.79",
+    "totalFrames": 54000,
+    "fpsAchieved": "6.88",
+    "completedAt": "2026-10-20T02:29:04.176Z"
+  }
+}

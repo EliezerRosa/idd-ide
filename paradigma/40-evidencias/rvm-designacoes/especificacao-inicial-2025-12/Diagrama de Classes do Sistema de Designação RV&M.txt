@@ -1,0 +1,94 @@
+@startuml
+
+' Definição de Enums e Tipos Auxiliares
+enum ParticipationType {
+  PRESIDENTE
+  ORACAO_INICIAL
+  ORACAO_FINAL
+  CANTICO
+  COMENTARIOS_FINAIS
+  TESOUROS
+  MINISTERIO
+  AJUDANTE
+  VIDA_CRISTA
+  DIRIGENTE
+  LEITOR
+}
+
+enum Gender {
+  M
+  F
+}
+
+enum HelperPreference {
+  TITULAR_ONLY
+  HELPER_ONLY
+  NONE
+}
+
+' Entidades Principais
+
+class Publisher {
+  +id: string
+  +name: string
+  +gender: Gender
+  +privileges: string[]
+  +restrictions: string[]
+  +isAssignedThisWeek: boolean
+  +lastAssignmentDate: Date
+  +assignmentCount: number
+  +gradeLevel: string
+  +isApprovedToCounsel: boolean
+  +isApprovedForTreasures: boolean
+  +isApprovedForEBC: boolean
+  +approvalNeeded: boolean
+  +helperPreference: HelperPreference
+  +assignedBySM: boolean
+  +unavailableDates: Date[]
+}
+
+class MeetingData {
+  +week: string
+  +theme: string
+}
+
+class Participation {
+  +id: string
+  +week: string
+  +partTitle: string
+  +type: ParticipationType
+  +duration: number
+  +isStudentPart: boolean
+  +requiresHelper: boolean
+  +publisherId: string
+  +publisherName: string
+}
+
+class SpecialEvent {
+  +id: string
+  +week: string
+  +templateId: string
+  +theme: string
+  +duration: number
+  +assignedTo: string
+}
+
+class EventTemplate {
+  +id: string
+  +name: string
+}
+
+class EventImpact {
+  +action: string
+  +targetType: ParticipationType[]
+}
+
+' Relacionamentos
+
+MeetingData "1" *-- "many" Participation : contains
+Publisher "1" -- "0..many" Participation : assigned to
+Participation "0..1" -- "0..1" Participation : paired with (helper/reader)
+SpecialEvent "1" -- "1" EventTemplate : uses
+EventTemplate "1" -- "1" EventImpact : defines
+
+@enduml

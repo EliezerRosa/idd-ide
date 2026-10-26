@@ -1,0 +1,69 @@
+@startuml
+start
+
+:Carregar Pauta da Semana (MeetingData);
+:Carregar Lista de Publicadores (Publisher[]);
+
+partition "Pré-Processamento" {
+    :Padronizar Ordem da Pauta;
+    :Inserir Partes Fixas (Aconselhamento);
+    :Identificar Eventos Especiais;
+    if (Tem Evento Especial?) then (sim)
+        :Aplicar Impacto do Evento (Redução de Tempo/Substituição);
+    endif
+}
+
+partition "Ciclo de Atribuição" {
+    while (Existem Partes Não Atribuídas?) is (sim)
+        :Selecionar Próxima Parte;
+        
+        partition "Filtro Rígido (Pilar 1)" {
+            :Filtrar por Disponibilidade;
+            :Filtrar por Gênero (Gender);
+            :Filtrar por Privilégios (Ancião, SM, Aprovado);
+            :Filtrar por Restrições e Preferências;
+        }
+
+        if (Candidatos Elegíveis > 0?) then (sim)
+            partition "Balanceamento (Pilar 2)" {
+                :Calcular Pontuação de Prioridade;
+                note right
+                    Fatores:
+                    - Tempo desde última designação (Peso Alto)
+                    - Tempo desde última vez como Ajudante (Peso Baixo)
+                    - Frequência recente
+                end note
+                :Ordenar Candidatos por Pontuação;
+            }
+            
+            :Selecionar Melhor Candidato;
+            
+            partition "Pareamento (Pilar 3)" {
+                if (Parte Requer Ajudante/Leitor?) then (sim)
+                    :Buscar Candidatos para Papel Secundário;
+                    :Aplicar Regras de Pareamento (Família, Gênero, Idade);
+                    :Selecionar Ajudante/Leitor;
+                    :Vincular ao Titular;
+                endif
+            }
+
+            partition "Pós-Atribuição (Regra 3)" {
+                if (Requer Aprovação Manual?) then (sim)
+                    :Marcar Status como "Pendente de Aprovação";
+                else (não)
+                    :Marcar Status como "Atribuído";
+                endif
+            }
+            
+            :Atualizar Estado do Publicador (Designado na Semana);
+        else (não)
+            :Marcar Parte como "Sem Candidato (Alerta)";
+        endif
+    endwhile
+}
+
+:Gerar Pauta Final;
+:Exibir para Revisão do Usuário;
+
+stop
+@enduml

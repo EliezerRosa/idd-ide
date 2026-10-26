@@ -1,0 +1,6 @@
+﻿Move checkpoint: C:\Antigravity - RVM Designações\IDD Paradigma\_checkpoint\\move-20260518-101545
+Manifest: C:\Antigravity - RVM Designações\IDD Paradigma\_checkpoint\\move-20260518-101545\move_manifest.csv
+Rollback: C:\Antigravity - RVM Designações\IDD Paradigma\_checkpoint\\move-20260518-101545\rollback.ps1
+
+Status counts:
+ - MOVED: 19

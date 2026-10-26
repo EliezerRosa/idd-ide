@@ -1,0 +1,699 @@
+[
+  {
+    "id": "DkFakgz1m2Y",
+    "title": "IDD - Desenvolvimento Orientado à Intenção",
+    "title_changed": false,
+    "description": "✅ CONCEITO — ideia e método de trabalho; este vídeo descreve o conceito, não uma ferramenta pronta.\n\nIDD — Desenvolvimento Orientado à Intenção (Intent-Driven Development)\n\nIDD (Intent-Driven Development) é o nome que dou, na minha formulação, a um método de trabalho com IA: o foco sai da sintaxe e vai para a intenção de negócio, o vocabulário do domínio e as regras que o sistema precisa respeitar. Esta aula apresenta a ideia de forma introdutória.\nOs três eixos apresentados:\n\nO que você aprende:\n• Linguagem natural estruturada como artefato principal: o vocabulário ubíquo e as regras de negócio declaradas orientam a construção, em vez de ficarem só como documentação.\n• Agentes de IA como executores: interpretam a intenção e fazem a tradução de baixo nível (esquemas, rotas, interface). A decisão sobre o que construir continua humana.\n• Novo papel do engenheiro: gestão de contexto, definição de fronteiras (Bounded Contexts) e validação do resultado quanto a requisitos, segurança e negócio.\n• Contexto histórico: cada geração de linguagens subiu o nível de abstração (Assembly, procedurais, orientação a objetos). O IDD é apresentado como uma proposta de próximo degrau, não como fato consumado.\n\nIDD — Intent-Driven Development, na formulação de Eliézer Rosa.\nSelos: ✅ implementado · 🧪 demonstração · 🔭 proposta — Cânone v1.0-rc1\nRepositório: https://github.com/EliezerRosa/idd-ide\n\n#IDD #IntentDrivenDevelopment #EngenhariaDeSoftware #IA",
+    "tags": [
+      "IDD",
+      "Intent-Driven Development",
+      "Desenvolvimento Orientado a Intencao",
+      "Eliezer Rosa",
+      "EliezerJPRosa",
+      "Engenharia de Software",
+      "Inteligencia Artificial"
+    ],
+    "selo": "✅",
+    "nota": "Selo ✅ conceito; removido markdown que o YouTube não renderiza e o tom de promessa ('garante', 'estúpido'); autoria como formulação."
+  },
+  {
+    "id": "nvnrCzE0JVI",
+    "title": "Aula - Introdução a IDD:",
+    "title_changed": false,
+    "description": "✅ CONCEITO — aula introdutória sobre o método; não apresenta uma ferramenta pronta.\n\nAula — Introdução ao IDD (Intent-Driven Development)\n\nAula introdutória sobre IDD: especificação e requisitos como base de um método de Engenharia de Software, com apresentação prática dos conceitos e uma comparação com propostas de foco semelhante na história da programação.\n\nO que você aprende:\n• O que é a intenção e por que ela é o ponto de partida do método\n• Como requisitos e especificação se relacionam com o IDD\n• Comparação com propostas anteriores da história da programação\n\nIDD — Intent-Driven Development, na formulação de Eliézer Rosa.\nSelos: ✅ implementado · 🧪 demonstração · 🔭 proposta — Cânone v1.0-rc1\nRepositório: https://github.com/EliezerRosa/idd-ide\n\n#IDD #IntentDrivenDevelopment #EngenhariaDeSoftware",
+    "tags": [
+      "IDD",
+      "Intent-Driven Development",
+      "Eliezer Rosa",
+      "EliezerJPRosa",
+      "Engenharia de Software",
+      "Requisitos de Software"
+    ],
+    "selo": "✅",
+    "nota": "Selo ✅ conceito; corrigido 'paradima'; descrição estruturada com rodapé padrão."
+  },
+  {
+    "id": "lNEr7vb0Gyo",
+    "title": "IDD Base de Conhecimento — Ep. 01: O que é o Paradigma IDD? (Ontologia da Intenção vs Vibe Coding)",
+    "title_changed": false,
+    "description": "✅ CONCEITO — filosofia e método; sem promessas técnicas. Ferramentas futuras aparecem só nos Ep. 04–10, como proposta.\n\nIDD — Base de Conhecimento | Episódio 01: O que é o IDD? Ontologia da Intenção vs Vibe Coding\n\nVibe coding, aceitar código gerado por IA sem controle, é rápido, mas deixa pouca rastreabilidade. Como manter sistemas compreensíveis e coerentes quando a IA escreve boa parte do código? Neste episódio, Eliézer Rosa apresenta a ideia central do IDD: passar do requisito passivo (documento) para a intenção ativa (declarada, confirmada e usada para conferir o resultado).\n\nO que você aprende:\n• Por que prompts soltos tendem a gerar dívida técnica silenciosa\n• O que é o IDD: um método que parte da intenção e das regras do domínio\n• A metáfora do GPS: a intenção é o destino; quando o código se afasta dele, o desvio é percebido e a rota é revista\n• Confirm-Once: a pessoa confirma a intenção e as invariantes uma vez, e o agente executa dentro desse acordo\n• Requisito passivo vs intenção ativa\n\n⏱️ Capítulos:\n00:00 - Introdução: A Crise do Vibe Coding e o Papel da IA\n00:15 - O que é o Paradigma Intent-Driven Development (IDD)?\n00:45 - Requisito Passivo vs Intenção Ativa\n01:15 - A Analogia do GPS para Engenharia de Software\n01:45 - O Princípio Confirm-Once e a Soberania Humana\n02:15 - Conclusão e Próximos Passos na Base de Conhecimento\n\n📺 Playlist \"IDD — Base de Conhecimento (Série Completa)\":\nhttps://www.youtube.com/playlist?list=PLkbRMhsplHjaLEi9O7SsJN3pH8TvsS6k7\n\nIDD — Intent-Driven Development, na formulação de Eliézer Rosa.\nSelos: ✅ implementado · 🧪 demonstração · 🔭 proposta — Cânone v1.0-rc1\nRepositório: https://github.com/EliezerRosa/idd-ide\n\n#IDD #IntentDrivenDevelopment #VibeCoding #EngenhariaDeSoftware #AgenticAI #EliezerRosa",
+    "tags": [
+      "IDD",
+      "Intent-Driven Development",
+      "Vibe Coding",
+      "Agentic AI",
+      "Eliezer Rosa",
+      "EliezerJPRosa",
+      "Engenharia de Software",
+      "IA Autonoma",
+      "Software Engineering"
+    ],
+    "selo": "✅",
+    "nota": "Selo ✅ conceito; removidos 'intenções matemáticas e modelos formais', 'Autor do Paradigma'; tags de autoridade (DeepMind, DSPy) retiradas; capítulos preservados."
+  },
+  {
+    "id": "O-ksnt8UlmU",
+    "title": "Vibe Coding vs IDD: qual a diferença? #Shorts #IDD #VibeCoding #IA",
+    "title_changed": false,
+    "description": "✅ CONCEITO — ideia e método de trabalho; sem promessas técnicas.\n\nVibe Coding vs IDD: qual a diferença?\n\nMuita gente ouve \"Intent-Driven\" e pensa em vibe coding. Este short esclarece a diferença: vibe coding é aceitar código gerado a partir de um pedido solto; IDD parte de uma intenção declarada e confirmada, com regras que o resultado precisa respeitar.\n\nO que você aprende:\n• Vibe coding: pouca estrutura e pouca rastreabilidade\n• IDD: intenção e invariantes declaradas antes de gerar código\n\n📺 Playlist \"IDD — Base de Conhecimento (Série Completa)\":\nhttps://www.youtube.com/playlist?list=PLkbRMhsplHjaLEi9O7SsJN3pH8TvsS6k7\n\n▶ Episódio completo (Ep. 01: O que é o IDD?): https://www.youtube.com/watch?v=lNEr7vb0Gyo\n\nIDD — Intent-Driven Development, na formulação de Eliézer Rosa.\nSelos: ✅ implementado · 🧪 demonstração · 🔭 proposta — Cânone v1.0-rc1\nRepositório: https://github.com/EliezerRosa/idd-ide\n\n#IDD #IntentDrivenDevelopment #VibeCoding #EngenhariaDeSoftware #IA #Shorts",
+    "tags": [
+      "IDD",
+      "Intent-Driven Development",
+      "Eliezer Rosa",
+      "EliezerJPRosa",
+      "Engenharia de Software",
+      "IA",
+      "Agentic AI",
+      "Shorts",
+      "Vibe Coding"
+    ],
+    "selo": "✅",
+    "nota": "Selo ✅ conceito; texto original cortado, substituído por resumo fiel ao título; sem 'oposto absoluto'."
+  },
+  {
+    "id": "TqDIfBcwVts",
+    "title": "IDD é um GPS para seu código! #Shorts #IDD #IntentDrivenDevelopment #IA",
+    "title_changed": false,
+    "description": "✅ CONCEITO — ideia e método de trabalho; sem promessas técnicas.\n\nIDD é um GPS para seu código!\n\nGeradores one-shot ajudam a começar, como dar a partida em um carro, mas o código gerado se desliga da fonte. A metáfora do GPS mostra a ideia do IDD: a intenção é o destino, e quando o código se afasta dela a rota é revista.\n\nO que você aprende:\n• Limite dos geradores one-shot: o código perde o vínculo com a intenção\n• Metáfora do GPS para o IDD\n\n📺 Playlist \"IDD — Base de Conhecimento (Série Completa)\":\nhttps://www.youtube.com/playlist?list=PLkbRMhsplHjaLEi9O7SsJN3pH8TvsS6k7\n\n▶ Episódio completo (Ep. 01: O que é o IDD?): https://www.youtube.com/watch?v=lNEr7vb0Gyo\n\nIDD — Intent-Driven Development, na formulação de Eliézer Rosa.\nSelos: ✅ implementado · 🧪 demonstração · 🔭 proposta — Cânone v1.0-rc1\nRepositório: https://github.com/EliezerRosa/idd-ide\n\n#IDD #IntentDrivenDevelopment #EngenhariaDeSoftware #IA #Shorts",
+    "tags": [
+      "IDD",
+      "Intent-Driven Development",
+      "Eliezer Rosa",
+      "EliezerJPRosa",
+      "Engenharia de Software",
+      "IA",
+      "Agentic AI",
+      "Shorts",
+      "Vibe Coding"
+    ],
+    "selo": "✅",
+    "nota": "Selo ✅ conceito; metáfora preservada sem promessa de recálculo automático."
+  },
+  {
+    "id": "qy1eojBRjXo",
+    "title": "O que é IDD? Em 60 segundos #Shorts #IDD #GitHubCopilot #IA",
+    "title_changed": false,
+    "description": "✅ CONCEITO — ideia e método de trabalho; sem promessas técnicas.\n\nO que é IDD? Em 60 segundos\n\nEm 60 segundos: o que é IDD? O short parte de um relato do autor, de um sistema de controle de estoque em COBOL num mainframe da IBM, em 1982, em que a documentação dizia uma coisa e o código fazia outra. Daí a motivação do método: manter a intenção e o código ligados.\n\nO que você aprende:\n• O problema da distância entre documentação e código\n• A resposta do IDD: intenção declarada como referência viva\n\n📺 Playlist \"IDD — Base de Conhecimento (Série Completa)\":\nhttps://www.youtube.com/playlist?list=PLkbRMhsplHjaLEi9O7SsJN3pH8TvsS6k7\n\n▶ Episódio completo (Ep. 01: O que é o IDD?): https://www.youtube.com/watch?v=lNEr7vb0Gyo\n\nIDD — Intent-Driven Development, na formulação de Eliézer Rosa.\nSelos: ✅ implementado · 🧪 demonstração · 🔭 proposta — Cânone v1.0-rc1\nRepositório: https://github.com/EliezerRosa/idd-ide\n\n#IDD #IntentDrivenDevelopment #EngenhariaDeSoftware #IA #Shorts",
+    "tags": [
+      "IDD",
+      "Intent-Driven Development",
+      "Eliezer Rosa",
+      "EliezerJPRosa",
+      "Engenharia de Software",
+      "IA",
+      "Agentic AI",
+      "Shorts"
+    ],
+    "selo": "✅",
+    "nota": "Selo ✅ conceito; relato biográfico mantido como no original; texto cortado resumido; hashtag GitHubCopilot retirada."
+  },
+  {
+    "id": "b1WExjtVmJ4",
+    "title": "Confirm-Once: IA autônoma com controle total #Shorts #IDD #CopilotAgent #IA",
+    "title_changed": false,
+    "description": "✅ CONCEITO — ideia e método de trabalho; sem promessas técnicas.\n\nConfirm-Once: IA autônoma com controle total\n\nO Confirm-Once diz que você e a IA dialogam uma única vez, em linguagem natural, para confirmar a intenção e as invariantes. Confirmado o acordo, o agente pode executar até o fim sem pedir aprovação a cada passo, e a pessoa revisa o resultado contra o que foi confirmado.\n\nO que você aprende:\n• Confirmar o plano uma vez em vez de aprovar cada passo\n• Autonomia do agente dentro de um acordo explícito\n\n📺 Playlist \"IDD — Base de Conhecimento (Série Completa)\":\nhttps://www.youtube.com/playlist?list=PLkbRMhsplHjaLEi9O7SsJN3pH8TvsS6k7\n\n▶ Episódio completo (Ep. 01: O que é o IDD?): https://www.youtube.com/watch?v=lNEr7vb0Gyo\n\nIDD — Intent-Driven Development, na formulação de Eliézer Rosa.\nSelos: ✅ implementado · 🧪 demonstração · 🔭 proposta — Cânone v1.0-rc1\nRepositório: https://github.com/EliezerRosa/idd-ide\n\n#IDD #IntentDrivenDevelopment #ConfirmOnce #AgenticAI #IA #Shorts",
+    "tags": [
+      "IDD",
+      "Intent-Driven Development",
+      "Eliezer Rosa",
+      "EliezerJPRosa",
+      "Engenharia de Software",
+      "IA",
+      "Agentic AI",
+      "Shorts",
+      "Confirm-Once"
+    ],
+    "selo": "✅",
+    "nota": "Selo ✅ conceito; 'controle total' do título é mantido no título, mas a descrição trata como acordo prévio e revisão."
+  },
+  {
+    "id": "_Ofd-PHLl-4",
+    "title": "Requisito passivo vs Intenção ativa: a virada de paradigma #Shorts #IDD #IA",
+    "title_changed": false,
+    "description": "✅ CONCEITO — ideia e método de trabalho; sem promessas técnicas.\n\nRequisito passivo vs Intenção ativa: a virada de paradigma\n\nUm requisito é passivo: um documento que descreve o que o sistema deve fazer e fica parado. A intenção, no IDD, é ativa: é declarada de forma que possa ser conferida ao longo do ciclo de desenvolvimento.\n\nO que você aprende:\n• Diferença entre requisito passivo e intenção ativa\n• Por que a intenção deve poder ser conferida contra o resultado\n\n📺 Playlist \"IDD — Base de Conhecimento (Série Completa)\":\nhttps://www.youtube.com/playlist?list=PLkbRMhsplHjaLEi9O7SsJN3pH8TvsS6k7\n\n▶ Episódio completo (Ep. 01: O que é o IDD?): https://www.youtube.com/watch?v=lNEr7vb0Gyo\n\nIDD — Intent-Driven Development, na formulação de Eliézer Rosa.\nSelos: ✅ implementado · 🧪 demonstração · 🔭 proposta — Cânone v1.0-rc1\nRepositório: https://github.com/EliezerRosa/idd-ide\n\n#IDD #IntentDrivenDevelopment #Requisitos #EngenhariaDeSoftware #Shorts",
+    "tags": [
+      "IDD",
+      "Intent-Driven Development",
+      "Eliezer Rosa",
+      "EliezerJPRosa",
+      "Engenharia de Software",
+      "IA",
+      "Agentic AI",
+      "Shorts"
+    ],
+    "selo": "✅",
+    "nota": "Selo ✅ conceito; 'executável' e 'agência' reformulados como declarada e conferível."
+  },
+  {
+    "id": "a3tIPjowBMk",
+    "title": "IDD Base de Conhecimento — Ep. 02: Comando Epistêmico vs Operacional (Teoria do Controle Humano-IA)",
+    "title_changed": false,
+    "description": "✅ CONCEITO — teoria de controle humano-IA como método de trabalho; sem promessas técnicas.\n\nIDD — Base de Conhecimento | Episódio 02: Comando Epistêmico vs Operacional\n\nQuando a IA escreve código em segundos, qual é o papel de quem engenha? Este episódio separa o Comando Epistêmico (saber o que se quer: a intenção e o arbítrio sobre ela) do Comando Operacional (a execução mecânica). A analogia é o voo Air France 447, em que a perda de consciência situacional dos operadores é discutida como alerta para o desenvolvimento com IA.\n\nO que você aprende:\n• A analogia com o voo Air France 447 e a perda de consciência situacional\n• Comando Epistêmico vs Comando Operacional: o que deve ficar com a pessoa e o que pode ser delegado\n• Augmenting vs Automating, a partir da visão de Douglas Engelbart: ampliar a capacidade humana sem substituir o julgamento\n• Fé Bayesiana vs credulidade: calibrar a confiança nas respostas de um LLM com base em evidências\n• Relato do autor sobre sistemas confiáveis nos anos 90 (um protocolo de commit em duas fases implementado sem biblioteca)\n\n⏱️ Capítulos:\n00:00 - Introdução: Quem Está Pilotando o Avião do Software?\n00:18 - A Tragédia do Voo Air France 447 e a Perda de Consciência Situacional\n00:45 - Comando Epistêmico vs Comando Operacional explicados\n01:15 - Augmenting vs Automating: O Modelo de Douglas Engelbart\n01:45 - Fé Bayesiana: Confiança Baseada em Evidências, Não em Credulidade\n02:15 - A Experiência dos Anos 90: Construindo Sistemas Confiáveis\n02:40 - Conclusão e Síntese Metodológica\n\n📺 Playlist \"IDD — Base de Conhecimento (Série Completa)\":\nhttps://www.youtube.com/playlist?list=PLkbRMhsplHjaLEi9O7SsJN3pH8TvsS6k7\n\nIDD — Intent-Driven Development, na formulação de Eliézer Rosa.\nSelos: ✅ implementado · 🧪 demonstração · 🔭 proposta — Cânone v1.0-rc1\nRepositório: https://github.com/EliezerRosa/idd-ide\n\n#IDD #IntentDrivenDevelopment #ComandoEpistemico #AirFrance447 #HumanInTheLoop #EngenhariaDeSoftware #AgenticAI #EliezerRosa",
+    "tags": [
+      "IDD",
+      "Intent-Driven Development",
+      "Comando Epistemico",
+      "Air France 447",
+      "Human in the Loop",
+      "Agentic AI",
+      "Eliezer Rosa",
+      "EliezerJPRosa",
+      "Engenharia de Software",
+      "Teoria do Controle"
+    ],
+    "selo": "✅",
+    "nota": "Selo ✅ conceito; retirados 'suicídio arquitetural', 'perigos mortais', 'infinitamente superior'; capítulo de Fé Bayesiana ajustado; tags e hashtags de autoridade removidas."
+  },
+  {
+    "id": "c0XM9fTQyIk",
+    "title": "Fé Bayesiana vs Credulidade: como confiar na IA com sabedoria #Shorts #IDD #AgenticAI",
+    "title_changed": false,
+    "description": "✅ CONCEITO — ideia e método de trabalho; sem promessas técnicas.\n\nFé Bayesiana vs Credulidade: como confiar na IA com sabedoria\n\nCredulidade é confiar sem evidência: copiar e colar código de uma IA porque parece certo. Fé bayesiana é ajustar a confiança conforme as evidências que se acumulam: testes, histórico de acertos, verificações. É o critério para confiar em respostas probabilísticas.\n\nO que você aprende:\n• Credulidade vs fé bayesiana\n• Como calibrar a confiança em respostas de um LLM\n\n📺 Playlist \"IDD — Base de Conhecimento (Série Completa)\":\nhttps://www.youtube.com/playlist?list=PLkbRMhsplHjaLEi9O7SsJN3pH8TvsS6k7\n\n▶ Episódio completo (Ep. 02: Comando Epistêmico vs Operacional): https://www.youtube.com/watch?v=a3tIPjowBMk\n\nIDD — Intent-Driven Development, na formulação de Eliézer Rosa.\nSelos: ✅ implementado · 🧪 demonstração · 🔭 proposta — Cânone v1.0-rc1\nRepositório: https://github.com/EliezerRosa/idd-ide\n\n#IDD #ComandoEpistemico #AgenticAI #IA #EngenhariaDeSoftware #Shorts",
+    "tags": [
+      "IDD",
+      "Intent-Driven Development",
+      "Eliezer Rosa",
+      "EliezerJPRosa",
+      "Engenharia de Software",
+      "IA",
+      "Agentic AI",
+      "Shorts",
+      "Comando Epistemico",
+      "Inferencia Bayesiana"
+    ],
+    "selo": "✅",
+    "nota": "Selo ✅ conceito; texto cortado resumido; hashtags reduzidas."
+  },
+  {
+    "id": "nr3zukPrmcI",
+    "title": "Air France 447 e o Comando Epistêmico: a analogia que muda tudo #Shorts #IDD #IA",
+    "title_changed": false,
+    "description": "✅ CONCEITO — ideia e método de trabalho; sem promessas técnicas.\n\nAir France 447 e o Comando Epistêmico: a analogia que muda tudo\n\nEm 2009, no voo Air France 447, o piloto automático desconectou por falha de sensores e a tripulação teve dificuldade de recuperar a consciência da situação. O short usa o caso como analogia para o Comando Epistêmico: quanto mais se delega a execução, mais importante é manter a compreensão do que o sistema está fazendo.\n\nO que você aprende:\n• A analogia do AF447 aplicada ao desenvolvimento com IA\n• Por que delegar a execução não dispensa entender o sistema\n\n📺 Playlist \"IDD — Base de Conhecimento (Série Completa)\":\nhttps://www.youtube.com/playlist?list=PLkbRMhsplHjaLEi9O7SsJN3pH8TvsS6k7\n\n▶ Episódio completo (Ep. 02: Comando Epistêmico vs Operacional): https://www.youtube.com/watch?v=a3tIPjowBMk\n\nIDD — Intent-Driven Development, na formulação de Eliézer Rosa.\nSelos: ✅ implementado · 🧪 demonstração · 🔭 proposta — Cânone v1.0-rc1\nRepositório: https://github.com/EliezerRosa/idd-ide\n\n#IDD #AirFrance447 #ComandoEpistemico #IA #EngenhariaDeSoftware #Shorts",
+    "tags": [
+      "IDD",
+      "Intent-Driven Development",
+      "Eliezer Rosa",
+      "EliezerJPRosa",
+      "Engenharia de Software",
+      "IA",
+      "Agentic AI",
+      "Shorts",
+      "Air France 447",
+      "Comando Epistemico"
+    ],
+    "selo": "✅",
+    "nota": "Selo ✅ conceito; 'a analogia que muda tudo' mantido só no título; texto cortado resumido."
+  },
+  {
+    "id": "XOGaHM-Ar1o",
+    "title": "Augmenting vs Automating: por que a diferença muda TUDO #Shorts #IDD #GitHubCopilot",
+    "title_changed": false,
+    "description": "✅ CONCEITO — ideia e método de trabalho; sem promessas técnicas.\n\nAugmenting vs Automating: por que a diferença muda TUDO\n\nAugmenting amplifica a sua capacidade sem substituir seu julgamento, como uma ferramenta elétrica que não decide onde pregar. Automating transfere a própria decisão para o sistema. A diferença orienta quanto controle a pessoa mantém ao trabalhar com agentes de IA.\n\nO que você aprende:\n• Augmenting vs Automating\n• Onde fica o julgamento humano em cada abordagem\n\n📺 Playlist \"IDD — Base de Conhecimento (Série Completa)\":\nhttps://www.youtube.com/playlist?list=PLkbRMhsplHjaLEi9O7SsJN3pH8TvsS6k7\n\n▶ Episódio completo (Ep. 02: Comando Epistêmico vs Operacional): https://www.youtube.com/watch?v=a3tIPjowBMk\n\nIDD — Intent-Driven Development, na formulação de Eliézer Rosa.\nSelos: ✅ implementado · 🧪 demonstração · 🔭 proposta — Cânone v1.0-rc1\nRepositório: https://github.com/EliezerRosa/idd-ide\n\n#IDD #ComandoEpistemico #AgenticAI #IA #EngenhariaDeSoftware #Shorts",
+    "tags": [
+      "IDD",
+      "Intent-Driven Development",
+      "Eliezer Rosa",
+      "EliezerJPRosa",
+      "Engenharia de Software",
+      "IA",
+      "Agentic AI",
+      "Shorts",
+      "Augmenting",
+      "Comando Epistemico"
+    ],
+    "selo": "✅",
+    "nota": "Selo ✅ conceito; texto cortado resumido; hashtag GitHubCopilot retirada."
+  },
+  {
+    "id": "OoH-DUQvvkc",
+    "title": "Como implementei um 2PC nos anos 90 sem biblioteca nenhuma #Shorts #IDD #EliezerRosa",
+    "title_changed": false,
+    "description": "✅ CONCEITO — relato biográfico do autor; não é uma funcionalidade do IDD.\n\nComo implementei um 2PC nos anos 90 sem biblioteca nenhuma\n\nRelato do autor, Eliézer Rosa: nos anos 90, no Grupo Paes Mendonça, um dos maiores varejistas da época, o sistema era de missão crítica, online e em tempo real, sobre um SGBD UNISYS com DASL. Sem bibliotecas prontas, foi preciso implementar um protocolo de commit em duas fases (2PC).\n\nO que você aprende:\n• Por que operações que alteram mais de um recurso precisam ser tratadas como uma unidade\n• Como esse histórico alimenta a visão do autor sobre confiabilidade\n• Observação do canal: a posição do IDD é usar transação ACID local dentro de um contexto e Sagas entre contextos\n\n📺 Playlist \"IDD — Base de Conhecimento (Série Completa)\":\nhttps://www.youtube.com/playlist?list=PLkbRMhsplHjaLEi9O7SsJN3pH8TvsS6k7\n\n▶ Episódio completo (Ep. 02: Comando Epistêmico vs Operacional): https://www.youtube.com/watch?v=a3tIPjowBMk\n\nIDD — Intent-Driven Development, na formulação de Eliézer Rosa.\nSelos: ✅ implementado · 🧪 demonstração · 🔭 proposta — Cânone v1.0-rc1\nRepositório: https://github.com/EliezerRosa/idd-ide\n\n#IDD #IntentDrivenDevelopment #EliezerRosa #EngenhariaDeSoftware #Shorts",
+    "tags": [
+      "IDD",
+      "Intent-Driven Development",
+      "Eliezer Rosa",
+      "EliezerJPRosa",
+      "Engenharia de Software",
+      "IA",
+      "Agentic AI",
+      "Shorts",
+      "2PC",
+      "Two-Phase Commit"
+    ],
+    "selo": "✅",
+    "nota": "Selo ✅ conceito; fatos biográficos (anos 90, Grupo Paes Mendonça, UNISYS/DASL) preservados; acrescentada a posição canônica 2PC local vs Sagas (A21)."
+  },
+  {
+    "id": "S8zykUuq6pI",
+    "title": "Epistêmico vs Operacional: a fronteira mais importante no desenvolvimento com IA #Shorts #IDD",
+    "title_changed": false,
+    "description": "✅ CONCEITO — ideia e método de trabalho; sem promessas técnicas.\n\nEpistêmico vs Operacional: a fronteira mais importante no desenvolvimento com IA\n\nComando Epistêmico é a autoridade sobre a intenção: o que se quer e por quê. Comando Operacional é a execução: como fazer. No IDD, a fronteira entre os dois define o que a pessoa decide e o que pode ser delegado ao agente.\n\nO que você aprende:\n• Definição de Comando Epistêmico e de Comando Operacional\n• Como a fronteira orienta a delegação a agentes de IA\n\n📺 Playlist \"IDD — Base de Conhecimento (Série Completa)\":\nhttps://www.youtube.com/playlist?list=PLkbRMhsplHjaLEi9O7SsJN3pH8TvsS6k7\n\n▶ Episódio completo (Ep. 02: Comando Epistêmico vs Operacional): https://www.youtube.com/watch?v=a3tIPjowBMk\n\nIDD — Intent-Driven Development, na formulação de Eliézer Rosa.\nSelos: ✅ implementado · 🧪 demonstração · 🔭 proposta — Cânone v1.0-rc1\nRepositório: https://github.com/EliezerRosa/idd-ide\n\n#IDD #ComandoEpistemico #AgenticAI #IA #EngenhariaDeSoftware #Shorts",
+    "tags": [
+      "IDD",
+      "Intent-Driven Development",
+      "Eliezer Rosa",
+      "EliezerJPRosa",
+      "Engenharia de Software",
+      "IA",
+      "Agentic AI",
+      "Shorts",
+      "Comando Epistemico"
+    ],
+    "selo": "✅",
+    "nota": "Selo ✅ conceito; texto cortado resumido."
+  },
+  {
+    "id": "UAqPdI2__qw",
+    "title": "Vannevar Bush 1945: A Semente do Hipertexto que inspira o IDD #Shorts #IDD #VannevarBush",
+    "title_changed": true,
+    "description": "✅ CONCEITO — história das ideias que inspiram o IDD; é uma leitura do autor, não uma relação de causa direta.\n\nVannevar Bush, 1945\n\nEm As We May Think (1945), Vannevar Bush descreveu o Memex, uma máquina para registrar e ligar informações por trilhas associativas. É uma das raízes do hipertexto. No Ep. 03, o autor propõe a leitura de que essa ideia de ligar conhecimento e intenção inspira o IDD; é uma interpretação, não uma relação histórica direta.\n\nO que você aprende:\n• O Memex e o hipertexto associativo\n• Por que o conhecimento ligado ao seu contexto importa para o IDD\n\n📺 Playlist \"IDD — Base de Conhecimento (Série Completa)\":\nhttps://www.youtube.com/playlist?list=PLkbRMhsplHjaLEi9O7SsJN3pH8TvsS6k7\n\n▶ Episódio completo (Ep. 03: A Genealogia do IDD): https://www.youtube.com/watch?v=Kb0EynowDH4\n\nIDD — Intent-Driven Development, na formulação de Eliézer Rosa.\nSelos: ✅ implementado · 🧪 demonstração · 🔭 proposta — Cânone v1.0-rc1\nRepositório: https://github.com/EliezerRosa/idd-ide\n\n#IDD #VannevarBush #HistoriaDoSoftware #GenealogiaDoIDD #Shorts",
+    "tags": [
+      "IDD",
+      "Intent-Driven Development",
+      "Eliezer Rosa",
+      "EliezerJPRosa",
+      "Engenharia de Software",
+      "IA",
+      "Agentic AI",
+      "Shorts",
+      "Historia da Computacao",
+      "Genealogia do IDD"
+    ],
+    "selo": "✅",
+    "nota": "Título: 'que gerou o IDD' afirmava causalidade; trocado por 'que inspira o IDD'. Texto cortado resumido."
+  },
+  {
+    "id": "-diU5RuJQz0",
+    "title": "Alan Kay: Dynabook, Smalltalk e a visao que moldou a computacao moderna #Shorts #IDD #AlanKay",
+    "title_changed": false,
+    "description": "✅ CONCEITO — história das ideias que inspiram o IDD; é uma leitura do autor, não uma relação de causa direta.\n\nAlan Kay\n\nNos anos 1970, no Xerox PARC, Alan Kay concebeu o Dynabook e participou da criação do Smalltalk, com a visão de objetos que trocam mensagens. Essa ênfase no que cada parte faz, e não em como, dialoga com a programação declarativa e com a ideia do IDD de partir da intenção. É uma leitura do autor, não uma afirmação de que Kay defendia o IDD.\n\nO que você aprende:\n• Dynabook e Smalltalk\n• Objetos como troca de mensagens e o foco no o quê\n\n📺 Playlist \"IDD — Base de Conhecimento (Série Completa)\":\nhttps://www.youtube.com/playlist?list=PLkbRMhsplHjaLEi9O7SsJN3pH8TvsS6k7\n\n▶ Episódio completo (Ep. 03: A Genealogia do IDD): https://www.youtube.com/watch?v=Kb0EynowDH4\n\nIDD — Intent-Driven Development, na formulação de Eliézer Rosa.\nSelos: ✅ implementado · 🧪 demonstração · 🔭 proposta — Cânone v1.0-rc1\nRepositório: https://github.com/EliezerRosa/idd-ide\n\n#IDD #AlanKay #HistoriaDoSoftware #GenealogiaDoIDD #Shorts",
+    "tags": [
+      "IDD",
+      "Intent-Driven Development",
+      "Eliezer Rosa",
+      "EliezerJPRosa",
+      "Engenharia de Software",
+      "IA",
+      "Agentic AI",
+      "Shorts",
+      "Historia da Computacao",
+      "Genealogia do IDD"
+    ],
+    "selo": "✅",
+    "nota": "Texto cortado resumido; ressalva de leitura interpretativa."
+  },
+  {
+    "id": "8353QeIosZU",
+    "title": "Simbiose Humano-Maquina: Licklider e Wiener — antes da IA existir #Shorts #IDD #HistoriaDoSoftware",
+    "title_changed": false,
+    "description": "✅ CONCEITO — história das ideias que inspiram o IDD; é uma leitura do autor, não uma relação de causa direta.\n\nLicklider e Wiener\n\nNorbert Wiener fundou a cibernética (1948), com a noção de sistemas que se autorregulam por realimentação. J.C.R. Licklider, em 1960, propôs a simbiose homem-máquina, em que pessoas e computadores cooperam no pensamento. Ambos antecedem a IA atual e servem de referência conceitual ao IDD.\n\nO que você aprende:\n• Cibernética e realimentação\n• A simbiose homem-máquina de Licklider\n\n📺 Playlist \"IDD — Base de Conhecimento (Série Completa)\":\nhttps://www.youtube.com/playlist?list=PLkbRMhsplHjaLEi9O7SsJN3pH8TvsS6k7\n\n▶ Episódio completo (Ep. 03: A Genealogia do IDD): https://www.youtube.com/watch?v=Kb0EynowDH4\n\nIDD — Intent-Driven Development, na formulação de Eliézer Rosa.\nSelos: ✅ implementado · 🧪 demonstração · 🔭 proposta — Cânone v1.0-rc1\nRepositório: https://github.com/EliezerRosa/idd-ide\n\n#IDD #Licklider #Cibernetica #HistoriaDoSoftware #GenealogiaDoIDD #Shorts",
+    "tags": [
+      "IDD",
+      "Intent-Driven Development",
+      "Eliezer Rosa",
+      "EliezerJPRosa",
+      "Engenharia de Software",
+      "IA",
+      "Agentic AI",
+      "Shorts",
+      "Historia da Computacao",
+      "Genealogia do IDD"
+    ],
+    "selo": "✅",
+    "nota": "Texto cortado resumido; datas preservadas conforme o Ep. 03."
+  },
+  {
+    "id": "XBkQ63E8TK8",
+    "title": "Mother of All Demos: Douglas Engelbart em 1968 ja mostrou o futuro #Shorts #IDD #Engelbart",
+    "title_changed": false,
+    "description": "✅ CONCEITO — história das ideias que inspiram o IDD; é uma leitura do autor, não uma relação de causa direta.\n\nDouglas Engelbart, 1968\n\nEm 1968, Douglas Engelbart apresentou o sistema NLS na chamada Mother of All Demos, mostrando em público mouse, hipertexto e colaboração por vídeo. Sua tese era aumentar a capacidade humana, não substituí-la, ideia que o IDD retoma na distinção entre augmenting e automating.\n\nO que você aprende:\n• O que foi a Mother of All Demos\n• Aumentar a capacidade humana como princípio\n\n📺 Playlist \"IDD — Base de Conhecimento (Série Completa)\":\nhttps://www.youtube.com/playlist?list=PLkbRMhsplHjaLEi9O7SsJN3pH8TvsS6k7\n\n▶ Episódio completo (Ep. 03: A Genealogia do IDD): https://www.youtube.com/watch?v=Kb0EynowDH4\n\nIDD — Intent-Driven Development, na formulação de Eliézer Rosa.\nSelos: ✅ implementado · 🧪 demonstração · 🔭 proposta — Cânone v1.0-rc1\nRepositório: https://github.com/EliezerRosa/idd-ide\n\n#IDD #Engelbart #HistoriaDoSoftware #GenealogiaDoIDD #Shorts",
+    "tags": [
+      "IDD",
+      "Intent-Driven Development",
+      "Eliezer Rosa",
+      "EliezerJPRosa",
+      "Engenharia de Software",
+      "IA",
+      "Agentic AI",
+      "Shorts",
+      "Historia da Computacao",
+      "Genealogia do IDD"
+    ],
+    "selo": "✅",
+    "nota": "Texto cortado resumido; 'primeiro sistema com mouse, hipertexto e vídeo' (superlativo sem fonte) trocado por descrição do que foi demonstrado."
+  },
+  {
+    "id": "do4_euLzZuE",
+    "title": "Ivan Sutherland 1963: Constraints Declarativos no Sketchpad #Shorts #IDD #Sutherland",
+    "title_changed": false,
+    "description": "✅ CONCEITO — história das ideias que inspiram o IDD; é uma leitura do autor, não uma relação de causa direta.\n\nIvan Sutherland, 1963\n\nEm 1963, Ivan Sutherland criou o Sketchpad, que permitia desenhar e declarar restrições (constraints) sobre as figuras, e o sistema mantinha essas restrições satisfeitas. É um antecedente da ideia de declarar regras e deixar que o sistema as respeite, que aparece no IDD como invariantes.\n\nO que você aprende:\n• O Sketchpad e as restrições declarativas\n• A ligação conceitual com as invariantes do IDD\n\n📺 Playlist \"IDD — Base de Conhecimento (Série Completa)\":\nhttps://www.youtube.com/playlist?list=PLkbRMhsplHjaLEi9O7SsJN3pH8TvsS6k7\n\n▶ Episódio completo (Ep. 03: A Genealogia do IDD): https://www.youtube.com/watch?v=Kb0EynowDH4\n\nIDD — Intent-Driven Development, na formulação de Eliézer Rosa.\nSelos: ✅ implementado · 🧪 demonstração · 🔭 proposta — Cânone v1.0-rc1\nRepositório: https://github.com/EliezerRosa/idd-ide\n\n#IDD #IvanSutherland #HistoriaDoSoftware #GenealogiaDoIDD #Shorts",
+    "tags": [
+      "IDD",
+      "Intent-Driven Development",
+      "Eliezer Rosa",
+      "EliezerJPRosa",
+      "Engenharia de Software",
+      "IA",
+      "Agentic AI",
+      "Shorts",
+      "Historia da Computacao",
+      "Genealogia do IDD"
+    ],
+    "selo": "✅",
+    "nota": "Texto cortado resumido; relação com invariantes marcada como antecedente conceitual."
+  },
+  {
+    "id": "Kb0EynowDH4",
+    "title": "IDD Base de Conhecimento — Ep. 03: A Genealogia do IDD (De Bush a LLMs: 79 Anos de Linhagem)",
+    "title_changed": false,
+    "description": "✅ CONCEITO — história das ideias que inspiram o IDD; é uma leitura do autor, não uma relação de causa direta.\n\nIDD — Base de Conhecimento | Episódio 03: A Genealogia do IDD (De Bush aos LLMs)\n\nAs ideias por trás do IDD têm antecedentes. Neste episódio, Eliézer Rosa percorre 79 anos de pesquisa e visão sobre como pessoas e máquinas podem pensar em conjunto, e mostra onde cada autor dialoga com a proposta do IDD. É uma leitura interpretativa, não uma afirmação de que esses autores defendiam o IDD.\n\nO que você aprende:\n• 1945: Vannevar Bush, As We May Think e o Memex (hipertexto associativo)\n• 1948 e 1960: Norbert Wiener (cibernética) e J.C.R. Licklider (simbiose homem-máquina)\n• 1963: Ivan Sutherland e o Sketchpad, com restrições (constraints) declaradas\n• 1968: Douglas Engelbart e a Mother of All Demos, com a ideia de aumentar a capacidade humana\n• Anos 1970: Alan Kay, Dynabook e Smalltalk, e a orientação a objetos como troca de mensagens\n• Como esses fios se encontram com os agentes de IA atuais\n\n⏱️ Capítulos:\n00:00 - Introdução: 79 Anos de História da Computação Humana\n00:20 - 1945: Vannevar Bush e o Memex (As We May Think)\n00:50 - 1960: Licklider e a Simbiose Humano-Máquina\n01:25 - 1963: Ivan Sutherland, Sketchpad e Restrições Declarativas\n02:00 - 1968: Douglas Engelbart e a Mother of All Demos\n02:40 - 1970: Alan Kay, Dynabook e a Verdadeira Orientação a Objetos\n03:20 - O Encontro com os LLMs: o que a linhagem sugere para o IDD\n\n📺 Playlist \"IDD — Base de Conhecimento (Série Completa)\":\nhttps://www.youtube.com/playlist?list=PLkbRMhsplHjaLEi9O7SsJN3pH8TvsS6k7\n\nIDD — Intent-Driven Development, na formulação de Eliézer Rosa.\nSelos: ✅ implementado · 🧪 demonstração · 🔭 proposta — Cânone v1.0-rc1\nRepositório: https://github.com/EliezerRosa/idd-ide\n\n#IDD #IntentDrivenDevelopment #HistoriaDaComputacao #VannevarBush #Engelbart #AlanKay #Licklider #EliezerRosa",
+    "tags": [
+      "IDD",
+      "Intent-Driven Development",
+      "Historia da Computacao",
+      "Vannevar Bush",
+      "Douglas Engelbart",
+      "Alan Kay",
+      "Ivan Sutherland",
+      "Licklider",
+      "Cibernetica",
+      "Eliezer Rosa",
+      "EliezerJPRosa",
+      "Engenharia de Software"
+    ],
+    "selo": "✅",
+    "nota": "Selo ✅ conceito; 'herdeiro legítimo' e 'consagração' trocados por leitura interpretativa; tags MIT/Xerox PARC retiradas; capítulo final ajustado."
+  },
+  {
+    "id": "oPcNC5FXnHY",
+    "title": "Como uma LEIGA Criou um CRM Completo com IA Sem Saber Programar | IDD na Prática",
+    "title_changed": false,
+    "description": "✅ IMPLEMENTADO — caso real; o código React/Supabase do NexusLog CRM está no repositório do projeto (pasta 40-evidencias/nexuslog-crm-melissa).\n\nCaso IDD na Prática: Melissa e o NexusLog CRM\n\nMelissa, gestora de uma operação de logística, não tinha experiência em programação (Python, React, SQL ou Docker). Usando o método IDD com um agente de IA, ela conduziu a criação do NexusLog, um CRM de 8 telas para fretes, cotações, frotas, motoristas e relatórios em PDF. Neste vídeo ela conversa com Eliézer Rosa sobre como foi o processo.\n\nO que você aprende:\n• Como descrever o problema em linguagem natural e iterar com a IA\n• O que a IA gerou e o que a pessoa decidiu ao longo do projeto\n• A comunicação diária sem jargão técnico\n• O ciclo de 5 passos do método IDD, aplicado a um caso concreto\n• A diferença entre o resultado (código React/Supabase com banco de dados e APIs) e um template de NoCode\n\n⏱️ Capítulos:\n00:00 - Introdução: O Desafio de Criar um CRM sem Saber Programar\n00:45 - O Primeiro Passo: Descrevendo o Problema em Linguagem Natural\n01:35 - Segurança e Incidentes: o tratamento de dados sensíveis\n02:30 - O Que a IA Gerou vs. O Que a Humana Decidiu\n04:15 - A Comunicação Diária: Eliminando Jargões Técnicos\n05:30 - O Método IDD (Desenvolvimento Dirigido por Intenção)\n07:20 - O Ciclo de 5 Passos do IDD\n08:45 - Tour pelas 8 Telas do NexusLog CRM\n\n📺 Playlist do caso:\nhttps://www.youtube.com/playlist?list=PLMWN1EWhq5tM\n\nIDD — Intent-Driven Development, na formulação de Eliézer Rosa.\nSelos: ✅ implementado · 🧪 demonstração · 🔭 proposta — Cânone v1.0-rc1\nRepositório: https://github.com/EliezerRosa/idd-ide\n\n#IDD #IntentDrivenDevelopment #NexusLog #CRM #IAParaLeigos #EngenhariaDeSoftware #EliezerRosa",
+    "tags": [
+      "IDD",
+      "Intent-Driven Development",
+      "Desenvolvimento Dirigido por Intencao",
+      "Eliezer Rosa",
+      "NexusLog",
+      "CRM",
+      "IA para leigos",
+      "Engenharia de Software",
+      "Inteligencia Artificial"
+    ],
+    "selo": "✅",
+    "nota": "Selo ✅ implementado (A6); removidos 'criador do paradigma', 'corporativo completo', 'alto impacto', 'refém da sintaxe'; capítulo 'em Produção' neutralizado; capítulos preservados."
+  },
+  {
+    "id": "uaUKrnagVb4",
+    "title": "Manifesto IDD: Uma Visão do Desenvolvimento com IA | IDD na Prática",
+    "title_changed": true,
+    "description": "🔭 PROPOSTA — visão de direção, não relato de fato. Os princípios (intenção como artefato principal, Comando Epistêmico, Confirm-Once) são ✅ prática documentada; o app de refrigeração mostrado é uma demonstração.\n\nManifesto IDD: uma visão do desenvolvimento com IA\n\nAbertura da série \"IDD na Prática\". O manifesto defende que a intenção humana é o artefato de mais alta ordem da engenharia de software e que a IA pode atuar como executor técnico, sob as regras e invariantes declaradas pela pessoa. É uma tese de direção. O domínio de Engenharia Térmica e Refrigeração serve de exemplo ilustrativo.\n\nO que você aprende:\n• Princípio: a intenção humana como artefato principal (✅ método de trabalho)\n• Exemplo ilustrativo: superaquecimento, sub-resfriamento e a Lei Federal 13.589/2018 (PMOC)\n• Invariantes declaradas e governança persistente, como ideia\n• A conexão com o campo: mecânico, smartphone e QR Code no exemplo\n• A visão de futuro da engenharia de software, como tese\n\n⚠️ O que é real e o que é ilustrativo\n• 🔭 Visão: a ideia de que se possa construir software complexo apenas a partir da intenção é uma tese de direção, não um resultado demonstrado.\n• 🧪 Ilustrativo: o app de refrigeração, os cálculos e o fluxo de campo mostrados são uma demonstração didática; não existe app de refrigeração implementado.\n• 🧪 Ilustrativo: o \"escudo de invariantes\" é uma metáfora; os gates reais são concretos (schema, testes, constraints). Não há garantia de impedir todo código defeituoso.\n• Produção do vídeo: vozes sintéticas (pt-BR-AntonioNeural e pt-BR-FranciscaNeural) e motor procedural IDD Video Studio.\n\n⏱️ Capítulos:\n00:00 - Ato 1: O Núcleo IDD & O Artefato de Mais Alta Ordem\n00:16 - Ato 2: A Física Térmica & a Lei 13.589 do PMOC\n00:33 - Ato 3: Invariantes Declaradas & Governança (Demonstração)\n00:49 - Ato 4: Conexão com o Campo: O Mecânico e o Smartphone\n01:05 - Ato 5: O Futuro da Engenharia de Software (Visão)\n\n📺 Playlist \"IDD na Prática — Leigos\":\nhttps://www.youtube.com/playlist?list=PLNkRuKhFHiBs\n\nIDD — Intent-Driven Development, na formulação de Eliézer Rosa.\nSelos: ✅ implementado · 🧪 demonstração · 🔭 proposta — Cânone v1.0-rc1\nRepositório: https://github.com/EliezerRosa/idd-ide\n\n#IDD #IntentDrivenDevelopment #EngenhariaDeSoftware #IA #PMOC #Refrigeracao #EliezerRosa",
+    "tags": [
+      "IDD",
+      "Intent-Driven Development",
+      "Desenvolvimento Dirigido por Intencao",
+      "Eliezer Rosa",
+      "EliezerJPRosa",
+      "Engenharia de Software",
+      "Inteligencia Artificial",
+      "PMOC",
+      "Refrigeracao Industrial",
+      "Lei 13589"
+    ],
+    "selo": "🔭",
+    "nota": "Selo 🔭 visão + ✅ princípios; título sem 'Definitivo'; removidos 'sem escrever uma única linha', 'determinístico', 'invioláveis', 'resiliente', 'conformidade irrestrita'; tag Intention-Driven e ChatGPT/Claude retiradas; capítulos preservados."
+  },
+  {
+    "id": "r2hTBA9f6DA",
+    "title": "Manifesto IDD: Uma Visão do Futuro do Software #Shorts #IDD",
+    "title_changed": true,
+    "description": "🔭 PROPOSTA — visão de direção, não relato de fato. Os princípios (intenção como artefato principal, Comando Epistêmico, Confirm-Once) são ✅ prática documentada; o app de refrigeração mostrado é uma demonstração.\n\nManifesto IDD (versão vertical)\n\nVersão vertical do manifesto: a tese de que a intenção humana é o artefato de mais alta ordem e de que a IA pode executar a parte técnica sob as regras que a pessoa declara. O exemplo é ilustrativo e vem da Engenharia Térmica e Refrigeração.\n\nO que você aprende:\n• A intenção como artefato principal (✅ método de trabalho)\n• Exemplo ilustrativo: superaquecimento, sub-resfriamento e Lei 13.589 do PMOC\n• Do chiller ao banco de dados com QR Code no smartphone, como cenário didático\n\n⚠️ O que é real e o que é ilustrativo\n• 🔭 Visão: construir sistemas reais a partir da intenção é tese de direção, não resultado demonstrado.\n• 🧪 Ilustrativo: o exemplo de refrigeração é demonstração; não existe app implementado. A cifra de redução de tempo de entrega exibida em versões anteriores foi retirada por não ter método de medição.\n\n📺 Playlist \"IDD na Prática — Leigos\":\nhttps://www.youtube.com/playlist?list=PLNkRuKhFHiBs\n\nIDD — Intent-Driven Development, na formulação de Eliézer Rosa.\nSelos: ✅ implementado · 🧪 demonstração · 🔭 proposta — Cânone v1.0-rc1\nRepositório: https://github.com/EliezerRosa/idd-ide\n\n#Shorts #IDD #IntentDrivenDevelopment #IA #EngenhariaDeSoftware #PMOC #Refrigeracao",
+    "tags": [
+      "IDD",
+      "Intent-Driven Development",
+      "Desenvolvimento Dirigido por Intencao",
+      "Eliezer Rosa",
+      "EliezerJPRosa",
+      "Engenharia de Software",
+      "Inteligencia Artificial",
+      "PMOC",
+      "Refrigeracao",
+      "Shorts"
+    ],
+    "selo": "🔭",
+    "nota": "Selo 🔭; removido '85% de redução' (A18); 'invioláveis', 'sem escrever uma única linha' retirados; título sem afirmar fato."
+  },
+  {
+    "id": "ZDduoIZdZ6I",
+    "title": "O Futuro do Software: Paradigma IDD, Múltiplos Agentes & A Tese do Fim da Sintaxe Manual",
+    "title_changed": true,
+    "description": "🔭 PROPOSTA — visão de direção; a tese do fim da sintaxe manual é uma hipótese, não um fato. Os princípios (intenção, Comando Epistêmico, Confirm-Once) são ✅ prática documentada.\n\nO Futuro do Software: Paradigma IDD, Múltiplos Agentes e a Tese do Fim da Sintaxe Manual\n\nA programação tradicional acabou? A tese deste episódio é que o que perde importância é a sintaxe manual como gargalo, não o raciocínio de engenharia. No encerramento da série \"IDD na Prática\", Eliézer Rosa, a Usuária Leiga e a IA Compilador (personagens do formato) fazem uma retrospectiva e apontam horizontes de pesquisa.\n\nO que você aprende:\n• Retrospectiva dos quatro passos do método: requisitos e invariantes, MER, UML e governança por testes\n• A tese de que a sintaxe manual deixa de ser o ponto central do trabalho\n• Contratos declarados (invariantes) como forma de reduzir erros de um agente de IA\n• Horizontes propostos: enxame multiagente, sistemas auto-regenerativos (self-healing) e participação de especialistas de domínio\n• A síntese: a pessoa permanece como arquiteta e responsável pela intenção\n\n⚠️ O que é real e o que é ilustrativo\n• 🔭 Proposta: enxame multiagente com auditoria, self-healing com patches autônomos e uso em sistemas de missão crítica são visões de futuro; não estão implementados.\n• 🧪 Ilustrativo: o app de refrigeração, \"240 testes\" e \"deploy em 4 segundos\" citados na retrospectiva são terminais encenados nos episódios; não existe app nem pipeline.\n• 🔭 Tese: \"a programação morreu\" não é afirmado como fato; é a pergunta e a hipótese que o episódio discute.\n\n⏱️ Capítulos:\n00:00 - Introdução do Grand Finale: A Tese do Aplicativo Construído a Partir da Intenção\n00:20 - Retrospectiva da Jornada: Os 4 Passos do Método IDD\n00:45 - A Experiência da Leiga: Da caixa preta à conversa transparente de governança\n01:05 - A Tese: a Sintaxe Manual como Gargalo?\n01:30 - A Visão da IA Compilador: Contratos Declarados para Reduzir Erros do Agente\n01:50 - As Três Fronteiras Propostas: Enxame Multiagente, Self-Healing e Democratização\n02:15 - Self-Healing (Proposta): Monitoramento de Invariantes\n02:35 - Tecnologia para Todos: Especialistas de Domínio como Visão\n03:00 - O Manifesto Final do Paradigma IDD: A soberania da intenção humana\n03:25 - Agradecimentos da Equipe, Encerramento da Série & O Futuro da Engenharia!\n\n📺 Playlist \"IDD na Prática — Leigos\":\nhttps://www.youtube.com/playlist?list=PLNkRuKhFHiBs\n\nIDD — Intent-Driven Development, na formulação de Eliézer Rosa.\nSelos: ✅ implementado · 🧪 demonstração · 🔭 proposta — Cânone v1.0-rc1\nRepositório: https://github.com/EliezerRosa/idd-ide\n\n#IDD #IntentDrivenDevelopment #OFuturoDoSoftware #MultiAgentes #EngenhariaDeSoftware #Governanca #EliezerRosa",
+    "tags": [
+      "IDD",
+      "Intent-Driven Development",
+      "Eliezer Rosa",
+      "EliezerJPRosa",
+      "Engenharia de Software",
+      "Agentes de IA",
+      "Multiagentes",
+      "Governanca",
+      "Metodologia",
+      "O Futuro do Software",
+      "Inteligencia Artificial"
+    ],
+    "selo": "🔭",
+    "nota": "Selo 🔭 visão; título sem 'A Morte da Sintaxe Manual' (agora 'Tese do Fim'); removidos 'criador', 'revolucionários', 'precisão matemática', 'inviolável', '240 testes/4 s' (marcados como encenação); capítulos preservados."
+  },
+  {
+    "id": "cRx5yKG8n1k",
+    "title": "IDD Base de Conhecimento — Ep. 04: O Paradigma Neuro-Simbólico (Por que LLMs Sozinhos Falham)",
+    "title_changed": false,
+    "description": "🔭 PROPOSTA — agenda de pesquisa; o que este episódio descreve ainda não está implementado no IDD.\n\nIDD — Base de Conhecimento | Episódio 04: O Paradigma Neuro-Simbólico\n\nLLMs são fortes em linguagem e fracos em regras estritas, e podem errar lógica de negócio com aparência de segurança. A IA neuro-simbólica combina redes neurais com sistemas simbólicos formais. Este episódio propõe um desenho em que a IA gera o código e uma camada simbólica (o MER e as invariantes) o confere, de modo que a IA não seja juíza de si mesma. Trata-se de uma linha de pesquisa; não há vínculo ou endosso de laboratórios citados.\n\nO que você aprende:\n• Por que LLMs sozinhos erram regras e lógica de domínio\n• O que é IA neuro-simbólica, em termos gerais\n• A proposta de uma camada simbólica (MER e invariantes) conferindo a saída da IA\n• Por que quem gera o código não deve ser quem o valida\n\n⚠️ O que é real e o que é ilustrativo\n• ✅ Real: Comando Epistêmico, Confirm-Once e a declaração de invariantes (Ep. 01–03) são prática de trabalho documentada. No idd-ide existem hoje o contrato .intent.yaml validado por schema, o comando idd verify e o dicionário ubíquo verificado no CI.\n• 🔭 Proposta: a camada simbólica como filtro formal é um desenho, não um componente existente. Hoje o que existe são checagens concretas (schema, testes, constraints, dicionário no CI).\n• 🔭 Proposta: a aproximação com pesquisas neuro-simbólicas é uma leitura do autor; não implica participação de nenhuma instituição citada.\n\n⏱️ Capítulos:\n00:00 - Introdução: A Crise do Vibe Coding Puro\n00:19 - A Fraqueza Probabilística das Redes Neurais Estatísticas\n00:46 - O Paradigma Neuro-Simbólico na pesquisa\n01:06 - A Camada Neuro (LLMs) unida à Camada Simbólica (MER e Invariantes), como proposta\n01:31 - A Camada Simbólica Proposta: a IA Não É Juíza de Si Mesma\n01:54 - Conclusão e Chamada para o Episódio 05: Compiladores de Intenção!\n\n📺 Playlist \"IDD — Base de Conhecimento (Série Completa)\":\nhttps://www.youtube.com/playlist?list=PLkbRMhsplHjaLEi9O7SsJN3pH8TvsS6k7\n\nIDD — Intent-Driven Development, na formulação de Eliézer Rosa.\nSelos: ✅ implementado · 🧪 demonstração · 🔭 proposta — Cânone v1.0-rc1\nRepositório: https://github.com/EliezerRosa/idd-ide\n\n#IDD #IntentDrivenDevelopment #NeuroSymbolicAI #VibeCoding #EngenhariaDeSoftware #FormalMethods #EliezerRosa",
+    "tags": [
+      "IDD",
+      "Intent-Driven Development",
+      "Eliezer Rosa",
+      "EliezerJPRosa",
+      "Engenharia de Software",
+      "Software Engineering",
+      "Neuro-Symbolic AI",
+      "Agentic AI",
+      "Vibe Coding",
+      "Formal Methods"
+    ],
+    "selo": "🔭",
+    "nota": "Selo 🔭; removidos 'convergência direta com DeepMind/MIT', 'principais pesquisadores', 'invioláveis', 'verdade do negócio'; tags de autoridade retiradas; capítulos preservados."
+  },
+  {
+    "id": "TluPKmbwKmg",
+    "title": "IDD Base de Conhecimento — Ep. 05: O Compilador de Intenções & Intent IR (A Morte do Prompt)",
+    "title_changed": false,
+    "description": "🔭 PROPOSTA — agenda de pesquisa; o que este episódio descreve ainda não está implementado no IDD.\n\nIDD — Base de Conhecimento | Episódio 05: O Compilador de Intenções e a Intent IR\n\nAjustar palavras em prompts soltos é tentativa e erro. A proposta deste episódio é uma Intent IR (representação intermediária de intenção): uma árvore semântica do domínio, independente de linguagem de programação, a partir da qual código poderia ser derivado, como um compilador faz com uma IR. As referências são o DSPy e a tradição de compiladores como o LLVM/MLIR.\n\nO que você aprende:\n• Limites do prompt solto em sistemas corporativos\n• O que seria uma Intent IR: um AST do domínio com gramática\n• A analogia com o LLVM\n• Um pipeline em quatro etapas, da linguagem natural ao código\n• A tese de que o código é derivável e a Intent IR é o patrimônio a preservar\n\n⚠️ O que é real e o que é ilustrativo\n• ✅ Real: Comando Epistêmico, Confirm-Once e a declaração de invariantes (Ep. 01–03) são prática de trabalho documentada. No idd-ide existem hoje o contrato .intent.yaml validado por schema, o comando idd verify e o dicionário ubíquo verificado no CI.\n• 🔭 Proposta: a Intent IR não existe. O que há hoje é o .intent.yaml, com constraints em texto livre validado por schema.\n• 🔭 Proposta: o pipeline em quatro etapas e a emissão de código a partir da IR são desenho de pesquisa; nenhuma garantia sobre a saída é afirmada.\n\n⏱️ Capítulos:\n00:00 - Introdução: Os Limites do Prompt Solto como Engenharia\n00:20 - Referências: DSPy e Compiladores Declarativos\n00:46 - O que é a Intent IR: A Representação Intermediária de Intenção\n01:10 - A Analogia com o LLVM: Como a Intenção se Torna Código\n01:35 - Pipeline em Quatro Etapas (Proposta)\n01:57 - O Código como Artefato Derivável (Tese)\n02:18 - Conclusão e Chamada para o Episódio 06: Invariantes Formais e SMT!\n\n📺 Playlist \"IDD — Base de Conhecimento (Série Completa)\":\nhttps://www.youtube.com/playlist?list=PLkbRMhsplHjaLEi9O7SsJN3pH8TvsS6k7\n\nIDD — Intent-Driven Development, na formulação de Eliézer Rosa.\nSelos: ✅ implementado · 🧪 demonstração · 🔭 proposta — Cânone v1.0-rc1\nRepositório: https://github.com/EliezerRosa/idd-ide\n\n#IDD #IntentDrivenDevelopment #IntentIR #Compiladores #LLVM #PromptEngineering #EngenhariaDeSoftware #EliezerRosa",
+    "tags": [
+      "IDD",
+      "Intent-Driven Development",
+      "Eliezer Rosa",
+      "EliezerJPRosa",
+      "Engenharia de Software",
+      "Software Engineering",
+      "Neuro-Symbolic AI",
+      "Agentic AI",
+      "Intent IR",
+      "Compiladores",
+      "LLVM",
+      "Prompt Engineering"
+    ],
+    "selo": "🔭",
+    "nota": "Selo 🔭; removidos 'amadorismo', 'sem alucinação de sintaxe', 'patrimônio perpétuo'; Intent IR marcada como proposta (A15); tag Stanford DSPy retirada; capítulos preservados."
+  },
+  {
+    "id": "BZeVG2CffjU",
+    "title": "IDD Base de Conhecimento — Ep. 06: Invariantes Formais & SMT Solvers (Z3 & Dafny)",
+    "title_changed": false,
+    "description": "🔭 PROPOSTA — agenda de pesquisa; o que este episódio descreve ainda não está implementado no IDD.\n\nIDD — Base de Conhecimento | Episódio 06: Invariantes Formais e SMT Solvers (Z3 e Dafny)\n\nTestes por exemplo cobrem pontos finitos. A proposta deste episódio é declarar invariantes de domínio de forma formal e verificá-las com solvers SMT, como o Z3, e com verificadores como o Dafny, antes do deploy.\nComo isso funcionaria: para mostrar que uma invariante I vale para uma operação permitida, o solver recebe as pré-condições, a operação e a negação de I. Se essa fórmula for UNSAT (insatisfatível), não existe contraexemplo e a invariante se mantém; se for SAT, o solver devolve um contraexemplo concreto. A verificação só cobre o que foi formalizado, e o modelo formal pode ter erros.\n\nO que você aprende:\n• Limite dos testes baseados em exemplos\n• Raciocínio automatizado e solvers SMT (Z3) e verificadores (Dafny), em termos gerais\n• Prova de invariante como mostrar que a negação é UNSAT\n• Os três tipos de invariantes propostos: estruturais (MER), comportamentais (UML) e temporizadas (proteção de dados históricos)\n• Rejeitar uma proposta do agente que viole uma invariante declarada, como meta de projeto\n\n⚠️ O que é real e o que é ilustrativo\n• ✅ Real: Comando Epistêmico, Confirm-Once e a declaração de invariantes (Ep. 01–03) são prática de trabalho documentada. No idd-ide existem hoje o contrato .intent.yaml validado por schema, o comando idd verify e o dicionário ubíquo verificado no CI.\n• 🔭 Proposta: não há uso de Z3, SMT ou Dafny no idd-ide. Nenhuma prova formal é executada hoje.\n• 🔭 Proposta: o objetivo é que a violação de uma invariante declarada e formalizada seja detectada por um gate; não é uma promessa de ausência de erros do agente.\n• 🔭 Referências a Microsoft Z3, Dafny e AWS Automated Reasoning são contexto técnico; não há vínculo com essas instituições.\n\n⏱️ Capítulos:\n00:00 - Introdução: O Limite dos Testes Unitários com IA\n00:19 - Raciocínio Automatizado: Z3 e Dafny como Referência\n00:46 - A Tríade das Invariantes do IDD: Estruturais, Comportamentais e Temporizadas\n01:09 - Proteção de Dados Históricos contra Mutação Indevida\n01:31 - Verificação por SMT antes do Deploy (Proposta; Invariante Provada = Negação UNSAT)\n01:54 - Conclusão e Chamada para o Episódio 07: Engenharia Constitucional e Diff Semântico!\n\n📺 Playlist \"IDD — Base de Conhecimento (Série Completa)\":\nhttps://www.youtube.com/playlist?list=PLkbRMhsplHjaLEi9O7SsJN3pH8TvsS6k7\n\nIDD — Intent-Driven Development, na formulação de Eliézer Rosa.\nSelos: ✅ implementado · 🧪 demonstração · 🔭 proposta — Cânone v1.0-rc1\nRepositório: https://github.com/EliezerRosa/idd-ide\n\n#IDD #IntentDrivenDevelopment #FormalMethods #SMTSolvers #Z3Solver #Dafny #AutomatedReasoning #EliezerRosa",
+    "tags": [
+      "IDD",
+      "Intent-Driven Development",
+      "Eliezer Rosa",
+      "EliezerJPRosa",
+      "Engenharia de Software",
+      "Software Engineering",
+      "Neuro-Symbolic AI",
+      "Agentic AI",
+      "Formal Methods",
+      "SMT Solvers",
+      "Z3 Solver",
+      "Dafny",
+      "Automated Reasoning",
+      "Domain Invariants"
+    ],
+    "selo": "🔭",
+    "nota": "Selo 🔭 (A13); removidos 'alucinação zero', 'inabalável', 'blindagem', 'garantir'; explicado que prova = negação UNSAT; tags AWS retiradas; Z3/Dafny só aqui."
+  },
+  {
+    "id": "cDeFecLHP9A",
+    "title": "IDD Base de Conhecimento — Ep. 08: A Teoria da Ação Atômica (Sagas de Domínio em 4 Fases)",
+    "title_changed": false,
+    "description": "🔭 PROPOSTA — agenda de pesquisa; o que este episódio descreve ainda não está implementado no IDD.\n\nIDD — Base de Conhecimento | Episódio 08: A Teoria da Ação Atômica (Sagas de Domínio em 4 Fases)\n\nAgentes de IA que executam operações complexas podem deixar meias-transações e estados órfãos. A proposta deste episódio é um protocolo de Ação Atômica em quatro fases (Guarda, Mutação, Selagem e Compensação), apoiado na teoria de Sagas, de Hector Garcia-Molina, e na visão de Pat Helland sobre dados através do tempo.\nPosição canônica do IDD: Sagas entre contextos; transação ACID local dentro de um contexto. Ou seja, o protocolo não substitui transações locais.\n\nO que você aprende:\n• O risco de código livre gerando estados parciais\n• Fase 1, Guarda: checar pré-condições com falha rápida (a verificação por SMT é uma extensão proposta)\n• Fase 2, Mutação: execução idempotente no escopo da intenção\n• Fase 3, Selagem: conferir pós-condições e emitir um Domain Event imutável\n• Fase 4, Compensação: reversão pré-declarada, em busca de consistência eventual\n\n⚠️ O que é real e o que é ilustrativo\n• ✅ Real: Comando Epistêmico, Confirm-Once e a declaração de invariantes (Ep. 01–03) são prática de trabalho documentada. No idd-ide existem hoje o contrato .intent.yaml validado por schema, o comando idd verify e o dicionário ubíquo verificado no CI.\n• 🔭 Proposta (método): o protocolo está especificado em 40-evidencias/refrigeracao-hvacr/docs, mas não há implementação de referência (A17).\n• 🔭 Proposta: o uso de SMT na fase de Guarda depende do Ep. 06, que também é proposta.\n• Sagas e 2PC: o relato de 2PC dos anos 90 (short biográfico) e esta posição sobre Sagas são conciliáveis pela regra acima.\n\n⏱️ Capítulos:\n00:00 - Introdução: O Desafio Comportamental da IA no Mundo Real\n00:26 - Por que Agentes Autônomos Ad-Hoc Corrompem Estados de Banco\n00:51 - O Protocolo Canônico em 4 Fases: Guarda, Mutação, Selagem e Compensação\n01:14 - As Fases: Pré-condições, Idempotência e Domain Events\n01:37 - Sagas de Domínio: A Sabedoria de Pat Helland e Garcia-Molina\n02:00 - Compensação Declarativa: Consistência Eventual sem Bloqueios Distribuídos\n02:22 - Fechamento da Série Fundamental e Agenda de Pesquisa\n\n📺 Playlist \"IDD — Base de Conhecimento (Série Completa)\":\nhttps://www.youtube.com/playlist?list=PLkbRMhsplHjaLEi9O7SsJN3pH8TvsS6k7\n\nIDD — Intent-Driven Development, na formulação de Eliézer Rosa.\nSelos: ✅ implementado · 🧪 demonstração · 🔭 proposta — Cânone v1.0-rc1\nRepositório: https://github.com/EliezerRosa/idd-ide\n\n#IDD #IntentDrivenDevelopment #Sagas #AtomicActions #PatHelland #Idempotence #DomainDrivenDesign #EliezerRosa",
+    "tags": [
+      "IDD",
+      "Intent-Driven Development",
+      "Eliezer Rosa",
+      "EliezerJPRosa",
+      "Engenharia de Software",
+      "Software Engineering",
+      "Neuro-Symbolic AI",
+      "Agentic AI",
+      "Distributed Sagas",
+      "Atomic Actions",
+      "Domain-Driven Design",
+      "Pat Helland",
+      "Hector Garcia-Molina",
+      "Idempotence"
+    ],
+    "selo": "🔭",
+    "nota": "Selo 🔭 (A17, A21); removidos 'consistência absoluta/total', 'magistral', 'triunfo'; conciliado 2PC vs Sagas; capítulos preservados."
+  },
+  {
+    "id": "hQrqyx0uZk8",
+    "title": "IDD Base de Conhecimento — Ep. 07: Engenharia Constitucional & Diff Semântico de Esquema",
+    "title_changed": false,
+    "description": "🔭 PROPOSTA — agenda de pesquisa; o que este episódio descreve ainda não está implementado no IDD.\n\nIDD — Base de Conhecimento | Episódio 07: Engenharia Constitucional e Diff Semântico de Esquema\n\nO Git compara texto, não cardinalidades nem integridade relacional. A proposta deste episódio é um diff semântico sobre a representação da intenção, que classificaria mudanças de domínio em três classes: A (adições puras), B (endurecimento de regras, com cálculo do alcance) e C (rupturas, tratadas com o padrão Expand and Contract). As invariantes de domínio funcionam como uma \"constituição\" do sistema, e as mudanças em esquema passam por decisão humana. A ideia se inspira na noção de Constitutional AI, sem vínculo com a Anthropic.\n\nO que você aprende:\n• Por que o diff textual do Git não vê quebras de cardinalidade ou de integridade relacional\n• Invariantes de domínio tratadas como a constituição do sistema\n• A proposta de uma Máquina de Diff de Intenções sobre um grafo semântico\n• Classes A, B e C de mutação e o padrão Expand and Contract\n• Soberania epistêmica: a pessoa decide sobre evoluções de esquema\n\n⚠️ O que é real e o que é ilustrativo\n• ✅ Real: Comando Epistêmico, Confirm-Once e a declaração de invariantes (Ep. 01–03) são prática de trabalho documentada. No idd-ide existem hoje o contrato .intent.yaml validado por schema, o comando idd verify e o dicionário ubíquo verificado no CI.\n• 🔭 Proposta: a Máquina de Diff de Intenções com Classes A/B/C não está implementada. O comando idd diff atual faz checagens por regex (A16).\n• 🔭 Proposta: o grafo semântico (AST/IR) depende da Intent IR do Ep. 05, que também é proposta.\n\n⏱️ Capítulos:\n00:00 - Introdução: Da Constitutional AI à Engenharia de Software (Inspiração)\n00:21 - Invariantes de Domínio como Constituição do Sistema\n00:46 - Limites do Git para Mutações de Banco e Arquitetura\n01:07 - A Máquina de Diff de Intenções (Proposta): Grafo Semântico vs Texto\n01:29 - A Classificação Tripartida de Mutações (Classes A, B e C)\n01:47 - O Padrão Expand and Contract e a Soberania Epistêmica Humana\n02:06 - Conclusão e Chamada para o Episódio 08: A Teoria da Ação Atômica e Sagas!\n\n📺 Playlist \"IDD — Base de Conhecimento (Série Completa)\":\nhttps://www.youtube.com/playlist?list=PLkbRMhsplHjaLEi9O7SsJN3pH8TvsS6k7\n\nIDD — Intent-Driven Development, na formulação de Eliézer Rosa.\nSelos: ✅ implementado · 🧪 demonstração · 🔭 proposta — Cânone v1.0-rc1\nRepositório: https://github.com/EliezerRosa/idd-ide\n\n#IDD #IntentDrivenDevelopment #DiffSemantico #SchemaEvolution #ExpandAndContract #IntentIR #EngenhariaDeSoftware #EliezerRosa",
+    "tags": [
+      "IDD",
+      "Intent-Driven Development",
+      "Eliezer Rosa",
+      "EliezerJPRosa",
+      "Engenharia de Software",
+      "Software Engineering",
+      "Neuro-Symbolic AI",
+      "Agentic AI",
+      "Constitutional AI",
+      "Diff Semantico",
+      "Schema Evolution",
+      "Expand and Contract",
+      "Intent IR"
+    ],
+    "selo": "🔭",
+    "nota": "Selo 🔭 (A15, A16); 'pétrea e inviolável', 'Git cego' suavizados; tag Anthropic retirada; diff atual por regex informado; capítulos preservados."
+  },
+  {
+    "id": "HAneRk6kqlE",
+    "title": "IDD Base de Conhecimento — Ep. 09: IDD vs MCP & Antigravity (Encanamento vs Engenharia)",
+    "title_changed": false,
+    "description": "🔭 PROPOSTA — agenda de pesquisa; o que este episódio descreve ainda não está implementado no IDD.\n\nIDD — Base de Conhecimento | Episódio 09: IDD vs MCP e Antigravity (Transporte vs Governança)\n\nO Model Context Protocol (MCP) e agentes como o Google Antigravity ajudam a conectar modelos a ferramentas. Mas a engenharia de software foi resolvida, ou só ficou mais rápida? Este episódio defende que o MCP é uma camada de transporte (JSON-RPC) e que a política do que aceitar ou recusar fica em outra camada, que seria o papel do IDD. É uma comparação conceitual, em tom bem-humorado, e não uma avaliação de produto.\n\nO que você aprende:\n• A diferença entre protocolo de transporte e semântica de domínio\n• A analogia da escavadeira: ferramenta potente sem governança\n• Um patch que compila mas quebra uma regra de faturamento: onde isso seria detectado\n• O que acontece quando a terceira chamada de ferramenta falha no meio de uma cadeia, e por que Sagas e compensação entram na proposta\n• IDD e MCP como camadas complementares\n\n⚠️ O que é real e o que é ilustrativo\n• ✅ Real: Comando Epistêmico, Confirm-Once e a declaração de invariantes (Ep. 01–03) são prática de trabalho documentada. No idd-ide existem hoje o contrato .intent.yaml validado por schema, o comando idd verify e o dicionário ubíquo verificado no CI.\n• 🔭 Proposta: a camada de governança sobre MCP/agentes descrita aqui não existe como produto. É a hipótese de trabalho do autor.\n• A comparação com MCP e Antigravity é conceitual; os produtos citados são de terceiros e não há vínculo com eles.\n\n⏱️ Capítulos:\n00:00 - Introdução: A Ilusão de que o MCP e o Antigravity Resolveram Tudo\n00:23 - A Analogia da Escavadeira: Encanamento vs Engenharia Civil\n00:54 - A Pergunta Provocativa: O Código Compilou, mas o Faturamento Quebrou!\n01:14 - O MCP É Transporte: a Política de Aceitar ou Recusar Fica em Outra Camada\n01:37 - O Pesadelo da 3ª Chamada de Ferramenta sem Sagas Distribuídas\n02:00 - IDD e MCP em Camadas Diferentes: Governança sobre Transporte (Tese)\n02:24 - Fechamento e Chamada para o Episódio 10: IDD vs Copilot Workspace e Aider!\n\n📺 Playlist \"IDD — Base de Conhecimento (Série Completa)\":\nhttps://www.youtube.com/playlist?list=PLkbRMhsplHjaLEi9O7SsJN3pH8TvsS6k7\n\nIDD — Intent-Driven Development, na formulação de Eliézer Rosa.\nSelos: ✅ implementado · 🧪 demonstração · 🔭 proposta — Cânone v1.0-rc1\nRepositório: https://github.com/EliezerRosa/idd-ide\n\n#IDD #IntentDrivenDevelopment #ModelContextProtocol #Antigravity #EngenhariaDeSoftware #AgenticAI #EliezerRosa",
+    "tags": [
+      "IDD",
+      "Intent-Driven Development",
+      "Eliezer Rosa",
+      "EliezerJPRosa",
+      "Engenharia de Software",
+      "Software Engineering",
+      "Neuro-Symbolic AI",
+      "Agentic AI",
+      "Model Context Protocol",
+      "MCP",
+      "Antigravity"
+    ],
+    "selo": "🔭",
+    "nota": "Selo 🔭; removidos 'arrebatador', 'não tem moral', 'verdadeira arquitetura'; tags de produto/autoridade e SMT retiradas; capítulos preservados."
+  },
+  {
+    "id": "6pvk9PbkuoE",
+    "title": "IDD Base de Conhecimento — Ep. 10: IDD vs Copilot Workspace & Aider (Fim do Patch-and-Pray)",
+    "title_changed": false,
+    "description": "🔭 PROPOSTA — agenda de pesquisa; o que este episódio descreve ainda não está implementado no IDD.\n\nIDD — Base de Conhecimento | Episódio 10: IDD vs Copilot Workspace e Aider (Spec em Markdown vs Intent IR)\n\nFerramentas como o GitHub Copilot Workspace e agentes como o Aider avançam no desenvolvimento guiado por especificação. Este episódio discute, de forma conceitual, uma crítica: uma spec em Markdown é texto livre gerando texto livre, e passar nos testes não prova que invariantes de domínio foram respeitadas. A alternativa proposta combina Intent IR, métodos formais e diff semântico. A comparação é uma opinião do autor, não uma avaliação de desempenho dos produtos.\n\nO que você aprende:\n• O que a spec em Markdown resolve e o que deixa em aberto\n• A cultura de comitar e rezar depois dos testes (patch-and-pray)\n• Amostragem finita de testes vs verificação formal por SMT, como proposta\n• Limites do Git para mudanças de banco e arquitetura\n• Diff de intenções e Expand and Contract como caminho proposto\n\n⚠️ O que é real e o que é ilustrativo\n• ✅ Real: Comando Epistêmico, Confirm-Once e a declaração de invariantes (Ep. 01–03) são prática de trabalho documentada. No idd-ide existem hoje o contrato .intent.yaml validado por schema, o comando idd verify e o dicionário ubíquo verificado no CI.\n• 🔭 Proposta: Intent IR, SMT e diff semântico são agenda de pesquisa (Ep. 05, 06 e 07); nada disso está implementado.\n• A comparação com produtos de terceiros é conceitual: nenhum teste, benchmark ou medição foi feito neste vídeo.\n\n⏱️ Capítulos:\n00:00 - Introdução: Copilot Workspace e Aider e o Desenvolvimento Guiado por Spec\n00:23 - A Armadilha da Spec em Markdown: Texto Livre Gerando Texto Livre\n00:52 - A Cultura do \"Patch-and-Pray\": Passou no Pytest e Reza!\n01:14 - Verificação Formal por SMT (Proposta) vs Amostragem Finita de Testes\n01:36 - Limites do Git para Mutações de Banco e Arquitetura\n01:58 - A Máquina de Diff de Intenções e o Padrão Expand and Contract\n02:20 - Síntese: Agenda da Engenharia de Software 3.0 (Visão)\n\n📺 Playlist \"IDD — Base de Conhecimento (Série Completa)\":\nhttps://www.youtube.com/playlist?list=PLkbRMhsplHjaLEi9O7SsJN3pH8TvsS6k7\n\nIDD — Intent-Driven Development, na formulação de Eliézer Rosa.\nSelos: ✅ implementado · 🧪 demonstração · 🔭 proposta — Cânone v1.0-rc1\nRepositório: https://github.com/EliezerRosa/idd-ide\n\n#IDD #IntentDrivenDevelopment #CopilotWorkspace #Aider #SpecDrivenDevelopment #IntentIR #EngenhariaDeSoftware #EliezerRosa",
+    "tags": [
+      "IDD",
+      "Intent-Driven Development",
+      "Eliezer Rosa",
+      "EliezerJPRosa",
+      "Engenharia de Software",
+      "Software Engineering",
+      "Neuro-Symbolic AI",
+      "Agentic AI",
+      "Copilot Workspace",
+      "Aider",
+      "Spec-Driven Development",
+      "Intent IR"
+    ],
+    "selo": "🔭",
+    "nota": "Selo 🔭; removidos 'líder no SWE-bench', 'decisivo', 'falsa sensação de segurança', 'Triunfo'; Z3/Dafny e SWE-bench retirados das tags; capítulos preservados."
+  },
+  {
+    "id": "i5MdkcEnQLg",
+    "title": "IDD Paradigma — Perspectiva Técnica: Avaliação Isenta & Os 5 Pilares de Formalização",
+    "title_changed": false,
+    "description": "🔭 PROPOSTA — avaliação do que falta; os cinco pilares são agenda, não funcionalidades existentes.\n\nIDD Paradigma — Perspectiva Técnica: O Que Falta e os 5 Pilares de Formalização\n\nO que ainda falta para o IDD ser adotado de forma ampla, como ocorreu com DDD ou LLVM? Neste episódio, Eliézer Rosa e a bancada do canal fazem uma avaliação crítica do ecossistema de agentes de IA e do próprio IDD, separando o que já se sustenta (a ontologia da intenção e a distinção entre Comando Epistêmico e Operacional) do que ainda precisa ser construído. A avaliação é do próprio autor, portanto não é uma análise independente.\n\nO que você aprende:\n• O que o IDD já tem: método de trabalho, Comando Epistêmico, Confirm-Once, dicionário ubíquo verificado e contrato .intent.yaml\n• Pilar 1, Intent IR canônica: um AST de domínio para múltiplos alvos (inspirado no LLVM e no DSPy)\n• Pilar 2, verificação formal: limites do assert_equal e o uso de SMT (Z3, Dafny) para checar invariantes; prova de invariante equivale a mostrar que a negação é UNSAT\n• Pilar 3, engenharia constitucional e diff semântico: limites do Git e o padrão Expand and Contract\n• Pilar 4, ação atômica: o protocolo de quatro fases (Guarda, Mutação, Selagem, Compensação), com base em Sagas e em Pat Helland\n• Pilar 5, benchmark canônico: uma proposta de teste com mutações consecutivas de domínio, ainda não executada\n• A linhagem histórica de 79 anos e a síntese: a intenção orienta, a IA gera e a pessoa arbitra\n\n⚠️ O que é real e o que é ilustrativo\n• ✅ Real: Comando Epistêmico, Confirm-Once, DAV (em produção no RVM Designações), .intent.yaml validado por schema, idd verify e o dicionário ubíquo no CI.\n• 🔭 Proposta: os 5 pilares são o que falta. Intent IR, SMT/Z3/Dafny, diff semântico por classes, ação atômica com implementação de referência e benchmark IDD não existem hoje.\n• 🔭 Proposta: o benchmark de 1.000 mutações descrito é um desenho de teste; nenhum resultado foi medido. Não há afirmação de taxa de falha.\n• Menções a MCP, Antigravity, Copilot Workspace, Aider e a eventos acadêmicos são contexto; não há vínculo com essas instituições.\n\n⏱️ Capítulos:\n00:00 - Introdução: O Que Falta para o IDD se Tornar Padrão Global?\n00:50 - MCP & Ferramentas Experimentais vs IDD: Encanamento vs Engenharia\n01:33 - Pilar 1: Intent IR Canônica (Limites do Prompt Solto e a AST de Domínio)\n02:13 - Pilar 2: SMT Solvers & Verificação Formal (Limites do Assert_Equal; Z3 e Dafny como Caminho)\n02:51 - Pilar 3: Engenharia Constitucional & Diff Semântico (Limites do Git)\n03:28 - Pilar 4: A Teoria da Ação Atômica (Sagas de Domínio em 4 Fases)\n04:06 - Pilar 5: Benchmark Canônico IDD (Proposta, Além do SWE-bench)\n04:42 - A Linhagem Histórica de 79 Anos (De Vannevar Bush e Engelbart a Alan Kay)\n05:20 - Estratégia de Divulgação e Hashtags\n05:54 - Conclusão: Governar a Intenção como Direção\n\n📺 Playlist desta série especial:\nhttps://www.youtube.com/playlist?list=PLW-P0rMNaKDs\n\n📺 Playlist \"IDD — Base de Conhecimento (Série Completa)\":\nhttps://www.youtube.com/playlist?list=PLkbRMhsplHjaLEi9O7SsJN3pH8TvsS6k7\n\nRepositório do RVM Designações (onde o padrão DAV roda em produção): github.com/EliezerRosa/rvm-designacoes-antigravity\n\nIDD — Intent-Driven Development, na formulação de Eliézer Rosa.\nSelos: ✅ implementado · 🧪 demonstração · 🔭 proposta — Cânone v1.0-rc1\nRepositório: https://github.com/EliezerRosa/idd-ide\n\n#IDD #IntentDrivenDevelopment #SoftwareEngineering #FormalMethods #IntentIR #DomainDrivenDesign #VibeCoding #EliezerRosa",
+    "tags": [
+      "IDD",
+      "Intent-Driven Development",
+      "Eliezer Rosa",
+      "EliezerJPRosa",
+      "Engenharia de Software",
+      "Software Engineering",
+      "Vibe Coding",
+      "Formal Methods",
+      "Intent IR",
+      "Domain-Driven Design",
+      "Distributed Sagas",
+      "Constitutional AI",
+      "Program Synthesis",
+      "Model Context Protocol",
+      "Software 3.0"
+    ],
+    "selo": "🔭",
+    "nota": "Selo 🔭; 5 pilares como 'o que falta'; benchmark 0% de quebra marcado como não executado; 'Avaliação Isenta' qualificada como do autor; UNSAT; tags de autoridade (ICSE, POPL, PLDI, AWS, Stanford DSPy) e Z3/Dafny retiradas; capítulos preservados. Descrição idêntica nas 3 duplicatas."
+  },
+  {
+    "id": "K0u1cVfKuR0",
+    "title": "IDD Paradigma — Perspectiva Técnica: Avaliação Isenta & Os 5 Pilares de Formalização",
+    "title_changed": false,
+    "description": "🔭 PROPOSTA — avaliação do que falta; os cinco pilares são agenda, não funcionalidades existentes.\n\nIDD Paradigma — Perspectiva Técnica: O Que Falta e os 5 Pilares de Formalização\n\nO que ainda falta para o IDD ser adotado de forma ampla, como ocorreu com DDD ou LLVM? Neste episódio, Eliézer Rosa e a bancada do canal fazem uma avaliação crítica do ecossistema de agentes de IA e do próprio IDD, separando o que já se sustenta (a ontologia da intenção e a distinção entre Comando Epistêmico e Operacional) do que ainda precisa ser construído. A avaliação é do próprio autor, portanto não é uma análise independente.\n\nO que você aprende:\n• O que o IDD já tem: método de trabalho, Comando Epistêmico, Confirm-Once, dicionário ubíquo verificado e contrato .intent.yaml\n• Pilar 1, Intent IR canônica: um AST de domínio para múltiplos alvos (inspirado no LLVM e no DSPy)\n• Pilar 2, verificação formal: limites do assert_equal e o uso de SMT (Z3, Dafny) para checar invariantes; prova de invariante equivale a mostrar que a negação é UNSAT\n• Pilar 3, engenharia constitucional e diff semântico: limites do Git e o padrão Expand and Contract\n• Pilar 4, ação atômica: o protocolo de quatro fases (Guarda, Mutação, Selagem, Compensação), com base em Sagas e em Pat Helland\n• Pilar 5, benchmark canônico: uma proposta de teste com mutações consecutivas de domínio, ainda não executada\n• A linhagem histórica de 79 anos e a síntese: a intenção orienta, a IA gera e a pessoa arbitra\n\n⚠️ O que é real e o que é ilustrativo\n• ✅ Real: Comando Epistêmico, Confirm-Once, DAV (em produção no RVM Designações), .intent.yaml validado por schema, idd verify e o dicionário ubíquo no CI.\n• 🔭 Proposta: os 5 pilares são o que falta. Intent IR, SMT/Z3/Dafny, diff semântico por classes, ação atômica com implementação de referência e benchmark IDD não existem hoje.\n• 🔭 Proposta: o benchmark de 1.000 mutações descrito é um desenho de teste; nenhum resultado foi medido. Não há afirmação de taxa de falha.\n• Menções a MCP, Antigravity, Copilot Workspace, Aider e a eventos acadêmicos são contexto; não há vínculo com essas instituições.\n\n⏱️ Capítulos:\n00:00 - Introdução: O Que Falta para o IDD se Tornar Padrão Global?\n00:50 - MCP & Ferramentas Experimentais vs IDD: Encanamento vs Engenharia\n01:33 - Pilar 1: Intent IR Canônica (Limites do Prompt Solto e a AST de Domínio)\n02:13 - Pilar 2: SMT Solvers & Verificação Formal (Limites do Assert_Equal; Z3 e Dafny como Caminho)\n02:51 - Pilar 3: Engenharia Constitucional & Diff Semântico (Limites do Git)\n03:28 - Pilar 4: A Teoria da Ação Atômica (Sagas de Domínio em 4 Fases)\n04:06 - Pilar 5: Benchmark Canônico IDD (Proposta, Além do SWE-bench)\n04:42 - A Linhagem Histórica de 79 Anos (De Vannevar Bush e Engelbart a Alan Kay)\n05:20 - Estratégia de Divulgação e Hashtags\n05:54 - Conclusão: Governar a Intenção como Direção\n\n📺 Playlist desta série especial:\nhttps://www.youtube.com/playlist?list=PLW-P0rMNaKDs\n\n📺 Playlist \"IDD — Base de Conhecimento (Série Completa)\":\nhttps://www.youtube.com/playlist?list=PLkbRMhsplHjaLEi9O7SsJN3pH8TvsS6k7\n\nRepositório do RVM Designações (onde o padrão DAV roda em produção): github.com/EliezerRosa/rvm-designacoes-antigravity\n\nIDD — Intent-Driven Development, na formulação de Eliézer Rosa.\nSelos: ✅ implementado · 🧪 demonstração · 🔭 proposta — Cânone v1.0-rc1\nRepositório: https://github.com/EliezerRosa/idd-ide\n\n#IDD #IntentDrivenDevelopment #SoftwareEngineering #FormalMethods #IntentIR #DomainDrivenDesign #VibeCoding #EliezerRosa",
+    "tags": [
+      "IDD",
+      "Intent-Driven Development",
+      "Eliezer Rosa",
+      "EliezerJPRosa",
+      "Engenharia de Software",
+      "Software Engineering",
+      "Vibe Coding",
+      "Formal Methods",
+      "Intent IR",
+      "Domain-Driven Design",
+      "Distributed Sagas",
+      "Constitutional AI",
+      "Program Synthesis",
+      "Model Context Protocol",
+      "Software 3.0"
+    ],
+    "selo": "🔭",
+    "nota": "Selo 🔭; 5 pilares como 'o que falta'; benchmark 0% de quebra marcado como não executado; 'Avaliação Isenta' qualificada como do autor; UNSAT; tags de autoridade (ICSE, POPL, PLDI, AWS, Stanford DSPy) e Z3/Dafny retiradas; capítulos preservados. Descrição idêntica nas 3 duplicatas."
+  },
+  {
+    "id": "sIN3nMc7Nhw",
+    "title": "IDD Paradigma — Perspectiva Técnica: Avaliação Isenta & Os 5 Pilares de Formalização",
+    "title_changed": false,
+    "description": "🔭 PROPOSTA — avaliação do que falta; os cinco pilares são agenda, não funcionalidades existentes.\n\nIDD Paradigma — Perspectiva Técnica: O Que Falta e os 5 Pilares de Formalização\n\nO que ainda falta para o IDD ser adotado de forma ampla, como ocorreu com DDD ou LLVM? Neste episódio, Eliézer Rosa e a bancada do canal fazem uma avaliação crítica do ecossistema de agentes de IA e do próprio IDD, separando o que já se sustenta (a ontologia da intenção e a distinção entre Comando Epistêmico e Operacional) do que ainda precisa ser construído. A avaliação é do próprio autor, portanto não é uma análise independente.\n\nO que você aprende:\n• O que o IDD já tem: método de trabalho, Comando Epistêmico, Confirm-Once, dicionário ubíquo verificado e contrato .intent.yaml\n• Pilar 1, Intent IR canônica: um AST de domínio para múltiplos alvos (inspirado no LLVM e no DSPy)\n• Pilar 2, verificação formal: limites do assert_equal e o uso de SMT (Z3, Dafny) para checar invariantes; prova de invariante equivale a mostrar que a negação é UNSAT\n• Pilar 3, engenharia constitucional e diff semântico: limites do Git e o padrão Expand and Contract\n• Pilar 4, ação atômica: o protocolo de quatro fases (Guarda, Mutação, Selagem, Compensação), com base em Sagas e em Pat Helland\n• Pilar 5, benchmark canônico: uma proposta de teste com mutações consecutivas de domínio, ainda não executada\n• A linhagem histórica de 79 anos e a síntese: a intenção orienta, a IA gera e a pessoa arbitra\n\n⚠️ O que é real e o que é ilustrativo\n• ✅ Real: Comando Epistêmico, Confirm-Once, DAV (em produção no RVM Designações), .intent.yaml validado por schema, idd verify e o dicionário ubíquo no CI.\n• 🔭 Proposta: os 5 pilares são o que falta. Intent IR, SMT/Z3/Dafny, diff semântico por classes, ação atômica com implementação de referência e benchmark IDD não existem hoje.\n• 🔭 Proposta: o benchmark de 1.000 mutações descrito é um desenho de teste; nenhum resultado foi medido. Não há afirmação de taxa de falha.\n• Menções a MCP, Antigravity, Copilot Workspace, Aider e a eventos acadêmicos são contexto; não há vínculo com essas instituições.\n\n⏱️ Capítulos:\n00:00 - Introdução: O Que Falta para o IDD se Tornar Padrão Global?\n00:50 - MCP & Ferramentas Experimentais vs IDD: Encanamento vs Engenharia\n01:33 - Pilar 1: Intent IR Canônica (Limites do Prompt Solto e a AST de Domínio)\n02:13 - Pilar 2: SMT Solvers & Verificação Formal (Limites do Assert_Equal; Z3 e Dafny como Caminho)\n02:51 - Pilar 3: Engenharia Constitucional & Diff Semântico (Limites do Git)\n03:28 - Pilar 4: A Teoria da Ação Atômica (Sagas de Domínio em 4 Fases)\n04:06 - Pilar 5: Benchmark Canônico IDD (Proposta, Além do SWE-bench)\n04:42 - A Linhagem Histórica de 79 Anos (De Vannevar Bush e Engelbart a Alan Kay)\n05:20 - Estratégia de Divulgação e Hashtags\n05:54 - Conclusão: Governar a Intenção como Direção\n\n📺 Playlist desta série especial:\nhttps://www.youtube.com/playlist?list=PLW-P0rMNaKDs\n\n📺 Playlist \"IDD — Base de Conhecimento (Série Completa)\":\nhttps://www.youtube.com/playlist?list=PLkbRMhsplHjaLEi9O7SsJN3pH8TvsS6k7\n\nRepositório do RVM Designações (onde o padrão DAV roda em produção): github.com/EliezerRosa/rvm-designacoes-antigravity\n\nIDD — Intent-Driven Development, na formulação de Eliézer Rosa.\nSelos: ✅ implementado · 🧪 demonstração · 🔭 proposta — Cânone v1.0-rc1\nRepositório: https://github.com/EliezerRosa/idd-ide\n\n#IDD #IntentDrivenDevelopment #SoftwareEngineering #FormalMethods #IntentIR #DomainDrivenDesign #VibeCoding #EliezerRosa",
+    "tags": [
+      "IDD",
+      "Intent-Driven Development",
+      "Eliezer Rosa",
+      "EliezerJPRosa",
+      "Engenharia de Software",
+      "Software Engineering",
+      "Vibe Coding",
+      "Formal Methods",
+      "Intent IR",
+      "Domain-Driven Design",
+      "Distributed Sagas",
+      "Constitutional AI",
+      "Program Synthesis",
+      "Model Context Protocol",
+      "Software 3.0"
+    ],
+    "selo": "🔭",
+    "nota": "Selo 🔭; 5 pilares como 'o que falta'; benchmark 0% de quebra marcado como não executado; 'Avaliação Isenta' qualificada como do autor; UNSAT; tags de autoridade (ICSE, POPL, PLDI, AWS, Stanford DSPy) e Z3/Dafny retiradas; capítulos preservados. Descrição idêntica nas 3 duplicatas."
+  }
+]

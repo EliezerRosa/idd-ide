@@ -1,0 +1,25 @@
+{
+  "schemaVersion": "1.0.0",
+  "createdAt": "2026-10-18T15:59:08.025Z",
+  "project": {
+    "name": "teste_ui_prompt",
+    "width": 320,
+    "height": 240,
+    "frameRate": 10,
+    "totalFrames": 10,
+    "durationSec": 1,
+    "htmlPath": "C:\\Antigravity - IDD Refrigeração\\motion_graphics_renderer\\studio\\temp\\scene_job_prompt_1792339133709.html"
+  },
+  "deliverables": {
+    "videoFile": "final_video.mp4",
+    "videoSizeBytes": 52355,
+    "videoSizeMB": "0.05",
+    "audioFile": null
+  },
+  "renderStats": {
+    "pipelineDurationSec": "14.26",
+    "totalFrames": 10,
+    "fpsAchieved": "0.70",
+    "completedAt": "2026-10-18T15:59:08.026Z"
+  }
+}

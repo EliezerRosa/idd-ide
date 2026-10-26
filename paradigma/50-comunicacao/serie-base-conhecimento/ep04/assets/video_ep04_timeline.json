@@ -1,0 +1,110 @@
+{
+  "projectName": "IDD_Base_Conhecimento_Ep04",
+  "totalDurationSec": 153.12,
+  "items": [
+    {
+      "index": 0,
+      "id": "seg_00_leigo",
+      "who": "leigo",
+      "actor": "Usuária Leiga",
+      "avatar": "leigo",
+      "slide": 1,
+      "text": "Eliézer, nos últimos meses o mundo da tecnologia foi tomado pela febre do chamado Vibe Coding: pessoas gerando milhares de linhas de código apenas trocando mensagens informais com LLMs. Por que os maiores cientistas da computação e a academia alertam que essa abordagem é insustentável para softwares reais?",
+      "wav": "C:\\Antigravity - IDD Refrigeração\\motion_graphics_renderer\\idd_teoria_ep04_assets\\audio\\seg_00_leigo.wav",
+      "startSec": 0.5,
+      "durSec": 19.896,
+      "endSec": 20.396
+    },
+    {
+      "index": 1,
+      "id": "seg_01_eliezer",
+      "who": "eliezer",
+      "actor": "Eliézer Rosa",
+      "avatar": "eliezer",
+      "slide": 1,
+      "text": "Porque modelos de linguagem estatísticos são redes neurais probabilísticas: eles prevêem o próximo token com brilhantismo linguístico, mas não possuem representação interna da verdade lógica nem das leis de conservação do seu negócio. Confiar a arquitetura de uma empresa puramente a um LLM sem amarras formais gera uma dívida técnica silenciosa e explosões de falhas graves.",
+      "wav": "C:\\Antigravity - IDD Refrigeração\\motion_graphics_renderer\\idd_teoria_ep04_assets\\audio\\seg_01_eliezer.wav",
+      "startSec": 21.046,
+      "durSec": 23.256,
+      "endSec": 44.302
+    },
+    {
+      "index": 2,
+      "id": "seg_02_leigo",
+      "who": "leigo",
+      "actor": "Usuária Leiga",
+      "avatar": "leigo",
+      "slide": 2,
+      "text": "E é aqui que os centros de pesquisa como o Google DeepMind e o MIT convergem com a sua proposta: a Inteligência Artificial Neuro-Simbólica! Veja no Slide dois a fusão dessas duas forças!",
+      "wav": "C:\\Antigravity - IDD Refrigeração\\motion_graphics_renderer\\idd_teoria_ep04_assets\\audio\\seg_02_leigo.wav",
+      "startSec": 44.952,
+      "durSec": 12.168,
+      "endSec": 57.12
+    },
+    {
+      "index": 3,
+      "id": "seg_03_eliezer",
+      "who": "eliezer",
+      "actor": "Eliézer Rosa",
+      "avatar": "eliezer",
+      "slide": 2,
+      "text": "Exatamente! A parte Neuro é a rede neural generativa: ela tem empatia, acolhe a linguagem da usuária leiga, transcreve a intenção e propõe soluções criativas. Mas a parte Simbólica é o coração do IDD: são os modelos relacionais, os grafos de domínio e as invariantes matemáticas que impõem o determinismo absoluto!",
+      "wav": "C:\\Antigravity - IDD Refrigeração\\motion_graphics_renderer\\idd_teoria_ep04_assets\\audio\\seg_03_eliezer.wav",
+      "startSec": 57.77,
+      "durSec": 22.296,
+      "endSec": 80.066
+    },
+    {
+      "index": 4,
+      "id": "seg_04_leigo",
+      "who": "leigo",
+      "actor": "Usuária Leiga",
+      "avatar": "leigo",
+      "slide": 3,
+      "text": "Veja que elegância no Slide três! A IA pode gerar a sintaxe que quiser, mas antes de qualquer linha ir para produção, o motor simbólico do IDD submete a proposta a um tribunal de regras relacionais. Se faltar um relacionamento no MER ou se violar uma invariante, o commit é barrado!",
+      "wav": "C:\\Antigravity - IDD Refrigeração\\motion_graphics_renderer\\idd_teoria_ep04_assets\\audio\\seg_04_leigo.wav",
+      "startSec": 80.716,
+      "durSec": 19.224,
+      "endSec": 99.94
+    },
+    {
+      "index": 5,
+      "id": "seg_05_eliezer",
+      "who": "eliezer",
+      "actor": "Eliézer Rosa",
+      "avatar": "eliezer",
+      "slide": 3,
+      "text": "Perfeito! A IA nunca pode ser juíza do próprio trabalho. No Paradigma IDD, a máquina simbólica age como um provador formal: ela ancora a alucinação generativa na física matemática dos dados. É o fim do achismo estatístico na engenharia de missão crítica.",
+      "wav": "C:\\Antigravity - IDD Refrigeração\\motion_graphics_renderer\\idd_teoria_ep04_assets\\audio\\seg_05_eliezer.wav",
+      "startSec": 100.59,
+      "durSec": 19.608,
+      "endSec": 120.198
+    },
+    {
+      "index": 6,
+      "id": "seg_06_leigo",
+      "who": "leigo",
+      "actor": "Usuária Leiga",
+      "avatar": "leigo",
+      "slide": 4,
+      "text": "Isso muda radicalmente o patamar da discussão! No próximo episódio, o zero cinco, nós vamos ver como o IDD substitui o amadorismo do Prompt Engineering por Compiladores de Intenção e Representações Intermediárias rigorosas!",
+      "wav": "C:\\Antigravity - IDD Refrigeração\\motion_graphics_renderer\\idd_teoria_ep04_assets\\audio\\seg_06_leigo.wav",
+      "startSec": 120.848,
+      "durSec": 14.472,
+      "endSec": 135.32
+    },
+    {
+      "index": 7,
+      "id": "seg_07_eliezer",
+      "who": "eliezer",
+      "actor": "Eliézer Rosa",
+      "avatar": "eliezer",
+      "slide": 4,
+      "text": "Com certeza! A engenharia de software do futuro não é escrita em texto manual; ela é compilada a partir da intenção pura. Acompanhe a nossa Base de Conhecimento e domine o fundamento formal da IA!",
+      "wav": "C:\\Antigravity - IDD Refrigeração\\motion_graphics_renderer\\idd_teoria_ep04_assets\\audio\\seg_07_eliezer.wav",
+      "startSec": 135.97,
+      "durSec": 15.0,
+      "endSec": 150.97
+    }
+  ]
+}

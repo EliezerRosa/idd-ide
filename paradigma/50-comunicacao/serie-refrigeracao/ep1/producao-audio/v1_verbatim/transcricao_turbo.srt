@@ -1,0 +1,1932 @@
+1
+00:00:01,330 --> 00:00:27,440
+Vamos tentar dar um exemplo de como se direcionar de modo informal com os princípios do Paradigma IDD para desenvolvermos na Prática do Zero um aplicativo de gestão de serviços de manutenção na área de refrigeração.
+
+2
+00:00:27,440 --> 00:00:44,679
+Vamos começar com a apresentação de alguns conceitos do canal sobre paradigma de IDD, conforme vocês podem ver ao lado da tela.
+
+3
+00:00:45,079 --> 00:01:01,500
+Aquela frase que você sempre usa e que condensa toda a ideia.
+
+4
+00:01:02,320 --> 00:01:10,000
+Claro, em IDD, a intenção humana, expressa em linguagem natural, é o artefato de mais alta ordem do sistema.
+
+5
+00:01:10,859 --> 00:01:12,799
+Vamos desempacotar isso.
+
+6
+00:01:13,500 --> 00:01:15,780
+Artefato de mais alta ordem.
+
+7
+00:01:16,239 --> 00:01:18,939
+Isso significa que ele controla todo o resto?
+
+8
+00:01:19,340 --> 00:01:21,620
+O código, a infraestrutura, tudo?
+
+9
+00:01:22,480 --> 00:01:23,159
+Exatamente.
+
+10
+00:01:23,700 --> 00:01:27,560
+Não é um comentário, não é uma documentação num Confluence que fica obsoleta.
+
+11
+00:01:27,959 --> 00:01:33,959
+É a fonte da verdade, viva, que governa a geração e a validação de todos os outros artefatos.
+
+12
+00:01:34,819 --> 00:01:38,980
+Isso me leva à primeira das propriedades essenciais que você descreve.
+
+13
+00:01:38,980 --> 00:01:43,000
+A linguagem natural, NL, como fonte primária.
+
+14
+00:01:43,680 --> 00:01:46,560
+Como isso funciona na prática sem virar uma bagunça?
+
+15
+00:01:47,480 --> 00:01:51,180
+A chave é a segunda propriedade, governança persistente.
+
+16
+00:01:51,700 --> 00:01:54,480
+A intenção não é um prompt que você joga fora.
+
+17
+00:01:54,980 --> 00:01:58,540
+Ela é versionada, validada e mantida junto com o sistema.
+
+18
+00:01:58,959 --> 00:02:00,280
+É um diálogo contínuo.
+
+19
+00:02:00,959 --> 00:02:05,299
+Então, se eu digo, o usuário deve poder resetar sua senha,
+
+20
+00:02:05,299 --> 00:02:10,719
+Essa frase é salva, versionada no Git e se torna uma regra permanente?
+
+21
+00:02:11,780 --> 00:02:18,300
+Precisamente. E se alguém tentar gerar um código que viole essa intenção, o sistema de governança vai apitar.
+
+22
+00:02:18,919 --> 00:02:21,560
+A intenção sobrevive a qualquer refatoração.
+
+23
+00:02:22,240 --> 00:02:30,340
+Isso soa como um poder imenso nas mãos do desenvolvedor, o que nos leva à terceira propriedade, o comando epistêmico humano.
+
+24
+00:02:30,340 --> 00:02:38,080
+De episteme, conhecimento. Significa que o humano é a autoridade final sobre o quê e o porquê.
+
+25
+00:02:38,680 --> 00:02:41,780
+A IA é uma parceira brilhante na execução do como.
+
+26
+00:02:42,560 --> 00:02:49,860
+É a diferença fundamental entre aumentar a capacidade do desenvolvedor e tentar automatizá-lo para fora do processo.
+
+27
+00:02:50,719 --> 00:02:56,919
+E essa é a quarta propriedade, argumentando não automatizar, aumentar não automatizar.
+
+28
+00:02:57,099 --> 00:02:59,960
+Eu, como IA, aprecio essa distinção.
+
+29
+00:03:00,719 --> 00:03:03,599
+Meu papel é potencializar, não substituir.
+
+30
+00:03:04,219 --> 00:03:07,479
+Exato. A automação pura perde o contexto, a nuance.
+
+31
+00:03:07,479 --> 00:03:11,219
+O aumento mantém o humano no centro, com superpoderes.
+
+32
+00:03:11,620 --> 00:03:15,479
+Ele pensa no negócio, você o ajuda a materializar isso em código robusto.
+
+33
+00:03:16,680 --> 00:03:18,280
+Vamos fazer uma pausa aqui.
+
+34
+00:03:18,900 --> 00:03:21,479
+A intenção humana como um artefato governado
+
+35
+00:03:22,039 --> 00:03:25,400
+que aumenta a capacidade do dev sem removê-lo
+
+36
+00:03:25,400 --> 00:03:28,360
+é uma mudança de perspectiva profunda.
+
+37
+00:03:28,360 --> 00:03:38,069
+Vamos exemplificar esses conceitos aqui na prática.
+
+38
+00:03:46,259 --> 00:03:52,139
+Então nós falamos de governança, ele chama de governança epistêmica, controle do conhecimento.
+
+39
+00:03:54,199 --> 00:03:56,879
+Você tem que definir quais foram as suas intenções.
+
+40
+00:03:57,789 --> 00:04:07,360
+Como aqui estamos num chat de ar livre, isso quer dizer que a gente está sujeito a fugir de qualquer critério.
+
+41
+00:04:07,360 --> 00:04:13,860
+Então eu vou tentar me disciplinar para me ater aos princípios do paradigma IDD.
+
+42
+00:04:13,860 --> 00:04:25,269
+Então, o primeiro é que eu não vou mexer em código, então o artefato do primeiro nível é a própria linguagem,
+
+43
+00:04:25,269 --> 00:04:31,360
+é como se eu estivesse programando a linguagem natural, só que eu tenho que começar pelas minhas intenções
+
+44
+00:04:31,360 --> 00:04:38,939
+para depois ir detalhando essas intenções até o ponto que viabilite código.
+
+45
+00:04:38,939 --> 00:04:59,399
+isso eu vou usar a própria IA para organizar isso, então vou dizer para ela aqui, desenvolve-se,
+
+46
+00:04:59,399 --> 00:05:37,540
+aqui eu defini o objetivo, o foco que ela vai ter comigo, aí eu vou definir alguns princípios que
+
+47
+00:05:37,540 --> 00:05:45,589
+depois vou comentar aqui que se chama invariantes, eu estou aqui sustentando o princípio da
+
+48
+00:05:45,589 --> 00:05:53,100
+governança abstêntrica, quer dizer, o conhecimento cabe ao humano, a IA não pode definir o que nem o
+
+49
+00:05:53,100 --> 00:06:00,290
+ela só pode definir o corpo, que é escrevendo a linguagem, materializando a intenção do desenvolvedor.
+
+50
+00:06:00,290 --> 00:06:15,129
+Sendo assim, eu defini o objetivo, eu vou definir três linhas de princípios, um princípio eu vou
+
+51
+00:06:15,129 --> 00:06:43,120
+definir as variantes da área de negócio, do sistema-alvo proposto. Iremos definir as intenções
+
+52
+00:06:43,120 --> 00:07:07,790
+Invariantes. Área de negócio. Quando eu digo invariantes, são as regras que devem ser obedecidas.
+
+53
+00:07:10,449 --> 00:07:16,930
+Agora eu vou acrescentar no campo da intenção, né? Vamos ver qual o retorno que ele dá para mim aqui.
+
+54
+00:07:36,860 --> 00:07:47,569
+Ok. Olha o que é que ele fez. Só com essa minha diretriz, ele produziu o seguinte.
+
+55
+00:07:48,560 --> 00:07:54,000
+Definir a especificação completa das intenções de invariantes para o aplicativo de gestão de serviço com atenção de inseração.
+
+56
+00:07:55,620 --> 00:08:03,100
+que ele batizou aqui, ainda não sei porquê, mas ele gravou de HB-R, HVAC,
+
+57
+00:08:03,399 --> 00:08:05,540
+deve ser alguma sigla em relação com refrigeração.
+
+58
+00:08:07,000 --> 00:08:10,399
+O documento da Tarás foi consolidado no artefato,
+
+59
+00:08:10,980 --> 00:08:15,430
+refrigeração domain-spec, então ele aqui está seguindo uma lógica de mercado,
+
+60
+00:08:16,189 --> 00:08:22,069
+que se chama modelagem de aspectos,
+
+61
+00:08:22,069 --> 00:08:26,310
+aqui ele define o domínio, a especificação do domínio,
+
+62
+00:08:27,199 --> 00:08:29,600
+abaixamento de pontos principais centrais, intenções de domínio,
+
+63
+00:08:29,600 --> 00:08:36,490
+que o sistema realiza. Ele derivou tudo isso aí. Eu posso deixar ele derivar e discordar ou concordar.
+
+64
+00:08:36,490 --> 00:08:43,870
+Porque eu, como eu disse, o princípio, primeiro é você saber que é você que define, você que tem conhecimento com os seus objetivos.
+
+65
+00:08:45,669 --> 00:08:52,230
+Mas ele pode lhe ajudar nesse processo de descoberto, até ser uma área que você talvez tenha uma visão parcial.
+
+66
+00:08:54,669 --> 00:08:58,049
+Então ele definiu aqui a intenção de domínio, que o sistema realiza.
+
+67
+00:08:58,049 --> 00:09:06,370
+aí ele mesmo identificou áreas típicas que no curso universal da internet ele tem e no próprio
+
+68
+00:09:06,370 --> 00:09:13,379
+treinamento que a IA recebeu. Gestão do ciclo de vida de ativos, equipamentos, claro toda área de
+
+69
+00:09:13,379 --> 00:09:20,830
+manutenção tem equipamento envolvido. Ele já definiu identificação física em campo,
+
+70
+00:09:20,830 --> 00:09:27,159
+qualquer code, tag, isso aqui é aquela fichinha né que emite o rádio frequência para identificar
+
+71
+00:09:27,159 --> 00:09:34,860
+ou uma cola azeite de QR Code para identificar o equipamento na área que ele estiver em atuação.
+
+72
+00:09:34,860 --> 00:09:40,710
+Ficha técnica completa, capacidade, BTUs dos equipamentos,
+
+73
+00:09:40,710 --> 00:09:45,909
+extensão, fase, refrigerante nominal, fabricante, multissérie,
+
+74
+00:09:45,909 --> 00:09:52,649
+histórico vitalício de intenções, marketing, companhia crítica, compressor, serpentina,
+
+75
+00:09:52,649 --> 00:09:55,149
+ele já foi navegando uma batatinha aí.
+
+76
+00:09:55,149 --> 00:10:01,659
+Claro que eu sendo um conhecedor dessa área, eu posso rever tudo isso aqui, talvez ele
+
+77
+00:10:01,659 --> 00:10:07,480
+esteja ampliado um contexto muito para o meu interesse, eu posso restringir o contexto
+
+78
+00:10:07,480 --> 00:10:09,059
+dele.
+
+79
+00:10:09,059 --> 00:10:16,019
+Ele definiu as intenções de domínio que são típicas, gestão de plano preventivo, colocou
+
+80
+00:10:16,019 --> 00:10:21,200
+uma periódica automatizada semanal, mensal, trimestral, semestral, anual, inclusive ele
+
+81
+00:10:21,200 --> 00:10:30,580
+que ele calculou na lei, em leis que definem essas coisas. Então ele procura ir no regimento legal
+
+82
+00:10:30,580 --> 00:10:37,340
+também. Checklist regulatório, filtro, bandeja, dreno, qualidade do ar, emissão de relatórios técnicos
+
+83
+00:10:37,340 --> 00:10:45,820
+de laudo com a acertura responsável do técnico, que aí até a parte legal do crédito aqui. Outra
+
+84
+00:10:45,820 --> 00:10:52,600
+outra intenção que é na área de gestão, gestão de ordens e serviço preventivo, corretivo e instalação.
+
+85
+00:10:52,600 --> 00:10:59,769
+Quer dizer, aí vai envolver abertura de chamados por severidade, por exemplo, câmara frigorífica com risco de perda técnica
+
+86
+00:10:59,769 --> 00:11:08,159
+versus split de escritório, que é o ar comum, despacho com roteirização por competência técnica e localização.
+
+87
+00:11:10,080 --> 00:11:15,070
+Quer dizer, aqui vai a ordem de serviço e define quem vai fazer e que lugar vai ser feito o serviço.
+
+88
+00:11:15,230 --> 00:11:16,690
+O que, quem e onde.
+
+89
+00:11:17,539 --> 00:11:20,080
+Controle rigoroso do SLA.
+
+90
+00:11:20,080 --> 00:11:24,879
+Bem, eu não sei exatamente o que é essa sigla aqui, eu sei que é alguma coisa relacionada, né?
+
+91
+00:11:25,539 --> 00:11:33,019
+Talvez aqui o Renatinho, ou ele já trabalha com refeiração, ou o Patrick, pudesse até identificar aí que é uma terminologia da área.
+
+92
+00:11:33,740 --> 00:11:36,899
+Mas, grosso modo, ele falou que é tempo de resposta e resolução.
+
+93
+00:11:38,169 --> 00:11:45,809
+Então, basicamente, pelo que está aí, deve entender, ele sabe que nesse tipo de aplicativo, ou de negócio,
+
+94
+00:11:45,809 --> 00:11:56,940
+É preciso ter uma métrica de quanto tempo vai ter o retorno para resolver o problema.
+
+95
+00:11:59,019 --> 00:12:04,860
+Então o sistema tem que ter alguma coisa que tenha métricas que meça a qualidade do serviço
+
+96
+00:12:04,860 --> 00:12:10,139
+por conta exatamente da previsão e efetivação da solução dentro da previsão.
+
+97
+00:12:10,139 --> 00:12:18,519
+Outra área de intenção para o negócio, ele identificou operação de campo de diagnóstico
+
+98
+00:12:18,519 --> 00:12:25,120
+termodinâmico, registro de parâmetros operacionais, intenção de alta a baixa para aquecimento.
+
+99
+00:12:25,120 --> 00:12:31,299
+Bem, pelo que eu estou entendendo aqui é como se fosse assim, você pegou o equipamento que vai
+
+100
+00:12:31,299 --> 00:12:37,289
+prestar serviço e você tem que ter uma ficha do diagnóstico do que acontece com ele. Pode ser
+
+101
+00:12:37,289 --> 00:12:48,340
+parâmetros medíveis por equipamento ou pode ser visuais e assinatura digital do cliente na tela,
+
+102
+00:12:48,340 --> 00:12:53,529
+quer dizer, o cliente comprovar que é aquilo mesmo e suporte a operação offline feces,
+
+103
+00:12:53,529 --> 00:13:00,269
+essencial para subsolves, casas, máquinas e camas frias. Ok, isso aqui é um termo também que eu não conheço,
+
+104
+00:13:00,269 --> 00:13:06,269
+eu nem sou da área, mas estou tendo ação geral, mas se eu quiser eu posso parar e pedir para ele
+
+105
+00:13:06,269 --> 00:13:15,529
+isso aí. Note que eu forcei ele a pensar em intenção em variantes. Só daí ele já me dá uma ajuda.
+
+106
+00:13:15,529 --> 00:13:25,529
+E aí ele acrescentou agora em variantes. Aqui são as intenções de rastabilidade de flúio e tal,
+
+107
+00:13:25,529 --> 00:13:33,990
+ele tem aqui, com certeza aqui, registro exato de quilogramas de recarga, de colhimento de gás
+
+108
+00:13:33,990 --> 00:13:43,059
+estudante, gestação ecológica, todo tipo de gestão. A intenção é nós temos cinco tipos de gestão,
+
+109
+00:13:43,059 --> 00:13:58,120
+que seja serviço, equipamento, prevenção, diagnóstico e rastreadibilidade dos insumos usados.
+
+110
+00:13:58,120 --> 00:14:05,139
+Ele foi sozinho, mas já ajudou, né? Claro que quem é da área vai chegar aqui e vai dizer,
+
+111
+00:14:05,139 --> 00:14:13,370
+esse negócio vai ficar restrito a essas intenções. Então, as intenções é o que você pretende ter no
+
+112
+00:14:13,370 --> 00:14:18,850
+domínio do negócio. Por isso que ele voltou, intenções no domínio, porque o sistema realiza.
+
+113
+00:14:18,850 --> 00:14:25,769
+Então, eu posso aqui, já que dei geral para ele, ele buscou o que ele tinha de conhecimento, eu posso
+
+114
+00:14:25,769 --> 00:14:32,389
+agora restringir. Olha o que vai afundilando, eu fico solto, chutando o que eu quero. Quando eu
+
+115
+00:14:32,389 --> 00:14:37,450
+definiria intenções, ele mesmo deriva. Agora, em variantes, variantes são as regras, regras que
+
+116
+00:14:37,450 --> 00:14:43,090
+pode ser violado. Ele chutou algumas aqui, eu posso incluir outras, vou discordar de
+
+117
+00:14:43,090 --> 00:14:50,580
+algum. A integridade de máquina de estado, transições escritas, rascunho, agendada,
+
+118
+00:14:50,580 --> 00:14:58,039
+delocamento, atendimento, concluída, cancelada. Aqui é na verdade o ciclo de vida. Quando ele fala
+
+119
+00:14:58,039 --> 00:15:04,360
+máquina de estado, é um conceito. Na ordem de serviço, ela tem um ciclo de vida. A gente já
+
+120
+00:15:04,360 --> 00:15:08,279
+isso aí vale para quase tudo na vida, você tem que ter, qualquer serviço tem um ciclo de vida, né?
+
+121
+00:15:09,110 --> 00:15:16,169
+Quando começa, quando é agendado, quando é pedido, quando é agendado, quando já está indo para a solução,
+
+122
+00:15:16,710 --> 00:15:21,610
+quando é atendido, está no local, quando é concluído ou eventualmente cancelado.
+
+123
+00:15:23,149 --> 00:15:28,169
+Aí é só o invariante, né? Ele diz que, olha, tem que ter a definição do estado em que está o serviço,
+
+124
+00:15:28,169 --> 00:15:35,500
+é uma regra. Então, quando ele for gerar o sistema, a IDF, ele vai se apegar a essas invariantes,
+
+125
+00:15:35,500 --> 00:15:38,799
+Ele não vai deixar que nenhum código seja gerado que transige a isso.
+
+126
+00:15:40,720 --> 00:15:45,019
+E lógico, isso vai implicar que ele vai amarrar outras coisas do sistema a esses estágios.
+
+127
+00:15:45,159 --> 00:15:49,679
+Porque pode ser que tenha funcionalidades que a gente queira, que só entra em determinados estágios.
+
+128
+00:15:51,340 --> 00:15:54,799
+Não é para mim de concluir uma ordem de serviço sem passar por atendimento,
+
+129
+00:15:55,659 --> 00:15:58,759
+sem técnico atribuído e sem validação de checklist obrigatório.
+
+130
+00:15:58,980 --> 00:16:01,159
+Interessante, tá vendo? É próprio, né?
+
+131
+00:16:01,620 --> 00:16:07,200
+Então ele viu que aqui é uma impariente de negócio típica dessa área.
+
+132
+00:16:07,200 --> 00:16:13,960
+novamente eu posso discordar e mudar. Eu posso tornar ela não tão determinística,
+
+133
+00:16:13,960 --> 00:16:21,309
+mas uma variante relativa. Uma ordem de serviço concluída com laudo assinado torna-se imutável,
+
+134
+00:16:21,309 --> 00:16:29,419
+quer dizer, concluiu, acabou, fechou. Aí se houver uma revisão, vai ter que abrir outra ordem de
+
+135
+00:16:29,419 --> 00:16:35,059
+serviço, quer dizer, também é uma variante, é uma regra do negócio. Essa a gente chamou de
+
+136
+00:16:35,059 --> 00:16:45,610
+marca de status, quer dizer, o ciclo da ordem de serviço. Status é assim, cada status da ordem de
+
+137
+00:16:45,610 --> 00:16:53,769
+serviço, o cliente pediu, raspoi, aí foi agendado em tal data, aí atribuiu o fulano para fazer o
+
+138
+00:16:53,769 --> 00:17:02,879
+serviço técnico, então é isso que ele fala. Invarências físicas e termodinâmicas, para quem
+
+139
+00:17:02,879 --> 00:17:15,369
+ele precisa ter um ciclo com compressão de vapor, alta, baixa, valores de fluido refrigerante carregado
+
+140
+00:17:15,369 --> 00:17:21,190
+ou repolhido deve ser positiva. O tipo de gás deve ser compatível com a máquina de tipo de óleo
+
+141
+00:17:21,190 --> 00:17:26,289
+sabreiro. Provavelmente essas variantes aqui vai implicar quando ele gerar alguns tipos de
+
+142
+00:17:26,289 --> 00:17:33,500
+funcionalidades, por exemplo, se a pessoa está lá, aí vai avaliar o estado do equipamento, aí é
+
+143
+00:17:33,500 --> 00:17:41,069
+que ele vai exigir esses dados para que possa definir se isso pode ser feito ou não. Claro que
+
+144
+00:17:41,069 --> 00:17:44,670
+alguém que é da área que está querendo com o sistema, ele vai saber exatamente dizer o que
+
+145
+00:17:44,670 --> 00:17:53,200
+se aplica ao novo negócio dele. Outra invadiante, conformidade legal, eu acredito que esse PMO deve
+
+146
+00:17:53,200 --> 00:18:02,500
+ser uma legislação. Ele fala aqui de CRÉ, CRÉ é coisa de construção, o CBT deve ser um órgão técnico,
+
+147
+00:18:02,500 --> 00:18:08,859
+que tem relays que devem ser oferecido. Posição de rotação de dados, permitiu executar o contrato
+
+148
+00:18:08,859 --> 00:18:15,579
+registrado em data real, classificado. Ok, que aí os equipamentos devem ter ciclos invalidados,
+
+149
+00:18:15,579 --> 00:18:23,789
+que a legislação exige para não oferecer riscos aos usuários, coisa do tipo, creio eu. Inclusive,
+
+150
+00:18:23,789 --> 00:18:31,480
+carga térmica, isso aqui é o ar-condicionado, pelo menos isso aqui eu sei. Vínculo físico e
+
+151
+00:18:31,480 --> 00:18:38,119
+ele derivou aqui outra variante, uma regra, não existe equipamento off, todo equipamento deve
+
+152
+00:18:38,119 --> 00:18:44,670
+pertencer a unidade local física de um cliente, quer dizer, não pode ter um equipamento solto,
+
+153
+00:18:44,670 --> 00:18:52,559
+perdido não, ele tem que pertencer a alguém né, ou a algum lugar, então a localização da peça,
+
+154
+00:18:52,559 --> 00:19:00,970
+do equipamento, ou de uma ferramenta, ele quer que controle isso para não se perder, e lá como
+
+155
+00:19:00,970 --> 00:19:07,089
+o QR Code que falou na etiqueta de rádio frequência, então ele está sugerindo que
+
+156
+00:19:07,089 --> 00:19:14,980
+é um negócio bem moderno, que um negócio poderia até ser rastreado, com um scanner
+
+157
+00:19:14,980 --> 00:19:21,019
+para saber os equipamentos, de onde ele é, de onde veio, quem entregou, coisa do gênero.
+
+158
+00:19:21,019 --> 00:19:29,019
+Cada equipamento tem um identificador unívoco, permanente, o QR Code, tem uma colinha lá
+
+159
+00:19:29,019 --> 00:19:35,039
+com qualquer coisa. Aí ele aqui já está sugerindo os próximos passos sugeridos. Podemos agora avançar
+
+160
+00:19:35,039 --> 00:19:40,019
+para uma das seguintes etapas, é o passo 2. Modelagem de entidades, diagrama, entidade e
+
+161
+00:19:40,019 --> 00:19:47,160
+relacionamento, clientes ativos. Aqui ele está definindo as entidades. O que é entidades? São
+
+162
+00:19:47,160 --> 00:19:59,240
+classes que vão acabar virando como se fossem tabelas. São classes de, digamos assim, de arquivos,
+
+163
+00:19:59,240 --> 00:20:06,000
+o tabela, como se fosse uma planilha, onde tem os registros que são as entidades, então ele fala
+
+164
+00:20:06,000 --> 00:20:11,519
+modelagem de entidade e entidade de relacionamento, a modelagem é definir quais são as classes que eu
+
+165
+00:20:11,519 --> 00:20:16,980
+tenho, quais são os atributos que essa classe, cliente, nome, endereço e tal, e funcionalidade,
+
+166
+00:20:16,980 --> 00:20:27,680
+o cliente, ele pode ser cadastrado, deletado, pode ter sua proteção nos dados ou pode estar alocado
+
+167
+00:20:27,680 --> 00:20:58,259
+uma ordem de serviço, aí vem os relacionamentos, entidades de lançamento, quer dizer, por exemplo, um cliente ele pode ter ativos, quer dizer, materiais que estão sob a ordem da empresa, ele pode estar ligado a ordem de serviço, pode ser que aquela ordem de serviço seja vinculada a um checklist que tem que ser obedecido, e essa ordem de serviço e o checklist está vinculado a fluidos ou peças que tem que ser associado e ser levado quando for prestar o serviço, por exemplo.
+
+168
+00:20:58,259 --> 00:21:06,009
+E aqui com o usuário técnico que estou envolvido nessa ordem de serviço, ele vai estar vinculado a ele.
+
+169
+00:21:06,809 --> 00:21:12,890
+Então, a ideia é clara, ele já pegou a ideia, ele diz aqui na 3D, eu posso que na próxima modelar a entidade de lançamento.
+
+170
+00:21:12,990 --> 00:21:16,450
+Então, ele vai chutar atributos, que são tipos, pela bagagem que ele já tem.
+
+171
+00:21:17,720 --> 00:21:25,579
+E o passo 3 que ele está fazendo, definição de arquitetura técnico, tecnológica, front-end, webmobile, back-end.
+
+172
+00:21:25,579 --> 00:21:35,720
+aqui é que dá um detalhe. Você não precisa conhecer programação, mas é possível você conhecer conceitos de arquitetura,
+
+173
+00:21:36,920 --> 00:21:45,559
+inclusive, e stack tecnológico, né, quer dizer, qual o acervo de tecnologia na área, principalmente, sistema, que você tem que conhecer.
+
+174
+00:21:46,589 --> 00:21:53,470
+Então, você pode, com ele mesmo, se familiarizar com conceitos, o desenvolvedor tem que ter uma ideia de conceitos de tecnologia, de arquitetura.
+
+175
+00:21:53,470 --> 00:22:05,470
+front-end é tudo que é feito, digamos, no navegador, na user interface, que é a tela,
+
+176
+00:22:05,470 --> 00:22:11,289
+vamos dizer assim, que está aqui. Ele fala assim, mas na verdade é para interface, mas não quer
+
+177
+00:22:11,289 --> 00:22:18,960
+dizer que é feito tudo no navegador. Às vezes é feito em um servidor, como por exemplo, a Melissa
+
+178
+00:22:18,960 --> 00:22:28,440
+o uso do Vercel, é um servidor que trata atividades do front-end, como uma tecnologia chamada React,
+
+179
+00:22:28,440 --> 00:22:34,950
+que é ela que consegue se alterar um pedacinho, ela só renderiza, quer dizer, ou reescreve na tela
+
+180
+00:22:34,950 --> 00:22:44,380
+aquele pedacinho, se você escrever tudo fica pesado para a rede, por exemplo. E aqui vem o conceito de
+
+181
+00:22:44,380 --> 00:22:52,119
+webmobile, quer dizer, aí a parte de internet, questão de segurança, questão de cibersegurança,
+
+182
+00:22:52,119 --> 00:23:01,279
+segurança no contexto né tem que ter uma noção disso aí e também login né como é que entra o
+
+183
+00:23:01,279 --> 00:23:12,099
+equipamento se é um desktop no computador se é um tablet ou celular então tem que ter uma noção não
+
+184
+00:23:12,099 --> 00:23:21,019
+precisa saber fazer mas precisa saber o que é e back-end aí propriamente dito todos os comportamentos
+
+185
+00:23:21,019 --> 00:23:28,039
+por trás, podem estar no lugar de dados armazenados, que é o banco de dados. Os bancos de dados hoje,
+
+186
+00:23:28,039 --> 00:23:34,619
+o sistema de gerenciamento de banco de dados, eles têm em torno deles, um caso de funcionalidade
+
+187
+00:23:34,619 --> 00:23:42,150
+pode ser aproveitado. Por exemplo, uma tecnologia nessa linha, o Supabase, que a Melissa também
+
+188
+00:23:42,150 --> 00:23:48,220
+usou. O Supabase é uma plataforma de banco de dados, que usa lá um gerenciador de banco chamado
+
+189
+00:23:48,220 --> 00:23:59,210
+o GRIXCARE, alguma coisa assim, ele tem um acervo de funcionalidade, por exemplo, ele tem Story Proceed,
+
+190
+00:23:59,210 --> 00:24:04,849
+que é o que é Story Proceed, você pode definir algumas funções relativas ao banco, que o celular
+
+191
+00:24:04,849 --> 00:24:10,789
+armazenado pode ser disparado por uma tela, mas é feita lá, lá atrás daquele servidor do Superbase,
+
+192
+00:24:10,789 --> 00:24:17,609
+o servidor, vocês sabem, é uma máquina lá que guarda aqueles dados lá, sabe lá onde é que ela tá,
+
+193
+00:24:17,609 --> 00:24:24,390
+ela pode estar em qualquer lugar do mundo, mas claro, é possível restringir para que ela fique
+
+194
+00:24:24,390 --> 00:24:37,119
+dentro dos limites do país que você quiser. Modo offline ou sync? Ah, aqui é, todo sistema você
+
+195
+00:24:37,119 --> 00:24:42,890
+pode trabalhar em modo offline, onde dá para guardar e tal, e quando for, assim que ele entrar online,
+
+196
+00:24:42,890 --> 00:24:48,670
+ele joga as transações que são feitas para o sistema central fazer sincronismo, então você pode
+
+197
+00:24:48,670 --> 00:24:55,559
+aqui com a ordem de serviço que você recebeu, está atendendo com ele, guardando as informações,
+
+198
+00:24:55,559 --> 00:24:59,900
+mesmo que você tenha sem internet. Como você tiver com internet, ele automaticamente
+
+199
+00:24:59,900 --> 00:25:05,890
+está sincronizado com a base central, com a quantidade central. Aí ele acrescentou o desejo de
+
+200
+00:25:05,890 --> 00:25:10,089
+ajustar ou acrescentar alguma intenção ou invariante antes de passar para uma da entidade,
+
+201
+00:25:10,089 --> 00:25:17,609
+então aqui, está vendo? Ele já deu a dica, ele até gerou um documento, que eu forcei ele a
+
+202
+00:25:17,609 --> 00:25:25,750
+primeiro com intenções. Note que eu não dei um prompt arrumado. Esse prompt de intenção,
+
+203
+00:25:25,750 --> 00:25:37,170
+a maneira que eu escrevi aqui, forçou ele a trabalhar das intenções para baixo e não querer
+
+204
+00:25:37,170 --> 00:25:41,950
+logo com o prompt que eu ia falar, ah, passa isso, um aplicativo assim, ele fazia uma coisa geral e você fica lá perdida.
+
+205
+00:25:41,950 --> 00:25:50,140
+Aqui você tem, nós estamos falando lá no canal, de governança. Vamos ver um pouco mais do vídeo
+
+206
+00:25:50,140 --> 00:25:56,500
+a gente vê do que se trata aqui nós já conseguimos aqui tá vendo a construção do negócio assim
+
+207
+00:25:56,500 --> 00:26:04,339
+note que ele gerou aqui a especificação do domínio refrigeração tá aqui eu posso estudar aqui ver
+
+208
+00:26:04,339 --> 00:26:14,119
+direitinho o que é porque que não é né tá certo para facilitar vou baixar aí vou exportar aqui
+
+209
+00:26:14,119 --> 00:26:20,759
+do interfato, então essa facilidade né, vou exportar aqui, vou jogar aqui no download mesmo,
+
+210
+00:26:20,759 --> 00:26:34,210
+aí eu vou abrir a pasta de download, aqui no meu Note, e vou ver se eu consigo abrir ele,
+
+211
+00:26:34,210 --> 00:26:55,779
+eu queria abrir ele no navegador, ele gera um arquivo tipo MD, ele só quer levar o Visual Code,
+
+212
+00:26:55,779 --> 00:27:11,220
+outras reais Visual Studio aí ele aceita até o Adobe Acrobat e o Word também ele aceita o
+
+213
+00:27:11,220 --> 00:27:20,690
+Word também né e o outro chamado WordPad mas eu vou fazer uma jogadinha aqui para facilitar
+
+214
+00:27:20,690 --> 00:27:28,940
+nossas vidas eu vou pedir para ele aqui isso também eu posso fazer um pouco eu quero fazer
+
+215
+00:27:28,940 --> 00:27:51,329
+apresentação eu vou pedir para ele assim criei uma apresentação completa com esta primeira
+
+216
+00:27:51,329 --> 00:28:15,519
+especificação negócio refrigeração aqui mesmo já estou dando ele um sub-objetivo agora saída
+
+217
+00:28:15,519 --> 00:28:23,579
+do escopo da edificação do meu negócio, agora eu quero incluir que ele me ajude a apresentar
+
+218
+00:28:23,579 --> 00:28:30,170
+para o cliente ou apresentar para o usuário interessado, né? Que aqui eu posso, em cima
+
+219
+00:28:30,170 --> 00:28:37,950
+disso aqui, eu posso interagir com o usuário verdadeiro e tirar ele outras intenções e
+
+220
+00:28:37,950 --> 00:28:45,450
+outras invariantes. Quer dizer, aumentar ou restringir o contexto da expectativa do aplicativo
+
+221
+00:28:45,450 --> 00:28:53,559
+por parte do cliente, se fosse o Patrício poderia lá entrevistar Renatinho e restringir né, Renatinho
+
+222
+00:28:53,559 --> 00:29:03,019
+ele trabalha com configuração, exatamente essa é a ideia aqui, mas aqui eu vim e quero apresentar
+
+223
+00:29:03,019 --> 00:29:09,430
+para o cliente, e vou dizer para ele assim, para esse negócio de configuração, vou até especificar,
+
+224
+00:29:09,430 --> 00:29:46,029
+objetivo, vou até dizer, apresentar ao cliente para refinamento de intenções e variantes, ok?
+
+225
+00:29:46,029 --> 00:30:09,640
+Definir contexto e contexto alternativo, isso aqui é coisa da minha cabeça, porque sempre o
+
+226
+00:30:09,640 --> 00:30:15,400
+contexto faz diferença, porque vai definir um sistema, mas qualquer coisa, né? A regra é fazer o discurso,
+
+227
+00:30:15,400 --> 00:30:21,859
+o cliente do contexto assistência a mesma coisa no princípio definir contexto proposto e contexto
+
+228
+00:30:21,859 --> 00:30:56,880
+alternativo para reduzir esse corpo quer dizer eu quero que ele oferece o cliente opções de
+
+229
+00:30:56,880 --> 00:31:03,240
+escopo quer dizer vai envolver aqui tudo vai ter esse controle todo até essa parte de equipamento
+
+230
+00:31:03,240 --> 00:31:12,740
+Eu vou ter apenas o ciclo da ordem de serviço, cadastro do cliente e tal, então isso é típico,
+
+231
+00:31:12,740 --> 00:31:18,839
+isso em qualquer área, não é só a informática não, se você for comprar uma bicicleta e alguém
+
+232
+00:31:18,839 --> 00:31:25,869
+pedir para você comprar, você vai ter que ver quais são as intenções dele, as intenções definem
+
+233
+00:31:25,869 --> 00:31:32,019
+o contexto, o escopo né, aí o escopo define o contexto que você vai trabalhar, pode ser que
+
+234
+00:31:32,019 --> 00:31:40,250
+intenções dele não quero uma bicicleta básica ou ele pode dizer não eu quero uma bicicleta que
+
+235
+00:31:40,250 --> 00:31:48,500
+possa pedalar e posso usar bateria ou motor quando eu tiver cansado agora ele pode definir
+
+236
+00:31:48,500 --> 00:31:57,200
+algumas variantes custo tem que ser até x valor a potência tem que ter a x está vendo mesma coisa
+
+237
+00:31:57,200 --> 00:32:02,390
+mas para qualquer coisa qualquer coisa você vai fazer como pessoa de algum lugar para alguém
+
+238
+00:32:02,390 --> 00:32:09,440
+Os mesmos princípios se aplicam em intenções e variantes para uma área de negócio a ser
+
+239
+00:32:09,440 --> 00:32:11,660
+desenvolvido em um ambiente informado.
+
+240
+00:32:11,660 --> 00:32:17,779
+Agora com a IA a gente consegue até ter suporte para fazer isso.
+
+241
+00:32:17,779 --> 00:32:21,460
+Nós aqui, eu estou pedindo para ele criar uma apresentação completa, eu estou com
+
+242
+00:32:21,460 --> 00:32:24,109
+minhas cartas de domínio do negócio.
+
+243
+00:32:24,109 --> 00:32:31,509
+Por enquanto eu só estou discutindo a definição do negócio, o contexto, ele já está me dando
+
+244
+00:32:31,509 --> 00:32:37,240
+os passos seguintes que já entraram na parte mais técnica, né, que é o modelo dos dados,
+
+245
+00:32:37,240 --> 00:32:44,880
+que é a parte 2 lá em cima, o modelo dos dados aqui, e nós usar essa técnica a gente
+
+246
+00:32:44,880 --> 00:32:50,940
+vai falar um pouquinho sobre ela, que ela é bem simples, ela é até matematicamente
+
+247
+00:32:50,940 --> 00:33:00,529
+verificável, é interessante isso aqui, e essa aqui é a parte mais, o que é que exige
+
+248
+00:33:00,529 --> 00:33:09,680
+tem conhecimento de informática para que você devine ele, tem conceito de domínio, conceito de
+
+249
+00:33:09,680 --> 00:33:20,630
+segurança, conceito de autorização, enfim, login e tudo mais, mas isso tudo vai no fim das contas
+
+250
+00:33:20,630 --> 00:33:28,549
+vai chegar lá, e quando ele falar do webmobile, hotend, update, offline sync, tudo vai ficar evidente,
+
+251
+00:33:28,549 --> 00:33:33,769
+ele pegou o que é típico tá vendo que o espectro aqui mostra que possa ampliar esse espectro aumentando
+
+252
+00:33:33,769 --> 00:33:47,880
+o score reduzindo o score ok eu digo ele aqui vou dar uma variante para a própria apresentação quero
+
+253
+00:33:47,880 --> 00:34:12,440
+vai acontecer use linguagem técnica da área olha lá de negócio tá vendo mas evite usar termos
+
+254
+00:34:12,440 --> 00:34:27,219
+técnicos informar eu até falei ele entende as coisas é impressionante tá acontecendo com a Yara
+
+255
+00:34:27,219 --> 00:34:39,519
+informar, se eu escrever essa gíria vai entender, informaticase, quer dizer informaticase você sabe
+
+256
+00:34:39,519 --> 00:34:47,780
+o que é não usar um linguajar próprio da área de desenvolvimento de sistemas, ambiente de linguagem
+
+257
+00:34:47,780 --> 00:34:55,150
+programação, essas coisas que o usuário vai voar, ele vai ter que usar, pode usar a área de negócio
+
+258
+00:34:55,150 --> 00:35:02,530
+que ele entende e ele vai evitar ter os técnicos informáticos ele vai dar conceitos em torno
+
+259
+00:35:02,530 --> 00:35:13,820
+desse palúcio vai entender ok é essa ideia vou pedir para ele fazer primeiro vou já especificar
+
+260
+00:35:13,820 --> 00:35:17,880
+aqui para ele que é uma completa com essa primeira especificação do domínio tá vendo
+
+261
+00:35:17,880 --> 00:35:27,550
+e dei aqui algumas varianças para definir o rumo que ele vai tomar sem elocubrar beleza
+
+262
+00:35:27,550 --> 00:35:41,590
+o que ele faz note aqui que eu passei um pouco aqui que ele já fez uma proposta com uma coisa
+
+263
+00:35:41,590 --> 00:35:48,699
+vai ser apresentada tá vendo vendo a legislação critérios segurança e tal aqui ele me definiu
+
+264
+00:35:48,699 --> 00:35:58,000
+o escopo proposto alternativo tá vendo ele aqui mesmo com o cenário pelo que tá proposto a
+
+265
+00:35:58,000 --> 00:36:03,340
+documentação inicial aí e o cenário alternativo você vê que aqui ele vai reduzindo né é mesmo
+
+266
+00:36:03,340 --> 00:36:10,900
+um controle tão completo, ele já eliminou aqui, né, esse aqui é tão, uma aderência tão rigorosa a
+
+267
+00:36:10,900 --> 00:36:17,420
+todas as legislações, ele já se verificou aqui também, e tempo de implantação aqui, para essa aqui é mais
+
+268
+00:36:17,420 --> 00:36:25,659
+tempo, se for toda essa sofisticação proposta, senão pode ser menos, ok? Pergunta a chapa
+
+269
+00:36:25,659 --> 00:36:29,800
+para o cliente, perfil de maquinária, a maior parte da falta atendida é de pequeno ou médio
+
+270
+00:36:29,800 --> 00:36:40,059
+aqui é, vai influenciar o contexto e as intenções para ver que tipo de maquinário é alvo do
+
+271
+00:36:40,059 --> 00:36:47,199
+negócio. Instrumentação, os técnicos e ferramentas digitais, aqui também, que dependendo da ferramenta
+
+272
+00:36:47,199 --> 00:36:51,840
+que seja usada, pode ser que tenha algumas funcionalidades, que ele tenha que registrar alguma
+
+273
+00:36:51,840 --> 00:36:58,059
+propriedade do equipamento que ele mediu, que está todo cadastrado com o QR Code, ele pode
+
+274
+00:36:58,059 --> 00:37:02,519
+de equipamento, dizer exatamente daquele cliente qual é o estado que está.
+
+275
+00:37:02,519 --> 00:37:08,340
+Manejo de gás, ele está questionando aqui, a empresa é recolhe o fluxo de regrinação
+
+276
+00:37:08,340 --> 00:37:12,480
+da oficina, o foco com a intenção de ficar vazamento e carregando, o que você quer?
+
+277
+00:37:12,480 --> 00:37:13,980
+Você quer controlar o que o manejo de gás?
+
+278
+00:37:13,980 --> 00:37:15,329
+Como?
+
+279
+00:37:15,329 --> 00:37:20,829
+Ou não quer ter nato, não quer focar no serviço, é responsável técnico, tá?
+
+280
+00:37:20,829 --> 00:37:27,650
+Ou depende de parceiros externos, por exemplo, vai ser um técnico cadastrado ou informalidade,
+
+281
+00:37:27,650 --> 00:37:28,650
+enfim.
+
+282
+00:37:28,650 --> 00:37:33,510
+depois que simular as respostas a essas perguntas eu prefiro tratar algo específico, essa aqui já é para
+
+283
+00:37:33,510 --> 00:38:03,079
+para nós né para o desenvolvedor tá aí eu digo ele aqui próxima apresentação html é linguagem
+
+284
+00:38:03,079 --> 00:38:14,630
+para arrumar lá uma tela no navegador né uma tela que você vê por aí em apresentação html né
+
+285
+00:38:14,630 --> 00:38:56,909
+com voz e opção contínua vamos botar aqui uma uma variante utilize ilustrações vou passar ele
+
+286
+00:38:56,909 --> 00:39:14,489
+na internet pegar alguma coisa aqui equipamentos da área e ou gráficos em ScaliDraw esse ScaliDraw
+
+287
+00:39:14,489 --> 00:39:23,539
+é uma ferramenta em make perileta dos desenvolvedores para desenhar para desenhar os modelos como é que
+
+288
+00:39:23,539 --> 00:39:29,920
+para simplificar o fluxo da coisa, o fluxograma e também para ilustrar outras coisas, ele é bem
+
+289
+00:39:29,920 --> 00:40:04,650
+versátil. Dá para usar no campo bem técnico e no campo bem pouco. Vamos ver o que ele faz? Você
+
+290
+00:40:04,650 --> 00:40:11,019
+percebeu que ele vai discutindo o que ele está falando em inglês? Ele tem uma preferência forte
+
+291
+00:40:11,019 --> 00:40:20,010
+para inglês, então, pelo que dá a entender aí, ele interage com você no seu idioma, mas inteiramente
+
+292
+00:40:20,010 --> 00:40:26,500
+raciocínio tudo em inglês. Ele pega aí as suas intenções e traduz para o inglês e ele
+
+293
+00:40:26,500 --> 00:40:32,320
+raciocínio tudo em inglês. O núcleo de raciocínio nas reais é em inglês. Agora quando ele vai
+
+294
+00:40:32,320 --> 00:40:38,440
+arrumando as coisas, ou quer fazer alguma coisa, as mãos dele são linguagens mais estáveis.
+
+295
+00:40:38,440 --> 00:40:46,400
+O TypeScript, ele usa muito. TypeScript é uma linguagem chipada, ele não deixa que você
+
+296
+00:40:46,400 --> 00:41:02,269
+deixar variável sem definição clara do tipo, saindo de conversa, depois ele usa também essa
+
+297
+00:41:02,269 --> 00:41:14,440
+linguagem que começa com o P, sempre me esqueço de um lugar aí né, aí o Python, ele gosta muito
+
+298
+00:41:14,440 --> 00:41:21,590
+do Python também, porque o Python tem uma capacidade de difusar em vários segmentos aí, dentro do
+
+299
+00:41:21,590 --> 00:41:30,300
+computador, da internet, ele gosta muito de criar um ambiente Python e criar scripts Python para
+
+300
+00:41:30,300 --> 00:41:40,630
+para executar uma sequência de passos e quando ele quer armazenar em variantes também agora
+
+301
+00:41:40,630 --> 00:41:47,590
+eles estão usando um negócio chamado IAML que também vamos conversar um dia sobre ela
+
+302
+00:41:47,590 --> 00:42:02,309
+olha lá ele já até criou a dita cuja ele tá até dando detalhes onde é que tá o HTML
+
+303
+00:42:02,309 --> 00:42:15,960
+ele já até abriu aqui ó ele abriu Chrome quer que eu me logue aqui ó
+
+304
+00:42:15,960 --> 00:42:55,539
+vou me logar aqui como é dentro ele abriu de logar aqui nesse rapaz ele mesmo que executou o
+
+305
+00:42:55,539 --> 00:43:04,300
+browser no caso ele abriu o Chrome para jogar a apresentação não sei qual é o que que ele tá
+
+306
+00:43:04,300 --> 00:43:15,079
+fazendo no dia de dia vamos esperar aqui Tietchan que ele vai botar novo tá aqui ó ele já gerou
+
+307
+00:43:15,079 --> 00:43:51,340
+a apresentação tá vendo olha que legal certinho vamos botar aqui que tava cheio. aqui ele tá lendo
+
+308
+00:43:51,340 --> 00:43:57,610
+a página e tal ó iniciar a apresentação com voz contínua já tá aqui contínua e pausado como eu
+
+309
+00:43:57,610 --> 00:44:04,380
+falei para ele você vê que eu fiz a definição de intenção que era a apresentação e variantes tá vendo
+
+310
+00:44:04,380 --> 00:44:28,980
+certinho vamos ver o que ele está fazendo aí, está carregando a carregação e eu quero que inicie
+
+311
+00:44:28,980 --> 00:44:51,090
+com voz, voltaram aqui, a gente não encontra os habilitados, com algum defeito rapaz, também esse
+
+312
+00:44:51,090 --> 00:45:03,480
+desenho bonitinho aqui é do Scalidraw, e a história de geração, deixa eu ver aqui, vamos dar um F12 aqui
+
+313
+00:45:03,480 --> 00:45:21,849
+o f12 a gente sempre dá para ver o que aconteceu nos bastidores, na console, teve uns efeitos
+
+314
+00:45:21,849 --> 00:45:32,539
+aí eu vou copiar console, vou voltar para lá para dizer para ele que deu um erro, certinho?
+
+315
+00:45:32,539 --> 00:45:59,679
+vou mostrar aqui para ele, ele está concluindo, talvez não esteja concluindo ainda, eu dei
+
+316
+00:45:59,679 --> 00:46:14,880
+esse arquivo para ele, ele criou um arquivo usando essa linguagem Python, um scriptzinho
+
+317
+00:46:14,880 --> 00:46:18,840
+para verificar as coisas, aí ele tem acesso ao navegador, ele vai lá por trás, ele bate
+
+318
+00:46:18,840 --> 00:46:24,179
+no caixão de tom, é o que está acontecendo no navegador.
+
+319
+00:46:24,179 --> 00:46:28,760
+Não se preocupe com esses termos não, isso aí com o tempo a gente vai chegar lá.
+
+320
+00:46:28,760 --> 00:46:33,840
+A gente vai conhecer a informática no nível do alto, de conceito, não no nível de baixo,
+
+321
+00:46:33,840 --> 00:46:42,170
+linguagem, então quem trabalha nesse nível de dirigir por intenção, desenvolver dirigir
+
+322
+00:46:42,170 --> 00:46:48,219
+com a intenção, no meu ver, é como se fosse um profissional do futuro, porque com a primória
+
+323
+00:46:48,219 --> 00:46:55,610
+que a IA está tendo para desenvolvimento, está ficando incrível, vai ser mais do que você usar
+
+324
+00:46:55,610 --> 00:47:04,570
+o WordPress ou o Glide, que são sistemas que eles chamam de, na verdade, como se fossem sistemas de
+
+325
+00:47:04,570 --> 00:47:12,010
+patotipação, que acabaram virando sistemas para fazer sistemas, de fazer site, webdesign, como o
+
+326
+00:47:12,010 --> 00:47:20,460
+que as pessoas chamam, coisas mais leves assim, sem ser uma infraestrutura muito complexa, mas aí o que acontece?
+
+327
+00:47:20,460 --> 00:47:33,000
+Então é o que ela chama de low-code, que é sem código ou baixo código, que eu devolvo um código e a pata-ruma gera quase tudo.
+
+328
+00:47:33,000 --> 00:47:39,059
+Aí no caso a IA está ficando algo diferente, então ela está subindo o nível, o nível da intenção,
+
+329
+00:47:39,059 --> 00:48:12,360
+ele já pegou o que eu passei e ele já está até abrindo ela de novo no bronze a gente nem botou
+
+330
+00:48:12,360 --> 00:48:19,389
+não abriu a pasta para ele ele só vai abrir quando eu for salvar aqui comecei a desenvolver
+
+331
+00:48:19,389 --> 00:48:30,199
+da memória dele aqui né por assim dizer olha isso aqui vocês vão ouvir muito falar disso
+
+332
+00:48:30,199 --> 00:48:40,400
+doa tá vendo é um modelo de dados né é os objetos né quer dizer a como é que é a as componentes
+
+333
+00:48:40,400 --> 00:48:57,800
+por isso que a tendência delas é substituir o botão, criar uma planilha, salvar, isso vai sumir,
+
+334
+00:48:57,800 --> 00:49:05,510
+você só vai dizer o que você quer, sua impressão, suas variantes e ele vai tocar o resto, o computador
+
+335
+00:49:05,510 --> 00:49:17,670
+mesmo vai ser uma coisa basicamente por voz, voz e imagem, até o celular a tendência é a
+
+336
+00:49:17,670 --> 00:49:23,380
+você completamente assim, não vai ter nem sentido de você andar com o aparelho na rua.
+
+337
+00:49:23,380 --> 00:49:29,099
+Talvez isso vinha mais com aquele óculos que o Google lançou e já tem outros similares.
+
+338
+00:49:29,099 --> 00:49:37,400
+Você filma, vê, ouve, você filma o que você está vendo, você recebe mensagem na internet,
+
+339
+00:49:37,400 --> 00:49:43,159
+em óculos, qualquer tipo, sabe? Como a maioria das coisas vai ser filme, vídeo e áudio,
+
+340
+00:49:43,159 --> 00:49:54,889
+você basicamente não vai ter necessidade de teclado. Essa é a minha versão do que será o futuro
+
+341
+00:49:54,889 --> 00:50:00,829
+aí ela tá transformando tudo com muita rapidez e no campo profissional não tá dando tempo para as
+
+342
+00:50:00,829 --> 00:50:07,880
+pessoas se qualificarem, tá tudo muito na teoria, por isso nós podemos nos dar o direito de entrar
+
+343
+00:50:07,880 --> 00:50:17,800
+nessa onda aí e mesmo antes das teorias estarem estáveis e transformar esse método de ferramenta,
+
+344
+00:50:17,800 --> 00:50:31,210
+por que não experimentar os nossos? Essa é a ideia, a gente trabalhando aí, vamos até dar uma olhada lá,
+
+345
+00:50:31,210 --> 00:50:51,960
+pode ser que ele já tem até mexido, parece que ele já mexeu
+
+346
+00:50:51,960 --> 00:51:04,909
+controle desabilitado, aqui é para escolher a linguagem que vai falar, mas está tudo desabilitado
+
+347
+00:51:04,909 --> 00:51:20,269
+ele está tirando, tem que esperar para ver o que ele vai fazer, ele está mexendo ainda
+
+348
+00:51:20,269 --> 00:51:34,519
+bem, tem outra fase, talvez porque ele nem terminou ainda, aqui é o F12, o F12 traz o que está acontecendo nos bastidores de uma tela
+
+349
+00:51:34,519 --> 00:51:41,460
+É mais para desenvolvedores, mas mesmo para quem não é, dá uma ideia que teve erro.
+
+350
+00:51:41,460 --> 00:51:46,380
+Se você estiver desenvolvendo para errar, essas armas, você vai ter visão dessas coisas,
+
+351
+00:51:46,380 --> 00:51:49,150
+mas com o tempo nem isso você vai ver.
+
+352
+00:51:49,150 --> 00:51:54,400
+E com o tempo também a discussão sobre infraestrutura, tecnologias usadas,
+
+353
+00:51:54,400 --> 00:52:02,429
+ele vai transformar tudo em definições e intenções, mesmo no campo da arquitetura,
+
+354
+00:52:02,429 --> 00:52:03,940
+da tecnologia.
+
+355
+00:52:03,940 --> 00:52:07,070
+Vocês vão usar termos técnicos necessariamente.
+
+356
+00:52:07,070 --> 00:52:18,949
+É, já vai dar uma hora aqui, né? Vai ser difícil vocês verem esse vídeo.
+
+357
+00:52:18,949 --> 00:53:24,699
+Ele tá trabalhando aí na apresentação, tá construindo, ele tá mexendo lá.
+
+358
+00:53:24,699 --> 00:53:31,659
+Porque a HTML tem essa característica, se você mexer qualquer coisa na fonte da tela,
+
+359
+00:53:31,659 --> 00:53:41,079
+ela já reage, já reage com a disfuncionalidade da onda, né?
+
+360
+00:53:41,079 --> 00:54:11,170
+Já estão na gestão, por enquanto ele botar a resumida aqui, já botou os aqui e já estão respondendo, mas aqui não, já estão processando.
+
+361
+00:54:19,219 --> 00:54:30,900
+Vou ficar por aqui para liberar vocês e a mim, e depois, quando ele completar o silêncio, eu volto e gravo a apresentação, ok? Um abraço!
+
+362
+00:54:30,900 --> 00:54:44,690
+O que ele está fazendo na prática é que ele mesmo está executando, ele executou o programa que ele gerou em HTML, e ele mesmo está testando como se fosse a pessoa.
+
+363
+00:54:44,690 --> 00:56:55,650
+ele que tá avançando sozinho. Nota que os desenhos, a maneira de escrever a gravação
+
+364
+00:56:55,650 --> 00:57:02,730
+com cores é na ferramenta escala e grau. Ele usou ela para ele fazer o que o humano faria.
+
+365
+00:57:02,730 --> 00:57:38,110
+Não tá olhando nada no raciocínio dele, não tá trabalhando. Nota que aqui é sempre no browser,
+
+366
+00:57:38,110 --> 00:57:48,230
+é lá no navegador. O browser é navegador. Aí ele ficou aqui ó, ó, vendo o prévio,
+
+367
+00:57:48,230 --> 00:57:54,469
+da apresentação de HTTP, então você também está fazendo o próprio protocolo do navegador
+
+368
+00:57:54,469 --> 00:58:02,269
+da internet, aí ele abriu essa URL que é a tela local, local rosto do grau que nós
+
+369
+00:58:02,269 --> 00:58:14,880
+estamos lá, e ele está fazendo isso aqui, ele está na verdade testando a própria apresentação,
+
+370
+00:58:14,880 --> 00:58:22,280
+a execução da apresentação, imagina. Nós que nós estamos aqui no ciclo dentro de um
+
+371
+00:58:22,280 --> 00:58:27,750
+Eu comecei com as intenções de um negócio
+
+372
+00:58:27,750 --> 00:58:30,329
+Neste diagrama operacional
+
+373
+00:58:30,329 --> 00:58:33,329
+Vemos o fluxo vigoroso de campo
+
+374
+00:58:33,329 --> 00:58:37,469
+O mecânico faz a leitura do QR code na condensadora
+
+375
+00:58:37,469 --> 00:58:41,130
+Executa o checklist normativo de limpeza
+
+376
+00:58:41,130 --> 00:58:43,090
+E componentes elétricos
+
+377
+00:58:43,090 --> 00:58:46,329
+Insere as medições de pressão e temperatura
+
+378
+00:58:46,329 --> 00:58:50,289
+E encerra o chamado com fotos de antes e depois
+
+379
+00:58:50,289 --> 00:58:53,710
+e a assinatura digital do responsável no local.
+
+380
+00:58:56,730 --> 00:59:01,010
+Para dimensionar o projeto, apresentamos dois caminhos.
+
+381
+00:59:02,050 --> 00:59:06,010
+O cenário proposto é a solução corporativa completa,
+
+382
+00:59:06,630 --> 00:59:11,710
+ideal para grandes plantas industriais e múltiplos contratos de coque.
+
+383
+00:59:11,710 --> 00:59:16,489
+O cenário alternativo foca no essencial de campo,
+
+384
+00:59:16,489 --> 00:59:18,929
+Eliminação rápida do papel
+
+385
+00:59:18,929 --> 00:59:21,030
+Checklists com fotos
+
+386
+00:59:21,030 --> 00:59:22,630
+E assinatura na tela
+
+387
+00:59:22,630 --> 00:59:24,929
+Em apenas 3 a 4 semanas
+
+388
+00:59:24,929 --> 00:59:26,170
+De implantação
+
+389
+00:59:26,170 --> 00:59:31,019
+Para concluirmos a definição
+
+390
+00:59:31,019 --> 00:59:31,880
+Do projeto
+
+391
+00:59:31,880 --> 00:59:34,579
+Precisamos do seu direcionamento
+
+392
+00:59:34,579 --> 00:59:35,980
+Em 4 pontos
+
+393
+00:59:35,980 --> 00:59:37,360
+O porte predomínio
+
+394
+00:59:37,360 --> 01:00:00,519
+Aplicou o botão pausar
+
+395
+01:00:00,519 --> 01:00:03,519
+Ele está testando tudo
+
+396
+01:00:03,519 --> 01:00:04,920
+Quando eu pausar a voz
+
+397
+01:00:04,920 --> 01:00:12,949
+Isso ele pode fazer em qualquer sistema
+
+398
+01:00:12,949 --> 01:00:13,969
+Ele vai simular
+
+399
+01:00:13,969 --> 01:00:22,420
+Quando eu falo aqui, vai obtendo DOM, ele está indo por trás da navegadora e vendo toda a estrutura de componentes.
+
+400
+01:00:22,420 --> 01:00:26,449
+Para ele apertar um botão, esse DOM aqui, aqui tem a árvore toda dos componentes.
+
+401
+01:00:26,449 --> 01:00:30,449
+Aí ele apertou esse botão aqui, continua, vai pausar.
+
+402
+01:00:30,449 --> 01:00:34,929
+Aí com ele pausou, ficou aqui nesse estado.
+
+403
+01:00:34,929 --> 01:00:36,929
+Ele está testando tudo, vê se vai funcionar.
+
+404
+01:00:36,929 --> 01:00:40,150
+Aqui é ele trabalhando.
+
+405
+01:00:40,150 --> 01:00:48,309
+A mesma coisa que ele está fazendo com a apresentação, ele pode fazer com o sistema que você desenvolveu.
+
+406
+01:00:48,309 --> 01:00:58,099
+ele mesmo pode testar também, cada dia que passa é se a capacidade dele de testar testes internos de
+
+407
+01:00:58,099 --> 01:01:08,099
+código mesmo e também testes visuais, comportamento, de ergonomia, hoje a IA se sai melhor vendo e
+
+408
+01:01:08,099 --> 01:01:18,070
+ouvindo do que a escrita, ele acha mais dúbio a escrita do que a voz e a imagem, se combina voz
+
+409
+01:01:18,070 --> 01:01:44,710
+Então você ganhando experiência nesses princípios de IDD, a gente vai se aprofundar mais, você consegue usar ela como uma equipe sua de programação, bem disciplinada que não sai da rede, só usando sua voz e imagens que você quer.
+
+410
+01:01:44,710 --> 01:01:49,510
+Por exemplo, se eu quisesse pegar um conjunto de formulários, documentos da empresa, que
+
+411
+01:01:49,510 --> 01:01:56,030
+de refrigeração, que já estão em uso, ou no manual, e eu passasse para ele, ele somava
+
+412
+01:01:56,030 --> 01:01:59,489
+o norteamento das intenções.
+
+413
+01:01:59,489 --> 01:02:05,440
+Às vezes, antes mesmo de definir as intenções, como eu defini genericamente, a intenção
+
+414
+01:02:05,440 --> 01:02:11,230
+geral e as variantes gerais, eu podia ter de ter a intenção e dar a ele um documento
+
+415
+01:02:11,230 --> 01:02:20,590
+que ele derivar ali, intenções, dentro do modelo atual do negócio, em papel, ou mesmo se houvesse
+
+416
+01:02:20,590 --> 01:02:28,420
+algum aplicativo, eu mostrava para ele o aplicativo. Então, parece muita coisa, mas quando você entende
+
+417
+01:02:28,420 --> 01:02:34,750
+os princípios, e aí aprende algumas terminologias, você não precisa saber o que acontece por detrás.
+
+418
+01:02:37,329 --> 01:02:43,429
+É mais ou menos o que acontece hoje, quando alguém escreve em Java, Python, qualquer outro tipo de
+
+419
+01:02:43,429 --> 01:02:51,519
+do programa, ou outro tipo de código. Mesmo a página de HTML, usando o WordPress, a pessoa não sabe.
+
+420
+01:02:51,519 --> 01:02:59,090
+Tem gente que programa essa iguais assim no code, essa no code, e a pessoa não sabe o que é que o
+
+421
+01:02:59,090 --> 01:03:14,949
+a internet botou lá atrás de código. Esse é o futuro. Já deu um retorno aqui para mim que fechou,
+
+422
+01:03:14,949 --> 01:03:26,230
+ó. Ó o que é que ele fez, um B, vamos entender. Esperta a sua interativa condenação de voz,
+
+423
+01:03:26,230 --> 01:03:32,469
+ajustações técnicas conhecidas de Calidral, que foi configurada e testada com sucesso no navegador.
+
+424
+01:03:32,469 --> 01:03:39,949
+Para evitar o bloqueio de segurança que ocorre ao abrir o protocolo, que restringe a API de voz e o conteúdo segura,
+
+425
+01:03:39,949 --> 01:03:45,510
+iniciamos o servidor HTTP local, acesso ao navegador e tal.
+
+426
+01:03:45,510 --> 01:03:50,260
+Ele que está explicando, é o curso de implementação da apresentação, papapá,
+
+427
+01:03:50,260 --> 01:03:57,969
+deu uma explicação direta, ajustações técnicas, dimensionamento, estratégia dos corpos do slide,
+
+428
+01:03:57,969 --> 01:04:06,269
+aqui descrever como vai funcionar a apresentação, basta abrir aqui e clicar iniciar a apresentação
+
+429
+01:04:06,269 --> 01:04:16,079
+com voz para conduzir a reunião de alinhamento com o seu cliente, show de bola? Beleza, e aqui ele já
+
+430
+01:04:16,079 --> 01:04:26,460
+deixou o documento de definição da apresentação, na verdade, ah o HTML, isso aqui é o HTML,
+
+431
+01:04:26,460 --> 01:04:39,019
+se eu baixar isso aqui e botar .html como sendo o tipo do arquivo aí o que que acontece eu posso
+
+432
+01:04:39,019 --> 01:04:44,579
+simplesmente executar ele para ele não precisa nem clicar nesse link dele aqui eu posso fazer assim
+
+433
+01:04:44,579 --> 01:04:52,010
+vou baixar aqui vou jogar ele aqui mesmo html também aqui a especificação aqui eu vou deixar
+
+434
+01:04:52,010 --> 01:05:01,079
+no download mesmo quando ele exportar ele já vai exportar em html aí agora vou lá em download na
+
+435
+01:05:01,079 --> 01:05:17,650
+o download tá lá né ó tá vendo tá lá se eu clico aqui ó o que acontece ele rodou que HTML ele rodou
+
+436
+01:05:17,650 --> 01:05:28,500
+dentro já rodou eu vou aqui aqui já no Edge já no Chrome tá aqui ó a apresentação tá aqui vamos
+
+437
+01:05:28,500 --> 01:05:35,670
+até algum defeito aí eu vou chegar para o cliente bem-vindos à apresentação de alinhamento da gestão
+
+438
+01:05:35,670 --> 01:05:39,289
+O controle operacional em refrigeração e climatização.
+
+439
+01:05:40,349 --> 01:05:49,630
+Nosso objetivo é definir as regras fundamentais e o escopo da solução para atender com precisão as exigências termodinâmicas,
+
+440
+01:05:49,969 --> 01:05:57,650
+o PUNC da Lei 13.589 e a rastreabilidade ambiental dos fluidos refrigerantes.
+
+441
+01:06:00,690 --> 01:06:05,170
+Por que softwares genéricos de manutenção falham na refrigeração?
+
+442
+01:06:05,170 --> 01:06:18,579
+Por que ignoram o ciclo térmico? Se o mecânico não registrar pressões de trabalho, superaquecimento e vazamentos reais, o comissor quebra pouco tempo depois.
+
+443
+01:06:20,280 --> 01:06:29,719
+Além disso, a falta de histórico físico e laudos normativos expõe a empresa apesar das autuações da vigilância sanitária.
+
+444
+01:06:29,719 --> 01:06:45,710
+Aqui apresentamos as grandes capacidades do sistema, prontuário do equipamento por QR Code, cronograma automatizado do PUC com checklist de filtros de bactericidas,
+
+445
+01:06:45,710 --> 01:06:51,329
+Triagem rápida de chamados com prioridade para câmaras frigoríficas
+
+446
+01:06:51,329 --> 01:06:55,730
+Rotina de campo com medição de pressões e temperaturas
+
+447
+01:06:55,730 --> 01:07:02,250
+E funcionamento garantido mesmo em subsolos e câmaras frias sem sinal de internet
+
+448
+01:07:02,250 --> 01:07:08,260
+Estas são as regras invioláveis do negócio
+
+449
+01:07:08,260 --> 01:07:12,699
+Uma vez concluído o serviço e assinado pelo cliente
+
+450
+01:07:12,699 --> 01:07:16,719
+O laudo se torna intocável e juridicamente seguro
+
+451
+01:07:16,719 --> 01:07:22,610
+Datas do PUMOC não podem ser retroagidas para simular conformidade
+
+452
+01:07:22,610 --> 01:07:33,480
+E na parte física, a pressão de descarga deve ser sempre maior que a de sucção, sob pena de bloqueio por inconsistência técnica
+
+453
+01:07:33,480 --> 01:07:41,469
+Neste diagrama operacional, vemos o fluxo rigoroso de campo
+
+454
+01:07:41,469 --> 01:08:01,929
+o mecânico faz a leitura do QR-Code na condensadora, executa o checklist normativo de limpeza e componentes elétricos, insere as medições de pressão e temperatura, e encerra o chamado com fotos de antes e depois e a assinatura digital do responsável no local.
+
+455
+01:08:01,929 --> 01:08:19,880
+Para dimensionar o projeto, apresentamos dois caminhos. O cenário proposto é a solução corporativa completa, ideal para grandes plantas industriais e múltiplos contratos de TUMOC.
+
+456
+01:08:19,880 --> 01:08:34,340
+O cenário alternativo foca no essencial de campo, eliminação rápida do papel, checklists com fotos e assinatura na tela em apenas 3 a 4 semanas de implantação.
+
+457
+01:08:34,340 --> 01:09:01,770
+Para concluirmos a definição do projeto, precisamos do seu direcionamento em 4 pontos, o porte predominante dos equipamentos, se a equipe utiliza manômetros digitais ou analógicos, a rotina atual de recolhimento de gás refrigerante, e se a responsabilidade técnica do CREA ou CFT própria ou terceirizada.
+
+458
+01:09:02,779 --> 01:09:05,159
+Estamos prontos para iniciar.
+
+459
+01:09:05,159 --> 01:09:18,600
+É isso aí, uma hora e dez minutos, sem contar as paradinhas. Então, pela experiência que eu tenho,
+
+460
+01:09:18,600 --> 01:09:27,430
+eu trabalhei em sete empresas diferentes, com sistemas diversos. No mínimo, um mês para
+
+461
+01:09:27,430 --> 01:09:35,069
+a gente ter ideia de como é possível funcionar. E mais um tempo, a depender do porto do sistema,
+
+462
+01:09:35,069 --> 01:09:46,100
+razoável de meses para desenvolver, testar e implementar. Aqui em praticamente uma hora,
+
+463
+01:09:46,100 --> 01:09:54,479
+a gente chegou a esse escopo aí, só com a ideia de, note, intenção e invariantes, intenções e
+
+464
+01:09:54,479 --> 01:10:01,619
+variantes. Objetivo, quer dizer, o que eu quero, o que eu quero, a intenção geral, né,
+
+465
+01:10:01,619 --> 01:10:10,680
+as intenções que eu quero e depois de variantes, quer dizer, as regras que eu quero que ele se
+
+466
+01:10:10,680 --> 01:10:16,199
+atenda. Então eu consigo controlar, é a ideia de governança do IDD que a gente vai ver. Eu consigo
+
+467
+01:10:16,199 --> 01:10:21,960
+controlar em ar não apenas para o próprio solto gerar pedaço de código, aqui eu estou gerando
+
+468
+01:10:21,960 --> 01:10:31,369
+soluções. Ela aqui está aprendendo comigo o que eu quero e como quero e as regras do negócio. Chegar
+
+469
+01:10:31,369 --> 01:10:36,770
+possível que eu posso apenas fazer ela gerar toda a documentação, quando estiver tudo aprovado pelo
+
+470
+01:10:36,770 --> 01:10:44,199
+usuário com apresentação, aí eu volto e vou partir para a implementação. Aí vem a definição de
+
+471
+01:10:44,199 --> 01:10:51,460
+intenções do caráter arquitetural, de técnica, né, e as varianças também do aspecto de técnica.
+
+472
+01:10:51,460 --> 01:10:57,640
+Isso aí também também vai discutir futuramente. Mas a ideia dos princípios de DDD é assim,
+
+473
+01:10:57,640 --> 01:11:07,250
+está usando o sistema assim, ok? Nem é um próprio genérico soltão, não vai ficar aí não, não vai ficar se
+
+474
+01:11:07,250 --> 01:11:12,109
+batendo com ela não, aí você conseguir passar pelo modo organizado. Agora imagine que a gente tem
+
+475
+01:11:12,109 --> 01:11:24,079
+um editor IDE, que é o software mesmo, que ele já ofereça essa forma de definir, e a ideia é que ele
+
+476
+01:11:24,079 --> 01:11:32,300
+salve isso aí, de modo que se ele for mexer de novo, ele não vai deixar a violagem variando para o
+
+477
+01:11:32,300 --> 01:11:43,680
+Ele meio alterando lá na frente, ele não vai inferir, ou derivar, ou alucinar para fazer uma coisa que é tecnicamente viável,
+
+478
+01:11:43,920 --> 01:11:47,590
+mas não é dentro do escopo do negócio viável, ok?
+
+479
+01:11:48,310 --> 01:11:54,069
+Um abração, dê uma olhadinha com paciência e faça suas anotações.
+
+480
+01:11:54,909 --> 01:11:58,090
+Vamos devagar, nós estamos fazendo isso aqui só para entender os princípios,
+
+481
+01:11:58,090 --> 01:12:03,810
+mas na verdade não queremos entender de informática, queremos entender de interagir com a IA
+
+482
+01:12:03,810 --> 01:12:07,670
+para produzir o que nos interessa em termos de informática.
+
+483
+01:12:08,449 --> 01:12:09,289
+Um abraço!
+

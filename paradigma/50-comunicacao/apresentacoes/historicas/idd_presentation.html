@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IDD: A Nova Abstração do Software</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@400;500;700&family=Space+Grotesk:wght@300;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        /* CONFIGURAÇÃO BASE */
+        :root {
+            --bg-color: #050505;
+            --accent-color: #deff9a;
+            --text-main: #f5f5f5;
+            --text-sub: #daffde;
+            --card-bg: #121212;
+            --border-color: rgba(218, 255, 222, 0.2);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            background-color: #222;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            font-family: 'Urbanist', sans-serif;
+            color: var(--text-main);
+            overflow-y: auto;
+            padding: 20px;
+        }
+
+        /* CONTROLES */
+        .controls-wrapper {
+            width: 1280px;
+            background: #1a1a1a;
+            padding: 15px;
+            border-radius: 12px;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            align-items: center;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+        }
+
+        .btn {
+            background: transparent;
+            border: 1px solid var(--accent-color);
+            color: var(--accent-color);
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 500;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn:hover { background: var(--accent-color); color: #000; }
+        .btn:disabled { opacity: 0.3; cursor: not-allowed; }
+        
+        .btn.active { background: #ff4d4d; border-color: #ff4d4d; color: white; }
+
+        .slide-counter { font-family: 'Space Grotesk', sans-serif; color: var(--text-sub); min-width: 80px; text-align: center; }
+
+        /* CONTAINER DO SLIDE */
+        .slide-container {
+            width: 1280px;
+            height: 720px;
+            background-color: var(--bg-color);
+            border-radius: 8px;
+            position: relative;
+            overflow: hidden;
+            display: none;
+            flex-direction: column;
+            padding: 60px;
+            border: 1px solid #333;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.8);
+        }
+
+        .slide-container.active { display: flex; }
+
+        /* DECORAÇÃO DE FUNDO */
+        .slide-container::before {
+            content: '';
+            position: absolute;
+            top: -10%;
+            right: -10%;
+            width: 40%;
+            height: 40%;
+            background: radial-gradient(circle, rgba(222, 255, 154, 0.05) 0%, transparent 70%);
+            z-index: 0;
+        }
+
+        .slide-container::after {
+            content: '';
+            position: absolute;
+            bottom: 40px;
+            left: 60px;
+            right: 60px;
+            height: 1px;
+            background: linear-gradient(90deg, var(--accent-color), transparent);
+            opacity: 0.3;
+        }
+
+        /* TIPOGRAFIA */
+        h1 { font-size: 80px; font-weight: 500; line-height: 1.1; margin-bottom: 20px; }
+        h1 span { color: var(--accent-color); }
+        h2.slide-title { font-size: 54px; margin-bottom: 40px; color: var(--text-main); }
+        h2.slide-title span { color: var(--accent-color); }
+        h3 { font-size: 28px; color: var(--accent-color); margin-bottom: 15px; font-weight: 500; }
+        p, li { font-size: 20px; line-height: 1.5; color: var(--text-sub); }
+        .subtitle { font-size: 24px; max-width: 800px; margin-top: 20px; }
+
+        /* LAYOUTS */
+        .content-area { display: flex; flex-direction: column; flex-grow: 1; z-index: 1; justify-content: center; }
+        .two-column { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; width: 100%; align-items: center; }
+        
+        .tiled-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 25px; }
+        .tile { background: var(--card-bg); padding: 30px; border-radius: 20px; border: 1px solid var(--border-color); }
+        
+        .icon-tile-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+        .icon-tile { text-align: center; background: #1a1a1a; padding: 30px 20px; border-radius: 24px; border: 1px solid var(--border-color); }
+        .icon-tile i { font-size: 40px; color: var(--accent-color); margin-bottom: 20px; }
+
+        .image-wrapper { width: 100%; height: 400px; border-radius: 24px; overflow: hidden; border: 1px solid var(--accent-color); }
+        .image-wrapper img { width: 100%; height: 100%; object-fit: cover; }
+
+        .highlight-num { font-size: 140px; font-weight: 700; color: var(--accent-color); line-height: 1; }
+
+        /* TABELA */
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th { text-align: left; padding: 20px; border-bottom: 2px solid var(--accent-color); color: var(--accent-color); font-size: 22px; }
+        td { padding: 20px; border-bottom: 1px solid #333; font-size: 18px; color: var(--text-sub); }
+
+        /* GRÁFICO BARRA */
+        .chart-container { display: flex; flex-direction: column; gap: 25px; width: 100%; }
+        .bar-row { display: flex; align-items: center; gap: 20px; }
+        .bar-label { width: 250px; text-align: right; font-weight: 500; font-size: 18px; }
+        .bar-bg { flex-grow: 1; height: 35px; background: #222; border-radius: 10px; overflow: hidden; }
+        .bar-fill { height: 100%; background: linear-gradient(90deg, #deff9a, #9afff5); display: flex; align-items: center; padding-left: 15px; color: #000; font-weight: 700; }
+
+        /* NARRADOR VISUAL */
+        .narrator-bubble {
+            position: absolute;
+            bottom: 60px;
+            right: 60px;
+            background: var(--accent-color);
+            color: #000;
+            padding: 10px 20px;
+            border-radius: 30px 30px 0 30px;
+            font-weight: 700;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.5s;
+            z-index: 10;
+        }
+        .active .narrator-bubble { opacity: 1; transform: translateY(0); }
+        .pulse { width: 10px; height: 10px; background: #000; border-radius: 50%; animation: pulse 1s infinite; }
+        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.5); } 100% { transform: scale(1); } }
+
+    </style>
+</head>
+<body>
+<div id="idd-status-banner" role="note" style="position:fixed;bottom:6px;left:6px;z-index:2147483000;max-width:min(92vw,560px);padding:3px 8px;font:11px/1.35 system-ui,-apple-system,Segoe UI,sans-serif;color:#fde68a;background:rgba(17,17,17,.82);border:1px solid rgba(253,230,138,.35);border-radius:6px;pointer-events:none;">📜 Peça histórica (versão anterior ao Cânone v1.0-rc1). Afirmações podem não refletir o status atual — ver paradigma/00-canone/AFIRMACOES.md</div>
+
+    <div class="controls-wrapper">
+        <button class="btn" id="prevBtn" onclick="changeSlide(-1)"><i class="fa-solid fa-chevron-left"></i> Anterior</button>
+        <div class="slide-counter" id="counter">1 / 12</div>
+        <button class="btn" id="nextBtn" onclick="changeSlide(1)">Próximo <i class="fa-solid fa-chevron-right"></i></button>
+        <div style="width: 2px; height: 30px; background: #444;"></div>
+        <button class="btn" id="speakBtn" onclick="toggleSpeech()"><i class="fa-solid fa-volume-high"></i> <span id="speakTxt">Narrar Slide</span></button>
+        <button class="btn" id="contBtn" onclick="toggleContinuous()"><i class="fa-solid fa-play"></i> <span id="contTxt">Modo Contínuo</span></button>
+        <button class="btn" id="stopBtn" onclick="stopSpeech()"><i class="fa-solid fa-stop"></i> Parar</button>
+    </div>
+
+    <div class="slide-container active" id="slide1">
+        <div class="narrator-bubble"><div class="pulse"></div> Narrador Ativo</div>
+        <div class="content-area" style="text-align: center;">
+            <h1>Desenvolvimento <span>Guiado por Intenção</span></h1>
+            <p class="subtitle">O fim do código como "Ativo Principal" e o nascimento da Orquestração de Agentes Autônomos. Uma jornada pela nova pirâmide de abstração do software.</p>
+        </div>
+    </div>
+
+    <div class="slide-container" id="slide2">
+        <div class="narrator-bubble"><div class="pulse"></div> Narrador Ativo</div>
+        <h2 class="slide-title">Além da Sintaxe: <span>A Grande Abstração</span></h2>
+        <div class="content-area">
+            <div class="two-column">
+                <div>
+                    <h3>A Evolução da Confiança</h3>
+                    <p>Historicamente, cada camada de computação tornou-se invisível conforme a estabilidade era atingida. Do hardware bruto ao bytecode, deixamos de questionar o "como" para focar no "que".</p>
+                    <br>
+                    <p>Em 2026, o código-fonte legível (TypeScript, Python) está se tornando o novo <strong>Assembly</strong>: uma fiação subjacente gerida por IAs.</p>
+                </div>
+                <div class="tile">
+                    <h3>Abstrações Históricas</h3>
+                    <ul style="list-style: none; padding-top: 10px;">
+                        <li><i class="fa-solid fa-check" style="color:var(--accent-color)"></i> Hardware / Portas Lógicas</li>
+                        <li><i class="fa-solid fa-check" style="color:var(--accent-color)"></i> Linguagem de Máquina / Bits</li>
+                        <li><i class="fa-solid fa-check" style="color:var(--accent-color)"></i> Compiladores / Gerenciamento de Memória</li>
+                        <li><i class="fa-solid fa-arrow-right" style="color:var(--accent-color)"></i> <strong>Novo: IA Intent Logic</strong></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide-container" id="slide3">
+        <div class="narrator-bubble"><div class="pulse"></div> Narrador Ativo</div>
+        <h2 class="slide-title">Evolução do <span>Stack de Confiança</span></h2>
+        <div class="content-area">
+            <div class="two-column">
+                <div class="image-wrapper">
+                    <img src="http://googleusercontent.com/image_collection/image_retrieval/12444138564777339658" alt="Evolução da Computação">
+                </div>
+                <div>
+                    <h3>O Código como Camada Implícita</h3>
+                    <p>Você mencionou que nenhum programador se preocupa hoje se os circuitos da CPU estão ok. Essa estabilidade "assumida" é o destino do código.</p>
+                    <p>No paradigma IDD, a intenção humana é a especificação executável. Se a IA entrega a estabilidade, o código morre como preocupação humana.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide-container" id="slide4">
+        <div class="narrator-bubble"><div class="pulse"></div> Narrador Ativo</div>
+        <h2 class="slide-title">As Ferramentas da <span>Nova Era</span></h2>
+        <div class="content-area">
+            <div class="icon-tile-grid">
+                <div class="icon-tile">
+                    <i class="fa-solid fa-code"></i>
+                    <h3>Cursor</h3>
+                    <p>A IDE que transformou a IA em motor estrutural, não apenas plugin.</p>
+                </div>
+                <div class="icon-tile">
+                    <i class="fa-solid fa-robot"></i>
+                    <h3>Devin</h3>
+                    <p>O executor autônomo que pesquisa, testa e debuga sozinho.</p>
+                </div>
+                <div class="icon-tile">
+                    <i class="fa-solid fa-brain"></i>
+                    <h3>Claude</h3>
+                    <p>O raciocínio de ponta capaz de entender intenções complexas.</p>
+                </div>
+                <div class="icon-tile">
+                    <i class="fa-solid fa-terminal"></i>
+                    <h3>Antigravity</h3>
+                    <p>O centro de comando de agentes independentes do Google.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide-container" id="slide5">
+        <div class="narrator-bubble"><div class="pulse"></div> Narrador Ativo</div>
+        <h2 class="slide-title">Adoção e <span>Eficiência Operacional</span></h2>
+        <div class="content-area">
+            <div class="chart-container">
+                <div class="bar-row">
+                    <div class="bar-label">Humano Solo</div>
+                    <div class="bar-bg"><div class="bar-fill" style="width: 10%;">10%</div></div>
+                </div>
+                <div class="bar-row">
+                    <div class="bar-label">VS Code + Copilot</div>
+                    <div class="bar-bg"><div class="bar-fill" style="width: 35%;">35%</div></div>
+                </div>
+                <div class="bar-row">
+                    <div class="bar-label">Cursor (RAG Context)</div>
+                    <div class="bar-bg"><div class="bar-fill" style="width: 75%;">75%</div></div>
+                </div>
+                <div class="bar-row">
+                    <div class="bar-label">Orquestração IDD (Agentes)</div>
+                    <div class="bar-bg"><div class="bar-fill" style="width: 95%;">95%</div></div>
+                </div>
+            </div>
+            <p style="margin-top: 30px; text-align: center;">Velocidade de entrega baseada em iterações de funcionalidades completas (End-to-End).</p>
+        </div>
+    </div>
+
+    <div class="slide-container" id="slide6">
+        <div class="narrator-bubble"><div class="pulse"></div> Narrador Ativo</div>
+        <h2 class="slide-title">Antigravity: <span>O Comando de Agentes</span></h2>
+        <div class="content-area">
+            <div class="two-column">
+                <div>
+                    <h3>O Salto do 1.0 para o 2.0</h3>
+                    <p>Diferente do Cursor, que é uma IDE, o Antigravity 2.0 é um sistema autônomo. Ele provisiona sandboxes Linux, executa comandos bash e resolve problemas sem intervenção.</p>
+                    <p>Aqui, a intenção não gera apenas código, gera um <strong>Comportamento de Sistema</strong>.</p>
+                </div>
+                <div class="tile">
+                    <h3>Capabilities 2026</h3>
+                    <p><i class="fa-solid fa-shield"></i> Sandbox Isolada</p>
+                    <p><i class="fa-solid fa-magnifying-glass"></i> Pesquisa Ativa (Search Tool)</p>
+                    <p><i class="fa-solid fa-arrows-rotate"></i> Ciclo Auto-Debug</p>
+                    <p><i class="fa-solid fa-cloud"></i> Managed Agents (Gemini API)</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide-container" id="slide7">
+        <div class="narrator-bubble"><div class="pulse"></div> Narrador Ativo</div>
+        <h2 class="slide-title">Humano: <span>De Pedreiro a Arquiteto</span></h2>
+        <div class="content-area">
+            <div class="tiled-grid">
+                <div class="tile">
+                    <h3>O Arquiteto (Você)</h3>
+                    <p>Define a intenção, os limites do negócio e valida o resultado final. O foco é na "Orquestração de Intenções".</p>
+                </div>
+                <div class="tile">
+                    <h3>O Executor (IA)</h3>
+                    <p>Gerencia a fiação técnica: banco de dados, APIs, CSS, erros de compilação e infraestrutura.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide-container" id="slide8">
+        <div class="narrator-bubble"><div class="pulse"></div> Narrador Ativo</div>
+        <h2 class="slide-title">O Limiar da <span>Confiança Absoluta</span></h2>
+        <div class="content-area" style="text-align: center;">
+            <div class="highlight-num">99.99%</div>
+            <h3>O Ponto de Inflexão</h3>
+            <p style="max-width: 800px; margin: 0 auto;">Quando a taxa de acerto dos agentes autônomos atingir este patamar, o código-fonte deixará de ser auditado por humanos, assim como não auditamos o microcódigo de uma CPU Intel.</p>
+        </div>
+    </div>
+
+    <div class="slide-container" id="slide9">
+        <div class="narrator-bubble"><div class="pulse"></div> Narrador Ativo</div>
+        <h2 class="slide-title">Hardware: <span>Potência para IA Local</span></h2>
+        <div class="content-area">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Especificação</th>
+                        <th>Seu Dell i7 (MX330)</th>
+                        <th>Máquina Ideal (IA Local)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>GPU / VRAM</td>
+                        <td>Nvidia MX330 (2GB)</td>
+                        <td>RTX 5090 (32GB+) ou M3 Ultra</td>
+                    </tr>
+                    <tr>
+                        <td>Memória RAM</td>
+                        <td>16GB DDR4</td>
+                        <td>128GB+ (Unified Memory)</td>
+                    </tr>
+                    <tr>
+                        <td>Performance IA</td>
+                        <td>Limitada a Modelos < 7B</td>
+                        <td>Roda Llama-3 70B e Claude Local</td>
+                    </tr>
+                    <tr>
+                        <td>Uso Contexto</td>
+                        <td>Lento em scripts longos</td>
+                        <td>Instantâneo para Repositórios</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="slide-container" id="slide10">
+        <div class="narrator-bubble"><div class="pulse"></div> Narrador Ativo</div>
+        <h2 class="slide-title">A Estrada para o <span>IDD Nível 6</span></h2>
+        <div class="content-area">
+            <div class="two-column">
+                <div class="image-wrapper" style="height: 300px;">
+                    <img src="http://googleusercontent.com/image_collection/image_retrieval/4428936223537823884" alt="Network Agents">
+                </div>
+                <div style="font-size: 18px;">
+                    <p><strong>2024: Assistência.</strong> IAs sugerem código no VS Code.</p>
+                    <p><strong>2025: Autonomia Parcial.</strong> Cursor e Devin criam features inteiras.</p>
+                    <p><strong>2026: Orquestração.</strong> Você gerencia times de agentes (Antigravity).</p>
+                    <p><strong>2027+: Abstração Total.</strong> Código é invisível. A Intenção é o Software.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide-container" id="slide11">
+        <div class="narrator-bubble"><div class="pulse"></div> Narrador Ativo</div>
+        <h2 class="slide-title">Diálogo: <span>Orquestrando a Intenção</span></h2>
+        <div class="content-area">
+            <div class="tile">
+                <h3>Sua Pergunta:</h3>
+                <p>"Como o Cursor se diferencia tanto e é o mais usado em grandes empresas?"</p>
+                <br>
+                <h3>Resposta:</h3>
+                <p>O segredo está no <strong>RAG Corporativo</strong> e <strong>Segurança</strong>. Ele indexa o código legado da empresa localmente, respeitando a privacidade, e age no "nível estrutural", enquanto o Copilot é apenas um plugin de interface.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide-container" id="slide12">
+        <div class="narrator-bubble"><div class="pulse"></div> Narrador Ativo</div>
+        <div class="content-area" style="text-align: center;">
+            <h1>Software na Velocidade do <span>Pensamento</span></h1>
+            <p class="subtitle">Obrigado pela discussão. Estamos construindo o futuro onde o único limite da tecnologia é a clareza da nossa intenção.</p>
+        </div>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide-container');
+        const synth = window.speechSynthesis;
+        let isContinuous = false;
+        let voices = [];
+
+        const scripts = [
+            "Bem-vindo ao futuro do desenvolvimento. Hoje vamos discutir o Paradigma Guiado por Intenção. O código, como o conhecemos, está morrendo para dar lugar à orquestração de agentes.",
+            "Slide dois. Vamos falar de abstração. Assim como não nos preocupamos com o silício da CPU, em breve não nos preocuparemos com a sintaxe. O código está se tornando o novo Assembly.",
+            "A evolução do stack. Note que conforme a tecnologia amadurece, as camadas inferiores tornam-se implícitas. No IDD, a intenção humana torna-se a especificação executável final.",
+            "As ferramentas da nova era. Cursor, Devin, Claude e o novíssimo Antigravity do Google. Cada uma delas assume uma parte da carga cognitiva que antes era exclusividade humana.",
+            "Eficiência operacional. Veja o salto: de dez por cento de produtividade humana para noventa e cinco por cento em sistemas de orquestração de agentes autônomos.",
+            "Antigravity: O salto para a autonomia total. Ele não é apenas um editor, é um centro de comando que executa sistemas inteiros em sandboxes isoladas, resolvendo problemas de ponta a ponta.",
+            "Humano como Arquiteto. Saímos do trabalho braçal de 'pedreiro do código' para a posição estratégica de definir intenções, limites e validar resultados complexos.",
+            "O limiar da confiança. Quando atingirmos noventa e nove vírgula noventa e nove por cento de precisão, o código fonte deixará de ser auditado por humanos de forma definitiva.",
+            "Sobre hardware. Sua Dell i7 é excelente para scripts leves, mas para IA Local em larga escala, precisamos de GPUs massivas ou memória unificada para processar contextos gigantes.",
+            "A estrada para o Nível Seis. De vinte e quatro a vinte e seis, mudamos da assistência para a orquestração total. Em breve, a única interface será sua intenção clara.",
+            "Respondendo ao seu questionamento. O Cursor brilha no mundo corporativo pela sua capacidade de indexar repositórios gigantes com segurança, algo que o Copilot comum ainda não faz com maestria.",
+            "Finalizamos aqui. O software agora corre na velocidade do pensamento. O único limite da tecnologia agora é a clareza da nossa intenção. Vamos continuar essa conversa?"
+        ];
+
+        function changeSlide(dir) {
+            slides[currentSlide].classList.remove('active');
+            currentSlide += dir;
+            if (currentSlide < 0) currentSlide = 0;
+            if (currentSlide >= slides.length) currentSlide = slides.length - 1;
+            slides[currentSlide].classList.add('active');
+            document.getElementById('counter').innerText = `${currentSlide + 1} / ${slides.length}`;
+            
+            if (synth.speaking) synth.cancel();
+            if (isContinuous) speakCurrentSlide();
+        }
+
+        function speakCurrentSlide() {
+            if (synth.speaking) synth.cancel();
+            const utterance = new SpeechSynthesisUtterance(scripts[currentSlide]);
+            utterance.lang = 'pt-BR';
+            utterance.rate = 1.1;
+            utterance.onend = () => {
+                if (isContinuous && currentSlide < slides.length - 1) {
+                    setTimeout(() => changeSlide(1), 1000);
+                }
+            };
+            synth.speak(utterance);
+        }
+
+        function toggleSpeech() {
+            if (synth.speaking) {
+                synth.cancel();
+                document.getElementById('speakTxt').innerText = "Narrar Slide";
+            } else {
+                speakCurrentSlide();
+                document.getElementById('speakTxt').innerText = "Silenciar";
+            }
+        }
+
+        function toggleContinuous() {
+            isContinuous = !isContinuous;
+            const btn = document.getElementById('contBtn');
+            const txt = document.getElementById('contTxt');
+            if (isContinuous) {
+                btn.classList.add('active');
+                txt.innerText = "Parar Contínuo";
+                speakCurrentSlide();
+            } else {
+                btn.classList.remove('active');
+                txt.innerText = "Modo Contínuo";
+                synth.cancel();
+            }
+        }
+
+        function stopSpeech() {
+            synth.cancel();
+            isContinuous = false;
+            document.getElementById('contBtn').classList.remove('active');
+            document.getElementById('contTxt').innerText = "Modo Contínuo";
+            document.getElementById('speakTxt').innerText = "Narrar Slide";
+        }
+
+        window.speechSynthesis.onvoiceschanged = () => {
+            voices = window.speechSynthesis.getVoices();
+        };
+    </script>
+</body>
+</html>

@@ -1,0 +1,110 @@
+{
+  "projectName": "IDD_Refrigeracao_Novo_Episodio_4F",
+  "totalDurationSec": 135.96,
+  "items": [
+    {
+      "index": 0,
+      "id": "seg_00_leigo",
+      "who": "leigo",
+      "actor": "Usuária Leiga",
+      "avatar": "leigo",
+      "slide": 1,
+      "text": "Eliézer, no episódio quatro E nós vimos a ergonomia com luva e laudo por voz. Mas imagine a situação real: o mecânico desce no subsolo de um shopping ou entra numa câmara fria de concreto e aço. Como o aplicativo funciona se não tem nenhum sinal de internet?",
+      "wav": "C:\\Antigravity - IDD Refrigeração\\motion_graphics_renderer\\idd_video_4f_assets\\audio\\seg_00_leigo.wav",
+      "startSec": 0.5,
+      "durSec": 16.632,
+      "endSec": 17.132
+    },
+    {
+      "index": 1,
+      "id": "seg_01_eliezer",
+      "who": "eliezer",
+      "actor": "Eliézer Rosa",
+      "avatar": "eliezer",
+      "slide": 1,
+      "text": "Esse é o clássico efeito Gaiola de Faraday da indústria! A maioria dos aplicativos trava ou perde dados porque foram feitos dependentes de nuvem. No Paradigma IDD, a premissa é estrita: Offline-First mandatório! O sistema precisa ser totalmente autônomo e relacional dentro do próprio dispositivo.",
+      "wav": "C:\\Antigravity - IDD Refrigeração\\motion_graphics_renderer\\idd_video_4f_assets\\audio\\seg_01_eliezer.wav",
+      "startSec": 17.782,
+      "durSec": 20.808,
+      "endSec": 38.59
+    },
+    {
+      "index": 2,
+      "id": "seg_02_leigo",
+      "who": "leigo",
+      "actor": "Usuária Leiga",
+      "avatar": "leigo",
+      "slide": 2,
+      "text": "Veja no Slide dois a inteligência do banco embarcado! O dispositivo roda um SQLite local completo, executando as mesmas invariantes de negócio e transações atômicas que vimos nos episódios três e quatro!",
+      "wav": "C:\\Antigravity - IDD Refrigeração\\motion_graphics_renderer\\idd_video_4f_assets\\audio\\seg_02_leigo.wav",
+      "startSec": 39.24,
+      "durSec": 13.704,
+      "endSec": 52.944
+    },
+    {
+      "index": 3,
+      "id": "seg_03_eliezer",
+      "who": "eliezer",
+      "actor": "Eliézer Rosa",
+      "avatar": "eliezer",
+      "slide": 2,
+      "text": "Exatamente! Quando o técnico fecha a ordem de serviço, dá baixa na peça e assina o laudo, a transação é gravada localmente com integridade criptográfica. Nenhuma informação se perde se a bateria acabar ou se o sinal demorar horas para voltar.",
+      "wav": "C:\\Antigravity - IDD Refrigeração\\motion_graphics_renderer\\idd_video_4f_assets\\audio\\seg_03_eliezer.wav",
+      "startSec": 53.594,
+      "durSec": 16.104,
+      "endSec": 69.698
+    },
+    {
+      "index": 4,
+      "id": "seg_04_leigo",
+      "who": "leigo",
+      "actor": "Usuária Leiga",
+      "avatar": "leigo",
+      "slide": 3,
+      "text": "E no Slide três nós vemos a reconciliação ao reconectar! Quando o técnico sobe ao térreo e pega o sinal de rede, o despachante de eventos sincroniza os dados sem nenhum conflito de concorrência!",
+      "wav": "C:\\Antigravity - IDD Refrigeração\\motion_graphics_renderer\\idd_video_4f_assets\\audio\\seg_04_leigo.wav",
+      "startSec": 70.348,
+      "durSec": 12.336,
+      "endSec": 82.684
+    },
+    {
+      "index": 5,
+      "id": "seg_05_eliezer",
+      "who": "eliezer",
+      "actor": "Eliézer Rosa",
+      "avatar": "eliezer",
+      "slide": 3,
+      "text": "Isso é garantido por tipos de dados replicados sem conflito, os CRDTs, e marcação temporal determinística. Mesmo se dois técnicos mexeram no mesmo sistema em turnos diferentes, o IDD reconcilia o estado do ativo sem sobrescrever nem duplicar relatórios.",
+      "wav": "C:\\Antigravity - IDD Refrigeração\\motion_graphics_renderer\\idd_video_4f_assets\\audio\\seg_05_eliezer.wav",
+      "startSec": 83.334,
+      "durSec": 17.544,
+      "endSec": 100.878
+    },
+    {
+      "index": 6,
+      "id": "seg_06_leigo",
+      "who": "leigo",
+      "actor": "Usuária Leiga",
+      "avatar": "leigo",
+      "slide": 4,
+      "text": "E o Slide quatro fecha com a validação assistida com operadores reais! O teste da luva, a medição do tempo de tela e a aprovação dos mecânicos veteranos antes do lançamento oficial!",
+      "wav": "C:\\Antigravity - IDD Refrigeração\\motion_graphics_renderer\\idd_video_4f_assets\\audio\\seg_06_leigo.wav",
+      "startSec": 101.528,
+      "durSec": 11.712,
+      "endSec": 113.24
+    },
+    {
+      "index": 7,
+      "id": "seg_07_eliezer",
+      "who": "eliezer",
+      "actor": "Eliézer Rosa",
+      "avatar": "eliezer",
+      "slide": 4,
+      "text": "Com isso fechamos o ciclo de excelência do Paradigma IDD: da intenção pura sem código, passando pela modelagem MER e UML, transações atômicas, evolução de esquema, até a ergonomia viva no campo de batalha. O software profissional com IA finalmente é uma realidade robusta!",
+      "wav": "C:\\Antigravity - IDD Refrigeração\\motion_graphics_renderer\\idd_video_4f_assets\\audio\\seg_07_eliezer.wav",
+      "startSec": 113.89,
+      "durSec": 19.92,
+      "endSec": 133.81
+    }
+  ]
+}

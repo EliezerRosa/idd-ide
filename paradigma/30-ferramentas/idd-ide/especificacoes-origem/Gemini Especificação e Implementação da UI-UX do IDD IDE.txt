@@ -1,0 +1,101 @@
+# Especificação e Implementação da UI/UX do IDD IDE v2.0
+
+```markdown
+Você é um Principal Frontend Architect e UX Designer especializado em Ambientes de Desenvolvimento Integrado (IDEs), Ferramentas de Engenharia de Software e Interfaces Neuro-Simbólicas.
+
+Sua tarefa é projetar a arquitetura de UI/UX e implementar os componentes centrais da interface gráfica do **IDD IDE v2.0**, elevando o estado atual do repositório (`EliezerRosa/idd-ide` — baseado em CLI, LSP e sincronização de contratos) para um **Painel de Controle Neuro-Simbólico Modular**.
+
+---
+
+### 🎯 Contexto e Propósito da UI
+
+O IDD IDE v2.0 estende o paradigma de Desenvolvimento Orientado a Intenção para uma experiência **HUD-first + Grid de Componentes**. A UI deve desconstruir a visão tradicional de "árvore de arquivos texto" e oferecer uma workspace onde o código-fonte, os contratos de intenção, a topologia de Bounded Contexts e a auditoria em tempo real coexistam de forma harmônica.
+
+---
+
+### 🏗️ Arquitetura de Layout da UI (4 Regiões Globais)
+
+A interface deve ser dividida em 4 quadrantes funcionais interconectados:
+
+
+```
+
+┌────────────────────────────────────────────────────────────────────────────────────────────────────────┐
+│ 1. BARRA SUPERIOR DE GOVERNANÇA (HUD Header)                                                          │
+│ [⬡ IDD IDE]  Project: Engine-Core  │ Lifecycle: [STABILIZATION ▼]  │ Role: [MODERATOR ▼]  │ Score: 92% │
+├──────────────┬─────────────────────────────────────────────────────────┬───────────────────────────────┤
+│ 2. TRILHO    │ 3. WORKSPACE CENTRAL: EDITOR DUAL & CANVAS             │ 4. PAINEL DIREITO DE GATES    │
+│    ESQUERDO  │ [user-account.intent.yaml]  [UserAccount.ts]  [Canvas]│                               │
+│              │ ┌─────────────────────────┬───────────────────────────┐ │ 🛑 HARD GATES (Determinístico) │
+│ BOUNDED      │ │ target_class: UserAcc   │ public registerFailed() { │ │ • Visibilidade: 100% OK       │
+│ CONTEXTS     │ │ target_method: reg...   │   this.failedCount++;     │ │ • LCOM Coesão: 0.12 (Excelente)│
+│ (Módulos DDD)│ │ state_mutation:         │   if (this.failedCount) { │ │ • CBO Acoplamento: 2 (Baixo)  │
+│              │ │   allowed: [failed...]  │     this.status = ...     │ │ • BCNF Relacional: Validado   │
+│ ┌──────────┐ │ └─────────────────────────┴───────────────────────────┘ │ ───────────────────────────── │
+│ │ Auth     │ │ ── Visão Visual Excalidraw + Bounding Boxes ────────── │ 👁️ SOFT GATES (VLM / Advisory) │
+│ │  ├─User  │ │ ┌─────────────────────────────────────────────────────┐ │ • SHALA Entropia H(p_q): 0.12 │
+│ │  └─Token │ │ │  [UserAccount] ──(1:N)──> [UserSession]             │ │ • Visual Score: 88%           │
+│ ├──────────┤ │ │  └─ ⚠️ Bounding Box: Structural Coupling Leak       │ │ • Alert: Context Leak on PR   │
+│ │ Sales    │ │ └─────────────────────────────────────────────────────┘ │                               │
+└──────────────┴─────────────────────────────────────────────────────────┴───────────────────────────────┤
+│ ❯ Terminal / IDD CLI  │  [Waivers Ativos: 1]  │  L1 Compiler Status: UNAMBIGUOUS  │  Sync: Local-First   │
+└────────────────────────────────────────────────────────────────────────────────────────────────────────┘
+
+```
+
+---
+
+### 📋 Especificação Detalhada dos Componentes de UI
+
+#### 1. Header HUD (Barra de Governança e Status Global)
+- **Lifecycle Status Selector:** Componente dropdown interativo para alterar o estado de maturidade do projeto (`exploratory` | `stabilization` | `production`). A mudança deste estado altera dinamicamente os temas de cor e os critérios dos *Hard/Soft Gates*.
+- **Role Authority Selector:** Seletor de papéis de governança (`executor` | `moderator` | `legislator`). Desabilita visualmente botões de concessão de *Waivers* e alteração do `/project.intent.yaml` caso o usuário não possua autoridade.
+- **Global Score Gauge:** Medidor circular/barra de progresso indicando a conformidade geral do projeto (0 a 100%).
+
+#### 2. Left Rail: Navegador por Bounded Contexts
+- Em vez de pastas do sistema operacional, agrupar o código-fonte e os contratos pelos *Bounded Contexts* declarados no `project.intent.yaml` (ex: `Auth`, `Sales`, `Billing`).
+- **Badges de Drift Status:** Exibir ícones coloridos ao lado de cada entidade/método:
+  - 🟢 **Verde:** 100% alinhado com o contrato.
+  - 🟡 **Amarelo:** Alerta de ergonomia cognitiva ou advertência do VLM (Soft Gate).
+  - 🔴 **Vermelho:** Violação crítica de AST/Hard Gate (ex: mutação não autorizada de estado ou importação ilegal de pacote).
+
+#### 3. Workspace Central: Editor Dual & Canvas Integrado
+Aba dividida em três visões comutáveis:
+1. **Editor Dual de Circunscrição (Side-by-Side):**
+   - Esquerda: O contrato de método `.intent.yaml` (Camada 3).
+   - Direita: O código-fonte (`.ts` ou `.py`).
+   - **Active State Mutation Highlight:** Destacar em tempo real no código apenas as variáveis autorizadas na seção `state_mutation.allowed_fields`. Se o código tentar alterar um campo `read_only`, pintar a linha em vermelho e exibir o diagnóstico do LSP.
+2. **Editor de Esquema Semântico (`domain.intent.yaml`):**
+   - Tabela de Dependências Funcionais ($X \rightarrow Y$) e cálculo do Fechamento de Atributos ($X^+$).
+3. **Canvas Multimodal Excalidraw:**
+   - Renderização do diagrama vetorial de entidades com **Overlay transparente de Bounding Boxes** marcando sugestões e alertas do VLM Inspector.
+
+#### 4. Right Panel: Painel Desacoplado de Gates
+- **Seção Hard Gates (Determinístico / Local / Bloqueante):**
+  - **Gauges de AST:** Exibir métricas de LCOM (Coesão) e CBO (Acoplamento).
+  - **Indicadores de Regra:** Checkboxes para Lei de Demeter, Visibilidade de Atributos, LSP e Normalização BCNF.
+- **Seção Soft Gates (Neural / Assíncrono / Advisory):**
+  - **Gauge de Entropia SHALA-LLM:** Exibir $\tilde{H}(p_q)$ da especificação em Linguagem Natural.
+  - **Parecer VLM:** Card com a nota visual (`visualScore`) e lista de achados cognitivos.
+
+---
+
+### 💬 Modais e Componentes Interativos
+
+1. **SHALA-LLM Ambiguity Resolution Modal (Pop-up L1):**
+   - Quando $\tilde{H}(p_q) > 0.35$, abrir janela modal exibindo as opções de interpretação verbalizadas com probabilidades para que o desenvolvedor selecione e consolide o termo no `.intent/ubiquitous-dictionary.json`.
+2. **Drift Waiver Granting Modal (Gestão de Exceções):**
+   - Formulário para usuários com papel de `moderator` ou `legislator` assinarem isenções temporárias de regras, definindo justificativa e prazo de expiração em dias.
+
+---
+
+### 💻 O que você deve entregar neste output
+
+1. **Hierarquia de Componentes Frontend:** Estrutura de arquivos e componentes (ex: React com Tailwind CSS e Lucide Icons, ou Webview para VS Code Extension).
+2. **Implementação do Estado da UI (State Management):** Tipagem TypeScript e modelo de estado (Zustand/Redux/Context API) integrando os eventos das 3 Camadas (`project`, `domain`, `module`) com a UI.
+3. **Código-Fonte do Componente Principal (`IDDWorkspace.tsx`):** Implementação completa do layout principal com o Header HUD, o Navegador de Bounded Contexts, o Editor Dual e o Painel de Hard/Soft Gates.
+4. **Componente do Pop-up de Desambiguação L1 (`ShalaAmbiguityResolver.tsx`):** Modal interativo para seleção de interpretações de Linguagem Ubíqua.
+
+Proceda com a implementação da arquitetura de UI/UX limpa, modular e tipada.
+
+```

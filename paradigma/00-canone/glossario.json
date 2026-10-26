@@ -1,0 +1,96 @@
+{
+  "version": "1.0",
+  "terms": [
+    {
+      "term": "IntentDrivenDevelopment",
+      "definition": "Disciplina em que a intenção humana em LN é a fonte de autoridade, compilada em contratos verificados deterministicamente; o código é derivado, regenerável e rastreável à intenção",
+      "kind": "concept",
+      "aliases": ["IDD", "Intent-Driven Development", "Desenvolvimento Orientado à Intenção"],
+      "forbidden": ["Intention-Driven Development", "Desenvolvimento Dirigido por Intenção", "Desenvolvimento Guiado por Intenção"]
+    },
+    {
+      "term": "Intent",
+      "definition": "Declaração em linguagem natural do quê e do porquê de uma mudança ou sistema; fonte de autoridade, não fonte executável",
+      "kind": "concept",
+      "aliases": ["Intenção"],
+      "forbidden": ["prompt"]
+    },
+    {
+      "term": "IntentContract",
+      "definition": "Projeção estruturada e verificável de uma Intent: invariantes, vocabulário de ações, critérios de aceite (ex.: .intent.yaml)",
+      "kind": "value-object",
+      "aliases": ["Contrato de Intenção"],
+      "forbidden": []
+    },
+    {
+      "term": "EpistemicCommand",
+      "definition": "Autoridade sobre o quê e o porquê (intenção, invariantes, critérios, limites éticos); sempre humana",
+      "kind": "concept",
+      "aliases": ["Comando Epistêmico"],
+      "forbidden": []
+    },
+    {
+      "term": "OperationalCommand",
+      "definition": "Autoridade sobre o como (ferramentas, sequência, sintaxe); delegável ao agente",
+      "kind": "concept",
+      "aliases": ["Comando Operacional"],
+      "forbidden": []
+    },
+    {
+      "term": "Invariant",
+      "definition": "Regra de negócio inegociável declarada explicitamente e checada por mecanismo determinístico",
+      "kind": "value-object",
+      "aliases": ["Invariante"],
+      "forbidden": ["invariante sagrada", "regra inquebrável"]
+    },
+    {
+      "term": "DeterministicActionVocabulary",
+      "definition": "Vocabulário fechado e tipado de ações; o LLM só produz {ação, parâmetros}; dados do domínio circulam apenas em código determinístico; casos frequentes passam por fast-path sem LLM",
+      "kind": "concept",
+      "aliases": ["DAV"],
+      "forbidden": []
+    },
+    {
+      "term": "ConfirmOnce",
+      "definition": "Padrão de aprovação: o humano aprova o plano uma vez e o agente executa até o fim, reportando tudo",
+      "kind": "concept",
+      "aliases": ["Confirm-Once"],
+      "forbidden": []
+    },
+    {
+      "term": "BayesianFaith",
+      "definition": "Confiança no agente proporcional à evidência auditável acumulada; oposto de credulidade",
+      "kind": "concept",
+      "aliases": ["Fé Bayesiana"],
+      "forbidden": []
+    },
+    {
+      "term": "UbiquitousDictionary",
+      "definition": "Dicionário verificável da Linguagem Ubíqua; termo ausente ou proibido gera alerta antes da geração de código",
+      "kind": "concept",
+      "aliases": ["Dicionário Ubíquo"],
+      "forbidden": []
+    },
+    {
+      "term": "StatusSeal",
+      "definition": "Selo obrigatório em peças públicas: IMPLEMENTADO (evidência verificável), DEMONSTRAÇÃO (protótipo/encenação ilustrativa) ou PROPOSTA (não implementado)",
+      "kind": "value-object",
+      "aliases": ["Selo de Status"],
+      "forbidden": []
+    },
+    {
+      "term": "ShalaMetric",
+      "definition": "PROPOSTA: medida de ambiguidade da LN por entropia sobre interpretações verbalizadas (Compilador L1)",
+      "kind": "concept",
+      "aliases": ["SHALA"],
+      "forbidden": ["SHADA"]
+    },
+    {
+      "term": "AtomicAction",
+      "definition": "Protocolo de mutação em 4 fases: Guarda, Mutação, Selagem, Compensação; Sagas entre contextos, transação ACID local dentro de um contexto",
+      "kind": "concept",
+      "aliases": ["Ação Atômica"],
+      "forbidden": []
+    }
+  ]
+}

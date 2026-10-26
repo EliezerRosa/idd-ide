@@ -1,0 +1,115 @@
+{
+  "episode": "4C",
+  "title": "Implementação Completa: Funções Puras & Métodos Amarrados às Invariantes",
+  "totalDurationSec": 132.8,
+  "items": [
+    {
+      "id": "seg_01_leigo",
+      "who": "leigo",
+      "actor": "Usuária Leiga",
+      "slide": 1,
+      "chat": false,
+      "startSec": 0.5,
+      "endSec": 12.74,
+      "durationSec": 12.24,
+      "text": "Eliézer, chegamos na fase de código vivo da Cafeteria e Padaria! Como o sistema executa a baixa atômica de ingredientes da receita sem permitir que o estoque fique negativo se vários caixas venderem juntos?",
+      "file": "audio/seg_01_leigo.mp3"
+    },
+    {
+      "id": "seg_02_eliezer",
+      "who": "eliezer",
+      "actor": "Eliézer Rosa",
+      "slide": 1,
+      "chat": false,
+      "startSec": 13.39,
+      "endSec": 30.36,
+      "durationSec": 16.97,
+      "text": "No Paradigma IDD, a gestão de estoque não depende de atualizações cegas em banco de dados. Nós utilizamos Funções Puras determinísticas que calculam o consumo exato da Ficha Técnica e geram novas estruturas imutáveis de lote, garantindo atomicidade total!",
+      "file": "audio/seg_02_eliezer.mp3"
+    },
+    {
+      "id": "seg_03_leigo",
+      "who": "leigo",
+      "actor": "Usuária Leiga",
+      "slide": 2,
+      "chat": false,
+      "startSec": 31.01,
+      "endSec": 40.73,
+      "durationSec": 9.72,
+      "text": "Vejam que fascinante o método processarPedidoBalcao com o decorador arroba invariant! IA Compilador, como ele fiscaliza a cozinha?",
+      "file": "audio/seg_03_leigo.mp3"
+    },
+    {
+      "id": "seg_04_ia",
+      "who": "ia",
+      "actor": "IA Compilador",
+      "slide": 2,
+      "chat": false,
+      "startSec": 41.38,
+      "endSec": 64.83,
+      "durationSec": 23.45,
+      "text": "O decorador atua como sentinela em tempo de execução. Na pré-condição, ele valida se cada insumo da receita exigida possui lote ativo e saldo superior à dose. E no pós-condição, ele audita se o custo total deduzido é exatamente igual à soma dos ingredientes faturados. Se faltar um único grama de café, o sistema lança InsufficientStockException e cancela a venda!",
+      "file": "audio/seg_04_ia.mp3"
+    },
+    {
+      "id": "seg_05_leigo",
+      "who": "leigo",
+      "actor": "Usuária Leiga",
+      "slide": 3,
+      "chat": false,
+      "startSec": 65.48,
+      "endSec": 70.86,
+      "durationSec": 5.38,
+      "text": "E no horário de pico da manhã, quando saem cinquenta expressos e croissants por minuto no balcão?",
+      "file": "audio/seg_05_leigo.mp3"
+    },
+    {
+      "id": "seg_06_ia",
+      "who": "ia",
+      "actor": "IA Compilador",
+      "slide": 3,
+      "chat": true,
+      "startSec": 71.51,
+      "endSec": 91.48,
+      "durationSec": 19.97,
+      "text": "Executando a suíte de testes de estresse com duzentos cenários de simulação em tempo real no terminal! Testes de consumo extremo de insumos compartilhados, transições FIFO de lotes e congelamento de custo de venda. Duzentos testes executados: duzentos aprovados com cem por cento de sucesso e zero estoque negativo!",
+      "file": "audio/seg_06_ia.mp3"
+    },
+    {
+      "id": "seg_07_eliezer",
+      "who": "eliezer",
+      "actor": "Eliézer Rosa",
+      "slide": 3,
+      "chat": true,
+      "startSec": 92.13,
+      "endSec": 104.44,
+      "durationSec": 12.31,
+      "text": "Implementação e suíte de testes homologadas com perfeição! É assim que uma padaria moderna opera: sem desperdícios, sem erros de caixa e com controle milimétrico de cada insumo.",
+      "file": "audio/seg_07_eliezer.mp3"
+    },
+    {
+      "id": "seg_08_leigo",
+      "who": "leigo",
+      "actor": "Usuária Leiga",
+      "slide": 4,
+      "chat": false,
+      "startSec": 105.09,
+      "endSec": 114.59,
+      "durationSec": 9.5,
+      "text": "Com os episódios de MER, UML e Código Vivo concluídos nas três trilhas, o Paradigma IDD prova que é possível construir softwares infalíveis!",
+      "file": "audio/seg_08_leigo.mp3"
+    },
+    {
+      "id": "seg_09_eliezer",
+      "who": "eliezer",
+      "actor": "Eliézer Rosa",
+      "slide": 4,
+      "chat": false,
+      "startSec": 115.24,
+      "endSec": 130.65,
+      "durationSec": 15.41,
+      "text": "Com certeza! Seja em fintech de Pix, agendamento de salão ou gestão de cafeteria: a intenção comanda, os modelos governam e o código nasce blindado. Obrigado a todos os inscritos e rumo ao futuro do software!",
+      "file": "audio/seg_09_eliezer.mp3"
+    }
+  ]
+}

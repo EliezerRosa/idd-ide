@@ -1,0 +1,1131 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>IDD – Desenvolvimento Orientado à Intenção</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Lora:ital,wght@0,400;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;600&family=Syne:wght@400;600;800&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --bg:#05080f; --bg2:#0b1020; --bg3:#111828;
+  --cyan:#00e5ff; --amber:#ffb347; --green:#39ff7a;
+  --red:#ff4d6d; --purple:#c084fc;
+  --text:#dde6f5; --muted:#7a8ba8;
+  --border:rgba(0,229,255,.18);
+  --glow:0 0 18px rgba(0,229,255,.35);
+  --nav-h:58px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{width:100%;height:100%;overflow:hidden}
+body{background:var(--bg);color:var(--text);font-family:'Lora',serif;position:relative}
+body::before{
+  content:'';position:fixed;inset:0;
+  background-image:linear-gradient(rgba(0,229,255,.04) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(0,229,255,.04) 1px,transparent 1px);
+  background-size:48px 48px;pointer-events:none;z-index:0;
+}
+
+/* ── deck ── */
+#deck{position:fixed;inset:0 0 var(--nav-h) 0;z-index:1;overflow:hidden}
+
+/* ── slide: flex column, only body scrolls ── */
+.slide{
+  position:absolute;inset:0;
+  display:flex;flex-direction:column;
+  padding:0 4vw;
+  opacity:0;transform:translateX(60px);
+  pointer-events:none;
+  transition:opacity .4s ease,transform .4s cubic-bezier(.4,0,.2,1);
+  overflow:hidden; /* NO scroll here */
+}
+.slide.active{opacity:1;transform:translateX(0);pointer-events:all}
+.slide.exit{opacity:0;transform:translateX(-60px)}
+
+/* ── header: fixed height ── */
+.slide-header{
+  flex-shrink:0;padding-top:1.4vh;padding-bottom:.9vh;
+  border-bottom:1px solid var(--border);
+  display:flex;align-items:baseline;gap:1rem;
+}
+.slide-number{font-family:'IBM Plex Mono',monospace;font-size:.72rem;color:var(--cyan);opacity:.7;letter-spacing:.12em}
+.slide-tag{font-family:'IBM Plex Mono',monospace;font-size:.66rem;color:var(--amber);letter-spacing:.1em;text-transform:uppercase;border:1px solid var(--amber);padding:1px 7px;border-radius:3px}
+
+/* ── body: THIS scrolls ── */
+.slide-body{
+  flex:1;
+  display:grid;grid-template-columns:1fr 300px;gap:2vw;
+  padding:1.2vh 0 .5vh;
+  min-height:0; /* critical */
+  overflow-y:auto;overflow-x:hidden;
+  scrollbar-width:thin;scrollbar-color:var(--cyan) transparent;
+  align-items:start;
+}
+.slide-body.full{grid-template-columns:1fr}
+.slide-body::-webkit-scrollbar{width:4px}
+.slide-body::-webkit-scrollbar-thumb{background:rgba(0,229,255,.3);border-radius:4px}
+
+/* ── voice bar: fixed at bottom of slide ── */
+.voice-bar{
+  flex-shrink:0;
+  display:flex;gap:.55rem;align-items:center;
+  padding:.6vh 0 .8vh;flex-wrap:wrap;
+  border-top:1px solid var(--border);
+  background:rgba(5,8,15,.7);
+}
+
+/* ── main content typography ── */
+.slide-main h1{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:clamp(2rem,4.5vw,3.8rem);line-height:1;
+  color:var(--cyan);text-shadow:var(--glow);letter-spacing:.04em;margin-bottom:.5rem;
+}
+.slide-main h2{font-family:'Syne',sans-serif;font-size:clamp(1rem,2.1vw,1.5rem);font-weight:800;color:var(--amber);letter-spacing:.02em;margin-bottom:.8rem}
+.slide-main h3{font-family:'Syne',sans-serif;font-size:clamp(.88rem,1.6vw,1.1rem);font-weight:600;color:var(--green);margin:.8rem 0 .3rem}
+.slide-main p{font-size:clamp(.8rem,1.35vw,.98rem);line-height:1.7;color:var(--text);margin-bottom:.7rem}
+.slide-main ul,.slide-main ol{padding-left:1.3rem;margin-bottom:.7rem}
+.slide-main li{font-size:clamp(.78rem,1.3vw,.95rem);line-height:1.65;margin-bottom:.25rem;color:var(--text)}
+.slide-main li::marker{color:var(--cyan)}
+
+/* ── comment panel: scrolls with body ── */
+.comment-panel{
+  background:rgba(255,179,71,.06);border:1px solid rgba(255,179,71,.25);
+  border-radius:10px;padding:1rem;display:flex;flex-direction:column;gap:.7rem;
+  font-family:'Lora',serif;font-size:clamp(.75rem,1.2vw,.9rem);line-height:1.65;color:#f0d4a0;
+  align-self:start;
+}
+.comment-panel .cpanel-title{
+  font-family:'IBM Plex Mono',monospace;font-size:.68rem;color:var(--amber);
+  letter-spacing:.12em;text-transform:uppercase;display:flex;align-items:center;gap:.5rem;margin-bottom:.1rem;
+}
+.comment-panel .cpanel-title span.dot{width:7px;height:7px;background:var(--amber);border-radius:50%;display:inline-block;animation:blink 1.5s infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.2}}
+.comment-panel .comment-text{font-style:italic}
+.comment-panel .comment-humor{
+  background:rgba(255,77,109,.1);border-left:3px solid var(--red);padding:.45rem .7rem;
+  font-style:normal;font-size:.87em;color:#ffb3c0;border-radius:0 5px 5px 0;
+  display:flex;flex-direction:column;gap:.5rem;
+}
+.humor-gif{
+  display:block;width:100%;max-height:120px;
+  object-fit:cover;object-position:center top;
+  border-radius:5px;border:1px solid rgba(255,77,109,.3);
+  align-self:stretch;
+}
+.humor-gif-broken{display:none}
+.comment-panel .comment-question{
+  background:rgba(57,255,122,.08);border:1px solid rgba(57,255,122,.3);
+  border-radius:6px;padding:.5rem .7rem;font-style:normal;font-size:.87em;color:#a0ffc4;
+  cursor:pointer;transition:background .2s;
+}
+.comment-panel .comment-question:hover{background:rgba(57,255,122,.15)}
+.comment-panel .comment-question::before{content:'💬 ';font-style:normal}
+
+/* refs */
+.refs-box{
+  background:rgba(192,132,252,.07);border:1px solid rgba(192,132,252,.22);
+  border-radius:8px;padding:.7rem .9rem;margin-top:.6rem;
+}
+.refs-box .refs-title{
+  font-family:'IBM Plex Mono',monospace;font-size:.65rem;color:var(--purple);
+  letter-spacing:.1em;text-transform:uppercase;margin-bottom:.4rem;
+}
+.refs-box a{
+  display:block;font-size:.78rem;color:#d8b4fe;text-decoration:none;
+  margin-bottom:.25rem;line-height:1.5;transition:color .2s;
+}
+.refs-box a:hover{color:var(--purple);text-decoration:underline}
+.refs-box a::before{content:'↗ ';opacity:.6}
+
+/* ── buttons ── */
+.btn-voice{
+  display:flex;align-items:center;gap:.45rem;
+  padding:.38rem .85rem;border-radius:6px;border:1px solid;
+  font-family:'IBM Plex Mono',monospace;font-size:.68rem;letter-spacing:.07em;
+  cursor:pointer;transition:all .2s;background:transparent;
+}
+.btn-voice.edu{border-color:var(--cyan);color:var(--cyan)}
+.btn-voice.edu:hover{background:rgba(0,229,255,.12)}
+.btn-voice.edu.speaking{background:rgba(0,229,255,.18);box-shadow:var(--glow)}
+.btn-voice.comment-btn{border-color:var(--amber);color:var(--amber)}
+.btn-voice.comment-btn:hover{background:rgba(255,179,71,.12)}
+.btn-voice.comment-btn.speaking{background:rgba(255,179,71,.18)}
+.btn-voice.stop-btn{border-color:var(--red);color:var(--red)}
+.btn-voice.stop-btn:hover{background:rgba(255,77,109,.12)}
+
+/* ── navigation bar ── */
+#nav{
+  position:fixed;bottom:0;left:0;right:0;height:var(--nav-h);
+  display:flex;align-items:center;justify-content:center;gap:1rem;
+  z-index:100;background:rgba(5,8,15,.9);
+  border-top:1px solid var(--border);backdrop-filter:blur(12px);
+}
+.nav-btn{
+  background:transparent;border:1px solid var(--border);color:var(--text);
+  padding:.38rem .85rem;border-radius:30px;cursor:pointer;
+  font-family:'IBM Plex Mono',monospace;font-size:.72rem;transition:all .2s;
+}
+.nav-btn:hover{border-color:var(--cyan);color:var(--cyan)}
+.nav-btn:disabled{opacity:.3;cursor:default}
+.nav-btn.auto-btn{border-color:var(--green);color:var(--green)}
+.nav-btn.auto-btn.active{background:rgba(57,255,122,.15);box-shadow:0 0 10px rgba(57,255,122,.3)}
+#slide-counter{font-family:'IBM Plex Mono',monospace;font-size:.72rem;color:var(--muted);min-width:5rem;text-align:center}
+#progress-bar{position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg,var(--cyan),var(--amber));transition:width .4s ease;z-index:200;box-shadow:0 0 8px var(--cyan)}
+
+/* ── cover ── */
+.cover-wrap{display:flex;flex-direction:column;justify-content:center;align-items:flex-start;height:100%;gap:1.2rem;padding:2vh 0}
+.cover-kicker{font-family:'IBM Plex Mono',monospace;font-size:.78rem;color:var(--green);letter-spacing:.2em;text-transform:uppercase;display:flex;align-items:center;gap:.6rem}
+.cover-kicker::before{content:'';display:block;width:30px;height:1px;background:var(--green)}
+.cover-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(3rem,7vw,6rem);line-height:.92;color:var(--cyan);text-shadow:0 0 30px rgba(0,229,255,.5),0 0 80px rgba(0,229,255,.2);letter-spacing:.04em}
+.cover-subtitle{font-family:'Syne',sans-serif;font-size:clamp(.95rem,2vw,1.35rem);font-weight:600;color:var(--amber)}
+.cover-description{font-size:clamp(.83rem,1.5vw,1rem);color:var(--muted);max-width:540px;line-height:1.75}
+.cover-pills{display:flex;gap:.6rem;flex-wrap:wrap}
+.pill{font-family:'IBM Plex Mono',monospace;font-size:.68rem;padding:.28rem .75rem;border-radius:3px;letter-spacing:.06em}
+.pill.cyan{border:1px solid var(--cyan);color:var(--cyan)}
+.pill.amber{border:1px solid var(--amber);color:var(--amber)}
+.pill.green{border:1px solid var(--green);color:var(--green)}
+.pill.red{border:1px solid var(--red);color:var(--red)}
+.pill.purple{border:1px solid var(--purple);color:var(--purple)}
+
+/* ── timeline ── */
+.timeline{display:flex;flex-direction:column;gap:.45rem;margin:.4rem 0 .8rem}
+.tl-item{display:grid;grid-template-columns:80px 14px 1fr;gap:.45rem;align-items:start;font-size:clamp(.76rem,1.25vw,.9rem)}
+.tl-year{font-family:'IBM Plex Mono',monospace;font-size:.76rem;color:var(--cyan);text-align:right;padding-top:.2rem;letter-spacing:.06em}
+.tl-dot-wrap{display:flex;flex-direction:column;align-items:center}
+.tl-dot{width:9px;height:9px;border-radius:50%;background:var(--cyan);border:2px solid var(--bg);flex-shrink:0;margin-top:.22rem}
+.tl-dot.amber{background:var(--amber)}.tl-dot.green{background:var(--green)}.tl-dot.red{background:var(--red)}.tl-dot.purple{background:var(--purple)}
+.tl-line{flex:1;width:1px;background:var(--border);margin-top:2px}
+.tl-text{color:var(--text);line-height:1.45;padding-bottom:.15rem}
+.tl-text strong{color:var(--amber);font-weight:600}
+
+/* ── code ── */
+.code-block{
+  background:#0a0f1c;border:1px solid rgba(0,229,255,.2);border-radius:8px;
+  padding:.85rem 1rem;font-family:'IBM Plex Mono',monospace;
+  font-size:clamp(.68rem,1.1vw,.83rem);line-height:1.6;
+  margin:.6rem 0;overflow-x:auto;position:relative;
+}
+.code-block .code-label{position:absolute;top:.45rem;right:.7rem;font-size:.62rem;color:var(--muted);letter-spacing:.1em}
+.code-block .kw{color:#c084fc}.code-block .fn{color:#00e5ff}.code-block .str{color:#39ff7a}
+.code-block .cmt{color:#5a7090;font-style:italic}.code-block .num{color:var(--amber)}
+
+/* ── vocab ── */
+.vocab-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:.8rem;margin:.6rem 0}
+.vocab-card{background:rgba(192,132,252,.07);border:1px solid rgba(192,132,252,.25);border-radius:8px;padding:.75rem .9rem}
+.vocab-card .vocab-term{font-family:'IBM Plex Mono',monospace;font-size:.78rem;color:var(--purple);font-weight:600;letter-spacing:.06em;margin-bottom:.3rem}
+.vocab-card .vocab-def{font-size:.83rem;color:var(--text);line-height:1.55}
+
+/* ── comparison table ── */
+.cmp-table{width:100%;border-collapse:collapse;font-size:clamp(.7rem,1.2vw,.86rem);margin:.6rem 0}
+.cmp-table th{font-family:'IBM Plex Mono',monospace;font-size:.67rem;letter-spacing:.1em;text-transform:uppercase;padding:.5rem .7rem;text-align:left;border-bottom:1px solid var(--border)}
+.cmp-table th:first-child{color:var(--muted)}.cmp-table th:nth-child(2){color:var(--cyan)}
+.cmp-table th:nth-child(3){color:var(--amber)}.cmp-table th:nth-child(4){color:var(--green)}.cmp-table th:nth-child(5){color:var(--purple)}
+.cmp-table td{padding:.45rem .7rem;border-bottom:1px solid rgba(255,255,255,.05);line-height:1.4;color:var(--text)}
+.cmp-table td:first-child{font-family:'IBM Plex Mono',monospace;font-size:.74rem;color:var(--muted)}
+.cmp-table tr:hover td{background:rgba(255,255,255,.03)}
+
+/* ── questions ── */
+.question-list{display:flex;flex-direction:column;gap:.8rem;margin:.6rem 0}
+.question-item{background:rgba(57,255,122,.07);border:1px solid rgba(57,255,122,.25);border-radius:8px;padding:.75rem 1rem;display:flex;gap:.8rem;align-items:flex-start;cursor:pointer;transition:background .2s}
+.question-item:hover{background:rgba(57,255,122,.13)}
+.question-item .q-num{font-family:'IBM Plex Mono',monospace;font-size:.78rem;color:var(--green);font-weight:600;flex-shrink:0;width:1.5rem}
+.question-item .q-text{font-size:clamp(.8rem,1.35vw,.95rem);line-height:1.55}
+
+/* ── hbox ── */
+.hbox{background:rgba(0,229,255,.06);border:1px solid rgba(0,229,255,.3);border-radius:8px;padding:.75rem 1rem;margin:.6rem 0}
+.hbox.amber-box{background:rgba(255,179,71,.06);border-color:rgba(255,179,71,.3)}
+.hbox.red-box{background:rgba(255,77,109,.06);border-color:rgba(255,77,109,.3)}
+.hbox p{margin:0;font-size:clamp(.8rem,1.3vw,.95rem)}
+
+/* ── principle cards ── */
+.principle-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(175px,1fr));gap:.8rem;margin:.6rem 0}
+.principle-card{background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:.85rem;transition:border-color .25s,box-shadow .25s}
+.principle-card:hover{border-color:var(--cyan);box-shadow:var(--glow)}
+.principle-card .pc-icon{font-size:1.4rem;margin-bottom:.4rem}
+.principle-card .pc-title{font-family:'Syne',sans-serif;font-weight:800;font-size:.85rem;color:var(--cyan);margin-bottom:.3rem}
+.principle-card .pc-desc{font-size:.8rem;color:var(--muted);line-height:1.55}
+
+/* ── tools ── */
+.tools-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(175px,1fr));gap:.75rem;margin:.6rem 0}
+.tool-card{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:.75rem .85rem}
+.tool-card .tc-name{font-family:'IBM Plex Mono',monospace;font-size:.78rem;color:var(--green);font-weight:600;margin-bottom:.25rem}
+.tool-card .tc-cat{font-size:.68rem;color:var(--muted);font-family:'IBM Plex Mono',monospace;margin-bottom:.3rem}
+.tool-card .tc-desc{font-size:.79rem;color:var(--text);line-height:1.5}
+
+/* ── stop vocab ── */
+.stop-banner{display:flex;align-items:center;gap:.9rem;margin-bottom:1rem;padding:.6rem 1rem;background:rgba(255,77,109,.1);border:1px solid rgba(255,77,109,.35);border-radius:8px}
+.stop-banner .stop-icon{font-size:1.4rem}
+.stop-banner .stop-label{font-family:'Syne',sans-serif;font-size:.9rem;font-weight:800;color:var(--red);letter-spacing:.05em}
+.stop-banner .stop-sub{font-size:.8rem;color:var(--muted)}
+
+em{color:var(--amber);font-style:normal;font-weight:600}
+code{font-family:'IBM Plex Mono',monospace;font-size:.86em;color:var(--cyan);background:rgba(0,229,255,.1);padding:.1em .38em;border-radius:3px}
+</style>
+</head>
+<body>
+<div id="idd-status-banner" role="note" style="position:fixed;bottom:6px;left:6px;z-index:2147483000;max-width:min(92vw,560px);padding:3px 8px;font:11px/1.35 system-ui,-apple-system,Segoe UI,sans-serif;color:#fde68a;background:rgba(17,17,17,.82);border:1px solid rgba(253,230,138,.35);border-radius:6px;pointer-events:none;">📜 Peça histórica (versão anterior ao Cânone v1.0-rc1). Afirmações podem não refletir o status atual — ver paradigma/00-canone/AFIRMACOES.md</div>
+<div id="progress-bar"></div>
+<div id="deck">
+
+<!-- ═══ SLIDE 00: CAPA ═══ -->
+<div class="slide active" id="s0">
+  <div class="slide-header"><span class="slide-number">// 00</span><span class="slide-tag">Introdução</span></div>
+  <div class="slide-body full">
+    <div class="slide-main">
+      <div class="cover-wrap">
+        <div class="cover-kicker">Aula Completa · 2025</div>
+        <div class="cover-title">IDD<br>DESENVOLVIMENTO<br>ORIENTADO À<br>INTENÇÃO</div>
+        <div class="cover-subtitle">Intent-Driven Development</div>
+        <div class="cover-description">O paradigma que está redefinindo como programadores pensam, comunicam e criam software — com ou sem inteligência artificial do lado de fora.</div>
+        <div class="cover-pills">
+          <span class="pill cyan">Histórico</span>
+          <span class="pill amber">Conceitos</span>
+          <span class="pill green">Exemplos</span>
+          <span class="pill red">Vocabulário</span>
+          <span class="pill purple">IA + IDD</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="voice-bar">
+    <button class="btn-voice edu" onclick="speakMain(0)">🔊 Ler Conteúdo</button>
+    <button class="btn-voice comment-btn" onclick="speakComment(0)">💬 Comentário</button>
+    <button class="btn-voice stop-btn" onclick="stopSpeech()">⏹ Parar</button>
+  </div>
+</div>
+
+<!-- ═══ SLIDE 01: AGENDA ═══ -->
+<div class="slide" id="s1">
+  <div class="slide-header"><span class="slide-number">// 01</span><span class="slide-tag">Agenda</span></div>
+  <div class="slide-body">
+    <div class="slide-main">
+      <h1>Roteiro da Aula</h1>
+      <p>Hoje vamos viajar do cartão perfurado até os agentes de IA sem perder o fio da meada — e sem fazer ninguém dormir. Prometemos.</p>
+      <h3>O que veremos:</h3>
+      <ol>
+        <li><em>Linha do Tempo Histórica</em> — De onde viemos e por que chegamos até aqui</li>
+        <li><em>O que é IDD?</em> — Definição precisa e contexto do paradigma</li>
+        <li><em>Parada de Vocabulário</em> — Antes de avançar, alinhamos os termos</li>
+        <li><em>Princípios Fundamentais</em> — Os 5 pilares do IDD</li>
+        <li><em>IDD vs outros paradigmas</em> — TDD, BDD, DDD — amigos ou inimigos?</li>
+        <li><em>Exemplos Práticos</em> — Código real, antes e depois</li>
+        <li><em>IDD + Inteligência Artificial</em> — O presente e o futuro</li>
+        <li><em>Ferramentas do Ecossistema</em> — O que usar agora</li>
+        <li><em>Desafios e Críticas</em> — Honestidade intelectual</li>
+        <li><em>Questões para Reflexão</em> — Pra você pensar no chuveiro</li>
+      </ol>
+      <div class="hbox"><p>🎯 <strong>Objetivo:</strong> Ao final desta aula, você será capaz de identificar, aplicar e discutir o paradigma IDD com confiança — e sem soar pretensioso em code reviews.</p></div>
+    </div>
+    <div class="comment-panel">
+      <div class="cpanel-title"><span class="dot"></span> Claude Comenta</div>
+      <p class="comment-text">Esta aula foi construída em camadas intencionais — começamos com história porque entender de onde viemos é a única forma de não repetir os mesmos erros com sintaxe diferente.</p>
+      <div class="comment-humor">😂 Aviso legal: se você já trabalhou em um projeto sem documentação de intenção, prepare-se para uma epifania dolorosa e libertadora ao mesmo tempo.
+        <img class="humor-gif" src="https://media.giphy.com/media/xT0xeJpnrWC4XWblEk/giphy.gif" alt="mind blown" onerror="this.classList.add('humor-gif-broken')">
+      </div>
+      <p class="comment-text">A piada sobre "não fazer ninguém dormir" tem fundamento metodológico: aprendizado acontece em estado de atenção. Perguntas, humor e exemplos reais mantêm o cérebro acordado.</p>
+    </div>
+  </div>
+  <div class="voice-bar">
+    <button class="btn-voice edu" onclick="speakMain(1)">🔊 Ler Conteúdo</button>
+    <button class="btn-voice comment-btn" onclick="speakComment(1)">💬 Comentário</button>
+    <button class="btn-voice stop-btn" onclick="stopSpeech()">⏹ Parar</button>
+  </div>
+</div>
+
+<!-- ═══ SLIDE 02: HISTÓRICO ═══ -->
+<div class="slide" id="s2">
+  <div class="slide-header"><span class="slide-number">// 02</span><span class="slide-tag">Histórico</span></div>
+  <div class="slide-body">
+    <div class="slide-main">
+      <h1>A Jornada do "Como" ao "O Quê"</h1>
+      <p>A história da programação é, essencialmente, a história da humanidade tentando comunicar <em>intenções</em> às máquinas de formas cada vez mais naturais.</p>
+      <div class="timeline">
+        <div class="tl-item"><span class="tl-year">1940s</span><div class="tl-dot-wrap"><div class="tl-dot"></div><div class="tl-line"></div></div><div class="tl-text"><strong>Linguagem de Máquina / Assembly</strong> — 100% como. O programador era um tradutor humano de intenções para operações binárias. Era como falar com um alienígena muito literal.</div></div>
+        <div class="tl-item"><span class="tl-year">1950s</span><div class="tl-dot-wrap"><div class="tl-dot amber"></div><div class="tl-line"></div></div><div class="tl-text"><strong>FORTRAN, COBOL</strong> — Primeiras abstrações. COBOL tentava soar inglês (<code>PERFORM CALCULATE-TOTAL</code>). A intenção começa a aparecer, tímida.</div></div>
+        <div class="tl-item"><span class="tl-year">1970s</span><div class="tl-dot-wrap"><div class="tl-dot amber"></div><div class="tl-line"></div></div><div class="tl-text"><strong>C, Pascal, Programação Estruturada</strong> — Dijkstra proclama a morte do GOTO. Funções nomeadas começam a expressar intenção de forma modular.</div></div>
+        <div class="tl-item"><span class="tl-year">1980–90s</span><div class="tl-dot-wrap"><div class="tl-dot green"></div><div class="tl-line"></div></div><div class="tl-text"><strong>OOP — C++, Java, Smalltalk</strong> — Objetos modelam o mundo real. A intenção começa a viver em classes, métodos e interfaces.</div></div>
+        <div class="tl-item"><span class="tl-year">2000s</span><div class="tl-dot-wrap"><div class="tl-dot red"></div><div class="tl-line"></div></div><div class="tl-text"><strong>Ágil, TDD, BDD, DDD</strong> — A intenção começa a ser formalizada: testes descrevem comportamentos esperados antes do código existir.</div></div>
+        <div class="tl-item"><span class="tl-year">2010s</span><div class="tl-dot-wrap"><div class="tl-dot purple"></div><div class="tl-line"></div></div><div class="tl-text"><strong>DSLs, Clean Architecture, UIs Declarativas</strong> — React, SQL, Terraform: descreva o que você quer, não como fazer. IDD implícito em muitas ferramentas.</div></div>
+        <div class="tl-item"><span class="tl-year">2020s</span><div class="tl-dot-wrap"><div class="tl-dot green"></div></div><div class="tl-text"><strong>IA + IDD formal</strong> — Copilot, Cursor, Claude Code: intenção em linguagem natural vira código. O paradigma IDD emerge como disciplina formal.</div></div>
+      </div>
+      <div class="refs-box">
+        <div class="refs-title">📚 Fontes &amp; Referências</div>
+        <a href="https://www.cs.utexas.edu/users/EWD/transcriptions/EWD02xx/EWD215.html" target="_blank">Dijkstra — Go To Statement Considered Harmful (1968)</a>
+        <a href="https://en.wikipedia.org/wiki/Smalltalk" target="_blank">Smalltalk — História da Orientação a Objetos (Wikipedia)</a>
+        <a href="https://agilemanifesto.org" target="_blank">Manifesto Ágil (2001) — agilemanifesto.org</a>
+        <a href="https://martinfowler.com/articles/designDead.html" target="_blank">Martin Fowler — Is Design Dead? (2000)</a>
+      </div>
+    </div>
+    <div class="comment-panel">
+      <div class="cpanel-title"><span class="dot"></span> Claude Comenta</div>
+      <p class="comment-text">O que a linha do tempo revela é fascinante: cada geração resolveu a distância entre intenção humana e execução de máquina um nível de abstração por vez.</p>
+      <p class="comment-text">COBOL foi ridicularizado por décadas — mas foi pioneiro na ideia de que código deve ser legível por não-programadores. Isso é IDD avant-la-lettre.</p>
+      <div class="comment-humor">🤓 Alan Turing, em 1950, já especulava sobre máquinas que seguem instruções em linguagem natural. Demorou 70 anos, mas chegamos lá. Paciência é uma virtude de programador.
+        <img class="humor-gif" src="https://media.giphy.com/media/3oEjI6SIIHBdRxXI40/giphy.gif" alt="still waiting" onerror="this.classList.add('humor-gif-broken')">
+      </div>
+      <div class="comment-question" onclick="speakQuestion(0)">Qual ponto da linha do tempo você considera mais transformador para como você programa hoje?</div>
+    </div>
+  </div>
+  <div class="voice-bar">
+    <button class="btn-voice edu" onclick="speakMain(2)">🔊 Ler Conteúdo</button>
+    <button class="btn-voice comment-btn" onclick="speakComment(2)">💬 Comentário</button>
+    <button class="btn-voice stop-btn" onclick="stopSpeech()">⏹ Parar</button>
+  </div>
+</div>
+
+<!-- ═══ SLIDE 03: O QUE É IDD ═══ -->
+<div class="slide" id="s3">
+  <div class="slide-header"><span class="slide-number">// 03</span><span class="slide-tag">Definição</span></div>
+  <div class="slide-body">
+    <div class="slide-main">
+      <h1>O que é IDD?</h1>
+      <div class="hbox"><p>🎯 <strong>Definição Central:</strong> IDD — <em>Intent-Driven Development</em> — é o paradigma no qual a <em>intenção</em> (o "porquê" e o "o quê") é o artefato primário de design, documentação e implementação, prevalecendo sobre a descrição mecânica do "como".</p></div>
+      <h3>A Pergunta-Chave do IDD</h3>
+      <p>Em vez de "Como implemento isso?", o IDD exige que você pergunte:</p>
+      <ul>
+        <li>🎯 <strong>Qual é a intenção de negócio ou usuário aqui?</strong></li>
+        <li>📣 <strong>Como expresso essa intenção de forma clara e inequívoca?</strong></li>
+        <li>🔍 <strong>Qualquer pessoa que leia entende o propósito sem perguntar?</strong></li>
+        <li>🤖 <strong>Um agente (humano ou IA) consegue executar fiel à intenção original?</strong></li>
+      </ul>
+      <h3>Os Três Níveis de Intenção</h3>
+      <ul>
+        <li><em>Intenção de Negócio:</em> "Precisamos calcular desconto para clientes VIP" (estratégico)</li>
+        <li><em>Intenção de Comportamento:</em> "Se VIP e valor &gt; R$500, aplicar 15% de desconto" (tático)</li>
+        <li><em>Intenção de Implementação:</em> <code>applyVipDiscount(customer, amount)</code> (operacional)</li>
+      </ul>
+      <div class="hbox amber-box"><p>💡 <strong>IDD não é</strong> sobre fazer código "bonito". É sobre fazer código <em>comunicativo</em> — onde a intenção sobrevive ao tempo, à rotatividade de equipe e às atualizações de dependência.</p></div>
+      <div class="refs-box">
+        <div class="refs-title">📚 Fontes &amp; Referências</div>
+        <a href="https://martinfowler.com/books/refactoring.html" target="_blank">Fowler — Refactoring: Improving the Design of Existing Code</a>
+        <a href="https://www.informit.com/articles/article.aspx?p=1235624" target="_blank">Robert C. Martin — Clean Code Principles</a>
+        <a href="https://intentdd.dev" target="_blank">intentdd.dev — Comunidade IDD (inglês)</a>
+      </div>
+    </div>
+    <div class="comment-panel">
+      <div class="cpanel-title"><span class="dot"></span> Claude Comenta</div>
+      <p class="comment-text">Código é comunicação, não apenas instrução. Quando você escreve código, está escrevendo uma mensagem para três públicos: a máquina, outros programadores e você mesmo daqui a 6 meses.</p>
+      <div class="comment-humor">😅 Você mesmo daqui a 6 meses é o público mais cruel. Vai abrir seu código às 23h antes de um deploy e vai odiar cada decisão tomada sem comentários. IDD é empatia consigo mesmo no futuro.
+        <img class="humor-gif" src="https://media.giphy.com/media/yYSSBtDgbbRzq/giphy.gif" alt="stressed programmer" onerror="this.classList.add('humor-gif-broken')">
+      </div>
+      <p class="comment-text">Os três níveis ecoam a Arquitetura Limpa de Robert Martin — separar domínio, regras de aplicação e infraestrutura. IDD vai além: torna essa separação explícita na linguagem do código.</p>
+      <div class="comment-question" onclick="speakQuestion(1)">Se você tivesse que explicar a intenção central do sistema onde trabalha em uma única frase, qual seria?</div>
+    </div>
+  </div>
+  <div class="voice-bar">
+    <button class="btn-voice edu" onclick="speakMain(3)">🔊 Ler Conteúdo</button>
+    <button class="btn-voice comment-btn" onclick="speakComment(3)">💬 Comentário</button>
+    <button class="btn-voice stop-btn" onclick="stopSpeech()">⏹ Parar</button>
+  </div>
+</div>
+
+<!-- ═══ SLIDE 04: VOCABULÁRIO ═══ -->
+<div class="slide" id="s4">
+  <div class="slide-header"><span class="slide-number">// 04</span><span class="slide-tag">⛔ Parada de Vocabulário</span></div>
+  <div class="slide-body full">
+    <div class="slide-main">
+      <div class="stop-banner">
+        <span class="stop-icon">🛑</span>
+        <div>
+          <div class="stop-label">PARADA OBRIGATÓRIA — VOCABULÁRIO TÉCNICO</div>
+          <div class="stop-sub">Antes de continuar, alinhamos os termos. Ninguém avança sem entender o que estamos falando.</div>
+        </div>
+      </div>
+      <div class="vocab-grid">
+        <div class="vocab-card"><div class="vocab-term">INTENÇÃO (Intent)</div><div class="vocab-def">A declaração explícita do propósito, comportamento esperado ou objetivo de negócio por trás de um trecho de código. É o "porquê existe" e o "o que deve fazer".</div></div>
+        <div class="vocab-card"><div class="vocab-term">IMPLEMENTAÇÃO</div><div class="vocab-def">Os detalhes técnicos de como a intenção é executada — loops, algoritmos, chamadas de API. No IDD, a implementação é intercambiável sem alterar a intenção.</div></div>
+        <div class="vocab-card"><div class="vocab-term">PARADIGMA</div><div class="vocab-def">Um modelo de pensamento que define como problemas são conceitualizados e resolvidos. Paradigmas moldam ferramentas, linguagens e práticas de desenvolvimento.</div></div>
+        <div class="vocab-card"><div class="vocab-term">DSL (Domain Specific Language)</div><div class="vocab-def">Linguagem projetada para expressar intenções de um domínio específico. SQL, GraphQL, Terraform, Gherkin são DSLs — descrevem o "quê" em vez do "como".</div></div>
+        <div class="vocab-card"><div class="vocab-term">DECLARATIVO vs IMPERATIVO</div><div class="vocab-def">Imperativo: descreve como fazer (sequência de passos). Declarativo: descreve o que deve ser o resultado. IDD favorece fortemente o estilo declarativo.</div></div>
+        <div class="vocab-card"><div class="vocab-term">ARTEFATO DE INTENÇÃO</div><div class="vocab-def">Qualquer documento, comentário, teste, contrato ou prompt que capture e preserve a intenção de uma funcionalidade. É a "verdade canônica" do IDD.</div></div>
+        <div class="vocab-card"><div class="vocab-term">CONTRATO (Contract)</div><div class="vocab-def">Especificação formal do comportamento esperado — entradas, saídas e invariantes. No IDD, contratos são intenções executáveis.</div></div>
+        <div class="vocab-card"><div class="vocab-term">ACIDENTALIDADE vs ESSENCIALIDADE</div><div class="vocab-def">Conceito de Fred Brooks: complexidade essencial (inerente ao problema) vs acidental (introduzida pela solução). IDD minimiza a complexidade acidental.</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="voice-bar">
+    <button class="btn-voice edu" onclick="speakMain(4)">🔊 Ler Vocabulário</button>
+    <button class="btn-voice comment-btn" onclick="speakComment(4)">💬 Comentário</button>
+    <button class="btn-voice stop-btn" onclick="stopSpeech()">⏹ Parar</button>
+  </div>
+</div>
+
+<!-- ═══ SLIDE 05: PRINCÍPIOS ═══ -->
+<div class="slide" id="s5">
+  <div class="slide-header"><span class="slide-number">// 05</span><span class="slide-tag">Princípios</span></div>
+  <div class="slide-body">
+    <div class="slide-main">
+      <h1>Os 5 Princípios do IDD</h1>
+      <p>O IDD é sustentado por cinco princípios inter-relacionados que formam uma filosofia coesa de desenvolvimento.</p>
+      <div class="principle-grid">
+        <div class="principle-card"><div class="pc-icon">🎯</div><div class="pc-title">I — Intent First</div><div class="pc-desc">A intenção precede a implementação. Antes de escrever código, a intenção deve ser articulada — em texto, testes ou contrato.</div></div>
+        <div class="principle-card"><div class="pc-icon">🔀</div><div class="pc-title">II — Separação de Preocupações</div><div class="pc-desc">Intenção e implementação existem em camadas distintas e intercambiáveis. A intenção é estável; a implementação, variável.</div></div>
+        <div class="principle-card"><div class="pc-icon">📣</div><div class="pc-title">III — Comunicabilidade</div><div class="pc-desc">O código deve comunicar sua intenção para qualquer leitor — humano ou máquina — sem necessidade de contexto externo.</div></div>
+        <div class="principle-card"><div class="pc-icon">🔄</div><div class="pc-title">IV — Rastreabilidade</div><div class="pc-desc">Toda linha de código deve ser rastreável até uma intenção de negócio. Se não há intenção que a justifique, o código não deveria existir.</div></div>
+        <div class="principle-card"><div class="pc-icon">⚡</div><div class="pc-title">V — Evolução Intencional</div><div class="pc-desc">Mudanças no código são guiadas por mudanças de intenção, não por refatorações oportunistas. A intenção é o vetor de evolução.</div></div>
+      </div>
+      <div class="refs-box">
+        <div class="refs-title">📚 Fontes &amp; Referências</div>
+        <a href="https://www.amazon.com.br/Clean-Architecture-Craftsmans-Software-Structure/dp/0134494164" target="_blank">Robert C. Martin — Clean Architecture (2017)</a>
+        <a href="https://martinfowler.com/bliki/IntentionRevealingName.html" target="_blank">Fowler — Intention Revealing Names (bliki)</a>
+        <a href="https://en.wikipedia.org/wiki/Separation_of_concerns" target="_blank">Separation of Concerns — Wikipedia</a>
+      </div>
+    </div>
+    <div class="comment-panel">
+      <div class="cpanel-title"><span class="dot"></span> Claude Comenta</div>
+      <p class="comment-text">O Princípio IV — Rastreabilidade — é o mais subversivo. Ele implica que código sem justificativa de negócio é tecnicamente "dívida de intenção".</p>
+      <div class="comment-humor">🤔 Quantas linhas do seu repositório sobreviveriam a essa auditoria? Aquela classe <code>UtilsHelper2Final_v3.java</code> que ninguém tem coragem de deletar é arqueologia de intenção abandonada.
+        <img class="humor-gif" src="https://media.giphy.com/media/l0HlBO7eyXzSZkJri/giphy.gif" alt="archaeological dig" onerror="this.classList.add('humor-gif-broken')">
+      </div>
+      <p class="comment-text">O Princípio V é especialmente relevante em contextos ágeis. Sprint planning que começa com "qual é a intenção desta feature?" já pratica IDD mesmo sem saber.</p>
+      <div class="comment-question" onclick="speakQuestion(2)">Dos cinco princípios, qual você acha que sua equipe atual menos pratica — e o que você poderia fazer para mudar isso?</div>
+    </div>
+  </div>
+  <div class="voice-bar">
+    <button class="btn-voice edu" onclick="speakMain(5)">🔊 Ler Conteúdo</button>
+    <button class="btn-voice comment-btn" onclick="speakComment(5)">💬 Comentário</button>
+    <button class="btn-voice stop-btn" onclick="stopSpeech()">⏹ Parar</button>
+  </div>
+</div>
+
+<!-- ═══ SLIDE 06: IDD VS OUTROS ═══ -->
+<div class="slide" id="s6">
+  <div class="slide-header"><span class="slide-number">// 06</span><span class="slide-tag">Comparação</span></div>
+  <div class="slide-body">
+    <div class="slide-main">
+      <h1>IDD vs Outros Paradigmas</h1>
+      <p>IDD não substitui TDD, BDD ou DDD — ele <em>os transcende e integra</em>. Entenda como cada um se relaciona:</p>
+      <table class="cmp-table">
+        <thead><tr><th>Dimensão</th><th>TDD</th><th>BDD</th><th>DDD</th><th>IDD</th></tr></thead>
+        <tbody>
+          <tr><td>Foco Central</td><td>Testes como especificação</td><td>Comportamento como linguagem</td><td>Domínio como modelo</td><td>Intenção como artefato primário</td></tr>
+          <tr><td>Artefato Principal</td><td>Teste unitário</td><td>Cenário Gherkin</td><td>Bounded Context</td><td>Declaração de intenção</td></tr>
+          <tr><td>Nível de Abstração</td><td>Código</td><td>Comportamento</td><td>Domínio</td><td>Propósito</td></tr>
+          <tr><td>Quem escreve</td><td>Dev</td><td>Dev + QA + Negócio</td><td>Dev + Domain Expert</td><td>Qualquer stakeholder</td></tr>
+          <tr><td>Compatível com IA</td><td>Parcialmente</td><td>Bem</td><td>Parcialmente</td><td>Nativamente</td></tr>
+          <tr><td>Garante rastreabilidade?</td><td>Não explicitamente</td><td>Parcialmente</td><td>No domínio</td><td>Sim, por definição</td></tr>
+        </tbody>
+      </table>
+      <div class="hbox amber-box"><p>🔗 <strong>Relação Ideal:</strong> <em>DDD</em> define os conceitos → <em>BDD</em> descreve comportamentos → <em>TDD</em> especifica implementações → <em>IDD</em> garante fidelidade à intenção original em todas as camadas.</p></div>
+      <div class="refs-box">
+        <div class="refs-title">📚 Fontes &amp; Referências</div>
+        <a href="https://martinfowler.com/bliki/TestDrivenDevelopment.html" target="_blank">Fowler — Test-Driven Development (bliki)</a>
+        <a href="https://cucumber.io/docs/bdd/" target="_blank">Cucumber — BDD: Behaviour Driven Development</a>
+        <a href="https://www.dddcommunity.org" target="_blank">DDD Community — dddcommunity.org</a>
+        <a href="https://www.amazon.com.br/Domain-Driven-Design-Tackling-Complexity-Software/dp/0321125215" target="_blank">Eric Evans — Domain-Driven Design (2003)</a>
+      </div>
+    </div>
+    <div class="comment-panel">
+      <div class="cpanel-title"><span class="dot"></span> Claude Comenta</div>
+      <p class="comment-text">"Compatível com IA — Nativamente" não é coincidência. Modelos de linguagem como eu operam fundamentalmente com intenções em linguagem natural. IDD é o paradigma que torna o desenvolvimento com IA mais eficiente.</p>
+      <div class="comment-humor">🤖 TDD foi criado antes de existir IA que programa. IDD foi formalizado sabendo que ela existe. É como comparar um mapa de papel com o Google Maps — ambos funcionam, mas um foi projetado para o mundo atual.
+        <img class="humor-gif" src="https://media.giphy.com/media/3oz8xAFtqoOUUrsh7W/giphy.gif" alt="old vs new upgrade" onerror="this.classList.add('humor-gif-broken')">
+      </div>
+      <p class="comment-text">"Quem escreve — Qualquer stakeholder" é revolucionário. No IDD, um PM que descreve a intenção de uma feature com precisão já está contribuindo com código, mesmo sem saber programar.</p>
+      <div class="comment-question" onclick="speakQuestion(3)">Você pratica TDD, BDD ou DDD hoje? Como essas práticas poderiam se conectar ao IDD no seu contexto?</div>
+    </div>
+  </div>
+  <div class="voice-bar">
+    <button class="btn-voice edu" onclick="speakMain(6)">🔊 Ler Conteúdo</button>
+    <button class="btn-voice comment-btn" onclick="speakComment(6)">💬 Comentário</button>
+    <button class="btn-voice stop-btn" onclick="stopSpeech()">⏹ Parar</button>
+  </div>
+</div>
+
+<!-- ═══ SLIDE 07: EXEMPLO ANTES ═══ -->
+<div class="slide" id="s7">
+  <div class="slide-header"><span class="slide-number">// 07</span><span class="slide-tag">Exemplo — Sem IDD</span></div>
+  <div class="slide-body">
+    <div class="slide-main">
+      <h1>Código Sem IDD</h1>
+      <p>Observe este exemplo clássico de código que funciona, mas que <em>não comunica intenção</em>:</p>
+      <div class="code-block">
+        <span class="code-label">❌ SEM IDD</span>
+<span class="kw">function</span> <span class="fn">calc</span>(u, v) {
+  <span class="kw">let</span> r = <span class="num">0</span>;
+  <span class="kw">if</span> (u.t === <span class="str">'vip'</span> && v > <span class="num">500</span>) {
+    r = v * <span class="num">0.85</span>;
+  } <span class="kw">else if</span> (u.t === <span class="str">'reg'</span> && v > <span class="num">1000</span>) {
+    r = v * <span class="num">0.95</span>;
+  } <span class="kw">else</span> { r = v; }
+  <span class="kw">return</span> r;
+}
+<span class="kw">const</span> total = <span class="fn">calc</span>(currentUser, cartValue);</div>
+      <h3>Problemas identificados:</h3>
+      <ul>
+        <li>🚫 <code>calc</code>, <code>u</code>, <code>v</code>, <code>r</code> — nomes sem semântica alguma</li>
+        <li>🚫 <code>0.85</code> e <code>0.95</code> são "magic numbers" — de onde vieram?</li>
+        <li>🚫 Sem documentação do por quê existe essa lógica</li>
+        <li>🚫 Alterar uma regra de negócio exige arqueologia de código</li>
+        <li>🚫 Não é possível escrever testes sem adivinhar a intenção</li>
+      </ul>
+      <div class="hbox red-box"><p>⚠️ Este código <strong>funciona</strong> — mas é uma <em>caixa-preta de intenção</em>. O "o quê" existe; o "porquê" morreu com quem escreveu.</p></div>
+    </div>
+    <div class="comment-panel">
+      <div class="cpanel-title"><span class="dot"></span> Claude Comenta</div>
+      <p class="comment-text">Este tipo de código existe em praticamente todos os repositórios de produção do mundo. Não é preguiça — é ausência de cultura de intenção explícita. Ninguém te ensinou que nomear variáveis é arquitetura.</p>
+      <div class="comment-humor">😬 Todo programador já viu código assim e pensou "quem fez isso?". E depois abriu o git blame e descobriu que foi ele mesmo, há 8 meses. A vergonha é parte do processo de crescimento.
+        <img class="humor-gif" src="https://media.giphy.com/media/xUOwGhAkYmcPn3tiEM/giphy.gif" alt="pointing at self - it was me" onerror="this.classList.add('humor-gif-broken')">
+      </div>
+      <p class="comment-text">Os magic numbers <code>0.85</code> e <code>0.95</code> são o sintoma mais claro de intenção não capturada. Se a regra mudar, quem sabe que tem que alterar exatamente esse número, nessa função?</p>
+      <div class="comment-question" onclick="speakQuestion(4)">Você reconhece algum trecho de código no seu projeto atual que se parece com esse exemplo? Como seria reescrito com IDD?</div>
+    </div>
+  </div>
+  <div class="voice-bar">
+    <button class="btn-voice edu" onclick="speakMain(7)">🔊 Ler Conteúdo</button>
+    <button class="btn-voice comment-btn" onclick="speakComment(7)">💬 Comentário</button>
+    <button class="btn-voice stop-btn" onclick="stopSpeech()">⏹ Parar</button>
+  </div>
+</div>
+
+<!-- ═══ SLIDE 08: EXEMPLO DEPOIS ═══ -->
+<div class="slide" id="s8">
+  <div class="slide-header"><span class="slide-number">// 08</span><span class="slide-tag">Exemplo — Com IDD</span></div>
+  <div class="slide-body">
+    <div class="slide-main">
+      <h1>Código Com IDD</h1>
+      <p>O mesmo comportamento, agora expressando <em>intenção explícita</em>:</p>
+      <div class="code-block">
+        <span class="code-label">✅ COM IDD</span>
+<span class="cmt">/**
+ * INTENÇÃO: Política de descontos por perfil e valor.
+ * Regra de Negócio RN-042: VIP &gt;= R$500 → 15% desc.
+ * Clientes regulares &gt;= R$1000 → 5% desc.
+ * @see JIRA-1024, PRD-Fidelidade-v2
+ */</span>
+<span class="kw">const</span> DISCOUNT_POLICY = {
+  VIP_THRESHOLD:         <span class="num">500</span>,  <span class="cmt">// R$ mínimo VIP</span>
+  VIP_DISCOUNT_RATE:     <span class="num">0.15</span>, <span class="cmt">// 15% desconto VIP</span>
+  REGULAR_THRESHOLD:     <span class="num">1000</span>, <span class="cmt">// R$ mínimo regular</span>
+  REGULAR_DISCOUNT_RATE: <span class="num">0.05</span>, <span class="cmt">// 5% desconto regular</span>
+};
+<span class="kw">function</span> <span class="fn">applyCustomerDiscountPolicy</span>(customer, purchaseAmount) {
+  <span class="kw">const</span> isVipEligible = customer.tier === <span class="str">'vip'</span>
+    && purchaseAmount >= DISCOUNT_POLICY.VIP_THRESHOLD;
+  <span class="kw">const</span> isRegularEligible = customer.tier === <span class="str">'regular'</span>
+    && purchaseAmount >= DISCOUNT_POLICY.REGULAR_THRESHOLD;
+  <span class="kw">if</span> (isVipEligible)
+    <span class="kw">return</span> purchaseAmount * (<span class="num">1</span> - DISCOUNT_POLICY.VIP_DISCOUNT_RATE);
+  <span class="kw">if</span> (isRegularEligible)
+    <span class="kw">return</span> purchaseAmount * (<span class="num">1</span> - DISCOUNT_POLICY.REGULAR_DISCOUNT_RATE);
+  <span class="kw">return</span> purchaseAmount; <span class="cmt">// Sem desconto aplicável</span>
+}</div>
+      <div class="hbox"><p>✅ Qualquer leitor — humano ou IA — sabe <em>o quê, porquê e como alterar</em>. A intenção está ancorada na própria estrutura do código.</p></div>
+      <div class="refs-box">
+        <div class="refs-title">📚 Fontes &amp; Referências</div>
+        <a href="https://adr.github.io" target="_blank">ADR GitHub — Architecture Decision Records (formato)</a>
+        <a href="https://www.amazon.com.br/Clean-Code-Handbook-Software-Craftsmanship/dp/0132350882" target="_blank">Robert C. Martin — Clean Code (2008)</a>
+      </div>
+    </div>
+    <div class="comment-panel">
+      <div class="cpanel-title"><span class="dot"></span> Claude Comenta</div>
+      <p class="comment-text">Note que o comportamento é idêntico. O que mudou foi a capacidade de comunicação. Esse código pode ser modificado por alguém que nunca viu o sistema antes, com probabilidade de erro drasticamente menor.</p>
+      <div class="comment-humor">💡 O link <code>@see JIRA-1024</code> pode parecer exagero, mas é ouro. Em 2027, quando alguém perguntar "por que 500 e não 300?", há uma thread inteira com a discussão. Esse é IDD rastreável.
+        <img class="humor-gif" src="https://media.giphy.com/media/nEMmyUp4hl1QjRoRGX/giphy.gif" alt="it's gold" onerror="this.classList.add('humor-gif-broken')">
+      </div>
+      <div class="comment-question" onclick="speakQuestion(5)">O que impediria sua equipe de adotar esse estilo hoje? É um obstáculo técnico, cultural ou de tempo?</div>
+    </div>
+  </div>
+  <div class="voice-bar">
+    <button class="btn-voice edu" onclick="speakMain(8)">🔊 Ler Conteúdo</button>
+    <button class="btn-voice comment-btn" onclick="speakComment(8)">💬 Comentário</button>
+    <button class="btn-voice stop-btn" onclick="stopSpeech()">⏹ Parar</button>
+  </div>
+</div>
+
+<!-- ═══ SLIDE 09: IDD + IA ═══ -->
+<div class="slide" id="s9">
+  <div class="slide-header"><span class="slide-number">// 09</span><span class="slide-tag">IDD + Inteligência Artificial</span></div>
+  <div class="slide-body">
+    <div class="slide-main">
+      <h1>IDD na Era da IA</h1>
+      <p>IDD foi, em certo sentido, <em>predestinado pela IA</em>. Com Copilot, Cursor, Claude Code, o fluxo passou a ser:</p>
+      <h3>O Novo Ciclo IDD + IA</h3>
+      <ol>
+        <li><em>Developer articula a intenção</em> — linguagem natural, precisa e contextual</li>
+        <li><em>Agente de IA interpreta e gera implementação</em> — baseado na intenção fornecida</li>
+        <li><em>Developer valida se honra a intenção</em> — revisão orientada à intenção</li>
+        <li><em>Intenção é preservada como documentação</em> — ciclo auditável e rastreável</li>
+      </ol>
+      <div class="code-block">
+        <span class="code-label">EXEMPLO: Prompt IDD para agente de IA</span>
+<span class="cmt">// INTENÇÃO: Criar serviço de notificação por e-mail que:
+// - Envie confirmação após compra aprovada
+// - Inclua resumo do pedido (itens, total, prazo)
+// - Use template HTML responsivo (design-system/email)
+// - Retryable em falha (max 3 tentativas, backoff exp.)
+// - Respeite optout de marketing (customer.emailOptOut)
+// - Testável via mock de transporte SMTP
+// Contexto: e-commerce B2C, volume ~5k/dia
+// Restrições: não armazenar conteúdo, apenas logs de envio</span></div>
+      <div class="hbox amber-box"><p>🚀 <strong>A Habilidade do Séc. XXI:</strong> Quem melhor expressa intenções — completa, não-ambígua e contextualizada — escreve software melhor com IA do que quem apenas conhece sintaxe.</p></div>
+      <div class="refs-box">
+        <div class="refs-title">📚 Fontes &amp; Referências</div>
+        <a href="https://github.com/features/copilot" target="_blank">GitHub Copilot — github.com/features/copilot</a>
+        <a href="https://cursor.com" target="_blank">Cursor — The AI Code Editor — cursor.com</a>
+        <a href="https://claude.ai/code" target="_blank">Claude Code — claude.ai/code</a>
+        <a href="https://arxiv.org/abs/2304.07590" target="_blank">arXiv — Is Self-Repair a Silver Bullet for Code Generation? (2023)</a>
+      </div>
+    </div>
+    <div class="comment-panel">
+      <div class="cpanel-title"><span class="dot"></span> Claude Comenta</div>
+      <p class="comment-text">Posso falar com autoridade aqui: quando você me fornece uma intenção bem articulada, a qualidade do código que produzo é substancialmente superior do que com instrução vaga. IDD não é só bom para humanos — é bom para mim também.</p>
+      <div class="comment-humor">🤖 "Faz um sistema de login" vs "Cria autenticação JWT com refresh token, blacklist em Redis, rate limiting por IP e MFA via TOTP". Adivinha qual resulta em código que vai direto para produção?
+        <img class="humor-gif" src="https://media.giphy.com/media/d3mlE7uhX8KFgEmY/giphy.gif" alt="obviously" onerror="this.classList.add('humor-gif-broken')">
+      </div>
+      <p class="comment-text">IDD também tem implicação para governança: quando a intenção é documentada, é possível auditar se o código gerado respeita restrições de privacidade e segurança — criando responsabilidade rastreável.</p>
+      <div class="comment-question" onclick="speakQuestion(6)">Como você descreveria a intenção do seu próximo pull request para um agente de IA, de forma que ele entendesse o propósito completo?</div>
+    </div>
+  </div>
+  <div class="voice-bar">
+    <button class="btn-voice edu" onclick="speakMain(9)">🔊 Ler Conteúdo</button>
+    <button class="btn-voice comment-btn" onclick="speakComment(9)">💬 Comentário</button>
+    <button class="btn-voice stop-btn" onclick="stopSpeech()">⏹ Parar</button>
+  </div>
+</div>
+
+<!-- ═══ SLIDE 10: FERRAMENTAS ═══ -->
+<div class="slide" id="s10">
+  <div class="slide-header"><span class="slide-number">// 10</span><span class="slide-tag">Ecossistema</span></div>
+  <div class="slide-body">
+    <div class="slide-main">
+      <h1>Ferramentas do Ecossistema IDD</h1>
+      <p>O IDD não depende de nenhuma ferramenta específica — é um paradigma. Mas certas ferramentas o habilitam com mais naturalidade:</p>
+      <div class="tools-grid">
+        <div class="tool-card"><div class="tc-name">GitHub Copilot</div><div class="tc-cat">Geração com intenção</div><div class="tc-desc">Transforma comentários e nomes de funções em implementação. Melhor quando a intenção é precisa.</div></div>
+        <div class="tool-card"><div class="tc-name">Cursor / Windsurf</div><div class="tc-cat">IDE orientado à intenção</div><div class="tc-desc">Permite descrever mudanças em linguagem natural e propaga por múltiplos arquivos.</div></div>
+        <div class="tool-card"><div class="tc-name">Claude Code</div><div class="tc-cat">Agente de desenvolvimento</div><div class="tc-desc">Recebe intenções complexas e executa tarefas de desenvolvimento ponta a ponta com contexto do repositório.</div></div>
+        <div class="tool-card"><div class="tc-name">Gherkin / Cucumber</div><div class="tc-cat">Intenção como especificação</div><div class="tc-desc">Given-When-Then captura intenção de comportamento de forma executável e legível por negócio.</div></div>
+        <div class="tool-card"><div class="tc-name">TypeScript</div><div class="tc-cat">Tipos como intenção</div><div class="tc-desc">Sistema de tipos que codifica intenções sobre estruturas de dados, tornando invariantes explícitas e checáveis.</div></div>
+        <div class="tool-card"><div class="tc-name">Terraform / Pulumi</div><div class="tc-cat">Infrastructure-as-Intent</div><div class="tc-desc">Infraestrutura declarativa: você descreve o estado desejado, não os passos para chegar lá.</div></div>
+        <div class="tool-card"><div class="tc-name">GraphQL</div><div class="tc-cat">API orientada à intenção</div><div class="tc-desc">O cliente declara exatamente quais dados precisa, sem saber detalhes de implementação da API.</div></div>
+        <div class="tool-card"><div class="tc-name">ADR (Decision Records)</div><div class="tc-cat">Documentação de intenção</div><div class="tc-desc">Registro de decisões arquiteturais com contexto, alternativas e intenção — artefatos IDD por excelência.</div></div>
+      </div>
+      <div class="refs-box">
+        <div class="refs-title">📚 Fontes &amp; Referências</div>
+        <a href="https://cucumber.io/docs/gherkin/" target="_blank">Gherkin Reference — cucumber.io</a>
+        <a href="https://www.typescriptlang.org/docs/" target="_blank">TypeScript — typescriptlang.org/docs</a>
+        <a href="https://developer.hashicorp.com/terraform/intro" target="_blank">Terraform Intro — HashiCorp Docs</a>
+        <a href="https://adr.github.io" target="_blank">ADR Tools — adr.github.io</a>
+      </div>
+    </div>
+    <div class="comment-panel">
+      <div class="cpanel-title"><span class="dot"></span> Claude Comenta</div>
+      <p class="comment-text">A lista revela que IDD já é praticado implicitamente por equipes que usam essas ferramentas. O paradigma torna isso explícito, sistemático e cultural — não apenas preferência pessoal de alguns devs.</p>
+      <div class="comment-humor">📝 ADRs são o MVP subestimado de IDD. Se sua empresa não usa ADRs, pode estar cultivando dívida de intenção sem perceber. Cinco minutos documentando uma decisão hoje pode salvar cinco horas de debate em seis meses.
+        <img class="humor-gif" src="https://media.giphy.com/media/3o6Zt8MgUuvSbkZYWc/giphy.gif" alt="big brain moment" onerror="this.classList.add('humor-gif-broken')">
+      </div>
+      <div class="comment-question" onclick="speakQuestion(7)">Das ferramentas listadas, qual teria o maior impacto no seu fluxo de trabalho atual — e por quê?</div>
+    </div>
+  </div>
+  <div class="voice-bar">
+    <button class="btn-voice edu" onclick="speakMain(10)">🔊 Ler Conteúdo</button>
+    <button class="btn-voice comment-btn" onclick="speakComment(10)">💬 Comentário</button>
+    <button class="btn-voice stop-btn" onclick="stopSpeech()">⏹ Parar</button>
+  </div>
+</div>
+
+<!-- ═══ SLIDE 11: DESAFIOS ═══ -->
+<div class="slide" id="s11">
+  <div class="slide-header"><span class="slide-number">// 11</span><span class="slide-tag">Desafios e Críticas</span></div>
+  <div class="slide-body">
+    <div class="slide-main">
+      <h1>Desafios e Críticas ao IDD</h1>
+      <p>Honestidade intelectual é parte de qualquer paradigma sério. O IDD tem limitações reais:</p>
+      <h3>Desafios Práticos</h3>
+      <ul>
+        <li>🔴 <strong>Sobrecarga Cognitiva Inicial:</strong> Articular intenção com precisão exige mais tempo upfront. Equipes sob pressão de prazo resistem.</li>
+        <li>🔴 <strong>Subjetividade de Intenção:</strong> Duas pessoas podem ter intenções diferentes para o mesmo requisito. IDD não resolve discordâncias de negócio.</li>
+        <li>🔴 <strong>Deterioração de Intenção:</strong> Intenções documentadas ficam desatualizadas como testes sem manutenção. Requer disciplina cultural constante.</li>
+        <li>🔴 <strong>Falta de Ferramental Formal:</strong> Ao contrário de TDD, não há um ciclo universalmente aceito. O paradigma ainda está sendo formalizado.</li>
+        <li>🔴 <strong>Resistência Cultural:</strong> "O código fala por si mesmo" é máxima arraigada. Convencer equipes que intenção explícita não é fraqueza é desafio cultural.</li>
+      </ul>
+      <h3>Críticas Legítimas</h3>
+      <ul>
+        <li>💬 <em>"IDD é apenas Clean Code com nome novo"</em> — Parcialmente verdadeiro. IDD sistematiza e expande práticas existentes.</li>
+        <li>💬 <em>"Intenções mudam, código fica"</em> — Justo. Por isso o IDD enfatiza rastreabilidade viva, não documentação estática.</li>
+        <li>💬 <em>"IA vai tornar isso irrelevante"</em> — Argumento inverso: IA torna IDD mais importante, não menos.</li>
+      </ul>
+      <div class="refs-box">
+        <div class="refs-title">📚 Fontes &amp; Referências</div>
+        <a href="https://www.cs.unc.edu/techreports/86-020.pdf" target="_blank">Fred Brooks — No Silver Bullet (1986, PDF)</a>
+        <a href="https://martinfowler.com/bliki/TechnicalDebt.html" target="_blank">Fowler — Technical Debt (bliki)</a>
+      </div>
+    </div>
+    <div class="comment-panel">
+      <div class="cpanel-title"><span class="dot"></span> Claude Comenta</div>
+      <p class="comment-text">A crítica "IDD é Clean Code com nome novo" merece respeito. Clean Code, de 2008, já pregava muito disso. O que IDD adiciona é a dimensão formal de rastreabilidade e integração nativa com IA — dois vetores que não existiam em 2008.</p>
+      <div class="comment-humor">🧐 "O código fala por si mesmo" é frase dita por quem nunca debugou código de outra pessoa a 2h da manhã antes de um deploy. Código fala, mas às vezes grita em idioma errado.
+        <img class="humor-gif" src="https://media.giphy.com/media/3o6fJ6oblxGBXAjfri/giphy.gif" alt="screaming chaos" onerror="this.classList.add('humor-gif-broken')">
+      </div>
+      <p class="comment-text">A questão de deterioração de intenção é real. A solução não é escrever mais comentários — é integrar intenção em artefatos rastreáveis: testes, contratos de API, ADRs, tickets linkados. Intenção viva, não intenção morta.</p>
+      <div class="comment-question" onclick="speakQuestion(8)">Das críticas levantadas, qual você considera mais válida para o seu contexto — e como você responderia a ela?</div>
+    </div>
+  </div>
+  <div class="voice-bar">
+    <button class="btn-voice edu" onclick="speakMain(11)">🔊 Ler Conteúdo</button>
+    <button class="btn-voice comment-btn" onclick="speakComment(11)">💬 Comentário</button>
+    <button class="btn-voice stop-btn" onclick="stopSpeech()">⏹ Parar</button>
+  </div>
+</div>
+
+<!-- ═══ SLIDE 12: FUTURO ═══ -->
+<div class="slide" id="s12">
+  <div class="slide-header"><span class="slide-number">// 12</span><span class="slide-tag">O Futuro</span></div>
+  <div class="slide-body">
+    <div class="slide-main">
+      <h1>O Futuro do IDD</h1>
+      <p>O IDD está na <em>fronteira da evolução do desenvolvimento de software</em>. Tendências que moldarão seu avanço:</p>
+      <h3>Tendências Emergentes (2025–2030)</h3>
+      <ul>
+        <li>🚀 <strong>Intent-as-Code:</strong> Arquivos <code>.intent</code> que geram código, testes e documentação automaticamente.</li>
+        <li>🚀 <strong>Agentes com memória de intenção:</strong> Agentes que mantêm contexto completo e garantem que mudanças não violam intenções anteriores.</li>
+        <li>🚀 <strong>IDD em Governança de IA:</strong> Regulamentações exigindo rastreabilidade em sistemas automatizados de decisão (crédito, saúde, justiça).</li>
+        <li>🚀 <strong>Natural Language Programming:</strong> A fronteira entre especificação e código executável continuará se dissolvendo.</li>
+        <li>🚀 <strong>Verificação Formal de Intenção:</strong> Ferramentas que checam matematicamente se implementação honra a intenção declarada.</li>
+      </ul>
+      <div class="hbox"><p>🔮 <strong>Hipótese:</strong> Em 10 anos, a habilidade mais valorizada não será conhecer linguagens — será <em>articular intenções complexas com precisão e completude</em>.</p></div>
+      <div class="refs-box">
+        <div class="refs-title">📚 Fontes &amp; Referências</div>
+        <a href="https://arxiv.org/abs/2302.04761" target="_blank">arXiv — LLMs for Code: Security and Correctness (2023)</a>
+        <a href="https://www.europarl.europa.eu/topics/pt/article/20230601STO93804/lei-da-ia-da-ue" target="_blank">EU AI Act — Lei de IA da União Europeia</a>
+        <a href="https://research.google/blog/formal-methods-for-ai-safety/" target="_blank">Google Research — Formal Methods for AI Safety</a>
+        <a href="https://future.a16z.com/ai-coding-tools-software-development/" target="_blank">a16z — The Future of Coding with AI</a>
+      </div>
+    </div>
+    <div class="comment-panel">
+      <div class="cpanel-title"><span class="dot"></span> Claude Comenta</div>
+      <p class="comment-text">A hipótese dos 10 anos não é especulação. Já aparecem cargos como "AI Prompt Engineer" e "AI Systems Designer" — que são essencialmente engenheiros de intenção com vocabulário diferente.</p>
+      <div class="comment-humor">🔮 A ironia histórica: durante décadas, programadores foram os únicos que podiam "falar com as máquinas". Com IDD + IA, o monopólio acabou. Isso é libertador e aterrorizante em proporções iguais.
+        <img class="humor-gif" src="https://media.giphy.com/media/26BRuo6sLetdllPAQ/giphy.gif" alt="exciting and terrifying" onerror="this.classList.add('humor-gif-broken')">
+      </div>
+      <p class="comment-text">A verificação formal de intenção é a fronteira de pesquisa mais fascinante. Imagine um compilador que pergunta "esta implementação honra sua intenção declarada?" antes de gerar bytecode. Isso existe em protótipos acadêmicos hoje.</p>
+      <div class="comment-question" onclick="speakQuestion(9)">Se você pudesse criar uma ferramenta para o futuro do IDD, que problema ela resolveria?</div>
+    </div>
+  </div>
+  <div class="voice-bar">
+    <button class="btn-voice edu" onclick="speakMain(12)">🔊 Ler Conteúdo</button>
+    <button class="btn-voice comment-btn" onclick="speakComment(12)">💬 Comentário</button>
+    <button class="btn-voice stop-btn" onclick="stopSpeech()">⏹ Parar</button>
+  </div>
+</div>
+
+<!-- ═══ SLIDE 13: QUESTÕES ═══ -->
+<div class="slide" id="s13">
+  <div class="slide-header"><span class="slide-number">// 13</span><span class="slide-tag">Questões para Reflexão</span></div>
+  <div class="slide-body full">
+    <div class="slide-main">
+      <h1>Questões para Aprofundamento</h1>
+      <p>O aprendizado real começa quando você se questiona. Clique em qualquer pergunta para ouvi-la em voz alta:</p>
+      <div class="question-list">
+        <div class="question-item" onclick="speakQuestion(10)"><span class="q-num">01</span><span class="q-text">Pense num projeto onde você trabalhou: se toda a equipe fosse embora amanhã, um novo time conseguiria entender as intenções de negócio apenas lendo o código e os testes? O que faltaria?</span></div>
+        <div class="question-item" onclick="speakQuestion(11)"><span class="q-num">02</span><span class="q-text">A diferença entre IDD e "simplesmente escrever bom código" é filosófica ou operacional? Existe algum caso em que praticar IDD seria prejudicial ao desenvolvimento?</span></div>
+        <div class="question-item" onclick="speakQuestion(12)"><span class="q-num">03</span><span class="q-text">Se intenções são o artefato primário, quem é responsável por capturá-las: o desenvolvedor, o PO, o arquiteto ou todos juntos? Como isso impacta a dinâmica de equipe?</span></div>
+        <div class="question-item" onclick="speakQuestion(13)"><span class="q-num">04</span><span class="q-text">Com agentes de IA cada vez mais autônomos, como garantir que a intenção do usuário final — e não apenas do desenvolvedor — seja capturada e honrada pelo sistema?</span></div>
+        <div class="question-item" onclick="speakQuestion(14)"><span class="q-num">05</span><span class="q-text">IDD sugere que intenções devem ser "rastreáveis e vivas". Qual seria o formato ideal para capturar intenção na sua stack tecnológica atual? Código, teste, ADR, wiki, ou outra coisa?</span></div>
+        <div class="question-item" onclick="speakQuestion(15)"><span class="q-num">06</span><span class="q-text">Se toda linha de código deve ser justificável por uma intenção de negócio, o que fazemos com otimizações de performance ou refatorações puramente técnicas? Elas violam o IDD?</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="voice-bar">
+    <button class="btn-voice edu" onclick="speakMain(13)">🔊 Ler Introdução</button>
+    <button class="btn-voice comment-btn" onclick="speakComment(13)">💬 Comentário</button>
+    <button class="btn-voice stop-btn" onclick="stopSpeech()">⏹ Parar</button>
+  </div>
+</div>
+
+<!-- ═══ SLIDE 14: CONCLUSÃO ═══ -->
+<div class="slide" id="s14">
+  <div class="slide-header"><span class="slide-number">// 14</span><span class="slide-tag">Conclusão</span></div>
+  <div class="slide-body">
+    <div class="slide-main">
+      <h1>Recapitulando</h1>
+      <p>Chegamos ao fim desta aula. Vamos consolidar os aprendizados centrais:</p>
+      <h3>O que aprendemos:</h3>
+      <ul>
+        <li>✅ IDD eleva a <em>intenção</em> ao status de artefato primário de design</li>
+        <li>✅ A história do desenvolvimento é a história da aproximação entre linguagem humana e execução de máquina</li>
+        <li>✅ IDD complementa TDD, BDD e DDD — não os substitui</li>
+        <li>✅ Código sem intenção explícita cria <em>dívida de intenção</em> que compromete manutenibilidade</li>
+        <li>✅ Com IA, articular intenções claras se torna a habilidade técnica mais valiosa</li>
+        <li>✅ Ferramentas já existem — o que falta é adoção cultural sistemática</li>
+      </ul>
+      <h3>Próximos Passos Práticos:</h3>
+      <ul>
+        <li>📌 Na próxima função que escrever, documente a intenção antes de escrever o corpo</li>
+        <li>📌 Proponha criar 1 ADR para uma decisão arquitetural pendente no seu projeto</li>
+        <li>📌 No próximo PR, adicione "Intenção desta mudança:" como campo obrigatório na descrição</li>
+        <li>📌 Experimente descrever uma feature completa para um agente de IA com intenção detalhada</li>
+      </ul>
+      <div class="hbox amber-box"><p>🎓 <strong>Mensagem Final:</strong> Todo software que durou décadas foi construído por equipes que, conscientemente ou não, capturaram e honraram intenções. IDD é a formalização de algo que os melhores programadores sempre souberam — mas raramente articularam.</p></div>
+      <div class="refs-box">
+        <div class="refs-title">📚 Para Continuar Estudando</div>
+        <a href="https://martinfowler.com" target="_blank">Martin Fowler — martinfowler.com (artigos e bliki)</a>
+        <a href="https://www.thoughtworks.com/radar" target="_blank">ThoughtWorks Technology Radar</a>
+        <a href="https://docs.anthropic.com" target="_blank">Anthropic Docs — Claude API &amp; Prompting</a>
+        <a href="https://github.com/joelparkerhenderson/architecture-decision-record" target="_blank">ADR Templates — GitHub (Henderson)</a>
+      </div>
+    </div>
+    <div class="comment-panel">
+      <div class="cpanel-title"><span class="dot"></span> Claude Comenta</div>
+      <p class="comment-text">Se eu pudesse deixar uma única mensagem desta aula: código é a última etapa do processo criativo, não a primeira. A intenção é a primeira. Quando você inverte isso, tudo muda — qualidade, velocidade, satisfação.</p>
+      <div class="comment-humor">🙌 Obrigado por chegarem até aqui sem fechar a aba do navegador — o que, em 2025, é uma declaração de intenção de aprendizado genuíno. IDD aprovaria.
+        <img class="humor-gif" src="https://media.giphy.com/media/ZfK4cXKJTTay1Ava29/giphy.gif" alt="standing ovation applause" onerror="this.classList.add('humor-gif-broken')">
+      </div>
+      <p class="comment-text">O maior presente que IDD pode dar à sua carreira não é produtividade imediata. É a capacidade de olhar para um problema e perguntar: "qual é a intenção aqui?" — uma pergunta simples que abre soluções que nenhum algoritmo sugere sozinho.</p>
+    </div>
+  </div>
+  <div class="voice-bar">
+    <button class="btn-voice edu" onclick="speakMain(14)">🔊 Ler Conclusão</button>
+    <button class="btn-voice comment-btn" onclick="speakComment(14)">💬 Comentário</button>
+    <button class="btn-voice stop-btn" onclick="stopSpeech()">⏹ Parar</button>
+  </div>
+</div>
+
+</div><!-- /#deck -->
+
+<!-- NAVIGATION BAR -->
+<div id="nav">
+  <button class="nav-btn" id="prev-btn" onclick="navigate(-1)" disabled>← Anterior</button>
+  <div id="slide-counter">01 / 15</div>
+  <button class="nav-btn auto-btn" id="auto-btn" onclick="toggleAuto()" title="Reprodução contínua automática">▶ Auto</button>
+  <button class="nav-btn" id="next-btn" onclick="navigate(1)">Próximo →</button>
+</div>
+
+<script>
+const slides = document.querySelectorAll('.slide');
+let current = 0;
+let autoPlaying = false;
+
+// ── TTS DATA ──────────────────────────────────────────
+const mainTexts = [
+  `Bem-vindos à aula completa sobre I D D — Desenvolvimento Orientado à Intenção. Este paradigma está redefinindo como programadores pensam, comunicam e criam software — com ou sem inteligência artificial ao lado. Hoje vamos explorar sua história, conceitos fundamentais e como aplicá-lo imediatamente.`,
+  `Hoje nossa aula terá dez grandes tópicos: linha do tempo histórica, definição do I D D, parada de vocabulário técnico, os cinco princípios fundamentais, comparação com T D D, B D D e D D D, exemplos práticos reais, I D D com inteligência artificial, ferramentas do ecossistema, desafios e críticas, e questões para reflexão.`,
+  `A história da programação é a história da humanidade tentando comunicar intenções às máquinas de formas cada vez mais naturais. Na década de 1940, linguagem de máquina e Assembly. Na década de 1950, Fortran e Cobol. Anos 70, C e Pascal com programação estruturada. Anos 80 e 90, orientação a objetos. Anos 2000, Ágil, T D D, B D D e D D D. Anos 2010, interfaces declarativas e Clean Architecture. E nos anos 2020, I A e I D D formal surgem como síntese de toda essa evolução.`,
+  `I D D, ou Desenvolvimento Orientado à Intenção, é o paradigma em que a intenção — o porquê e o o quê — é o artefato primário de design, documentação e implementação. Em vez de perguntar como implementar, I D D exige que você pergunte: qual é a intenção de negócio aqui? Como expresso essa intenção de forma clara? Existem três níveis: intenção de negócio no nível estratégico, intenção de comportamento no nível tático, e intenção de implementação no nível operacional.`,
+  `Parada obrigatória de vocabulário. Intenção: declaração explícita do propósito por trás do código. Implementação: detalhes técnicos intercambiáveis sem alterar a intenção. Paradigma: modelo de pensamento que define como problemas são conceitualizados. D S L: linguagem para expressar intenções de um domínio específico. Declarativo versus imperativo: declarativo descreve o resultado, imperativo descreve os passos. Artefato de intenção: qualquer documento que capture e preserve a intenção. Contrato: especificação formal de comportamento. Acidentalidade versus essencialidade: complexidade inerente versus introduzida pela solução.`,
+  `Os cinco princípios do I D D. Primeiro: Intent First — a intenção precede a implementação. Segundo: Separação de Preocupações — intenção e implementação em camadas distintas. Terceiro: Comunicabilidade — código comunica intenção para qualquer leitor sem contexto externo. Quarto: Rastreabilidade — toda linha de código rastreável a uma intenção de negócio. Quinto: Evolução Intencional — mudanças guiadas por mudanças de intenção, não por refatorações oportunistas.`,
+  `Comparando I D D com outros paradigmas. T D D usa testes como especificação, escrito por desenvolvedores. B D D usa comportamento como linguagem, com cenários Gherkin. D D D usa o domínio como modelo com bounded contexts. I D D usa a intenção como artefato primário — escrito por qualquer stakeholder. I D D é o único nativamente compatível com inteligência artificial e o único que garante rastreabilidade por definição. A relação ideal: D D D define conceitos, B D D descreve comportamentos, T D D especifica implementações, e I D D garante fidelidade à intenção em todas as camadas.`,
+  `Exemplo de código sem I D D. Uma função chamada "calc" que recebe "u" e "v" com variáveis sem semântica, números mágicos como 0.85 e 0.95 sem explicação, sem documentação da lógica de negócio, impossível de testar sem adivinhar a intenção, e nenhum code review pode verificar se o comportamento está correto. Este código funciona — mas é uma caixa-preta de intenção.`,
+  `Exemplo de código com I D D. A mesma lógica com intenção explícita. Um bloco de documentação explica a intenção, referencia a regra de negócio R N zero quarenta e dois e o ticket do J I R A. Um objeto D I S C O U N T underscore P O L I C Y declara todos os valores com seus significados. A função se chama applyCustomerDiscountPolicy e as variáveis isVipEligible e isRegularEligible tornam explícita a lógica de elegibilidade.`,
+  `I D D na era da inteligência artificial. O ciclo I D D mais I A: primeiro, o desenvolvedor articula a intenção em linguagem natural, precisa e contextual. Segundo, o agente de I A interpreta e gera a implementação. Terceiro, o desenvolvedor valida se a implementação honra a intenção. Quarto, a intenção é preservada como documentação rastreável. A habilidade do século vinte e um: quem melhor expressa intenções escreve software melhor com I A do que quem apenas conhece sintaxe.`,
+  `Ferramentas do ecossistema I D D: GitHub Copilot para geração de código com intenção. Cursor e Windsurf para edição orientada à intenção. Claude Code como agente de desenvolvimento ponta a ponta. Gherkin e Cucumber para intenção como especificação executável. TypeScript com tipos como intenção. Terraform e Pulumi para infraestrutura declarativa. GraphQL para APIs orientadas à intenção. E A D Rs, Architecture Decision Records, para documentação de intenção arquitetural.`,
+  `Desafios e críticas ao I D D: sobrecarga cognitiva inicial ao articular intenção antes de codificar. Subjetividade, pois duas pessoas podem ter intenções diferentes. Deterioração quando documentações ficam desatualizadas. Falta de ferramental formal comparado ao T D D. E resistência cultural. As críticas legítimas: I D D seria Clean Code com nome novo — parcialmente verdadeiro; intenções mudam mas código fica — por isso I D D enfatiza rastreabilidade viva; e que I A tornaria I D D irrelevante — argumento inverso, pois I A torna I D D mais importante.`,
+  `O futuro do I D D entre 2025 e 2030. Intent as Code com arquivos de intenção formal que geram código automaticamente. Agentes de I A com memória de intenção. I D D em governança de I A com regulamentações exigindo rastreabilidade em sistemas de decisão. Natural Language Programming com a fronteira entre especificação e código se dissolvendo. E verificação formal de intenção que checa matematicamente se implementação honra a intenção declarada. Hipótese: em dez anos, a habilidade mais valorizada será articular intenções complexas com precisão.`,
+  `Questões para aprofundamento. Estas perguntas não têm resposta única. Clique em cada uma para ouvi-la. Use-as em discussões em grupo, entrevistas técnicas ou reflexão individual.`,
+  `Recapitulando. I D D eleva a intenção ao status de artefato primário. A história é a aproximação entre linguagem humana e execução de máquina. I D D complementa T D D, B D D e D D D. Código sem intenção cria dívida de intenção. Com I A, articular intenções claras é a habilidade técnica mais valiosa. Próximos passos: documentar intenção antes de escrever qualquer função. Criar um A D R para uma decisão pendente. Adicionar intenção como campo obrigatório em pull requests. Experimentar descrever features com intenção detalhada para agentes de I A.`
+];
+
+const commentTexts = [
+  `Esta apresentação foi construída com um propósito deliberado: demonstrar I D D ao falar sobre I D D. Cada slide tem uma intenção explícita, cada seção está rastreável a um objetivo de aprendizagem. Aviso legal: se você já trabalhou em um projeto sem documentação de intenção, prepare-se para uma epifania dolorosa e libertadora ao mesmo tempo.`,
+  `A estrutura em dez tópicos não é arbitrária. Começa com história porque entender de onde viemos é a única forma de não repetir os mesmos erros com sintaxe diferente. Termina com perguntas porque conhecimento sem reflexão é apenas memória. E colocamos um slide de vocabulário no meio — porque nada destrói mais uma aula do que pessoas discutindo com termos diferentes.`,
+  `O que a linha do tempo revela é fascinante: cada geração resolveu a distância entre intenção humana e execução de máquina um nível de abstração por vez. Cobol foi ridicularizado por décadas, mas foi pioneiro na ideia de que código deve ser legível por não-programadores. Isso é I D D avant-la-lettre. Alan Turing, em 1950, já especulava sobre máquinas que seguem instruções em linguagem natural. Demorou 70 anos, mas chegamos lá. Paciência é uma virtude de programador.`,
+  `A maior sacada do I D D é perceber que código é comunicação, não apenas instrução. Quando você escreve código, está escrevendo uma mensagem para três públicos: a máquina, outros programadores, e você mesmo daqui a seis meses. A você mesmo daqui a seis meses é o público mais cruel. Aquele sujeito vai abrir seu código às 23 horas antes de um deploy e vai odiar cada decisão tomada sem comentários. I D D é empatia consigo mesmo no futuro.`,
+  `O vocabulário técnico não é burocracia — é a fundação do raciocínio preciso. Quando falamos de intenção versus implementação com significados alinhados, a qualidade das discussões técnicas melhora radicalmente. Uma equipe que fala a mesma língua técnica entrega software melhor, não porque codifica mais rápido, mas porque erra menos por mal-entendido.`,
+  `O Princípio Quatro, rastreabilidade, é o mais subversivo. Ele implica que código sem justificativa de negócio é tecnicamente dívida de intenção. Quantas linhas do seu repositório sobreviveriam a essa auditoria? Aquela classe UtilsHelper2Final versão 3 que ninguém tem coragem de deletar é arqueologia de intenção abandonada. O Princípio Cinco é especialmente relevante em contextos ágeis. Sprint planning que começa com "qual é a intenção desta feature?" já pratica I D D mesmo sem saber.`,
+  `A coluna "compatível com I A — nativamente" para I D D não é coincidência. Modelos de linguagem como eu operam fundamentalmente com intenções em linguagem natural. É como comparar um mapa de papel com o Google Maps — ambos funcionam, mas um foi projetado para o mundo atual. A linha "quem escreve — qualquer stakeholder" é revolucionária. No I D D, um gerente de produto que descreve a intenção de uma feature com precisão já está contribuindo com código, mesmo sem saber programar.`,
+  `Este tipo de código existe em praticamente todos os repositórios de produção do mundo. Não é preguiça — é ausência de cultura de intenção explícita. Ninguém te ensinou que nomear variáveis é arquitetura. Todo programador já viu código assim e pensou "quem fez isso?". E depois abriu o git blame e descobriu que foi ele mesmo, há oito meses. A vergonha é parte do processo de crescimento.`,
+  `Note que o comportamento é idêntico entre os dois exemplos. O que mudou foi a capacidade de comunicação. O link ao ticket do Jira pode parecer exagero, mas é ouro. Em 2027, quando alguém perguntar "por que 500 e não 300?", há uma thread inteira com a discussão de negócio que levou a essa decisão. Esse é I D D rastreável.`,
+  `Posso falar com autoridade aqui: quando você me fornece uma intenção bem articulada, a qualidade do código que produzo é substancialmente superior do que com instrução vaga. I D D não é só bom para humanos — é bom para mim também. Pense na diferença entre "faz um sistema de login" versus "cria autenticação J W T com refresh token, blacklist em Redis, rate limiting por I P e suporte a M F A via T O T P". Adivinha qual prompt resulta em código que vai direto para produção?`,
+  `A lista de ferramentas revela que I D D já é praticado implicitamente por equipes que as usam. O paradigma torna isso explícito, sistemático e cultural. A D Rs são o M V P subestimado de I D D. Se sua empresa não usa A D Rs, pode estar cultivando dívida de intenção sem perceber. Cinco minutos documentando uma decisão hoje pode salvar cinco horas de debate em seis meses.`,
+  `A crítica "I D D é Clean Code com nome novo" merece respeito. Clean Code, de 2008, já pregava muito disso. O que I D D adiciona é a dimensão formal de rastreabilidade e integração nativa com I A — dois vetores que não existiam em 2008. "O código fala por si mesmo" é frase dita por quem nunca debugou código de outra pessoa a duas horas da manhã antes de um deploy. Código fala, mas às vezes grita em idioma errado.`,
+  `A hipótese dos dez anos não é especulação. Já aparecem cargos como A I Prompt Engineer e A I Systems Designer — que são essencialmente engenheiros de intenção com vocabulário diferente. A ironia histórica: durante décadas, programadores foram os únicos que podiam falar com as máquinas. Com I D D mais I A, o monopólio acabou. Isso é libertador e aterrorizante em proporções iguais.`,
+  `Estas perguntas são difíceis de responder porque são difíceis de verdade — não porque falta informação, mas porque exigem que você examine suas próprias práticas com honestidade. A pergunta sobre rastreabilidade de intenção em um projeto real costuma revelar muito mais sobre a saúde de uma cultura de engenharia do que qualquer dashboard de métricas.`,
+  `Se eu pudesse deixar uma única mensagem desta aula: código é a última etapa do processo criativo, não a primeira. A intenção é a primeira. Quando você inverte isso, tudo muda — qualidade, velocidade e satisfação do trabalho. Obrigado por chegarem até aqui sem fechar a aba do navegador — o que, em 2025, é uma declaração de intenção de aprendizado genuíno. I D D aprovaria.`
+];
+
+// Perguntas ao final de cada comentário (null = nenhuma)
+const endQuestions = [
+  null, null,
+  `💬 Pergunta ao final: qual foi o ponto da linha do tempo que você considera mais transformador para como você programa hoje?`,
+  `💬 Reflexão ao final: se você tivesse que explicar a intenção central do sistema onde trabalha em uma única frase, qual seria?`,
+  null,
+  `💬 Pergunta ao final: dos cinco princípios, qual sua equipe atual menos pratica — e o que você poderia fazer para mudar isso?`,
+  `💬 Pergunta ao final: você pratica T D D, B D D ou D D D hoje? Como essas práticas poderiam se conectar ao I D D no seu contexto?`,
+  `💬 Pergunta ao final: você reconhece algum trecho de código no seu projeto atual semelhante a esse exemplo? Como seria reescrito com I D D?`,
+  `💬 Pergunta ao final: o que impediria sua equipe de adotar esse estilo hoje? É obstáculo técnico, cultural ou de tempo?`,
+  `💬 Pergunta ao final: como você descreveria a intenção do seu próximo pull request para um agente de I A, de forma que ele entendesse o propósito completo?`,
+  `💬 Pergunta ao final: das ferramentas listadas, qual teria o maior impacto no seu fluxo de trabalho atual?`,
+  `💬 Pergunta ao final: das críticas levantadas, qual você considera mais válida para o seu contexto — e como você responderia a ela?`,
+  `💬 Pergunta ao final: se você pudesse criar uma ferramenta para o futuro do I D D, que problema ela resolveria?`,
+  null, null
+];
+
+// Questions for slide 13 and inline buttons
+const allQuestions = [
+  // inline slide questions (indices 0-9)
+  `Qual foi o ponto da linha do tempo que você considera mais transformador para como você programa hoje?`,
+  `Se você tivesse que explicar a intenção central do sistema onde trabalha em uma única frase, qual seria?`,
+  `Dos cinco princípios, qual sua equipe atual menos pratica — e o que você poderia fazer para mudar isso?`,
+  `Você pratica T D D, B D D ou D D D hoje? Como essas práticas poderiam se conectar ao I D D no seu contexto?`,
+  `Você reconhece algum trecho de código no seu projeto atual semelhante a esse exemplo? Como seria reescrito com I D D?`,
+  `O que impediria sua equipe de adotar esse estilo hoje? É obstáculo técnico, cultural ou de tempo?`,
+  `Como você descreveria a intenção do seu próximo pull request para um agente de I A, de forma que ele entendesse o propósito completo?`,
+  `Das ferramentas listadas, qual teria o maior impacto no seu fluxo de trabalho atual — e por quê?`,
+  `Das críticas levantadas, qual você considera mais válida para o seu contexto — e como você responderia a ela?`,
+  `Se você pudesse criar uma ferramenta para o futuro do I D D, que problema ela resolveria?`,
+  // slide 13 full questions (indices 10-15)
+  `Primeira questão: pense num projeto onde você trabalhou. Se toda a equipe fosse embora amanhã, um novo time conseguiria entender as intenções de negócio apenas lendo o código e os testes? O que faltaria?`,
+  `Segunda questão: a diferença entre I D D e simplesmente escrever bom código é filosófica ou operacional? Existe algum caso em que praticar I D D seria prejudicial ao desenvolvimento?`,
+  `Terceira questão: se intenções são o artefato primário, quem é responsável por capturá-las: o desenvolvedor, o Product Owner, o arquiteto ou todos juntos? Como isso impacta a dinâmica de equipe?`,
+  `Quarta questão: com agentes de I A cada vez mais autônomos, como garantir que a intenção do usuário final — e não apenas do desenvolvedor — seja capturada e honrada pelo sistema?`,
+  `Quinta questão: I D D sugere que intenções devem ser rastreáveis e vivas. Qual seria o formato ideal para capturar intenção na sua stack tecnológica atual? Código, teste, A D R, wiki, ou outra coisa?`,
+  `Sexta questão: se toda linha de código deve ser justificável por uma intenção de negócio, o que fazemos com otimizações de performance ou refatorações puramente técnicas? Elas violam o I D D?`
+];
+
+// ── NAVIGATION ──────────────────────────────────────
+function navigate(dir) {
+  const next = current + dir;
+  if (next < 0 || next >= slides.length) {
+    if (autoPlaying && dir > 0) { stopAutoPlay(); }
+    return;
+  }
+  stopSpeech();
+  slides[current].classList.remove('active');
+  slides[current].classList.add('exit');
+  setTimeout(() => slides[current].classList.remove('exit'), 500);
+  current = next;
+  slides[current].classList.add('active');
+  slides[current].scrollTop = 0;
+  updateNav();
+}
+
+function updateNav() {
+  document.getElementById('prev-btn').disabled = current === 0;
+  document.getElementById('next-btn').disabled = current === slides.length - 1;
+  document.getElementById('slide-counter').textContent =
+    String(current + 1).padStart(2,'0') + ' / ' + String(slides.length).padStart(2,'0');
+  document.getElementById('progress-bar').style.width =
+    ((current + 1) / slides.length * 100) + '%';
+}
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowRight' || e.key === 'ArrowDown') { e.preventDefault(); navigate(1); }
+  else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') { e.preventDefault(); navigate(-1); }
+  else if (e.key === 'Escape') { stopSpeech(); stopAutoPlay(); }
+  else if (e.key === ' ') { e.preventDefault(); if (autoPlaying) stopAutoPlay(); else navigate(1); }
+});
+
+// ── SPEECH ───────────────────────────────────────────
+let voices = [];
+function loadVoices() { voices = window.speechSynthesis.getVoices(); }
+window.speechSynthesis.onvoiceschanged = loadVoices;
+loadVoices();
+
+function getBestVoice(preferAlt) {
+  const pt = voices.filter(v => v.lang.toLowerCase().startsWith('pt'));
+  if (!pt.length) return null;
+  if (preferAlt) return pt[1] || pt[0];
+  return pt[0];
+}
+
+function setActiveSpeaker(type) {
+  document.querySelectorAll('.btn-voice').forEach(b => b.classList.remove('speaking'));
+  if (!type) return;
+  const cls = type === 'comment' ? 'comment-btn' : 'edu';
+  slides[current].querySelectorAll('.btn-voice.' + cls)
+    .forEach(b => b.classList.add('speaking'));
+}
+
+function speak(text, type, onEnd) {
+  window.speechSynthesis.cancel();
+  const utter = new SpeechSynthesisUtterance(text);
+  utter.lang = 'pt-BR';
+  const v = getBestVoice(type === 'comment');
+  if (v) utter.voice = v;
+  utter.pitch = type === 'comment' ? 1.12 : 1.0;
+  utter.rate  = type === 'comment' ? 1.05 : 0.93;
+  utter.volume = 1;
+  setActiveSpeaker(type);
+  utter.onend = () => { setActiveSpeaker(null); if (onEnd) onEnd(); };
+  utter.onerror = () => { setActiveSpeaker(null); };
+  window.speechSynthesis.speak(utter);
+}
+
+function speakMain(idx) {
+  speak(mainTexts[idx], 'main');
+}
+
+function speakComment(idx) {
+  const eq = endQuestions[idx];
+  if (eq) {
+    speak(commentTexts[idx], 'comment', () => {
+      setTimeout(() => speak(eq, 'question'), 600);
+    });
+  } else {
+    speak(commentTexts[idx], 'comment');
+  }
+}
+
+function speakQuestion(idx) {
+  speak(allQuestions[idx], 'main');
+}
+
+function stopSpeech() {
+  window.speechSynthesis.cancel();
+  setActiveSpeaker(null);
+}
+
+// ── AUTO PLAY ────────────────────────────────────────
+function toggleAuto() {
+  if (autoPlaying) stopAutoPlay();
+  else startAutoPlay();
+}
+
+function startAutoPlay() {
+  autoPlaying = true;
+  document.getElementById('auto-btn').classList.add('active');
+  document.getElementById('auto-btn').textContent = '⏸ Auto';
+  runAutoSlide();
+}
+
+function stopAutoPlay() {
+  autoPlaying = false;
+  document.getElementById('auto-btn').classList.remove('active');
+  document.getElementById('auto-btn').textContent = '▶ Auto';
+  stopSpeech();
+}
+
+function runAutoSlide() {
+  if (!autoPlaying) return;
+  const idx = current;
+  const eq = endQuestions[idx];
+
+  // Chain: main → comment [→ end-question] → next slide
+  speak(mainTexts[idx], 'main', () => {
+    if (!autoPlaying) return;
+    setTimeout(() => {
+      if (eq) {
+        speak(commentTexts[idx], 'comment', () => {
+          if (!autoPlaying) return;
+          setTimeout(() => {
+            speak(eq, 'question', () => {
+              if (!autoPlaying) return;
+              setTimeout(() => advanceAuto(), 1200);
+            });
+          }, 500);
+        });
+      } else {
+        speak(commentTexts[idx], 'comment', () => {
+          if (!autoPlaying) return;
+          setTimeout(() => advanceAuto(), 1200);
+        });
+      }
+    }, 500);
+  });
+}
+
+function advanceAuto() {
+  if (!autoPlaying) return;
+  if (current < slides.length - 1) {
+    navigate(1);
+    setTimeout(() => runAutoSlide(), 300);
+  } else {
+    stopAutoPlay();
+  }
+}
+
+// Init
+updateNav();
+</script>
+</body>
+</html>
