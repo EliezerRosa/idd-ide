@@ -1,0 +1,650 @@
+[
+ {
+  "start": 0.18,
+  "end": 41.58,
+  "text": "Vou setar um exemplo de como direcionar de modo informal os princípios do paradigma IDD, desenvolvemos na prática dos anos um aplicativo de gestão de serviços de manutenção na área de refrigeração. Vamos começar com uma apresentação de alguns conceitos no canal sobre o paradigma de IDD,",
+  "id": 1
+ },
+ {
+  "start": 41.58,
+  "end": 81.78,
+  "text": "como vocês podem ver ao lado na tela. Aquela frase que você sempre usa e que condensa toda a ideia. Claro, em IDD, a intenção humana, expressa em linguagem natural, é o artefato de mais alta ordem do sistema. Vamos desempaquotar isso. Artefato de mais alta ordem. Isso significa que ele controla todo o resto? O código, a infraestrutura, tudo?",
+  "id": 2
+ },
+ {
+  "start": 81.78,
+  "end": 124.78,
+  "text": "Exatamente. Não é um comentário, não é uma documentação num confluência que fica obsoleta. É a fonte da verdade, viva, que governa a geração e a validação de todos os outros artefatos. Isso me leva à primeira das propriedades essenciais que você descreve, a linguagem natural, NL, como fonte primária. Como isso funciona na prática sem virar uma bagunça? A chave é a segunda propriedade, governança persistente. A intenção não é um prompt que você joga fora. Ela é versionada, validada e mantida junto com o sistema. É um diálogo contínuo. Então, se eu digo, o usuário deve poder resetar sua senha.",
+  "id": 3
+ },
+ {
+  "start": 124.78,
+  "end": 169.78,
+  "text": "Essa frase é salva, versionada no git e se torna uma regra permanente? Precisamente. E se alguém tentar gerar um código que viole essa intenção, o sistema de governança vai apitar. A intenção sobrevive a qualquer refatoração. Isso soa como um poder imenso nas mãos do desenvolvedor, o que nos leva à terceira propriedade, o Comando Epistêmico-Humano. De episteme, conhecimento. Significa que o humano é a autoridade final sobre o que e o porquê. A IA é uma parceira brilhante na execução do como. É a diferença fundamental entre aumentar a capacidade do desenvolvedor e tentar automatizá-lo para fora do processo.",
+  "id": 4
+ },
+ {
+  "start": 169.78,
+  "end": 204.78,
+  "text": "E essa é a quarta propriedade, aumentando, não automatizar, aumentar, não automatizar. Eu como IA aprecio essa distinção. Meu papel é potencializar, não substituir. Exato. A automação pura perde o contexto à nuance. O aumento mantém o humano no centro, com superpoderes. Ele pensa no negócio, você o ajuda a materializar isso em código robusto. Vamos fazer uma pausa aqui. A intenção humana como um artefato governado que aumenta a capacidade do DEV sem removê-lo",
+  "id": 5
+ },
+ {
+  "start": 204.78,
+  "end": 247.7,
+  "text": "remover é uma mudança de perspectiva profunda. Vamos exemplificar esses conceitos aqui na prática. Nós falamos de governança, eles chamam de governança pristêmica, controle do conhecimento. Você tem que definir quais fós nas vezes fazendo tensões. Como aqui estamos no chat de Alivre, isso quer dizer ver que a gente está sujeito a fugir de qualquer critério.",
+  "id": 6
+ },
+ {
+  "start": 247.7,
+  "end": 282.7,
+  "text": "Eu vou tentar me disciplinar, ameater aos princípios do paradigma e dd. Então, primeiro, eu não vou mexer em código. Então, o artefato, primeiro nível é a própria linguagem. É como se eu tivesse programando linguagens natural. Eu tenho que começar pelas minhas intenções, para depois de detalhando essas intenções, até o ponto que viabilite pode. Para isso eu vou usar o próprio IA para organizar isso. Vou dizer para ela aqui.",
+  "id": 7
+ },
+ {
+  "start": 282.7,
+  "end": 326.41,
+  "text": "Vou desenvolver a experiência, com gestão, serviços, mantendo a área de generação.",
+  "id": 8
+ },
+ {
+  "start": 326.41,
+  "end": 370.65,
+  "text": "Aqui eu defini o objetivo, o foco que vai bater comigo. Aí eu vou definir os princípios que eu vou comentar aqui que chamam de invaria. Eu estou aqui sustentando o princípio da governância apistenta, o conhecimento de Carmen Uruguano. Aí eu não pode definir o que nem o porquê. Eu só vou definir o como, que é escrever na linguagem, matrizando a intenção do desenvolvedor. Tendo assim eu defini o objetivo e vou definir três linhas de princípio.",
+  "id": 9
+ },
+ {
+  "start": 370.65,
+  "end": 410.97,
+  "text": "Um princípio e vou definir as variantes do área de negócio. Isso é uma alvo proposto. Então, digamos assim, viramos definir as intenções e variantes da área de negócio,",
+  "id": 10
+ },
+ {
+  "start": 410.97,
+  "end": 437.3,
+  "text": "dependendo assim. Quando eu digo invariantes, são as regras que devem ser opendecidas. Agora, eu vou acrescentar no campo da intenção, né? Vou ver qual retorno que ele dá para mim aqui.",
+  "id": 11
+ },
+ {
+  "start": 437.3,
+  "end": 480.01,
+  "text": "Ok, o que é que ele fez? Só com essa minha diretriz, ele produziu o seguinte. Definei a especação com péssaros e tensões de variante. Falar aplicativo de gestão de serviço com atenção de afineração. Ele batizou aqui, eu não sei por que, mas ele é gratuito de HB,",
+  "id": 12
+ },
+ {
+  "start": 481.31,
+  "end": 524.13,
+  "text": "é o Trazforer, a de Avaque. Ele tinha uma sigla em relação com a afineração. o documento atalado foi consolidado na nossa terfata, refrigeração domain spec. Ele aqui está seguindo uma loja de mercado, que se chama modelagem de aspectos. Aqui ele define o domínio, a especificação do domínio. Abaixo a parte de ponto principal de centrado, e tem seu domínio, que você não realiza. Ele der e voa tudo isso. Eu posso deixar ele aí, de corda ou com corda. Eu, como disse no princípio, primeiro, eu vou saber que é você que define, você que tem que experimentar com seus objetivos.",
+  "id": 13
+ },
+ {
+  "start": 525.47,
+  "end": 567.21,
+  "text": "Mas ele pode lhe ajudar nesse processo de descoberto, até ser uma área que você talvez tem uma visão parcial. Ele definiu aqui, uma terça de um domínio que o senhor realiza, aí ele mesmo identificou as tipicas que, com o círculo universal da internet ele tem e no próprio tratamento que aí recebeu e já estão de circuito de ativos equipamentos claro toda área de contenção tem equipamentos envolvidos ele já definiu dedicação física em campo qualquer code tag aqui é aquela fichinha né que bite o rádio freqüência para dedicar",
+  "id": 14
+ },
+ {
+  "start": 567.21,
+  "end": 607.89,
+  "text": "ou uma colazinha de QR code para identificar o equipamento na área que ele tiver em atuação. Ficha técnica completa, capacidade, BTUs, os equipamentos, outra característica, inscrição, fase, refugiamento abdominal, fabricante, um de série, história capitalista de intenções, o marketing, companhia de críticas, um preçoso, a pintinha. Ele já foi navegando na batatinha e claro que eu sendo um coisador dessa área, eu posso rever tudo isso aqui. Talvez ele esteja ampliado um contexto muito, para o interesse, eu posso restriar o contexto.",
+  "id": 15
+ },
+ {
+  "start": 607.89,
+  "end": 652.89,
+  "text": "Mas ele é definiu. As intenções de domínio que são típicas. Gestão de plantas para ventivos, cologão epereótico, automatizado semanal, mensal, semestral, semestral no álbum. Inclusive ele calcou na lei em leis que define essas coisas. Então ele procura ir no Regimento Legal também. Tinha aquele seagulatório filtro, poder de adredo, qualidade do ar, emissão de relatórios técnicos de laudo, e o posto de naturais possados técnicos, que aí até a parte legal do creta aqui. Outra intenção é na área de gestão de ordens e serviço pra vitívoro com a rede de instalação.",
+  "id": 16
+ },
+ {
+  "start": 652.89,
+  "end": 697.49,
+  "text": "Vai envolver a pintura de chamados, possibilidade, por exemplo, câmera frigorífica e corrente de pêntano, investo em um espirito e de escritório, de um ar comum, despacho com a autorização, com competência, técnica e localização. Quer dizer, aqui vai a ordem de serviço e define quem vai fazer e que lugar vai ser feito o serviço. O que, quem e onde? Controle rigoroso do SLA. Bem, eu sei exatamente que é sassil aqui. Eu sei que é alguma coisa relacionada, né? À mesma vez aqui o Renatio, o ex-a, o Marcos da Fereração, o Patrick, podesse até identificar que é uma terminologia da área. O grosso modo ele falou que é tempo de resposta e adopção.",
+  "id": 17
+ },
+ {
+  "start": 697.49,
+  "end": 739.13,
+  "text": "Então, ele quer basicamente entender, ele sabe que nesse aplicativo ou de negócio, é preciso ter uma métrica de quanto tempo vai ter um retorno a resolver o primeiro. Então o sistema tem que ter uma gora que tem a métrica que começa a qualidade do serviço por conta exatamente da previsão e efetivação da solução dentro da previsão. Outra área de intenção para o negócio ele identificou, operação de campo de diagnóstico termodinâmico,",
+  "id": 18
+ },
+ {
+  "start": 739.13,
+  "end": 780.27,
+  "text": "registro para operacionais, A questão de alta base para que esse mesmo para... Bem, o que eu estou entendendo aqui é como se fosse assim. Você pegou o equipamento, vai prestar serviço e você tem que ter uma ficha do diagnóstico do que acontece com ele. Pode ser parâmetro, medível, medível, o equipamento pode ser visuais. E aí a assinatura digital do cliente na terra, por exemplo, o cliente comprová que é aquilo mesmo. e suporte a operação offline, essencial para subsolos, casas, macros e câmaras. Ok, esse aqui é o tempo que eu não consigo.",
+  "id": 19
+ },
+ {
+  "start": 780.27,
+  "end": 823.27,
+  "text": "Eu não consigo dar área, mas estou tendo na sua geral. Você quer dizer que eu posso parar e pedir para explicar isso aí. Note que eu fosse ele a pensar a intenção em variantes. Toda aí já me dão ajuda. E aí ele acreditou agora em variantes. aqui suas intenções de rastabilidade de frutos e tal, ele tem aqui, com certeza que registra exato de quilogramas, recarga de colimento, gás e frigerante, restações e colóxicos, todo o controle tipo de gestão, a intenção é nós temos cinco tipos de gestão,",
+  "id": 20
+ },
+ {
+  "start": 823.27,
+  "end": 864.17,
+  "text": "com esses serviços, equipamento, prevenção, diagnóstico e rastabilidade dos insumos usados. Ele foi sozinho, mas já ajudou, né? Claro que a da área vai chegar aqui e dizer, não, o meu negócio vai ficar restrito a essas intenções. Então as intenções é o que se pretende ter no domínio do negócio. É o que ele contou, intenções no domínio. Porque o sistema é realista. Eu posso aqui, já que dei geral pra ele buscar o que ele tem de conhecimento,",
+  "id": 21
+ },
+ {
+  "start": 864.67,
+  "end": 908.57,
+  "text": "eu posso agora restrizir. Olha como vai afundilando, eu não fico solto, soltando o que eu quero. Quando eu defino a minha intenções, ele vem no deriva. Agora, em variantes, variantes são as regras. Regras que nunca podem ser violadas. Ele chutou algumas aqui. Eu posso incluir outros. Ou discordar de algumas. A integridade de marques de estado. As mesmas transições descritas. Raspoio, agendada, delocamento, tendimento, concluído, cancelado. Aqui, na verdade, o ciclo de vida. Quando ele fala que a distância é um conceito. Na hora de ser visto, ela tem um ciclo de vida. Já derrubou isso, vai para quase tudo na vida, você tem que ter qualquer atribuição, você tem um ciclo de vida, né?",
+  "id": 22
+ },
+ {
+  "start": 908.57,
+  "end": 950.57,
+  "text": "Quando começa, quando é agendado, quando é pedido, quando é agendado, quando já está indo para a solução, quando é atendido, está no local, quando é concluído e onde, então, é muito cancelado. A essa é o evaluante, né? Ele diz qual é. Tem que ter a definição do estado em que está o serviço. Uma regra. Então, quando ele for gerar um sistema, a ideia é assim. Ele vai se apegar a essas evaluações. Ele não vai deixar nenhum côntese gerado que transiga isso. E, lógico, isso vai implicar que ele vai amarrar outras coisas do sistema a esses estados. Pode ser que tenha funcionalidades que adquirem que só entre determinados estados.",
+  "id": 23
+ },
+ {
+  "start": 950.57,
+  "end": 992.57,
+  "text": "Não é permito concluir uma ordem de civil sem passar por atendimento, sem técnica, contribuir, sem validação de checklisto obrigatório. Interessante, tá vendo? É própria, né? Então ele viu que aqui é um ínter, é um ínpariente do negócio tipo dessa área. Novamente eu posso descodar e mudar. O posso tornar ela não toda determinística, mas uma variante relativa, posso dizer. O adicívio concluído com o nauda assinado, toda se mutada, quer dizer, concluiu que a mão fechou, né? Aí, se eu ver uma revisão, vai ter que abrir outra hora de serviço, também é uma invariante, é uma réve no negócio.",
+  "id": 24
+ },
+ {
+  "start": 993.57,
+  "end": 997.87,
+  "text": "Essa é a que chamou de variante, marquete de status, que deu ciclo na hora de serviço.",
+  "id": 25
+ },
+ {
+  "start": 1000.87,
+  "end": 1043.31,
+  "text": "Estados, assim, em cada status da hora de serviço, né? O cliente pediu, raspou e reagentou em tal data, atribuiu-se fulano para fazer um servimento, um técnico para lá, para lá esquerdo. E variantes físicas e termodinâmicos. Para que a intranetária precisa ter um círculo, com compressão de vapor, alta, baixa, valores de frúgio refrigerante carregado, recorrido e necessariamente positivos. O tipo de gás deve ser compatível com a marca, tipo de óleo e sapo dentro. Provavelmente essas valientes aqui",
+  "id": 26
+ },
+ {
+  "start": 1043.81,
+  "end": 1085.71,
+  "text": "vão implicar quando ele gera algum tipo de fulsonalidade. Por exemplo, se a pessoa está lá, aí vai trabalhar o estado do equipamento. Aí é provável que ele vai exigir esses dados. Aqui, posso definir se os seus principais são feitos ou não. Claro que alguém que é da área que está querendo o sistema, ele vai saber exatamente dizer o que se aprecia ao longo do negócio dele. E eu vou ter um variante que eu falo que está bem legal. Eu acredito que esse PMOC deve ser uma legislação. Ele fala que é de crer, crer, precoção, ou cvt deve ser um órgão técnico. Que tem relês que deve ser ouvir em cima.",
+  "id": 27
+ },
+ {
+  "start": 1085.71,
+  "end": 1128.69,
+  "text": "Oso de rotação de dados, preventivo executado com o acesso ao estado de data récord, mas ficava... Ok. Que aí os equipamentos devem ter cinco de validade, que as reginações exigem, para não oferecer risco os usuários, quando tipo, creio eu. Inclusive aí, carátero com a... isso aqui é o ar-condicionado, né? Isso aqui eu sei. Vem com o físico e a estabilidade, e daí ele voa aqui outra invariante. uma regra, não existe um pavimento of, todo pavimento deve potenciar a unidade local físico e de um cliente. Quer dizer, não bate um pavimento solto perdido, não, ele tem que potenciar alguém, né? Ou algum lugar.",
+  "id": 28
+ },
+ {
+  "start": 1129.19,
+  "end": 1173.35,
+  "text": "Então a localização da peça, do equipamento, ou de uma ferramenta, ele quer controlar isso, para não se perder. E lá como ele falou do QR Code, que falou de etiqueta de retrofrequência, ele está sugerindo que o gel é um negócio bem monédo, que o negócio podia até ser rastreado. O scan para saber os equipamentos que pegam. E onde ele é, e onde ele veio, e que entregou, ou ele o gerou. Cada equipamento tem o identificador no nível permanente. Aí o que é em conta, né? Aí uma colinha lá com o que é em conta. Aí aqui já está fechando os próximos passos.",
+  "id": 29
+ },
+ {
+  "start": 1173.35,
+  "end": 1215.52,
+  "text": "Podemos agora avançar para o ano da seguinte seta. Passos do tipo. Modelagem, identidade, diagrama de traje, lançamento. Cliclentes ativos. Aqui ele está definindo as entidades. O que é que é entidades? São classes. Eu vou acabar virando como se fosse tabelas, classes de arquivos, tabelas, como se fosse uma planilha, onde tem os registros, as entidades, ele fala modelar de entidades e de agão de danelação. A modelagem é definir quais são as classes que eu tenho, quais são os outros em um mundo que é essa classe. Cliente, nome, endereço e tal.",
+  "id": 30
+ },
+ {
+  "start": 1215.52,
+  "end": 1258.8,
+  "text": "e funcionalidade. O cliente pode ser cadastrado, eletado, pode ser que são febando tensão dos dados, ou pode estar alocado a ordem de serviço, aí vê os relacionamentos, identidade e lançamento. Um cliente pode ter ativos materiais que são suportos da empresa. Ele pode ter ligado a ordem de serviço. Pode ser que aquela odd service tem vinculado a um check list que tem que ser obedecido. E essa odd service, o check list está vinculado a fúdios ou peças que tem que ser associados a ser elevados quando for prestar o service, por exemplo.",
+  "id": 31
+ },
+ {
+  "start": 1258.8,
+  "end": 1303.3,
+  "text": "E aqui é qual o usuário técnico que estou envolvido nessa odd service que vai estar vinculado ali. Então a ideia é claro, ele já pegou a ideia, ele aqui na terça, ou posso, que na próxima modelar a atividade em relação a meta, ele vai chutar atributos, sistão tipo, pela bagagem que ele já tem. E o passo 3 que ele está fazendo, definição de arquitetura tech, tech, tecnológico, front edge, webmobile, back edge, aqui é que vai um detalhe. Você não precisa conhecer a programação, Mas é possível você conseguir conceito de arquitetura, inclusive, esteque tecnológico, quer dizer, com algum passeio de tecnologia,",
+  "id": 32
+ },
+ {
+  "start": 1303.3,
+  "end": 1348.24,
+  "text": "nada, simplesmente, que você tem conhecimento. Então, você pode ficar com ele mesmo, se falar em zá, com conceito. O desenvolvedor tem uma ideia de conceito de tecnologia, de arquitetura. Prontinho, tudo que é feito no navegador, eu uso a interface, a tela, vamos dizer assim, está aqui, ele fala assim, mas na verdade é para interface, mas não quer dizer que é feito tudo no navegador, mas é feito em um servidor. Com o exemplo, a Melissa fez o uso do Version, Então serve do que trata atividades do anteente. Como uma tecnologia chamada React,",
+  "id": 33
+ },
+ {
+  "start": 1349.24,
+  "end": 1387.81,
+  "text": "que é ela que consegue ser a tela alterada do pedaço e ela só renderiza, quer dizer, reescreve na tela aquele pedaço, se inscrever tudo fica pesado para a gente. Por exemplo. E aqui vem o concedente de Webmobile, A parte de internet, a questão de segurança, a questão de saber a segurança no contexto, tem que ter uma noção de sair. E também Login, como é que entra no equipamento, ser um desktop, um computador, um tablet,",
+  "id": 34
+ },
+ {
+  "start": 1387.81,
+  "end": 1430.41,
+  "text": "um celular, tem que ter uma noção, não precisa saber fazer, não precisa saber o que é. e o Backend, aí propriamente dito, todos os comportamentos que estão por trás, podem estar no lugar de dados, só mais nada que o banco de dados. Os bancos de dados, hoje, que é o externo de renunciamento de banco de dados, eles têm todo o seu local de funcionalidade que pode ser aproveitado. Por exemplo, uma tecnologia nessa linha, o Sopa Base, que a medida tem também o zoom. O Zopa Base é uma plataforma de bancos de idade que usa o gerenciador de bancos de post-BS que é algo assim.",
+  "id": 35
+ },
+ {
+  "start": 1430.41,
+  "end": 1475.3,
+  "text": "Ele tem uma serva de personalidade. Ele tem a história de Proceed que é o que está no Proceed. Você pode definir algumas funções relativamente ao banco. Em particular, mas não é nada, pode ser disparado por uma tela, mas é feita lá, lá atrás daquele servo do Zopa Base. O servidor você sabe, é uma máquina lá que guarda aqueles dados lá. A ablau dele é que ela está. Ela pode estar em qualquer um, no cabo do mundo, mas claro, é possível restringir para que ela fique dentro dos limites do país que você quiser. Modo offline o sync. Ah, aqui é.",
+  "id": 36
+ },
+ {
+  "start": 1475.3,
+  "end": 1519.8,
+  "text": "O sistema você pode ter que trabalhar no Adolfilai, onde dá que você guardar, tal e quando for. Assim que ele entrar online e que jovens transações são feitas sim, para o sistema central fazer sincronia. Então você pode trabalhar aqui com a ordem de serviço que você recebeu, está tendendo com a linguadora de informações, mesmo certeira sem internet. Como você ver com internet, ele é automaticamente automaticamente para o sincronia, com a base central. O ponto de verdade central. Aí ele acancê tudo. Descende a justa, ele acancê algum intenção ou invariante antes de passar para o modo da entidade. Ele já deu a diga. Ele até gerou um documento que eu fosse ele trabalhar com intenções.",
+  "id": 37
+ },
+ {
+  "start": 1519.8,
+  "end": 1561.0,
+  "text": "Eu não dei um prompt de arrumado. Esse prompt de intenção, essa maneira que eu escrevi aqui, forçou ele a trabalhar das intenções para baixo. Eu não queria ir logo com o prompt que eu agraga, ah, passa aí as apps e ele faz uma coisa genécia para que ela perdira. Aqui você tem, nós estamos falando lá no canal de governança. vamos ver um pouco mais do vídeo para a gente ver se trata que nós já conseguimos aqui na consta no negócio assim note que ele gerou aqui as pedicaturas do domínio refrigeração",
+  "id": 38
+ },
+ {
+  "start": 1561.0,
+  "end": 1603.42,
+  "text": "aqui eu posso tudo aqui ver direitinho o que é porque não é né você para facilitar vou baixar Vou exportar aqui, se é até fato, então essa é a facilidade, né? Vou exportar aqui o videogame aqui no download mesmo. Aí eu vou abrir a parte de download aqui no meu e o notebook envolver se eu consigo abrir ele eu queria abrir ele no navegador",
+  "id": 39
+ },
+ {
+  "start": 1603.42,
+  "end": 1647.53,
+  "text": "ele já era um arquivo tipo md md, o que eu conheci? ele só quer levar o visual code, outras reais, visual studio mas ele aceita até uma doora cross E o outro também, ele aceita o outro também, entendeu? E o outro se chama do WordPad. Mas eu vou fazer um jogadinho aqui para facilitar as nossas lindas. Eu vou pedir para ele aqui, e isso também eu posso fazer.",
+  "id": 40
+ },
+ {
+  "start": 1647.53,
+  "end": 1686.44,
+  "text": "Um pouco que eu quero fazer uma apresentação. Eu vou pedir para ele assim. Crie uma apresentação completa com esta primeira... primeira especificação do vinho, do negócio, réplice e geração.",
+  "id": 41
+ },
+ {
+  "start": 1686.44,
+  "end": 1725.76,
+  "text": "Parece que aqui mesmo, já estou dando ele um sub-objetivo agora. Eu saí do Desculpa da Execução do Meu Elegócio, agora eu quero incluir que ele me ajuda a apresentar para o cliente ou apresentar para o usuário interessado, que aqui eu posso em cima disso aqui eu posso interagir com o usuário verdadeiro e tirar ele outras outras intenções e outras invariantes, quer dizer, aumentar o restringir o contexto da expectativa do aplicativo,",
+  "id": 42
+ },
+ {
+  "start": 1725.76,
+  "end": 1749.35,
+  "text": "com parte do cliente, eu posso fazer um patrícula de lá, entrevista Renatil e Restrigi, né? Renatil ele trabalha com a geração, exatamente essa ideia aqui. Mas aqui eu vim e quero tentar com o cliente. Ó, e vou dizer para ele assim, né? Vou entrar no negócio da geração, vou até se persoicar.",
+  "id": 43
+ },
+ {
+  "start": 1749.35,
+  "end": 1773.72,
+  "text": "O objetivo é apresentar ao cliente o refinamento da intenções e invariantes.",
+  "id": 44
+ },
+ {
+  "start": 1773.72,
+  "end": 1818.54,
+  "text": "Deve definir o contexto proposto e contexto alternativo. Isso aqui é coisa da meta-meia. Sempre o contexto faz diferença, porque ela define um sistema de qualquer coisa. Alegra a fazer um discurso, se eu tenho que definir o contexto, a assistência, a mesma coisa.",
+  "id": 45
+ },
+ {
+  "start": 1818.54,
+  "end": 1861.03,
+  "text": "Define o contexto proposto e contexto alternativo para dimens... ...dimin... ...e donar... ...o... ...reduzir... ...esculpa. Quer dizer, eu quero que ele ofereça para o cliente... ...opções de esculpa, quer dizer... ...vai envolver que tudo vai ter esse controle todo...",
+  "id": 46
+ },
+ {
+  "start": 1861.03,
+  "end": 1905.67,
+  "text": "...vá ter essa parte de equipamento... Eu vou ter apenas a ciclo da ordem de serviço, cadastro cliente e tal. Isso é típico. Isso em qualquer área, mas não sou informática não. Se você for, se você comprar uma bicicleta, nem pedir para você comprar, você vai ter que ver quais são as intenções dele. As intenções definem o escopo, né? Aí os escopos definem o contexto que você vai trabalhar. sei que as intenções dele não quero um de um de que uma bicicleta básica e fazer não eu quero um psiquiatra que posso pede lá e posso usar a bateria o motor quando tiver cansado",
+  "id": 47
+ },
+ {
+  "start": 1906.87,
+  "end": 1947.83,
+  "text": "agora pode definir um alvo de variante custo tem que ser testido a novo a potência tem que ter a chance isso mesmo tem uma coisa mas qualquer coisa Qualquer coisa que você vai fazer como pessoa, em algum lugar, para alguém, você mesmo precisa se aplicar de intenções e variantes para um área de negócio, ou seja, se você devolver de um ambiente informático. Agora com a IA, a gente consegue até ter suporto para fazer isso. Nós aqui, eu estou aqui para criar uma apresentação completa, para eu ter primeiro pescado tudo muito o negócio. Por enquanto, eu só estou discutindo a deficição do negócio,",
+  "id": 48
+ },
+ {
+  "start": 1947.83,
+  "end": 1989.6,
+  "text": "O contexto já está me dando espaço seguinte que já entra no parte mais técnica, né? É um modelo de indústria, que é o passo 2 lá em cima, né? O modelo de indústria, que é que ele vai usar essa técnica e a gente vai colocar um som dela, que ela é bem simples, mas ela é até matematicamente verificada e interessante ser aqui. e essa aqui é a parte mais, o que é que exige de coispe de informática para que você devina ele, tem conceito do outro, de outro trabalho, conceito de domínio, conceito de",
+  "id": 49
+ },
+ {
+  "start": 1989.6,
+  "end": 2029.37,
+  "text": "sabe-se-gurança, conceito de autorização de, enfim, de alguém e de tudo mais. isso tudo vai, no fim da espota, chegar lá. E quando ele fala, meu eve mow, bot end, o que dá, final de sinc, tudo vai ficar evidente. Ele pegou o que é típico, né? O aspecto aqui, o gosto que você pode ampliar esse aspecto, aumentar o expo, reduzir o expo. Ok? É de ver ele aqui, mudar uma variante para a própria apresentação, que ele diga assim,",
+  "id": 50
+ },
+ {
+  "start": 2029.37,
+  "end": 2067.75,
+  "text": "Use linguagem técnica da área de negócio, mas evite usar terros técnicos, informar. até falar ele entende as coisas. Impressionante, o que está acontecendo com a Iá na loucura.",
+  "id": 51
+ },
+ {
+  "start": 2067.75,
+  "end": 2111.78,
+  "text": "Informar, se eu escrever essa gíria, ele vai entender. Informar de case. Quer dizer, informar de case você sabe que é não usar um linguagem à própria área de desenvolver de sistemas, ambiente de linguagem, para ver o que é que dá, talvez, os dois horas vai voar. Ele vai ter que usar a área do local, porque ele não entende. E ele vai evitar ter uns técnicos informáticos. Ele vai dar porcentes em torno de alguns lá, entendeu? Ok? Essa é a ideia. Vamos pedir para ele fazer primeiro lá.",
+  "id": 52
+ },
+ {
+  "start": 2111.78,
+  "end": 2150.51,
+  "text": "Eu já especiar aqui com ele, que é uma completa com essa primeira especificação domínio da nossa empresa, entendeu? e dei aqui uma coisa variante para definir o rumo que ele vai tomar sem é logo cobrar beleza vamos ver o que ele faz note aqui que eu passei um pouco aqui ele já fez uma proposta de alguma coisa você apresentada vendo a legislação critérios segurando e tal aqui ele vai definir o escopo do posto alternativo",
+  "id": 53
+ },
+ {
+  "start": 2150.51,
+  "end": 2194.27,
+  "text": "Ele aqui fez o cenário, ele está proposto da documentação inicial e o cenário é alternativo. Você vê que aqui ele vai reduzir, na verdade com o controle tão completo ele já diminuiu aqui. Esse aqui é tão, uma delícia tão rigóosa, todas as legislações ele já se machucou aqui também. Tempo de implantação aqui e para essa aqui é mais tempo, foi por toda essa sofisticação proposta, não pode ser medo. para ser menos. Ok? Pergunta, achar para finalmente para o cliente. Perfile de maquinário. É uma opada, a foto é tendida de pequeno macphor, vira o teto e tal. Aqui é. Vai influenciar o contexto e as intenções",
+  "id": 54
+ },
+ {
+  "start": 2194.27,
+  "end": 2237.57,
+  "text": "para ver que tipo de maquinário ele é alvo, né, do negócio. Tem que manter a atenção. Estumentação, o técnico de ferraments digitais, mas no outro, também. E, de repente, a ferraments que vocês usaram pode ser que tenha alguma esforçabilidade de sinal, Você tem que registrar alguma propriedade do equipamento que ele me viu Se ele está todo cadastrado com QR code, ele pode ler para aquele equipamento E dizer exatamente para aquele cliente que vai ao estado que está O lense de gás Ele está questionando aqui A empresa é recorde fluido de ação ao ensino, foco com o lense de gás, ele não fica vazamento de carga É o que você quer, você quer contar no que o lense de gás, como? Ou não quer ter data, não quer focar no seu lense",
+  "id": 55
+ },
+ {
+  "start": 2237.57,
+  "end": 2278.21,
+  "text": "eu não sabe o técnico, tá? ou depende de parceiros de estéril esse é um técnico, tá adastrado? ou a informalidade? eu gosto de simular as respostas se vocês perguntam pra eles pra ter algumas pessoas em pra antes aqui já é pra... pra losas né, pra o desenvolvedor tá? aí eu digo aí daqui tá, próximo apresentação",
+  "id": 56
+ },
+ {
+  "start": 2278.21,
+  "end": 2318.61,
+  "text": "Então, em HTML é linguagem para arrumar lá uma tela do navegador, uma tela que você vê por aí. Em HTML aparenta-se com voz e opção de continua pausada.",
+  "id": 57
+ },
+ {
+  "start": 2318.61,
+  "end": 2359.89,
+  "text": "Vamos colocar aqui uma invariante. Utilize ilustrações. Vou forçar ele na internet para pegar alguma coisa aqui. Equipamento da área. E ou gráficos em escalidão. Esse escalidão é uma ferramenta meio que perileta dos desenvolvedores para desenhar.",
+  "id": 58
+ },
+ {
+  "start": 2359.89,
+  "end": 2404.06,
+  "text": "como é que você vai ficar, o fluxo da coisa, o fluxo da grama, e também para ilustrar outras coisas, ele é bem versátil. Dá para usar um campo bem técnico e um campo bem foco. Vamos ver o que ele faz? Olá.",
+  "id": 59
+ },
+ {
+  "start": 2404.06,
+  "end": 2447.0,
+  "text": "Você percebeu que ele vai discutindo o que está fazendo em inglês? Ele tem uma preferência forte na inglês. na ver o que dá a entender aí, ele interade com você no seu idioma, mas inteiramente ele ressuscita tudo em inglês. Ele pega aí as suas intenções e traduz pro inglês e ele ressuscita tudo em inglês, porque o núcleo de ressuscita das ideais é inglês. Agora quando ele vai arrumando as coisas, o que é fazer uma coisa, as mãos deles são linguagem mais estáveis como o TypeScript. Ele usa o TypeScript pelo linguagem tipada. Ele não deixa você deixar avaliar",
+  "id": 60
+ },
+ {
+  "start": 2447.0,
+  "end": 2491.63,
+  "text": "sem definição clara do tipo, quando o gente começa. Depois ele usa também essa linguagem que começa com P. Eu não esqueço o lugar aí, né? Aí o Python. Python, ele gosta muito do Python também, que o Python tem capacidade de forçar em vários segmentos aí. Dentro o computador da internet. Ele gosta muito de criar um bit Python e criar scripts Python para executar uma sequência que passa.",
+  "id": 61
+ },
+ {
+  "start": 2491.63,
+  "end": 2536.22,
+  "text": "E quando ele quer imaginar variantes também agora, ele está usando o linguagem de Madrid e a ML. Então, conversa um dia sobre ela. Olha lá, ele já até criou a dita cuja. Ele está até dando detalhes de onde é que está o HTML, bravo! Ele já tem abril aqui, olha. Ele abriu Chrome, não é? até que eu me logue aqui, né?",
+  "id": 62
+ },
+ {
+  "start": 2536.22,
+  "end": 2580.07,
+  "text": "Vou me logue aqui com o banheiro Cadê? Ele abriu de lo... Eu vou me logue aqui com esse rapaz, o que que ele faz? Ele mesmo se executou o Braus, no caso ele abriu o Promo pra jogar por apresentação",
+  "id": 63
+ },
+ {
+  "start": 2580.07,
+  "end": 2624.0,
+  "text": "Não sei qual é a atriz, o que que ele tá fazendo mesmo? Não espera que ele te diga, que ele vai botar no Alvo? Opa, tá aqui, ele já gerou apresentação, tá vendo? Vai que legal. Este eu vou botar aqui, aquela cheia.",
+  "id": 64
+ },
+ {
+  "start": 2624.0,
+  "end": 2667.26,
+  "text": "Vou botar aqui, aí a apresentação. Vai aqui, ele tá lendo a página e tal. Vou iniciar a apresentação como vou de contínua, já tá aqui. Continue pausando, que eu falei pra ele. Você vê que eu fiz outra impedição de intenção, pela aparentação e variantes, tá vendo? É tchau? Vamos ver o que ele está fazendo aí. Está carregando a correcação.",
+  "id": 65
+ },
+ {
+  "start": 2667.26,
+  "end": 2710.16,
+  "text": "E eu tenho que inicia com o voiz, olha. Vou fazer de volta aqui. Aqui no... A gente não encontra o imabilitado. Com algum defeito, rapaz. Também esse desenho bonito aqui, é do escalidrão. e a história de veração não é necessário, mas eu vou saber aqui quando dar o F12 aqui com certeza, então eu derrubo o pau o F12 é que sempre dá para ver o que aconteceu com os bastidosos",
+  "id": 66
+ },
+ {
+  "start": 2710.16,
+  "end": 2744.92,
+  "text": "no console, né? e o console, aí, eu ia... com dois defetinhos aí eu vou copiar o console Vou voltar para lá, para dizer para ele que deu um erro. Certo? Vou mostrar aqui para ele.",
+  "id": 67
+ },
+ {
+  "start": 2745.92,
+  "end": 2787.48,
+  "text": "Vamos ver, talvez não esteja nem concluindo ainda. Eu dei esse aqui para ele, é. Ele é criou um ativinho nessa linguagem Python, é um script, já para ver e ver quais coisas. Ele tem acesso no navegador, vai lá por trás, tem quase nem questão de como. É o que está acontecendo no navegador. Não se preocupem com esses temas não, isso aí com o tempo que vai chegar lá.",
+  "id": 68
+ },
+ {
+  "start": 2787.48,
+  "end": 2830.76,
+  "text": "A gente vai conhecer qual o mais que é o nível do alto, do conceito, no nível de baixo, do engordho. Então quem trabalha nesse nível de dirigir puntenção, desalvo e dirigir puntenção, onde eu ver como foi a próxima aula do futuro. E quando a maior gente que aí está tendo pra ir desloucando, Incrível! Vai ser mais que você usar o WordPress ou o Client, que são sistemas que eles chamam de, na verdade, consor o sistema de pontua de passão, que acabaram virando sistemas para fazer sistemas, de fazer sites,",
+  "id": 69
+ },
+ {
+  "start": 2830.76,
+  "end": 2874.88,
+  "text": "o design, como o pessoal chama, né? O mais leve, assim, que tem um infrastructure muito complexa. mas aí o que acontece então é questão de local de não local de crescer em código baixo código de um japonês código e na pração já era quase não aí no caso aí a tá ficando algo diferente então ela tá subindo o nível de uma livre da intenção vai estar reabrindo a apresentação ele já pegou que eu passei e já tá até",
+  "id": 70
+ },
+ {
+  "start": 2874.88,
+  "end": 2901.31,
+  "text": "até abrindo ela. E no Brown nem botou a... Não abriu a pasta para ele. A gente só vai ver quando eu for salvar aqui. Comecei a devolver da memória dele aqui, né? Para assim...",
+  "id": 71
+ },
+ {
+  "start": 2907.86,
+  "end": 2911.82,
+  "text": "Ó, esse aqui você não ouvi muito falar disso, doato, né? É um modelo de idade, né?",
+  "id": 72
+ },
+ {
+  "start": 2914.77,
+  "end": 2957.93,
+  "text": "É um dos objetos, né? Quer dizer, como é que é as componentes de uma tela, né? Vem por aqui. Ninguém entra lá por trás, né? Por isso que as atendências delas substituiu, você já vai clicar em botão, criar uma planilha, salvar, isso vai sumir. Isso vai dizer o que você quer, o que são os seus evaliantes e ele vai tocar o resto. O computador mesmo é isso. É uma coisa basicamente por roda. É uma imagem. Até o celular, a atendência e a comunicação",
+  "id": 73
+ },
+ {
+  "start": 2957.93,
+  "end": 3002.58,
+  "text": "completamente, não vai ter nem sentido de você ir na companhia de não. Talvez isso vinha mais com aquele óculos. O Google lançou e já tem outros similares. Tem você filmar, ver, ouvir. Você filme o que você está vendo, você recebe mensagem na internet, tem o óculos, o que você tem, sabe? Como uma de as coisas vai ser filme, vídeo e áudio, você praticamente não vai ter necessidade de ter claro. Essa é a minha versão do que será o futuro dessa metade. E ela transforma muito, muito rapidência. E no campeonato profissional não está dando tempo para as pessoas se qualificar e metade.",
+  "id": 74
+ },
+ {
+  "start": 3002.58,
+  "end": 3038.35,
+  "text": "Tudo muito da teoria. Por isso nós podemos nos dar o direito de entrar nessa onda aí. E mesmo antes das teorias estarem estáveis e transformar esse método de ferramenta, porque não, se pra me depender de tal uns não, se quisir. É essa ideia. Aí está valendo aí. Vamos até a dar uma olhada lá, que pode ser, que ele até até mexeu, mano. Parece que ele já mexeu. Não tô desabilitado.",
+  "id": 75
+ },
+ {
+  "start": 3038.35,
+  "end": 3077.94,
+  "text": "Aqui é pra escolher as linguagens que eu falei, mas tá tudo desabilitado, né? Ele tá cheio mesmo. Então, espera pra ver o que ele vai fazer. Ele tá mexendo aí mesmo. Bem,",
+  "id": 76
+ },
+ {
+  "start": 3077.94,
+  "end": 3122.55,
+  "text": "Bem, mas eu não estou falando aí, mas talvez porque ele nem termina ainda. Aqui é o F12, o F12, o traje que está acontecendo nos bastidores de uma tela, tá vendo? É mais para desenvolvedores, mas mesmo é para quem não é, não é ideia que você tem mesmo. Se você estiver desenvolver um colher, essas diárias no início, você vai ter visão de essas coisas, mas com o tempo nem isso vai ver. e contendo também a discussão sobre infraestrutura, tecnologia usada, ele vai transformar tudo em deficições de intenções, mesmo no campo da arquitetura,",
+  "id": 77
+ },
+ {
+  "start": 3122.55,
+  "end": 3143.34,
+  "text": "na tecnologia. Vocês vão usar temas técnicos necessários. É, já vai dar uma hora aqui, não? Vamos para por aqui. Vai ser difícil vocês verem se... A lei está trabalhando a lei, a lei está retaçando.",
+  "id": 78
+ },
+ {
+  "start": 3143.34,
+  "end": 3203.2,
+  "text": "Construindo funcionário.",
+  "id": 79
+ },
+ {
+  "start": 3203.2,
+  "end": 3232.01,
+  "text": "Ele está mexendo lá, porque a HTML tem essa característica. Se você mexer qualquer coisa na fonte da tela, ela já reage. Ela reage, porque a funcionalidade não, né? Já estão lá, já estão, vou inserir. Para ir para o time, botar a rede na crise. A montou, já estão respondendo, mas aqui não.",
+  "id": 80
+ },
+ {
+  "start": 3232.01,
+  "end": 3276.04,
+  "text": "que ele está processando. Vou ficar por aqui para levar vocês a mim e depois, quando ele completar o sininho, eu volto e gravo a apresentação. Ok? Um abraço! O que ele está fazendo na prática?",
+  "id": 81
+ },
+ {
+  "start": 3276.04,
+  "end": 3285.04,
+  "text": "Ele mesmo está executando. Ele executou um programinha que ele gerou em HTML e ele mesmo está testando como se fosse a pessoa.",
+  "id": 82
+ },
+ {
+  "start": 3285.04,
+  "end": 3377.47,
+  "text": "Ele está lançando sozinho.",
+  "id": 83
+ },
+ {
+  "start": 3377.47,
+  "end": 3418.5,
+  "text": "Nós que os desenhos, as maneiras de escrever, a grau por a cor, já é na ferramente escale grau.",
+  "id": 84
+ },
+ {
+  "start": 3418.5,
+  "end": 3455.96,
+  "text": "Ele usou ela para fazer o que o humano faria. Eu não estava olhando lá no raciocínio dele, não estava trabalhando.",
+  "id": 85
+ },
+ {
+  "start": 3455.96,
+  "end": 3498.22,
+  "text": "Nós que aqui, é tempo do Braude, é lá no navegador, Braude é no navegador. Aí ele ficou aqui, olha, no preview, verificação da apresentação do VH30P. Então, se você merece fazer o próprio protocolo, então, o vendedor da internet, aí ele está abrindo essa OER, que é a tela local, local gosto, do grau, nós estamos lá. E isso também está aqui. Ele está, na verdade, testando a própria apresentação, a execução da apresentação, imagina.",
+  "id": 86
+ },
+ {
+  "start": 3498.22,
+  "end": 3540.68,
+  "text": "Nós que nós estamos aqui, no ciclo dentro de um ciclo, quer dizer, Eu comecei com as intenções de um negócio de a febração. Neste diagrama operacional, vemos o fluxo favoroso de campo. O mecânico faz a leitura do QR code na condensadora, executa o checklist normativo de limpeza e componentes elétricos, insere as medições de pressão e temperatura e encerra o chamado com fotos de antes e depois e a assinatura digital do responsável local. Para dimensionar o projeto, apresentamos dois caminhos.",
+  "id": 87
+ },
+ {
+  "start": 3540.68,
+  "end": 3577.37,
+  "text": "O cenário proposto é a solução corporativa com varieta e real para grandes plantas industriais e múltiplos contratos de smoke. O cenário alternativo foca no essencial de campo, eliminação rápida do papel, checklists com fotos e assinatura na tela em apenas 3 a 4 semanas de implantação. Para concluirmos a definição do projeto, precisamos do seu direcionamento em 4 pontos, o porte predot...",
+  "id": 88
+ },
+ {
+  "start": 3577.37,
+  "end": 3622.26,
+  "text": "Ele aclicou o botão pausado, tá vendo? Ele tá testando tudo, quando pausar a voz. Isso ele pode fazer em qualquer ase em cima, ele mesmo simular. Quando eu falo aqui, óbita o dom. Ele tá por trás da venadora e vê todas as estruturas de componentes.",
+  "id": 89
+ },
+ {
+  "start": 3622.26,
+  "end": 3665.06,
+  "text": "Ele aperta o botão, esse dom aqui, que tem a árvore toda dos componentes. Aí ele aperta esse botão aqui, continua. para pausar, para ele pausar e ficar nesse estado. Ele está testando tudo, isso vai funcionar. Aqui é ele trabalhando. O mesmo que está fazendo com a apresentação, ele pode fazer com o sistema que você desenvolve. Ele vê como a testa está também. O cara diz que passa que esse capacidade tem que testar testes internos, de código e também testes visuais, comportamento, ergonomia. Hoje é ir a...",
+  "id": 90
+ },
+ {
+  "start": 3665.06,
+  "end": 3705.06,
+  "text": "se sai melhor vendo e ouvir. O que é escrita? Ele acha mais dúbia escrita do que a voz e a imagem. Comprei na voz e imagem. Então, se você ganha o experiência nesse princípio de IDD, que vai se aprofundar mais, você consegue usar ela como um equipe de programação bem disciplinado e que não sai da regra, pausando sua voz e imagens que você quer.",
+  "id": 91
+ },
+ {
+  "start": 3705.06,
+  "end": 3749.59,
+  "text": "Se eu quisesse pegar um conjunto de formulário, um documento da empresa que vem da geração, que já estão em uso, ou no manual, eu passasse para ele, ele somava o norteamento das intenções. Às vezes eu, antes mesmo de definir as intenções, definir genéricamente, a intenção geral e as variantes gerais, eu podia ter que ter a intenção e dar-me um documento que ele der e valir, com tensões dentro do modelo atual do negócio em papel com meio de saber se alguma aplicativa eu vou achar a melhor aplicativa parece muita coisa, mas quanto você tem dos princípios",
+  "id": 92
+ },
+ {
+  "start": 3749.59,
+  "end": 3760.98,
+  "text": "e aí aprender algumas tecnologias você não precisa saber o que acontece por detrás é mais ou menos o que acontece hoje que não vem escrever já, papai",
+  "id": 93
+ },
+ {
+  "start": 3797.16,
+  "end": 3799.16,
+  "text": "O que é que ele foi? O B!",
+  "id": 94
+ },
+ {
+  "start": 3802.16,
+  "end": 3825.16,
+  "text": "Olá! Velha taxa interesse o coração de hoje nos seus técnicos e os traços técnicos com estilo escali-dral foi configurada e testada com sucesso no navegador Vê? Para vomitar um bloque de segurança que ocorre ao apelir o fotocone que resta o JAP de voz e o contê de segure e iniciamos o servidor da TTP local com acesso ao navegador e tal",
+  "id": 95
+ },
+ {
+  "start": 3855.16,
+  "end": 3860.56,
+  "text": "E aqui ele já deixou o documento de definição da apresentação.",
+  "id": 96
+ },
+ {
+  "start": 3863.2,
+  "end": 3906.64,
+  "text": "Na verdade, a HTML tem um problema. Se eu baixar isso aqui e botar ponto HTML com o seu tipo do arquivo, aí o que é que acontece? Eu posso simplesmente executar ele para... Nem precisa clicar nesse link dele aqui. Eu posso fazer assim. vou baixar aqui, jogar ele aqui mesmo. Html também aqui é a especificação, aqui é o que eu vou deixar no download mesmo. Quando ele exportar, ele já vai exportar em html. Aí agora vou lá em download, a parte da download, está lá, né? Tá vendo?",
+  "id": 97
+ },
+ {
+  "start": 3906.64,
+  "end": 3949.88,
+  "text": "Está lá. Se eu clico aqui, o que acontece? Ele enroloou, o html enroloou dentro. Eu vou aqui, já no Edge, mais no Chrome. Tá aqui. Então só tá aqui. Vamos lá, tem algum defenso? Eu vou chegar pro cliente. Bem-vindos à apresentação de Alinhamento da Gestão e Controle Operacional em Refrigeração e Climatização. Nosso objetivo é definir as regras fundamentais e o escopo da solução para atender com precisão as exigências termodinâmicas,",
+  "id": 98
+ },
+ {
+  "start": 3949.88,
+  "end": 3992.58,
+  "text": "o PUNC da Lei 13.589 e a rastriabilidade ambiental dos fluidos refrigerantes. Porque softwares genéricos de manutenção falham na refrigeração. Porque ignoram o ciclo térmico. Se o mecânico não registrar pressões de trabalho, superaquecimento e vazamentos reais, o professor quebra pouco tempo depois. Além disso, a falta de histórico físico e laudos normativos expõe a empresa apesar das autoações da vigilância sanitária.",
+  "id": 99
+ },
+ {
+  "start": 3992.58,
+  "end": 4032.84,
+  "text": "Aqui apresentamos as grandes capacidades do sistema, prontuário do equipamento por que RQ, cronograma automatizado do Pumok con checklists de filtros de bacterecidas, triagem rápida de chamados com prioridade para câmaras frigoríficas, rotina de campo com medição de pressões e temperaturas, e funcionamento garantido mesmo em subsolus e câmaras frias sem sinal de internet. são as regras em viola vez do negócio, uma vez concluído o serviço e assinado pelo cliente,",
+  "id": 100
+ },
+ {
+  "start": 4032.84,
+  "end": 4072.06,
+  "text": "o laudo se torna intocável e juridicamente seguro. Datas do PUMOC não podem ser retroagidas para simular conformidade. E na parte física, a pressão de descarga deve ser sempre maior que a de sucção, sua pena de bloqueio por inconsistência técnica. Neste diagrama operacional, vemos o fluxo rigoroso de campo, o mecânico faz a leitura do QR na condensadora, executa o checklist normativo de limpeza e componentes elétricos, insere",
+  "id": 101
+ },
+ {
+  "start": 4072.06,
+  "end": 4108.4,
+  "text": "as medições de pressão e temperatura, e insere o chamado com fotos de antes e depois e assinatura digital do responsável no local. Para dimensionar o projeto, apresentamos dois caminhos. O cenário proposto é a solução corporativa completa, ideal para grandes plantas industriais e múltiplos contratos de smoke. O cenário alternativo foca no essencial de campo, eliminação rápida do papel, checklists",
+  "id": 102
+ },
+ {
+  "start": 4108.4,
+  "end": 4145.44,
+  "text": "com fotos e assinatura na tela em apenas três a quatro semanas de implantação. Para concluirmos a definição do projeto, precisamos do seu direcionamento em quatro pontos, o porte predominante dos equipamentos, se a equipe utiliza manometros digitais ou ou analógicos, a rotina atual de recolhimento de gás refrigerante e se a responsabilidade técnica do CRE ou CFT própria ou terceirizada. Estamos prontos para iniciar.",
+  "id": 103
+ },
+ {
+  "start": 4145.44,
+  "end": 4188.97,
+  "text": "É isso aí, é uma hora e dez minutos, enquanto as paradias, né? Então, ó, pela esperança que eu tenho, eu trabalho em certas empresas diferentes, de sistemas diversos. No mínimo um mês para a gente ter ideia como é possível funcionar. De mais um tempo, a depender do porto do sistema, razoável de meses para desenvolver, testar e implementar. Aqui em praticamente uma hora a gente chegou a esse esculpar",
+  "id": 104
+ },
+ {
+  "start": 4188.97,
+  "end": 4229.69,
+  "text": "só com a ideia de, não atingir, intenção e invariência, intenções e invariência. O objetivo, o que eu quero, o que eu quero, a intenção geral, as intenções que eu quero e depois as variantes, quer dizer, as regras do que eu quero que ele se aterra. Então eu consigo controlar a ideia de governança, do IDD que a gente vai ver. Eu consigo controlar e há não apenas com o próprio solto de gerar pedaços de código, aqui eu estou fazendo só os sons. Ela aqui está aprendendo comigo o que eu quero, o que eu quero e as réve as coisas.",
+  "id": 105
+ },
+ {
+  "start": 4230.65,
+  "end": 4270.57,
+  "text": "Chegar em um nível que eu posso apenas fazer as regaturas de argumentação, porque eu tenho tudo aprovado pelo usuário com a apresentação, aí eu volto e vou partir para a implementação. Aí vem a deficição de intenso de caráter natural da de técnica, né? E a desmarenza vem de um aspecto técnico. E também tem um adicuto futuro amigo. Mas a ideia dos princípios de DD é assim, você pensa nos momentos de tema assim. Ok? Nem é um próprio genérico soltão, para fazer um... Não, aí fica aí, não. E é ficar se batendo com ela, não. É você conseguir passar pelo modo alcançar. Agora imagine,",
+  "id": 106
+ },
+ {
+  "start": 4270.57,
+  "end": 4314.63,
+  "text": "que é a gente ter um editor, um DE, que é o software, tipo Vescoz, que já ofereça essa forma de definir. E é a ideia que ele salve sair, de modo que se ele for mexer de novo, ele não vai deixar violar de maneira para definir. Ele meio alterando lá na frente. Ele não vai inferir, derivar, alucinar, para fazer alguma coisa que é tecnicamente viável, mas não é dentro dos corpos do negócio do VAL. Ok? Um abração, dê um olhado de paciência e faça suas anotações.",
+  "id": 107
+ },
+ {
+  "start": 4314.63,
+  "end": 4329.63,
+  "text": "Vamos devagar, nós estamos fazendo isso aqui só para entender os princípios. Mas na verdade não queremos entender de formato, queremos entender de... ter a dica OIA para produzir o que nos interessa em termos de informática. Um abraço.",
+  "id": 108
+ }
+]

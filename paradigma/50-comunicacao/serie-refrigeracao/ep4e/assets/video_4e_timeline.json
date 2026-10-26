@@ -1,0 +1,110 @@
+{
+  "projectName": "IDD_Refrigeracao_Novo_Episodio_4E",
+  "totalDurationSec": 131.09,
+  "items": [
+    {
+      "index": 0,
+      "id": "seg_00_leigo",
+      "who": "leigo",
+      "actor": "Usuária Leiga",
+      "avatar": "leigo",
+      "slide": 1,
+      "text": "Eliézer, nós desenhamos uma arquitetura impecável com regras matemáticas e evolução contínua. Mas me diga uma coisa: e quando esse software chega lá na ponta, na mão do mecânico em cima de um telhado quente, de luva e cheio de graxa?",
+      "wav": "C:\\Antigravity - IDD Refrigeração\\motion_graphics_renderer\\idd_video_4e_assets\\audio\\seg_00_leigo.wav",
+      "startSec": 0.5,
+      "durSec": 14.688,
+      "endSec": 15.188
+    },
+    {
+      "index": 1,
+      "id": "seg_01_eliezer",
+      "who": "eliezer",
+      "actor": "Eliézer Rosa",
+      "avatar": "eliezer",
+      "slide": 1,
+      "text": "Você tocou no ponto mais crítico de toda a engenharia de software! Um sistema desenvolvido no ar-condicionado de um escritório falha miseravelmente no campo se não respeitar a realidade física do operador. No IDD, a ergonomia não é estética decorativa: ela é tratada como Intenção Operacional Humana e Invariantes de Atrito.",
+      "wav": "C:\\Antigravity - IDD Refrigeração\\motion_graphics_renderer\\idd_video_4e_assets\\audio\\seg_01_eliezer.wav",
+      "startSec": 15.838,
+      "durSec": 20.904,
+      "endSec": 36.742
+    },
+    {
+      "index": 2,
+      "id": "seg_02_leigo",
+      "who": "leigo",
+      "actor": "Usuária Leiga",
+      "avatar": "leigo",
+      "slide": 2,
+      "text": "Veja no Slide dois o que muda na prática! Em vez daqueles botões minúsculos e formulários de trinta campos, o IDD impõe alvos de toque industriais de até oitenta pixels e paleta de alto contraste para sol direto!",
+      "wav": "C:\\Antigravity - IDD Refrigeração\\motion_graphics_renderer\\idd_video_4e_assets\\audio\\seg_02_leigo.wav",
+      "startSec": 37.392,
+      "durSec": 13.824,
+      "endSec": 51.216
+    },
+    {
+      "index": 3,
+      "id": "seg_03_eliezer",
+      "who": "eliezer",
+      "actor": "Eliézer Rosa",
+      "avatar": "eliezer",
+      "slide": 2,
+      "text": "Com certeza! O técnico de campo nunca deve ser transformado em um digitador de dados. O ativo é identificado em um segundo pelo QR Code, e as escolhas são feitas com cartões de toque único, sem menus suspensos infinitos.",
+      "wav": "C:\\Antigravity - IDD Refrigeração\\motion_graphics_renderer\\idd_video_4e_assets\\audio\\seg_03_eliezer.wav",
+      "startSec": 51.866,
+      "durSec": 15.888,
+      "endSec": 67.754
+    },
+    {
+      "index": 4,
+      "id": "seg_04_leigo",
+      "who": "leigo",
+      "actor": "Usuária Leiga",
+      "avatar": "leigo",
+      "slide": 3,
+      "text": "E no Slide três entra a inteligência artificial multimodal! O mecânico simplesmente aperta o botão de voz e fala o que fez. A IA transcreve, extrai as peças e as quantidades de gás e preenche o modelo do banco automaticamente!",
+      "wav": "C:\\Antigravity - IDD Refrigeração\\motion_graphics_renderer\\idd_video_4e_assets\\audio\\seg_04_leigo.wav",
+      "startSec": 68.404,
+      "durSec": 15.936,
+      "endSec": 84.34
+    },
+    {
+      "index": 5,
+      "id": "seg_05_eliezer",
+      "who": "eliezer",
+      "actor": "Eliézer Rosa",
+      "avatar": "eliezer",
+      "slide": 3,
+      "text": "Exatamente! Ele dita o laudo em dez segundos, a IA mapeia para os métodos atômicos do MER e o mecânico apenas clica em confirmar. E com a visão computacional, uma foto do manifold ou da plaqueta já extrai as pressões e superaquecimento sem digitar um único número.",
+      "wav": "C:\\Antigravity - IDD Refrigeração\\motion_graphics_renderer\\idd_video_4e_assets\\audio\\seg_05_eliezer.wav",
+      "startSec": 84.99,
+      "durSec": 18.624,
+      "endSec": 103.614
+    },
+    {
+      "index": 6,
+      "id": "seg_06_leigo",
+      "who": "leigo",
+      "actor": "Usuária Leiga",
+      "avatar": "leigo",
+      "slide": 4,
+      "text": "Isso reduz o tempo de fechamento da ordem de serviço de quinze minutos para menos de um minuto! Mas Eliézer, e quando o mecânico entra numa câmara frigorífica ou subsolo sem sinal nenhum de internet?",
+      "wav": "C:\\Antigravity - IDD Refrigeração\\motion_graphics_renderer\\idd_video_4e_assets\\audio\\seg_06_leigo.wav",
+      "startSec": 104.264,
+      "durSec": 12.768,
+      "endSec": 117.032
+    },
+    {
+      "index": 7,
+      "id": "seg_07_eliezer",
+      "who": "eliezer",
+      "actor": "Eliézer Rosa",
+      "avatar": "eliezer",
+      "slide": 4,
+      "text": "Esse é o tema do nosso episódio quatro F: a arquitetura Offline-First, gaiolas de Faraday e a sincronização resiliente sem perda de dados. Nos vemos lá!",
+      "wav": "C:\\Antigravity - IDD Refrigeração\\motion_graphics_renderer\\idd_video_4e_assets\\audio\\seg_07_eliezer.wav",
+      "startSec": 117.682,
+      "durSec": 11.256,
+      "endSec": 128.938
+    }
+  ]
+}

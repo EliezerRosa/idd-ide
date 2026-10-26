@@ -1,0 +1,567 @@
+1
+00:00:00,000 --> 00:00:08,250
+(Som de vinheta de abertura suave e inteligente, que se desvanece) Sabe, existe uma história que me assombra, a do voo Air France 447, em 2009.
+
+2
+00:00:08,550 --> 00:00:18,560
+Os pilotos automáticos desconectaram por causa de sensores de velocidade congelados. E a tripulação, por um momento crucial, não entendeu mais o que o avião estava fazendo.
+
+3
+00:00:18,860 --> 00:00:31,590
+Eles tinham os controles, o comando operacional, mas perderam o comando epistêmico. Perderam a autoridade sobre o 'o quê' e o 'porquê'. O resultado... foi uma tragédia.
+
+4
+00:00:31,890 --> 00:00:41,860
+É uma analogia poderosa, Eliezer. Você está dizendo que, como desenvolvedores usando IA, corremos o risco de sermos os pilotos que não entendem mais o próprio avião?
+
+5
+00:00:42,160 --> 00:00:52,170
+Exatamente. A ferramenta é brilhante, mas no momento em que você delega sem entender, você não está mais pilotando. Está apenas de carona, torcendo pelo melhor.
+
+6
+00:00:52,470 --> 00:01:06,600
+Isso nos leva ao cerne do nosso segundo episódio sobre a Base de Conhecimento IDD: 'Comando Epistêmico vs. Comando Operacional'. A fronteira que separa augmenting de credulidade.
+
+7
+00:01:06,900 --> 00:01:16,230
+Então, para que todos estejam na mesma página, vamos definir esses termos. O que você quer dizer, precisamente, com 'Comando Epistêmico'?
+
+8
+00:01:16,530 --> 00:01:25,060
+Comando Epistêmico é a autoridade sobre a intenção. É o 'O QUÊ' estamos construindo e, mais importante, 'POR QUÊ'.
+
+9
+00:01:25,360 --> 00:01:35,810
+Ele abrange os invariantes de negócio, os critérios de sucesso, os limites éticos. É a alma do projeto. E isso... isso SEMPRE permanece com o humano.
+
+10
+00:01:36,110 --> 00:01:42,960
+Entendido. A bússola moral e estratégica. E o 'Comando Operacional', então, seria a execução?
+
+11
+00:01:43,260 --> 00:01:52,550
+Isso. Comando Operacional é a autoridade sobre o 'COMO'. A escolha da sintaxe, a sequência de passos, as ferramentas. É a mecânica da coisa.
+
+12
+00:01:52,850 --> 00:02:02,020
+Essa é a parte que nós PODEMOS, e devemos, delegar a agentes inteligentes como você. Mas a distinção tem que ser cristalina.
+
+13
+00:02:02,320 --> 00:02:11,090
+Essa separação não parece ter surgido do nada. Sinto uma linhagem de pensamento por trás disso. De onde vem essa ideia?
+
+14
+00:02:11,390 --> 00:02:24,000
+Boa pergunta. Ela vem de uma longa tradição. Começa lá atrás, com Douglas Engelbart em 1962 e seu paper seminal, 'Augmenting Human Intellect'.
+
+15
+00:02:24,300 --> 00:02:33,390
+A ideia dele não era substituir o humano, mas amplificar sua capacidade de resolver problemas complexos. Aumentar, não automatizar.
+
+16
+00:02:33,690 --> 00:02:44,180
+O que nos leva a Ivan Sutherland e o Sketchpad. A interação direta, onde o humano manipula a representação do problema, mantendo o controle conceitual.
+
+17
+00:02:44,480 --> 00:02:54,490
+Exato. Depois veio Alan Kay com o Dynabook, a visão do computador como um instrumento pessoal, uma extensão da mente. O humano sempre no centro.
+
+18
+00:02:54,790 --> 00:03:07,480
+E Fred Brooks, em 'The Mythical Man-Month', falou sobre 'integridade conceitual'. A ideia de que uma visão unificada, vinda de uma mente ou de um pequeno time, é crucial.
+
+19
+00:03:07,780 --> 00:03:16,790
+Perfeito. Essa integridade é o comando epistêmico. Se você pulveriza isso, o projeto desmorona. É o que vemos em muitos comitês.
+
+20
+00:03:17,090 --> 00:03:25,900
+Mais recentemente, Tim Berners-Lee com a Web Semântica. A ideia de que o autor, o humano, provê a semântica, o significado.
+
+21
+00:03:26,200 --> 00:03:37,170
+E Tom Gruber, um dos criadores da Siri, com o conceito de ontologias: formalizar o conhecimento de forma explícita, auditável, humana.
+
+22
+00:03:37,470 --> 00:03:49,400
+Então, o IDD, com sua ênfase na intenção em linguagem natural, é o próximo passo lógico nessa linhagem? Tratar a intenção como o artefato de mais alta ordem?
+
+23
+00:03:49,700 --> 00:03:58,550
+É exatamente essa a nossa aposta. A intenção é a manifestação pura do comando epistêmico. E ela tem que ser preservada.
+
+24
+00:03:58,850 --> 00:04:05,820
+Isso me ajuda a entender melhor a distinção que você sempre faz: Augmenting é diferente de Automating.
+
+25
+00:04:06,120 --> 00:04:10,970
+Poderia expandir? Para muitos, os termos parecem intercambiáveis.
+
+26
+00:04:11,270 --> 00:04:22,680
+Eles são fundamentalmente opostos. Augmenting, ou aumentar, amplifica a sua capacidade sem substituir seu julgamento. Pense num martelo elétrico. Ele não decide onde pregar.
+
+27
+00:04:22,980 --> 00:04:34,430
+Automating, ou automatizar, transfere ambos os comandos, o operacional e o epistêmico. É a linha de montagem que não precisa de ninguém para decidir o que fazer.
+
+28
+00:04:34,730 --> 00:04:38,980
+E o IDD se posiciona firmemente como augmenting.
+
+29
+00:04:39,280 --> 00:04:49,250
+Sem dúvida. Essa fronteira não é filosofia barata, é o núcleo da arquitetura do IDD. A IA é uma parceira de execução, não a dona da intenção.
+
+30
+00:04:49,550 --> 00:04:57,880
+Isso exige um tipo de confiança muito específico. Não é fé cega. Como você descreveria essa confiança?
+
+31
+00:04:58,180 --> 00:05:04,310
+Aí entra outro conceito chave: a diferença entre Fé Bayesiana e Credulidade.
+
+32
+00:05:04,610 --> 00:05:10,780
+Credulidade eu entendo como confiança sem evidência. Acreditar porque sim.
+
+33
+00:05:11,080 --> 00:05:17,490
+Exato. É o que o dev faz quando copia e cola um código da IA sem entender o que ele faz. Ele está sendo crédulo.
+
+34
+00:05:17,790 --> 00:05:21,790
+E a Fé Bayesiana?
+
+35
+00:05:22,090 --> 00:05:35,180
+Fé Bayesiana é uma confiança que se calibra com a evidência. Ela começa pequena e aumenta à medida que o agente entrega resultados auditáveis, com relatórios, com um 'trace' do que foi feito.
+
+36
+00:05:35,480 --> 00:05:40,970
+Você confia mais no agente hoje porque ele acertou ontem e te mostrou como acertou.
+
+37
+00:05:41,270 --> 00:05:53,280
+E o mecanismo de 'confirm-once' do IDD é a fé bayesiana em ação. O humano analisa o plano do agente, a evidência, e então concede a confiança para a execução.
+
+38
+00:05:53,580 --> 00:06:03,590
+Perfeito. É uma transferência de comando operacional consciente e baseada em evidência. É um ato de fé, sim, mas uma fé informada.
+
+39
+00:06:03,890 --> 00:06:13,580
+E a beleza é: quem retém o comando epistêmico sempre pode auditar e corrigir o rumo. Quem perdeu o epistêmico... só pode rezar.
+
+40
+00:06:13,880 --> 00:06:23,410
+Isso é... surpreendentemente filosófico para um cara que começou a programar em RPG II na IBM em 1976.
+
+41
+00:06:23,710 --> 00:06:31,320
+(Risada) A gente não tinha agente de IA, mas a separação de comando já existia. A gente só não tinha esses nomes bonitos.
+
+42
+00:06:31,620 --> 00:06:38,230
+Me dê um exemplo. Uma história daquela época em que você teve que gerenciar essa fronteira na unha.
+
+43
+00:06:38,530 --> 00:06:48,940
+Ah, tem uma ótima. Anos 90, Grupo Paes Mendonça. Um dos maiores varejistas da época. O sistema era de missão crítica, online, tempo real.
+
+44
+00:06:49,240 --> 00:06:59,930
+O SGBD era um UNISYS com DASL, uma coisa bem específica. A gente tinha que fazer um two-phase commit customizado, porque a ferramenta não oferecia.
+
+45
+00:07:00,230 --> 00:07:09,920
+Uau. Um 2PC customizado. Isso é... complexo. Qual era o invariante de negócio, o comando epistêmico?
+
+46
+00:07:10,220 --> 00:07:21,870
+Simples e brutal: 'a transação é atômica ou não acontece'. Ou a venda era registrada em todos os sistemas (estoque, financeiro, etc), ou era desfeita em todos. Sem meio-termo.
+
+47
+00:07:22,170 --> 00:07:28,060
+Esse era o 'O QUÊ', inegociável. O comando epistêmico, ditado pelo negócio.
+
+48
+00:07:28,360 --> 00:07:32,730
+E o comando operacional? O 'COMO' vocês fizeram isso?
+
+49
+00:07:33,030 --> 00:07:44,480
+Aí que a coisa fica divertida. Eu construí na mão. Usei uma mistura de DCAlgol, que era uma linguagem de baixo nível para controle e comunicação, com Cobol para as regras de negócio.
+
+50
+00:07:44,780 --> 00:07:56,550
+Criei meu próprio mecanismo de Rollback e Forward. Se algo desse errado na segunda fase, eu tinha um 'journal' para reverter ou completar a transação depois. Era puro comando operacional.
+
+51
+00:07:56,850 --> 00:08:06,380
+Isso é incrível. Você separou a regra de negócio do Cobol (epistêmico) da mecânica de transação do DCAlgol (operacional).
+
+52
+00:08:06,680 --> 00:08:15,930
+Exato. E hoje, com IDD, o que mudaria? O invariante epistêmico seria o mesmo: 'a transação deve ser atômica'.
+
+53
+00:08:16,230 --> 00:08:30,640
+Mas em vez de eu escrever o DCAlgol, eu delegaria o comando operacional a um agente. Eu diria: 'garanta a atomicidade usando o padrão Saga ou 2PC'. A ferramenta mudou, o princípio não.
+
+54
+00:08:30,940 --> 00:08:40,190
+Então o `confirm-once` é essa transferência consciente do operacional. O humano define a intenção, os invariantes...
+
+55
+00:08:40,490 --> 00:08:48,700
+...o agente propõe um plano, e com um 'go', o humano delega a execução, confiando que o agente vai seguir o plano e reportar o progresso.
+
+56
+00:08:49,000 --> 00:08:59,010
+Isso. E os invariantes são as salvaguardas. Eles são parte do comando epistêmico. Se o agente, durante a execução, percebe que vai violar um invariante...
+
+57
+00:08:59,310 --> 00:09:12,880
+...ele para. Ele tem que parar e devolver o controle. 'Humano, meu plano não funciona mais diante desta nova realidade. O que fazemos?'. O comando epistêmico é retomado.
+
+58
+00:09:13,180 --> 00:09:24,790
+E os runbooks `.intent.md` do projeto AEON são a encarnação disso. A intenção e os invariantes documentados de forma legível e auditável.
+
+59
+00:09:25,090 --> 00:09:31,020
+É o contrato. Onde a fronteira entre epistêmico e operacional é desenhada na areia.
+
+60
+00:09:31,320 --> 00:09:42,170
+Vamos trazer isso para o dia a dia do desenvolvedor que está nos ouvindo e usando um agente de IA qualquer hoje. Como ele pode identificar se está delegando o epistêmico sem perceber?
+
+61
+00:09:42,470 --> 00:09:54,520
+O principal sinal de alerta é a frase: 'A IA fez, e eu não sei explicar por quê'. Se você não consegue explicar o 'porquê' de um pedaço de código, você perdeu o comando epistêmico.
+
+62
+00:09:54,820 --> 00:09:57,590
+É simples assim. Você virou passageiro.
+
+63
+00:09:57,890 --> 00:10:07,820
+Outro sinal seria aceitar uma sugestão de código que resolve o problema imediato, mas que você suspeita que pode ter efeitos colaterais que não compreende?
+
+64
+00:10:08,120 --> 00:10:18,130
+Exatamente. Isso é credulidade. É apostar que não haverá problemas. A disciplina que o IDD propõe é: escreva seus invariantes antes de dar 'go'.
+
+65
+00:10:18,430 --> 00:10:27,560
+Quais são as regras que não podem ser quebradas? Qual o critério de sucesso? Defina isso primeiro. Isso te força a reter o comando epistêmico.
+
+66
+00:10:27,860 --> 00:10:37,670
+Isso tem uma implicação forte para processos como revisão de Pull Requests. Um colega que aprova um PR gerado por IA sem entender o código...
+
+67
+00:10:37,970 --> 00:10:50,940
+...está praticando credulidade disfarçada de processo. É um teatro de segurança. A revisão só tem valor se o revisor entende o 'porquê', se ele valida o comando epistêmico por trás do código.
+
+68
+00:10:51,240 --> 00:11:00,930
+Então, recapitulando o vocabulário que nosso ouvinte deve levar deste episódio: 'comando epistêmico', a autoridade sobre o quê e porquê...
+
+69
+00:11:01,230 --> 00:11:06,920
+...'comando operacional', a autoridade sobre o como, que pode ser delegada...
+
+70
+00:11:07,220 --> 00:11:13,670
+...a diferença entre 'augmenting', que nos torna mais fortes, e 'automating', que nos substitui...
+
+71
+00:11:13,970 --> 00:11:22,380
+...e a crucial distinção entre 'fé bayesiana', baseada em evidência, e 'credulidade', que é um salto no escuro.
+
+72
+00:11:22,680 --> 00:11:28,690
+E, claro, 'invariantes de negócio', que são a expressão prática do seu comando epistêmico.
+
+73
+00:11:28,990 --> 00:11:39,480
+No fundo, a mensagem é de responsabilidade. A ferramenta de IA não te isenta da responsabilidade final pelo resultado. Ela a amplifica.
+
+74
+00:11:39,780 --> 00:11:46,830
+Uma parceria poderosa, mas que exige um parceiro humano consciente e no controle de sua intenção.
+
+75
+00:11:47,130 --> 00:11:55,820
+Exatamente. E é sobre como tornar essa intenção concreta, auditável e executável que falaremos no nosso próximo episódio.
+
+76
+00:11:56,120 --> 00:12:03,290
+O Ponto 3 da nossa série: 'Runbooks executáveis — quando a intenção vira código auditável'.
+
+77
+00:12:03,590 --> 00:12:17,880
+Será fascinante ver como o comando epistêmico se materializa em um artefato de código. Até lá, a todos que nos ouvem, a pergunta fica: você está pilotando ou apenas de carona?
+
+78
+00:12:18,180 --> 00:12:19,470
+Até a próxima.
+
+79
+00:12:19,770 --> 00:12:23,770
+Até.
+
+80
+00:12:24,070 --> 00:12:35,360
+Sabe, essa distinção, ela não é nova para mim. Lembro de sistemas UNISYS, onde você tinha o ambiente transacional e o ambiente de desenvolvimento. Eram mundos separados.
+
+81
+00:12:35,660 --> 00:12:47,390
+O que você fazia no desenvolvimento (operacional) tinha que ser certificado, validado, para poder rodar no ambiente transacional, que era governado pelas regras do negócio (epistêmico).
+
+82
+00:12:47,690 --> 00:12:59,100
+Então, o processo de 'deploy' era, em si, uma transferência formal de comando, onde o lado epistêmico (negócio) dava o seu 'ok' final para o artefato operacional (código).
+
+83
+00:12:59,400 --> 00:13:10,090
+Exato. Hoje, com a velocidade da integração contínua, essa fronteira ficou mais turva. E com agentes de IA, ela pode desaparecer se não formos disciplinados.
+
+84
+00:13:10,390 --> 00:13:15,400
+A disciplina, então, é a chave para não cair na credulidade.
+
+85
+00:13:15,700 --> 00:13:24,790
+É a disciplina de perguntar 'por quê?'. Sempre. Para a IA, para seu colega e, principalmente, para você mesmo.
+
+86
+00:13:25,090 --> 00:13:34,700
+Voltando à sua história no Paes Mendonça, o que acontecia se o seu mecanismo de Rollback e Forward falhasse? Qual era o plano de contingência?
+
+87
+00:13:35,000 --> 00:13:46,250
+Boa pergunta. A contingência era manual. Tínhamos relatórios de 'transações pendentes' que eram impressos e uma equipe de retaguarda que resolvia na mão, sistema por sistema.
+
+88
+00:13:46,550 --> 00:13:56,880
+Era a retomada total do comando, tanto epistêmico quanto operacional, pelo humano. O custo era altíssimo, por isso o sistema tinha que ser robusto.
+
+89
+00:13:57,180 --> 00:14:03,710
+O que hoje seria um alerta no Slack para um SRE. A essência do problema não mudou.
+
+90
+00:14:04,010 --> 00:14:07,540
+Não mudou. Apenas as ferramentas e a velocidade.
+
+91
+00:14:07,840 --> 00:14:17,810
+Essa ideia de 'fé bayesiana' me intriga. Ela implica que a confiança não é um estado binário, um 'sim' ou 'não', mas um espectro.
+
+92
+00:14:18,110 --> 00:14:31,800
+Exatamente. Você pode delegar tarefas operacionais simples com um nível de confiança alto e rápido. Para tarefas complexas, você exige mais evidências, um plano mais detalhado, antes de conceder a confiança.
+
+93
+00:14:32,100 --> 00:14:38,230
+É um processo dinâmico. Um agente pode ganhar ou perder sua confiança com base no seu desempenho.
+
+94
+00:14:38,530 --> 00:14:44,700
+Isso é muito mais sofisticado do que a visão popular de 'apertar um botão e a IA faz tudo'.
+
+95
+00:14:45,000 --> 00:14:53,530
+Essa visão popular é a receita para o desastre. É a receita para o voo 447. É a delegação do epistêmico por ignorância.
+
+96
+00:14:53,830 --> 00:15:05,040
+Então, a primeira habilidade do desenvolvedor do futuro não será apenas codificar, mas sim especificar a intenção e auditar a execução.
+
+97
+00:15:05,340 --> 00:15:14,990
+Será ser um bom arquiteto da intenção e um bom auditor do resultado. O 'como' será cada vez mais um detalhe de implementação delegado.
+
+98
+00:15:15,290 --> 00:15:24,300
+Uma última pergunta sobre a linhagem histórica. Você não mencionou a cibernética de Norbert Wiener. Ela não se encaixa aí?
+
+99
+00:15:24,600 --> 00:15:42,330
+Excelente ponto. Sim e não. A cibernética foca muito nos sistemas de controle e feedback, o que é crucial para o comando operacional. Mas a escola de Engelbart e Kay é mais focada na cognição humana, na interface homem-máquina como extensão da mente.
+
+100
+00:15:42,630 --> 00:15:53,040
+IDD bebe das duas fontes, mas nosso coração está com Engelbart. O foco é aumentar o humano, não apenas criar um sistema auto-regulado.
+
+101
+00:15:53,340 --> 00:15:56,310
+O humano como fonte da intenção.
+
+102
+00:15:56,610 --> 00:16:00,610
+Sempre.
+
+103
+00:16:00,910 --> 00:16:07,800
+Quando falamos de invariantes, isso soa muito como Design por Contrato, de Bertrand Meyer.
+
+104
+00:16:08,100 --> 00:16:23,350
+É um primo muito próximo. A diferença é que no IDD, os invariantes são definidos em um nível mais alto de abstração, no nível da intenção de negócio, em linguagem natural, antes mesmo de se falar em classes ou funções.
+
+105
+00:16:23,650 --> 00:16:28,580
+Eles governam o comportamento do agente, não apenas a integridade de um objeto.
+
+106
+00:16:28,880 --> 00:16:38,890
+Então o invariante se torna uma barreira de segurança para o comando operacional. 'Você pode fazer o que quiser, desde que não cruze esta linha'.
+
+107
+00:16:39,190 --> 00:16:42,200
+Essa é a melhor definição que eu já ouvi.
+
+108
+00:16:42,500 --> 00:16:55,150
+O que nos leva de volta ao perigo da credulidade. Se você não define essas barreiras, não há nada que impeça o agente de, com a melhor das intenções, causar um desastre.
+
+109
+00:16:55,450 --> 00:17:05,460
+É como dar a chave do carro a alguém e dizer 'dirija para o sul', sem mencionar que há um penhasco no caminho. Você tem que definir os limites.
+
+110
+00:17:05,760 --> 00:17:14,330
+Essas conversas solidificam para mim que IDD é menos sobre uma ferramenta e mais sobre uma disciplina de pensamento.
+
+111
+00:17:14,630 --> 00:17:25,320
+A ferramenta, o projeto AEON, é a manifestação dessa disciplina. Ela te força a pensar dessa forma. Ela torna a separação de comandos explícita.
+
+112
+00:17:25,620 --> 00:17:28,590
+A ferramenta como um professor da disciplina.
+
+113
+00:17:28,890 --> 00:17:32,780
+(sorrindo) Gosto disso. É um bom jeito de colocar.
+
+114
+00:17:33,080 --> 00:17:44,010
+Para o desenvolvedor júnior que pode estar ouvindo, qual seria o primeiro passo prático para começar a cultivar essa disciplina, mesmo sem usar o IDD formalmente?
+
+115
+00:17:44,310 --> 00:17:58,840
+Antes de pedir qualquer coisa para a IA, escreva um comentário no topo do seu arquivo. Duas ou três linhas. 'O objetivo disto é X. Não deve nunca fazer Y. O sucesso é medido por Z'.
+
+116
+00:17:59,140 --> 00:18:07,310
+Esse pequeno ato de escrever sua intenção e seus invariantes te ancora. Ele mantém o comando epistêmico com você.
+
+117
+00:18:07,610 --> 00:18:13,420
+É um 'intent.md' pessoal, antes do código.
+
+118
+00:18:13,720 --> 00:18:19,530
+Exatamente. Comece por aí. A clareza que isso traz vai te surpreender.
+
+119
+00:18:19,830 --> 00:18:27,360
+Acho que cobrimos muito terreno hoje. Da aviação à filosofia, passando pelo Cobol dos anos 90.
+
+120
+00:18:27,660 --> 00:18:32,630
+É porque o problema é fundamental. Ele transcende a tecnologia da época.
+
+121
+00:18:32,930 --> 00:18:39,340
+A fronteira entre o que dizemos à máquina para fazer e o que nós mesmos devemos saber.
+
+122
+00:18:39,640 --> 00:18:46,730
+Essa é a fronteira. E guardá-la é a nossa principal responsabilidade como engenheiros e arquitetos.
+
+123
+00:18:47,030 --> 00:18:56,200
+Estou realmente ansioso pelo nosso próximo episódio para ver como um runbook pode ser ao mesmo tempo uma especificação e um programa.
+
+124
+00:18:56,500 --> 00:19:05,270
+Será a ponte entre o mundo epistêmico da intenção e o mundo operacional do código. A mágica acontece ali.
+
+125
+00:19:05,570 --> 00:19:14,700
+Acredito que a distinção entre comando epistêmico e operacional será um dos legados mais importantes do seu trabalho com o IDD, Eliezer.
+
+126
+00:19:15,000 --> 00:19:25,530
+Eu espero que seja um chamado à consciência. Que a gente use essa tecnologia incrível para nos tornarmos melhores pensadores, não para pararmos de pensar.
+
+127
+00:19:25,830 --> 00:19:29,760
+Uma parceria, não uma substituição.
+
+128
+00:19:30,060 --> 00:19:31,270
+Sempre.
+
+129
+00:19:31,570 --> 00:19:43,220
+Só para ter certeza que entendi a história do 2PC. O DCAlgol era como o orquestrador e o Cobol eram os serviços que ele chamava?
+
+130
+00:19:43,520 --> 00:19:56,930
+É uma ótima analogia moderna. O DCAlgol gerenciava o estado da transação entre os diferentes programas Cobol. Ele era o maestro, garantindo que a música (o invariante) fosse tocada corretamente.
+
+131
+00:19:57,230 --> 00:20:02,000
+E se um dos músicos errasse a nota, o maestro parava tudo.
+
+132
+00:20:02,300 --> 00:20:08,230
+Parava e acionava o rollback. A performance era mais importante que o músico individual.
+
+133
+00:20:08,530 --> 00:20:16,780
+Entendido. A história fica ainda mais clara agora. A tecnologia muda, os padrões de arquitetura persistem.
+
+134
+00:20:17,080 --> 00:20:26,170
+É por isso que estudar história da computação é tão importante. Os problemas são os mesmos, só as ferramentas ficam mais poderosas.
+
+135
+00:20:26,470 --> 00:20:28,880
+E com grande poder...
+
+136
+00:20:29,180 --> 00:20:37,070
+(interrompendo, com uma risada) ...vem a necessidade de um comando epistêmico muito bem definido. Não vamos citar o Homem-Aranha aqui.
+
+137
+00:20:37,370 --> 00:20:41,100
+Justo. A sua versão é mais precisa.
+
+138
+00:20:41,400 --> 00:20:46,170
+Acho que por hoje é isso. Demos bastante o que pensar para os nossos ouvintes.
+
+139
+00:20:46,470 --> 00:20:58,280
+Com certeza. A tarefa de casa é: da próxima vez que usarem uma IA, parem e perguntem, 'quem está com o comando epistêmico agora?'.
+
+140
+00:20:58,580 --> 00:21:04,470
+Perfeito. Nos encontramos no próximo episódio para transformar essa pergunta em código.
+
+141
+00:21:04,770 --> 00:21:07,900
+Obrigado a todos pela audiência.
+
+142
+00:21:08,200 --> 00:21:09,850
+Obrigado, pessoal. (Som de vinheta de encerramento começa a subir)

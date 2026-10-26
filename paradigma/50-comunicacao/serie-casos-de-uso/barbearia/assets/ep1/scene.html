@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>IDD Barbearia - Ep. 1 Domínio & Intenção</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, sans-serif; }
+    body {
+      width: 1920px; height: 1080px; background: #0c0f18; color: #f8fafc;
+      overflow: hidden; position: relative;
+    }
+    .grid-bg {
+      position: absolute; inset: 0;
+      background-image: linear-gradient(rgba(245, 158, 11, 0.05) 1px, transparent 1px),
+                        linear-gradient(90deg, rgba(245, 158, 11, 0.05) 1px, transparent 1px);
+      background-size: 60px 60px;
+    }
+    .glow-ambient {
+      position: absolute; width: 1100px; height: 1100px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(245, 158, 11, 0.22) 0%, rgba(217, 119, 6, 0.15) 45%, transparent 70%);
+      top: 50%; left: 50%; transform: translate(-50%, -50%); filter: blur(90px); pointer-events: none;
+    }
+
+    /* TOP BAR */
+    .top-bar {
+      position: absolute; top: 0; left: 0; right: 0; height: 80px;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 60px; background: rgba(15, 23, 42, 0.85);
+      border-bottom: 1px solid rgba(245, 158, 11, 0.35); backdrop-filter: blur(12px); z-index: 50;
+    }
+    .top-title { display: flex; align-items: center; gap: 18px; }
+    .badge-ep {
+      background: linear-gradient(135deg, #d97706, #b45309); color: white;
+      font-weight: 800; font-size: 16px; letter-spacing: 1.5px;
+      padding: 6px 18px; border-radius: 999px; text-transform: uppercase;
+      box-shadow: 0 0 20px rgba(245, 158, 11, 0.5);
+    }
+    .series-name { font-size: 20px; font-weight: 700; color: #94a3b8; }
+    .series-name span { color: #f8fafc; font-weight: 800; }
+    .timer-box { font-size: 18px; font-family: monospace; color: #fbbf24; font-weight: 700; }
+
+    /* STAGE */
+    .stage {
+      position: absolute; top: 80px; bottom: 220px; left: 0; right: 0;
+      padding: 40px 60px; display: flex; flex-direction: column; z-index: 20;
+    }
+    .slide-view {
+      display: none; width: 100%; height: 100%; flex-direction: column;
+      animation: fadeIn 0.4s ease-out forwards;
+    }
+    .slide-view.active { display: flex; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+    .slide-header { margin-bottom: 25px; }
+    .slide-category { font-size: 16px; font-weight: 800; color: #f59e0b; text-transform: uppercase; letter-spacing: 2px; }
+    .slide-title { font-size: 40px; font-weight: 900; color: #ffffff; margin-top: 4px; }
+    .slide-subtitle { font-size: 20px; color: #94a3b8; margin-top: 6px; }
+
+    .cards-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; flex: 1; }
+    .feature-card {
+      background: rgba(15, 23, 42, 0.85); border: 1.5px solid rgba(245, 158, 11, 0.35);
+      border-radius: 18px; padding: 28px; display: flex; flex-direction: column;
+      backdrop-filter: blur(14px); box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+    }
+    .card-icon { font-size: 38px; margin-bottom: 16px; }
+    .card-title { font-size: 24px; font-weight: 800; color: #fbbf24; margin-bottom: 12px; }
+    .card-desc { font-size: 17px; color: #cbd5e1; line-height: 1.5; flex: 1; }
+    .card-tag {
+      margin-top: 15px; align-self: flex-start; background: rgba(245, 158, 11, 0.15);
+      border: 1px solid #f59e0b; color: #fde68a; padding: 4px 12px; border-radius: 8px;
+      font-size: 13px; font-weight: 700;
+    }
+
+    /* CHAT TERMINAL SLIDE 3 */
+    .terminal-container { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; flex: 1; }
+    .terminal-window {
+      background: #020617; border: 1.5px solid #1e293b; border-radius: 16px;
+      padding: 24px; font-family: 'Consolas', monospace; font-size: 15px;
+      color: #38bdf8; display: flex; flex-direction: column;
+    }
+    .terminal-header { display: flex; gap: 8px; margin-bottom: 16px; border-bottom: 1px solid #1e293b; padding-bottom: 12px; }
+    .t-dot { width: 12px; height: 12px; border-radius: 50%; }
+    .t-red { background: #ef4444; } .t-yellow { background: #f59e0b; } .t-green { background: #10b981; }
+    .terminal-body { flex: 1; line-height: 1.6; color: #e2e8f0; }
+
+    .chat-card {
+      background: rgba(15, 23, 42, 0.85); border: 1.5px solid rgba(245, 158, 11, 0.35);
+      border-radius: 16px; padding: 24px; display: flex; flex-direction: column;
+    }
+    .chat-bubble {
+      background: rgba(30, 41, 59, 0.8); border: 1px solid rgba(245, 158, 11, 0.2);
+      border-radius: 14px; padding: 18px; margin-bottom: 16px; line-height: 1.5; font-size: 16px;
+    }
+    .chat-author { font-size: 14px; font-weight: 800; margin-bottom: 6px; }
+    .author-ia { color: #38bdf8; }
+    .author-eliezer { color: #fbbf24; }
+
+    /* BOTTOM BAR */
+    .bottom-bar {
+      position: absolute; bottom: 0; left: 0; right: 0; height: 220px;
+      background: rgba(6, 12, 24, 0.95); border-top: 1px solid rgba(245, 158, 11, 0.3);
+      backdrop-filter: blur(16px); display: flex; align-items: center;
+      padding: 0 60px; gap: 40px; z-index: 50;
+    }
+    .avatars-container { display: flex; gap: 30px; align-items: center; }
+    .avatar-card {
+      display: flex; flex-direction: column; align-items: center;
+      transition: all 0.3s ease; opacity: 0.45; transform: scale(0.95);
+    }
+    .avatar-card.active { opacity: 1; transform: scale(1.05); }
+    .avatar-circle {
+      width: 90px; height: 90px; border-radius: 50%; overflow: hidden;
+      border: 3px solid #475569; position: relative;
+    }
+    .avatar-card.active .avatar-circle {
+      border-color: #f59e0b; box-shadow: 0 0 25px rgba(245, 158, 11, 0.7);
+    }
+    .avatar-circle img { width: 100%; height: 100%; object-fit: cover; }
+    .avatar-name { font-size: 15px; font-weight: 800; color: #f8fafc; margin-top: 8px; }
+    .avatar-role { font-size: 12px; color: #94a3b8; font-weight: 600; }
+
+    .subtitles-container {
+      flex: 1; height: 140px; background: rgba(15, 23, 42, 0.8);
+      border: 1.5px solid rgba(245, 158, 11, 0.35); border-radius: 16px;
+      padding: 20px 28px; display: flex; flex-direction: column; justify-content: center;
+    }
+    .sub-speaker { font-size: 15px; font-weight: 800; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 6px; }
+    .speaker-leigo { color: #f472b6; }
+    .speaker-eliezer { color: #fbbf24; }
+    .speaker-ia { color: #38bdf8; }
+    .sub-text { font-size: 21px; font-weight: 600; color: #f1f5f9; line-height: 1.45; }
+
+    #black-curtain { position: absolute; inset: 0; background: #000; z-index: 9999; pointer-events: none; }
+  </style>
+</head>
+<body>
+  <div id="black-curtain"></div>
+  <div class="glow-ambient"></div>
+  <div class="grid-bg"></div>
+
+  <div class="top-bar">
+    <div class="top-title">
+      <div class="badge-ep">EPISÓDIO 1 · BARBEARIA &amp; SALÃO</div>
+      <div class="series-name">IDD NA PRÁTICA · <span>DOMÍNIO &amp; INTENÇÃO DO APP</span></div>
+    </div>
+    <div class="timer-box" id="clock-display">00:00.0</div>
+  </div>
+
+  <div class="stage">
+    <!-- SLIDE 1: O CAOS DO AGENDAMENTO -->
+    <div class="slide-view active" id="slide-1">
+      <div class="slide-header">
+        <div class="slide-category">A DOR DO NEGÓCIO REAL</div>
+        <div class="slide-title">O Caos do Caderno no Salão de Beleza</div>
+        <div class="slide-subtitle">Como horários manuais e mensagens soltas no WhatsApp destroem a rotina</div>
+      </div>
+      <div class="cards-grid">
+        <div class="feature-card">
+          <div class="card-icon">📖</div>
+          <div class="card-title">1. O Caderno Rasurado</div>
+          <div class="card-desc">Marcações a lápis, desmarcações em cima da hora e encaixes que atrasam toda a fila de clientes do sábado.</div>
+          <div class="card-tag">PERDA DE CLIENTES</div>
+        </div>
+        <div class="feature-card">
+          <div class="card-icon">🪑</div>
+          <div class="card-title">2. A Cadeira Disputada</div>
+          <div class="card-desc">Dois clientes chegam às 14:00 para o mesmo profissional. Constrangimento na recepção e perda de autoridade.</div>
+          <div class="card-tag">SOBREPOSIÇÃO</div>
+        </div>
+        <div class="feature-card">
+          <div class="card-icon">💵</div>
+          <div class="card-title">3. A Conta da Comissão</div>
+          <div class="card-desc">No fim do expediente, o cálculo manual de comissões (60%/40%) gera dúvidas, atrito e desconfiança entre a equipe.</div>
+          <div class="card-tag">ATOLAMENTO FINANCEIRO</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 2: AS 3 INTENÇÕES DO APP -->
+    <div class="slide-view" id="slide-2">
+      <div class="slide-header">
+        <div class="slide-category">O PRIMEIRO PASSO DO IDD</div>
+        <div class="slide-title">As 3 Intenções Centrais do Aplicativo</div>
+        <div class="slide-subtitle">Definindo o objetivo puro do sistema antes de pensar em código</div>
+      </div>
+      <div class="cards-grid">
+        <div class="feature-card">
+          <div class="card-icon">📱</div>
+          <div class="card-title">1. Autonomia do Cliente</div>
+          <div class="card-desc">O cliente visualiza fotos, escolhe o barbeiro e reserva o horário pelo celular em menos de 1 minuto, sem telefonar.</div>
+          <div class="card-tag">EXPERIÊNCIA RÁPIDA</div>
+        </div>
+        <div class="feature-card">
+          <div class="card-icon">⏰</div>
+          <div class="card-title">2. Agenda Sincronizada</div>
+          <div class="card-desc">O profissional recebe os horários no celular com disparos de confirmação automática pelo WhatsApp.</div>
+          <div class="card-tag">ZERO ATRASO</div>
+        </div>
+        <div class="feature-card">
+          <div class="card-icon">⚖️</div>
+          <div class="card-title">3. Comissão Transparente</div>
+          <div class="card-desc">Divisão matemática instantânea no momento em que a comanda é fechada. Zero discussão na recepção.</div>
+          <div class="card-tag">JUSTIÇA FINANCEIRA</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 3: INVARIANTE DA CADEIRA ÚNICA & CHAT IA -->
+    <div class="slide-view" id="slide-3">
+      <div class="slide-header">
+        <div class="slide-category">A INVARIANTE SAGRADA DO SALÃO</div>
+        <div class="slide-title">A Regra da Cadeira Única &amp; Interação com a IA</div>
+        <div class="slide-subtitle">A regra que nenhum código gerado pela IA pode ousar desrespeitar</div>
+      </div>
+      <div class="terminal-container">
+        <div class="terminal-window">
+          <div class="terminal-header">
+            <div class="t-dot t-red"></div>
+            <div class="t-dot t-yellow"></div>
+            <div class="t-dot t-green"></div>
+            <span style="margin-left: auto; font-size: 12px; color: #64748b;">IDD COMPILER · BARBER ENGINE</span>
+          </div>
+          <div class="terminal-body">
+            <div>&gt; idd compile --domain=barbearia --invariants</div>
+            <div style="color: #fbbf24;">[INVARIANT-01] Cadeira_Unica: Profissional alocado a no maximo 1 cliente.</div>
+            <div style="color: #34d399;">[INVARIANT-02] Duracao_Minima: Servico &gt;= 10 minutos.</div>
+            <div style="color: #38bdf8;">[COMBO DETECTED] Corte (30min) + Barba (20min) = 50min contínuos.</div>
+            <br>
+            <div style="color: #a855f7;">[SLOT LOCK] 10:00 -&gt; 10:50 BLOQUEADO PARA MESTRE RICARDO</div>
+            <div style="color: #34d399;">✓ ZERO SOBREPOSIÇÃO GARANTIDA NO CONTRATO</div>
+          </div>
+        </div>
+        <div class="chat-card">
+          <div class="chat-bubble">
+            <div class="chat-author author-ia">🤖 IA Compilador</div>
+            <div>
+              Orquestrador Eliézer, identifiquei a intenção do combo (Corte + Barba). Devo alocar 50 minutos contínuos na mesma cadeira e impedir qualquer encaixe concorrente?
+            </div>
+          </div>
+          <div class="chat-bubble">
+            <div class="chat-author author-eliezer">👤 Eliézer Rosa</div>
+            <div>
+              Exatamente! A cadeira fica blindada até as 10:50. Nenhum outro cliente poderá reservar antes das 11:00. Governança aprovada!
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 4: SÍNTESE DO EPISÓDIO -->
+    <div class="slide-view" id="slide-4">
+      <div class="slide-header">
+        <div class="slide-category">O PODER DO PARADIGMA IDD</div>
+        <div class="slide-title">Do Problema Real à Solução sem Código Manual</div>
+        <div class="slide-subtitle">O software nasce da clareza do negócio e não da complexidade de programação</div>
+      </div>
+      <div class="cards-grid">
+        <div class="feature-card">
+          <div class="card-icon">🧠</div>
+          <div class="card-title">1. Clareza Humana</div>
+          <div class="card-desc">O dono do salão e o leigo conhecem a dor e sabem exatamente o que querem que aconteça.</div>
+          <div class="card-tag">INTENÇÃO</div>
+        </div>
+        <div class="feature-card">
+          <div class="card-icon">🛡️</div>
+          <div class="card-title">2. Invariante Inviolável</div>
+          <div class="card-desc">A barbearia nunca terá reservas duplas porque a regra é um contrato matemático inviolável.</div>
+          <div class="card-tag">SEGURANÇA</div>
+        </div>
+        <div class="feature-card">
+          <div class="card-icon">⚡</div>
+          <div class="card-title">3. Próximo Passo</div>
+          <div class="card-desc">No Ep. 1B veremos os requisitos detalhados e nos próximos episódios o MER, UML e o código vivo do app!</div>
+          <div class="card-tag">CONTINUAÇÃO</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BOTTOM BAR -->
+  <div class="bottom-bar">
+    <div class="avatars-container">
+      <div class="avatar-card" id="av-leigo">
+        <div class="avatar-circle">
+          <img src="../../avatares/avatar_usuaria_leiga.png" alt="Usuária Leiga">
+        </div>
+        <div class="avatar-name">Usuária Leiga</div>
+        <div class="avatar-role">Validadora de Domínio</div>
+      </div>
+      <div class="avatar-card" id="av-eliezer">
+        <div class="avatar-circle">
+          <img src="../../avatares/avatar_eliezer_oficial.png" alt="Eliézer Rosa">
+        </div>
+        <div class="avatar-name">Eliézer Rosa</div>
+        <div class="avatar-role">Orquestrador IDD</div>
+      </div>
+      <div class="avatar-card" id="av-ia">
+        <div class="avatar-circle">
+          <img src="../../avatares/avatar_ia_compilador.png" alt="IA Compilador">
+        </div>
+        <div class="avatar-name">IA Compilador</div>
+        <div class="avatar-role">Agente de Execução</div>
+      </div>
+    </div>
+    <div class="subtitles-container">
+      <div class="sub-speaker" id="sub-speaker">USUÁRIA LEIGA</div>
+      <div class="sub-text" id="sub-text">Iniciando episódio 1 do App da Barbearia no Paradigma IDD...</div>
+    </div>
+  </div>
+
+  <script>
+    let timelineItems = [];
+    let isRunning = false;
+    let startTimeMs = 0;
+
+    window.setTimeline = function(items) { timelineItems = items; };
+    window.startPresentation = function() {
+      const curtain = document.getElementById('black-curtain');
+      if (curtain) {
+        curtain.style.opacity = '0';
+        setTimeout(() => curtain.remove(), 80);
+      }
+      isRunning = true;
+      startTimeMs = performance.now();
+      requestAnimationFrame(renderLoop);
+    };
+
+    function renderLoop(now) {
+      if (!isRunning) return;
+      const elapsedSec = (now - startTimeMs) / 1000;
+      const minutes = Math.floor(elapsedSec / 60);
+      const seconds = (elapsedSec % 60).toFixed(1);
+      document.getElementById('clock-display').innerText =
+        String(minutes).padStart(2, '0') + ':' + String(seconds).padStart(4, '0');
+
+      const curSeg = timelineItems.find(item => elapsedSec >= item.startSec && elapsedSec < item.endSec);
+      if (curSeg) {
+        const targetSlideId = 'slide-' + curSeg.slide;
+        document.querySelectorAll('.slide-view').forEach(s => {
+          if (s.id === targetSlideId) {
+            if (!s.classList.contains('active')) s.classList.add('active');
+          } else {
+            s.classList.remove('active');
+          }
+        });
+
+        ['leigo', 'eliezer', 'ia'].forEach(who => {
+          const el = document.getElementById('av-' + who);
+          if (el) {
+            if (curSeg.who === who) el.classList.add('active');
+            else el.classList.remove('active');
+          }
+        });
+
+        const speakerEl = document.getElementById('sub-speaker');
+        const textEl = document.getElementById('sub-text');
+        speakerEl.className = 'sub-speaker speaker-' + curSeg.who;
+        speakerEl.innerText = curSeg.actor;
+        textEl.innerText = curSeg.text;
+      }
+      requestAnimationFrame(renderLoop);
+    }
+  </script>
+</body>
+</html>

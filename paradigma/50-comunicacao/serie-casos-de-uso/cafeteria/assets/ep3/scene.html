@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>IDD Cafeteria - Ep. 3 Código Vivo & Amarração com Invariantes</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, sans-serif; }
+    body {
+      width: 1920px; height: 1080px; background: #0c0a09; color: #f8fafc;
+      overflow: hidden; position: relative;
+    }
+    .grid-bg {
+      position: absolute; inset: 0;
+      background-image: linear-gradient(rgba(245, 158, 11, 0.05) 1px, transparent 1px),
+                        linear-gradient(90deg, rgba(245, 158, 11, 0.05) 1px, transparent 1px);
+      background-size: 60px 60px;
+    }
+    .glow-ambient {
+      position: absolute; width: 1100px; height: 1100px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(217, 119, 6, 0.25) 0%, rgba(180, 83, 9, 0.15) 45%, transparent 70%);
+      top: 50%; left: 50%; transform: translate(-50%, -50%); filter: blur(90px); pointer-events: none;
+    }
+
+    /* TOP BAR */
+    .top-bar {
+      position: absolute; top: 0; left: 0; right: 0; height: 80px;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 60px; background: rgba(28, 19, 14, 0.88);
+      border-bottom: 1px solid rgba(245, 158, 11, 0.35); backdrop-filter: blur(12px); z-index: 50;
+    }
+    .top-title { display: flex; align-items: center; gap: 18px; }
+    .badge-ep {
+      background: linear-gradient(135deg, #b45309, #78350f); color: white;
+      font-weight: 800; font-size: 16px; letter-spacing: 1.5px;
+      padding: 6px 18px; border-radius: 999px; text-transform: uppercase;
+      box-shadow: 0 0 20px rgba(245, 158, 11, 0.4);
+    }
+    .series-name { font-size: 20px; font-weight: 700; color: #d6d3d1; }
+    .series-name span { color: #f59e0b; font-weight: 800; }
+    .timer-box { font-size: 18px; font-family: monospace; color: #fbbf24; font-weight: 700; }
+
+    /* STAGE */
+    .stage {
+      position: absolute; top: 80px; bottom: 220px; left: 0; right: 0;
+      padding: 40px 60px; display: flex; flex-direction: column; z-index: 20;
+    }
+    .slide-view {
+      display: none; width: 100%; height: 100%; flex-direction: column;
+      animation: fadeIn 0.4s ease-out forwards;
+    }
+    .slide-view.active { display: flex; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+    .slide-header { margin-bottom: 25px; }
+    .slide-category { font-size: 16px; font-weight: 800; color: #f59e0b; text-transform: uppercase; letter-spacing: 2px; }
+    .slide-title { font-size: 40px; font-weight: 900; color: #ffffff; margin-top: 4px; }
+    .slide-subtitle { font-size: 20px; color: #a8a29e; margin-top: 6px; }
+
+    .cards-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; flex: 1; }
+    .feature-card {
+      background: rgba(28, 19, 14, 0.85); border: 1.5px solid rgba(245, 158, 11, 0.35);
+      border-radius: 18px; padding: 28px; display: flex; flex-direction: column;
+      backdrop-filter: blur(14px); box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+    }
+    .card-icon { font-size: 38px; margin-bottom: 16px; }
+    .card-title { font-size: 24px; font-weight: 800; color: #fbbf24; margin-bottom: 12px; }
+    .card-desc { font-size: 17px; color: #e7e5e4; line-height: 1.5; flex: 1; }
+    .card-tag {
+      margin-top: 15px; align-self: flex-start; background: rgba(245, 158, 11, 0.15);
+      border: 1px solid #f59e0b; color: #fde68a; padding: 4px 12px; border-radius: 8px;
+      font-size: 13px; font-weight: 700;
+    }
+
+    /* CODE TERMINAL */
+    .terminal-container { display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 28px; flex: 1; }
+    .terminal-window {
+      background: #020617; border: 1.5px solid #1e293b; border-radius: 16px;
+      padding: 24px; font-family: 'Consolas', monospace; font-size: 14.5px;
+      color: #38bdf8; display: flex; flex-direction: column; overflow: hidden;
+    }
+    .terminal-header { display: flex; gap: 8px; margin-bottom: 14px; border-bottom: 1px solid #1e293b; padding-bottom: 10px; }
+    .t-dot { width: 12px; height: 12px; border-radius: 50%; }
+    .t-red { background: #ef4444; } .t-yellow { background: #f59e0b; } .t-green { background: #10b981; }
+    .terminal-body { flex: 1; line-height: 1.55; color: #e2e8f0; font-family: 'Consolas', monospace; }
+
+    .chat-card {
+      background: rgba(28, 19, 14, 0.85); border: 1.5px solid rgba(245, 158, 11, 0.35);
+      border-radius: 16px; padding: 24px; display: flex; flex-direction: column;
+    }
+    .chat-bubble {
+      background: rgba(41, 29, 21, 0.85); border: 1px solid rgba(245, 158, 11, 0.25);
+      border-radius: 14px; padding: 18px; margin-bottom: 16px; line-height: 1.5; font-size: 16px;
+    }
+    .chat-author { font-size: 14px; font-weight: 800; margin-bottom: 6px; }
+    .author-ia { color: #38bdf8; }
+    .author-eliezer { color: #fbbf24; }
+
+    /* BOTTOM BAR */
+    .bottom-bar {
+      position: absolute; bottom: 0; left: 0; right: 0; height: 220px;
+      background: rgba(16, 11, 8, 0.96); border-top: 1px solid rgba(245, 158, 11, 0.35);
+      backdrop-filter: blur(16px); display: flex; align-items: center;
+      padding: 0 60px; gap: 40px; z-index: 50;
+    }
+    .avatars-container { display: flex; gap: 30px; align-items: center; }
+    .avatar-card {
+      display: flex; flex-direction: column; align-items: center;
+      transition: all 0.3s ease; opacity: 0.45; transform: scale(0.95);
+    }
+    .avatar-card.active { opacity: 1; transform: scale(1.05); }
+    .avatar-circle {
+      width: 90px; height: 90px; border-radius: 50%; overflow: hidden;
+      border: 3px solid #57534e; position: relative; background: #292524;
+    }
+    .avatar-card.active .avatar-circle {
+      border-color: #f59e0b; box-shadow: 0 0 25px rgba(245, 158, 11, 0.7);
+    }
+    .avatar-circle img { width: 100%; height: 100%; object-fit: cover; }
+    .avatar-name { font-size: 15px; font-weight: 800; color: #f8fafc; margin-top: 8px; }
+    .avatar-role { font-size: 12px; color: #a8a29e; font-weight: 600; }
+
+    .subtitles-container {
+      flex: 1; height: 140px; background: rgba(28, 19, 14, 0.8);
+      border: 1.5px solid rgba(245, 158, 11, 0.35); border-radius: 16px;
+      padding: 20px 28px; display: flex; flex-direction: column; justify-content: center;
+    }
+    .sub-speaker { font-size: 15px; font-weight: 800; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 6px; }
+    .speaker-leigo { color: #f472b6; }
+    .speaker-eliezer { color: #fbbf24; }
+    .speaker-ia { color: #38bdf8; }
+    .sub-text { font-size: 21px; font-weight: 600; color: #f5f5f4; line-height: 1.45; }
+
+    #black-curtain { position: absolute; inset: 0; background: #000; z-index: 9999; pointer-events: none; }
+  </style>
+</head>
+<body>
+  <div id="black-curtain"></div>
+  <div class="glow-ambient"></div>
+  <div class="grid-bg"></div>
+
+  <div class="top-bar">
+    <div class="top-title">
+      <div class="badge-ep">EPISÓDIO 3 · CAFETERIA &amp; PADARIA</div>
+      <div class="series-name">IDD NA PRÁTICA · <span>CÓDIGO VIVO &amp; AMARRAÇÃO TOTAL</span></div>
+    </div>
+    <div class="timer-box" id="clock-display">00:00.0</div>
+  </div>
+
+  <div class="stage">
+    <!-- SLIDE 1: A AMARRAÇÃO DIRETA DO CÓDIGO -->
+    <div class="slide-view active" id="slide-1">
+      <div class="slide-header">
+        <div class="slide-category">A REVOLUÇÃO DA COMPILAÇÃO IDD</div>
+        <div class="slide-title">Código Vivo com Amarração Direta às Invariantes</div>
+        <div class="slide-subtitle">Como cada linha de SQL e TypeScript nasce amarrada às regras sagradas do negócio</div>
+      </div>
+      <div class="cards-grid">
+        <div class="feature-card">
+          <div class="card-icon">📜</div>
+          <div class="card-title">1. Rastreabilidade Absoluta</div>
+          <div class="card-desc">Zero código órfão. Cada constraint no PostgreSQL responde diretamente a uma intenção humana validada.</div>
+          <div class="card-tag">CERTIDÃO DE NASCIMENTO</div>
+        </div>
+        <div class="feature-card">
+          <div class="card-icon">⚙️</div>
+          <div class="card-title">2. Gatilhos Atômicos no Banco</div>
+          <div class="card-desc">O PostgreSQL impede a inserção de itens caso a gramatura dos ingredientes na despensa seja insuficiente.</div>
+          <div class="card-tag">TRIGGER ANTI-RUPTURA</div>
+        </div>
+        <div class="feature-card">
+          <div class="card-icon">🛡️</div>
+          <div class="card-title">3. Guards em TypeScript</div>
+          <div class="card-desc">A máquina de estados da comanda impede entrega de pedidos não liquidados no caixa.</div>
+          <div class="card-tag">BLINDAGEM DE DOMÍNIO</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 2: O CÓDIGO REAL DO SCHEMA.SQL -->
+    <div class="slide-view" id="slide-2">
+      <div class="slide-header">
+        <div class="slide-category">ARQUIVO REAL: SCHEMA.SQL</div>
+        <div class="slide-title">A Trigger de Blindagem do Estoque Crítico</div>
+        <div class="slide-subtitle">Código real que garante a integridade matemática da cafeteria direto no banco</div>
+      </div>
+      <div class="cards-grid">
+        <div class="feature-card">
+          <div class="card-icon">⚡</div>
+          <div class="card-title">Trigger de Validação</div>
+          <div class="card-desc">BEFORE INSERT ON comanda_itens: consulta produto_receita e aborta se quantidade_atual &lt; necessária.</div>
+          <div class="card-tag">check_estoque_ingrediente()</div>
+        </div>
+        <div class="feature-card">
+          <div class="card-icon">⚖️</div>
+          <div class="card-title">Constraint Matemática</div>
+          <div class="card-desc">CHECK (valor_total = valor_subtotal - valor_desconto). Impede divergências de centavos no cupom fiscal.</div>
+          <div class="card-tag">check_valor_total</div>
+        </div>
+        <div class="feature-card">
+          <div class="card-icon">📦</div>
+          <div class="card-title">Baixa em Cascata</div>
+          <div class="card-desc">Cada espresso (30g café) ou cappuccino (30g café + 150ml leite) debita a despensa no exato milissegundo.</div>
+          <div class="card-tag">BAIXA ATÔMICA</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 3: O CÓDIGO TYPESCRIPT & GOVERNANÇA DA FSM -->
+    <div class="slide-view" id="slide-3">
+      <div class="slide-header">
+        <div class="slide-category">ARQUIVO REAL: DOMAIN_RULES.TS</div>
+        <div class="slide-title">A Máquina de Estados &amp; Interação com a IA</div>
+        <div class="slide-subtitle">A classe ComandaDominio barrando entregas não liquidadas</div>
+      </div>
+      <div class="terminal-container">
+        <div class="terminal-window">
+          <div class="terminal-header">
+            <div class="t-dot t-red"></div>
+            <div class="t-dot t-yellow"></div>
+            <div class="t-dot t-green"></div>
+            <span style="margin-left: auto; font-size: 12px; color: #64748b;">DOMAIN_RULES.TS · CAFETERIA FSM</span>
+          </div>
+          <div class="terminal-body">
+            <div style="color: #64748b;">// Transição rigorosa de status da Comanda</div>
+            <div>public transicionarPara(novoStatus: StatusComanda): void {</div>
+            <div>&nbsp;&nbsp;if (!transicoesValidas[this.status].includes(novoStatus)) {</div>
+            <div style="color: #ef4444;">&nbsp;&nbsp;&nbsp;&nbsp;throw new Error("Transição proibida");</div>
+            <div>&nbsp;&nbsp;}</div>
+            <br>
+            <div style="color: #fbbf24;">&nbsp;&nbsp;// INVARIANTE SAGRADA DE LIQUIDAÇÃO PRÉVIA</div>
+            <div>&nbsp;&nbsp;if (novoStatus === 'ENTREGUE' &amp;&amp; !this.pago) {</div>
+            <div style="color: #ef4444;">&nbsp;&nbsp;&nbsp;&nbsp;throw new Error("Impossível entregar comanda não paga!");</div>
+            <div>&nbsp;&nbsp;}</div>
+            <div style="color: #34d399;">&nbsp;&nbsp;this.status = novoStatus;</div>
+            <div>}</div>
+          </div>
+        </div>
+        <div class="chat-card">
+          <div class="chat-bubble">
+            <div class="chat-author author-ia">🤖 IA Compilador</div>
+            <div>
+              Ao implementar a transição de 'PRONTO' para 'ENTREGUE', o garçom pode entregar antes da liquidação financeira ou a máquina deve barrar caso 'pago' seja falso?
+            </div>
+          </div>
+          <div class="chat-bubble">
+            <div class="chat-author author-eliezer">👤 Eliézer Rosa</div>
+            <div>
+              Invariante de Liquidação Prévia! A comanda só transiciona para 'ENTREGUE' se 'pago' for estritamente verdadeiro. O calote e o esquecimento de cobrança são zerados por construção!
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 4: SÍNTESE E PRÓXIMO PASSO -->
+    <div class="slide-view" id="slide-4">
+      <div class="slide-header">
+        <div class="slide-category">O PODER DO PARADIGMA IDD</div>
+        <div class="slide-title">Software Correto por Construção</div>
+        <div class="slide-subtitle">Código vivo, amarrado e matematicamente protegido em todas as camadas</div>
+      </div>
+      <div class="cards-grid">
+        <div class="feature-card">
+          <div class="card-icon">💎</div>
+          <div class="card-title">1. Amarração Total</div>
+          <div class="card-desc">Da intenção humana ao schema.sql e domain_rules.ts, todas as peças se conectam com precisão cirúrgica.</div>
+          <div class="card-tag">INTEGRIDADE TOTAL</div>
+        </div>
+        <div class="feature-card">
+          <div class="card-icon">⚡</div>
+          <div class="card-title">2. Zero Código Manual</div>
+          <div class="card-desc">O empreendedor e o desenvolvedor orquestram intenções e a IA compila classes e triggers blindadas.</div>
+          <div class="card-tag">NO-CODE IDD</div>
+        </div>
+        <div class="feature-card">
+          <div class="card-icon">🚀</div>
+          <div class="card-title">3. Próximo: Ep. 3B</div>
+          <div class="card-desc">No Ep. 3B metodológico, veremos os diagramas UML, casos de uso e a FSM compilados com a IA!</div>
+          <div class="card-tag">CONTINUAÇÃO</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BOTTOM BAR -->
+  <div class="bottom-bar">
+    <div class="avatars-container">
+      <div class="avatar-card" id="av-leigo">
+        <div class="avatar-circle">
+          <img src="../../avatares/avatar_usuaria_leiga.png" alt="Usuária Leiga">
+        </div>
+        <div class="avatar-name">Usuária Leiga</div>
+        <div class="avatar-role">Validadora de Domínio</div>
+      </div>
+      <div class="avatar-card" id="av-eliezer">
+        <div class="avatar-circle">
+          <img src="../../avatares/avatar_eliezer_oficial.png" alt="Eliézer Rosa">
+        </div>
+        <div class="avatar-name">Eliézer Rosa</div>
+        <div class="avatar-role">Orquestrador IDD</div>
+      </div>
+      <div class="avatar-card" id="av-ia">
+        <div class="avatar-circle">
+          <img src="../../avatares/avatar_ia_compilador.png" alt="IA Compilador">
+        </div>
+        <div class="avatar-name">IA Compilador</div>
+        <div class="avatar-role">Agente de Execução</div>
+      </div>
+    </div>
+    <div class="subtitles-container">
+      <div class="sub-speaker" id="sub-speaker">USUÁRIA LEIGA</div>
+      <div class="sub-text" id="sub-text">Iniciando episódio 3 do App da Cafeteria: Código Vivo & Amarração com as Invariantes...</div>
+    </div>
+  </div>
+
+  <script>
+    let timelineItems = [];
+    let isRunning = false;
+    let startTimeMs = 0;
+
+    window.setTimeline = function(items) { timelineItems = items; };
+    window.startPresentation = function() {
+      const curtain = document.getElementById('black-curtain');
+      if (curtain) {
+        curtain.style.opacity = '0';
+        setTimeout(() => curtain.remove(), 80);
+      }
+      isRunning = true;
+      startTimeMs = performance.now();
+      requestAnimationFrame(renderLoop);
+    };
+
+    function renderLoop(now) {
+      if (!isRunning) return;
+      const elapsedSec = (now - startTimeMs) / 1000;
+      const minutes = Math.floor(elapsedSec / 60);
+      const seconds = (elapsedSec % 60).toFixed(1);
+      document.getElementById('clock-display').innerText =
+        String(minutes).padStart(2, '0') + ':' + String(seconds).padStart(4, '0');
+
+      const curSeg = timelineItems.find(item => elapsedSec >= item.startSec && elapsedSec < item.endSec);
+      if (curSeg) {
+        const targetSlideId = 'slide-' + curSeg.slide;
+        document.querySelectorAll('.slide-view').forEach(s => {
+          if (s.id === targetSlideId) {
+            if (!s.classList.contains('active')) s.classList.add('active');
+          } else {
+            s.classList.remove('active');
+          }
+        });
+
+        ['leigo', 'eliezer', 'ia'].forEach(who => {
+          const el = document.getElementById('av-' + who);
+          if (el) {
+            if (curSeg.who === who) el.classList.add('active');
+            else el.classList.remove('active');
+          }
+        });
+
+        const speakerEl = document.getElementById('sub-speaker');
+        const textEl = document.getElementById('sub-text');
+        speakerEl.className = 'sub-speaker speaker-' + curSeg.who;
+        speakerEl.innerText = curSeg.actor;
+        textEl.innerText = curSeg.text;
+      }
+      requestAnimationFrame(renderLoop);
+    }
+  </script>
+</body>
+</html>

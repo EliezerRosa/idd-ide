@@ -1,0 +1,110 @@
+{
+  "projectName": "IDD_Base_Conhecimento_Ep10",
+  "totalDurationSec": 172.01,
+  "items": [
+    {
+      "index": 0,
+      "id": "seg_00_leigo",
+      "who": "leigo",
+      "actor": "Usuária Leiga",
+      "avatar": "leigo",
+      "slide": 1,
+      "text": "Eliézer, no episódio anterior nós vimos os limites do MCP e do Antigravity. Mas e quanto ao GitHub Copilot Workspace, que já prega o desenvolvimento orientado a especificação? E o Aider, que bate recordes no benchmark SWE-bench resolvendo bugs de repositórios reais? Eles não chegaram exatamente onde o IDD quer chegar?",
+      "wav": "C:\\Antigravity - IDD Refrigeração\\motion_graphics_renderer\\idd_teoria_ep10_assets\\audio\\seg_00_leigo.wav",
+      "startSec": 0.5,
+      "durSec": 21.888,
+      "endSec": 22.388
+    },
+    {
+      "index": 1,
+      "id": "seg_01_eliezer",
+      "who": "eliezer",
+      "actor": "Eliézer Rosa",
+      "avatar": "eliezer",
+      "slide": 1,
+      "text": "Aí está a armadilha mais sutil da nossa área! O Copilot Workspace pega um prompt em texto livre e transforma em outro texto livre com bullet points em Markdown! É um gerador de texto orientando outro gerador de texto. Não existe uma Intent IR estruturada, não existe tipagem estrita de domínio. E ferramentas de terminal como o Aider operam na metodologia que eu chamo de Patch-and-Pray: o modelo gera um remendo no arquivo, roda a suíte de testes unitários, e se o pytest der verde, ele comita no Git e reza!",
+      "wav": "C:\\Antigravity - IDD Refrigeração\\motion_graphics_renderer\\idd_teoria_ep10_assets\\audio\\seg_01_eliezer.wav",
+      "startSec": 23.038,
+      "durSec": 33.84,
+      "endSec": 56.878
+    },
+    {
+      "index": 2,
+      "id": "seg_02_leigo",
+      "who": "leigo",
+      "actor": "Usuária Leiga",
+      "avatar": "leigo",
+      "slide": 2,
+      "text": "E veja no Slide dois por que o Patch-and-Pray é perigoso! Testes unitários com assert_equal testam apenas pontos finitos e conhecidos. Se o seu teste não previa uma condição de corrida ou concorrência assíncrona, adivinha quem vai descobrir o bug às três da manhã em produção? O seu cliente!",
+      "wav": "C:\\Antigravity - IDD Refrigeração\\motion_graphics_renderer\\idd_teoria_ep10_assets\\audio\\seg_02_leigo.wav",
+      "startSec": 57.528,
+      "durSec": 18.696,
+      "endSec": 76.224
+    },
+    {
+      "index": 3,
+      "id": "seg_03_eliezer",
+      "who": "eliezer",
+      "actor": "Eliézer Rosa",
+      "avatar": "eliezer",
+      "slide": 2,
+      "text": "Exatamente! Uma coisa é passar em três testes unitários; outra coisa completamente diferente é usar provadores formais como o Z3 para provar matematicamente que em nenhum estado do universo uma transação financeira vai gerar saldo negativo! O IDD substitui a amostragem finita pela verificação matemática de invariantes universais.",
+      "wav": "C:\\Antigravity - IDD Refrigeração\\motion_graphics_renderer\\idd_teoria_ep10_assets\\audio\\seg_03_eliezer.wav",
+      "startSec": 76.874,
+      "durSec": 22.08,
+      "endSec": 98.954
+    },
+    {
+      "index": 4,
+      "id": "seg_04_leigo",
+      "who": "leigo",
+      "actor": "Usuária Leiga",
+      "avatar": "leigo",
+      "slide": 3,
+      "text": "E no Slide três nós temos a comparação definitiva: por que o Git é cego para a IA! O Aider depende 100% dos commits do Git. Mas o Git só entende caracteres ASCII e hashes SHA-1. Ele não tem a menor ideia de que uma linha alterada em um arquivo de migração quebrou uma cardinalidade no banco ou travou tabelas em produção!",
+      "wav": "C:\\Antigravity - IDD Refrigeração\\motion_graphics_renderer\\idd_teoria_ep10_assets\\audio\\seg_04_leigo.wav",
+      "startSec": 99.604,
+      "durSec": 21.912,
+      "endSec": 121.516
+    },
+    {
+      "index": 5,
+      "id": "seg_05_eliezer",
+      "who": "eliezer",
+      "actor": "Eliézer Rosa",
+      "avatar": "eliezer",
+      "slide": 3,
+      "text": "Perfeito! A Máquina de Diff de Intenções do IDD compara grafos ontológicos, prevê o raio de destruição e classifica a mutação em Classes A, B e C, aplicando o padrão Expand and Contract para zero downtime. O Git vê letras; o IDD vê arquitetura e integridade de dados.",
+      "wav": "C:\\Antigravity - IDD Refrigeração\\motion_graphics_renderer\\idd_teoria_ep10_assets\\audio\\seg_05_eliezer.wav",
+      "startSec": 122.166,
+      "durSec": 19.248,
+      "endSec": 141.414
+    },
+    {
+      "index": 6,
+      "id": "seg_06_leigo",
+      "who": "leigo",
+      "actor": "Usuária Leiga",
+      "avatar": "leigo",
+      "slide": 4,
+      "text": "Que confronto esclarecedor! Fechamos essa comparação provando que o IDD não é apenas uma forma de pedir código para a IA, mas uma disciplina científica madura para a nova era do software!",
+      "wav": "C:\\Antigravity - IDD Refrigeração\\motion_graphics_renderer\\idd_teoria_ep10_assets\\audio\\seg_06_leigo.wav",
+      "startSec": 142.064,
+      "durSec": 12.696,
+      "endSec": 154.76
+    },
+    {
+      "index": 7,
+      "id": "seg_07_eliezer",
+      "who": "eliezer",
+      "actor": "Eliézer Rosa",
+      "avatar": "eliezer",
+      "slide": 4,
+      "text": "Com certeza! Pare de programar por sensações e venha para a engenharia determinística. Inscreva-se no canal, compartilhe essa Masterclass com seu time de desenvolvimento e lidere a revolução do Paradigma IDD!",
+      "wav": "C:\\Antigravity - IDD Refrigeração\\motion_graphics_renderer\\idd_teoria_ep10_assets\\audio\\seg_07_eliezer.wav",
+      "startSec": 155.41,
+      "durSec": 14.448,
+      "endSec": 169.858
+    }
+  ]
+}

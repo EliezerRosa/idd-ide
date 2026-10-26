@@ -1,0 +1,549 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RVM Notificacoes - Estado Atual</title>
+  <style>
+    :root {
+      --bg: #f4f6fb;
+      --ink: #172033;
+      --muted: #5b657a;
+      --brand: #0a7a5a;
+      --brand-2: #0d5a9f;
+      --warn: #cc6b00;
+      --danger: #b83232;
+      --card: #ffffff;
+      --border: #d7ddeb;
+      --shadow: 0 10px 26px rgba(23, 32, 51, 0.08);
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Segoe UI", "Trebuchet MS", Verdana, sans-serif;
+      color: var(--ink);
+      background: radial-gradient(circle at 20% 10%, #ffffff, var(--bg));
+    }
+
+    header {
+      padding: 20px 24px;
+      background: linear-gradient(120deg, var(--brand), var(--brand-2));
+      color: #fff;
+      box-shadow: var(--shadow);
+    }
+
+    header h1 { margin: 0; font-size: 1.5rem; }
+    header p { margin: 6px 0 0; opacity: 0.92; }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 320px 1fr;
+      gap: 16px;
+      padding: 16px;
+    }
+
+    .panel, .stage {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      box-shadow: var(--shadow);
+    }
+
+    .panel { padding: 14px; position: sticky; top: 12px; height: fit-content; }
+    .panel h2 { margin: 0 0 10px; font-size: 1.05rem; }
+
+    .controls { display: grid; gap: 8px; margin-bottom: 14px; }
+    .row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+
+    label { font-size: 0.82rem; color: var(--muted); }
+    select, input[type="range"] {
+      width: 100%;
+      margin-top: 4px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 8px;
+      background: #fff;
+    }
+
+    button {
+      border: 0;
+      border-radius: 10px;
+      padding: 10px 12px;
+      cursor: pointer;
+      font-weight: 600;
+      background: #e9eef9;
+      color: var(--ink);
+    }
+
+    .btn-primary { background: var(--brand); color: #fff; }
+    .btn-secondary { background: var(--brand-2); color: #fff; }
+    .btn-danger { background: var(--danger); color: #fff; }
+    .btn-warning { background: var(--warn); color: #fff; }
+
+    .hint {
+      background: #f8fbff;
+      border: 1px dashed #b7c7ea;
+      border-radius: 10px;
+      padding: 10px;
+      color: var(--muted);
+      font-size: 0.85rem;
+      line-height: 1.4;
+    }
+
+    .stage { padding: 20px; min-height: 72vh; }
+
+    .slide { display: none; }
+    .slide.active { display: block; animation: reveal .25s ease-in; }
+
+    @keyframes reveal {
+      from { opacity: 0; transform: translateY(4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .slide h3 { margin-top: 0; font-size: 1.4rem; }
+    .slide p { line-height: 1.55; color: #263049; }
+
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+      margin: 14px 0;
+    }
+
+    .kpi {
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 10px;
+      background: #fcfdff;
+    }
+
+    .kpi b { font-size: 1.2rem; display: block; margin-top: 6px; }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+      font-size: 0.92rem;
+    }
+
+    th, td {
+      border: 1px solid var(--border);
+      padding: 8px;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th { background: #eef3ff; }
+
+    .nav {
+      margin-top: 14px;
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .progress {
+      flex: 1;
+      height: 9px;
+      border-radius: 999px;
+      background: #e6ebf7;
+      overflow: hidden;
+      margin: 0 10px;
+    }
+
+    .bar { height: 100%; width: 0; background: linear-gradient(90deg, var(--brand), var(--brand-2)); }
+
+    .quiz-card {
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 12px;
+      margin: 10px 0;
+      background: #fcfdff;
+    }
+
+    .quiz-card h4 { margin: 0 0 8px; }
+    .quiz-options { display: grid; gap: 6px; }
+
+    .score {
+      margin-top: 12px;
+      padding: 10px;
+      border-radius: 10px;
+      background: #edf8f3;
+      border: 1px solid #bfe5d2;
+      font-weight: 700;
+      display: none;
+    }
+
+    @media (max-width: 980px) {
+      .layout { grid-template-columns: 1fr; }
+      .panel { position: static; }
+      .kpi-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+<div id="idd-status-banner" role="note" style="position:fixed;bottom:6px;left:6px;z-index:2147483000;max-width:min(92vw,560px);padding:3px 8px;font:11px/1.35 system-ui,-apple-system,Segoe UI,sans-serif;color:#fde68a;background:rgba(17,17,17,.82);border:1px solid rgba(253,230,138,.35);border-radius:6px;pointer-events:none;">📜 Peça histórica (versão anterior ao Cânone v1.0-rc1). Afirmações podem não refletir o status atual — ver paradigma/00-canone/AFIRMACOES.md</div>
+  <header>
+    <h1>RVM Designacoes - Notificacoes</h1>
+    <p>Estado atual, escopo, origem, destino e efeitos operacionais</p>
+  </header>
+
+  <div class="layout">
+    <aside class="panel">
+      <h2>Apresentador (voz natural)</h2>
+      <div class="controls">
+        <label>Voz
+          <select id="voiceSelect"></select>
+        </label>
+        <div class="row">
+          <label>Velocidade
+            <input id="rate" type="range" min="0.8" max="1.3" step="0.05" value="1" />
+          </label>
+          <label>Entonacao
+            <input id="pitch" type="range" min="0.8" max="1.3" step="0.05" value="1" />
+          </label>
+        </div>
+        <div class="row">
+          <button id="speakSlide" class="btn-primary">Narrar slide</button>
+          <button id="speakAuto" class="btn-secondary">Narrar tudo</button>
+        </div>
+        <div class="row">
+          <button id="pause">Pausar/Retomar</button>
+          <button id="stop" class="btn-danger">Parar voz</button>
+        </div>
+      </div>
+
+      <div class="hint">
+        Dica: para voz mais natural em portugues, selecione uma voz pt-BR no navegador.
+        Use Narrar tudo para conduzir a reuniao automaticamente slide a slide.
+      </div>
+    </aside>
+
+    <main class="stage">
+      <section class="slide active" data-voice="Bem-vindos. Esta apresentação mostra, de forma clara, como funcionam as notificações no RVM hoje, para usuários finais, administradores e gestores de projeto.">
+        <h3>1) Objetivo e mensagem principal</h3>
+        <p>
+          O sistema já possui uma base robusta de notificações operacionais e de auditoria.
+          O foco atual é manter clareza entre <b>notificação persistente</b>, <b>feedback imediato de interface</b>
+          e <b>mensageria externa</b>.
+        </p>
+        <div class="kpi-grid">
+          <div class="kpi"><span>Dominios de notificacao persistente</span><b>3 ativos</b></div>
+          <div class="kpi"><span>Canais principais de visualizacao (Admin)</span><b>3</b></div>
+          <div class="kpi"><span>Portais de usuario final com feedback dedicado</span><b>3</b></div>
+        </div>
+      </section>
+
+      <section class="slide" data-voice="A arquitetura de notificações é baseada em tabelas de mudança, assinatura em tempo real e ações de tratamento como dispensar ou reatribuir.">
+        <h3>2) Arquitetura de notificacoes</h3>
+        <table>
+          <thead><tr><th>Camada</th><th>Como funciona</th><th>Objetivo</th></tr></thead>
+          <tbody>
+            <tr><td>Origem (DB/RPC)</td><td>Tabelas change_notifications e funcoes RPC de registro/dismiss</td><td>Persistir evento com contexto</td></tr>
+            <tr><td>Tempo real</td><td>Supabase channel por dominio</td><td>Atualizacao imediata sem recarregar tela</td></tr>
+            <tr><td>UI unificada</td><td>Banner generico com severidade, autor, data e acoes</td><td>Resposta operacional rapida</td></tr>
+            <tr><td>Acao consequente</td><td>Reatribuir agora, dispensar ou revisao manual</td><td>Fechar ciclo da ocorrencia</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section class="slide" data-voice="Para administradores, há três famílias de notificação persistente: disponibilidade, recusas de confirmação e mudanças de perfil de publicador.">
+        <h3>3) Escopo atual por dominio</h3>
+        <table>
+          <thead><tr><th>Dominio</th><th>Origem</th><th>Destino visual</th><th>Interacao consequente</th></tr></thead>
+          <tbody>
+            <tr>
+              <td>Disponibilidade</td>
+              <td>RPC de mudanca de disponibilidade</td>
+              <td>Admin tab, S89 modal, Chat (compacto)</td>
+              <td>Reatribuir partes afetadas ou dispensar</td>
+            </tr>
+            <tr>
+              <td>Confirmacao/Recusa</td>
+              <td>Portal de confirmacao de designacao</td>
+              <td>Admin tab e S89 modal</td>
+              <td>Reatribuir parte recusada ou dispensar</td>
+            </tr>
+            <tr>
+              <td>Perfil de publicador</td>
+              <td>PublisherStatusForm (admin/portal)</td>
+              <td>Admin tab</td>
+              <td>Revisao manual (sem reatribuir no banner)</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section class="slide" data-voice="Para usuários finais, as notificações são mais de orientação e confirmação de ação: acesso válido, erro, sucesso e próximos passos.">
+        <h3>4) Experiencia do usuario final</h3>
+        <table>
+          <thead><tr><th>Canal</th><th>Mensagem principal</th><th>Objetivo ao usuario</th></tr></thead>
+          <tbody>
+            <tr><td>Portal de Confirmacao</td><td>Acesso autorizado, ja respondido, sucesso, erro</td><td>Dar seguranca e fechar resposta</td></tr>
+            <tr><td>Portal de Disponibilidade</td><td>Validando, link invalido, salvando, salvo</td><td>Conduzir autogestao de agenda</td></tr>
+            <tr><td>Publisher Form por link</td><td>Acesso por token, resultado de salvamento em lote</td><td>Permitir ajuste controlado com rastreio</td></tr>
+            <tr><td>Login + 2FA</td><td>Solicitacao e validacao de codigo WhatsApp</td><td>Protecao e confianca de acesso</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section class="slide" data-voice="Além das notificações internas, existe o canal externo de comunicação via WhatsApp com registro de histórico e atividade operacional.">
+        <h3>5) Origem, destino e efeitos (matriz executiva)</h3>
+        <table>
+          <thead>
+            <tr><th>Canal</th><th>Publico</th><th>Persistencia</th><th>Origem</th><th>Destino</th><th>Efeito consequente</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Banners change_notifications</td><td>Admin</td><td>Alta</td><td>RPC + tabelas de dominio</td><td>UI Admin/S89/Chat</td><td>Reatribuir, dispensar, revisar</td></tr>
+            <tr><td>Status/toasts inline</td><td>Admin e portal</td><td>Baixa</td><td>Estado de tela</td><td>Topo/alerta local</td><td>Confirmar sucesso ou erro imediato</td></tr>
+            <tr><td>Modais de impedimento</td><td>Admin e portal</td><td>Media</td><td>Regra de elegibilidade</td><td>Modal de decisao</td><td>Salvar, salvar sem cancelar, cancelar</td></tr>
+            <tr><td>Hub de Comunicacao</td><td>Admin</td><td>Alta</td><td>notifications/activity_logs</td><td>Aba Comunicacao</td><td>Acompanhar envio e historico</td></tr>
+            <tr><td>WhatsApp S89/S140</td><td>Usuarios finais e lideres</td><td>Media</td><td>communicationService</td><td>WhatsApp Web/App</td><td>Acao humana (confirmar, recusar, substituir)</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section class="slide" data-voice="Agora veremos um quiz curto de revisão para reforçar entendimento de escopo, origem, destino e consequência das notificações.">
+        <h3>6) Quiz de revisao</h3>
+        <div id="quizArea"></div>
+        <div class="score" id="scoreBox"></div>
+        <button id="checkQuiz" class="btn-warning">Corrigir quiz</button>
+      </section>
+
+      <div class="nav">
+        <button id="prevSlide">Anterior</button>
+        <div class="progress"><div class="bar" id="bar"></div></div>
+        <span id="counter"></span>
+        <button id="nextSlide">Proximo</button>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    const slides = Array.from(document.querySelectorAll('.slide'));
+    const counter = document.getElementById('counter');
+    const bar = document.getElementById('bar');
+    const hintBox = document.querySelector('.hint');
+    let idx = 0;
+
+    function renderSlide() {
+      slides.forEach((s, i) => s.classList.toggle('active', i === idx));
+      counter.textContent = `Slide ${idx + 1} / ${slides.length}`;
+      bar.style.width = `${((idx + 1) / slides.length) * 100}%`;
+    }
+
+    document.getElementById('prevSlide').addEventListener('click', () => {
+      idx = Math.max(0, idx - 1);
+      renderSlide();
+    });
+
+    document.getElementById('nextSlide').addEventListener('click', () => {
+      idx = Math.min(slides.length - 1, idx + 1);
+      renderSlide();
+    });
+
+    // Voice presenter
+    const voiceSelect = document.getElementById('voiceSelect');
+    const rate = document.getElementById('rate');
+    const pitch = document.getElementById('pitch');
+    const speakSlideBtn = document.getElementById('speakSlide');
+    const speakAutoBtn = document.getElementById('speakAuto');
+    const pauseBtn = document.getElementById('pause');
+    const stopBtn = document.getElementById('stop');
+    let voices = [];
+    let autoNarrate = false;
+    const hasSpeech = 'speechSynthesis' in window && 'SpeechSynthesisUtterance' in window;
+
+    function loadVoices() {
+      if (!hasSpeech) return;
+      voices = window.speechSynthesis.getVoices() || [];
+      voiceSelect.innerHTML = '';
+      const sorted = [...voices].sort((a, b) => {
+        const ap = (a.lang || '').toLowerCase().startsWith('pt') ? -1 : 1;
+        const bp = (b.lang || '').toLowerCase().startsWith('pt') ? -1 : 1;
+        return ap - bp;
+      });
+      voices = sorted;
+      sorted.forEach((v, i) => {
+        const op = document.createElement('option');
+        op.value = i;
+        op.textContent = `${v.name} (${v.lang})`;
+        if ((v.lang || '').toLowerCase().includes('pt-br')) op.selected = true;
+        voiceSelect.appendChild(op);
+      });
+    }
+
+    if (hasSpeech) {
+      window.speechSynthesis.onvoiceschanged = loadVoices;
+      loadVoices();
+    } else {
+      speakSlideBtn.disabled = true;
+      speakAutoBtn.disabled = true;
+      pauseBtn.disabled = true;
+      stopBtn.disabled = true;
+      voiceSelect.disabled = true;
+      rate.disabled = true;
+      pitch.disabled = true;
+      if (hintBox) {
+        hintBox.textContent = 'Seu navegador não suporta síntese de voz nesta página. Os botões de navegação e quiz continuam funcionando normalmente.';
+      }
+    }
+
+    function slideText(slide) {
+      return slide.getAttribute('data-voice') || slide.innerText.replace(/\s+/g, ' ').trim();
+    }
+
+    function pickStablePtBrVoice(excludeName = '') {
+      const byKnownName = voices.find((v) => {
+        const name = (v.name || '').toLowerCase();
+        const lang = (v.lang || '').toLowerCase();
+        const excluded = (excludeName || '').toLowerCase();
+        return lang.includes('pt-br') && (name.includes('maria') || name.includes('daniel')) && name !== excluded;
+      });
+      if (byKnownName) return byKnownName;
+
+      return voices.find((v) => {
+        const name = (v.name || '').toLowerCase();
+        const lang = (v.lang || '').toLowerCase();
+        const excluded = (excludeName || '').toLowerCase();
+        return lang.includes('pt-br') && name !== excluded;
+      }) || null;
+    }
+
+    function speakCurrentSlide(isRetry = false, failedVoiceName = '') {
+      if (!hasSpeech) return;
+      window.speechSynthesis.cancel();
+
+      const utter = new SpeechSynthesisUtterance(slideText(slides[idx]));
+      const selectedIdx = Number(voiceSelect.value);
+      let chosen = voices[selectedIdx] || null;
+
+      // Some browser voices can fail intermittently; prefer a stable pt-BR fallback.
+      if (!chosen || (chosen.name || '').toLowerCase().includes('yara')) {
+        chosen = pickStablePtBrVoice(chosen ? chosen.name : failedVoiceName);
+      }
+
+      if (chosen) utter.voice = chosen;
+      utter.lang = chosen ? chosen.lang : 'pt-BR';
+      utter.rate = Number(rate.value);
+      utter.pitch = Number(pitch.value);
+      utter.onend = () => {
+        if (autoNarrate && idx < slides.length - 1) {
+          idx += 1;
+          renderSlide();
+          setTimeout(speakCurrentSlide, 350);
+        } else {
+          autoNarrate = false;
+        }
+      };
+
+      utter.onerror = () => {
+        if (!isRetry) {
+          const fallback = pickStablePtBrVoice(chosen ? chosen.name : failedVoiceName);
+          if (fallback) {
+            const fallbackIdx = voices.findIndex((v) => v.name === fallback.name && v.lang === fallback.lang);
+            if (fallbackIdx >= 0) voiceSelect.value = String(fallbackIdx);
+            speakCurrentSlide(true, chosen ? chosen.name : failedVoiceName);
+            return;
+          }
+        }
+        autoNarrate = false;
+      };
+
+      window.speechSynthesis.speak(utter);
+    }
+
+    speakSlideBtn.addEventListener('click', () => {
+      autoNarrate = false;
+      speakCurrentSlide();
+    });
+
+    speakAutoBtn.addEventListener('click', () => {
+      autoNarrate = true;
+      speakCurrentSlide();
+    });
+
+    pauseBtn.addEventListener('click', () => {
+      if (!hasSpeech) return;
+      if (window.speechSynthesis.speaking && !window.speechSynthesis.paused) {
+        window.speechSynthesis.pause();
+      } else if (window.speechSynthesis.paused) {
+        window.speechSynthesis.resume();
+      }
+    });
+
+    stopBtn.addEventListener('click', () => {
+      if (!hasSpeech) return;
+      autoNarrate = false;
+      window.speechSynthesis.cancel();
+    });
+
+    // Quiz
+    const quizData = [
+      {
+        q: 'Qual canal mostra notificacoes persistentes com severidade e acao operacional?',
+        opts: ['Banner change_notifications', 'Mensagem de loading', 'Tooltip de botao'],
+        a: 0,
+      },
+      {
+        q: 'No dominio de confirmacao/recusa, a consequencia esperada para o Admin e:',
+        opts: ['Somente ler a mensagem', 'Reatribuir parte ou dispensar', 'Gerar backup manual'],
+        a: 1,
+      },
+      {
+        q: 'Qual fluxo e principalmente para feedback imediato ao usuario final?',
+        opts: ['Status/sucesso/erro no portal', 'Historico consolidado de 90 dias', 'Indice de cache IA'],
+        a: 0,
+      },
+      {
+        q: 'Onde o Admin acompanha envio e atividade de comunicacao?',
+        opts: ['Aba Comunicacao (Hub)', 'Somente no console do navegador', 'Apenas no banco SQL'],
+        a: 0,
+      },
+      {
+        q: 'O objetivo da matriz origem-destino-consequencia e:',
+        opts: ['Aumentar complexidade tecnica', 'Dar visibilidade e governanca operacional', 'Substituir testes'],
+        a: 1,
+      },
+    ];
+
+    function renderQuiz() {
+      const area = document.getElementById('quizArea');
+      area.innerHTML = '';
+      quizData.forEach((item, i) => {
+        const card = document.createElement('div');
+        card.className = 'quiz-card';
+        card.innerHTML = `<h4>${i + 1}) ${item.q}</h4>`;
+        const opts = document.createElement('div');
+        opts.className = 'quiz-options';
+        item.opts.forEach((o, j) => {
+          const id = `q${i}_o${j}`;
+          const label = document.createElement('label');
+          label.innerHTML = `<input type="radio" name="q${i}" value="${j}" id="${id}"> ${o}`;
+          opts.appendChild(label);
+        });
+        card.appendChild(opts);
+        area.appendChild(card);
+      });
+    }
+
+    document.getElementById('checkQuiz').addEventListener('click', () => {
+      let score = 0;
+      quizData.forEach((item, i) => {
+        const chosen = document.querySelector(`input[name="q${i}"]:checked`);
+        if (chosen && Number(chosen.value) === item.a) score += 1;
+      });
+
+      const pct = Math.round((score / quizData.length) * 100);
+      const box = document.getElementById('scoreBox');
+      box.style.display = 'block';
+      box.textContent = `Resultado: ${score}/${quizData.length} (${pct}%). ${pct >= 80 ? 'Excelente revisao.' : pct >= 60 ? 'Boa base, vale revisar pontos chave.' : 'Recomenda-se repetir a apresentacao.'}`;
+    });
+
+    renderQuiz();
+    renderSlide();
+  </script>
+</body>
+</html>

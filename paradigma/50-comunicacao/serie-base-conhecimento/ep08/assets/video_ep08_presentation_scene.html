@@ -1,0 +1,912 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=1920, height=1080, initial-scale=1.0">
+  <title>Episódio 08 — IDD Base de Conhecimento: A Teoria da Ação Atômica & Sagas em 4 Fases</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-dark: #050811;
+      --bg-card: rgba(11, 20, 38, 0.90);
+      --amber-atomic: #f59e0b;
+      --amber-glow: rgba(245, 158, 11, 0.45);
+      --emerald-ok: #10b981;
+      --cyan-frost: #38bdf8;
+      --purple-tech: #a855f7;
+      --rose-warn: #f43f5e;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      width: 1920px;
+      height: 1080px;
+      overflow: hidden;
+      background: #050811;
+      color: var(--text-main);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      position: relative;
+    }
+
+    #bg-canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 1920px;
+      height: 1080px;
+      z-index: 1;
+    }
+
+    .app-container {
+      position: relative;
+      z-index: 10;
+      width: 1920px;
+      height: 1080px;
+      display: flex;
+      flex-direction: column;
+      padding: 30px 45px;
+      justify-content: space-between;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 18px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .brand-wrap {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .brand-logo {
+      width: 50px;
+      height: 50px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #f59e0b, #ef4444);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 26px;
+      box-shadow: 0 0 20px rgba(245, 158, 11, 0.5);
+    }
+    .brand-text h1 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 22px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      color: #fff;
+    }
+    .brand-text span {
+      font-size: 13px;
+      color: #fbbf24;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+    }
+
+    .header-badges {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .h-badge {
+      padding: 8px 18px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: rgba(15, 23, 42, 0.7);
+    }
+    .h-badge.ep-tag {
+      background: linear-gradient(135deg, rgba(245, 158, 11, 0.25), rgba(239, 68, 68, 0.25));
+      border-color: rgba(245, 158, 11, 0.5);
+      color: #fef3c7;
+    }
+    .h-badge.live-indicator {
+      border-color: rgba(245, 158, 11, 0.4);
+      color: #fbbf24;
+    }
+    .pulse-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #fbbf24;
+      box-shadow: 0 0 8px #fbbf24;
+    }
+
+    main {
+      flex: 1;
+      display: grid;
+      grid-template-columns: 1420px 380px;
+      gap: 30px;
+      margin: 20px 0;
+      min-height: 0;
+    }
+
+    .slide-panel {
+      background: var(--bg-card);
+      border: 1px solid rgba(245, 158, 11, 0.25);
+      border-radius: 24px;
+      padding: 32px 38px;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(16px);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .slide-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 24px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      padding-bottom: 16px;
+    }
+    .slide-title-area h2 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 32px;
+      font-weight: 800;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .slide-title-area h2 span {
+      color: #fbbf24;
+    }
+    .slide-title-area p {
+      color: var(--text-muted);
+      font-size: 15px;
+      margin-top: 6px;
+    }
+    .slide-num-tag {
+      background: rgba(245, 158, 11, 0.15);
+      border: 1px solid #f59e0b;
+      color: #fbbf24;
+      padding: 6px 16px;
+      border-radius: 12px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .slide-content-viewport {
+      flex: 1;
+      position: relative;
+      min-height: 0;
+    }
+    .slide-view {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.4s ease, transform 0.4s ease;
+      transform: translateY(10px);
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .slide-view.active {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0);
+    }
+
+    /* SLIDE 1: O CALCANHAR DE AQUILES DA IA */
+    .danger-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      flex: 1;
+    }
+    .d-card {
+      background: rgba(15, 23, 42, 0.7);
+      border-radius: 16px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .d-card.danger {
+      border-color: rgba(244, 63, 94, 0.4);
+      background: radial-gradient(circle at top right, rgba(244, 63, 94, 0.12), transparent 70%), rgba(15, 23, 42, 0.8);
+    }
+    .d-card.atomic {
+      border-color: rgba(245, 158, 11, 0.4);
+      background: radial-gradient(circle at top right, rgba(245, 158, 11, 0.15), transparent 70%), rgba(15, 23, 42, 0.8);
+    }
+    .d-head {
+      font-family: 'Outfit', sans-serif;
+      font-size: 19px;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .d-head.danger { color: #fb7185; }
+    .d-head.atomic { color: #fbbf24; }
+    .d-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      font-size: 15px;
+      line-height: 1.5;
+      color: #cbd5e1;
+    }
+    .d-item strong { color: #fff; }
+
+    /* SLIDE 2: O PROTOCOLO EM 4 FASES */
+    .four-phases-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr 1fr;
+      gap: 16px;
+      flex: 1;
+    }
+    .phase-card {
+      background: rgba(15, 23, 42, 0.75);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      padding: 22px 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      position: relative;
+      overflow: hidden;
+    }
+    .phase-card.p1 { border-color: rgba(56, 189, 248, 0.4); background: radial-gradient(circle at top, rgba(56, 189, 248, 0.12), transparent 80%), rgba(15, 23, 42, 0.8); }
+    .phase-card.p2 { border-color: rgba(168, 85, 247, 0.4); background: radial-gradient(circle at top, rgba(168, 85, 247, 0.12), transparent 80%), rgba(15, 23, 42, 0.8); }
+    .phase-card.p3 { border-color: rgba(16, 185, 129, 0.4); background: radial-gradient(circle at top, rgba(16, 185, 129, 0.12), transparent 80%), rgba(15, 23, 42, 0.8); }
+    .phase-card.p4 { border-color: rgba(245, 158, 11, 0.4); background: radial-gradient(circle at top, rgba(245, 158, 11, 0.12), transparent 80%), rgba(15, 23, 42, 0.8); }
+
+    .phase-badge {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      font-weight: 800;
+      padding: 4px 10px;
+      border-radius: 999px;
+      align-self: flex-start;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    .p1 .phase-badge { background: rgba(56, 189, 248, 0.2); color: #38bdf8; }
+    .p2 .phase-badge { background: rgba(168, 85, 247, 0.2); color: #c084fc; }
+    .p3 .phase-badge { background: rgba(16, 185, 129, 0.2); color: #34d399; }
+    .p4 .phase-badge { background: rgba(245, 158, 11, 0.2); color: #fbbf24; }
+
+    .phase-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 19px;
+      font-weight: 800;
+      color: #fff;
+    }
+    .phase-desc {
+      font-size: 13px;
+      color: #cbd5e1;
+      line-height: 1.5;
+    }
+    .phase-tag-bot {
+      margin-top: auto;
+      padding: 8px;
+      border-radius: 8px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      text-align: center;
+      background: rgba(0, 0, 0, 0.4);
+      color: #94a3b8;
+    }
+
+    /* SLIDE 3: SAGAS DE DOMÍNIO */
+    .sagas-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      flex: 1;
+    }
+    .saga-box {
+      background: rgba(15, 23, 42, 0.7);
+      border-radius: 16px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .saga-box.helland {
+      border-color: rgba(56, 189, 248, 0.35);
+      background: radial-gradient(circle at top right, rgba(56, 189, 248, 0.1), transparent 70%), rgba(15, 23, 42, 0.8);
+    }
+    .saga-box.idd-sagas {
+      border-color: rgba(245, 158, 11, 0.35);
+      background: radial-gradient(circle at top right, rgba(245, 158, 11, 0.1), transparent 70%), rgba(15, 23, 42, 0.8);
+    }
+
+    /* SLIDE 4: FECHAMENTO DA SÉRIE FUNDAMENTAL */
+    .triumph-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      flex: 1;
+    }
+    .pillar-summary {
+      background: rgba(15, 23, 42, 0.7);
+      border: 1px solid rgba(245, 158, 11, 0.3);
+      border-radius: 16px;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .pillar-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 14px;
+      color: #e2e8f0;
+      padding: 6px 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+    .pillar-row span.icon { font-size: 18px; }
+    .pillar-row strong { color: #fbbf24; }
+
+    .call-action-box {
+      background: linear-gradient(135deg, rgba(245, 158, 11, 0.25), rgba(239, 68, 68, 0.15));
+      border: 1.5px solid rgba(245, 158, 11, 0.5);
+      border-radius: 16px;
+      padding: 26px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      box-shadow: 0 10px 35px rgba(245, 158, 11, 0.2);
+    }
+
+    /* BARRA LATERAL */
+    .sidebar {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+    .host-card {
+      background: var(--bg-card);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 20px;
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    .host-card.talking {
+      border-color: #f59e0b;
+      background: linear-gradient(135deg, rgba(245, 158, 11, 0.2), rgba(15, 23, 42, 0.9));
+      box-shadow: 0 0 30px rgba(245, 158, 11, 0.35);
+      transform: scale(1.02);
+    }
+    .host-card.talking.leigo-active {
+      border-color: #38bdf8;
+      background: linear-gradient(135deg, rgba(56, 189, 248, 0.2), rgba(15, 23, 42, 0.9));
+      box-shadow: 0 0 30px rgba(56, 189, 248, 0.35);
+    }
+    .avatar-wrap {
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      border: 2px solid rgba(255, 255, 255, 0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 32px;
+      background: #0b1426;
+      flex-shrink: 0;
+    }
+    .host-info h4 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 17px;
+      font-weight: 700;
+      color: #fff;
+    }
+    .host-info p {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 3px;
+    }
+    .talk-badge {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      font-size: 10px;
+      text-transform: uppercase;
+      font-weight: 800;
+      letter-spacing: 1px;
+      padding: 3px 8px;
+      border-radius: 999px;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .host-card.talking .talk-badge {
+      opacity: 1;
+      background: #f59e0b;
+      color: #0b1426;
+    }
+    .host-card.talking.leigo-active .talk-badge {
+      background: #38bdf8;
+      color: #0b1426;
+    }
+
+    .telemetry-card {
+      background: var(--bg-card);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 20px;
+      padding: 20px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .tele-title {
+      font-size: 12px;
+      font-weight: 800;
+      color: var(--text-muted);
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .tele-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 13px;
+      padding: 8px 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+    .tele-val {
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 700;
+      color: #fbbf24;
+    }
+
+    footer {
+      background: rgba(11, 20, 38, 0.95);
+      border: 1px solid rgba(245, 158, 11, 0.25);
+      border-radius: 18px;
+      padding: 16px 26px;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+    .spk-pill {
+      padding: 6px 14px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-shrink: 0;
+    }
+    .spk-pill.eliezer {
+      background: rgba(245, 158, 11, 0.2);
+      border: 1px solid #f59e0b;
+      color: #fbbf24;
+    }
+    .spk-pill.leigo {
+      background: rgba(56, 189, 248, 0.2);
+      border: 1px solid #38bdf8;
+      color: #38bdf8;
+    }
+    .speech-box {
+      flex: 1;
+      font-size: 16px;
+      color: #e2e8f0;
+      font-weight: 500;
+      line-height: 1.4;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .wave-bars {
+      display: flex;
+      gap: 4px;
+      align-items: center;
+      height: 24px;
+      opacity: 0.3;
+    }
+    .wave-bars.active { opacity: 1; }
+    .w-bar {
+      width: 3px;
+      background: #fbbf24;
+      border-radius: 999px;
+      animation: wavePulse 0.8s infinite ease-in-out;
+    }
+    .w-bar:nth-child(2) { animation-delay: 0.15s; height: 18px; }
+    .w-bar:nth-child(3) { animation-delay: 0.3s; height: 24px; }
+    .w-bar:nth-child(4) { animation-delay: 0.45s; height: 14px; }
+    .w-bar:nth-child(5) { animation-delay: 0.2s; height: 20px; }
+    @keyframes wavePulse {
+      0%, 100% { height: 6px; }
+      50% { height: 22px; }
+    }
+  </style>
+</head>
+<body>
+  <canvas id="bg-canvas"></canvas>
+
+  <div class="app-container">
+    <header>
+      <div class="brand-wrap">
+        <div class="brand-logo">⚛️</div>
+        <div class="brand-text">
+          <h1>PARADIGMA IDD — BASE DE CONHECIMENTO</h1>
+          <span>AÇÃO ATÔMICA, SAGAS &amp; O PROTOCOLO EM 4 FASES</span>
+        </div>
+      </div>
+      <div class="header-badges">
+        <div class="h-badge ep-tag">
+          <span>EPISÓDIO 08</span>
+          <strong>FECHAMENTO DA SÉRIE FUNDAMENTAL</strong>
+        </div>
+        <div class="h-badge live-indicator">
+          <div class="pulse-dot"></div>
+          <span id="timeReadout">00:00 / 03:06</span>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section class="slide-panel">
+        <div class="slide-header">
+          <div class="slide-title-area">
+            <h2 id="mainSlideTitle"><span>⚛️</span> O Calcanhar de Aquiles da IA: Mutações Ad-Hoc</h2>
+            <p id="mainSlideSubtitle">Por que permitir que agentes de IA gerem código de mutação livre corrompe sistemas reais.</p>
+          </div>
+          <div class="slide-num-tag">SLIDE <span id="slideIndicator">1</span>/4</div>
+        </div>
+
+        <div class="slide-content-viewport">
+          <!-- SLIDE 1: O CALCANHAR DE AQUILES DA IA -->
+          <div class="slide-view active" id="view-slide-1">
+            <div class="danger-grid">
+              <div class="d-card danger">
+                <div class="d-head danger">🚨 O Perigo do Código Livre com LLMs</div>
+                <div class="d-item">
+                  <span>💥</span>
+                  <div><strong>Meia-Transação Fatal:</strong> O modelo executa parte de uma operação (ex.: debita estoque) e falha antes de gerar o faturamento.</div>
+                </div>
+                <div class="d-item">
+                  <span>🕳️</span>
+                  <div><strong>Estados Órfãos:</strong> Entidades criadas no banco sem vínculos essenciais, gerando lixo relacional e corrupção silenciosa.</div>
+                </div>
+                <div class="d-item">
+                  <span>🔓</span>
+                  <div><strong>Ausência de Rollback Simétrico:</strong> Se um webhook externo falha, o código do LLM não sabe como reverter com idempotência.</div>
+                </div>
+              </div>
+
+              <div class="d-card atomic">
+                <div class="d-head atomic">⚛️ IDD: A Teoria da Ação Atômica</div>
+                <div class="d-item">
+                  <span>📐</span>
+                  <div><strong>Comportamento Declarativo:</strong> Nenhum método executa código imperativo arbitrário. Toda mutação é um grafo atômico de transição.</div>
+                </div>
+                <div class="d-item">
+                  <span>🛡️</span>
+                  <div><strong>Atomicidade Matemática:</strong> Ou a intenção completa atinge o estado final desejado, ou o sistema retorna ao estado inicial exato.</div>
+                </div>
+                <div class="d-item">
+                  <span>⚡</span>
+                  <div><strong>Blindagem de Concorrência:</strong> Locks otimistas e controle estrito de versões evitam condições de corrida entre agentes de IA.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- SLIDE 2: O PROTOCOLO EM 4 FASES -->
+          <div class="slide-view" id="view-slide-2">
+            <div class="four-phases-grid">
+              <div class="phase-card p1">
+                <div class="phase-badge">Fase 1</div>
+                <div class="phase-title">🛡️ GUARDA</div>
+                <div class="phase-desc">
+                  Validação formal de precondições e invariantes de domínio via SMT Solvers. Falha rápida antes de tocar qualquer dado persistido.
+                </div>
+                <div class="phase-tag-bot">Pre-Conditions Check</div>
+              </div>
+
+              <div class="phase-card p2">
+                <div class="phase-badge">Fase 2</div>
+                <div class="phase-title">⚡ MUTAÇÃO</div>
+                <div class="phase-desc">
+                  Aplicação da transformação de estado em escopo estritamente isolado e com garantia de idempotência para retentativas seguras.
+                </div>
+                <div class="phase-tag-bot">Isolated Mutation</div>
+              </div>
+
+              <div class="phase-card p3">
+                <div class="phase-badge">Fase 3</div>
+                <div class="phase-title">🔒 SELAGEM</div>
+                <div class="phase-desc">
+                  Verificação de pós-condições, integridade referencial e emissão do Evento de Domínio imutável no log append-only.
+                </div>
+                <div class="phase-tag-bot">Post-Conditions &amp; Event</div>
+              </div>
+
+              <div class="phase-card p4">
+                <div class="phase-badge">Fase 4</div>
+                <div class="phase-title">🔄 COMPENSAÇÃO</div>
+                <div class="phase-desc">
+                  Gatilho automático de reversão simétrica em caso de falha transitória ou externa, restaurando a consistência do sistema.
+                </div>
+                <div class="phase-tag-bot">Saga Compensating Action</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- SLIDE 3: SAGAS DE DOMÍNIO -->
+          <div class="sagas-grid">
+            <div class="saga-box helland">
+              <div class="d-head" style="color: #38bdf8;">📚 A Sabedoria da Ciência da Computação</div>
+              <div class="d-item">
+                <span>🏛️</span>
+                <div><strong>Pat Helland (Amazon/Salesforce):</strong> "Life Beyond Distributed Transactions". Por que 2-Phase Commit bloqueante não escala no mundo real.</div>
+              </div>
+              <div class="d-item">
+                <span>🔄</span>
+                <div><strong>Garcia-Molina &amp; Salem (Princeton):</strong> A formalização de Sagas como uma sequência de transações locais intercaladas com compensações.</div>
+              </div>
+              <div class="d-item">
+                <span>⏱️</span>
+                <div><strong>Dados Através do Tempo:</strong> A imutabilidade do log histórico é a chave para a consistência eventual determinística.</div>
+              </div>
+            </div>
+
+            <div class="saga-box idd-sagas">
+              <div class="d-head" style="color: #fbbf24;">⚛️ Sagas Declarativas no Paradigma IDD</div>
+              <div class="d-item">
+                <span>🌲</span>
+                <div><strong>Compensação Pré-Declarada:</strong> Toda intenção comportamental declara sua ação compensatória simétrica no compilador antes de rodar.</div>
+              </div>
+              <div class="d-item">
+                <span>🚫</span>
+                <div><strong>Zero Deadlocks:</strong> Sem locks distribuídos entre agregados. O compilador IDD garante convergência sem travar tabelas.</div>
+              </div>
+              <div class="d-item">
+                <span>🤖</span>
+                <div><strong>Agentes Sem Poder de Dano:</strong> O agente de IA orquestra intenções de alto nível; o motor executa as fases de forma inabalável.</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- SLIDE 4: FECHAMENTO DA SÉRIE FUNDAMENTAL -->
+          <div class="slide-view" id="view-slide-4">
+            <div class="triumph-layout">
+              <div class="pillar-summary">
+                <div style="font-size: 13px; font-weight: 800; color: #fbbf24; text-transform: uppercase; letter-spacing: 1.5px;">
+                  OS 5 PILARES DA SÉRIE FUNDAMENTAL DO IDD
+                </div>
+                <div class="pillar-row">
+                  <span class="icon">🏛️</span>
+                  <div><strong>Ontologia &amp; Linhagem:</strong> De Bush a LLMs, o comando epistêmico humano soberano.</div>
+                </div>
+                <div class="pillar-row">
+                  <span class="icon">🧠</span>
+                  <div><strong>Neuro-Simbólico:</strong> A fusão de LLMs probabilísticos com raciocínio determinístico.</div>
+                </div>
+                <div class="pillar-row">
+                  <span class="icon">⚡</span>
+                  <div><strong>Compilador de Intenções:</strong> DSPy, Intent IR e a morte do prompt engineering ad-hoc.</div>
+                </div>
+                <div class="pillar-row">
+                  <span class="icon">🛡️</span>
+                  <div><strong>Invariantes &amp; SMT:</strong> Z3, Dafny e a garantia de alucinação de domínio zero.</div>
+                </div>
+                <div class="pillar-row">
+                  <span class="icon">📜</span>
+                  <div><strong>Constituição &amp; Ação Atômica:</strong> Diff semântico e o protocolo de execução em 4 fases.</div>
+                </div>
+              </div>
+
+              <div class="call-action-box">
+                <div>
+                  <div style="font-size: 13px; font-weight: 800; color: #fff; letter-spacing: 1px; text-transform: uppercase;">
+                    BEM-VINDO À NOVA ENGENHARIA DE SOFTWARE
+                  </div>
+                  <h3 style="font-family: 'Outfit', sans-serif; font-size: 26px; font-weight: 900; color: #fff; margin-top: 10px; line-height: 1.2;">
+                    A ERA DA CRIAÇÃO DETERMINÍSTICA DE SOFTWARE
+                  </h3>
+                  <p style="font-size: 14px; color: #cbd5e1; margin-top: 12px; line-height: 1.5;">
+                    Superamos o improviso do Vibe Coding com uma ciência rigorosa, matemática formal e soberania humana inabalável.
+                  </p>
+                </div>
+                <div style="background: rgba(15, 23, 42, 0.85); border-radius: 12px; padding: 14px; font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.3);">
+                  ▶ Próximo Passo: Playlist "IDD na Prática — Refrigeração"
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <aside class="sidebar">
+        <div class="host-card" id="card-eliezer">
+          <div class="avatar-wrap">👨‍💼</div>
+          <div class="host-info">
+            <h4>Eliézer Rosa</h4>
+            <p>Criador do Paradigma IDD</p>
+          </div>
+          <div class="talk-badge">FALANDO</div>
+        </div>
+
+        <div class="host-card" id="card-leigo">
+          <div class="avatar-wrap">👩‍💻</div>
+          <div class="host-info">
+            <h4>Usuária Leiga</h4>
+            <p>Voz da Ergonomia de Campo</p>
+          </div>
+          <div class="talk-badge">FALANDO</div>
+        </div>
+
+        <div class="telemetry-card">
+          <div class="tele-title">
+            <span>⚙️</span> PROTOCOLO ATÔMICO
+          </div>
+          <div class="tele-item">
+            <span style="color: var(--text-muted);">Protocolo</span>
+            <span class="tele-val">CANÔNICO 4 FASES</span>
+          </div>
+          <div class="tele-item">
+            <span style="color: var(--text-muted);">Consistência</span>
+            <span class="tele-val">SAGAS ACID/BASE</span>
+          </div>
+          <div class="tele-item">
+            <span style="color: var(--text-muted);">Idempotência</span>
+            <span class="tele-val">MATEMÁTICA</span>
+          </div>
+          <div class="tele-item">
+            <span style="color: var(--text-muted);">Série Teórica</span>
+            <span class="tele-val" style="color: #10b981;">CONCLUÍDA</span>
+          </div>
+        </div>
+      </aside>
+    </main>
+
+    <footer>
+      <div class="spk-pill leigo" id="speakerPill">
+        <span>🎙️</span> <span id="speakerName">Usuária Leiga</span>
+      </div>
+      <div class="speech-box" id="speechContent">
+        "Eliézer, chegamos ao episódio oito da nossa Base de Conhecimento!..."
+      </div>
+      <div class="wave-bars active" id="waveBars">
+        <div class="w-bar"></div>
+        <div class="w-bar"></div>
+        <div class="w-bar"></div>
+        <div class="w-bar"></div>
+        <div class="w-bar"></div>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    const canvas = document.getElementById('bg-canvas');
+    const ctx = canvas.getContext('2d');
+    canvas.width = 1920;
+    canvas.height = 1080;
+
+    const particles = [];
+    for (let i = 0; i < 70; i++) {
+      particles.push({
+        x: Math.random() * 1920,
+        y: Math.random() * 1080,
+        radius: Math.random() * 2 + 0.5,
+        speedX: (Math.random() - 0.5) * 0.3,
+        speedY: (Math.random() - 0.5) * 0.3,
+        color: Math.random() > 0.5 ? '#f59e0b' : '#38bdf8',
+        alpha: Math.random() * 0.4 + 0.1
+      });
+    }
+
+    function animateBg() {
+      ctx.fillStyle = '#050811';
+      ctx.fillRect(0, 0, 1920, 1080);
+      particles.forEach(p => {
+        p.x += p.speedX; p.y += p.speedY;
+        if (p.y < 0) p.y = 1080;
+        if (p.x < 0) p.x = 1920;
+        if (p.x > 1920) p.x = 0;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+        ctx.fillStyle = p.color;
+        ctx.globalAlpha = p.alpha;
+        ctx.fill();
+      });
+      requestAnimationFrame(animateBg);
+    }
+    requestAnimationFrame(animateBg);
+
+    window.timelineItems = [];
+
+    window.setTimeline = function(items) {
+      if (items && items.length > 0) window.timelineItems = items;
+    };
+
+    const slideTitles = [
+      { t: "O Calcanhar de Aquiles da IA: Mutações Ad-Hoc", s: "Por que permitir que agentes de IA gerem código de mutação livre corrompe sistemas reais." },
+      { t: "O Protocolo Canônico da Ação Atômica em 4 Fases", s: "Guarda (Pre-conditions), Mutação (Idempotente), Selagem (Domain Event) e Compensação (Sagas)." },
+      { t: "Sagas de Domínio & Transações Sem Bloqueio", s: "A teoria de Pat Helland e Hector Garcia-Molina aplicada à síntese de software por IA." },
+      { t: "O Fechamento da Série Fundamental: A Nova Engenharia", s: "O Paradigma IDD como a resposta formal e definitiva ao caos e fragilidade do Vibe Coding." }
+    ];
+
+    window.updateFrameAtTime = function(timeSec) {
+      const curtain = document.getElementById('sync-curtain');
+      if (curtain && curtain.style.display !== 'none') curtain.style.display = 'none';
+
+      const m = Math.floor(timeSec / 60);
+      const s = Math.floor(timeSec % 60);
+      const timeStr = `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+      const timeEl = document.getElementById('timeReadout');
+      if (timeEl) timeEl.innerText = `${timeStr} / 03:06`;
+
+      if (!window.timelineItems || window.timelineItems.length === 0) return;
+
+      const currentSeg = window.timelineItems.find(it => timeSec >= it.startSec && timeSec <= it.endSec)
+        || window.timelineItems.filter(it => it.startSec <= timeSec).pop()
+        || window.timelineItems[0];
+
+      const speakingSeg = window.timelineItems.find(it => timeSec >= it.startSec && timeSec <= it.endSec);
+
+      document.querySelectorAll('.slide-view').forEach(sv => sv.classList.remove('active'));
+      const activeView = document.getElementById(`view-slide-${currentSeg.slide}`);
+      if (activeView) activeView.classList.add('active');
+
+      document.getElementById('slideIndicator').innerText = currentSeg.slide;
+      const tInfo = slideTitles[currentSeg.slide - 1];
+      if (tInfo) {
+        document.getElementById('mainSlideTitle').innerHTML = `<span>⚛️</span> ${tInfo.t}`;
+        document.getElementById('mainSlideSubtitle').innerText = tInfo.s;
+      }
+
+      document.getElementById('speechContent').innerText = `"${currentSeg.text}"`;
+      document.getElementById('speakerName').innerText = currentSeg.actor;
+      const pill = document.getElementById('speakerPill');
+      pill.className = `spk-pill ${currentSeg.who}`;
+
+      const cardEliezer = document.getElementById('card-eliezer');
+      const cardLeigo = document.getElementById('card-leigo');
+      const waveBars = document.getElementById('waveBars');
+
+      if (speakingSeg) {
+        cardEliezer.classList.toggle('talking', speakingSeg.who === 'eliezer');
+        cardLeigo.classList.toggle('talking', speakingSeg.who === 'leigo');
+        cardLeigo.classList.toggle('leigo-active', speakingSeg.who === 'leigo');
+        waveBars.classList.add('active');
+      } else {
+        cardEliezer.classList.remove('talking');
+        cardEliezer.classList.remove('talking');
+        cardLeigo.classList.remove('talking');
+        cardLeigo.classList.remove('leigo-active');
+        waveBars.classList.remove('active');
+      }
+    };
+  </script>
+</body>
+</html>

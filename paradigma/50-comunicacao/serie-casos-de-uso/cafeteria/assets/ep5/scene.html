@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>IDD Cafeteria - Ep. 5 Grand Finale: Telemetria Real & Encerramento</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, sans-serif; }
+    body {
+      width: 1920px; height: 1080px; background: #0c0a09; color: #f8fafc;
+      overflow: hidden; position: relative;
+    }
+    .grid-bg {
+      position: absolute; inset: 0;
+      background-image: linear-gradient(rgba(245, 158, 11, 0.05) 1px, transparent 1px),
+                        linear-gradient(90deg, rgba(245, 158, 11, 0.05) 1px, transparent 1px);
+      background-size: 60px 60px;
+    }
+    .glow-ambient {
+      position: absolute; width: 1100px; height: 1100px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(217, 119, 6, 0.28) 0%, rgba(180, 83, 9, 0.16) 45%, transparent 70%);
+      top: 50%; left: 50%; transform: translate(-50%, -50%); filter: blur(90px); pointer-events: none;
+    }
+
+    /* TOP BAR */
+    .top-bar {
+      position: absolute; top: 0; left: 0; right: 0; height: 80px;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 60px; background: rgba(28, 19, 14, 0.88);
+      border-bottom: 1px solid rgba(245, 158, 11, 0.35); backdrop-filter: blur(12px); z-index: 50;
+    }
+    .top-title { display: flex; align-items: center; gap: 18px; }
+    .badge-ep {
+      background: linear-gradient(135deg, #f59e0b, #b45309); color: white;
+      font-weight: 900; font-size: 16px; letter-spacing: 1.5px;
+      padding: 6px 20px; border-radius: 999px; text-transform: uppercase;
+      box-shadow: 0 0 22px rgba(245, 158, 11, 0.5);
+    }
+    .series-name { font-size: 20px; font-weight: 700; color: #d6d3d1; }
+    .series-name span { color: #f59e0b; font-weight: 800; }
+    .timer-box { font-size: 18px; font-family: monospace; color: #fbbf24; font-weight: 700; }
+
+    /* STAGE */
+    .stage {
+      position: absolute; top: 80px; bottom: 220px; left: 0; right: 0;
+      padding: 40px 60px; display: flex; flex-direction: column; z-index: 20;
+    }
+    .slide-view {
+      display: none; width: 100%; height: 100%; flex-direction: column;
+      animation: fadeIn 0.4s ease-out forwards;
+    }
+    .slide-view.active { display: flex; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+    .slide-header { margin-bottom: 25px; }
+    .slide-category { font-size: 16px; font-weight: 800; color: #f59e0b; text-transform: uppercase; letter-spacing: 2px; }
+    .slide-title { font-size: 40px; font-weight: 900; color: #ffffff; margin-top: 4px; }
+    .slide-subtitle { font-size: 20px; color: #a8a29e; margin-top: 6px; }
+
+    .cards-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; flex: 1; }
+    .feature-card {
+      background: rgba(28, 19, 14, 0.85); border: 1.5px solid rgba(245, 158, 11, 0.35);
+      border-radius: 18px; padding: 28px; display: flex; flex-direction: column;
+      backdrop-filter: blur(14px); box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+    }
+    .card-icon { font-size: 38px; margin-bottom: 16px; }
+    .card-title { font-size: 24px; font-weight: 800; color: #fbbf24; margin-bottom: 12px; }
+    .card-desc { font-size: 17px; color: #e7e5e4; line-height: 1.5; flex: 1; }
+    .card-tag {
+      margin-top: 15px; align-self: flex-start; background: rgba(245, 158, 11, 0.15);
+      border: 1px solid #f59e0b; color: #fde68a; padding: 4px 12px; border-radius: 8px;
+      font-size: 13px; font-weight: 700;
+    }
+
+    /* TELEMETRIA SLIDE 3 */
+    .terminal-container { display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 28px; flex: 1; }
+    .terminal-window {
+      background: #020617; border: 1.5px solid #1e293b; border-radius: 16px;
+      padding: 24px; font-family: 'Consolas', monospace; font-size: 14px;
+      color: #38bdf8; display: flex; flex-direction: column;
+    }
+    .terminal-header { display: flex; gap: 8px; margin-bottom: 16px; border-bottom: 1px solid #1e293b; padding-bottom: 12px; }
+    .t-dot { width: 12px; height: 12px; border-radius: 50%; }
+    .t-red { background: #ef4444; } .t-yellow { background: #f59e0b; } .t-green { background: #10b981; }
+    .terminal-body { flex: 1; line-height: 1.6; color: #e2e8f0; }
+
+    .chat-card {
+      background: rgba(28, 19, 14, 0.85); border: 1.5px solid rgba(245, 158, 11, 0.35);
+      border-radius: 16px; padding: 22px; display: flex; flex-direction: column;
+    }
+    .chat-bubble {
+      background: rgba(41, 29, 21, 0.85); border: 1px solid rgba(245, 158, 11, 0.25);
+      border-radius: 14px; padding: 16px; margin-bottom: 14px; line-height: 1.45; font-size: 15px;
+    }
+    .chat-author { font-size: 14px; font-weight: 800; margin-bottom: 6px; }
+    .author-ia { color: #38bdf8; }
+    .author-eliezer { color: #fbbf24; }
+
+    /* BOTTOM BAR */
+    .bottom-bar {
+      position: absolute; bottom: 0; left: 0; right: 0; height: 220px;
+      background: rgba(16, 11, 8, 0.96); border-top: 1px solid rgba(245, 158, 11, 0.35);
+      backdrop-filter: blur(16px); display: flex; align-items: center;
+      padding: 0 60px; gap: 40px; z-index: 50;
+    }
+    .avatars-container { display: flex; gap: 30px; align-items: center; }
+    .avatar-card {
+      display: flex; flex-direction: column; align-items: center;
+      transition: all 0.3s ease; opacity: 0.45; transform: scale(0.95);
+    }
+    .avatar-card.active { opacity: 1; transform: scale(1.05); }
+    .avatar-circle {
+      width: 90px; height: 90px; border-radius: 50%; overflow: hidden;
+      border: 3px solid #57534e; position: relative; background: #292524;
+    }
+    .avatar-card.active .avatar-circle {
+      border-color: #f59e0b; box-shadow: 0 0 25px rgba(245, 158, 11, 0.7);
+    }
+    .avatar-circle img { width: 100%; height: 100%; object-fit: cover; }
+    .avatar-name { font-size: 15px; font-weight: 800; color: #f8fafc; margin-top: 8px; }
+    .avatar-role { font-size: 12px; color: #a8a29e; font-weight: 600; }
+
+    .subtitles-container {
+      flex: 1; height: 140px; background: rgba(28, 19, 14, 0.8);
+      border: 1.5px solid rgba(245, 158, 11, 0.35); border-radius: 16px;
+      padding: 20px 28px; display: flex; flex-direction: column; justify-content: center;
+    }
+    .sub-speaker { font-size: 15px; font-weight: 800; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 6px; }
+    .speaker-leigo { color: #f472b6; }
+    .speaker-eliezer { color: #fbbf24; }
+    .speaker-ia { color: #38bdf8; }
+    .sub-text { font-size: 21px; font-weight: 600; color: #f5f5f4; line-height: 1.45; }
+
+    #black-curtain { position: absolute; inset: 0; background: #000; z-index: 9999; pointer-events: none; }
+  </style>
+</head>
+<body>
+  <div id="black-curtain"></div>
+  <div class="glow-ambient"></div>
+  <div class="grid-bg"></div>
+
+  <div class="top-bar">
+    <div class="top-title">
+      <div class="badge-ep">EPISÓDIO 5 · GRAND FINALE</div>
+      <div class="series-name">IDD NA PRÁTICA · <span>O APP DA CAFETERIA NO AR COM ZERO ERROS</span></div>
+    </div>
+    <div class="timer-box" id="clock-display">00:00.0</div>
+  </div>
+
+  <div class="stage">
+    <!-- SLIDE 1: A CELEBRAÇÃO DO RESULTADO -->
+    <div class="slide-view active" id="slide-1">
+      <div class="slide-header">
+        <div class="slide-category">GRAND FINALE DA CAFETERIA &amp; PADARIA</div>
+        <div class="slide-title">O Aplicativo em Produção com Rigor Absoluto</div>
+        <div class="slide-subtitle">Da desorganização de comandas de papel a um sistema corporativo compilado sem código manual</div>
+      </div>
+      <div class="cards-grid">
+        <div class="feature-card">
+          <div class="card-icon">☕</div>
+          <div class="card-title">1. Fim do Caos Operacional</div>
+          <div class="card-desc">Mesas sincronizadas com a cozinha via monitor KDS, fechamento de caixa imediato e estoque de insumos protegido.</div>
+          <div class="card-tag">TRANSFORMAÇÃO TOTAL</div>
+        </div>
+        <div class="feature-card">
+          <div class="card-icon">🧠</div>
+          <div class="card-title">2. Intenção Guia a Máquina</div>
+          <div class="card-desc">O dono da cafeteria expressou o que o negócio precisava e a IA compilou banco relacional, telas e lógica sem atritos.</div>
+          <div class="card-tag">PARADIGMA IDD</div>
+        </div>
+        <div class="feature-card">
+          <div class="card-icon">💎</div>
+          <div class="card-title">3. Padrão Corporativo Acessível</div>
+          <div class="card-desc">Segurança e rastreabilidade dignas de bancos globais entregues para a cafeteria e padaria de bairro.</div>
+          <div class="card-tag">QUALIDADE MÁXIMA</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 2: OS 4 PILARES SAGRADOS -->
+    <div class="slide-view" id="slide-2">
+      <div class="slide-header">
+        <div class="slide-category">A TRILHA COMPLETA DA METODOLOGIA IDD</div>
+        <div class="slide-title">Os Quatro Pilares Percorridos na Cafeteria</div>
+        <div class="slide-subtitle">A amarração estrutural entre o que o humano deseja e o que a máquina compila</div>
+      </div>
+      <div class="cards-grid">
+        <div class="feature-card">
+          <div class="card-icon">📜</div>
+          <div class="card-title">Passo 1: Intenções &amp; Invariantes</div>
+          <div class="card-desc">Episódios 1 e 1B: Declaração canônica das regras de ouro, bloqueio de estoque negativo e integridade da comanda.</div>
+          <div class="card-tag">CONTRATO SAGRADO</div>
+        </div>
+        <div class="feature-card">
+          <div class="card-icon">📐</div>
+          <div class="card-title">Passo 2: Telas &amp; MER Relacional</div>
+          <div class="card-desc">Episódios 2 e 2B: Design de comanda, KDS da cozinha, mesas interativas e modelo relacional em Terceira Forma Normal.</div>
+          <div class="card-tag">DESIGN &amp; DADOS</div>
+        </div>
+        <div class="feature-card">
+          <div class="card-icon">🚀</div>
+          <div class="card-title">Passos 3 &amp; 4: Código, Testes &amp; Deploy</div>
+          <div class="card-desc">Episódios 3, 3B, 4 e 4B: Triggers SQL, máquina de estados FSM, 240 testes em 8.4s e deploy Confirm-Once em 4.1s.</div>
+          <div class="card-tag">BUILD &amp; GOVERNANÇA</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 3: TELEMETRIA REAL NO FIM DE SEMANA -->
+    <div class="slide-view" id="slide-3">
+      <div class="slide-header">
+        <div class="slide-category">TELEMETRIA REAL EM PRODUÇÃO</div>
+        <div class="slide-title">Cafeteria Grão &amp; Arte: Fim de Semana Inaugural</div>
+        <div class="slide-subtitle">Métricas auditadas coletadas diretamente da esteira em nuvem</div>
+      </div>
+      <div class="terminal-container">
+        <div class="terminal-window">
+          <div class="terminal-header">
+            <div class="t-dot t-red"></div>
+            <div class="t-dot t-yellow"></div>
+            <div class="t-dot t-green"></div>
+            <span style="color:#94a3b8; margin-left:12px;">kds-monitor@cafeteria-grao-arte: ~</span>
+          </div>
+          <div class="terminal-body">
+            <span style="color:#10b981;">[SYSTEM HEALTH] All Microservices ONLINE | EKS Cluster ACTIVE</span><br>
+            --------------------------------------------------------<br>
+            • Comandas Atendidas no Fim de Semana: <span style="color:#fbbf24; font-weight:bold;">384 comandas</span><br>
+            • Divergência de Café em Grãos: <span style="color:#10b981; font-weight:bold;">0.00 gramas</span> (100% batido)<br>
+            • Divergência de Leite Fresco: <span style="color:#10b981; font-weight:bold;">0.00 ml</span> (100% batido)<br>
+            • Comandas Entregues Sem Pagamento: <span style="color:#10b981; font-weight:bold;">0 (ZERO)</span><br>
+            • Latência de Sincronização Mesa → KDS: <span style="color:#38bdf8; font-weight:bold;">350ms</span><br>
+            • Faturamento Auditado Pix/Cartão: <span style="color:#10b981; font-weight:bold;">R$ 14.820,50</span><br>
+            • Furos de Caixa ou Divergências: <span style="color:#10b981; font-weight:bold;">R$ 0,00</span><br>
+            --------------------------------------------------------<br>
+            <span style="color:#10b981; font-weight:bold;">[STATUS] Zero falhas operacionais registradas durante a operação!</span>
+          </div>
+        </div>
+        <div class="chat-card">
+          <div class="chat-bubble">
+            <div class="chat-author author-ia">🤖 IA Compilador</div>
+            <div>
+              Relatório de telemetria da Cafeteria: 384 comandas atendidas, 0g de divergência de café e leite, 0 mesas sem pagamento, latência de 350ms no KDS e zero falhas de concorrência registradas.
+            </div>
+          </div>
+          <div class="chat-bubble">
+            <div class="chat-author author-eliezer">👤 Eliézer Rosa</div>
+            <div>
+              Eficiência absoluta! Mesas girando com agilidade, cozinha sem papel e caixa fechando no centavo exato. A padaria e cafeteria ganharam a robustez operacional de uma grande corporação!
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 4: ENCERRAMENTO E PRÓXIMA PLAYLIST -->
+    <div class="slide-view" id="slide-4">
+      <div class="slide-header">
+        <div class="slide-category">ENCERRAMENTO DA PLAYLIST 2 &amp; O QUE VEM A SEGUIR</div>
+        <div class="slide-title">Prepare-se para a Playlist 3: Racha de Conta &amp; Pix!</div>
+        <div class="slide-subtitle">A dor clássica dos encontros com amigos resolvida com precisão matemática</div>
+      </div>
+      <div class="cards-grid">
+        <div class="feature-card">
+          <div class="card-icon">🏆</div>
+          <div class="card-title">Playlist 2 Concluída</div>
+          <div class="card-desc">9 vídeos publicados mostrando a esteira autônoma e metodológica completa da Cafeteria &amp; Padaria.</div>
+          <div class="card-tag">9 EPISÓDIOS NO AR</div>
+        </div>
+        <div class="feature-card">
+          <div class="card-icon">💸</div>
+          <div class="card-title">Playlist 3: Racha de Pix</div>
+          <div class="card-desc">"Quem Paga o Quê?": divisão de contas com centavos indivisíveis, gorjeta dinâmica e cobrança Pix instantânea!</div>
+          <div class="card-tag">PRÓXIMA SÉRIE</div>
+        </div>
+        <div class="feature-card">
+          <div class="card-icon">🚀</div>
+          <div class="card-title">A Revolução IDD Continua</div>
+          <div class="card-desc">Inscreva-se no canal @EliézerJPRosa e venha construir software à prova de balas com a gente!</div>
+          <div class="card-tag">CANAL @ELIEZERJPROSA</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BOTTOM BAR -->
+  <div class="bottom-bar">
+    <div class="avatars-container">
+      <div class="avatar-card" id="av-leigo">
+        <div class="avatar-circle">
+          <img src="../../avatares/avatar_usuaria_leiga.png" alt="Usuária Leiga">
+        </div>
+        <div class="avatar-name">Usuária Leiga</div>
+        <div class="avatar-role">Validadora de Domínio</div>
+      </div>
+      <div class="avatar-card" id="av-eliezer">
+        <div class="avatar-circle">
+          <img src="../../avatares/avatar_eliezer_oficial.png" alt="Eliézer Rosa">
+        </div>
+        <div class="avatar-name">Eliézer Rosa</div>
+        <div class="avatar-role">Orquestrador IDD</div>
+      </div>
+      <div class="avatar-card" id="av-ia">
+        <div class="avatar-circle">
+          <img src="../../avatares/avatar_ia_compilador.png" alt="IA Compilador">
+        </div>
+        <div class="avatar-name">IA Compilador</div>
+        <div class="avatar-role">Agente de Execução</div>
+      </div>
+    </div>
+    <div class="subtitles-container">
+      <div class="sub-speaker" id="sub-speaker">USUÁRIA LEIGA</div>
+      <div class="sub-text" id="sub-text">Iniciando episódio 5: Grand Finale da Cafeteria e Padaria...</div>
+    </div>
+  </div>
+
+  <script>
+    let timelineItems = [];
+    let isRunning = false;
+    let startTimeMs = 0;
+
+    window.setTimeline = function(items) { timelineItems = items; };
+    window.startPresentation = function() {
+      const curtain = document.getElementById('black-curtain');
+      if (curtain) {
+        curtain.style.opacity = '0';
+        setTimeout(() => curtain.remove(), 80);
+      }
+      isRunning = true;
+      startTimeMs = performance.now();
+      requestAnimationFrame(renderLoop);
+    };
+
+    function renderLoop(now) {
+      if (!isRunning) return;
+      const elapsedSec = (now - startTimeMs) / 1000;
+      const minutes = Math.floor(elapsedSec / 60);
+      const seconds = (elapsedSec % 60).toFixed(1);
+      document.getElementById('clock-display').innerText =
+        String(minutes).padStart(2, '0') + ':' + String(seconds).padStart(4, '0');
+
+      const curSeg = timelineItems.find(item => elapsedSec >= item.startSec && elapsedSec < item.endSec);
+      if (curSeg) {
+        const targetSlideId = 'slide-' + curSeg.slide;
+        document.querySelectorAll('.slide-view').forEach(s => {
+          if (s.id === targetSlideId) {
+            if (!s.classList.contains('active')) s.classList.add('active');
+          } else {
+            s.classList.remove('active');
+          }
+        });
+
+        ['leigo', 'eliezer', 'ia'].forEach(who => {
+          const el = document.getElementById('av-' + who);
+          if (el) {
+            if (curSeg.who === who) el.classList.add('active');
+            else el.classList.remove('active');
+          }
+        });
+
+        const speakerEl = document.getElementById('sub-speaker');
+        const textEl = document.getElementById('sub-text');
+        speakerEl.className = 'sub-speaker speaker-' + curSeg.who;
+        speakerEl.innerText = curSeg.actor;
+        textEl.innerText = curSeg.text;
+      }
+      requestAnimationFrame(renderLoop);
+    }
+  </script>
+</body>
+</html>

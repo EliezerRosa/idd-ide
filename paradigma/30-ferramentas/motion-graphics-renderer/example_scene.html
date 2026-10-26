@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Cena de Animação - Motion Graphics</title>
+  <style>
+    body, html { margin: 0; padding: 0; overflow: hidden; background: #0f172a; }
+    canvas { display: block; width: 1920px; height: 1080px; }
+  </style>
+</head>
+<body>
+  <canvas id="canvas" width="1920" height="1080"></canvas>
+  <script>
+    const canvas = document.getElementById('canvas');
+    const ctx = canvas.getContext('2d');
+
+    // Função de renderização determinística chamada pelo Playwright a cada frame
+    window.renderFrame = async function(timeMs) {
+      const t = timeMs / 1000;
+
+      // Fundo escuro com gradiente elegante
+      const grad = ctx.createLinearGradient(0, 0, 1920, 1080);
+      grad.addColorStop(0, '#0f172a');
+      grad.addColorStop(1, '#1e293b');
+      ctx.fillStyle = grad;
+      ctx.fillRect(0, 0, 1920, 1080);
+
+      // Círculo animado pulsante
+      const cx = 960 + Math.sin(t * 3) * 300;
+      const cy = 540 + Math.cos(t * 3) * 150;
+      const r = 60 + Math.sin(t * 5) * 20;
+
+      ctx.beginPath();
+      ctx.arc(cx, cy, r, 0, Math.PI * 2);
+      ctx.fillStyle = '#38bdf8';
+      ctx.shadowColor = '#0284c7';
+      ctx.shadowBlur = 30;
+      ctx.fill();
+
+      // Texto de título
+      ctx.shadowBlur = 0;
+      ctx.fillStyle = '#f8fafc';
+      ctx.font = 'bold 44px sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText('IDD MOTION GRAPHICS RENDERER', 960, 450);
+
+      ctx.font = '28px monospace';
+      ctx.fillStyle = '#94a3b8';
+      ctx.fillText(`Tempo: ${t.toFixed(2)}s | TimeMs: ${Math.round(timeMs)}ms`, 960, 520);
+    };
+
+    window.renderFrame(0);
+  </script>
+</body>
+</html>

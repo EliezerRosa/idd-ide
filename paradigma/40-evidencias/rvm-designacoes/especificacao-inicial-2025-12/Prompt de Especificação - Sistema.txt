@@ -1,0 +1,231 @@
+﻿INSTRUÇÃO PARA ENGENHEIRO DE SOFTWARE UML
+PROJETO: Sistema Automatizado de Designação de Partes para a Reunião "Nossa Vida e Ministério Cristão" (RV&M).
+OBJETIVO: Modelar um sistema que automatize a designação de partes da RV&M, garantindo o rodízio justo e ponderado dos publicadores (balanceamento), o cumprimento de todas as regras teocráticas de elegibilidade (filtros rígidos) e a adesão aos fluxos de controle hierárquico (aprovação por Anciãos).
+1. ANÁLISE DO DOMÍNIO (CONTEXTO E ATORES)
+O sistema lida com o complexo processo de alocação de publicadores em diferentes papéis de uma reunião semanal.
+Atores e Autoridade Hierárquica:
+1. Publicador: Membro básico; gerencia sua disponibilidade e preferências.
+2. Servidor RV&M (SMRV&M): Administrador operacional; responsável por gerar a pauta automática e gerenciar dados.
+3. Ancião: Autoridade máxima; detém o poder de aprovação final das designações.
+Categorias de Partes (para Ponderação do Rodízio):
+O rodízio deve ser ponderado em três categorias, refletindo o peso de cada participação na prioridade de designação.
+
+
+Categoria
+	Exemplo
+	Peso/Penalidade
+	TEACHING
+	Discurso (10 min), Joias, Necessidades Locais.
+	Máximo (x1.0)
+	STUDENT
+	Leitura da Bíblia, Demonstrações (Titular), Discurso Estudante.
+	Médio (x0.5)
+	HELPER
+	Ajudante em Demonstrações.
+	Mínimo (x0.1)
+	2. MODELO DE DADOS CONCEITUAL (DIAGRAMA DE CLASSES)
+As entidades devem encapsular todas as regras de elegibilidade e rastreamento.
+A. Classe: Publisher (Publicador)
+Atributo
+	Tipo
+	Regra de Negócio Associada
+	publisherId
+	string
+	PK.
+	name
+	string
+	Nome completo.
+	gender
+	enum (M
+	F)
+	privileges
+	string[]
+	Ex: ANCIÃO, SM, PIONEIRO.
+	authorityLevel
+	enum (ELDER
+	SM
+	isApprovedForTreasures
+	boolean
+	Permissão para partes de ensino principal.
+	isApprovedForEBC_Dirigente
+	boolean
+	Permissão para dirigir o EBC (Revisão 5).
+	isApprovedForEBC_Leitor
+	boolean
+	Permissão para ler no EBC (Revisão 5).
+	approvalNeeded
+	boolean
+	Regra 2: Se true, qualquer designação (salvo cânticos) entra em PENDING_APPROVAL.
+	canBeHelper
+	boolean
+	Vontade pessoal (Revisão 1).
+	unavailableWeeks
+	string[]
+	Semanas em que não pode participar (Revisão 5).
+	B. Classe: MeetingPart (Parte da Reunião - Template da Apostila)
+Atributo
+	Tipo
+	Regra de Negócio Associada
+	partId
+	string
+	PK.
+	week
+	string
+	Data da semana.
+	partType
+	string
+	Título específico (Ex: "Leitura da Bíblia", "Joias espirituais").
+	teachingCategory
+	enum
+	Regra 3: (TEACHING, STUDENT, HELPER). Essencial para a ponderação.
+	requiredPrivileges
+	string[]
+	Requisitos mínimos da parte.
+	requiredGender
+	enum (M
+	F
+	requiresHelper
+	boolean
+	Se true, ativa a lógica de pareamento.
+	requiresApprovalByElder
+	boolean
+	Regra 2: Se true, a atribuição entra em PENDING_APPROVAL (Revisão 3).
+	C. Classe: AssignmentHistory (Histórico de Rodízio)
+Atributo
+	Tipo
+	Regra de Negócio Associada
+	historyId
+	string
+	PK.
+	publisherId
+	string
+	FK para Publisher.
+	date
+	Date
+	Data da participação.
+	assignmentType
+	enum
+	Categoria de ponderação (TEACHING, STUDENT, HELPER).
+	partType
+	string
+	Regra 4: Tipo exato da parte (para evitar repetição imediata do mesmo tipo de parte).
+	D. Classe: Assignment (Designação - Resultado Final)
+Atributo
+	Tipo
+	Regra de Negócio Associada
+	assignmentId
+	string
+	PK.
+	meetingPartId
+	string
+	FK para MeetingPart.
+	principalPublisherId
+	string
+	Titular/Estudante.
+	secondaryPublisherId
+	string
+	Ajudante/Leitor.
+	approvalStatus
+	enum (DRAFT
+	PENDING_APPROVAL
+	approvedByElderId
+	string
+	Ancião que aprovou.
+	3. REGRAS DE NEGÓCIO E REQUISITOS (LÓGICA DO SISTEMA)
+O Engenheiro deve garantir que os seguintes requisitos de lógica de negócio sejam implementados:
+LISTA CONSOLIDADA DE REGRAS NO PROCESSO DE DESIGNAÇÃO
+1. Disponibilidade e Restrições Pessoais (Filtro Rígido):
+   * O candidato deve estar disponível na semana (Publisher.unavailableWeeks).
+   * O candidato deve atender aos requisitos de gênero (MeetingPart.requiredGender).
+   * O candidato deve possuir os privilégios/aprovações necessários (isApprovedForTreasures, isApprovedForEBC_Dirigente, etc.) para o tipo de parte.
+   * O candidato não pode ter sido designado para outra parte na mesma reunião (exceção: Presidente/Conselheiro podem ter partes fixas).
+2. Rodízio Ponderado (Balanceamento):
+   * A prioridade é calculada pela fórmula: $\text{Prioridade} = \sum_{k} (\text{Dias desde a última parte de } k) \times \text{Peso}_k$.
+   * Pesos de Categoria: TEACHING ($\times 1.0$), STUDENT ($\times 0.5$), HELPER ($\times 0.1$). O candidato com a maior Prioridade (maior tempo de espera ponderado) será o selecionado.
+3. Repetição de Parte (Cooldown):
+   * O sistema deve impor uma penalidade (significativa no ranqueamento) para candidatos que executaram o mesmo tipo de parte (AssignmentHistory.partType exato) nas últimas 6-8 semanas.
+4. Pareamento de Ajudante/Leitor:
+   * Se MeetingPart.requiresHelper é true, o sistema deve selecionar um secondaryPublisherId (Ajudante/Leitor) que:
+      * Esteja elegível e disponível.
+      * Atenda às regras de gênero e associação de família (se aplicável).
+5. Gatilho de Aprovação Hierárquica (PENDING_APPROVAL):
+   * A designação entra no status PENDING_APPROVAL se:
+      * MeetingPart.requiresApprovalByElder é true.
+      * OU Publisher.approvalNeeded é true.
+6. Controle de Ação (Ancião):
+   * Somente usuários com Publisher.authorityLevel == ELDER podem alterar o status de PENDING_APPROVAL para APPROVED ou REJECTED.
+7. Ação de Rejeição (Refluxo):
+   * Se o status for REJECTED, o publicador rejeitado é temporariamente excluído da lista de elegíveis, e o AssignmentEngine deve tentar designar outro publicador para a mesma MeetingPart.
+Requisito Não Funcional: Cronometragem
+* O sistema deve calcular o horário de início e fim de cada Assignment com base na duração (MeetingPart.duration) e no horário de início da reunião.
+4. ESPECIFICAÇÃO PARA ANÁLISE DE IA/NLP
+Esta seção visa facilitar a conversão das regras de negócio em linguagem natural para predicados lógicos, usando um modelo de IA especializado.
+4.1 Dicionário de Vocabulário (Mapeamento Conceitual para Atributos)
+Termo Conceitual (Linguagem Natural)
+	Atributo Correspondente (Modelo de Dados)
+	Tipo de Entidade
+	Disponibilidade
+	Publisher.unavailableWeeks
+	Publicador
+	Gênero
+	Publisher.gender, MeetingPart.requiredGender
+	Publicador / Parte
+	Privilégio (Elegibilidade)
+	Publisher.isApprovedForTreasures, Publisher.isApprovedForEBC_Dirigente, etc.
+	Publicador
+	Pode ser Ajudante
+	Publisher.canBeHelper
+	Publicador
+	Tipo de Parte
+	AssignmentHistory.partType
+	Histórico
+	Categoria de Rodízio
+	MeetingPart.teachingCategory
+	Parte
+	Requer Ajudante
+	MeetingPart.requiresHelper
+	Parte
+	Requer Aprovação CA
+	MeetingPart.requiresApprovalByElder
+	Parte
+	Perfil em Revisão
+	Publisher.approvalNeeded
+	Publicador
+	Nível de Autoridade
+	Publisher.authorityLevel
+	Publicador
+	Status da Designação
+	Assignment.approvalStatus
+	Designação
+	Penalidade (Cooldown)
+	Tempo desde a última AssignmentHistory do mesmo partType
+	Histórico
+	4.2 Regras em Linguagem Natural (para Predicados Lógicos)
+1. Filtro de Gênero: O Gênero do Publicador deve ser compatível com o Gênero Requerido para a Parte.
+2. Filtro de Disponibilidade: O Publicador não pode ter a semana atual listada em sua Disponibilidade.
+3. Filtro de Privilégio: O Publicador deve ter Privilégios de Ensino (Aprovação) para partes classificadas como TEACHING ou Dirigente de EBC.
+4. Gatilho de Aprovação (Assunto): Se a Parte Requer Aprovação CA, o Status da Designação deve ser PENDING_APPROVAL.
+5. Gatilho de Aprovação (Perfil): Se o Perfil do Publicador Requer Revisão, o Status da Designação deve ser PENDING_APPROVAL.
+6. Regra de Cooldown: A Penalidade por repetição de Tipo de Parte deve ser aplicada, evitando que um Publicador com alta penalidade seja ranqueado entre os primeiros.
+7. Regra de Rodízio: O candidato final deve ser aquele com a maior pontuação de prioridade no Rodízio Ponderado (baseado na Categoria de Rodízio).
+8. Regra de Controle: A transição do Status da Designação de PENDING_APPROVAL para APPROVED ou REJECTED só pode ocorrer se o ator tiver Nível de Autoridade de ELDER.
+4.3 Definição do Motor de Inferência (AssignmentEngine)
+O Motor de Inferência (AssignmentEngine) é o componente central responsável por:
+* Entrada (Fatos): Recebe o conjunto completo de MeetingPart da semana e todos os registros de Publisher e AssignmentHistory relevantes.
+* Processamento (Cadeia de Raciocínio):
+   1. Filtragem: Aplica as Regras 1, 2, 3, 4 e 8 (se aplicável - seção 4.2).
+   2. Ranqueamento: Aplica as Regras 6 e 7 (fórmula de ponderação - seção 4.2).
+   3. Seleção: Seleciona o melhor candidato.
+   4. Verificação de Aprovação: Aplica as Regras 4 e 5 (gatilhos de PENDING_APPROVAL - seção 4.2).
+* Saída (Conclusão): Gera um novo registro Assignment com os IDs do publicador/ajudante e o approvalStatus inicial.
+4.4 Axiomas de Arquitetura e Comunicação (Princípios de Design)
+O projeto de software deve aderir aos seguintes axiomas de arquitetura para garantir manutenibilidade, escalabilidade e clareza:
+1. Coesão e Acoplamento Zero: Cada funcionalidade (módulo, serviço, classe) deve ser projetada para ser fortemente coesa (executar uma única responsabilidade bem definida) e deve buscar o acoplamento mais baixo possível (idealmente acoplamento zero) com as demais partes do sistema.
+2. Comunicação Baseada em JSON: Toda a comunicação entre os módulos ou serviços do sistema (incluindo a comunicação de entrada para o Motor de Inferência e a saída de Designações) deve ser estritamente realizada utilizando o formato de dados JSON (JavaScript Object Notation).
+5. FERRAMENTAS UML SOLICITADAS
+O engenheiro deve gerar a documentação técnica obrigatória:
+1. Diagrama de Classes: Detalhando as quatro classes principais (Publisher, MeetingPart, AssignmentHistory, Assignment) e seus relacionamentos (1:N, 1:1, etc.).
+2. Diagrama de Caso de Uso: Detalhando os três atores (Publicador, SMRV&M, Ancião) e a hierarquia de suas permissões.
+3. Diagrama de Atividades: Modelando o fluxo do AssignmentEngine, incluindo os estágios de Filtro Rígido, Balanceamento Ponderado e o nó de Decisão da Aprovação Hierárquica.
+4. Diagrama de Sequência: Detalhando a interação dos serviços na execução do cálculo de Prioridade Ponderada (Regra 3).
+FIM DA ESPECIFICAÇÃO.

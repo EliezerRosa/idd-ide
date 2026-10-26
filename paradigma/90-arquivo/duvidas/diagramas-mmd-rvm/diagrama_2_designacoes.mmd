@@ -1,0 +1,72 @@
+%%{init: {
+  'theme': 'base',
+  'themeVariables': {
+    'fontSize': '20px',
+    'fontFamily': 'Arial, sans-serif',
+    'primaryColor': '#2E7D32',
+    'primaryTextColor': '#ffffff',
+    'primaryBorderColor': '#1B5E20',
+    'lineColor': '#37474F',
+    'textColor': '#212121'
+  }
+}}%%
+
+classDiagram
+    direction TB
+
+    class ScheduledAssignment["📋 SCHEDULED ASSIGNMENT"] {
+        +String id
+        +String weekId
+        +String partId
+        +String partTitle
+        +ParticipationType partType
+        +TeachingCategory teachingCategory
+        +String principalPublisherId
+        +String principalPublisherName
+        +String secondaryPublisherId
+        +String secondaryPublisherName
+        +String date
+        +String startTime
+        +String endTime
+        +Int durationMin
+        +ApprovalStatus status
+        +String approvedByElderId
+        +String approvalDate
+        +String rejectionReason
+        +String selectionReason
+        +Float score
+        +String room
+        +String createdAt
+    }
+
+    class ApprovalStatus {
+        <<enumeration>>
+        ⏳ DRAFT
+        🔔 PENDING_APPROVAL
+        ✅ APPROVED
+        ❌ REJECTED
+    }
+
+    class TeachingCategory {
+        <<enumeration>>
+        📚 TEACHING ~peso 1.0~
+        🎓 STUDENT ~peso 0.5~
+        🤝 HELPER ~peso 0.1~
+    }
+
+    class ParticipationType {
+        <<enumeration>>
+        👔 Presidente
+        🙏 Oração Inicial
+        🙏 Oração Final
+        💎 Tesouros
+        📢 Ministério
+        ❤️ Vida Cristã
+        📖 Dirigente EBC
+        📄 Leitor EBC
+        🤝 Ajudante
+    }
+
+    ScheduledAssignment --> ApprovalStatus : tem
+    ScheduledAssignment --> TeachingCategory : categoria
+    ScheduledAssignment --> ParticipationType : tipo

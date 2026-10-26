@@ -1,0 +1,286 @@
+%%{init: {
+  'theme': 'base',
+  'themeVariables': {
+    'fontSize': '16px',
+    'fontFamily': 'Arial, sans-serif',
+    'primaryColor': '#2196F3',
+    'primaryTextColor': '#ffffff',
+    'primaryBorderColor': '#1565C0',
+    'secondaryColor': '#4CAF50',
+    'secondaryTextColor': '#ffffff',
+    'secondaryBorderColor': '#2E7D32',
+    'tertiaryColor': '#FF9800',
+    'tertiaryTextColor': '#000000',
+    'tertiaryBorderColor': '#E65100',
+    'lineColor': '#37474F',
+    'textColor': '#212121',
+    'classText': '#212121'
+  }
+}}%%
+
+classDiagram
+    direction LR
+
+    %% ════════════════════════════════════════════════════════════════
+    %% ENTIDADES FUNDAMENTAIS (Azul Escuro) - Core do Sistema
+    %% ════════════════════════════════════════════════════════════════
+
+    class Publisher["🧑 Publisher"]  {
+        +String id
+        +String name
+        +Gender gender
+        +Condition condition
+        +Boolean isBaptized
+        +Boolean isServing
+        +AgeGroup ageGroup
+        +String[] parentIds
+        +Boolean isHelperOnly
+        +PublisherPrivileges privileges
+        +PublisherAvailability availability
+    }
+
+    class ScheduledAssignment["📋 ScheduledAssignment"] {
+        +String id
+        +String weekId
+        +String partTitle
+        +ParticipationType partType
+        +TeachingCategory teachingCategory
+        +String principalPublisherId
+        +String secondaryPublisherId
+        +ApprovalStatus status
+        +Float score
+        +String selectionReason
+    }
+
+    class HistoryRecord["📜 HistoryRecord"] {
+        +String id
+        +String weekId
+        +String date
+        +EnumSecao section
+        +String partTitle
+        +EnumModalidade modality
+        +String rawPublisherName
+        +String resolvedPublisherId
+        +HistoryStatus status
+        +String importBatchId
+    }
+
+    class MeetingData["🏛️ MeetingData"] {
+        +String id
+        +String congregationName
+        +String date
+        +String week
+        +String chairman
+        +TreasuresSection treasures
+        +MinistrySection ministry
+        +LivingSection living
+    }
+
+    %% ════════════════════════════════════════════════════════════════
+    %% ENTIDADES SECUNDÁRIAS (Verde) - Suporte
+    %% ════════════════════════════════════════════════════════════════
+
+    class PublisherPrivileges["⚙️ Privileges"] {
+        +Boolean canGiveTalks
+        +Boolean canConductCBS
+        +Boolean canReadCBS
+        +Boolean canPray
+        +Boolean canPreside
+    }
+
+    class PublisherAvailability["📅 Availability"] {
+        +String mode
+        +String[] exceptionDates
+        +String[] availableDates
+    }
+
+    class WorkbookBatch["📦 WorkbookBatch"] {
+        +String id
+        +String fileName
+        +String uploadDate
+        +Int totalParts
+        +String weekRange
+        +Boolean isActive
+    }
+
+    class WorkbookPart["📄 WorkbookPart"] {
+        +String id
+        +String batchId
+        +String weekId
+        +String section
+        +String partTitle
+        +WorkbookStatus status
+    }
+
+    class ImportBatch["📥 ImportBatch"] {
+        +String id
+        +String fileName
+        +String source
+        +Int totalRecords
+        +Int approvedCount
+    }
+
+    class Assignment["📝 Assignment S-89"] {
+        +String id
+        +String date
+        +String title
+        +String student
+        +String assistant
+        +Int durationMin
+    }
+
+    class SpecialEvent["🎉 SpecialEvent"] {
+        +String id
+        +String week
+        +String templateId
+        +String theme
+        +Int duration
+    }
+
+    class EventTemplate["📋 EventTemplate"] {
+        +String id
+        +String name
+        +String description
+        +EventImpact impact
+    }
+
+    class Rule["⚖️ Rule"] {
+        +String id
+        +String description
+        +Boolean isActive
+        +RuleCondition[] conditions
+    }
+
+    class PublisherStats["📊 PublisherStats"] {
+        +String publisherId
+        +Int totalAssignments
+        +String lastAssignmentDate
+        +Float avgDaysBetween
+    }
+
+    %% ════════════════════════════════════════════════════════════════
+    %% ENUMERAÇÕES (Laranja) - Taxonomia
+    %% ════════════════════════════════════════════════════════════════
+
+    class Gender["Gender 👥"] {
+        <<enum>>
+        brother
+        sister
+    }
+
+    class Condition["Condition 🎖️"] {
+        <<enum>>
+        Ancião
+        Servo_Ministerial
+        Publicador
+    }
+
+    class AgeGroup["AgeGroup 👶👨"] {
+        <<enum>>
+        Adulto
+        Jovem
+        Criança
+    }
+
+    class EnumSecao["EnumSecao 📑"] {
+        <<enum>>
+        Início_Reunião
+        Tesouros
+        Ministério
+        Vida_Cristã
+        Final_Reunião
+    }
+
+    class EnumTipoParte["EnumTipoParte 🎯"] {
+        <<enum>>
+        Presidente
+        Oração_Inicial
+        Discurso_Tesouros
+        Joias_Espirituais
+        Parte_Estudante
+        Dirigente_EBC
+        Leitor_EBC
+        Oração_Final
+    }
+
+    class EnumModalidade["EnumModalidade 🎭"] {
+        <<enum>>
+        Presidência
+        Oração
+        Discurso_Ensino
+        Demonstração
+        Leitura_Estudante
+        Dirigente_EBC
+        Leitor_EBC
+    }
+
+    class EnumFuncao["EnumFuncao 🔄"] {
+        <<enum>>
+        Titular
+        Ajudante
+    }
+
+    class ApprovalStatus["ApprovalStatus ✅"] {
+        <<enum>>
+        DRAFT
+        PENDING
+        APPROVED
+        REJECTED
+    }
+
+    class WorkbookStatus["WorkbookStatus 📊"] {
+        <<enum>>
+        DRAFT
+        REFINED
+        PROMOTED
+    }
+
+    class HistoryStatus["HistoryStatus 📋"] {
+        <<enum>>
+        PENDING
+        VALIDATED
+        APPROVED
+        REJECTED
+    }
+
+    class TeachingCategory["TeachingCategory 📚"] {
+        <<enum>>
+        TEACHING
+        STUDENT
+        HELPER
+    }
+
+    %% ════════════════════════════════════════════════════════════════
+    %% RELACIONAMENTOS
+    %% ════════════════════════════════════════════════════════════════
+
+    %% Publisher composições
+    Publisher *-- PublisherPrivileges : tem
+    Publisher *-- PublisherAvailability : tem
+    Publisher --> Gender
+    Publisher --> Condition
+    Publisher --> AgeGroup
+
+    %% Designações
+    ScheduledAssignment --> Publisher : principal
+    ScheduledAssignment --> Publisher : secundário
+    ScheduledAssignment --> ApprovalStatus
+    ScheduledAssignment --> TeachingCategory
+    ScheduledAssignment --> EnumTipoParte
+
+    %% Histórico
+    HistoryRecord --> EnumSecao
+    HistoryRecord --> EnumModalidade
+    HistoryRecord --> HistoryStatus
+    ImportBatch "1" *-- "*" HistoryRecord
+
+    %% Workbook
+    WorkbookBatch "1" *-- "*" WorkbookPart
+    WorkbookPart --> WorkbookStatus
+    WorkbookPart --> EnumSecao
+
+    %% Eventos
+    SpecialEvent --> EventTemplate
+
+    %% Stats
+    PublisherStats --> Publisher

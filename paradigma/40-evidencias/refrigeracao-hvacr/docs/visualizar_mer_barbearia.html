@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Diagrama Gráfico MER Canônico — Barbearia & Salão VIP (IDD)</title>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, sans-serif; }
+    body {
+      background: #090d16;
+      color: #f8fafc;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 30px;
+    }
+    header {
+      text-align: center;
+      margin-bottom: 25px;
+    }
+    .badge {
+      display: inline-block;
+      background: linear-gradient(135deg, #d97706, #f59e0b);
+      color: white;
+      font-weight: 800;
+      font-size: 13px;
+      padding: 5px 16px;
+      border-radius: 999px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+      box-shadow: 0 0 15px rgba(245, 158, 11, 0.4);
+    }
+    h1 {
+      font-size: 32px;
+      font-weight: 900;
+      color: #ffffff;
+      letter-spacing: -0.5px;
+    }
+    p {
+      color: #94a3b8;
+      font-size: 16px;
+      margin-top: 6px;
+    }
+    .container {
+      width: 100%;
+      max-width: 1400px;
+      background: rgba(15, 23, 42, 0.9);
+      border: 1.5px solid rgba(245, 158, 11, 0.35);
+      border-radius: 20px;
+      padding: 30px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .mermaid {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+    }
+
+    /* INVARIANTS GRID */
+    .invariants-box {
+      width: 100%;
+      margin-top: 30px;
+      border-top: 1px solid rgba(245, 158, 11, 0.25);
+      padding-top: 25px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+    .inv-card {
+      background: rgba(30, 41, 59, 0.7);
+      border: 1px solid rgba(245, 158, 11, 0.3);
+      border-radius: 14px;
+      padding: 18px;
+    }
+    .inv-title {
+      font-size: 15px;
+      font-weight: 800;
+      color: #fbbf24;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .inv-desc {
+      font-size: 14px;
+      color: #cbd5e1;
+      line-height: 1.5;
+    }
+    .inv-code {
+      margin-top: 10px;
+      background: #020617;
+      border: 1px solid #1e293b;
+      padding: 8px 12px;
+      border-radius: 8px;
+      font-family: 'Consolas', monospace;
+      font-size: 12px;
+      color: #38bdf8;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="badge">PARADIGMA IDD · MODELO CANÔNICO</div>
+    <h1>Modelo Entidade-Relacionamento — Barbearia & Salão VIP</h1>
+    <p>Agendamentos com Zero Overbooking, Comandas Integradas e Partilha Fiscal (Lei do Salão Parceiro)</p>
+  </header>
+
+  <div class="container">
+    <div class="mermaid">
+erDiagram
+    ESTABELECIMENTO ||--o{ PROFISSIONAL : credencia
+    ESTABELECIMENTO ||--o{ CLIENTE : atende
+    ESTABELECIMENTO ||--o{ SERVICO : oferece
+
+    PROFISSIONAL ||--o{ AGENDAMENTO : atende_agenda
+    CLIENTE ||--o{ AGENDAMENTO : reserva
+    SERVICO ||--o{ AGENDAMENTO : especifica
+
+    CLIENTE ||--o{ COMANDA_SALAO : titular
+    COMANDA_SALAO ||--|{ ITEM_COMANDA_SALAO : contem
+    PROFISSIONAL ||--o{ ITEM_COMANDA_SALAO : executa
+
+    ITEM_COMANDA_SALAO ||--|| PARTILHA_COMISSAO_LEI_SALAO : gera_partilha
+    COMANDA_SALAO ||--|{ PAGAMENTO_SALAO : quita
+
+    ESTABELECIMENTO {
+        uuid id PK
+        string cnpj UK
+        string razao_social
+        string nome_fantasia
+        string timezone
+    }
+
+    PROFISSIONAL {
+        uuid id PK
+        uuid estabelecimento_id FK
+        string nome
+        string cpf UK
+        decimal percentual_comissao_padrao
+        string chave_pix UK
+        boolean ativo
+    }
+
+    CLIENTE {
+        uuid id PK
+        uuid estabelecimento_id FK
+        string nome
+        string whatsapp UK
+        int total_visitas
+        timestamp criado_em
+    }
+
+    SERVICO {
+        uuid id PK
+        uuid estabelecimento_id FK
+        string codigo_sku UK
+        string nome "CORTE_DEGRADE | BARBA_TERAPIA | COLORACAO"
+        int duracao_minutos
+        decimal preco_tabela
+        boolean ativo
+    }
+
+    AGENDAMENTO {
+        uuid id PK
+        uuid profissional_id FK
+        uuid cliente_id FK
+        uuid servico_id FK
+        timestamp data_hora_inicio
+        timestamp data_hora_fim
+        string status_fsm "SOLICITADO | CONFIRMADO | EM_ATENDIMENTO | CONCLUIDO | CANCELADO | NO_SHOW"
+        string hash_reserva_anti_overbooking UK
+    }
+
+    COMANDA_SALAO {
+        uuid id PK
+        uuid cliente_id FK
+        string status_fsm "ABERTA | CONFERINDO | PAGA | ENCERRADA"
+        timestamp aberta_em
+        timestamp encerrada_em
+        decimal total_servicos
+        decimal total_produtos
+        decimal total_descontos
+        decimal valor_final
+    }
+
+    ITEM_COMANDA_SALAO {
+        uuid id PK
+        uuid comanda_id FK
+        uuid profissional_executor_id FK
+        string tipo_item "SERVICO | PRODUTO"
+        uuid item_origem_id FK
+        decimal quantidade
+        decimal preco_cobrado
+        decimal taxa_comissao_aplicada
+    }
+
+    PARTILHA_COMISSAO_LEI_SALAO {
+        uuid id PK
+        uuid item_comanda_id FK
+        uuid profissional_id FK
+        decimal valor_bruto
+        decimal cota_salao
+        decimal cota_profissional
+        string status_repasse "PENDENTE | LIBERADO | REPASSADO_PIX"
+        string chave_nfse_substituta UK
+    }
+
+    PAGAMENTO_SALAO {
+        uuid id PK
+        uuid comanda_id FK
+        string forma_pagto "PIX_DINAMICO | CARTAO_CREDITO | CARTAO_DEBITO | DINHEIRO"
+        decimal valor_pago
+        string payload_pix_txid UK
+        string status_transacao "CONFIRMADO | PENDENTE | ESTORNADO"
+        timestamp processado_em
+    }
+    </div>
+
+    <div class="invariants-box">
+      <div class="inv-card">
+        <div class="inv-title">⏱️ 1. Zero Overbooking na Cadeira</div>
+        <div class="inv-desc">Intervalos de atendimento de um mesmo profissional devem ser mutuamente disjuntos. O banco de dados rejeita interseção temporal em status CONFIRMADO ou EM_ATENDIMENTO.</div>
+        <div class="inv-code">[t1_inicio, t1_fim] ∩ [t2_inicio, t2_fim] ≡ ∅</div>
+      </div>
+      <div class="inv-card">
+        <div class="inv-title">⚖️ 2. Lei do Salão Parceiro (Lei 13.352)</div>
+        <div class="inv-desc">A partilha entre salão e profissional é atômica na comanda: cota_salao + cota_profissional = valor_bruto. Isola a tributação de cada parte legalmente.</div>
+        <div class="inv-code">cota_salao + cota_profissional ≡ valor_bruto</div>
+      </div>
+      <div class="inv-card">
+        <div class="inv-title">🔒 3. Quitação &amp; Liberação de Cadeira</div>
+        <div class="inv-desc">A comanda só transita para ENCERRADA quando a soma dos pagamentos cobrir 100% do saldo final, disparando a liberação do profissional para o próximo agendamento.</div>
+        <div class="inv-code">Σ PAGAMENTO_SALAO.valor_pago ≡ COMANDA_SALAO.valor_final</div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: 'dark',
+      themeVariables: {
+        darkMode: true,
+        background: '#090d16',
+        primaryColor: '#d97706',
+        primaryTextColor: '#f8fafc',
+        primaryBorderColor: '#f59e0b',
+        lineColor: '#f59e0b',
+        secondaryColor: '#0f172a',
+        tertiaryColor: '#1e293b'
+      }
+    });
+  </script>
+</body>
+</html>

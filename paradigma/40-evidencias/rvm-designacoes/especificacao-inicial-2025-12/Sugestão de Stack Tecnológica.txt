@@ -1,0 +1,64 @@
+﻿Componente
+	Tecnologia Sugerida
+	Justificativa
+	Banco de Dados (Fase 0)
+	Google Firestore
+	Solução NoSQL escalável e flexível, ideal para armazenar documentos JSON complexos (Publisher, AssignmentHistory). É nativamente compatível com ambientes Firebase/Google Cloud, simplificando a autenticação.
+	Backend / Core Controller (Fase 1 & 2)
+	Python com Framework Django ou Node.js com Framework NestJS
+	Python é ideal para algoritmos complexos (Ranqueamento, Ponderação) e prototipagem rápida. O Django (ou NestJS, se preferir JavaScript) fornece uma estrutura clara para a API JSON (Fase 2) e segurança robusta (RBAC).
+	Autenticação (Fase 0)
+	Firebase Authentication
+	Integra-se perfeitamente com o Firestore e facilita a implementação do Controle de Ação Hierárquica (RBAC) baseado no authorityLevel do Publicador.
+	Frontend / UI (Fase 3)
+	React.js
+	Líder de mercado para construção de interfaces de usuário componentizadas, garantindo a coesão do código e a manutenibilidade. Perfeito para a UI responsiva.
+	Estilização / Responsividade
+	Tailwind CSS
+	Permite desenvolver a UI responsiva (Fase 3) de forma extremamente rápida e adaptável, seguindo a abordagem mobile-first.
+	
+{
+  "$id": "Publisher",
+  "type": "object",
+  "properties": {
+    "publisherId": { "type": "string", "description": "ID único do publicador (PK)" },
+    "name": { "type": "string", "description": "Nome completo" },
+    "gender": { "type": "string", "enum": ["M", "F", "OTHER"], "description": "Gênero" },
+    "privileges": { 
+      "type": "array", 
+      "items": { "type": "string" }, 
+      "description": "Lista de privilégios (Ex: ANCIÃO, SM, PIONEIRO)" 
+    },
+    "authorityLevel": { 
+      "type": "string", 
+      "enum": ["ELDER", "SM", "PUBLISHER"], 
+      "description": "Nível de controle de acesso (RBAC). Essencial para Regra 8." 
+    },
+    "isApprovedForTreasures": { 
+      "type": "boolean", 
+      "description": "Aprovação para partes de ensino principal/discurso." 
+    },
+    "isApprovedForEBC_Dirigente": { 
+      "type": "boolean", 
+      "description": "Aprovação para dirigir Estudo Bíblico de Congregação." 
+    },
+    "isApprovedForEBC_Leitor": { 
+      "type": "boolean", 
+      "description": "Aprovação para ser leitor do EBC." 
+    },
+    "approvalNeeded": { 
+      "type": "boolean", 
+      "description": "Flag: Se TRUE, todas as designações (exceto cânticos) requerem aprovação de Ancião (Regra 2)." 
+    },
+    "canBeHelper": { 
+      "type": "boolean", 
+      "description": "Indica vontade pessoal de ser ajudante (Revisão 1)." 
+    },
+    "unavailableWeeks": { 
+      "type": "array", 
+      "items": { "type": "string", "format": "date" }, 
+      "description": "Lista de datas (YYYY-MM-DD) em que o publicador não está disponível (Filtro Rígido)." 
+    }
+  },
+  "required": ["publisherId", "name", "gender", "authorityLevel", "approvalNeeded"]
+}

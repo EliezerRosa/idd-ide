@@ -1,0 +1,906 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=1920, height=1080, initial-scale=1.0">
+  <title>Episódio 04 — IDD Base de Conhecimento: O Paradigma Neuro-Simbólico</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-dark: #050811;
+      --bg-card: rgba(11, 20, 38, 0.90);
+      --bg-card-border: rgba(168, 85, 247, 0.3);
+      --purple-tech: #a855f7;
+      --purple-glow: rgba(168, 85, 247, 0.45);
+      --cyan-frost: #38bdf8;
+      --emerald-ok: #10b981;
+      --amber-alert: #f59e0b;
+      --rose-warn: #f43f5e;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      width: 1920px;
+      height: 1080px;
+      overflow: hidden;
+      background: #050811;
+      color: var(--text-main);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      position: relative;
+    }
+
+    #bg-canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 1920px;
+      height: 1080px;
+      z-index: 1;
+    }
+
+    .app-container {
+      position: relative;
+      z-index: 10;
+      width: 1920px;
+      height: 1080px;
+      display: flex;
+      flex-direction: column;
+      padding: 30px 45px;
+      justify-content: space-between;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 18px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .brand-wrap {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .brand-logo {
+      width: 50px;
+      height: 50px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #a855f7, #38bdf8);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 26px;
+      box-shadow: 0 0 20px rgba(168, 85, 247, 0.5);
+    }
+    .brand-text h1 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 22px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      color: #fff;
+    }
+    .brand-text span {
+      font-size: 13px;
+      color: #c084fc;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+    }
+
+    .header-badges {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .h-badge {
+      padding: 8px 18px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      background: rgba(168, 85, 247, 0.15);
+      border: 1px solid rgba(168, 85, 247, 0.35);
+      color: #c084fc;
+    }
+    .h-badge.live {
+      background: rgba(56, 189, 248, 0.15);
+      border-color: rgba(56, 189, 248, 0.4);
+      color: #38bdf8;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .pulse-dot {
+      width: 10px;
+      height: 10px;
+      background: #38bdf8;
+      border-radius: 50%;
+      animation: pulse 1.8s infinite;
+    }
+    @keyframes pulse {
+      0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(56, 189, 248, 0.7); }
+      70% { transform: scale(1.15); box-shadow: 0 0 0 10px rgba(56, 189, 248, 0); }
+      100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(56, 189, 248, 0); }
+    }
+
+    main {
+      flex: 1;
+      display: grid;
+      grid-template-columns: 1fr 340px;
+      gap: 30px;
+      padding: 24px 0;
+      min-height: 0;
+    }
+
+    .slide-stage {
+      background: var(--bg-card);
+      border: 1px solid var(--bg-card-border);
+      border-radius: 20px;
+      padding: 30px 40px;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      box-shadow: 0 20px 45px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(16px);
+      overflow: hidden;
+    }
+
+    .slide-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 24px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      padding-bottom: 16px;
+    }
+    .slide-title-area h2 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 32px;
+      font-weight: 800;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .slide-title-area h2 span {
+      color: #c084fc;
+    }
+    .slide-title-area p {
+      color: var(--text-muted);
+      font-size: 15px;
+      margin-top: 6px;
+    }
+    .slide-num-tag {
+      background: rgba(168, 85, 247, 0.15);
+      border: 1px solid #a855f7;
+      color: #c084fc;
+      padding: 6px 16px;
+      border-radius: 12px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .slide-content-viewport {
+      flex: 1;
+      position: relative;
+      min-height: 0;
+    }
+    .slide-view {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.4s ease, transform 0.4s ease;
+      transform: translateY(10px);
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .slide-view.active {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0);
+    }
+
+    /* SLIDE 1: A CRISE DO VIBE CODING */
+    .crisis-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      flex: 1;
+    }
+    .c-card {
+      background: rgba(15, 23, 42, 0.7);
+      border-radius: 16px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .c-card.bad {
+      border-color: rgba(244, 63, 94, 0.4);
+      background: radial-gradient(circle at top right, rgba(244, 63, 94, 0.12), transparent 70%), rgba(15, 23, 42, 0.8);
+    }
+    .c-card.good {
+      border-color: rgba(168, 85, 247, 0.4);
+      background: radial-gradient(circle at top right, rgba(168, 85, 247, 0.12), transparent 70%), rgba(15, 23, 42, 0.8);
+    }
+    .c-head {
+      font-family: 'Outfit', sans-serif;
+      font-size: 19px;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .c-head.bad { color: #fb7185; }
+    .c-head.good { color: #c084fc; }
+    .c-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      font-size: 14px;
+      line-height: 1.5;
+      color: #cbd5e1;
+    }
+    .c-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      margin-top: 6px;
+      flex-shrink: 0;
+    }
+    .c-dot.red { background: #f43f5e; box-shadow: 0 0 8px rgba(244, 63, 94, 0.6); }
+    .c-dot.purple { background: #a855f7; box-shadow: 0 0 8px rgba(168, 85, 247, 0.6); }
+
+    .crisis-alert {
+      background: rgba(168, 85, 247, 0.1);
+      border: 1px solid rgba(168, 85, 247, 0.35);
+      border-radius: 14px;
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      color: #f3e8ff;
+      font-size: 15px;
+    }
+
+    /* SLIDE 2: NEURO-SIMBÓLICO */
+    .neuro-sym-row {
+      display: grid;
+      grid-template-columns: 1fr 80px 1fr;
+      gap: 16px;
+      align-items: center;
+      flex: 1;
+    }
+    .pillar-box {
+      background: rgba(15, 23, 42, 0.8);
+      border-radius: 16px;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      height: 100%;
+      justify-content: center;
+    }
+    .pillar-box.neuro {
+      border: 1px solid rgba(56, 189, 248, 0.4);
+      background: radial-gradient(circle at top left, rgba(56, 189, 248, 0.12), transparent 70%), rgba(15, 23, 42, 0.8);
+    }
+    .pillar-box.symbolic {
+      border: 1px solid rgba(168, 85, 247, 0.4);
+      background: radial-gradient(circle at top right, rgba(168, 85, 247, 0.12), transparent 70%), rgba(15, 23, 42, 0.8);
+    }
+    .plus-badge {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Outfit', sans-serif;
+      font-size: 32px;
+      font-weight: 900;
+      color: #38bdf8;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 50%;
+      width: 60px;
+      height: 60px;
+      margin: 0 auto;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+    }
+
+    /* SLIDE 3: O TRIBUNAL SIMBÓLICO */
+    .tribunal-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 24px;
+      flex: 1;
+    }
+    .tribunal-flow {
+      background: #030712;
+      border: 1px solid rgba(168, 85, 247, 0.35);
+      border-radius: 16px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .tr-step {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 14px;
+      background: rgba(255, 255, 255, 0.03);
+      border-radius: 8px;
+      font-size: 13px;
+    }
+    .tr-badge {
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-weight: 700;
+      font-size: 12px;
+    }
+    .tr-badge.ai { background: rgba(56, 189, 248, 0.2); color: #38bdf8; border: 1px solid #38bdf8; }
+    .tr-badge.guard { background: rgba(168, 85, 247, 0.2); color: #c084fc; border: 1px solid #a855f7; }
+    .tr-badge.pass { background: rgba(16, 185, 129, 0.2); color: #34d399; border: 1px solid #10b981; }
+
+    .verdict-card {
+      background: radial-gradient(circle at center, rgba(168, 85, 247, 0.15), transparent 70%), rgba(15, 23, 42, 0.8);
+      border: 1px solid rgba(168, 85, 247, 0.35);
+      border-radius: 16px;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      gap: 16px;
+    }
+    .verdict-icon {
+      font-size: 52px;
+      filter: drop-shadow(0 0 15px rgba(168, 85, 247, 0.6));
+    }
+
+    /* SLIDE 4: SÍNTESE FINAL */
+    .synthesis-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      flex: 1;
+    }
+    .sy-card {
+      background: rgba(15, 23, 42, 0.7);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      padding: 22px 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      position: relative;
+    }
+    .sy-card.prime {
+      border-color: #a855f7;
+      background: radial-gradient(circle at top center, rgba(168, 85, 247, 0.2), transparent 75%), rgba(15, 23, 42, 0.9);
+      box-shadow: 0 0 25px rgba(168, 85, 247, 0.25);
+    }
+    .sy-num {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      background: rgba(168, 85, 247, 0.2);
+      border: 1px solid #a855f7;
+      color: #c084fc;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 700;
+      font-size: 14px;
+    }
+    .sy-title {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 800;
+      font-size: 16px;
+      color: #fff;
+    }
+    .sy-desc {
+      font-size: 13px;
+      color: #94a3b8;
+      line-height: 1.5;
+    }
+
+    /* PRESENTER CARDS */
+    .presenters-col {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .actor-card {
+      flex: 1;
+      background: var(--bg-card);
+      border: 1px solid var(--bg-card-border);
+      border-radius: 20px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      position: relative;
+      transition: all 0.3s ease;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+    }
+    .actor-card.talking {
+      border-color: #a855f7;
+      box-shadow: 0 0 30px var(--purple-glow), inset 0 0 20px rgba(168, 85, 247, 0.15);
+      transform: scale(1.02);
+    }
+    .actor-avatar-wrap {
+      position: relative;
+      width: 100px;
+      height: 100px;
+      margin-bottom: 14px;
+    }
+    .actor-img {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      border: 3px solid rgba(255, 255, 255, 0.2);
+      object-fit: cover;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+    }
+    .actor-card.talking .actor-img {
+      border-color: #a855f7;
+    }
+    .talking-halo {
+      position: absolute;
+      top: -8px; left: -8px; right: -8px; bottom: -8px;
+      border-radius: 50%;
+      border: 2px dashed #a855f7;
+      opacity: 0;
+      animation: rotateHalo 6s linear infinite;
+    }
+    .actor-card.talking .talking-halo {
+      opacity: 1;
+    }
+    @keyframes rotateHalo {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+    .actor-name {
+      font-family: 'Outfit', sans-serif;
+      font-size: 18px;
+      font-weight: 800;
+      color: #fff;
+    }
+    .actor-role {
+      font-size: 12px;
+      color: #c084fc;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-top: 4px;
+    }
+
+    /* FOOTER */
+    footer {
+      height: 135px;
+      background: var(--bg-card);
+      border: 1px solid var(--bg-card-border);
+      border-radius: 18px;
+      padding: 16px 28px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+    }
+    .sub-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .spk-pill {
+      font-size: 12px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      padding: 4px 12px;
+      border-radius: 999px;
+    }
+    .spk-pill.eliezer { background: rgba(56, 189, 248, 0.2); color: #38bdf8; border: 1px solid #38bdf8; }
+    .spk-pill.leigo { background: rgba(168, 85, 247, 0.2); color: #c084fc; border: 1px solid #a855f7; }
+
+    .time-readout {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+    .speech-box {
+      font-size: 18px;
+      line-height: 1.45;
+      font-weight: 600;
+      color: #f1f5f9;
+      display: flex;
+      align-items: center;
+      min-height: 52px;
+    }
+    .wave-bars {
+      display: flex;
+      align-items: center;
+      gap: 3px;
+      height: 16px;
+      opacity: 0;
+    }
+    .wave-bars.active { opacity: 1; }
+    .bar {
+      width: 3px;
+      height: 100%;
+      background: #a855f7;
+      border-radius: 2px;
+      animation: soundWave 0.8s ease-in-out infinite alternate;
+    }
+    .bar:nth-child(2) { animation-delay: 0.15s; }
+    .bar:nth-child(3) { animation-delay: 0.3s; }
+    .bar:nth-child(4) { animation-delay: 0.45s; }
+    @keyframes soundWave {
+      0% { height: 4px; }
+      100% { height: 16px; }
+    }
+
+    #sync-curtain {
+      position: absolute;
+      top: 0; left: 0; width: 1920px; height: 1080px;
+      background: #050811;
+      z-index: 999;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+    }
+    .spinner {
+      width: 50px;
+      height: 50px;
+      border: 4px solid rgba(168, 85, 247, 0.2);
+      border-top-color: #a855f7;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+  </style>
+</head>
+<body>
+  <div id="sync-curtain">
+    <div class="spinner"></div>
+    <div style="font-family:'Outfit',sans-serif; font-size:22px; font-weight:700; color:#c084fc;">
+      Carregando Ep. 04: O Paradigma Neuro-Simbólico...
+    </div>
+  </div>
+
+  <canvas id="bg-canvas"></canvas>
+
+  <div class="app-container">
+    <header>
+      <div class="brand-wrap">
+        <div class="brand-logo">🧬</div>
+        <div class="brand-text">
+          <h1>Paradigma IDD &mdash; Base de Conhecimento</h1>
+          <span>Episódio 04 &bull; O Paradigma Neuro-Simbólico (Por que LLMs Sozinhos Falham)</span>
+        </div>
+      </div>
+      <div class="header-badges">
+        <div class="h-badge">IA Neuro-Simbólica</div>
+        <div class="h-badge">DeepMind & MIT</div>
+        <div class="h-badge live">
+          <div class="pulse-dot"></div>
+          Fronteira Científica
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section class="slide-stage">
+        <div class="slide-header">
+          <div class="slide-title-area">
+            <h2 id="mainSlideTitle"><span>🧬</span> A Ilusão do Vibe Coding Puro</h2>
+            <p id="mainSlideSubtitle">Por que redes neurais estatísticas alucinam lógica e geram dívida técnica silenciosa.</p>
+          </div>
+          <div class="slide-num-tag">EP. 04 &bull; SLIDE <span id="slideIndicator">1</span> / 4</div>
+        </div>
+
+        <div class="slide-content-viewport">
+          <!-- SLIDE 1: A CRISE DO VIBE CODING -->
+          <div class="slide-view active" id="view-slide-1">
+            <div class="crisis-grid">
+              <div class="c-card bad">
+                <div class="c-head bad">
+                  <span>❌</span> A Fraqueza dos LLMs Puros (Conexionismo)
+                </div>
+                <div class="c-item">
+                  <div class="c-dot red"></div>
+                  <div>Modelos de probabilidade de tokens: não possuem representação interna causal da verdade lógica.</div>
+                </div>
+                <div class="c-item">
+                  <div class="c-dot red"></div>
+                  <div>Alucinações silenciosas: o código parece correto na sintaxe, mas quebra invariantes e regras de negócio.</div>
+                </div>
+                <div class="c-item">
+                  <div class="c-dot red"></div>
+                  <div>Dívida técnica descontrolada: duplicações, inconsistências relacionais e falhas de segurança.</div>
+                </div>
+              </div>
+
+              <div class="c-card good">
+                <div class="c-head good">
+                  <span>🛡️</span> A Resposta do Paradigma IDD
+                </div>
+                <div class="c-item">
+                  <div class="c-dot purple"></div>
+                  <div>Intenção como âncora: o modelo formal de negócio governa e restringe a geração do LLM.</div>
+                </div>
+                <div class="c-item">
+                  <div class="c-dot purple"></div>
+                  <div>Invariantes invioláveis: regras matemáticas que nenhuma alucinação de prompt consegue romper.</div>
+                </div>
+                <div class="c-item">
+                  <div class="c-dot purple"></div>
+                  <div>Determinismo arquitetural: a liberdade criativa da IA subordinada à verdade do domínio.</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="crisis-alert">
+              <div style="font-size: 26px;">💡</div>
+              <div>
+                <strong>Axioma da Ciência da Computação:</strong> Redes neurais são ótimas em intuição e linguagem; motores simbólicos são perfeitos em lógica e conservação de regras. O futuro exige a união de ambos.
+              </div>
+            </div>
+          </div>
+
+          <!-- SLIDE 2: NEURO-SIMBÓLICO -->
+          <div class="slide-view" id="view-slide-2">
+            <div class="neuro-sym-row">
+              <div class="pillar-box neuro">
+                <div style="font-family:'Outfit',sans-serif; font-size:22px; font-weight:800; color:#38bdf8;">
+                  🧠 Dimensão "NEURO"
+                </div>
+                <div style="font-size:14px; color:#cbd5e1; line-height:1.6;">
+                  • Modelos de Linguagem Generativos (LLMs)<br>
+                  • Empatia com a Usuária Leiga<br>
+                  • Elicitação de Intenções em linguagem natural<br>
+                  • Proposta criativa de algoritmos e sintaxe
+                </div>
+              </div>
+
+              <div class="plus-badge">+</div>
+
+              <div class="pillar-box symbolic">
+                <div style="font-family:'Outfit',sans-serif; font-size:22px; font-weight:800; color:#c084fc;">
+                  ⚙️ Dimensão "SIMBÓLICA"
+                </div>
+                <div style="font-size:14px; color:#cbd5e1; line-height:1.6;">
+                  • Modelo Entidade-Relacionamento (MER)<br>
+                  • Máquinas de Estados UML e ASTs Semânticas<br>
+                  • Invariantes Matemáticas Formais<br>
+                  • Verificação Determinística e Prova de Teoremas
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- SLIDE 3: O TRIBUNAL SIMBÓLICO -->
+          <div class="slide-view" id="view-slide-3">
+            <div class="tribunal-grid">
+              <div class="tribunal-flow">
+                <div style="color:#c084fc; font-weight:700; margin-bottom:4px;">
+                  ⚖️ O Fluxo da Verdade no IDD:
+                </div>
+                <div class="tr-step">
+                  <span>1. Intenção Bruta do Usuário</span>
+                  <span class="tr-badge ai">CAMADA NEURO</span>
+                </div>
+                <div class="tr-step">
+                  <span>2. Proposta de Código gerada pela IA</span>
+                  <span class="tr-badge ai">GERAÇÃO LLM</span>
+                </div>
+                <div class="tr-step">
+                  <span>3. Verificação contra o MER e Invariantes</span>
+                  <span class="tr-badge guard">TRIBUNAL SIMBÓLICO</span>
+                </div>
+                <div class="tr-step">
+                  <span>4. Commit Aprovado com Prova Formal</span>
+                  <span class="tr-badge pass">ZERO ALUCINAÇÃO</span>
+                </div>
+              </div>
+
+              <div class="verdict-card">
+                <div class="verdict-icon">🛡️</div>
+                <div style="font-family:'Outfit',sans-serif; font-size:20px; font-weight:800; color:#c084fc;">
+                  A IA Nunca é Juíza de Si Mesma
+                </div>
+                <div style="font-size:14px; color:#cbd5e1; line-height:1.6;">
+                  No IDD, a IA é uma força geradora extraordinária, mas a autoridade de homologação reside na matemática formal das regras de negócio.
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- SLIDE 4: SÍNTESE FINAL -->
+          <div class="slide-view" id="view-slide-4">
+            <div class="synthesis-row">
+              <div class="sy-card">
+                <div class="sy-num">1</div>
+                <div class="sy-title">Linguagem Pura</div>
+                <div class="sy-desc">Intenção de negócio acolhida sem barreiras de sintaxe.</div>
+              </div>
+
+              <div class="sy-card prime">
+                <div class="sy-num">2</div>
+                <div class="sy-title">Neuro-Simbólico</div>
+                <div class="sy-desc">A convergência defendida por DeepMind, MIT e IDD.</div>
+              </div>
+
+              <div class="sy-card">
+                <div class="sy-num">3</div>
+                <div class="sy-title">Raciocínio Formal</div>
+                <div class="sy-desc">Invariantes matemáticas ancorando a realidade dos dados.</div>
+              </div>
+
+              <div class="sy-card">
+                <div class="sy-num">4</div>
+                <div class="sy-title">Episódio 05</div>
+                <div class="sy-desc">O Compilador de Intenções e a Intent IR.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <aside class="presenters-col">
+        <div class="actor-card" id="card-eliezer">
+          <div class="talking-halo"></div>
+          <div class="actor-avatar-wrap">
+            <img class="actor-img" src="../avatares/eliezer.png" alt="Eliézer Rosa">
+          </div>
+          <div class="actor-name">Eliézer Rosa</div>
+          <div class="actor-role">Autor do Paradigma IDD</div>
+        </div>
+
+        <div class="actor-card" id="card-leigo">
+          <div class="talking-halo"></div>
+          <div class="actor-avatar-wrap">
+            <img class="actor-img" src="../avatares/leigo.png" alt="Usuária Leiga">
+          </div>
+          <div class="actor-name">Usuária Leiga</div>
+          <div class="actor-role">Engenheira de Negócio</div>
+        </div>
+      </aside>
+    </main>
+
+    <footer>
+      <div class="sub-meta">
+        <div style="display:flex; align-items:center; gap:12px;">
+          <div class="spk-pill" id="speakerPill">USUÁRIA LEIGA</div>
+          <span style="font-size:13px; font-weight:700; color:#94a3b8;" id="speakerName">Usuária Leiga</span>
+          <div class="wave-bars" id="waveBars">
+            <div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div>
+          </div>
+        </div>
+        <div class="time-readout" id="timeReadout">00:00 / 02:18</div>
+      </div>
+      <div class="speech-box" id="speechContent">
+        "Carregando narrativa..."
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    const canvas = document.getElementById('bg-canvas');
+    const ctx = canvas.getContext('2d');
+    canvas.width = 1920;
+    canvas.height = 1080;
+
+    const particles = [];
+    for (let i = 0; i < 70; i++) {
+      particles.push({
+        x: Math.random() * 1920,
+        y: Math.random() * 1080,
+        radius: Math.random() * 2 + 0.5,
+        speedX: (Math.random() - 0.5) * 0.3,
+        speedY: (Math.random() - 0.5) * 0.3,
+        color: Math.random() > 0.5 ? '#a855f7' : '#38bdf8',
+        alpha: Math.random() * 0.4 + 0.1
+      });
+    }
+
+    function animateBg() {
+      ctx.fillStyle = '#050811';
+      ctx.fillRect(0, 0, 1920, 1080);
+      particles.forEach(p => {
+        p.x += p.speedX; p.y += p.speedY;
+        if (p.y < 0) p.y = 1080;
+        if (p.x < 0) p.x = 1920;
+        if (p.x > 1920) p.x = 0;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+        ctx.fillStyle = p.color;
+        ctx.globalAlpha = p.alpha;
+        ctx.fill();
+      });
+      requestAnimationFrame(animateBg);
+    }
+    requestAnimationFrame(animateBg);
+
+    window.timelineItems = [];
+
+    window.setTimeline = function(items) {
+      if (items && items.length > 0) window.timelineItems = items;
+    };
+
+    const slideTitles = [
+      { t: "A Ilusão do Vibe Coding Puro", s: "Por que redes neurais estatísticas alucinam lógica e geram dívida técnica silenciosa." },
+      { t: "O Que É a Inteligência Artificial Neuro-Simbólica?", s: "A união da intuição generativa (Neuro) com o rigor matemático e formal (Simbólico)." },
+      { t: "O Tribunal Simbólico do IDD", s: "Por que a IA nunca pode ser juíza do próprio trabalho: o MER e as invariantes como filtros." },
+      { t: "A Síntese da Ciência da Computação", s: "Convergência entre DeepMind, MIT e o Paradigma IDD: preparação para o Ep. 05." }
+    ];
+
+    window.updateFrameAtTime = function(timeSec) {
+      const curtain = document.getElementById('sync-curtain');
+      if (curtain && curtain.style.display !== 'none') curtain.style.display = 'none';
+
+      const m = Math.floor(timeSec / 60);
+      const s = Math.floor(timeSec % 60);
+      const timeStr = `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+      const timeEl = document.getElementById('timeReadout');
+      if (timeEl) timeEl.innerText = `${timeStr} / 02:18`;
+
+      if (!window.timelineItems || window.timelineItems.length === 0) return;
+
+      const currentSeg = window.timelineItems.find(it => timeSec >= it.startSec && timeSec <= it.endSec)
+        || window.timelineItems.filter(it => it.startSec <= timeSec).pop()
+        || window.timelineItems[0];
+
+      const speakingSeg = window.timelineItems.find(it => timeSec >= it.startSec && timeSec <= it.endSec);
+
+      document.querySelectorAll('.slide-view').forEach(sv => sv.classList.remove('active'));
+      const activeView = document.getElementById(`view-slide-${currentSeg.slide}`);
+      if (activeView) activeView.classList.add('active');
+
+      document.getElementById('slideIndicator').innerText = currentSeg.slide;
+      const tInfo = slideTitles[currentSeg.slide - 1];
+      if (tInfo) {
+        document.getElementById('mainSlideTitle').innerHTML = `<span>🧬</span> ${tInfo.t}`;
+        document.getElementById('mainSlideSubtitle').innerText = tInfo.s;
+      }
+
+      document.getElementById('speechContent').innerText = `"${currentSeg.text}"`;
+      document.getElementById('speakerName').innerText = currentSeg.actor;
+      const pill = document.getElementById('speakerPill');
+      pill.className = `spk-pill ${currentSeg.who}`;
+
+      const cardEliezer = document.getElementById('card-eliezer');
+      const cardLeigo = document.getElementById('card-leigo');
+      const waveBars = document.getElementById('waveBars');
+
+      if (speakingSeg) {
+        cardEliezer.classList.toggle('talking', speakingSeg.who === 'eliezer');
+        cardLeigo.classList.toggle('talking', speakingSeg.who === 'leigo');
+        waveBars.classList.add('active');
+      } else {
+        cardEliezer.classList.remove('talking');
+        cardLeigo.classList.remove('talking');
+        waveBars.classList.remove('active');
+      }
+    };
+  </script>
+</body>
+</html>

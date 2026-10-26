@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>IDD Racha de Pix - Ep. 2B Metodologia: MER Preliminar com IA</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, sans-serif; }
+    body {
+      width: 1920px; height: 1080px; background: #030712; color: #f8fafc;
+      overflow: hidden; position: relative;
+    }
+    .grid-bg {
+      position: absolute; inset: 0;
+      background-image: linear-gradient(rgba(56, 189, 248, 0.05) 1px, transparent 1px),
+                        linear-gradient(90deg, rgba(56, 189, 248, 0.05) 1px, transparent 1px);
+      background-size: 60px 60px;
+    }
+    .glow-ambient {
+      position: absolute; width: 1100px; height: 1100px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(14, 165, 233, 0.28) 0%, rgba(6, 182, 212, 0.16) 45%, transparent 70%);
+      top: 50%; left: 50%; transform: translate(-50%, -50%); filter: blur(90px); pointer-events: none;
+    }
+
+    /* TOP BAR */
+    .top-bar {
+      position: absolute; top: 0; left: 0; right: 0; height: 80px;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 60px; background: rgba(15, 23, 42, 0.88);
+      border-bottom: 1px solid rgba(56, 189, 248, 0.35); backdrop-filter: blur(12px); z-index: 50;
+    }
+    .top-title { display: flex; align-items: center; gap: 18px; }
+    .badge-ep {
+      background: linear-gradient(135deg, #0284c7, #0369a1); color: white;
+      font-weight: 800; font-size: 16px; letter-spacing: 1.5px;
+      padding: 6px 18px; border-radius: 999px; text-transform: uppercase;
+      box-shadow: 0 0 20px rgba(56, 189, 248, 0.4);
+    }
+    .series-name { font-size: 20px; font-weight: 700; color: #cbd5e1; }
+    .series-name span { color: #38bdf8; font-weight: 800; }
+    .timer-box { font-size: 18px; font-family: monospace; color: #38bdf8; font-weight: 700; }
+
+    /* STAGE */
+    .stage {
+      position: absolute; top: 80px; bottom: 220px; left: 0; right: 0;
+      padding: 40px 60px; display: flex; flex-direction: column; z-index: 20;
+    }
+    .slide-view {
+      display: none; width: 100%; height: 100%; flex-direction: column;
+      animation: fadeIn 0.4s ease-out forwards;
+    }
+    .slide-view.active { display: flex; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+    .slide-header { margin-bottom: 25px; }
+    .slide-category { font-size: 16px; font-weight: 800; color: #38bdf8; text-transform: uppercase; letter-spacing: 2px; }
+    .slide-title { font-size: 40px; font-weight: 900; color: #ffffff; margin-top: 4px; }
+    .slide-subtitle { font-size: 20px; color: #94a3b8; margin-top: 6px; }
+
+    .cards-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; flex: 1; }
+    .feature-card {
+      background: rgba(15, 23, 42, 0.85); border: 1.5px solid rgba(56, 189, 248, 0.35);
+      border-radius: 18px; padding: 28px; display: flex; flex-direction: column;
+      backdrop-filter: blur(14px); box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+    }
+    .card-icon { font-size: 38px; margin-bottom: 16px; }
+    .card-title { font-size: 24px; font-weight: 800; color: #38bdf8; margin-bottom: 12px; }
+    .card-desc { font-size: 17px; color: #e2e8f0; line-height: 1.5; flex: 1; }
+    .card-tag {
+      margin-top: 15px; align-self: flex-start; background: rgba(56, 189, 248, 0.15);
+      border: 1px solid #38bdf8; color: #bae6fd; padding: 4px 12px; border-radius: 8px;
+      font-size: 13px; font-weight: 700;
+    }
+
+    /* SLIDE 2: DIAGRAMA MER CONCEITUAL */
+    .mer-diagram-container {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; flex: 1; align-items: center;
+    }
+    .mer-entity {
+      background: rgba(15, 23, 42, 0.9); border: 1.5px solid rgba(56, 189, 248, 0.4);
+      border-radius: 16px; padding: 20px; display: flex; flex-direction: column;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+    }
+    .mer-entity-title {
+      font-size: 18px; font-weight: 800; color: #38bdf8; border-bottom: 1px solid rgba(56, 189, 248, 0.3);
+      padding-bottom: 8px; margin-bottom: 12px; display: flex; justify-content: space-between;
+    }
+    .mer-entity-field { font-size: 14px; color: #cbd5e1; margin-bottom: 6px; font-family: monospace; }
+    .mer-entity-pk { color: #f59e0b; font-weight: bold; }
+    .mer-entity-fk { color: #34d399; }
+
+    /* SLIDE 3: TERMINAL & CHAT */
+    .terminal-container { display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 28px; flex: 1; }
+    .terminal-window {
+      background: #020617; border: 1.5px solid #1e293b; border-radius: 16px;
+      padding: 24px; font-family: 'Consolas', monospace; font-size: 14px;
+      color: #38bdf8; display: flex; flex-direction: column;
+    }
+    .terminal-header { display: flex; gap: 8px; margin-bottom: 16px; border-bottom: 1px solid #1e293b; padding-bottom: 12px; }
+    .t-dot { width: 12px; height: 12px; border-radius: 50%; }
+    .t-red { background: #ef4444; } .t-yellow { background: #f59e0b; } .t-green { background: #10b981; }
+    .terminal-body { flex: 1; line-height: 1.6; color: #e2e8f0; }
+
+    .chat-card {
+      background: rgba(15, 23, 42, 0.85); border: 1.5px solid rgba(56, 189, 248, 0.35);
+      border-radius: 16px; padding: 22px; display: flex; flex-direction: column;
+    }
+    .chat-bubble {
+      background: rgba(30, 41, 59, 0.85); border: 1px solid rgba(56, 189, 248, 0.25);
+      border-radius: 14px; padding: 16px; margin-bottom: 14px; line-height: 1.45; font-size: 15px;
+    }
+    .chat-author { font-size: 14px; font-weight: 800; margin-bottom: 6px; }
+    .author-ia { color: #38bdf8; }
+    .author-eliezer { color: #38bdf8; }
+
+    /* BOTTOM BAR */
+    .bottom-bar {
+      position: absolute; bottom: 0; left: 0; right: 0; height: 220px;
+      background: rgba(10, 15, 29, 0.96); border-top: 1px solid rgba(56, 189, 248, 0.35);
+      backdrop-filter: blur(16px); display: flex; align-items: center;
+      padding: 0 60px; gap: 40px; z-index: 50;
+    }
+    .avatars-container { display: flex; gap: 30px; align-items: center; }
+    .avatar-card {
+      display: flex; flex-direction: column; align-items: center;
+      transition: all 0.3s ease; opacity: 0.45; transform: scale(0.95);
+    }
+    .avatar-card.active { opacity: 1; transform: scale(1.05); }
+    .avatar-circle {
+      width: 90px; height: 90px; border-radius: 50%; overflow: hidden;
+      border: 3px solid #334155; position: relative; background: #0f172a;
+    }
+    .avatar-card.active .avatar-circle {
+      border-color: #38bdf8; box-shadow: 0 0 25px rgba(56, 189, 248, 0.7);
+    }
+    .avatar-circle img { width: 100%; height: 100%; object-fit: cover; }
+    .avatar-name { font-size: 15px; font-weight: 800; color: #f8fafc; margin-top: 8px; }
+    .avatar-role { font-size: 12px; color: #94a3b8; font-weight: 600; }
+
+    .subtitles-container {
+      flex: 1; height: 140px; background: rgba(15, 23, 42, 0.8);
+      border: 1.5px solid rgba(56, 189, 248, 0.35); border-radius: 16px;
+      padding: 20px 28px; display: flex; flex-direction: column; justify-content: center;
+    }
+    .sub-speaker { font-size: 15px; font-weight: 800; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 6px; }
+    .speaker-leigo { color: #f472b6; }
+    .speaker-eliezer { color: #38bdf8; }
+    .speaker-ia { color: #34d399; }
+    .sub-text { font-size: 21px; font-weight: 600; color: #f8fafc; line-height: 1.45; }
+
+    #black-curtain { position: absolute; inset: 0; background: #000; z-index: 9999; pointer-events: none; }
+  </style>
+</head>
+<body>
+  <div id="black-curtain"></div>
+  <div class="glow-ambient"></div>
+  <div class="grid-bg"></div>
+
+  <div class="top-bar">
+    <div class="top-title">
+      <div class="badge-ep">EPISÓDIO 2B · METODOLOGIA IDD</div>
+      <div class="series-name">IDD NA PRÁTICA · <span>O 2º PASSO SAGRADO: MER PRELIMINAR COM IA</span></div>
+    </div>
+    <div class="timer-box" id="clock-display">00:00.0</div>
+  </div>
+
+  <div class="stage">
+    <!-- SLIDE 1: O 2º PASSO METODOLÓGICO -->
+    <div class="slide-view active" id="slide-1">
+      <div class="slide-header">
+        <div class="slide-category">METODOLOGIA IDD • O 2º PASSO SAGRADO</div>
+        <div class="slide-title">MER Preliminar: Modelagem do Negócio sem Código SQL</div>
+        <div class="slide-subtitle">Como orquestrar com a IA as entidades e relações sem escovação prematura de bits</div>
+      </div>
+      <div class="cards-grid">
+        <div class="feature-card">
+          <div class="card-icon">🧠</div>
+          <div class="card-title">1. Modelo Mental Puro</div>
+          <div class="card-desc">As entidades refletem exatamente a realidade do mundo real: Mesa, Amigos, Pedidos e Divisões.</div>
+          <div class="card-tag">CONCEITUAL</div>
+        </div>
+        <div class="feature-card">
+          <div class="card-icon">🔗</div>
+          <div class="card-title">2. Cardinalidades N:N</div>
+          <div class="card-desc">Mapeamento rigoroso de itens consumidos por 1 ou mais amigos, sem duplicar registros no banco.</div>
+          <div class="card-tag">RELACIONAL</div>
+        </div>
+        <div class="feature-card">
+          <div class="card-icon">🛡️</div>
+          <div class="card-title">3. Cotas Blindadas</div>
+          <div class="card-desc">Garantia arquitetural de que o histórico de pagamentos e chaves Pix jamais sofrerá mutação acidental.</div>
+          <div class="card-tag">GOVERNANÇA</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 2: ENTIDADES DO MER -->
+    <div class="slide-view" id="slide-2">
+      <div class="slide-header">
+        <div class="slide-category">MODELO ENTIDADE-RELACIONAMENTO DO RACHA</div>
+        <div class="slide-title">Entidades Núcleo: Mesa, Participantes &amp; Consumo N:N</div>
+        <div class="slide-subtitle">A tabela associativa ConsumoItem como o coração do cálculo fracionário atômico</div>
+      </div>
+      <div class="mer-diagram-container">
+        <div class="mer-entity">
+          <div class="mer-entity-title">
+            <span>MESA</span>
+            <span style="font-size:12px; color:#38bdf8;">[1]</span>
+          </div>
+          <div class="mer-entity-field"><span class="mer-entity-pk">PK</span> id: uuid</div>
+          <div class="mer-entity-field">numero_mesa: int</div>
+          <div class="mer-entity-field">chave_pix_dest: text</div>
+          <div class="mer-entity-field">taxa_servico_pct: dec</div>
+          <div class="mer-entity-field">status: enum</div>
+        </div>
+
+        <div class="mer-entity">
+          <div class="mer-entity-title">
+            <span>PARTICIPANTE</span>
+            <span style="font-size:12px; color:#38bdf8;">[N]</span>
+          </div>
+          <div class="mer-entity-field"><span class="mer-entity-pk">PK</span> id: uuid</div>
+          <div class="mer-entity-field"><span class="mer-entity-fk">FK</span> mesa_id: uuid</div>
+          <div class="mer-entity-field">nome: varchar(60)</div>
+          <div class="mer-entity-field">telefone: varchar(20)</div>
+          <div class="mer-entity-field">is_pagador_mesa: bool</div>
+        </div>
+
+        <div class="mer-entity">
+          <div class="mer-entity-title">
+            <span>ITEM_COMANDA</span>
+            <span style="font-size:12px; color:#38bdf8;">[N]</span>
+          </div>
+          <div class="mer-entity-field"><span class="mer-entity-pk">PK</span> id: uuid</div>
+          <div class="mer-entity-field"><span class="mer-entity-fk">FK</span> mesa_id: uuid</div>
+          <div class="mer-entity-field">descricao: text</div>
+          <div class="mer-entity-field">preco_total: int (cents)</div>
+          <div class="mer-entity-field">status_preparo: enum</div>
+        </div>
+
+        <div class="mer-entity" style="border-color:#10b981;">
+          <div class="mer-entity-title" style="color:#10b981;">
+            <span>CONSUMO_ITEM (N:N)</span>
+            <span style="font-size:12px; color:#10b981;">[Pivot]</span>
+          </div>
+          <div class="mer-entity-field"><span class="mer-entity-pk">PK</span> id: uuid</div>
+          <div class="mer-entity-field"><span class="mer-entity-fk">FK</span> item_comanda_id: uuid</div>
+          <div class="mer-entity-field"><span class="mer-entity-fk">FK</span> participante_id: uuid</div>
+          <div class="mer-entity-field">peso_cota: dec</div>
+        </div>
+
+        <div class="mer-entity" style="border-color:#38bdf8;">
+          <div class="mer-entity-title" style="color:#38bdf8;">
+            <span>COTA_RATEIO</span>
+            <span style="font-size:12px; color:#38bdf8;">[Snapshot]</span>
+          </div>
+          <div class="mer-entity-field"><span class="mer-entity-pk">PK</span> id: uuid</div>
+          <div class="mer-entity-field"><span class="mer-entity-fk">FK</span> participante_id: uuid</div>
+          <div class="mer-entity-field">valor_itens_cents: int</div>
+          <div class="mer-entity-field">taxa_servico_cents: int</div>
+          <div class="mer-entity-field">resto_centavos_cents: int</div>
+          <div class="mer-entity-field">total_cota_cents: int</div>
+        </div>
+
+        <div class="mer-entity" style="border-color:#f59e0b;">
+          <div class="mer-entity-title" style="color:#f59e0b;">
+            <span>PAYLOAD_PIX</span>
+            <span style="font-size:12px; color:#f59e0b;">[Auditoria]</span>
+          </div>
+          <div class="mer-entity-field"><span class="mer-entity-pk">PK</span> id: uuid</div>
+          <div class="mer-entity-field"><span class="mer-entity-fk">FK</span> cota_rateio_id: uuid</div>
+          <div class="mer-entity-field">emv_payload: text</div>
+          <div class="mer-entity-field">status_liquidacao: enum</div>
+          <div class="mer-entity-field">liquidado_em: timestamptz</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 3: TERMINAL DA IA & GOVERNANÇA -->
+    <div class="slide-view" id="slide-3">
+      <div class="slide-header">
+        <div class="slide-category">GOVERNANÇA METODOLÓGICA &amp; DECISÕES DO MER</div>
+        <div class="slide-title">Terminal da IA: Imutabilidade Relacional da Cota de Rateio</div>
+        <div class="slide-subtitle">A IA submete escolhas de modelagem crítica para decisão do orquestrador</div>
+      </div>
+      <div class="terminal-container">
+        <div class="terminal-window">
+          <div class="terminal-header">
+            <div class="t-dot t-red"></div>
+            <div class="t-dot t-yellow"></div>
+            <div class="t-dot t-green"></div>
+            <span style="margin-left: 10px; font-weight: bold; color: #94a3b8;">idd-mer-architect ~ v2.1.0</span>
+          </div>
+          <div class="terminal-body">
+            <p>> Analisando integridade relacional do Racha de Pix...</p>
+            <p style="color:#f59e0b;">[ALERTA] Risco de mutabilidade: ItemComanda pode ser cancelado pós-fechamento.</p>
+            <p>> Consulta ao Orquestrador Eliézer Rosa:</p>
+            <p style="color:#38bdf8;">"Se as cotas apontarem diretamente para o somatório dinâmico, QR Codes já gerados e pagos perderão a correspondência contábil. Proponho transformar COTA_RATEIO em entidade de snapshot imutável com versionamento. Autoriza?"</p>
+            <p style="color:#34d399;">✔ Resposta: Aprovado. Snapshot imutável auditado com versionamento de fechamento.</p>
+            <p style="color:#10b981; font-weight: bold;">[STATUS] INVARIANTE DE IMUTABILIDADE IMPLEMENTADA COM SUCESSO.</p>
+          </div>
+        </div>
+
+        <div class="chat-card">
+          <div class="chat-bubble">
+            <div class="chat-author author-ia">🤖 IA Compilador</div>
+            <div>Orquestrador Eliézer e Usuária Leiga, ao modelar o MER do Racha, identifiquei um risco de inconsistência: se um item for cancelado ou o preço alterado após a geração das cotas, os códigos Pix já distribuídos aos participantes se tornarão inválidos. Proponho que CotaRateio seja um snapshot imutável com status de fechamento da mesa. Autoriza essa modelagem relacional?</div>
+          </div>
+          <div class="chat-bubble">
+            <div class="chat-author author-eliezer">👤 Eliézer Rosa</div>
+            <div>Perfeito! A cota é um snapshot imutável auditado. Se a comanda for reaberta, uma nova versão de rateio é gerada e os códigos Pix anteriores são invalidados com rastreabilidade total.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 4: SÍNTESE DO MER -->
+    <div class="slide-view" id="slide-4">
+      <div class="slide-header">
+        <div class="slide-category">SÍNTESE METODOLÓGICA DO 2º PASSO</div>
+        <div class="slide-title">Estrutura de Dados Blindada para o Futuro</div>
+        <div class="slide-subtitle">Como o MER preliminar protege a equipe contra retrabalho e bugs financeiros</div>
+      </div>
+      <div class="cards-grid">
+        <div class="feature-card">
+          <div class="card-icon">⚡</div>
+          <div class="card-title">Cálculo Instantâneo</div>
+          <div class="card-desc">A relação N:N de ConsumoItem viabiliza consultas relacionais atômicas em menos de 5 milissegundos.</div>
+          <div class="card-tag">PERFORMANCE</div>
+        </div>
+        <div class="feature-card">
+          <div class="card-icon">🔒</div>
+          <div class="card-title">Blindagem Financeira</div>
+          <div class="card-desc">A Invariante da Soma Zero fica garantida no próprio esquema conceitual através de valores inteiros em centavos.</div>
+          <div class="card-tag">SEGURANÇA</div>
+        </div>
+        <div class="feature-card">
+          <div class="card-icon">🚀</div>
+          <div class="card-title">Próximo Passo: UML</div>
+          <div class="card-desc">Com os dados modelados, o próximo passo metodológico é desenhar o diagrama de classes e estados com a IA!</div>
+          <div class="card-tag">EPISÓDIO 3</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BOTTOM BAR -->
+  <div class="bottom-bar">
+    <div class="avatars-container">
+      <div class="avatar-card" id="av-leigo">
+        <div class="avatar-circle">
+          <img src="../../avatares/avatar_usuaria_leiga.png" alt="Usuária Leiga">
+        </div>
+        <div class="avatar-name">Usuária Leiga</div>
+        <div class="avatar-role">Validadora de Domínio</div>
+      </div>
+      <div class="avatar-card" id="av-eliezer">
+        <div class="avatar-circle">
+          <img src="../../avatares/avatar_eliezer_oficial.png" alt="Eliézer Rosa">
+        </div>
+        <div class="avatar-name">Eliézer Rosa</div>
+        <div class="avatar-role">Orquestrador IDD</div>
+      </div>
+      <div class="avatar-card" id="av-ia">
+        <div class="avatar-circle">
+          <img src="../../avatares/avatar_ia_compilador.png" alt="IA Compilador">
+        </div>
+        <div class="avatar-name">IA Compilador</div>
+        <div class="avatar-role">Agente de Execução</div>
+      </div>
+    </div>
+    <div class="subtitles-container">
+      <div class="sub-speaker" id="sub-speaker">USUÁRIA LEIGA</div>
+      <div class="sub-text" id="sub-text">Iniciando episódio 2B metodológico: MER Preliminar com IA...</div>
+    </div>
+  </div>
+
+  <script>
+    let timelineItems = [];
+    let isRunning = false;
+    let startTimeMs = 0;
+
+    window.setTimeline = function(items) { timelineItems = items; };
+    window.stopPresentation = function() {
+      isRunning = false;
+    };
+    window.startPresentation = function() {
+      const curtain = document.getElementById('black-curtain');
+      if (curtain) {
+        curtain.style.opacity = '0';
+        setTimeout(() => curtain.remove(), 80);
+      }
+      isRunning = true;
+      startTimeMs = performance.now();
+      requestAnimationFrame(renderLoop);
+    };
+
+    function renderLoop(now) {
+      if (!isRunning) return;
+      const elapsedSec = (now - startTimeMs) / 1000;
+      const minutes = Math.floor(elapsedSec / 60);
+      const seconds = (elapsedSec % 60).toFixed(1);
+      document.getElementById('clock-display').innerText =
+        String(minutes).padStart(2, '0') + ':' + String(seconds).padStart(4, '0');
+
+      const curSeg = timelineItems.find(item => elapsedSec >= item.startSec && elapsedSec < item.endSec);
+      if (curSeg) {
+        const targetSlideId = 'slide-' + curSeg.slide;
+        document.querySelectorAll('.slide-view').forEach(s => {
+          if (s.id === targetSlideId) {
+            if (!s.classList.contains('active')) s.classList.add('active');
+          } else {
+            s.classList.remove('active');
+          }
+        });
+
+        ['leigo', 'eliezer', 'ia'].forEach(who => {
+          const el = document.getElementById('av-' + who);
+          if (el) {
+            if (curSeg.who === who) el.classList.add('active');
+            else el.classList.remove('active');
+          }
+        });
+
+        const speakerEl = document.getElementById('sub-speaker');
+        const textEl = document.getElementById('sub-text');
+        speakerEl.className = 'sub-speaker speaker-' + curSeg.who;
+        speakerEl.innerText = curSeg.actor;
+        textEl.innerText = curSeg.text;
+      }
+      requestAnimationFrame(renderLoop);
+    }
+  </script>
+</body>
+</html>

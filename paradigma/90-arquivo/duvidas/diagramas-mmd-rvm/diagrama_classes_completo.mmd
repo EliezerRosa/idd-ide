@@ -1,0 +1,504 @@
+%%{ init: { 'theme': 'base', 'themeVariables': { 'primaryColor': '#e1f5fe', 'primaryTextColor': '#01579b', 'lineColor': '#0288d1' } } }%%
+
+classDiagram
+    direction TB
+
+    %% ============================================================
+    %% MÓDULO 1: PUBLICADORES (Atores)
+    %% ============================================================
+
+    class Publisher {
+        +String id
+        +String name
+        +Gender gender
+        +Condition condition
+        +String phone
+        +Boolean isBaptized
+        +Boolean isServing
+        +AgeGroup ageGroup
+        +String[] parentIds
+        +Boolean isHelperOnly
+        +Boolean canPairWithNonParent
+        +PublisherPrivileges privileges
+        +PublisherPrivilegesBySection privilegesBySection
+        +PublisherAvailability availability
+        +String[] aliases
+        +Boolean isNotQualified
+        +Boolean requestedNoParticipation
+        +String source
+        +String createdAt
+    }
+
+    class PublisherPrivileges {
+        +Boolean canGiveTalks
+        +Boolean canConductCBS
+        +Boolean canReadCBS
+        +Boolean canPray
+        +Boolean canPreside
+    }
+
+    class PublisherPrivilegesBySection {
+        +Boolean canParticipateInTreasures
+        +Boolean canParticipateInMinistry
+        +Boolean canParticipateInLife
+    }
+
+    class PublisherAvailability {
+        +String mode
+        +String[] exceptionDates
+        +String[] availableDates
+    }
+
+    class Gender {
+        <<enumeration>>
+        brother
+        sister
+    }
+
+    class Condition {
+        <<enumeration>>
+        Ancião
+        Servo_Ministerial
+        Publicador
+    }
+
+    class AgeGroup {
+        <<enumeration>>
+        Adulto
+        Jovem
+        Criança
+    }
+
+    Publisher "1" *-- "1" PublisherPrivileges : tem
+    Publisher "1" *-- "1" PublisherPrivilegesBySection : tem
+    Publisher "1" *-- "1" PublisherAvailability : tem
+    Publisher --> Gender
+    Publisher --> Condition
+    Publisher --> AgeGroup
+    Publisher "0..*" --> "0..2" Publisher : parentIds
+
+    %% ============================================================
+    %% MÓDULO 2: ESTRUTURA DA APOSTILA (Template)
+    %% ============================================================
+
+    class WorkbookBatch {
+        +String id
+        +String fileName
+        +String uploadDate
+        +Int totalParts
+        +Int draftCount
+        +Int refinedCount
+        +Int promotedCount
+        +String weekRange
+        +Boolean isActive
+        +String promotedAt
+        +String[] promotedToParticipationIds
+    }
+
+    class WorkbookPart {
+        +String id
+        +String batchId
+        +String weekId
+        +String weekDisplay
+        +String date
+        +String section
+        +String tipoParte
+        +String partTitle
+        +String descricao
+        +Int seq
+        +Funcao funcao
+        +String duracao
+        +String horaInicio
+        +String horaFim
+        +String rawPublisherName
+        +String resolvedPublisherId
+        +String resolvedPublisherName
+        +Float matchConfidence
+        +WorkbookStatus status
+        +String createdAt
+        +String updatedAt
+    }
+
+    class WorkbookStatus {
+        <<enumeration>>
+        DRAFT
+        REFINED
+        PROMOTED
+    }
+
+    WorkbookBatch "1" *-- "1..*" WorkbookPart : contém
+    WorkbookPart --> WorkbookStatus
+
+    %% ============================================================
+    %% MÓDULO 3: ENUMS RVM PRO 2.0 (Taxonomia da Reunião)
+    %% ============================================================
+
+    class EnumSecao {
+        <<enumeration>>
+        Início_da_Reunião
+        Tesouros_da_Palavra_de_Deus
+        Faça_Seu_Melhor_no_Ministério
+        Nossa_Vida_Cristã
+        Final_da_Reunião
+    }
+
+    class EnumTipoParte {
+        <<enumeration>>
+        Presidente
+        Cântico_Inicial
+        Oração_Inicial
+        Comentários_Iniciais
+        Discurso_Tesouros
+        Joias_Espirituais
+        Parte_Estudante
+        Elogios_Conselhos
+        Cântico_Meio
+        Parte_Vida_Cristã
+        Dirigente_EBC
+        Leitor_EBC
+        Comentários_Finais
+        Cântico_Final
+        Oração_Final
+    }
+
+    class EnumModalidade {
+        <<enumeration>>
+        Presidência
+        Cântico
+        Oração
+        Aconselhamento
+        Discurso_Ensino
+        Leitura_Estudante
+        Demonstração
+        Discurso_Estudante
+        Dirigente_EBC
+        Leitor_EBC
+    }
+
+    class EnumFuncao {
+        <<enumeration>>
+        Titular
+        Ajudante
+    }
+
+    %% ============================================================
+    %% MÓDULO 4: DESIGNAÇÕES EFETIVAS
+    %% ============================================================
+
+    class ScheduledAssignment {
+        +String id
+        +String weekId
+        +String partId
+        +String partTitle
+        +ParticipationType partType
+        +TeachingCategory teachingCategory
+        +String principalPublisherId
+        +String principalPublisherName
+        +String secondaryPublisherId
+        +String secondaryPublisherName
+        +String date
+        +String startTime
+        +String endTime
+        +Int durationMin
+        +ApprovalStatus status
+        +String approvedByElderId
+        +String approvalDate
+        +String rejectionReason
+        +String selectionReason
+        +Float score
+        +String room
+        +String createdAt
+        +String updatedAt
+    }
+
+    class ApprovalStatus {
+        <<enumeration>>
+        DRAFT
+        PENDING_APPROVAL
+        APPROVED
+        REJECTED
+    }
+
+    class TeachingCategory {
+        <<enumeration>>
+        TEACHING
+        STUDENT
+        HELPER
+    }
+
+    class ParticipationType {
+        <<enumeration>>
+        Presidente
+        Oração_Inicial
+        Oração_Final
+        Tesouros_da_Palavra
+        Faça_Seu_Melhor
+        Nossa_Vida_Cristã
+        Dirigente_EBC
+        Leitor_EBC
+        Ajudante
+        Cântico
+        Comentários_Finais
+    }
+
+    ScheduledAssignment --> ApprovalStatus
+    ScheduledAssignment --> TeachingCategory
+    ScheduledAssignment --> ParticipationType
+    ScheduledAssignment "0..*" --> "1" Publisher : principalPublisher
+    ScheduledAssignment "0..*" --> "0..1" Publisher : secondaryPublisher
+
+    %% ============================================================
+    %% MÓDULO 5: PARTICIPAÇÕES (Histórico)
+    %% ============================================================
+
+    class Participation {
+        +String id
+        +String publisherName
+        +String week
+        +String date
+        +String partTitle
+        +ParticipationType type
+        +Int duration
+        +String source
+        +String createdAt
+    }
+
+    class HistoryRecord {
+        +String id
+        +String weekId
+        +String weekDisplay
+        +String date
+        +MeetingSection section
+        +String partTitle
+        +Int partSequence
+        +PartModality modality
+        +String rawPublisherName
+        +String participationRole
+        +String resolvedPublisherId
+        +String resolvedPublisherName
+        +Float matchConfidence
+        +StandardPartKey standardPartKey
+        +String partTheme
+        +String workbookNumber
+        +HistoryStatus status
+        +String validationNotes
+        +String importSource
+        +String importBatchId
+        +String createdAt
+        +String updatedAt
+        +String approvedBy
+        +String approvedAt
+    }
+
+    class ImportBatch {
+        +String id
+        +String fileName
+        +String importDate
+        +String source
+        +Int totalRecords
+        +Int pendingCount
+        +Int validatedCount
+        +Int approvedCount
+        +Int rejectedCount
+    }
+
+    class HistoryStatus {
+        <<enumeration>>
+        PENDING
+        VALIDATED
+        APPROVED
+        REJECTED
+    }
+
+    Participation --> ParticipationType
+    Participation "0..*" --> "1" Publisher : publisherName
+    HistoryRecord --> HistoryStatus
+    HistoryRecord --> EnumSecao
+    HistoryRecord --> EnumModalidade
+    ImportBatch "1" *-- "1..*" HistoryRecord : contém
+
+    %% ============================================================
+    %% MÓDULO 6: ESTRUTURA DA REUNIÃO (S-140)
+    %% ============================================================
+
+    class MeetingData {
+        +String id
+        +String congregationName
+        +String date
+        +String week
+        +String bibleReading
+        +String chairman
+        +String counselor
+        +String openingPrayer
+        +String openingSong
+        +TreasuresSection treasures
+        +MinistrySection ministry
+        +LivingSection living
+    }
+
+    class TreasuresSection {
+        +AssignableItem talk
+        +AssignableItem gems
+        +StudentPart bibleReading
+    }
+
+    class MinistrySection {
+        +StudentPart part1
+        +StudentPart part2
+        +StudentPart part3
+        +StudentPart part4
+    }
+
+    class LivingSection {
+        +String song
+        +AssignableItem part1
+        +AssignableItem part2
+        +AssignableItem congregationStudy
+        +MeetingItem closingComments
+        +String closingSong
+        +String closingPrayer
+    }
+
+    class AssignableItem {
+        +String time
+        +String description
+        +String duration
+        +Boolean isSong
+        +Boolean isComment
+        +String assignee
+        +String assigneeRole
+    }
+
+    class StudentPart {
+        +String time
+        +String description
+        +String duration
+        +String mainHallAssignee
+        +String roomBAssignee
+        +String assistantMainHall
+        +String assistantRoomB
+        +String assigneeRole
+    }
+
+    MeetingData "1" *-- "1" TreasuresSection
+    MeetingData "1" *-- "1" MinistrySection
+    MeetingData "1" *-- "1" LivingSection
+    TreasuresSection *-- AssignableItem
+    TreasuresSection *-- StudentPart
+    MinistrySection *-- StudentPart
+    LivingSection *-- AssignableItem
+
+    %% ============================================================
+    %% MÓDULO 7: DESIGNAÇÃO S-89
+    %% ============================================================
+
+    class Assignment {
+        +String id
+        +String date
+        +String congregation
+        +Int partNumber
+        +String section
+        +String title
+        +String student
+        +String assistant
+        +Int durationMin
+        +String room
+    }
+
+    %% ============================================================
+    %% MÓDULO 8: MOTOR DE REGRAS
+    %% ============================================================
+
+    class Rule {
+        +String id
+        +String description
+        +Boolean isActive
+        +RuleCondition[] conditions
+    }
+
+    class RuleCondition {
+        +String fact
+        +String operator
+        +Value value
+    }
+
+    class EngineConfig {
+        +Weights weights
+        +Cooldown cooldown
+        +Bonuses bonuses
+        +Pairing pairing
+    }
+
+    class RankedCandidate {
+        +Publisher publisher
+        +Float score
+        +Breakdown breakdown
+        +String reason
+    }
+
+    class FilterResult {
+        +Publisher[] eligible
+        +RejectedItem[] rejected
+    }
+
+    Rule "1" *-- "1..*" RuleCondition
+    RankedCandidate --> Publisher
+    FilterResult --> Publisher
+
+    %% ============================================================
+    %% MÓDULO 9: EVENTOS ESPECIAIS
+    %% ============================================================
+
+    class SpecialEvent {
+        +String id
+        +String week
+        +String templateId
+        +String theme
+        +String assignedTo
+        +Int duration
+        +Configuration configuration
+    }
+
+    class EventTemplate {
+        +String id
+        +String name
+        +String description
+        +EventImpact impact
+        +Defaults defaults
+    }
+
+    class EventImpact {
+        +EventImpactAction action
+        +ParticipationType[] targetType
+        +ParticipationType reassignTarget
+    }
+
+    class EventImpactAction {
+        <<enumeration>>
+        REPLACE_PART
+        ADD_PART
+        REPLACE_SECTION
+        REASSIGN_PART
+    }
+
+    SpecialEvent "0..*" --> "1" EventTemplate : usa
+    EventTemplate "1" *-- "1" EventImpact
+    EventImpact --> EventImpactAction
+
+    %% ============================================================
+    %% MÓDULO 10: ESTATÍSTICAS
+    %% ============================================================
+
+    class PublisherStats {
+        +String publisherId
+        +String publisherName
+        +Int totalAssignments
+        +String lastAssignmentDate
+        +String lastAssignmentWeek
+        +String lastAssignmentTitle
+        +ParticipationType lastAssignmentType
+        +Float avgDaysBetweenAssignments
+    }
+
+    PublisherStats --> Publisher
+    PublisherStats --> ParticipationType

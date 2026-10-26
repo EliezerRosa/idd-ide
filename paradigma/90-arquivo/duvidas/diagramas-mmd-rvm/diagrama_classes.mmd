@@ -1,0 +1,144 @@
+classDiagram
+    direction TB
+    
+    class Apostila {
+        <<Workbook>>
+        +String id
+        +String codigo
+        +Date mesInicio
+        +Date mesFim
+        +String idioma
+        +getSemanas() Semana[]
+    }
+    
+    class Semana {
+        <<Week>>
+        +String id
+        +String apostilaId
+        +String titulo
+        +Date dataInicio
+        +Date dataFim
+        +String leituraBiblica
+        +int[3] canticos
+        +getSecoes() Secao[]
+    }
+    
+    class Secao {
+        <<Section>>
+        +String id
+        +String semanaId
+        +TipoSecao tipo
+        +String titulo
+        +String cor
+        +int ordem
+        +getPartes() Parte[]
+    }
+    
+    class Parte {
+        <<Part>>
+        +String id
+        +String secaoId
+        +TipoParte tipo
+        +String titulo
+        +int duracao
+        +int ordem
+        +String indicadoPor
+        +PublicoAlvo publicoAlvo
+        +TipoConteudo tipoConteudo
+        +NivelEstudante nivel
+        +boolean requerAjudante
+        +boolean temSalaB
+        +Cenario[] cenariosPermitidos
+    }
+    
+    class Evento {
+        <<Event>>
+        +String id
+        +String semanaId
+        +TipoEvento tipo
+        +String descricao
+        +ImpactoEvento impacto
+        +boolean reduzPartes
+        +int minutosRecapitulacao
+    }
+    
+    class Publicador {
+        <<Publisher>>
+        +String id
+        +String nome
+        +String telefone
+        +Genero genero
+        +Date dataNascimento
+        +Date dataBatismo
+        +Privilegio privilegio
+        +Capacitacao[] capacitacoes
+        +Categoria categoria
+        +Date[] datasIndisponiveis
+        +PeriodoIndisponivel[] periodos
+        +TipoExclusao tipoExclusao
+        +String motivoExclusao
+        +Date exclusaoAte
+    }
+    
+    class TipoSecao {
+        <<enum>>
+        TESOUROS
+        MINISTERIO
+        VIDA_CRISTA
+        EBC
+    }
+    
+    class TipoParte {
+        <<enum>>
+        CANTICO_INICIAL
+        ORACAO_INICIAL
+        COMENTARIOS_INICIAIS
+        DISCURSO_TESOUROS
+        JOIAS_ESPIRITUAIS
+        LEITURA_BIBLIA
+        INICIANDO_CONVERSAS
+        CULTIVANDO_INTERESSE
+        FAZENDO_DISCIPULOS
+        EXPLICANDO_CRENCAS
+        DISCURSO_ESTUDANTE
+        VIDEO
+        PARTE_VIDA_CRISTA
+        NECESSIDADES_LOCAIS
+        ESTUDO_BIBLICO
+        CANTICO_INTERMEDIARIO
+        COMENTARIOS_FINAIS
+        CANTICO_FINAL
+        ORACAO_FINAL
+    }
+    
+    class Privilegio {
+        <<enum>>
+        PNB
+        PUB
+        SM
+        A
+    }
+    
+    class Capacitacao {
+        <<enum>>
+        LEITURA
+        DISCURSO
+        LEITOR_EB
+        ORACAO
+    }
+    
+    class TipoEvento {
+        <<enum>>
+        MEMORIAL
+        ASSEMBLEIA_CIRCUITO
+        CONGRESSO_REGIONAL
+        VISITA_SC
+        BOLETIM_CG
+    }
+    
+    Apostila "1" *-- "8..9" Semana : contem
+    Semana "1" *-- "4" Secao : contem
+    Semana "1" o-- "0..1" Evento : pode ter
+    Secao "1" *-- "1..*" Parte : contem
+    
+    Publicador "*" ..> "*" Parte : e elegivel para

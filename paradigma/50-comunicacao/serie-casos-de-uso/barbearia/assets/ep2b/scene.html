@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>IDD Barbearia - Ep. 2B Metodologia (MER do Negócio com IA)</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, sans-serif; }
+    body {
+      width: 1920px; height: 1080px; background: #0c0f18; color: #f8fafc;
+      overflow: hidden; position: relative;
+    }
+    .grid-bg {
+      position: absolute; inset: 0;
+      background-image: linear-gradient(rgba(14, 165, 233, 0.05) 1px, transparent 1px),
+                        linear-gradient(90deg, rgba(14, 165, 233, 0.05) 1px, transparent 1px);
+      background-size: 60px 60px;
+    }
+    .glow-ambient {
+      position: absolute; width: 1100px; height: 1100px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(14, 165, 233, 0.22) 0%, rgba(2, 132, 199, 0.15) 45%, transparent 70%);
+      top: 50%; left: 50%; transform: translate(-50%, -50%); filter: blur(90px); pointer-events: none;
+    }
+
+    .top-bar {
+      position: absolute; top: 0; left: 0; right: 0; height: 80px;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 60px; background: rgba(15, 23, 42, 0.85);
+      border-bottom: 1px solid rgba(14, 165, 233, 0.35); backdrop-filter: blur(12px); z-index: 50;
+    }
+    .top-title { display: flex; align-items: center; gap: 18px; }
+    .badge-ep {
+      background: linear-gradient(135deg, #0284c7, #0369a1); color: white;
+      font-weight: 800; font-size: 16px; letter-spacing: 1.5px;
+      padding: 6px 18px; border-radius: 999px; text-transform: uppercase;
+      box-shadow: 0 0 20px rgba(14, 165, 233, 0.5);
+    }
+    .series-name { font-size: 20px; font-weight: 700; color: #94a3b8; }
+    .series-name span { color: #f8fafc; font-weight: 800; }
+    .timer-box { font-size: 18px; font-family: monospace; color: #38bdf8; font-weight: 700; }
+
+    .stage {
+      position: absolute; top: 80px; bottom: 220px; left: 0; right: 0;
+      padding: 40px 60px; display: flex; flex-direction: column; z-index: 20;
+    }
+    .slide-view {
+      display: none; width: 100%; height: 100%; flex-direction: column;
+      animation: fadeIn 0.4s ease-out forwards;
+    }
+    .slide-view.active { display: flex; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+    .slide-header { margin-bottom: 25px; }
+    .slide-category { font-size: 16px; font-weight: 800; color: #38bdf8; text-transform: uppercase; letter-spacing: 2px; }
+    .slide-title { font-size: 40px; font-weight: 900; color: #ffffff; margin-top: 4px; }
+    .slide-subtitle { font-size: 20px; color: #94a3b8; margin-top: 6px; }
+
+    .cards-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; flex: 1; }
+    .feature-card {
+      background: rgba(15, 23, 42, 0.85); border: 1.5px solid rgba(14, 165, 233, 0.35);
+      border-radius: 18px; padding: 28px; display: flex; flex-direction: column;
+      backdrop-filter: blur(14px); box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+    }
+    .card-icon { font-size: 38px; margin-bottom: 16px; }
+    .card-title { font-size: 24px; font-weight: 800; color: #38bdf8; margin-bottom: 12px; }
+    .card-desc { font-size: 17px; color: #cbd5e1; line-height: 1.5; flex: 1; }
+    .card-tag {
+      margin-top: 15px; align-self: flex-start; background: rgba(14, 165, 233, 0.15);
+      border: 1px solid #0ea5e9; color: #bae6fd; padding: 4px 12px; border-radius: 8px;
+      font-size: 13px; font-weight: 700;
+    }
+
+    /* MER Diagram Visual Grid */
+    .mer-board {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; flex: 1;
+      align-items: center;
+    }
+    .mer-entity {
+      background: rgba(15, 23, 42, 0.9); border: 2px solid #0284c7;
+      border-radius: 16px; overflow: hidden; box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+    }
+    .mer-entity-header {
+      background: linear-gradient(135deg, #0369a1, #0284c7); padding: 12px 18px;
+      font-weight: 800; font-size: 18px; color: white; display: flex; justify-content: space-between;
+    }
+    .mer-entity-fields {
+      padding: 16px; display: flex; flex-direction: column; gap: 8px; font-size: 15px;
+    }
+    .field-pk { color: #f59e0b; font-weight: 700; }
+    .field-fk { color: #38bdf8; font-weight: 600; }
+    .field-normal { color: #cbd5e1; }
+    .mer-rel-badge {
+      display: inline-block; padding: 4px 10px; border-radius: 6px;
+      background: rgba(56, 189, 248, 0.15); color: #38bdf8; font-size: 12px; font-weight: 700;
+      text-align: center; margin-top: 10px;
+    }
+
+    .terminal-container { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; flex: 1; }
+    .terminal-window {
+      background: #020617; border: 1.5px solid #1e293b; border-radius: 16px;
+      padding: 24px; font-family: 'Consolas', monospace; font-size: 15px;
+      color: #38bdf8; display: flex; flex-direction: column;
+    }
+    .terminal-header { display: flex; gap: 8px; margin-bottom: 16px; border-bottom: 1px solid #1e293b; padding-bottom: 12px; }
+    .t-dot { width: 12px; height: 12px; border-radius: 50%; }
+    .t-red { background: #ef4444; } .t-yellow { background: #f59e0b; } .t-green { background: #10b981; }
+    .terminal-body { flex: 1; line-height: 1.6; color: #e2e8f0; }
+
+    .chat-card {
+      background: rgba(15, 23, 42, 0.85); border: 1.5px solid rgba(14, 165, 233, 0.35);
+      border-radius: 16px; padding: 24px; display: flex; flex-direction: column;
+    }
+    .chat-bubble {
+      background: rgba(30, 41, 59, 0.8); border: 1px solid rgba(14, 165, 233, 0.2);
+      border-radius: 14px; padding: 18px; margin-bottom: 16px; line-height: 1.5; font-size: 16px;
+    }
+    .chat-author { font-size: 14px; font-weight: 800; margin-bottom: 6px; }
+    .author-ia { color: #38bdf8; }
+    .author-eliezer { color: #fbbf24; }
+
+    .bottom-bar {
+      position: absolute; bottom: 0; left: 0; right: 0; height: 220px;
+      background: rgba(6, 12, 24, 0.95); border-top: 1px solid rgba(14, 165, 233, 0.3);
+      backdrop-filter: blur(16px); display: flex; align-items: center;
+      padding: 0 60px; gap: 40px; z-index: 50;
+    }
+    .avatars-row { display: flex; gap: 30px; align-items: center; }
+    .avatar-wrapper {
+      display: flex; flex-direction: column; align-items: center; gap: 8px;
+      opacity: 0.45; transform: scale(0.92); transition: all 0.3s ease;
+    }
+    .avatar-wrapper.active {
+      opacity: 1; transform: scale(1.05);
+    }
+    .avatar-circle {
+      width: 90px; height: 90px; border-radius: 50%;
+      border: 3px solid transparent; overflow: hidden; position: relative;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.6);
+    }
+    .avatar-wrapper.active .avatar-circle {
+      border-color: #38bdf8;
+      box-shadow: 0 0 25px rgba(14, 165, 233, 0.6);
+    }
+    .avatar-img { width: 100%; height: 100%; object-fit: cover; }
+    .avatar-name { font-size: 14px; font-weight: 700; color: #94a3b8; }
+    .avatar-wrapper.active .avatar-name { color: #38bdf8; }
+
+    .speech-box {
+      flex: 1; background: rgba(15, 23, 42, 0.85); border: 1.5px solid rgba(14, 165, 233, 0.35);
+      border-radius: 16px; padding: 20px 28px; display: flex; flex-direction: column;
+      justify-content: center; min-height: 140px;
+    }
+    .speech-speaker { font-size: 15px; font-weight: 800; color: #38bdf8; margin-bottom: 6px; }
+    .speech-text { font-size: 21px; font-weight: 600; color: #f8fafc; line-height: 1.45; }
+
+    #blackCurtain {
+      position: absolute; inset: 0; background: #000000; z-index: 9999;
+      pointer-events: none; transition: opacity 0.05s linear;
+    }
+  </style>
+</head>
+<body>
+  <div id="blackCurtain"></div>
+  <div class="grid-bg"></div>
+  <div class="glow-ambient"></div>
+
+  <div class="top-bar">
+    <div class="top-title">
+      <div class="badge-ep">Ep. 2B · Metodologia IDD</div>
+      <div class="series-name">IDD na Prática: <span>O MER do Negócio com a IA</span></div>
+    </div>
+    <div class="timer-box" id="timer">00:00</div>
+  </div>
+
+  <div class="stage">
+    <!-- SLIDE 1 -->
+    <div class="slide-view active" id="slide1">
+      <div class="slide-header">
+        <div class="slide-category">Passo 2 da Metodologia IDD</div>
+        <div class="slide-title">Modelagem de Dados Conceitual Sem Digitar Código</div>
+        <div class="slide-subtitle">Como orquestrar a IA para conectar o salão à estrutura de dados antes do banco existir</div>
+      </div>
+      <div class="cards-grid">
+        <div class="feature-card">
+          <div class="card-icon">🧠</div>
+          <div class="card-title">Conceito Antes de SQL</div>
+          <div class="card-desc">Proibição de sintaxe de banco de dados. O foco é mapear as coisas reais: Clientes, Barbeiros, Serviços e Comandas.</div>
+          <div class="card-tag">MODELO CONCEITUAL</div>
+        </div>
+        <div class="feature-card">
+          <div class="card-icon">🔗</div>
+          <div class="card-title">Cardinalidade do Salão</div>
+          <div class="card-desc">Definição precisa: 1 Cliente para N Agendamentos; 1 Agendamento para exatamente 1 Profissional e Cadeira.</div>
+          <div class="card-tag">CARDINALIDADE 1:N</div>
+        </div>
+        <div class="feature-card">
+          <div class="card-icon">🛡️</div>
+          <div class="card-title">Proteção Semântica</div>
+          <div class="card-desc">O cliente leigo valida o desenho das caixas. Se o fluxo da barbearia estiver correto, o banco nascerá perfeito.</div>
+          <div class="card-tag">GOVERNANÇA LEIGA</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 2 -->
+    <div class="slide-view" id="slide2">
+      <div class="slide-header">
+        <div class="slide-category">Modelo Entidade-Relacionamento do Salão</div>
+        <div class="slide-title">Diagrama Conceitual (MER) Proposto pela IA</div>
+        <div class="slide-subtitle">Mapeamento semântico completo das entidades e suas relações estruturais</div>
+      </div>
+      <div class="mer-board">
+        <div class="mer-entity">
+          <div class="mer-entity-header"><span>CLIENTE</span> <span>[1]</span></div>
+          <div class="mer-entity-fields">
+            <div class="field-pk">🔑 id_cliente (PK)</div>
+            <div class="field-normal">👤 nome_completo</div>
+            <div class="field-normal">📱 telefone_whatsapp</div>
+            <div class="field-normal">📅 data_cadastro</div>
+            <div class="mer-rel-badge">1 : N com Agendamento</div>
+          </div>
+        </div>
+
+        <div class="mer-entity">
+          <div class="mer-entity-header"><span>PROFISSIONAL</span> <span>[1]</span></div>
+          <div class="mer-entity-fields">
+            <div class="field-pk">🔑 id_profissional (PK)</div>
+            <div class="field-normal">✂️ nome_barbeiro</div>
+            <div class="field-normal">🪑 cadeira_numero</div>
+            <div class="field-normal">💵 comissao_padrao_pct</div>
+            <div class="mer-rel-badge">1 : N com Agendamento</div>
+          </div>
+        </div>
+
+        <div class="mer-entity">
+          <div class="mer-entity-header"><span>AGENDAMENTO</span> <span>[N]</span></div>
+          <div class="mer-entity-fields">
+            <div class="field-pk">🔑 id_agendamento (PK)</div>
+            <div class="field-fk">🔗 id_cliente (FK)</div>
+            <div class="field-fk">🔗 id_profissional (FK)</div>
+            <div class="field-normal">⏰ data_hora_inicio</div>
+            <div class="field-normal">🏁 status_comanda</div>
+            <div class="mer-rel-badge">1 : N com Item_Servico</div>
+          </div>
+        </div>
+
+        <div class="mer-entity">
+          <div class="mer-entity-header"><span>ITEM_SERVICO</span> <span>[N]</span></div>
+          <div class="mer-entity-fields">
+            <div class="field-pk">🔑 id_item (PK)</div>
+            <div class="field-fk">🔗 id_agendamento (FK)</div>
+            <div class="field-fk">🔗 id_servico (FK)</div>
+            <div class="field-normal">💰 preco_congelado</div>
+            <div class="field-normal">⏱️ duracao_minutos</div>
+            <div class="mer-rel-badge">Snapshot Histórico</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 3 -->
+    <div class="slide-view" id="slide3">
+      <div class="slide-header">
+        <div class="slide-category">Governança Humana no Loop</div>
+        <div class="slide-title">Terminal do Compilador IA: O Dilema do Histórico</div>
+        <div class="slide-subtitle">A IA detecta riscos de integridade retroativa e aguarda a decisão de negócio de Eliézer</div>
+      </div>
+      <div class="terminal-container">
+        <div class="terminal-window">
+          <div class="terminal-header">
+            <div class="t-dot t-red"></div>
+            <div class="t-dot t-yellow"></div>
+            <div class="t-dot t-green"></div>
+            <span style="color:#94a3b8; font-size:13px; margin-left:10px;">IDD Compiler Engine · MER Check</span>
+          </div>
+          <div class="terminal-body">
+            &gt; analisando relacionamento: Agendamento_Itens → Catalogo_Servicos<br>
+            &gt; <span style="color:#fbbf24;">ALERTA DE FRONTEIRA:</span> O que ocorre se a Barbearia alterar o preço do Corte de R$ 35 para R$ 40?<br>
+            &gt; Risco: Se o relatório financeiro do mês passado fizer JOIN no catálogo atual, haverá distorção contábil retroativa.<br>
+            &gt; <span style="color:#38bdf8;">CONSULTA DE GOVERNANÇA:</span> Devo criar campo de snapshot imutável no momento da comanda?<br>
+            &gt; STATUS: Bloqueado aguardando instrução do Orquestrador...
+          </div>
+        </div>
+
+        <div class="chat-card">
+          <div class="chat-bubble">
+            <div class="chat-author author-ia">🤖 IA Compilador</div>
+            Orquestrador Eliézer, devemos apontar o item para o catálogo atual ou manter cópia congelada do valor no momento da venda?
+          </div>
+          <div class="chat-bubble">
+            <div class="chat-author author-eliezer">👤 Eliézer Rosa (Governança)</div>
+            Decisão de governança: cópia congelada permanente! Criamos snapshot histórico no Item do Agendamento. O catálogo muda para o futuro, mas o passado financeiro é sagrado e imutável.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 4 -->
+    <div class="slide-view" id="slide4">
+      <div class="slide-header">
+        <div class="slide-category">Síntese do Passo Metodológico</div>
+        <div class="slide-title">MER Aprovado: Fundação de Dados Inviolável</div>
+        <div class="slide-subtitle">A ponte sólida para a geração do código real no Episódio 3</div>
+      </div>
+      <div class="cards-grid">
+        <div class="feature-card">
+          <div class="card-icon">📐</div>
+          <div class="card-title">Rastreabilidade Total</div>
+          <div class="card-desc">Cada tabela que nascer no banco terá seu motivo de existir mapeado diretamente nas intenções do salão.</div>
+          <div class="card-tag">SEM TABELAS INÚTEIS</div>
+        </div>
+        <div class="feature-card">
+          <div class="card-icon">🔒</div>
+          <div class="card-title">Passado Financeiro Preservado</div>
+          <div class="card-desc">A regra de snapshot congelado impede fraudes, furos no caixa ou distorções de comissão em relatórios antigos.</div>
+          <div class="card-tag">INVARIANTE DE VALOR</div>
+        </div>
+        <div class="feature-card">
+          <div class="card-icon">🚀</div>
+          <div class="card-title">Próximo Passo: Código Real</div>
+          <div class="card-desc">No Ep. 3 veremos a geração do código vivo e sua amarração explícita com o MER e as Invariantes!</div>
+          <div class="card-tag">EP. 3 CÓDIGO VIVO</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="bottom-bar">
+    <div class="avatars-row">
+      <div class="avatar-wrapper" id="av_eliezer">
+        <div class="avatar-circle">
+          <img class="avatar-img" src="../../../motion_graphics_renderer/assets/avatars/eliezer.png" alt="Eliézer">
+        </div>
+        <div class="avatar-name">Eliézer Rosa</div>
+      </div>
+      <div class="avatar-wrapper" id="av_leigo">
+        <div class="avatar-circle">
+          <img class="avatar-img" src="../../../motion_graphics_renderer/assets/avatars/leigo.png" alt="Usuária Leiga">
+        </div>
+        <div class="avatar-name">Usuária Leiga</div>
+      </div>
+      <div class="avatar-wrapper" id="av_ia">
+        <div class="avatar-circle">
+          <img class="avatar-img" src="../../../motion_graphics_renderer/assets/avatars/ia.png" alt="IA Compilador">
+        </div>
+        <div class="avatar-name">IA Compilador</div>
+      </div>
+    </div>
+
+    <div class="speech-box">
+      <div class="speech-speaker" id="speakerName">Aguardando início...</div>
+      <div class="speech-text" id="speechText">O episódio começará em instantes.</div>
+    </div>
+  </div>
+
+  <script>
+    let timelineItems = [];
+    let currentIndex = -1;
+    let animInterval = null;
+
+    window.setTimeline = function(items) {
+      timelineItems = items;
+      console.log('Timeline configurada com ' + items.length + ' segmentos.');
+    };
+
+    window.startPresentation = function() {
+      const curtain = document.getElementById('blackCurtain');
+      if (curtain) curtain.style.display = 'none';
+
+      let currentSec = 0;
+      animInterval = setInterval(() => {
+        currentSec += 0.1;
+        const mins = Math.floor(currentSec / 60).toString().padStart(2, '0');
+        const secs = Math.floor(currentSec % 60).toString().padStart(2, '0');
+        document.getElementById('timer').innerText = `${mins}:${secs}`;
+
+        const activeItem = timelineItems.find(it => currentSec >= it.startSec && currentSec < it.endSec);
+        if (activeItem) {
+          updateDisplay(activeItem);
+        }
+      }, 100);
+    };
+
+    function updateDisplay(item) {
+      if (currentIndex === item.index) return;
+      currentIndex = item.index;
+
+      ['av_eliezer', 'av_leigo', 'av_ia'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.classList.remove('active');
+      });
+      const currentAv = document.getElementById('av_' + item.who);
+      if (currentAv) currentAv.classList.add('active');
+
+      document.getElementById('speakerName').innerText = item.actor;
+      document.getElementById('speechText').innerText = item.text;
+
+      for (let i = 1; i <= 4; i++) {
+        const s = document.getElementById('slide' + i);
+        if (s) s.classList.remove('active');
+      }
+      const targetSlide = document.getElementById('slide' + item.slide);
+      if (targetSlide) targetSlide.classList.add('active');
+    }
+  </script>
+</body>
+</html>

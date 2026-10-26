@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>IDD Racha de Pix - Ep. 2C MER Completo & Invariantes de Normalização</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, sans-serif; }
+    body {
+      width: 1920px; height: 1080px; background: #030712; color: #f8fafc;
+      overflow: hidden; position: relative;
+    }
+    .grid-bg {
+      position: absolute; inset: 0;
+      background-image: linear-gradient(rgba(56, 189, 248, 0.05) 1px, transparent 1px),
+                        linear-gradient(90deg, rgba(56, 189, 248, 0.05) 1px, transparent 1px);
+      background-size: 60px 60px;
+    }
+    .glow-ambient {
+      position: absolute; width: 1150px; height: 1150px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(14, 165, 233, 0.28) 0%, rgba(99, 102, 241, 0.16) 45%, transparent 70%);
+      top: 50%; left: 50%; transform: translate(-50%, -50%); filter: blur(95px); pointer-events: none;
+    }
+
+    /* TOP BAR */
+    .top-bar {
+      position: absolute; top: 0; left: 0; right: 0; height: 80px;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 60px; background: rgba(15, 23, 42, 0.88);
+      border-bottom: 1px solid rgba(56, 189, 248, 0.35); backdrop-filter: blur(12px); z-index: 50;
+    }
+    .top-title { display: flex; align-items: center; gap: 18px; }
+    .badge-ep {
+      background: linear-gradient(135deg, #0284c7, #2563eb); color: white;
+      font-weight: 800; font-size: 16px; letter-spacing: 1.5px;
+      padding: 6px 18px; border-radius: 999px; text-transform: uppercase;
+      box-shadow: 0 0 20px rgba(56, 189, 248, 0.4);
+    }
+    .series-name { font-size: 20px; font-weight: 700; color: #cbd5e1; }
+    .series-name span { color: #38bdf8; font-weight: 800; }
+    .timer-box { font-size: 18px; font-family: monospace; color: #38bdf8; font-weight: 700; }
+
+    /* STAGE */
+    .stage {
+      position: absolute; top: 80px; bottom: 220px; left: 0; right: 0;
+      padding: 30px 60px; display: flex; flex-direction: column; z-index: 20;
+    }
+    .slide-view {
+      display: none; width: 100%; height: 100%; flex-direction: column;
+      animation: fadeIn 0.4s ease-out forwards;
+    }
+    .slide-view.active { display: flex; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+    .slide-header { margin-bottom: 18px; }
+    .slide-category { font-size: 15px; font-weight: 800; color: #38bdf8; text-transform: uppercase; letter-spacing: 2px; }
+    .slide-title { font-size: 36px; font-weight: 900; color: #ffffff; margin-top: 4px; }
+    .slide-subtitle { font-size: 18px; color: #94a3b8; margin-top: 4px; }
+
+    /* SLIDE 1: MER COMPLETO (CANONICAL ENTITY-RELATIONSHIP CROW'S FOOT NOTATION) */
+    .mer-diagram-container {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; flex: 1;
+    }
+    .entity-box {
+      background: rgba(15, 23, 42, 0.95); border: 2px solid #38bdf8;
+      border-radius: 12px; overflow: hidden; display: flex; flex-direction: column;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.6);
+    }
+    .entity-header {
+      background: linear-gradient(135deg, #0369a1, #0284c7); color: white;
+      font-weight: 900; font-size: 16px; letter-spacing: 1.5px;
+      padding: 8px 16px; display: flex; justify-content: space-between; align-items: center;
+      border-bottom: 1.5px solid rgba(56, 189, 248, 0.5);
+    }
+    .entity-tag {
+      font-size: 11px; background: rgba(0,0,0,0.3); padding: 2px 8px; border-radius: 4px;
+      font-family: monospace; font-weight: 700;
+    }
+    .entity-body {
+      padding: 12px 16px; flex: 1; font-family: 'Consolas', monospace; font-size: 13px;
+      line-height: 1.55; display: flex; flex-direction: column; justify-content: space-between;
+    }
+    .attr-row { display: flex; justify-content: space-between; margin-bottom: 3px; }
+    .attr-pk { color: #fde047; font-weight: 700; }
+    .attr-fk { color: #a78bfa; font-weight: 600; }
+    .attr-normal { color: #e2e8f0; }
+    .attr-type { color: #64748b; font-size: 12px; }
+    .rel-badge {
+      margin-top: 8px; background: rgba(56, 189, 248, 0.12); border: 1px solid rgba(56, 189, 248, 0.3);
+      padding: 4px 8px; border-radius: 6px; font-size: 11px; color: #bae6fd;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+
+    /* SLIDE 2: PIRÂMIDE DE NORMALIZAÇÃO IDD */
+    .norm-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; flex: 1; }
+    .norm-card {
+      background: rgba(15, 23, 42, 0.88); border: 1.5px solid rgba(56, 189, 248, 0.35);
+      border-radius: 18px; padding: 26px; display: flex; flex-direction: column;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.5);
+    }
+    .norm-badge {
+      display: inline-block; padding: 5px 14px; border-radius: 8px; font-size: 13px; font-weight: 800;
+      text-transform: uppercase; margin-bottom: 14px; align-self: flex-start;
+    }
+    .b-cyan { background: rgba(6, 182, 212, 0.2); border: 1px solid #06b6d4; color: #67e8f9; }
+    .b-blue { background: rgba(59, 130, 246, 0.2); border: 1px solid #3b82f6; color: #93c5fd; }
+    .b-indigo { background: rgba(99, 102, 241, 0.2); border: 1px solid #6366f1; color: #c7d2fe; }
+    .norm-title { font-size: 22px; font-weight: 800; color: #ffffff; margin-bottom: 10px; }
+    .norm-desc { font-size: 16px; color: #cbd5e1; line-height: 1.5; flex: 1; }
+    .norm-formula {
+      margin-top: 15px; background: #020617; border: 1px solid #1e293b;
+      padding: 10px 14px; border-radius: 8px; font-family: monospace; font-size: 13px; color: #38bdf8;
+    }
+
+    /* SLIDE 3: TERMINAL & CHAT */
+    .terminal-container { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 28px; flex: 1; }
+    .terminal-window {
+      background: #020617; border: 1.5px solid #1e293b; border-radius: 16px;
+      padding: 24px; font-family: 'Consolas', monospace; font-size: 13px;
+      color: #38bdf8; display: flex; flex-direction: column;
+    }
+    .terminal-header { display: flex; gap: 8px; margin-bottom: 14px; border-bottom: 1px solid #1e293b; padding-bottom: 10px; }
+    .t-dot { width: 12px; height: 12px; border-radius: 50%; }
+    .t-red { background: #ef4444; } .t-yellow { background: #f59e0b; } .t-green { background: #10b981; }
+    .terminal-body { flex: 1; line-height: 1.55; color: #e2e8f0; }
+
+    .chat-card {
+      background: rgba(15, 23, 42, 0.85); border: 1.5px solid rgba(56, 189, 248, 0.35);
+      border-radius: 16px; padding: 22px; display: flex; flex-direction: column;
+    }
+    .chat-bubble {
+      background: rgba(30, 41, 59, 0.85); border: 1px solid rgba(56, 189, 248, 0.25);
+      border-radius: 14px; padding: 16px; margin-bottom: 14px; line-height: 1.45; font-size: 15px;
+    }
+    .chat-author { font-size: 14px; font-weight: 800; margin-bottom: 6px; }
+    .author-ia { color: #38bdf8; }
+    .author-eliezer { color: #38bdf8; }
+
+    /* SLIDE 4: SÍNTESE DO MER */
+    .cards-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; flex: 1; }
+    .feature-card {
+      background: rgba(15, 23, 42, 0.85); border: 1.5px solid rgba(56, 189, 248, 0.35);
+      border-radius: 18px; padding: 28px; display: flex; flex-direction: column;
+      box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+    }
+    .card-icon { font-size: 38px; margin-bottom: 16px; }
+    .card-title { font-size: 24px; font-weight: 800; color: #38bdf8; margin-bottom: 12px; }
+    .card-desc { font-size: 17px; color: #e2e8f0; line-height: 1.5; flex: 1; }
+    .card-tag {
+      margin-top: 15px; align-self: flex-start; background: rgba(56, 189, 248, 0.15);
+      border: 1px solid #38bdf8; color: #bae6fd; padding: 4px 12px; border-radius: 8px;
+      font-size: 13px; font-weight: 700;
+    }
+
+    /* BOTTOM BAR */
+    .bottom-bar {
+      position: absolute; bottom: 0; left: 0; right: 0; height: 220px;
+      background: rgba(10, 15, 29, 0.96); border-top: 1px solid rgba(56, 189, 248, 0.35);
+      backdrop-filter: blur(16px); display: flex; align-items: center;
+      padding: 0 60px; gap: 40px; z-index: 50;
+    }
+    .avatars-container { display: flex; gap: 30px; align-items: center; }
+    .avatar-card {
+      display: flex; flex-direction: column; align-items: center;
+      transition: all 0.3s ease; opacity: 0.45; transform: scale(0.95);
+    }
+    .avatar-card.active { opacity: 1; transform: scale(1.05); }
+    .avatar-circle {
+      width: 90px; height: 90px; border-radius: 50%; overflow: hidden;
+      border: 3px solid #334155; position: relative; background: #0f172a;
+    }
+    .avatar-card.active .avatar-circle {
+      border-color: #38bdf8; box-shadow: 0 0 25px rgba(56, 189, 248, 0.7);
+    }
+    .avatar-circle img { width: 100%; height: 100%; object-fit: cover; }
+    .avatar-name { font-size: 15px; font-weight: 800; color: #f8fafc; margin-top: 8px; }
+    .avatar-role { font-size: 12px; color: #94a3b8; font-weight: 600; }
+
+    .subtitles-container {
+      flex: 1; height: 140px; background: rgba(15, 23, 42, 0.8);
+      border: 1.5px solid rgba(56, 189, 248, 0.35); border-radius: 16px;
+      padding: 20px 28px; display: flex; flex-direction: column; justify-content: center;
+    }
+    .sub-speaker {
+      font-size: 14px; font-weight: 800; text-transform: uppercase; letter-spacing: 1.5px;
+      margin-bottom: 8px;
+    }
+    .speaker-leigo { color: #f43f5e; }
+    .speaker-eliezer { color: #38bdf8; }
+    .speaker-ia { color: #38bdf8; }
+    .sub-text { font-size: 19px; line-height: 1.45; color: #f8fafc; font-weight: 500; }
+
+    #black-curtain {
+      position: absolute; inset: 0; background: #000000; z-index: 9999;
+      pointer-events: none; transition: opacity 0.08s linear;
+    }
+  </style>
+</head>
+<body>
+  <div id="black-curtain"></div>
+  <div class="glow-ambient"></div>
+  <div class="grid-bg"></div>
+
+  <!-- TOP BAR -->
+  <div class="top-bar">
+    <div class="top-title">
+      <div class="badge-ep">Episódio 2C • MER Completo</div>
+      <div class="series-name">IDD NA PRÁTICA: <span>MODELO DE DADOS & NORMALIZAÇÃO</span></div>
+    </div>
+    <div class="timer-box" id="clock-display">00:00.0</div>
+  </div>
+
+  <!-- STAGE -->
+  <div class="stage">
+    <!-- SLIDE 1: MER COMPLETO CANÔNICO CROW'S FOOT -->
+    <div class="slide-view active" id="slide-1">
+      <div class="slide-header">
+        <div class="slide-category">Engenharia de Dados IDD • Modelo Conceitual Canônico</div>
+        <div class="slide-title">Diagrama Entidade-Relacionamento Completo (Crow's Foot)</div>
+        <div class="slide-subtitle">6 Entidades Canônicas, Chaves Fortes, Matriz Associativa N:N e Snapshots Auditados</div>
+      </div>
+      <div class="mer-diagram-container">
+        <!-- 1. MESA -->
+        <div class="entity-box">
+          <div class="entity-header">
+            <span>MESA</span>
+            <span class="entity-tag">ENTIDADE FORTE</span>
+          </div>
+          <div class="entity-body">
+            <div>
+              <div class="attr-row"><span class="attr-pk">🔑 id</span><span class="attr-type">UUID</span></div>
+              <div class="attr-row"><span class="attr-normal">numero</span><span class="attr-type">INT</span></div>
+              <div class="attr-row"><span class="attr-normal">taxa_servico</span><span class="attr-type">DECIMAL(4,2)</span></div>
+              <div class="attr-row"><span class="attr-normal">status</span><span class="attr-type">ENUM</span></div>
+            </div>
+            <div class="rel-badge">
+              <span>Mesa ||---------}o Participante</span>
+              <span>1 : N</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2. PARTICIPANTE -->
+        <div class="entity-box">
+          <div class="entity-header">
+            <span>PARTICIPANTE</span>
+            <span class="entity-tag">ENTIDADE FORTE</span>
+          </div>
+          <div class="entity-body">
+            <div>
+              <div class="attr-row"><span class="attr-pk">🔑 id</span><span class="attr-type">UUID</span></div>
+              <div class="attr-row"><span class="attr-fk">🔗 mesa_id</span><span class="attr-type">UUID</span></div>
+              <div class="attr-row"><span class="attr-normal">nome</span><span class="attr-type">VARCHAR(100)</span></div>
+              <div class="attr-row"><span class="attr-normal">telefone</span><span class="attr-type">VARCHAR(20)</span></div>
+            </div>
+            <div class="rel-badge">
+              <span>Participante ||---------}o Consumo</span>
+              <span>1 : N</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3. ITEM_COMANDA -->
+        <div class="entity-box">
+          <div class="entity-header">
+            <span>ITEM_COMANDA</span>
+            <span class="entity-tag">PRODUTO/SERVIÇO</span>
+          </div>
+          <div class="entity-body">
+            <div>
+              <div class="attr-row"><span class="attr-pk">🔑 id</span><span class="attr-type">UUID</span></div>
+              <div class="attr-row"><span class="attr-fk">🔗 mesa_id</span><span class="attr-type">UUID</span></div>
+              <div class="attr-row"><span class="attr-normal">descricao</span><span class="attr-type">VARCHAR(120)</span></div>
+              <div class="attr-row"><span class="attr-normal">valor_centavos</span><span class="attr-type">BIGINT</span></div>
+            </div>
+            <div class="rel-badge">
+              <span>Item ||---------}o Consumo</span>
+              <span>1 : N</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 4. CONSUMO_ITEM (ASSOCIATIVA N:N) -->
+        <div class="entity-box" style="border-color: #38bdf8;">
+          <div class="entity-header" style="background: linear-gradient(135deg, #0284c7, #3b82f6);">
+            <span>CONSUMO_ITEM</span>
+            <span class="entity-tag">ASSOCIATIVA N:N</span>
+          </div>
+          <div class="entity-body">
+            <div>
+              <div class="attr-row"><span class="attr-pk">🔑 item_id</span><span class="attr-type">UUID</span></div>
+              <div class="attr-row"><span class="attr-pk">🔑 participante_id</span><span class="attr-type">UUID</span></div>
+              <div class="attr-row"><span class="attr-normal">fracao_rateio</span><span class="attr-type">DECIMAL(4,3)</span></div>
+              <div class="attr-row"><span class="attr-normal">is_gorjeta_aceita</span><span class="attr-type">BOOLEAN</span></div>
+            </div>
+            <div class="rel-badge">
+              <span>Item }o---------|| ConsumoItem</span>
+              <span>N : M</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 5. COTA_RATEIO (SNAPSHOT IMUTÁVEL) -->
+        <div class="entity-box" style="border-color: #a855f7;">
+          <div class="entity-header" style="background: linear-gradient(135deg, #7e22ce, #9333ea);">
+            <span>COTA_RATEIO</span>
+            <span class="entity-tag">SNAPSHOT DERIVADO</span>
+          </div>
+          <div class="entity-body">
+            <div>
+              <div class="attr-row"><span class="attr-pk">🔑 id</span><span class="attr-type">UUID</span></div>
+              <div class="attr-row"><span class="attr-fk">🔗 participante_id</span><span class="attr-type">UUID</span></div>
+              <div class="attr-row"><span class="attr-normal">valor_cota_centavos</span><span class="attr-type">BIGINT</span></div>
+              <div class="attr-row"><span class="attr-normal">status_pagamento</span><span class="attr-type">ENUM</span></div>
+            </div>
+            <div class="rel-badge">
+              <span>Cota ||---------|| PayloadPix</span>
+              <span>1 : 1</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 6. PAYLOAD_PIX (LIQUIDAÇÃO) -->
+        <div class="entity-box" style="border-color: #10b981;">
+          <div class="entity-header" style="background: linear-gradient(135deg, #059669, #10b981);">
+            <span>PAYLOAD_PIX</span>
+            <span class="entity-tag">INTEGRAÇÃO BACEN</span>
+          </div>
+          <div class="entity-body">
+            <div>
+              <div class="attr-row"><span class="attr-pk">🔑 id</span><span class="attr-type">UUID</span></div>
+              <div class="attr-row"><span class="attr-fk">🔗 cota_rateio_id</span><span class="attr-type">UUID</span></div>
+              <div class="attr-row"><span class="attr-normal">qr_code_emv</span><span class="attr-type">TEXT</span></div>
+              <div class="attr-row"><span class="attr-normal">end_to_end_id</span><span class="attr-type">VARCHAR(35)</span></div>
+            </div>
+            <div class="rel-badge">
+              <span>Snapshot Fiscal Imutável</span>
+              <span>Auditado</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 2: AS INVARIANTES UNIVERSAIS DE NORMALIZAÇÃO -->
+    <div class="slide-view" id="slide-2">
+      <div class="slide-header">
+        <div class="slide-category">Rigor Formal • Engenharia de Software IDD</div>
+        <div class="slide-title">As Invariantes Universais de Normalização Relacional</div>
+        <div class="slide-subtitle">Como as Formas Normais Eliminam Anomalias de Atualização, Deleção e Inserção</div>
+      </div>
+      <div class="norm-grid">
+        <div class="norm-card">
+          <div class="norm-badge b-cyan">Primeira Forma Normal (1FN)</div>
+          <div class="norm-title">Atomicidade de Domínio</div>
+          <div class="norm-desc">Todos os atributos contêm valores atômicos indivisíveis. Proibição estrita de arrays soltos de telefones ou listas de itens dentro de colunas de texto.</div>
+          <div class="norm-formula">∀ attr ∈ Entidade, is_atomic(attr) === true</div>
+        </div>
+        <div class="norm-card">
+          <div class="norm-badge b-blue">Segunda Forma Normal (2FN)</div>
+          <div class="norm-title">Dependência Funcional Plena</div>
+          <div class="norm-desc">Nenhum atributo não-chave depende de parte da chave primária composta. A fração do consumo pertence estritamente ao par (item_id, participante_id).</div>
+          <div class="norm-formula">fracao_rateio → (item_id, participante_id)</div>
+        </div>
+        <div class="norm-card">
+          <div class="norm-badge b-indigo">Terceira Forma Normal (3FN)</div>
+          <div class="norm-title">Sem Dependência Transitiva</div>
+          <div class="norm-desc">Nenhum atributo não-chave depende de outro atributo não-chave. A cota é gravada como snapshot imutável, blindada contra mutações colaterais da mesa.</div>
+          <div class="norm-formula">CotaRateio(t) = Snapshot(Consumo × Itens)</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 3: TERMINAL DA IA: SUBMISSÃO DAS INVARIANTES DE DADOS -->
+    <div class="slide-view" id="slide-3">
+      <div class="slide-header">
+        <div class="slide-category">Terminal de Governança • Validação Formal</div>
+        <div class="slide-title">IA Compilador Submetendo a Matriz de Invariantes</div>
+        <div class="slide-subtitle">Lista de Invariantes Universais do MER Aguardando Aprovação do Orquestrador</div>
+      </div>
+      <div class="terminal-container">
+        <div class="terminal-window">
+          <div class="terminal-header">
+            <div class="t-dot t-red"></div>
+            <div class="t-dot t-yellow"></div>
+            <div class="t-dot t-green"></div>
+            <span style="margin-left: 10px; font-size: 12px; color: #64748b;">ai-compiler@mer-validator:~/data-invariants</span>
+          </div>
+          <div class="terminal-body">
+            <p style="color: #38bdf8;">[MATRIZ DE INVARIANTES DO MODELO DE DADOS - RACHA DE PIX]</p>
+            <br>
+            <p style="color: #4ade80;">✓ INV_DATA_01 (Unicidade Relacional):</p>
+            <p style="color: #94a3b8;">  CONSTRAINT uq_mesa_participante UNIQUE(mesa_id, telefone)</p>
+            <br>
+            <p style="color: #4ade80;">✓ INV_DATA_02 (Integridade Fracionária):</p>
+            <p style="color: #94a3b8;">  ASSERT: SUM(ConsumoItem.fracao_rateio) === 1.000 FOR EACH ItemComanda</p>
+            <br>
+            <p style="color: #4ade80;">✓ INV_DATA_03 (Imutabilidade de Snapshot):</p>
+            <p style="color: #94a3b8;">  RULE: CotaRateio status in ('EMITIDA','PAGA') BLOCKS UPDATE</p>
+            <br>
+            <p style="color: #4ade80;">✓ INV_DATA_04 (Proteção contra Órfãos):</p>
+            <p style="color: #94a3b8;">  FOREIGN KEY ON DELETE RESTRICT (proíbe purga de histórico ativo)</p>
+            <br>
+            <p style="color: #fde047;">[STATUS] Aguardando homologação do Orquestrador Eliézer Rosa...</p>
+          </div>
+        </div>
+        <div class="chat-card">
+          <div class="chat-bubble">
+            <div class="chat-author author-ia">🤖 IA Compilador</div>
+            Matriz de Invariantes do MER pronta para aprovação. Unicidade de participante, integridade fracionária em 1.000, imutabilidade de snapshot fiscal e restrição estrita de integridade referencial. Posso homologar o modelo?
+          </div>
+          <div class="chat-bubble">
+            <div class="chat-author author-eliezer">👨‍💻 Eliézer Rosa</div>
+            Modelo de dados homologado com distinção! Com essas 4 invariantes universais travadas na modelagem conceitual, nenhum banco de dados conseguirá corromper o saldo dos participantes.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 4: SÍNTESE DO MER & RUMO AO UML -->
+    <div class="slide-view" id="slide-4">
+      <div class="slide-header">
+        <div class="slide-category">Próximo Passo • Arquitetura Comportamental</div>
+        <div class="slide-title">Do Modelo de Dados ao Comportamento Vivo</div>
+        <div class="slide-subtitle">Como as Tabelas Estáticas se Conectam à Lógica de Negócio</div>
+      </div>
+      <div class="cards-grid">
+        <div class="feature-card">
+          <div class="card-icon">🗄️</div>
+          <div class="card-title">Base de Dados Blindada</div>
+          <div class="card-desc">O MER canônico impede inconsistências por design antes de qualquer programador digitar uma instrução SQL.</div>
+          <div class="card-tag">Estrutura Pura</div>
+        </div>
+        <div class="feature-card">
+          <div class="card-icon">⚡</div>
+          <div class="card-title">Próximo Vídeo: Ep. 3C</div>
+          <div class="card-desc">No Episódio 3C, vamos exibir o Diagrama UML Completo: Atores, Casos de Uso, Classes, Estados e Métodos!</div>
+          <div class="card-tag">UML Completo</div>
+        </div>
+        <div class="feature-card">
+          <div class="card-icon">🎯</div>
+          <div class="card-title">O Padrão IDD</div>
+          <div class="card-desc">Intenções sem viés (1B) -> MER Canônico (2C) -> UML Vivo (3C) -> Código Compilado (4C). A esteira invencível!</div>
+          <div class="card-tag">Metodologia Formal</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BOTTOM BAR -->
+  <div class="bottom-bar">
+    <div class="avatars-container">
+      <div class="avatar-card" id="av-leigo">
+        <div class="avatar-circle">
+          <img src="../../avatares/avatar_usuaria_leiga.png" alt="Usuária Leiga">
+        </div>
+        <div class="avatar-name">Usuária Leiga</div>
+        <div class="avatar-role">Validadora de Domínio</div>
+      </div>
+      <div class="avatar-card" id="av-eliezer">
+        <div class="avatar-circle">
+          <img src="../../avatares/avatar_eliezer_oficial.png" alt="Eliézer Rosa">
+        </div>
+        <div class="avatar-name">Eliézer Rosa</div>
+        <div class="avatar-role">Orquestrador IDD</div>
+      </div>
+      <div class="avatar-card" id="av-ia">
+        <div class="avatar-circle">
+          <img src="../../avatares/avatar_ia_compilador.png" alt="IA Compilador">
+        </div>
+        <div class="avatar-name">IA Compilador</div>
+        <div class="avatar-role">Normalização & Contratos</div>
+      </div>
+    </div>
+    <div class="subtitles-container">
+      <div class="sub-speaker" id="sub-speaker">USUÁRIA LEIGA</div>
+      <div class="sub-text" id="sub-text">Iniciando episódio 2C: MER Completo, Normalização & Invariantes de Dados...</div>
+    </div>
+  </div>
+
+  <script>
+    let timelineItems = [];
+    let isRunning = false;
+    let startTimeMs = 0;
+
+    window.setTimeline = function(items) { timelineItems = items; };
+    window.stopPresentation = function() {
+      isRunning = false;
+    };
+    window.startPresentation = function() {
+      const curtain = document.getElementById('black-curtain');
+      if (curtain) {
+        curtain.style.opacity = '0';
+        setTimeout(() => curtain.remove(), 80);
+      }
+      isRunning = true;
+      startTimeMs = performance.now();
+      requestAnimationFrame(renderLoop);
+    };
+
+    function renderLoop(now) {
+      if (!isRunning) return;
+      const elapsedSec = (now - startTimeMs) / 1000;
+      const minutes = Math.floor(elapsedSec / 60);
+      const seconds = (elapsedSec % 60).toFixed(1);
+      document.getElementById('clock-display').innerText =
+        String(minutes).padStart(2, '0') + ':' + String(seconds).padStart(4, '0');
+
+      const curSeg = timelineItems.find(item => elapsedSec >= item.startSec && elapsedSec < item.endSec);
+      if (curSeg) {
+        const targetSlideId = 'slide-' + curSeg.slide;
+        document.querySelectorAll('.slide-view').forEach(s => {
+          if (s.id === targetSlideId) {
+            if (!s.classList.contains('active')) s.classList.add('active');
+          } else {
+            s.classList.remove('active');
+          }
+        });
+
+        ['leigo', 'eliezer', 'ia'].forEach(who => {
+          const el = document.getElementById('av-' + who);
+          if (el) {
+            if (curSeg.who === who) el.classList.add('active');
+            else el.classList.remove('active');
+          }
+        });
+
+        const speakerEl = document.getElementById('sub-speaker');
+        const textEl = document.getElementById('sub-text');
+        speakerEl.className = 'sub-speaker speaker-' + curSeg.who;
+        speakerEl.innerText = curSeg.actor;
+        textEl.innerText = curSeg.text;
+      }
+      requestAnimationFrame(renderLoop);
+    }
+  </script>
+</body>
+</html>

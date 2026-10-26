@@ -1,0 +1,1667 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Apresentação Técnica do MER — IDD Refrigeração (HVAC-R)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Fira+Code:wght@400;500;600&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --bg-dark: #070d18;
+      --bg-card: rgba(15, 23, 42, 0.88);
+      --bg-card-border: rgba(56, 189, 248, 0.22);
+      --cyan-frost: #38bdf8;
+      --cyan-glow: rgba(56, 189, 248, 0.35);
+      --ice-blue: #0284c7;
+      --deep-navy: #0b1528;
+      --emerald-ok: #10b981;
+      --amber-alert: #f59e0b;
+      --purple-tech: #a855f7;
+      --rose-warn: #f43f5e;
+      --text-main: #f1f5f9;
+      --text-muted: #94a3b8;
+      --handwriting-font: 'Caveat', cursive, sans-serif;
+      --mono-font: 'Fira Code', monospace;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      width: 100vw;
+      height: 100vh;
+      max-height: 100vh;
+      overflow: hidden; /* Strict Zero scroll */
+      background: radial-gradient(circle at 50% 10%, #102647 0%, #070d18 65%, #02050b 100%);
+      color: var(--text-main);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      display: flex;
+      flex-direction: column;
+      user-select: none;
+    }
+
+    /* Top Navigation Bar */
+    header {
+      height: 52px;
+      min-height: 52px;
+      background: rgba(7, 13, 24, 0.94);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(56, 189, 248, 0.18);
+      padding: 0 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      z-index: 50;
+      gap: 12px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .brand-icon {
+      width: 34px;
+      height: 34px;
+      background: linear-gradient(135deg, #0284c7, #38bdf8);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.15rem;
+      box-shadow: 0 0 12px rgba(56, 189, 248, 0.4);
+      flex-shrink: 0;
+    }
+
+    .brand-title {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 700;
+      font-size: 1.05rem;
+      letter-spacing: -0.01em;
+      color: #fff;
+      line-height: 1.1;
+    }
+
+    .brand-subtitle {
+      font-size: 0.7rem;
+      color: var(--cyan-frost);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-weight: 600;
+    }
+
+    /* Controls */
+    .controls-container {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn {
+      background: rgba(30, 41, 59, 0.85);
+      border: 1px solid rgba(56, 189, 248, 0.28);
+      color: var(--text-main);
+      padding: 6px 12px;
+      border-radius: 7px;
+      cursor: pointer;
+      font-size: 0.78rem;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+    }
+
+    .btn:hover {
+      background: rgba(56, 189, 248, 0.18);
+      border-color: var(--cyan-frost);
+      transform: translateY(-1px);
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #0284c7, #0369a1);
+      border-color: #38bdf8;
+      box-shadow: 0 0 10px rgba(2, 132, 199, 0.4);
+    }
+
+    .btn-primary:hover {
+      background: linear-gradient(135deg, #0369a1, #0284c7);
+      box-shadow: 0 0 16px var(--cyan-glow);
+    }
+
+    .mode-pill {
+      display: flex;
+      background: #0b1528;
+      border: 1px solid rgba(56, 189, 248, 0.25);
+      border-radius: 16px;
+      padding: 2px;
+      font-size: 0.72rem;
+    }
+
+    .mode-btn {
+      padding: 4px 10px;
+      border-radius: 14px;
+      border: none;
+      background: transparent;
+      color: var(--text-muted);
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.2s;
+    }
+
+    .mode-btn.active {
+      background: var(--cyan-frost);
+      color: #070d18;
+      box-shadow: 0 0 8px var(--cyan-glow);
+    }
+
+    .voice-select {
+      background: #0b1528;
+      border: 1px solid rgba(56, 189, 248, 0.25);
+      color: #e2e8f0;
+      border-radius: 7px;
+      padding: 5px 8px;
+      font-size: 0.74rem;
+      max-width: 140px;
+      outline: none;
+      cursor: pointer;
+    }
+
+    /* Voice Animation Wave */
+    .audio-wave {
+      display: inline-flex;
+      align-items: center;
+      gap: 2.5px;
+      height: 14px;
+    }
+
+    .audio-wave span {
+      width: 2.5px;
+      height: 4px;
+      background: var(--cyan-frost);
+      border-radius: 2px;
+      transition: height 0.2s ease;
+    }
+
+    .audio-wave.speaking span:nth-child(1) { animation: wave 0.7s infinite 0.1s; }
+    .audio-wave.speaking span:nth-child(2) { animation: wave 0.7s infinite 0.25s; }
+    .audio-wave.speaking span:nth-child(3) { animation: wave 0.7s infinite 0.15s; }
+    .audio-wave.speaking span:nth-child(4) { animation: wave 0.7s infinite 0.3s; }
+
+    @keyframes wave {
+      0%, 100% { height: 3px; }
+      50% { height: 14px; }
+    }
+
+    /* Progress bar */
+    .presentation-progress {
+      width: 100%;
+      height: 3px;
+      background: rgba(255, 255, 255, 0.08);
+      position: relative;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #38bdf8, #10b981, #a855f7);
+      width: 12.5%;
+      transition: width 0.35s ease;
+    }
+
+    /* Main Slides Viewport - Strict Zero Scroll */
+    main {
+      flex: 1;
+      min-height: 0;
+      height: calc(100vh - 52px - 3px - 34px - 48px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 8px 20px;
+      max-width: 1360px;
+      margin: 0 auto;
+      width: 100%;
+      overflow: hidden;
+    }
+
+    .slide {
+      display: none;
+      width: 100%;
+      height: 100%;
+      animation: fadeInSlide 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .slide.active {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+
+    @keyframes fadeInSlide {
+      from {
+        opacity: 0;
+        transform: translateY(8px) scale(0.995);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    /* Unified Slide Panel Card */
+    .card-panel {
+      background: var(--bg-card);
+      border: 1px solid var(--bg-card-border);
+      border-radius: 16px;
+      padding: 16px 24px;
+      backdrop-filter: blur(20px);
+      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      overflow: hidden;
+      box-sizing: border-box;
+    }
+
+    .slide-header {
+      flex-shrink: 0;
+      margin-bottom: 8px;
+    }
+
+    .header-top-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 4px;
+    }
+
+    .badge-group {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .slide-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 2px 10px;
+      background: rgba(56, 189, 248, 0.12);
+      border: 1px solid rgba(56, 189, 248, 0.28);
+      border-radius: 20px;
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: var(--cyan-frost);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .slide-badge.badge-green {
+      background: rgba(16, 185, 129, 0.15);
+      border-color: rgba(16, 185, 129, 0.35);
+      color: #34d399;
+    }
+
+    .slide-badge.badge-purple {
+      background: rgba(168, 85, 247, 0.15);
+      border-color: rgba(168, 85, 247, 0.35);
+      color: #c084fc;
+    }
+
+    .slide-badge.badge-amber {
+      background: rgba(245, 158, 11, 0.15);
+      border-color: rgba(245, 158, 11, 0.35);
+      color: #fbbf24;
+    }
+
+    .role-tags {
+      display: flex;
+      gap: 6px;
+    }
+
+    .role-tag {
+      font-size: 0.68rem;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 4px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: var(--text-muted);
+    }
+
+    .role-tag.dev {
+      border-color: rgba(168, 85, 247, 0.4);
+      color: #d8b4fe;
+    }
+
+    .role-tag.tech {
+      border-color: rgba(56, 189, 248, 0.4);
+      color: #7dd3fc;
+    }
+
+    .slide-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: clamp(1.25rem, 1.9vw, 1.7rem);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+      margin-bottom: 2px;
+      background: linear-gradient(135deg, #ffffff 60%, var(--cyan-frost) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .slide-subtitle {
+      font-size: clamp(0.74rem, 0.95vw, 0.85rem);
+      color: var(--text-muted);
+      line-height: 1.35;
+      max-width: 1050px;
+    }
+
+    .slide-body {
+      flex: 1;
+      min-height: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 10px;
+      overflow: hidden;
+    }
+
+    /* Grids */
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: 14px;
+      height: 100%;
+      align-items: stretch;
+    }
+
+    .grid-2-even {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      height: 100%;
+      align-items: stretch;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      height: 100%;
+      align-items: stretch;
+    }
+
+    .grid-4 {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      height: 100%;
+      align-items: stretch;
+    }
+
+    /* Split Box Dev vs Manutenção */
+    .perspective-card {
+      background: rgba(11, 21, 40, 0.88);
+      border: 1px solid rgba(56, 189, 248, 0.18);
+      border-radius: 12px;
+      padding: 12px 14px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      height: 100%;
+    }
+
+    .perspective-card.dev-card {
+      border-top: 3px solid var(--purple-tech);
+      background: rgba(168, 85, 247, 0.03);
+    }
+
+    .perspective-card.maint-card {
+      border-top: 3px solid var(--cyan-frost);
+      background: rgba(56, 189, 248, 0.03);
+    }
+
+    .perspective-card.goal-card {
+      border-top: 3px solid var(--emerald-ok);
+      background: rgba(16, 185, 129, 0.03);
+    }
+
+    .p-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 8px;
+      padding-bottom: 6px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+    }
+
+    .p-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      flex: 1;
+    }
+
+    .p-list li {
+      font-size: 0.74rem;
+      line-height: 1.35;
+      color: #cbd5e1;
+      display: flex;
+      align-items: flex-start;
+      gap: 6px;
+    }
+
+    .p-list li strong {
+      color: #fff;
+    }
+
+    /* Entity Schema Card */
+    .schema-card {
+      background: rgba(8, 15, 30, 0.95);
+      border: 1px solid rgba(56, 189, 248, 0.25);
+      border-radius: 10px;
+      padding: 10px 14px;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+      height: 100%;
+    }
+
+    .schema-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 8px;
+      padding-bottom: 6px;
+      border-bottom: 1px dashed rgba(56, 189, 248, 0.25);
+    }
+
+    .schema-title {
+      font-family: var(--mono-font);
+      font-size: 0.86rem;
+      font-weight: 700;
+      color: #38bdf8;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .schema-sub {
+      font-size: 0.68rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .schema-fields {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 4.5px;
+      font-family: var(--mono-font);
+      font-size: 0.71rem;
+      flex: 1;
+    }
+
+    .schema-fields li {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: #94a3b8;
+      padding: 2px 4px;
+      border-radius: 4px;
+    }
+
+    .schema-fields li:hover {
+      background: rgba(56, 189, 248, 0.08);
+      color: #f1f5f9;
+    }
+
+    .field-pk { color: #f59e0b; font-weight: 600; }
+    .field-fk { color: #a855f7; font-weight: 600; }
+    .field-type { font-size: 0.64rem; color: #64748b; }
+    .field-tag {
+      font-size: 0.62rem;
+      background: rgba(56, 189, 248, 0.15);
+      color: var(--cyan-frost);
+      padding: 1px 5px;
+      border-radius: 3px;
+    }
+
+    /* Purpose banner */
+    .purpose-banner {
+      background: linear-gradient(90deg, rgba(2, 132, 199, 0.15), rgba(16, 185, 129, 0.1));
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      border-radius: 8px;
+      padding: 8px 14px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.76rem;
+      color: #e2e8f0;
+      flex-shrink: 0;
+    }
+
+    .purpose-banner strong {
+      color: #38bdf8;
+    }
+
+    /* Relationship Mini Flow */
+    .rel-flow {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 8px;
+      background: rgba(11, 21, 40, 0.7);
+      border-radius: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      flex-shrink: 0;
+    }
+
+    .rel-node {
+      background: #0f1c33;
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-family: var(--mono-font);
+      font-size: 0.72rem;
+      color: #fff;
+      font-weight: 600;
+    }
+
+    .rel-node.active-node {
+      border-color: var(--emerald-ok);
+      background: rgba(16, 185, 129, 0.15);
+      color: #a7f3d0;
+      box-shadow: 0 0 10px rgba(16, 185, 129, 0.2);
+    }
+
+    .rel-arrow {
+      color: var(--cyan-frost);
+      font-size: 0.75rem;
+      font-weight: 700;
+    }
+
+    .rel-cardinality {
+      font-size: 0.65rem;
+      color: var(--text-muted);
+      background: rgba(255, 255, 255, 0.05);
+      padding: 2px 5px;
+      border-radius: 4px;
+    }
+
+    /* Subtitle & Caption Bar */
+    .caption-box {
+      height: 34px;
+      min-height: 34px;
+      background: rgba(6, 11, 20, 0.92);
+      border-top: 1px solid rgba(56, 189, 248, 0.15);
+      display: flex;
+      align-items: center;
+      padding: 0 20px;
+      gap: 10px;
+      z-index: 40;
+    }
+
+    .caption-icon {
+      font-size: 0.95rem;
+    }
+
+    .caption-text {
+      font-size: 0.76rem;
+      color: #cbd5e1;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      font-style: italic;
+    }
+
+    /* Bottom Bar */
+    footer {
+      height: 48px;
+      min-height: 48px;
+      background: rgba(7, 13, 24, 0.96);
+      backdrop-filter: blur(14px);
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 0 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      z-index: 50;
+    }
+
+    .slide-counter {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .slide-counter strong {
+      color: #fff;
+    }
+
+    .nav-buttons {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* Visual ER diagram grid on final slide */
+    .er-visual-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      grid-template-rows: auto auto;
+      gap: 10px;
+      height: 100%;
+    }
+
+    .er-box {
+      background: rgba(11, 21, 40, 0.9);
+      border: 1px solid rgba(56, 189, 248, 0.2);
+      border-radius: 10px;
+      padding: 8px 12px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: all 0.2s;
+    }
+
+    .er-box:hover {
+      border-color: var(--cyan-frost);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.35);
+    }
+
+    .er-box.highlight {
+      border: 2px solid var(--emerald-ok);
+      background: rgba(16, 185, 129, 0.06);
+    }
+
+    .er-header {
+      font-family: var(--mono-font);
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: #38bdf8;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .er-purpose {
+      font-size: 0.7rem;
+      color: #e2e8f0;
+      margin: 4px 0;
+      line-height: 1.25;
+    }
+
+    .er-tech-role {
+      font-size: 0.64rem;
+      color: #34d399;
+      font-weight: 600;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+      padding-top: 4px;
+    }
+
+    @media (max-width: 1000px) {
+      .grid-2, .grid-3, .grid-4, .er-visual-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+  <style id="idd-selos-style">
+    .idd-selo{display:inline-block;vertical-align:middle;font:700 11px/1.4 system-ui,"Segoe UI",sans-serif;letter-spacing:.02em;text-transform:none;padding:2px 8px;border-radius:999px;margin:0 6px;white-space:nowrap;-webkit-text-fill-color:currentColor;-webkit-background-clip:border-box;background-clip:border-box;}
+    .idd-selo-proposta{color:#f3e8ff;background:rgba(88,28,135,.88);border:1px solid #c084fc;}
+    .idd-selo-demo{color:#fef3c7;background:rgba(120,53,15,.88);border:1px solid #fbbf24;}
+    .idd-selo-impl{color:#d1fae5;background:rgba(6,78,59,.88);border:1px solid #34d399;}
+    .idd-nota{font:italic 500 11px/1.4 system-ui,"Segoe UI",sans-serif;color:#cbd5e1;text-transform:none;letter-spacing:0;-webkit-text-fill-color:currentColor;}
+  </style>
+</head>
+<body>
+  <div id="idd-status-banner" role="note" aria-label="Status do conteúdo" style="position:fixed;left:50%;bottom:6px;transform:translateX(-50%);z-index:2147483000;pointer-events:none;max-width:min(46vw,640px);white-space:normal;text-align:center;font:600 11px/1.3 system-ui,'Segoe UI',sans-serif;color:#f8fafc;-webkit-text-fill-color:#f8fafc;background:rgba(15,23,42,.9);border:1px solid rgba(148,163,184,.65);border-radius:10px;padding:3px 10px;box-shadow:0 2px 8px rgba(0,0,0,.4);text-transform:none;letter-spacing:0;">🔭 PROPOSTA — o MER é especificação real; o sistema não está implementado · Cânone v1.0-rc1 · ✅ implementado · 🧪 demonstração · 🔭 proposta</div>
+
+  <!-- Top Navigation Bar -->
+  <header>
+    <div class="brand">
+      <div class="brand-icon">🗄️</div>
+      <div>
+        <div class="brand-title">Arquitetura de Dados & MER — HVAC-R</div>
+        <div class="brand-subtitle">Alinhamento Técnico: Devs & Especialistas de Manutenção</div>
+      </div>
+    </div>
+
+    <!-- Presentation Controls -->
+    <div class="controls-container">
+      <a href="apresentacao_bounded_contexts_transacoes.html" class="btn" title="Ver apresentação de Bounded Contexts & Transações Atômicas" style="background: rgba(16, 185, 129, 0.2); border-color: #10b981; color: #34d399; text-decoration: none;">
+        <span>📐</span>
+        <span>Bounded Contexts &amp; Transações</span>
+      </a>
+
+      <button class="btn btn-primary" id="btnPlayPause" title="Reproduzir ou pausar áudio">
+        <span id="playIcon">▶</span>
+        <span id="playLabel">Apresentar com Voz</span>
+      </button>
+
+      <div class="audio-wave" id="audioWave" title="Status da narração">
+        <span></span><span></span><span></span><span></span>
+      </div>
+
+      <div class="mode-pill" title="Modo de Avanço dos Slides">
+        <button class="mode-btn active" id="btnModeContinuous">Contínuo</button>
+        <button class="mode-btn" id="btnModePaused">Pausado</button>
+      </div>
+
+      <select class="voice-select" id="voiceSelect" title="Selecionar voz em português">
+        <option value="">Carregando vozes...</option>
+      </select>
+
+      <button class="btn" id="btnVoiceToggle" title="Mutar/Desmutar áudio">
+        <span id="voiceMuteIcon">🔊</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Progress Bar -->
+  <div class="presentation-progress">
+    <div class="progress-fill" id="progressFill"></div>
+  </div>
+
+  <!-- Main Presentation Slides (Strict Zero Scroll) -->
+  <main>
+
+    <!-- SLIDE 1: Visão Geral e Propósito do MER -->
+    <div class="slide active" data-slide="1" data-title="Visão Geral do MER">
+      <div class="card-panel">
+        <div class="slide-header">
+          <div class="header-top-row">
+            <div class="badge-group">
+              <span class="slide-badge badge-green">Engenharia de Software + Refrigeração</span><span class="idd-selo idd-selo-proposta">🔭 PROPOSTA</span><span class="idd-nota">MER = especificação real; sistema não implementado</span>
+              <span class="slide-badge badge-purple">Intent-Driven Development</span>
+            </div>
+            <div class="role-tags">
+              <span class="role-tag dev">Para Desenvolvedores</span>
+              <span class="role-tag tech">Para Técnicos & Engenheiros</span>
+            </div>
+          </div>
+          <h2 class="slide-title">MER Orientado a Objetivos: Por Que Modelar Assim?</h2>
+          <p class="slide-subtitle">
+            Em HVAC-R, uma tabela não é apenas um repositório de dados: cada entidade reflete diretamente a física da refrigeração, o rigor legal do PMOC e a agilidade do mecânico em campo.
+          </p>
+        </div>
+
+        <div class="slide-body">
+          <div class="grid-3">
+            <div class="perspective-card dev-card">
+              <div class="p-header">
+                <span>💻</span> A Visão do Desenvolvedor
+              </div>
+              <ul class="p-list">
+                <li><strong>Multi-tenant Nativo:</strong> Isolamento estrito de dados entre empresas prestadoras via RLS no Supabase.</li>
+                <li><strong>Offline-First (🔭 proposta):</strong> Estrutura de dados pensada para sincronização assíncrona (subsolos e casas de máquinas).</li>
+                <li><strong>Integridade Referencial:</strong> Foreign keys e estados que impedem ativos órfãos e dados contraditórios.</li>
+              </ul>
+            </div>
+
+            <div class="perspective-card maint-card">
+              <div class="p-header">
+                <span>🔧</span> A Visão do Especialista
+              </div>
+              <ul class="p-list">
+                <li><strong>Foco na Máquina:</strong> Prontuário técnico vitalício com histórico de compressores, quebras e gás de fábrica.</li>
+                <li><strong>Ciclo Termodinâmico:</strong> Registro claro de pressões de alta/baixa, superaquecimento e delta térmico ($\Delta T$).</li>
+                <li><strong>Respaldo Legal:</strong> Laudos de PMOC (Lei 13.589/18) com evidências fotográficas e responsabilidade técnica.</li>
+              </ul>
+            </div>
+
+            <div class="perspective-card goal-card">
+              <div class="p-header">
+                <span>🎯</span> O Objetivo do Negócio
+              </div>
+              <ul class="p-list">
+                <li><strong>Zero Papel:</strong> Fim de blocos de OS perdidos e falhas de cobrança de peças em campo.</li>
+                <li><strong>Velocidade no Atendimento:</strong> Meta (estimativa, não medida): menos de 90 segundos para o mecânico lançar e disparar comprovante.</li>
+                <li><strong>Conformidade Sem Fricção:</strong> Atende à lei sanitária sem travar o ritmo operacional da equipe.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="purpose-banner">
+            <span>💡</span>
+            <span><strong>Princípio Central do MER:</strong> A entidade central é o <strong>EQUIPAMENTO</strong>, identificado via QR Code unívoco, ao redor do qual orbitam as ordens de serviço, medições e contratos.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 2: Estrutura Territorial & Multi-tenant -->
+    <div class="slide" data-slide="2" data-title="Estrutura Territorial">
+      <div class="card-panel">
+        <div class="slide-header">
+          <div class="header-top-row">
+            <div class="badge-group">
+              <span class="slide-badge">Entidades Fundacionais</span><span class="idd-selo idd-selo-proposta">🔭 PROPOSTA</span>
+              <span class="slide-badge badge-green">Hierarquia Física</span>
+            </div>
+            <div class="role-tags">
+              <span class="role-tag dev">RLS & Foreign Keys</span>
+              <span class="role-tag tech">Rotas & Instalações</span>
+            </div>
+          </div>
+          <h2 class="slide-title">Fundação Territorial: Tenant, Cliente e Local de Instalação</h2>
+          <p class="slide-subtitle">
+            Garantindo que nenhum equipamento seja órfão e que a equipe técnica saiba exatamente em qual sala, andar e filial o maquinário está operando.
+          </p>
+        </div>
+
+        <div class="slide-body">
+          <div class="rel-flow">
+            <div class="rel-node">TENANT</div>
+            <span class="rel-arrow">1 ── N</span>
+            <div class="rel-node">CLIENTE</div>
+            <span class="rel-arrow">1 ── N</span>
+            <div class="rel-node active-node">LOCAL_INSTALACAO</div>
+            <span class="rel-arrow">1 ── N</span>
+            <div class="rel-node">EQUIPAMENTO</div>
+          </div>
+
+          <div class="grid-2">
+            <div class="schema-card">
+              <div class="schema-header">
+                <span class="schema-title">📁 LOCAL_INSTALACAO</span>
+                <span class="schema-sub">Âncora Territorial</span>
+              </div>
+              <ul class="schema-fields">
+                <li><span><span class="field-pk">id</span> : uuid</span> <span class="field-tag">PK</span></li>
+                <li><span><span class="field-fk">cliente_id</span> : uuid</span> <span class="field-tag">FK -> CLIENTE</span></li>
+                <li><span>nome_unidade : string</span> <span class="field-type">"Matriz Centro", "Loja 04"</span></li>
+                <li><span>endereco_completo : string</span> <span class="field-type">Rua, Número, Bairro</span></li>
+                <li><span>setor_ambiente : string</span> <span class="field-type">"CPD", "Câmara Congelados", "Sala 201"</span></li>
+                <li><span>andar_pavimento : string</span> <span class="field-type">Opcional para predial</span></li>
+              </ul>
+            </div>
+
+            <div class="perspective-card goal-card">
+              <div class="p-header">
+                <span>🏢</span> Por Que Esta Estrutura Existe no Negócio?
+              </div>
+              <ul class="p-list">
+                <li><strong>Para a Manutenção:</strong> Evita a confusão de "qual split está quebrado". O chamado aponta: *Cliente Supermercado X -> Filial Sul -> Sala dos Servidores*.</li>
+                <li><strong>Para o PMOC Legal:</strong> A legislação exige laudo por **ambiente climatizado**, discriminando a volumetria e pessoas no local.</li>
+                <li><strong>Para os Desenvolvedores:</strong> A amarração em árvore permite agrupar manutenções preventivas em lote por rota de atendimento geográfica.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="purpose-banner">
+            <span>🛡️</span>
+            <span><strong>Invariante Rígida:</strong> Toda máquina ativa pertence obrigatoriamente a um <code>local_id</code>. Não são permitidos equipamentos desvinculados de um espaço físico.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 3: O Coração do Negócio - EQUIPAMENTO -->
+    <div class="slide" data-slide="3" data-title="Equipamento & QR Code">
+      <div class="card-panel">
+        <div class="slide-header">
+          <div class="header-top-row">
+            <div class="badge-group">
+              <span class="slide-badge badge-green">Entidade-Núcleo</span><span class="idd-selo idd-selo-proposta">🔭 PROPOSTA</span>
+              <span class="slide-badge badge-amber">Prontuário Vitalício</span>
+            </div>
+            <div class="role-tags">
+              <span class="role-tag dev">Indexed QR Code</span>
+              <span class="role-tag tech">Placa do Fabricante</span>
+            </div>
+          </div>
+          <h2 class="slide-title">EQUIPAMENTO: O Prontuário Digital do Ativo</h2>
+          <p class="slide-subtitle">
+            A máquina é o centro de gravidade da empresa de refrigeração. A etiqueta com QR Code conecta a física da condensadora/evaporadora ao banco de dados.
+          </p>
+        </div>
+
+        <div class="slide-body">
+          <div class="grid-2">
+            <div class="schema-card">
+              <div class="schema-header">
+                <span class="schema-title">❄️ EQUIPAMENTO</span>
+                <span class="schema-sub">Tabela Principal</span>
+              </div>
+              <ul class="schema-fields">
+                <li><span><span class="field-pk">id</span> : uuid</span> <span class="field-tag">PK</span></li>
+                <li><span><span class="field-fk">local_id</span> : uuid</span> <span class="field-tag">FK -> LOCAL_INSTALACAO</span></li>
+                <li><span><strong style="color:#38bdf8;">qr_code_id</strong> : string (Unique)</span> <span class="field-tag">Index B-Tree</span></li>
+                <li><span>categoria : string</span> <span class="field-type">Split, VRF, Chiller, Câmara Fria</span></li>
+                <li><span>fabricante / modelo : string</span> <span class="field-type">Carrier, Daikin, Elgin</span></li>
+                <li><span>capacidade_btu : int</span> <span class="field-type">Ex: 12.000, 60.000 (5 TR)</span></li>
+                <li><span>tipo_fluido : string</span> <span class="field-type">R410A, R32, R404A, R22</span></li>
+                <li><span>tensao_eletrica : string</span> <span class="field-type">220V Mono, 380V Trifásico</span></li>
+              </ul>
+            </div>
+
+            <div class="grid-2-even" style="height: 100%;">
+              <div class="perspective-card maint-card">
+                <div class="p-header">
+                  <span>📱</span> Em Campo (Mecânico)
+                </div>
+                <ul class="p-list">
+                  <li><strong>Acesso Instantâneo:</strong> Apontou a câmera para o QR Code da máquina, o app carrega na hora: modelo, tipo de gás de fábrica e histórico.</li>
+                  <li><strong>Histórico de Quebras:</strong> Permite saber: *"Esse compressor já queimou 2 vezes este ano; não adianta só trocar o capacitor"*.</li>
+                </ul>
+              </div>
+
+              <div class="perspective-card dev-card">
+                <div class="p-header">
+                  <span>⚙️</span> Na Engenharia de Software
+                </div>
+                <ul class="p-list">
+                  <li><strong>Busca Ultrarrápida:</strong> Campo <code>qr_code_id</code> unívoco e indexado, viabilizando busca local offline em cache IndexedDB (🔭 proposta).</li>
+                  <li><strong>Imutabilidade Técnica:</strong> O tipo de gás original e tensão não podem ser alterados sem flag explícita de Retrofit.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="purpose-banner">
+            <span>🎯</span>
+            <span><strong>Objetivo do Negócio Atendido:</strong> Acabar com a dúvida de peças e fluidos incompatíveis. O técnico não carrega fluido errado para o atendimento.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 4: Motor de Campo - ORDEM DE SERVICO -->
+    <div class="slide" data-slide="4" data-title="Ordem de Serviço & Técnico">
+      <div class="card-panel">
+        <div class="slide-header">
+          <div class="header-top-row">
+            <div class="badge-group">
+              <span class="slide-badge badge-green">Motor de Campo</span><span class="idd-selo idd-selo-proposta">🔭 PROPOSTA</span>
+              <span class="slide-badge badge-purple">Máquina de Estados Ágil</span>
+            </div>
+            <div class="role-tags">
+              <span class="role-tag dev">State Machine & Bucket</span>
+              <span class="role-tag tech">Antes/Depois & WhatsApp</span>
+            </div>
+          </div>
+          <h2 class="slide-title">ORDEM_SERVICO & TECNICO: Da Abertura ao Comprovante</h2>
+          <p class="slide-subtitle">
+            Estrutura flexível que atende tanto chamados emergenciais quanto preventivas periódicas, com captura de evidências visuais e assinatura digital.
+          </p>
+        </div>
+
+        <div class="slide-body">
+          <div class="grid-2">
+            <div class="schema-card">
+              <div class="schema-header">
+                <span class="schema-title">⚡ ORDEM_SERVICO</span>
+                <span class="schema-sub">Transação Operacional</span>
+              </div>
+              <ul class="schema-fields">
+                <li><span><span class="field-pk">id</span> : uuid</span> <span class="field-tag">PK</span></li>
+                <li><span><span class="field-fk">equipamento_id</span> : uuid</span> <span class="field-tag">FK -> EQUIPAMENTO</span></li>
+                <li><span><span class="field-fk">tecnico_id</span> : uuid</span> <span class="field-tag">FK -> TECNICO</span></li>
+                <li><span>tipo : string</span> <span class="field-type">Preventiva (PMOC), Corretiva, Avulsa</span></li>
+                <li><span>status : string</span> <span class="field-type">Agendada, Em_Atendimento, Concluida</span></li>
+                <li><span>relato_cliente / diagnostico : text</span> <span class="field-type">Linguagem natural ágil</span></li>
+                <li><span>foto_antes_url / foto_depois_url : string</span> <span class="field-tag">Storage S3/Supabase</span></li>
+                <li><span>assinatura_cliente_url : string</span> <span class="field-type">Traço na tela / Validação</span></li>
+                <li><span>valor_total_servico : decimal</span> <span class="field-type">Mão de obra + Peças</span></li>
+              </ul>
+            </div>
+
+            <div class="grid-2-even" style="height: 100%;">
+              <div class="perspective-card goal-card">
+                <div class="p-header">
+                  <span>📸</span> Respaldo com Evidências
+                </div>
+                <ul class="p-list">
+                  <li><strong>Fotos Antes/Depois:</strong> Mostram ao cliente a serpentina desobstruída e a bandeja limpa, eliminando contestações de cobrança.</li>
+                  <li><strong>Disparo no WhatsApp:</strong> Ao concluir, o sistema deverá gerar o comprovante com as fotos e dados (meta ilustrativa: menos de 10 segundos).</li>
+                </ul>
+              </div>
+
+              <div class="perspective-card dev-card">
+                <div class="p-header">
+                  <span>🔄</span> Flexibilidade de Estados
+                </div>
+                <ul class="p-list">
+                  <li><strong>Lançamento Posterior Permitido:</strong> A OS pode ir de criação a conclusão no mesmo minuto (para quando o mecânico lança após fazer o serviço).</li>
+                  <li><strong>Imutabilidade Pós-Fechamento:</strong> Uma vez assinada e concluída, torna-se somente-leitura para garantir segurança jurídica.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="purpose-banner">
+            <span>🚀</span>
+            <span><strong>Meta de Eficiência (estimativa):</strong> Permitir o preenchimento completo da OS em menos de <strong>90 segundos</strong> na tela do celular do mecânico.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 5: Ciclo Frigorífico - MEDICAO_TECNICA -->
+    <div class="slide" data-slide="5" data-title="Medição Termodinâmica">
+      <div class="card-panel">
+        <div class="slide-header">
+          <div class="header-top-row">
+            <div class="badge-group">
+              <span class="slide-badge badge-amber">Termodinâmica Aplicada</span><span class="idd-selo idd-selo-proposta">🔭 PROPOSTA</span>
+              <span class="slide-badge badge-green">Ciclo Frigorífico</span>
+            </div>
+            <div class="role-tags">
+              <span class="role-tag dev">Tabela 1:N Opcional</span>
+              <span class="role-tag tech">Manifold & Termômetro</span>
+            </div>
+          </div>
+          <h2 class="slide-title">MEDICAO_TECNICA: Ciclo Frigorífico & Parâmetros Físicos</h2>
+          <p class="slide-subtitle">
+            O diferencial que separa um software de refrigeração de um app genérico de manutenção predial: captura de pressões, temperaturas e corrente elétrica.
+          </p>
+        </div>
+
+        <div class="slide-body">
+          <div class="grid-2">
+            <div class="schema-card">
+              <div class="schema-header">
+                <span class="schema-title">🌡️ MEDICAO_TECNICA</span>
+                <span class="schema-sub">Diagnóstico Físico</span>
+              </div>
+              <ul class="schema-fields">
+                <li><span><span class="field-pk">id</span> : uuid</span> <span class="field-tag">PK</span></li>
+                <li><span><span class="field-fk">ordem_servico_id</span> : uuid</span> <span class="field-tag">FK -> ORDEM_SERVICO</span></li>
+                <li><span>pressao_sucao_psi : float</span> <span class="field-type">Linha de Baixa Pressão</span></li>
+                <li><span>pressao_descarga_psi : float</span> <span class="field-type">Linha de Alta Pressão</span></li>
+                <li><span>temp_insuflamento_c : float</span> <span class="field-type">Saída do Ar Gelado</span></li>
+                <li><span>temp_retorno_c : float</span> <span class="field-type">Entrada do Ar Ambiente</span></li>
+                <li><span>delta_t_calculado : float</span> <span class="field-type">Diferencial térmico (Retorno - Insuflamento)</span></li>
+                <li><span>corrente_operacao_a : float</span> <span class="field-type">Consumo elétrico do compressor</span></li>
+                <li><span>superaquecimento_k : float</span> <span class="field-type">Proteção contra retorno de líquido</span></li>
+              </ul>
+            </div>
+
+            <div class="grid-2-even" style="height: 100%;">
+              <div class="perspective-card maint-card">
+                <div class="p-header">
+                  <span>🔬</span> Diagnóstico Especializado
+                </div>
+                <ul class="p-list">
+                  <li><strong>Delta T ($\Delta T$):</strong> Se a diferença for menor que 8°C a 12°C em splits normais, o sistema sinaliza baixo rendimento térmico.</li>
+                  <li><strong>Pressões de Trabalho:</strong> Identifica na hora falta de gás, serpentina suja ou capilar entupido antes de condenar o compressor.</li>
+                </ul>
+              </div>
+
+              <div class="perspective-card dev-card">
+                <div class="p-header">
+                  <span>💻</span> Decisão de Arquitetura
+                </div>
+                <ul class="p-list">
+                  <li><strong>Entidade Segregada (1:N):</strong> Permite medição antes do conserto e medição de pós-validação sem poluir a tabela de OS.</li>
+                  <li><strong>Campos Não Bloqueantes:</strong> O técnico pode registrar apenas o Delta T rápido ou pressões se não estiver com o manifold.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="purpose-banner">
+            <span>⚙️</span>
+            <span><strong>Invariante Termodinâmica:</strong> Em compressores de pistão/scroll/rotativo: <code>pressao_descarga > pressao_sucao</code>. Especificação: o banco deverá rejeitar leituras invertidas (CHECK a implementar).</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 6: Compliance Legal - LAUDO_PMOC -->
+    <div class="slide" data-slide="6" data-title="Laudo PMOC & Sustentabilidade">
+      <div class="card-panel">
+        <div class="slide-header">
+          <div class="header-top-row">
+            <div class="badge-group">
+              <span class="slide-badge badge-purple">Compliance Regulatório</span><span class="idd-selo idd-selo-proposta">🔭 PROPOSTA</span>
+              <span class="slide-badge badge-green">Lei 13.589/2018</span>
+            </div>
+            <div class="role-tags">
+              <span class="role-tag dev">Auditoria Imutável</span>
+              <span class="role-tag tech">Vigilância Sanitária</span>
+            </div>
+          </div>
+          <h2 class="slide-title">LAUDO_PMOC: Conformidade Sanitária & Rastreabilidade de Gás</h2>
+          <p class="slide-subtitle">
+            Modelado para atender às normas da Anvisa e Ministério da Saúde, além do rastreamento de fluidos ecológicos conforme o Protocolo de Montreal.
+          </p>
+        </div>
+
+        <div class="slide-body">
+          <div class="grid-2">
+            <div class="schema-card">
+              <div class="schema-header">
+                <span class="schema-title">📜 LAUDO_PMOC</span>
+                <span class="schema-sub">Conformidade Legal</span>
+              </div>
+              <ul class="schema-fields">
+                <li><span><span class="field-pk">id</span> : uuid</span> <span class="field-tag">PK</span></li>
+                <li><span><span class="field-fk">ordem_servico_id</span> : uuid</span> <span class="field-tag">FK -> ORDEM_SERVICO (1:1)</span></li>
+                <li><span>filtro_higienizado : boolean</span> <span class="field-type">Obrigatório Portaria 3.523</span></li>
+                <li><span>dreno_desobstruido : boolean</span> <span class="field-type">Prevenção de transbordamento</span></li>
+                <li><span>bandeja_limpa : boolean</span> <span class="field-type">Controle bacteriológico</span></li>
+                <li><span>serpentina_quimica : boolean</span> <span class="field-type">Aplicação de bactericida</span></li>
+                <li><span>vazamento_detectado : boolean</span> <span class="field-type">Teste de estanqueidade</span></li>
+                <li><span>gas_adicionado_kg : float</span> <span class="field-type">Balanço de massa de fluido</span></li>
+                <li><span>gas_recolhido_kg : float</span> <span class="field-type">Destinação ecológica/recolhedora</span></li>
+              </ul>
+            </div>
+
+            <div class="grid-2-even" style="height: 100%;">
+              <div class="perspective-card maint-card">
+                <div class="p-header">
+                  <span>🛡️</span> Segurança em Auditorias
+                </div>
+                <ul class="p-list">
+                  <li><strong>Fiscalização da Anvisa:</strong> Deverá gerar laudos em PDF com o checklist sanitário completo, pronto para apresentar ao fiscal.</li>
+                  <li><strong>Controle de Gás:</strong> Não permite registrar recarga de gás sem indicar o teste de estanqueidade e solução de vazamento.</li>
+                </ul>
+              </div>
+
+              <div class="perspective-card dev-card">
+                <div class="p-header">
+                  <span>⚖️</span> Por Que Uma Tabela Separada?
+                </div>
+                <ul class="p-list">
+                  <li><strong>Separação de Preocupações:</strong> Uma corretiva emergencial rápida não gera registro de PMOC, mantendo o banco normalizado e sem campos nulos inúteis.</li>
+                  <li><strong>Sem Retroatividade Falsa:</strong> Invariante de sistema que impede adulterar datas passadas para simular prazos de vistoria.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="purpose-banner">
+            <span>🌿</span>
+            <span><strong>Sustentabilidade:</strong> O campo <code>gas_recolhido_kg</code> registra o uso de recolhedora em oficina, apoiando a comprovação de conformidade com normas ambientais do CONAMA.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 7: Recorrência & Contratos - CONTRATO -->
+    <div class="slide" data-slide="7" data-title="Contratos & Automação">
+      <div class="card-panel">
+        <div class="slide-header">
+          <div class="header-top-row">
+            <div class="badge-group">
+              <span class="slide-badge badge-green">Receita Recorrente</span><span class="idd-selo idd-selo-proposta">🔭 PROPOSTA</span>
+              <span class="slide-badge">Automação de Cronograma</span>
+            </div>
+            <div class="role-tags">
+              <span class="role-tag dev">Cron Triggers & Jobs</span>
+              <span class="role-tag tech">Manutenções Periódicas</span>
+            </div>
+          </div>
+          <h2 class="slide-title">CONTRATO: Automação das Preventivas e Previsibilidade</h2>
+          <p class="slide-subtitle">
+            Como o banco de dados deverá automatizar a rotina da empresa, gerando ordens de serviço preventivas mensais sem esquecimentos e sem retrabalho manual.
+          </p>
+        </div>
+
+        <div class="slide-body">
+          <div class="grid-2">
+            <div class="schema-card">
+              <div class="schema-header">
+                <span class="schema-title">📑 CONTRATO</span>
+                <span class="schema-sub">Automação Periódica</span>
+              </div>
+              <ul class="schema-fields">
+                <li><span><span class="field-pk">id</span> : uuid</span> <span class="field-tag">PK</span></li>
+                <li><span><span class="field-fk">cliente_id</span> : uuid</span> <span class="field-tag">FK -> CLIENTE</span></li>
+                <li><span>data_inicio / data_fim : date</span> <span class="field-type">Vigência contratual</span></li>
+                <li><span>frequencia_pmoc_meses : int</span> <span class="field-type">1 (Mensal), 3 (Trimestral)</span></li>
+                <li><span>limite_corretivas_inclusas : int</span> <span class="field-type">Chamados avulsos cobertos</span></li>
+                <li><span>responsavel_tecnico_id : uuid</span> <span class="field-tag">FK -> TECNICO (CREA/CFT)</span></li>
+                <li><span>ativo : boolean</span> <span class="field-type">Flag de controle</span></li>
+              </ul>
+            </div>
+
+            <div class="grid-2-even" style="height: 100%;">
+              <div class="perspective-card goal-card">
+                <div class="p-header">
+                  <span>📅</span> Benefício Operacional
+                </div>
+                <ul class="p-list">
+                  <li><strong>Zero Esquecimento:</strong> No primeiro dia do mês, o sistema agenda automaticamente a visita para todos os aparelhos sob contrato.</li>
+                  <li><strong>Fidelização do Cliente:</strong> O contratante recebe certificados mensais de renovação do PMOC sem precisar cobrar a empresa.</li>
+                </ul>
+              </div>
+
+              <div class="perspective-card dev-card">
+                <div class="p-header">
+                  <span>🤖</span> Arquitetura de Automação
+                </div>
+                <ul class="p-list">
+                  <li><strong>Supabase Edge Function / Cron:</strong> Dispara todo dia 1º de cada mês, criando as instâncias de <code>ORDEM_SERVICO</code> no status <code>Agendada</code>.</li>
+                  <li><strong>Vínculo N:N Contrato-Equipamentos:</strong> Tabela associativa que define quais máquinas estão contempladas no contrato vigente.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="purpose-banner">
+            <span>💼</span>
+            <span><strong>Objetivo Comercial:</strong> Transformar serviços avulsos de "apagar incêndio" em contratos de receita recorrente mensal (MRR) previsível.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 8: Visão Holística & Próximos Passos -->
+    <div class="slide" data-slide="8" data-title="Arquitetura Unificada">
+      <div class="card-panel">
+        <div class="slide-header">
+          <div class="header-top-row">
+            <div class="badge-group">
+              <span class="slide-badge badge-green">Síntese Integrada</span><span class="idd-selo idd-selo-proposta">🔭 PROPOSTA</span>
+              <span class="slide-badge badge-purple">Plano de Implementação</span>
+            </div>
+            <div class="role-tags">
+              <span class="role-tag dev">Supabase + PWA</span>
+              <span class="role-tag tech">Aprovação do Time</span>
+            </div>
+          </div>
+          <h2 class="slide-title">Mapa Completo do MER: Do Banco de Dados às Mãos do Mecânico</h2>
+          <p class="slide-subtitle">
+            Como as entidades se conectam para entregar a experiência ágil proposta ao cliente Renato e suportar o crescimento da empresa.
+          </p>
+        </div>
+
+        <div class="slide-body">
+          <div class="er-visual-grid">
+            <div class="er-box">
+              <div class="er-header">
+                <span>TENANT / CLIENTE</span>
+                <span>🏢</span>
+              </div>
+              <div class="er-purpose">Multi-tenant e cadastro unificado dos contratantes.</div>
+              <div class="er-tech-role">Dev: RLS | Manut: Isolamento</div>
+            </div>
+
+            <div class="er-box">
+              <div class="er-header">
+                <span>LOCAL_INSTALACAO</span>
+                <span>📍</span>
+              </div>
+              <div class="er-purpose">Âncora geográfica e setor físico das máquinas.</div>
+              <div class="er-tech-role">Dev: Hierarquia | Manut: Rotas</div>
+            </div>
+
+            <div class="er-box highlight">
+              <div class="er-header">
+                <span>EQUIPAMENTO (QR Code)</span>
+                <span>❄️</span>
+              </div>
+              <div class="er-purpose">Prontuário vitalício, modelo, capacidade e fluido de fábrica.</div>
+              <div class="er-tech-role">Dev: Cache B-Tree | Manut: Bipou abriu</div>
+            </div>
+
+            <div class="er-box highlight">
+              <div class="er-header">
+                <span>ORDEM_SERVICO</span>
+                <span>⚡</span>
+              </div>
+              <div class="er-purpose">Execução, fotos antes/depois, peças e comprovante WhatsApp.</div>
+              <div class="er-tech-role">Dev: State Machine | Manut: meta < 90s</div>
+            </div>
+
+            <div class="er-box">
+              <div class="er-header">
+                <span>MEDICAO_TECNICA</span>
+                <span>🌡️</span>
+              </div>
+              <div class="er-purpose">Pressões de baixa/alta, Delta T e rendimento térmico.</div>
+              <div class="er-tech-role">Dev: 1:N Opcional | Manut: Manifold</div>
+            </div>
+
+            <div class="er-box">
+              <div class="er-header">
+                <span>LAUDO_PMOC</span>
+                <span>📜</span>
+              </div>
+              <div class="er-purpose">Checklist legal da Anvisa e balanço ecológico de fluidos.</div>
+              <div class="er-tech-role">Dev: Auditoria | Manut: Lei 13.589</div>
+            </div>
+
+            <div class="er-box">
+              <div class="er-header">
+                <span>CONTRATO</span>
+                <span>📅</span>
+              </div>
+              <div class="er-purpose">Cronograma automático mensal de preventivas periódicas.</div>
+              <div class="er-tech-role">Dev: Cron Job | Manut: Receita Recorrente</div>
+            </div>
+
+            <div class="er-box highlight" style="border-color: var(--purple-tech);">
+              <div class="er-header">
+                <span>OFFLINE-FIRST SYNC <span class="idd-selo idd-selo-proposta">🔭 PROPOSTA</span></span>
+                <span>📡</span>
+              </div>
+              <div class="er-purpose">Proposta: sincronização assíncrona via IndexedDB e Supabase (não implementada).</div>
+              <div class="er-tech-role">Dev: Fila Local | Manut: meta funcionar no subsolo</div>
+            </div>
+          </div>
+
+          <div class="purpose-banner">
+            <span>🚀</span>
+            <span><strong>Próximos Passos Conjuntos:</strong> 1) Criar as migrations no Supabase com RLS; 2) Prototipar as 4 telas essenciais do app mobile; 3) Testar a leitura de QR Code em campo com os mecânicos.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Caption & Subtitle Bar (Closed Caption) -->
+  <div class="caption-box">
+    <span class="caption-icon">💬</span>
+    <span class="caption-text" id="captionText">
+      Carregando apresentação do Modelo Entidade-Relacionamento...
+    </span>
+  </div>
+
+  <!-- Bottom Bar: Counter & Navigation -->
+  <footer>
+    <div class="slide-counter">
+      Slide <span id="currentSlideNum">1</span> de <span id="totalSlidesNum">8</span>: 
+      <strong id="slideTitleDisplay" style="color: #fff; margin-left: 4px;">Visão Geral do MER</strong>
+    </div>
+
+    <div class="nav-buttons">
+      <button class="btn" id="btnPrevSlide">← Anterior</button>
+      <button class="btn btn-primary" id="btnNextSlide">Próximo →</button>
+    </div>
+  </footer>
+
+  <!-- Script: Slide Engine + Speech Synthesis Voice System with Subtitles -->
+  <script>
+    const slideScripts = {
+      1: "Olá equipe de desenvolvimento e especialistas em manutenção! Sejam bem-vindos à apresentação técnica do nosso Modelo Entidade-Relacionamento do projeto de Refrigeração e PMOC. Nosso objetivo aqui é mostrar a ponte direta entre a arquitetura do banco de dados e as metas reais de campo: agilidade do mecânico, zero papel e conformidade legal.",
+      2: "Começando pela fundação territorial: as tabelas de Tenant, Cliente e Local de Instalação. No desenvolvimento, o Tenant garante isolamento total entre empresas via RLS. Para a equipe de manutenção, o Local de Instalação garante que nenhuma máquina seja órfã: o técnico sabe exatamente a filial, andar e sala onde deve atuar.",
+      3: "Aqui temos o coração do sistema: a tabela Equipamento. Ela é a identidade digital da máquina através do QR Code único. Para os desenvolvedores, é uma chave indexada e leve para cache offline. Para o mecânico, basta apontar a câmera na condensadora para ver na hora o histórico completo, capacidade térmica e o tipo de fluido refrigerante de fábrica.",
+      4: "A tabela Ordem de Serviço representa o motor de campo. Projetada como uma máquina de estados flexível, ela permite tanto agendamentos prévios quanto abertura e fechamento imediato no mesmo minuto. O armazenamento das fotos de antes e depois e da assinatura digital traz proteção jurídica contra reclamações e alimenta o comprovante enviado pelo WhatsApp.",
+      5: "A medição técnica é onde a ciência do ciclo frigorífico ganha vida no banco de dados. Separada da Ordem de Serviço em uma relação um para muitos, ela registra pressões de alta e baixa, corrente do compressor e o diferencial térmico Delta T. Campos não obrigatórios garantem que o mecânico não seja travado caso não esteja com o manifold na mão.",
+      6: "Para o compliance regulatório da Lei 13.589 do PMOC, criamos a tabela Laudo PMOC. Ela isola o checklist sanitário da Anvisa e o balanço ecológico de recarga e recolhimento de gás refrigerante. Esta separação mantém o banco normalizado e permite emitir relatórios em PDF com a rastreabilidade exigida pela fiscalização.",
+      7: "A tabela Contrato viabiliza a previsibilidade financeira e a automação do negócio. Em conjunto com triggers ou cron jobs agendados, o sistema gera automaticamente as ordens de serviço preventivas no início de cada mês para todos os equipamentos cobertos, eliminando esquecimentos e aumentando a retenção dos clientes.",
+      8: "Para concluir, este mapa integrado demonstra como todas as tabelas atuam em perfeita harmonia. A proposta é usar o Supabase, com suporte offline via sincronização local ainda a implementar, para entregar uma ferramenta robusta para o desenvolvedor e rápida para o mecânico. Agora, estamos prontos para subir as tabelas e prototipar as quatro telas do aplicativo!"
+    };
+
+    let currentSlide = 1;
+    const totalSlides = 8;
+    let isPlaying = false;
+    let isContinuous = true;
+    let isVoiceMuted = false;
+    let synth = window.speechSynthesis;
+    let currentUtterance = null;
+    let advanceTimeout = null;
+    let speechHeartbeat = null;
+    let availableVoices = [];
+
+    // Elements
+    const slides = document.querySelectorAll('.slide');
+    const currentSlideNumEl = document.getElementById('currentSlideNum');
+    const totalSlidesNumEl = document.getElementById('totalSlidesNum');
+    const slideTitleDisplayEl = document.getElementById('slideTitleDisplay');
+    const progressFillEl = document.getElementById('progressFill');
+    const captionTextEl = document.getElementById('captionText');
+    const btnPlayPause = document.getElementById('btnPlayPause');
+    const playIcon = document.getElementById('playIcon');
+    const playLabel = document.getElementById('playLabel');
+    const audioWave = document.getElementById('audioWave');
+    const btnModeContinuous = document.getElementById('btnModeContinuous');
+    const btnModePaused = document.getElementById('btnModePaused');
+    const btnVoiceToggle = document.getElementById('btnVoiceToggle');
+    const voiceMuteIcon = document.getElementById('voiceMuteIcon');
+    const voiceSelectEl = document.getElementById('voiceSelect');
+    const btnPrevSlide = document.getElementById('btnPrevSlide');
+    const btnNextSlide = document.getElementById('btnNextSlide');
+
+    totalSlidesNumEl.textContent = totalSlides;
+
+    // Populate Voice Selection List
+    function populateVoices() {
+      if (!synth) return;
+      availableVoices = synth.getVoices();
+      voiceSelectEl.innerHTML = '';
+
+      const ptVoices = availableVoices.filter(v => v.lang.startsWith('pt'));
+      const voicesToUse = ptVoices.length > 0 ? ptVoices : availableVoices;
+
+      voicesToUse.forEach((voice, index) => {
+        const option = document.createElement('option');
+        option.value = voice.name;
+        option.textContent = `${voice.name.replace(/Microsoft|Google/g, '').trim()} (${voice.lang})`;
+        if (voice.lang === 'pt-BR' && (option.value.includes('Maria') || option.value.includes('Luciana') || option.value.includes('Daniel') || index === 0)) {
+          option.selected = true;
+        }
+        voiceSelectEl.appendChild(option);
+      });
+    }
+
+    if (synth) {
+      populateVoices();
+      if (synth.onvoiceschanged !== undefined) {
+        synth.onvoiceschanged = populateVoices;
+      }
+    }
+
+    function getSelectedVoice() {
+      if (!synth || availableVoices.length === 0) return null;
+      const selectedName = voiceSelectEl.value;
+      const found = availableVoices.find(v => v.name === selectedName);
+      if (found) return found;
+      const ptBR = availableVoices.find(v => v.lang === 'pt-BR');
+      return ptBR || availableVoices[0] || null;
+    }
+
+    // Switch Slide
+    function showSlide(index, autoSpeak = true) {
+      if (index < 1) index = 1;
+      if (index > totalSlides) index = totalSlides;
+
+      currentSlide = index;
+
+      slides.forEach((slide) => {
+        slide.classList.remove('active');
+        if (parseInt(slide.getAttribute('data-slide')) === currentSlide) {
+          slide.classList.add('active');
+          const title = slide.getAttribute('data-title');
+          slideTitleDisplayEl.textContent = title;
+        }
+      });
+
+      currentSlideNumEl.textContent = currentSlide;
+      const progressPercent = (currentSlide / totalSlides) * 100;
+      progressFillEl.style.width = `${progressPercent}%`;
+
+      btnPrevSlide.disabled = currentSlide === 1;
+      btnNextSlide.disabled = currentSlide === totalSlides;
+
+      stopNarration();
+
+      if (autoSpeak && isPlaying && !isVoiceMuted) {
+        speakCurrentSlide();
+      } else {
+        captionTextEl.textContent = slideScripts[currentSlide] || '';
+      }
+    }
+
+    // Speak current slide script
+    function speakCurrentSlide() {
+      if (!synth) {
+        captionTextEl.textContent = slideScripts[currentSlide] || '';
+        return;
+      }
+
+      stopNarration();
+
+      const text = slideScripts[currentSlide];
+      if (!text) return;
+
+      currentUtterance = new SpeechSynthesisUtterance(text);
+      currentUtterance.lang = 'pt-BR';
+      currentUtterance.rate = 1.05;
+      currentUtterance.pitch = 1.0;
+
+      const voice = getSelectedVoice();
+      if (voice) {
+        currentUtterance.voice = voice;
+      }
+
+      currentUtterance.onstart = () => {
+        audioWave.classList.add('speaking');
+        captionTextEl.textContent = text;
+      };
+
+      currentUtterance.onend = () => {
+        audioWave.classList.remove('speaking');
+        clearInterval(speechHeartbeat);
+
+        if (isPlaying && isContinuous && currentSlide < totalSlides) {
+          advanceTimeout = setTimeout(() => {
+            showSlide(currentSlide + 1, true);
+          }, 1400);
+        } else if (currentSlide === totalSlides) {
+          isPlaying = false;
+          updatePlayPauseButton();
+        }
+      };
+
+      currentUtterance.onerror = (e) => {
+        console.warn('SpeechSynthesis error:', e);
+        audioWave.classList.remove('speaking');
+        clearInterval(speechHeartbeat);
+      };
+
+      if (!isVoiceMuted) {
+        synth.speak(currentUtterance);
+
+        // Chrome SpeechSynthesis auto-pause bug workaround
+        speechHeartbeat = setInterval(() => {
+          if (synth.speaking) {
+            synth.pause();
+            synth.resume();
+          }
+        }, 10000);
+      }
+    }
+
+    function stopNarration() {
+      if (advanceTimeout) {
+        clearTimeout(advanceTimeout);
+        advanceTimeout = null;
+      }
+      if (speechHeartbeat) {
+        clearInterval(speechHeartbeat);
+        speechHeartbeat = null;
+      }
+      if (synth && synth.speaking) {
+        synth.cancel();
+      }
+      audioWave.classList.remove('speaking');
+    }
+
+    function updatePlayPauseButton() {
+      if (isPlaying) {
+        playIcon.textContent = '⏸';
+        playLabel.textContent = 'Pausar Voz';
+        btnPlayPause.classList.add('btn-primary');
+      } else {
+        playIcon.textContent = '▶';
+        playLabel.textContent = 'Apresentar com Voz';
+        btnPlayPause.classList.remove('btn-primary');
+      }
+    }
+
+    // Event Listeners
+    btnPlayPause.addEventListener('click', () => {
+      if (isPlaying) {
+        isPlaying = false;
+        stopNarration();
+      } else {
+        isPlaying = true;
+        speakCurrentSlide();
+      }
+      updatePlayPauseButton();
+    });
+
+    btnModeContinuous.addEventListener('click', () => {
+      isContinuous = true;
+      btnModeContinuous.classList.add('active');
+      btnModePaused.classList.remove('active');
+    });
+
+    btnModePaused.addEventListener('click', () => {
+      isContinuous = false;
+      btnModePaused.classList.add('active');
+      btnModeContinuous.classList.remove('active');
+    });
+
+    btnVoiceToggle.addEventListener('click', () => {
+      isVoiceMuted = !isVoiceMuted;
+      if (isVoiceMuted) {
+        voiceMuteIcon.textContent = '🔇';
+        stopNarration();
+      } else {
+        voiceMuteIcon.textContent = '🔊';
+        if (isPlaying) speakCurrentSlide();
+      }
+    });
+
+    voiceSelectEl.addEventListener('change', () => {
+      if (isPlaying) {
+        speakCurrentSlide();
+      }
+    });
+
+    btnPrevSlide.addEventListener('click', () => {
+      if (currentSlide > 1) {
+        showSlide(currentSlide - 1, isPlaying);
+      }
+    });
+
+    btnNextSlide.addEventListener('click', () => {
+      if (currentSlide < totalSlides) {
+        showSlide(currentSlide + 1, isPlaying);
+      }
+    });
+
+    // Keyboard Navigation
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight' || e.key === 'PageDown') {
+        if (currentSlide < totalSlides) showSlide(currentSlide + 1, isPlaying);
+      } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+        if (currentSlide > 1) showSlide(currentSlide - 1, isPlaying);
+      } else if (e.key === ' ' || e.key === 'Spacebar') {
+        e.preventDefault();
+        btnPlayPause.click();
+      }
+    });
+
+    // Initialize First Slide
+    showSlide(1, false);
+  </script>
+</body>
+</html>

@@ -1,0 +1,30 @@
+@startuml
+left to right direction
+
+actor "Superintendente da RV&M" as User
+actor "Corpo de Anciãos" as Elders
+
+package "Sistema de Designação RV&M" {
+    usecase "Gerar Pauta Semanal" as UC1
+    usecase "Gerenciar Publicadores" as UC2
+    usecase "Configurar Eventos Especiais" as UC3
+    usecase "Revisar Designações Pendentes" as UC4
+    usecase "Aprovar/Rejeitar Designações" as UC5
+    usecase "Visualizar Histórico de Designações" as UC6
+    usecase "Exportar Pauta" as UC7
+}
+
+User --> UC1
+User --> UC2
+User --> UC3
+User --> UC6
+User --> UC7
+
+Elders --> UC4
+Elders --> UC5
+Elders --> UC6
+
+UC1 ..> UC2 : usa dados de
+UC1 ..> UC3 : considera
+UC4 ..> UC5 : inclui
+@enduml

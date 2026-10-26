@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Modelo UML Vivo e Interativo — Racha de Conta & Pix (IDD)</title>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <style>
+    :root {
+      --bg-dark: #050811;
+      --card-bg: rgba(15, 23, 42, 0.92);
+      --border-cyan: rgba(56, 189, 248, 0.35);
+      --cyan-neon: #38bdf8;
+      --green-neon: #10b981;
+      --purple-neon: #a855f7;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, sans-serif; }
+    body {
+      background: var(--bg-dark);
+      color: var(--text-main);
+      padding: 30px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+    }
+    header { text-align: center; margin-bottom: 25px; }
+    .badge-top {
+      display: inline-block;
+      background: linear-gradient(135deg, #0284c7, #38bdf8);
+      color: white; font-weight: 800; font-size: 13px;
+      padding: 5px 16px; border-radius: 999px; letter-spacing: 1.5px;
+      text-transform: uppercase; margin-bottom: 10px;
+      box-shadow: 0 0 15px rgba(56, 189, 248, 0.4);
+    }
+    h1 { font-size: 32px; font-weight: 900; letter-spacing: -0.5px; }
+    p { color: var(--text-muted); font-size: 16px; margin-top: 6px; }
+
+    .card {
+      width: 100%; max-width: 1400px;
+      background: var(--card-bg);
+      border: 1.5px solid var(--border-cyan);
+      border-radius: 20px;
+      padding: 26px 30px;
+      margin-bottom: 30px;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.7);
+    }
+    .card-title {
+      font-size: 20px; font-weight: 800; color: var(--cyan-neon);
+      margin-bottom: 6px; display: flex; align-items: center; gap: 10px;
+    }
+    .card-desc { font-size: 14px; color: var(--text-muted); margin-bottom: 20px; }
+
+    /* CONTROLES DE FOCO E ZOOM */
+    .controls-bar {
+      display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center;
+      gap: 15px; margin-bottom: 20px;
+      background: rgba(10, 15, 29, 0.8);
+      padding: 12px 18px; border-radius: 12px;
+      border: 1px solid rgba(56, 189, 248, 0.2);
+    }
+    .btn-group { display: flex; gap: 8px; align-items: center; }
+    .btn-label { font-size: 13px; font-weight: 800; color: var(--text-muted); text-transform: uppercase; margin-right: 6px; }
+    .btn {
+      background: rgba(30, 41, 59, 0.8);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      color: var(--text-main); font-weight: 700; font-size: 13px;
+      padding: 6px 14px; border-radius: 8px; cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .btn:hover { background: rgba(56, 189, 248, 0.25); border-color: var(--cyan-neon); }
+    .btn.active {
+      background: linear-gradient(135deg, #0284c7, #0ea5e9);
+      border-color: #38bdf8; color: white;
+      box-shadow: 0 0 12px rgba(56, 189, 248, 0.5);
+    }
+
+    /* VIEWPORT PAN & ZOOM */
+    .viewport {
+      width: 100%; height: 500px;
+      overflow: hidden; position: relative;
+      background: #020617; border-radius: 14px;
+      border: 1px solid rgba(56, 189, 248, 0.2);
+      display: flex; justify-content: center; align-items: center;
+      cursor: grab;
+    }
+    .viewport:active { cursor: grabbing; }
+    .pan-zoom-container {
+      transform-origin: center center;
+      transition: transform 0.15s ease-out;
+      width: 100%; display: flex; justify-content: center;
+    }
+
+    /* TABELA DE CASOS DE USO */
+    .table-container { margin-top: 25px; overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; font-size: 13px; text-align: left; }
+    th {
+      background: rgba(14, 165, 233, 0.15); color: var(--cyan-neon);
+      padding: 10px 14px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px;
+      border-bottom: 2px solid rgba(56, 189, 248, 0.4);
+    }
+    td { padding: 10px 14px; border-bottom: 1px solid rgba(56, 189, 248, 0.15); color: #cbd5e1; }
+    tr:hover td { background: rgba(56, 189, 248, 0.05); }
+    .id-tag {
+      font-weight: 800; color: #fde047; background: rgba(253, 224, 71, 0.12);
+      padding: 2px 8px; border-radius: 4px; font-family: monospace;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="badge-top">Paradigma IDD • Racha de Conta & Pix</div>
+    <h1>Modelo UML Vivo: Casos de Uso, Classes & Statechart</h1>
+    <p>Navegação Gradual por Ator com Zoom, Pan e Diagrama de Domínio sem Poluição Visual</p>
+  </header>
+
+  <!-- CARD 1: CASOS DE USO INTERATIVO -->
+  <section class="card">
+    <div class="card-title">
+      <span>🎯</span> 1. Diagrama de Casos de Uso com Seleção de Foco
+    </div>
+    <div class="card-desc">
+      Selecione um ator da mesa para isolar as responsabilidades e visualizar os fluxos de inclusão e extensão.
+    </div>
+
+    <div class="controls-bar">
+      <div class="btn-group">
+        <span class="btn-label">Foco por Ator:</span>
+        <button class="btn active" id="btn-amigo" onclick="setFocus('amigo')">🍻 Amigo na Mesa</button>
+        <button class="btn" id="btn-organizador" onclick="setFocus('organizador')">👑 Organizador do Racha</button>
+        <button class="btn" id="btn-garcom" onclick="setFocus('garcom')">🧾 Garçom / Caixa</button>
+        <button class="btn" id="btn-bacen" onclick="setFocus('bacen')">⚡ Gateway BACEN (Pix)</button>
+        <button class="btn" id="btn-todos" onclick="setFocus('todos')">🌐 Visão Integrada</button>
+      </div>
+      <div class="btn-group">
+        <button class="btn" id="zoomInBtn" onclick="zoom(1.15)">➕</button>
+        <button class="btn" id="zoomOutBtn" onclick="zoom(0.85)">➖</button>
+        <button class="btn" id="resetZoomBtn" onclick="resetZoom()">↺</button>
+      </div>
+    </div>
+
+    <div class="viewport" id="viewport">
+      <div class="pan-zoom-container" id="panZoom">
+        <div id="mermaidContainer"></div>
+      </div>
+    </div>
+
+    <!-- TABELA DINÂMICA DE CASOS DE USO -->
+    <div class="table-container">
+      <h3 style="font-size: 15px; color: #f8fafc; margin-bottom: 10px;">📋 Regras Invioláveis dos Casos de Uso em Foco</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Caso de Uso (Intenção de Negócio)</th>
+            <th>Ator Primário</th>
+            <th>Relação</th>
+            <th>Invariante / Regra Inviolável</th>
+          </tr>
+        </thead>
+        <tbody id="ucTableBody"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- CARD 2: DIAGRAMA DE CLASSES (3 COMPARTIMENTOS OMG STANDARD) -->
+  <section class="card">
+    <div class="card-title">
+      <span>📦</span> 2. Diagrama de Classes de Domínio (3 Compartimentos OMG Standard)
+    </div>
+    <div class="card-desc">
+      Classes puras desacopladas de frameworks, com atributos privados (-) e métodos de domínio públicos (+).
+    </div>
+    <div class="static-mermaid">
+classDiagram
+    class Mesa {
+        -UUID id
+        -UUID estabelecimentoId
+        -String codigoMesa
+        -EstadoMesa status
+        -Decimal taxaServicoPct
+        -DateTime abertaEm
+        +abrirMesa(codigoMesa) : Void
+        +adicionarItem(item) : Void
+        +fecharMesa() : Result
+        +calcularTotalBruto() : Decimal
+    }
+
+    class ItemComanda {
+        -UUID id
+        -UUID mesaId
+        -String descricao
+        -Int quantidade
+        -Decimal precoUnitario
+        -Boolean compartilhado
+        +atribuirFracao(participanteId, fracao) : Void
+        +validarSomaZero() : Boolean
+        +calcularValorTotal() : Decimal
+    }
+
+    class CotaRateio {
+        -UUID id
+        -UUID participanteId
+        -UUID mesaId
+        -Decimal subtotalItens
+        -Decimal valorTaxaServico
+        -Decimal valorTotalCota
+        -String hashAuditoria
+        +gerarSnapshotImutavel() : String
+        +aplicarGorjeta(pct) : Void
+        +confirmarQuitacao() : Void
+    }
+
+    class TransacaoPix {
+        -UUID id
+        -UUID cotaRateioId
+        -String txid
+        -String payloadEmv
+        -StatusWebhook status
+        +gerarChaveDinamica() : String
+        +processarWebhook(txid, valor) : Result
+        +isIdempotenteValido() : Boolean
+    }
+
+    Mesa "1" *-- "0..*" ItemComanda : contem
+    Mesa "1" *-- "1..*" CotaRateio : consolida
+    ItemComanda "1" *-- "1..*" CotaRateio : fraciona
+    CotaRateio "1" -- "0..1" TransacaoPix : liquida via
+    </div>
+  </section>
+
+  <!-- CARD 3: MÁQUINA DE ESTADOS DA MESA & COTA (STATECHART) -->
+  <section class="card">
+    <div class="card-title">
+      <span>🔄</span> 3. Máquina de Estados da Mesa e Liquidação Pix (Statechart)
+    </div>
+    <div class="card-desc">
+      Ciclo de vida estrito que proíbe discrepâncias de rateio e garante selamento com Hash criptográfico.
+    </div>
+    <div class="static-mermaid">
+stateDiagram-v2
+    [*] --> ABERTA : Abrir mesa pelo Organizador ou Garçom
+    
+    ABERTA --> LANCANDO_CONSUMO : Pedir itens no cardápio
+    LANCANDO_CONSUMO --> ABERTA : [Item registrado && Fração válida]
+    
+    ABERTA --> FECHAMENTO_SOLICITADO : Solicitar conta da mesa
+    
+    state FECHAMENTO_SOLICITADO {
+        [*] --> CalcularRateio
+        CalcularRateio --> ValidarSomaZero : [Soma das Frações == 1.000]
+        ValidarSomaZero --> GerarSnapshots : Emitir cotas individuais
+        GerarSnapshots --> [*]
+    }
+    
+    FECHAMENTO_SOLICITADO --> COTAS_EMITIDAS : Gerar QR Codes Pix Dinâmicos
+    
+    COTAS_EMITIDAS --> LIQUIDANDO : Pagamento via Pix recebido
+    LIQUIDANDO --> COTAS_EMITIDAS : [Cota parcial paga]
+    
+    LIQUIDANDO --> CONCLUIDA : [Todas as cotas pagas || Caixa Bar confirma]
+    
+    CONCLUIDA --> [*] : Gerar Hash SHA-256 e Recibo Contábil Imutável
+    </div>
+  </section>
+
+  <script>
+    const FOCUS_DATA = {
+      amigo: {
+        mermaid: `graph LR
+          subgraph Atores
+            Amigo["Amigo na Mesa"]
+          end
+          subgraph Sistema_Racha["App Racha de Pix"]
+            UC02("UC02: Ingressar na Mesa via Link ou QR Code")
+            UC03("UC03: Visualizar Consumo Individual e Coletivo")
+            UC07("UC07: Pagar Cota via Pix Copia-e-Cola")
+            UC08("UC08: Receber Notificação de Quitação no WhatsApp")
+          end
+          Amigo --> UC02
+          Amigo --> UC03
+          Amigo --> UC07
+          UC07 -.->|include| UC08`,
+        table: [
+          { id: "UC02", title: "Ingressar na Mesa", actor: "Amigo na Mesa", rel: "Direto", rule: "Acesso por token único de mesa sem exigir cadastro prévio pesado." },
+          { id: "UC03", title: "Visualizar Consumo", actor: "Amigo na Mesa", rel: "Leitura", rule: "Transparência total dos pratos que divide e dos itens que consumiu sozinho." },
+          { id: "UC07", title: "Pagar via Pix", actor: "Amigo na Mesa", rel: "Direto", rule: "Payload EMV dinâmico com valor exato de centavos, proibindo erro de digitação." },
+          { id: "UC08", title: "Receber Notificação", actor: "Sistema WhatsApp", rel: "Include", rule: "Comprovante instantâneo entregue ao participante logo após o webhook do banco." }
+        ]
+      },
+      organizador: {
+        mermaid: `graph LR
+          subgraph Atores
+            Organizador["Organizador da Mesa"]
+          end
+          subgraph Sistema_Racha["App Racha de Pix"]
+            UC01("UC01: Abrir Mesa e Definir Gorjeta Opcional")
+            UC04("UC04: Atribuir Frações de Consumo dos Itens")
+            UC06("UC06: Fechar Mesa e Travar Cotas Imutáveis")
+            UC11("UC11: Reverter Fechamento caso Alguém Peça Saideira")
+          end
+          Organizador --> UC01
+          Organizador --> UC04
+          Organizador --> UC06
+          UC06 -.->|extend| UC11`,
+        table: [
+          { id: "UC01", title: "Abrir Mesa", actor: "Organizador", rel: "Direto", rule: "Define número da mesa e se a gorjeta de 10% é rateada proporcionalmente." },
+          { id: "UC04", title: "Atribuir Frações", actor: "Organizador", rel: "Direto", rule: "Invariante da Soma Zero: frações de cada prato devem somar exatamente 1.000." },
+          { id: "UC06", title: "Fechar Mesa", actor: "Organizador", rel: "Direto", rule: "Emissão de cotas congela os valores em snapshots imutáveis." },
+          { id: "UC11", title: "Reversão Saideira", actor: "Organizador", rel: "Extend", rule: "Se alguém pedir novo chope, anula Pix não pagos e recalcula cotas atomicamente." }
+        ]
+      },
+      garcom: {
+        mermaid: `graph LR
+          subgraph Atores
+            Garcom["Garçom / Caixa do Bar"]
+          end
+          subgraph Sistema_Racha["App Racha de Pix"]
+            UC05("UC05: Lançar Itens de Consumo na Comanda")
+            UC10("UC10: Conferir Liquidação no Painel do Caixa")
+            UC12("UC12: Receber Pagamento Complementar em Dinheiro/Cartão")
+          end
+          Garcom --> UC05
+          Garcom --> UC10
+          Garcom --> UC12`,
+        table: [
+          { id: "UC05", title: "Lançar Itens Comanda", actor: "Garçom", rel: "Direto", rule: "Itens sobem direto para a comanda digital da mesa em tempo real." },
+          { id: "UC10", title: "Conferir Liquidação", actor: "Caixa do Bar", rel: "Direto", rule: "Dashboard mostra em verde quem já pagou e em vermelho quem falta pagar." },
+          { id: "UC12", title: "Pagamento Complementar", actor: "Caixa do Bar", rel: "Direto", rule: "Permite que amigo sem chave Pix pague sua cota exata no balcão em dinheiro." }
+        ]
+      },
+      bacen: {
+        mermaid: `graph LR
+          subgraph Atores
+            Bacen["Gateway BACEN / Pix"]
+          end
+          subgraph Sistema_Racha["App Racha de Pix"]
+            UC09("UC09: Conciliar Pagamento via Webhook Idempotente")
+            UC13("UC13: Dar Baixa Instantânea na Cota do Participante")
+          end
+          Bacen --> UC09
+          UC09 -.->|include| UC13`,
+        table: [
+          { id: "UC09", title: "Conciliar Webhook", actor: "Gateway BACEN", rel: "Direto", rule: "Processamento idempotente: mesmo evento repetido jamais duplica baixa." },
+          { id: "UC13", title: "Baixa Instantânea", actor: "Sistema Racha", rel: "Include", rule: "Ao liquidar a cota, a barra de progresso da mesa avança em tempo real no telão." }
+        ]
+      },
+      todos: {
+        mermaid: `graph TB
+          subgraph Atores
+            Amigo["Amigo"]
+            Org["Organizador"]
+            Garcom["Garçom/Caixa"]
+            Bacen["Gateway Pix"]
+          end
+          subgraph Sistema_Integrado["Racha de Pix - Sistema Integrado"]
+            UC01("UC01: Abrir Mesa")
+            UC04("UC04: Atribuir Frações")
+            UC06("UC06: Fechar Mesa")
+            UC07("UC07: Pagar Cota Pix")
+            UC09("UC09: Webhook BACEN")
+            UC10("UC10: Baixa Caixa")
+          end
+          Org --> UC01
+          Org --> UC04
+          Org --> UC06
+          Amigo --> UC07
+          Bacen --> UC09
+          Garcom --> UC10
+          UC06 -.->|gera| UC07
+          UC07 -.->|liquida| UC09`,
+        table: [
+          { id: "UC01", title: "Abrir Mesa", actor: "Organizador", rel: "Direto", rule: "Inicialização segura da comanda compartilhada." },
+          { id: "UC04", title: "Atribuir Frações", actor: "Organizador", rel: "Direto", rule: "Conservação contábil: soma das frações == 1.000." },
+          { id: "UC06", title: "Fechar Mesa", actor: "Organizador", rel: "Direto", rule: "Congelamento do total e geração de snapshots imutáveis." },
+          { id: "UC07", title: "Pagar Cota Pix", actor: "Amigo na Mesa", rel: "Direto", rule: "QRCode EMV dinâmico com valor exato de centavos." },
+          { id: "UC09", title: "Webhook BACEN", actor: "Gateway Pix", rel: "Webhook", rule: "Automação bancária idempotente em menos de 2 segundos." }
+        ]
+      }
+    };
+
+    let currentScale = 1.0;
+    let panX = 0, panY = 0;
+    let isPanning = false;
+    let startX = 0, startY = 0;
+
+    async function setFocus(actorKey) {
+      document.querySelectorAll('.controls-bar .btn-group:first-child .btn').forEach(b => b.classList.remove('active'));
+      const activeBtn = document.getElementById('btn-' + actorKey);
+      if (activeBtn) activeBtn.classList.add('active');
+
+      const data = FOCUS_DATA[actorKey];
+      if (!data) return;
+
+      const container = document.getElementById('mermaidContainer');
+      container.removeAttribute('data-processed');
+      container.className = 'mermaid';
+      container.innerHTML = data.mermaid;
+
+      await mermaid.run({ nodes: [container] });
+
+      const tbody = document.getElementById('ucTableBody');
+      tbody.innerHTML = '';
+      data.table.forEach(row => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td><span class="id-tag">${row.id}</span></td>
+          <td><strong>${row.title}</strong></td>
+          <td style="color: #38bdf8; font-weight: 700;">${row.actor}</td>
+          <td><span style="background: rgba(56,189,248,0.12); padding: 2px 8px; border-radius: 4px; font-size: 11px;">${row.rel}</span></td>
+          <td>${row.rule}</td>
+        `;
+        tbody.appendChild(tr);
+      });
+
+      resetZoom();
+    }
+
+    function zoom(factor) {
+      currentScale *= factor;
+      if (currentScale < 0.4) currentScale = 0.4;
+      if (currentScale > 3.0) currentScale = 3.0;
+      updateTransform();
+    }
+
+    function resetZoom() {
+      currentScale = 1.0;
+      panX = 0; panY = 0;
+      updateTransform();
+    }
+
+    function updateTransform() {
+      const panZoom = document.getElementById('panZoom');
+      if (panZoom) {
+        panZoom.style.transform = `translate(${panX}px, ${panY}px) scale(${currentScale})`;
+      }
+    }
+
+    const vp = document.getElementById('viewport');
+    vp.addEventListener('mousedown', (e) => {
+      isPanning = true;
+      startX = e.clientX - panX;
+      startY = e.clientY - panY;
+    });
+    window.addEventListener('mousemove', (e) => {
+      if (!isPanning) return;
+      panX = e.clientX - startX;
+      panY = e.clientY - startY;
+      updateTransform();
+    });
+    window.addEventListener('mouseup', () => { isPanning = false; });
+    vp.addEventListener('wheel', (e) => {
+      e.preventDefault();
+      zoom(e.deltaY < 0 ? 1.08 : 0.92);
+    });
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      mermaid.initialize({
+        startOnLoad: false,
+        theme: 'dark',
+        themeVariables: {
+          darkMode: true,
+          background: '#020617',
+          primaryColor: '#0f172a',
+          primaryBorderColor: '#38bdf8',
+          primaryTextColor: '#f8fafc',
+          lineColor: '#38bdf8'
+        }
+      });
+      await setFocus('amigo');
+      await mermaid.run({ nodes: Array.from(document.querySelectorAll('.static-mermaid')) });
+    });
+  </script>
+</body>
+</html>

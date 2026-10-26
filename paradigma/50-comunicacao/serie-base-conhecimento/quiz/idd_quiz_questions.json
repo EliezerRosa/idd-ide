@@ -1,0 +1,144 @@
+{
+  "questions": [
+    {
+      "id": 1,
+      "episode": 1,
+      "question": "Como a propriedade da 'Governança Persistente' no IDD se diferencia da documentação tradicional ou do gerenciamento estático de requisitos?",
+      "options": {
+        "A": "É um processo rigoroso de aprovação manual feito por um comitê de arquitetura antes de cada deploy.",
+        "B": "Depende de revisões de código semanais onde os desenvolvedores comparam o sistema com fluxogramas antigos.",
+        "C": "É um guardião automatizado e programático que entende a relação entre intenção e código, vivendo no ecossistema do desenvolvedor.",
+        "D": "Consiste na geração inicial do código ('scaffold') que, uma vez criado, é gerenciado livremente pelos desenvolvedores."
+      },
+      "correct": "C",
+      "explanation_correct": "Exatamente! A governança no IDD não é um comitê burocrático, mas sim um guardião automatizado. Ela vive nas ferramentas do desenvolvedor, validando a intenção contra o código de forma programática e contínua.",
+      "hint_wrong": "Lembre-se de como Eliezer descreveu a governança não como um obstáculo humano ou burocrático, mas como uma validação ágil que acontece no terminal e no fluxo de CI/CD."
+    },
+    {
+      "id": 2,
+      "episode": 1,
+      "question": "Apesar de elogiar o Domain-Driven Design (DDD), Eliezer aponta que o IDD resolve um problema específico que o DDD não conseguiu superar. Qual é esse problema?",
+      "options": {
+        "A": "No DDD, a Linguagem Ubíqua não possui vocabulário de negócios suficiente para modelar sistemas complexos.",
+        "B": "O DDD é focado primariamente em testes de comportamento (Behavior), o que atrasa o ciclo de desenvolvimento.",
+        "C": "O DDD incentiva a prática do 'vibe coding', resultando em códigos sem auditoria ou governança.",
+        "D": "No DDD, a Linguagem Ubíqua acaba sendo traduzida para código e perde seu status de artefato canônico, enquanto no IDD ela própria comanda a tradução."
+      },
+      "correct": "D",
+      "explanation_correct": "Muito bem observado. No DDD, a linguagem rica do negócio acaba diluída em classes de programação. No IDD, a linguagem natural se mantém como a fonte primária e governante dessa tradução, sem se perder na sintaxe.",
+      "hint_wrong": "Pense no que acontece com os termos de negócio no DDD quando chega a hora de realmente escrever o software. Onde a fonte da verdade vai parar segundo o episódio?"
+    },
+    {
+      "id": 3,
+      "episode": 1,
+      "question": "Qual é a principal vantagem cognitiva e prática do 'Confirm-Once Pattern' no desenvolvimento de software guiado por intenção?",
+      "options": {
+        "A": "Permite que os desenvolvedores escrevam testes unitários em múltiplas linguagens simultaneamente sem intervenção humana.",
+        "B": "Centraliza o esforço de validar a complexidade lógica na linguagem natural, permitindo gerar o código confiavelmente em várias linguagens sem revalidar a regra de negócio.",
+        "C": "Elimina a necessidade de definir invariantes de negócio, pois o modelo de IA auto-deduz as regras do domínio.",
+        "D": "Delega inteiramente a autoria do sistema para a IA, transformando o desenvolvedor em um mero digitador."
+      },
+      "correct": "B",
+      "explanation_correct": "Perfeito. O Confirm-Once Pattern garante que o esforço mental pesado seja investido na validação da regra de negócio apenas uma vez. Depois que a intenção está cravada, a IA assume a mecânica da implementação segura.",
+      "hint_wrong": "O nome 'Confirmar Uma Vez' diz respeito a não ter que reescrever lógicas pesadas para cada mudança técnica. Reflita sobre o nível de abstração onde o esforço humano é mais necessário."
+    },
+    {
+      "id": 4,
+      "episode": 1,
+      "question": "No ecossistema do IDD, qual é o papel exato das 'Invariantes de Negócio'?",
+      "options": {
+        "A": "São salvaguardas programáticas declaradas em linguagem natural que bloqueiam ativamente a geração de códigos que violariam regras fundamentais do sistema.",
+        "B": "São diretrizes estáticas de boas práticas usadas exclusivamente para o treinamento de desenvolvedores juniores.",
+        "C": "São scripts de monitoramento pós-deploy que enviam alertas no Slack para os engenheiros de confiabilidade (SRE).",
+        "D": "Representam a camada final de testes escritos em Gherkin ('Given-When-Then') focados puramente em UI."
+      },
+      "correct": "A",
+      "explanation_correct": "É exatamente isso. As invariantes funcionam como as 'leis da física' do sistema. Se uma intenção ou geração de código ameaça quebrar essa regra, o sistema IDD bloqueia a ação na mesma hora.",
+      "hint_wrong": "Recorde a analogia sobre o 'saldo não-negativo' e o que o sistema IDD diria a um desenvolvedor que tentasse submeter uma intenção que contorna essa regra."
+    },
+    {
+      "id": 5,
+      "episode": 1,
+      "question": "No final do primeiro episódio, discute-se a diferença entre um 'Requisito de Software' tradicional e a 'Intenção' no IDD. Qual é o diferencial crucial da intenção nesse contexto?",
+      "options": {
+        "A": "A intenção dispensa a etapa de refinação, permitindo pular direto para a compilação do sistema.",
+        "B": "A intenção é focada apenas em aspectos operacionais de infraestrutura, enquanto o requisito descreve as regras do negócio.",
+        "C": "A intenção é efêmera e descartada após a criação inicial do código, servindo apenas como um 'prompt' de partida.",
+        "D": "A intenção é executável e possui agência ativa no ciclo de vida do software, governando e validando constantemente o sistema gerado."
+      },
+      "correct": "D",
+      "explanation_correct": "Isso mesmo. Um requisito tradicional é passivo e fica obsoleto na gaveta, mas a intenção no IDD atua ativamente. Ela é um requisito com 'superpoderes' que recalcula a rota constantemente.",
+      "hint_wrong": "Contraste um documento de especificações estático no Word com algo que atua diretamente no ciclo do sistema, como a analogia do GPS apresentada no episódio."
+    },
+    {
+      "id": 6,
+      "episode": 2,
+      "question": "Baseado na analogia do voo Air France 447, como Eliezer diferencia o 'Comando Epistêmico' do 'Comando Operacional' no uso de inteligências artificiais?",
+      "options": {
+        "A": "O comando epistêmico foca na sintaxe da linguagem de programação, enquanto o operacional lida com a governança dos dados.",
+        "B": "O comando epistêmico é a autoridade sobre o 'o quê' e o 'porquê', mantida pelo humano, enquanto o comando operacional é a execução do 'como', delegada à IA.",
+        "C": "O comando epistêmico é exercido exclusivamente pela inteligência artificial para definir a estratégia, deixando a execução manual para o humano no comando operacional.",
+        "D": "Ambos os comandos se fundem em sistemas avançados, tornando impossível distinguir o autor da decisão arquitetural final."
+      },
+      "correct": "B",
+      "explanation_correct": "Brilhante! O Comando Epistêmico é a bússola estratégica e ética do projeto humano. Já o Comando Operacional é a mecânica técnica, que podemos delegar com segurança aos agentes inteligentes.",
+      "hint_wrong": "Lembre-se do que os pilotos do voo perderam. Eles ainda tinham o controle manual das alavancas, mas deixaram de entender a razão fundamental das ações do avião."
+    },
+    {
+      "id": 7,
+      "episode": 2,
+      "question": "Qual das seguintes atitudes de um desenvolvedor representa o conceito de 'Credulidade' em vez de 'Fé Bayesiana' no desenvolvimento auxiliado por IA?",
+      "options": {
+        "A": "Exigir que a IA apresente um plano detalhado e rastreável de modificação antes de autorizar a execução do código.",
+        "B": "Aprovar um Pull Request gerado pela IA que resolve um bug imediato, sem conseguir explicar o porquê daquele código funcionar.",
+        "C": "Pausar o ciclo de desenvolvimento quando a IA alerta que uma nova implementação poderá ferir uma Invariante de Negócio.",
+        "D": "Aumentar gradativamente a complexidade das tarefas operacionais delegadas à IA após sucessivas entregas corretas e auditáveis."
+      },
+      "correct": "B",
+      "explanation_correct": "Exatamente. Aceitar um código gerado por IA sem compreender a lógica subjacente é um salto no escuro. Isso caracteriza a credulidade e leva à perda do Comando Epistêmico.",
+      "hint_wrong": "A credulidade acontece quando pulamos a validação de evidências. Qual das opções mostra o desenvolvedor agindo apenas como passageiro do próprio projeto, torcendo pelo melhor?"
+    },
+    {
+      "id": 8,
+      "episode": 2,
+      "question": "Eliezer traça uma linhagem histórica para o IDD. Por que ele alinha a filosofia do IDD mais proximamente ao pensamento de Douglas Engelbart do que à cibernética de Norbert Wiener?",
+      "options": {
+        "A": "Porque Engelbart focou na tecnologia como meio de amplificar a capacidade cognitiva humana para resolver problemas complexos (augmenting), enquanto a cibernética prioriza sistemas auto-regulados de controle e feedback.",
+        "B": "Porque Wiener acreditava que os computadores deveriam ser instrumentos apenas para cálculos matemáticos isolados do ambiente corporativo.",
+        "C": "Porque a cibernética proibia o uso de inteligência artificial em sistemas de negócios, algo que Engelbart reverteu com o projeto Dynabook.",
+        "D": "Porque Engelbart foi o inventor da 'Fé Bayesiana', que é o algoritmo matemático estrito por trás de todo compilador IDD atual."
+      },
+      "correct": "A",
+      "explanation_correct": "Excelente conexão histórica. Enquanto a cibernética lida fortemente com sistemas de feedback mecânico, Engelbart pensou a interface como uma extensão da mente. O IDD bebe dessa fonte ao colocar o humano sempre como centro da intenção.",
+      "hint_wrong": "Pense na diferença central entre focar primariamente em automatizar um mecanismo e fornecer ferramentas focadas em dar superpoderes cognitivos e intelectuais a uma pessoa."
+    },
+    {
+      "id": 9,
+      "episode": 2,
+      "question": "Embora o conceito de Invariantes no IDD lembre o 'Design by Contract' de Bertrand Meyer, existe uma diferença conceitual importante. Qual é?",
+      "options": {
+        "A": "O Design by Contract requer testes exaustivos escritos em Gherkin, enquanto as Invariantes do IDD não são testáveis.",
+        "B": "As Invariantes do IDD são definidas em alto nível de abstração e linguagem natural para governar o agente de IA, antes mesmo de funções ou classes existirem.",
+        "C": "As Invariantes do IDD operam apenas em tempo de compilação de código legado em COBOL ou DCAlgol.",
+        "D": "Não há diferença. Eliezer afirma categoricamente que o IDD é apenas o Design by Contract renomeado para a era da inteligência artificial."
+      },
+      "correct": "B",
+      "explanation_correct": "Na mosca! Enquanto o Design by Contract tradicional foca em garantias no nível estrutural do código (classes e métodos), as invariantes do IDD cercam o limite semântico e comportamental do próprio agente de IA antes do código nascer.",
+      "hint_wrong": "O Design by Contract opera primariamente na semântica das linguagens de programação durante o desenvolvimento tradicional. No IDD, em que formato e momento definimos nossas regras inquebráveis?"
+    },
+    {
+      "id": 10,
+      "episode": 2,
+      "question": "Qual é a recomendação prática inicial dada no Episódio 2 para que um desenvolvedor comece a cultivar o Comando Epistêmico, mesmo se ainda não utilizar as ferramentas formais do IDD?",
+      "options": {
+        "A": "Proibir completamente o uso de ferramentas como GitHub Copilot em projetos críticos para evitar contaminação do código.",
+        "B": "Escrever um comentário no topo do arquivo explicitando o objetivo, restrições inquebráveis e critérios de sucesso em linguagem natural antes de pedir ajuda à IA.",
+        "C": "Escrever a arquitetura completa em COBOL estruturado antes de fazer a tradução final para linguagens modernas.",
+        "D": "Delegar a criação da regra de negócio à IA e em seguida revisar a formatação sintática manualmente em ferramentas de lint."
+      },
+      "correct": "B",
+      "explanation_correct": "Excelente escolha. Esse simples ato de registrar a intenção formaliza uma âncora epistêmica. Ele garante que você cristalizou o 'o quê' e o 'porquê' antes de entregar a direção operacional do 'como' ao agente.",
+      "hint_wrong": "Mesmo sem um ecossistema complexo de governança IDD instalado, qual atitude prévia garante que você delimitou as regras do jogo e reteve a responsabilidade pela lógica?"
+    }
+  ]
+}

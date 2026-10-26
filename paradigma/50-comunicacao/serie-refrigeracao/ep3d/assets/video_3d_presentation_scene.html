@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=1920, height=1080, initial-scale=1.0">
+  <title>Episódio 3D — Metodologia IDD: Transações Atômicas & Métodos UML — Atomicidade, Invariantes do MER & Sagas</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-dark: #050811;
+      --bg-card: rgba(11, 20, 38, 0.90);
+      --bg-card-border: rgba(56, 189, 248, 0.25);
+      --cyan-frost: #38bdf8;
+      --cyan-glow: rgba(56, 189, 248, 0.45);
+      --ice-blue: #0284c7;
+      --emerald-ok: #10b981;
+      --amber-alert: #f59e0b;
+      --purple-tech: #a855f7;
+      --rose-warn: #f43f5e;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      width: 1920px;
+      height: 1080px;
+      overflow: hidden;
+      background: #050811;
+      color: var(--text-main);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      position: relative;
+    }
+
+    #bg-canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 1920px;
+      height: 1080px;
+      z-index: 1;
+    }
+
+    .app-container {
+      position: relative;
+      z-index: 10;
+      width: 1920px;
+      height: 1080px;
+      display: flex;
+      flex-direction: column;
+      padding: 30px 45px;
+      justify-content: space-between;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 18px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .brand-wrap {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .brand-logo {
+      width: 50px;
+      height: 50px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #0284c7, #a855f7);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 26px;
+      box-shadow: 0 0 20px rgba(168, 85, 247, 0.5);
+    }
+    .brand-text h1 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 22px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      color: #fff;
+    }
+    .brand-text span {
+      font-size: 13px;
+      color: #38bdf8;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+    }
+
+    .header-badges {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .h-badge {
+      padding: 8px 18px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      background: rgba(168, 85, 247, 0.15);
+      border: 1px solid rgba(168, 85, 247, 0.35);
+      color: #c084fc;
+    }
+    .h-badge.live {
+      background: rgba(16, 185, 129, 0.15);
+      border-color: rgba(16, 185, 129, 0.4);
+      color: #34d399;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .pulse-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #34d399;
+      box-shadow: 0 0 10px #34d399;
+      animation: pulse 1.5s infinite;
+    }
+    @keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.4; transform: scale(0.85); } }
+
+    /* Main Stage */
+    .stage-row {
+      display: grid;
+      grid-template-columns: 1180px 610px;
+      gap: 35px;
+      height: 720px;
+      align-items: stretch;
+    }
+
+    /* Left: Slides Viewport */
+    .slides-viewport {
+      background: var(--bg-card);
+      border: 1.5px solid var(--bg-card-border);
+      border-radius: 24px;
+      padding: 26px 32px;
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6);
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .slide-badge-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+    .s-badge {
+      padding: 5px 14px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      background: rgba(168, 85, 247, 0.15);
+      color: #c084fc;
+      border: 1px solid rgba(168, 85, 247, 0.3);
+    }
+    .slide-num-pill {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      color: #94a3b8;
+      font-weight: 700;
+    }
+
+    .slide-title-wrap h2 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 26px;
+      font-weight: 900;
+      color: #fff;
+      letter-spacing: -0.5px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .slide-title-wrap p {
+      font-size: 14.5px;
+      color: #94a3b8;
+      margin-top: 4px;
+      line-height: 1.4;
+    }
+
+    .slide-content-area {
+      flex: 1;
+      margin-top: 20px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .slide-view {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(20px);
+      transition: opacity 0.4s ease, transform 0.4s ease;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .slide-view.active {
+      opacity: 1;
+      pointer-events: all;
+      transform: translateY(0);
+    }
+
+    .inner-grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+      height: 100%;
+    }
+
+    .info-card {
+      background: rgba(15, 23, 42, 0.85);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 16px;
+      padding: 18px 22px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .info-card.highlight {
+      border-color: rgba(56, 189, 248, 0.35);
+      box-shadow: 0 0 25px rgba(56, 189, 248, 0.1);
+    }
+    .card-head {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 16px;
+      font-weight: 800;
+      color: #38bdf8;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      padding-bottom: 8px;
+    }
+    .card-head.amber { color: #fbbf24; }
+    .card-head.green { color: #34d399; }
+    .card-head.purple { color: #c084fc; }
+
+    .bullet-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      font-size: 13.5px;
+      color: #cbd5e1;
+      line-height: 1.45;
+    }
+    .bullet-list li {
+      position: relative;
+      padding-left: 18px;
+    }
+    .bullet-list li::before {
+      content: '▹';
+      position: absolute;
+      left: 0;
+      color: #38bdf8;
+    }
+    .bullet-list strong { color: #fff; }
+
+    /* Timeline visual dos 4 passos da transação */
+    .timeline-4steps {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin-top: 8px;
+    }
+    .step-box {
+      background: rgba(5, 8, 17, 0.85);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      padding: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .step-box.active {
+      border-color: #38bdf8;
+      box-shadow: 0 0 15px rgba(56, 189, 248, 0.25);
+    }
+    .step-label {
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+    }
+    .step-title {
+      font-size: 13.5px;
+      font-weight: 800;
+      color: #fff;
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .step-desc {
+      font-size: 12px;
+      color: #94a3b8;
+      line-height: 1.35;
+    }
+
+    /* Right: Host Avatars and Live Speech Card */
+    .hosts-panel {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .avatars-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .avatar-card {
+      background: rgba(15, 23, 42, 0.7);
+      border: 1.5px solid rgba(255, 255, 255, 0.08);
+      border-radius: 18px;
+      padding: 16px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      transition: all 0.3s ease;
+    }
+    .avatar-circle {
+      width: 58px;
+      height: 58px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 26px;
+      font-weight: 900;
+      color: white;
+      flex-shrink: 0;
+      transition: all 0.3s ease;
+    }
+    .avatar-circle.eliezer {
+      background: linear-gradient(135deg, #0284c7, #0369a1);
+      border: 2px solid #38bdf8;
+    }
+    .avatar-circle.leigo {
+      background: linear-gradient(135deg, #d97706, #b45309);
+      border: 2px solid #fbbf24;
+    }
+
+    .avatar-info h4 {
+      font-size: 15px;
+      font-weight: 800;
+      color: #fff;
+    }
+    .avatar-info span {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: #94a3b8;
+    }
+    .avatar-card.talking {
+      background: rgba(30, 41, 59, 0.9);
+      transform: translateY(-3px);
+    }
+    .avatar-card.eliezer.talking {
+      border-color: #38bdf8;
+      box-shadow: 0 0 25px rgba(56, 189, 248, 0.35);
+    }
+    .avatar-card.eliezer.talking .avatar-circle {
+      box-shadow: 0 0 20px rgba(56, 189, 248, 0.7);
+    }
+    .avatar-card.leigo.talking {
+      border-color: #fbbf24;
+      box-shadow: 0 0 25px rgba(251, 191, 36, 0.35);
+    }
+    .avatar-card.leigo.talking .avatar-circle {
+      box-shadow: 0 0 20px rgba(251, 191, 36, 0.7);
+    }
+
+    .speech-card {
+      background: rgba(11, 20, 38, 0.95);
+      border: 1.5px solid var(--bg-card-border);
+      border-radius: 20px;
+      padding: 24px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+    }
+    .speech-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 14px;
+    }
+    .spk-pill {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 16px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    .spk-pill.eliezer { background: rgba(56, 189, 248, 0.15); border: 1px solid rgba(56, 189, 248, 0.4); color: #38bdf8; }
+    .spk-pill.leigo { background: rgba(245, 158, 11, 0.15); border: 1px solid rgba(245, 158, 11, 0.4); color: #fbbf24; }
+
+    .wave-bars {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      height: 20px;
+    }
+    .wave-bar {
+      width: 3.5px;
+      height: 4px;
+      background: #c084fc;
+      border-radius: 2px;
+      transition: height 0.15s ease;
+    }
+    .wave-bars.active .wave-bar:nth-child(1) { animation: waveA 0.6s infinite 0.1s; }
+    .wave-bars.active .wave-bar:nth-child(2) { animation: waveA 0.6s infinite 0.25s; }
+    .wave-bars.active .wave-bar:nth-child(3) { animation: waveA 0.6s infinite 0.15s; }
+    .wave-bars.active .wave-bar:nth-child(4) { animation: waveA 0.6s infinite 0.3s; }
+    .wave-bars.active .wave-bar:nth-child(5) { animation: waveA 0.6s infinite 0.2s; }
+    @keyframes waveA { 0%, 100% { height: 4px; } 50% { height: 20px; } }
+
+    .speech-body {
+      font-size: 17px;
+      line-height: 1.55;
+      color: #f1f5f9;
+      font-weight: 500;
+      flex: 1;
+      display: flex;
+      align-items: center;
+    }
+    .speech-foot {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      padding-top: 14px;
+      font-size: 12px;
+      color: #94a3b8;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 14px;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      font-size: 13px;
+      color: #94a3b8;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="bg-canvas" width="1920" height="1080"></canvas>
+
+  <div class="app-container">
+    <header>
+      <div class="brand-wrap">
+        <div class="brand-logo">⚡</div>
+        <div class="brand-text">
+          <h1>Paradigma IDD • Série Oficial na Prática</h1>
+          <span>Episódio 3D: Transações Atômicas &amp; Métodos UML na Prática</span>
+        </div>
+      </div>
+
+      <div class="header-badges">
+        <div class="h-badge">Unit of Work &amp; Sagas</div>
+        <div class="h-badge live">
+          <div class="pulse-dot"></div>
+          Invariantes Invioláveis
+        </div>
+      </div>
+    </header>
+
+    <div class="stage-row">
+      <!-- SLIDES VIEWPORT -->
+      <div class="slides-viewport">
+        <div class="slide-badge-row">
+          <span class="s-badge">Engenharia de Domínio</span>
+          <span class="slide-num-pill">Slide <span id="slideIndicator">1</span> de 4</span>
+        </div>
+
+        <div class="slide-title-wrap">
+          <h2 id="mainSlideTitle"><span>⚡</span> O Conceito de Transação Atômica no IDD</h2>
+          <p id="mainSlideSubtitle">Por que os Casos de Uso de 2º Nível operam como transações de Agregado estritas (Tudo ou Nada).</p>
+        </div>
+
+        <div class="slide-content-area">
+          <!-- SLIDE 1 -->
+          <div class="slide-view active" id="view-slide-1">
+            <div class="inner-grid-2">
+              <div class="info-card highlight">
+                <div class="card-head">🏛️ A Natureza do UC de 2º Nível</div>
+                <p style="font-size: 13.5px; color: #cbd5e1; line-height: 1.5;">
+                  No Paradigma IDD, o Caso de Uso de 2º Nível é uma <strong>Unidade Atômica de Trabalho (Unit of Work)</strong>:
+                </p>
+                <ul class="bullet-list">
+                  <li><strong>ACID no Negócio:</strong> Não existe operação "meio feita". Se um laudo falhar, o estoque não baixa.</li>
+                  <li><strong>Isolamento de Concorrência:</strong> Locks otimistas e controle de versão de agregado impedem colisões.</li>
+                  <li><strong>Preservação do MER:</strong> A integridade referencial do banco de dados é protegida em tempo de execução.</li>
+                </ul>
+              </div>
+
+              <div class="info-card highlight">
+                <div class="card-head purple">🔄 Padrões Modernos Empregados</div>
+                <ul class="bullet-list">
+                  <li><strong>Aggregate Root Transactions:</strong> Cada entidade raiz é o único ponto de entrada para mutações.</li>
+                  <li><strong>Two-Phase Commit (2PC):</strong> Fase de preparação e teste de invariantes antes da confirmação física.</li>
+                  <li><strong>Transactional Outbox:</strong> Mensagens externas (ex: WhatsApp Z-API) são gravadas no mesmo commit de banco.</li>
+                  <li><strong>Sagas Compensatórias:</strong> Reversão idempotente de estados em caso de falha de serviço remoto.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <!-- SLIDE 2 -->
+          <div class="slide-view" id="view-slide-2">
+            <div class="inner-grid-2">
+              <div class="info-card highlight">
+                <div class="card-head amber">📋 Caso Real: Fechamento Bi-Partite de OS</div>
+                <p style="font-size: 13.5px; color: #cbd5e1; line-height: 1.5;">
+                  O técnico em campo finaliza a manutenção preventiva de um Split de 60.000 BTU/h:
+                </p>
+                <ul class="bullet-list">
+                  <li>1. Aplica o checklist dos 4 itens normativos da Portaria 3.523.</li>
+                  <li>2. Deduz capacitor de 45µF do estoque móvel do veículo.</li>
+                  <li>3. Registra medição: Pressão Alta 280 PSI &gt; Baixa 65 PSI.</li>
+                  <li>4. Coleta fotos e assinatura do cliente na tela do celular.</li>
+                </ul>
+              </div>
+
+              <div class="info-card highlight">
+                <div class="card-head green">🛡️ Ação Imediata da Compensação</div>
+                <p style="font-size: 13.5px; color: #cbd5e1; line-height: 1.5;">
+                  Se a internet falhar ou se o checklist for reprovado:
+                </p>
+                <ul class="bullet-list">
+                  <li><strong>Estorno de Peças:</strong> O capacitor volta ao inventário do veículo via <code>estornarSaldo()</code>.</li>
+                  <li><strong>Trilho Seguro:</strong> A OS retorna para <code>EM_ATENDIMENTO</code> sem quebrar o histórico.</li>
+                  <li><strong>Proteção ao Cliente:</strong> O Outbox cancela a notificação: zero disparo de WhatsApp falso.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <!-- SLIDE 3 -->
+          <div class="slide-view" id="view-slide-3">
+            <div style="display: flex; flex-direction: column; gap: 14px; height: 100%;">
+              <div class="info-card highlight" style="flex: none;">
+                <div class="card-head">🧩 Classes UML nos 3 Compartimentos OMG com Métodos de Atomicidade</div>
+                <p style="font-size: 13px; color: #cbd5e1;">
+                  Os métodos não são simples getters/setters: são sub-componentes comportamentais divididos em 4 fases invioláveis.
+                </p>
+              </div>
+
+              <div class="timeline-4steps" style="flex: 1;">
+                <div class="step-box active">
+                  <span class="step-label" style="color: #fbbf24;">Fase 1: Guarda</span>
+                  <span class="step-title">validarPreCondicoes()</span>
+                  <span class="step-desc">Valida checklist da Portaria 3.523, presença de fotos e saldo no veículo antes de mutação.</span>
+                </div>
+
+                <div class="step-box active">
+                  <span class="step-label" style="color: #34d399;">Fase 2: Mutação</span>
+                  <span class="step-title">executarMutacao()</span>
+                  <span class="step-desc">Aplica débito no estoque móvel e transiciona o estado da Ordem de Serviço em memória.</span>
+                </div>
+
+                <div class="step-box active">
+                  <span class="step-label" style="color: #c084fc;">Fase 3: Pós-Condição</span>
+                  <span class="step-title">assegurarInvariantes()</span>
+                  <span class="step-desc">Gera Hash SHA-256 do laudo, enfileira evento no Outbox e dispara commit no banco.</span>
+                </div>
+
+                <div class="step-box active">
+                  <span class="step-label" style="color: #f43f5e;">Fase 4: Compensação</span>
+                  <span class="step-title">compensarRollback()</span>
+                  <span class="step-desc">Restaura saldo de peças, cancela notificação e preserva o estado limpo sem corrupção.</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- SLIDE 4 -->
+          <div class="slide-view" id="view-slide-4">
+            <div class="inner-grid-2">
+              <div class="info-card highlight">
+                <div class="card-head green">🏆 A Vitória do Paradigma IDD</div>
+                <p style="font-size: 13.5px; color: #cbd5e1; line-height: 1.5;">
+                  A convergência entre agilidade com IA e segurança de nível bancário:
+                </p>
+                <ul class="bullet-list">
+                  <li><strong>IA Sem Alucinações:</strong> As invariantes funcionam como grades de contenção matemática para o compilador.</li>
+                  <li><strong>Auditoria Nativa:</strong> Cada transação gera evidência criptográfica imutável para a Anvisa e o CREA.</li>
+                  <li><strong>Resiliência em Campo:</strong> Operação offline-first confiável mesmo em subsolos sem sinal.</li>
+                </ul>
+              </div>
+
+              <div class="info-card highlight">
+                <div class="card-head purple">🎬 Roteiro dos Próximos Passos</div>
+                <p style="font-size: 13.5px; color: #cbd5e1; line-height: 1.5;">
+                  A esteira metodológica continua na playlist:
+                </p>
+                <ul class="bullet-list">
+                  <li><strong>Episódio 4:</strong> Validação prática e entrega em produção do app de Refrigeração.</li>
+                  <li><strong>Episódio 4B:</strong> Governança, testes automatizados de invariantes e deploy contínuo com IA.</li>
+                  <li><strong>Talk Show Especial:</strong> Homologação do MER canônico e Casos de Uso.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT: HOSTS & SPEECH CARD -->
+      <div class="hosts-panel">
+        <div class="avatars-row">
+          <div class="avatar-card eliezer" id="card-eliezer">
+            <div class="avatar-circle eliezer">ER</div>
+            <div class="avatar-info">
+              <h4>Eliézer Rosa</h4>
+              <span>Orquestrador IDD</span>
+            </div>
+          </div>
+
+          <div class="avatar-card leigo" id="card-leigo">
+            <div class="avatar-circle leigo">UL</div>
+            <div class="avatar-info">
+              <h4>Usuária Leiga</h4>
+              <span>Visão de Negócio</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="speech-card">
+          <div class="speech-head">
+            <div class="spk-pill leigo" id="speakerPill">
+              <span id="speakerName">Usuária Leiga</span>
+            </div>
+            <div class="wave-bars active" id="waveBars">
+              <div class="wave-bar"></div>
+              <div class="wave-bar"></div>
+              <div class="wave-bar"></div>
+              <div class="wave-bar"></div>
+              <div class="wave-bar"></div>
+            </div>
+          </div>
+
+          <div class="speech-body" id="speechContent">
+            "Carregando apresentação do Episódio 3D..."
+          </div>
+
+          <div class="speech-foot">
+            <span>PARADIGMA IDD · SÉRIE METODOLÓGICA</span>
+            <span id="timeReadout">00:00 / 02:18</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      <span>IDD: Intent-Driven Development • Transações Atômicas e Métodos UML em HVAC-R</span>
+      <span>Metodologia IDD Oficial @EliézerJPRosa</span>
+    </footer>
+  </div>
+
+  <script>
+    // Partículas de fundo animadas
+    const canvas = document.getElementById('bg-canvas');
+    const ctx = canvas.getContext('2d');
+    const particles = [];
+    for (let i = 0; i < 40; i++) {
+      particles.push({
+        x: Math.random() * 1920,
+        y: Math.random() * 1080,
+        speedY: -0.2 - Math.random() * 0.4,
+        speedX: (Math.random() - 0.5) * 0.3,
+        radius: 1 + Math.random() * 2,
+        alpha: 0.2 + Math.random() * 0.5,
+        color: Math.random() > 0.5 ? '#c084fc' : '#38bdf8'
+      });
+    }
+
+    function animateBg() {
+      ctx.fillStyle = '#050811';
+      ctx.fillRect(0, 0, 1920, 1080);
+      particles.forEach(p => {
+        p.x += p.speedX; p.y += p.speedY;
+        if (p.y < 0) p.y = 1080;
+        if (p.x < 0) p.x = 1920;
+        if (p.x > 1920) p.x = 0;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+        ctx.fillStyle = p.color;
+        ctx.globalAlpha = p.alpha;
+        ctx.fill();
+      });
+      requestAnimationFrame(animateBg);
+    }
+    requestAnimationFrame(animateBg);
+
+    // Timeline embutida
+    window.timelineItems = [
+      {
+        "index": 0, "id": "seg_00_leigo", "who": "leigo", "actor": "Usuária Leiga",
+        "slide": 1, "startSec": 0.5, "durSec": 16.8, "endSec": 17.3,
+        "text": "Eliézer, no episódio três C nós delimitamos os sub-módulos e os Casos de Uso de segundo nível. Mas como isso funciona na hora em que o aplicativo precisa gravar dados reais? Como garantir que uma operação complexa não deixe o banco de dados corrompido pela metade?"
+      },
+      {
+        "index": 1, "id": "seg_01_eliezer", "who": "eliezer", "actor": "Eliézer Rosa",
+        "slide": 1, "startSec": 17.95, "durSec": 19.032, "endSec": 36.982,
+        "text": "Aqui entra o conceito mais moderno de Transações Atômicas de Negócio! No Paradigma IDD, cada Caso de Uso de segundo nível opera como uma Unit of Work, ou seja, uma transação de Agregado estrita. Tudo comita ou nada comita. Não existe estado meio certo."
+      },
+      {
+        "index": 2, "id": "seg_02_leigo", "who": "leigo", "actor": "Usuária Leiga",
+        "slide": 2, "startSec": 37.632, "durSec": 15.744, "endSec": 53.376,
+        "text": "Veja no Slide dois o exemplo do fechamento da Ordem de Serviço em campo! Nós temos o técnico finalizando a visita, baixando o capacitor do carro, coletando a assinatura do síndico e emitindo o laudo do PMOC. Como a atomicidade protege essa rotina?"
+      },
+      {
+        "index": 3, "id": "seg_03_eliezer", "who": "eliezer", "actor": "Eliézer Rosa",
+        "slide": 2, "startSec": 54.026, "durSec": 21.144, "endSec": 75.17,
+        "text": "Se a conexão de internet cair ou se o laudo violar uma regra sanitária, o IDD aciona a compensação imediata. A peça volta ao estoque do carro, a ordem de serviço permanece em atendimento e nenhuma mensagem incorreta é disparada no WhatsApp. É a integridade do MER e das regras de negócio preservada a ferro e fogo."
+      },
+      {
+        "index": 4, "id": "seg_04_leigo", "who": "leigo", "actor": "Usuária Leiga",
+        "slide": 3, "startSec": 75.82, "durSec": 11.952, "endSec": 87.772,
+        "text": "E no Slide três nós vemos as Classes UML! Reparem que os métodos não são apenas getters e setters vazios. Eles são sub-componentes funcionais com quatro fases bem definidas!"
+      },
+      {
+        "index": 5, "id": "seg_05_eliezer", "who": "eliezer", "actor": "Eliézer Rosa",
+        "slide": 3, "startSec": 88.422, "durSec": 15.912, "endSec": 104.334,
+        "text": "Exatamente! Cada classe possui métodos de Guarda para validar pré-condições, métodos de Mutação atômica em memória, métodos de Pós-Condição para checar invariantes e gerar o hash imutável, e métodos de Compensação para rollback seguro."
+      },
+      {
+        "index": 6, "id": "seg_06_leigo", "who": "leigo", "actor": "Usuária Leiga",
+        "slide": 4, "startSec": 104.984, "durSec": 14.544, "endSec": 119.528,
+        "text": "Sensacional! Com Bounded Contexts rígidos e Transações Atômicas governadas por invariantes, o desenvolvedor e o especialista de negócio têm a certeza de que a IA vai construir um software resiliente e profissional!"
+      },
+      {
+        "index": 7, "id": "seg_07_eliezer", "who": "eliezer", "actor": "Eliézer Rosa",
+        "slide": 4, "startSec": 120.178, "durSec": 16.584, "endSec": 136.762,
+        "text": "Essa é a maturidade do Paradigma IDD: combinar a velocidade da inteligência artificial com o rigor inegociável da engenharia de software. No próximo episódio nós avançamos para a validação em produção. Continue acompanhando a série!"
+      }
+    ];
+
+    const slideTitles = [
+      { t: "O Conceito de Transação Atômica no IDD", s: "Por que os Casos de Uso de 2º Nível operam como transações de Agregado estritas (Tudo ou Nada)." },
+      { t: "Estudo de Caso: Fechamento Bi-Partite & Sagas", s: "Como a atomicidade protege a rotina de encerramento da OS, baixa de peças e envio de WhatsApp." },
+      { t: "Classes UML: O Protocolo das 4 Fases", s: "Métodos de Guarda, Mutação, Pós-Condição e Compensação em classes de domínio puras." },
+      { t: "A Vitória da Maturidade da Engenharia IDD", s: "Velocidade de IA aliada ao rigor inviolável de regras de negócio e integridade do banco." }
+    ];
+
+    // Atualizador de Frame Determinístico Frame-Pipe
+    window.updateFrameAtTime = function(timeSec) {
+      const curtain = document.getElementById('sync-curtain');
+      if (curtain && curtain.style.display !== 'none') curtain.style.display = 'none';
+
+      const m = Math.floor(timeSec / 60);
+      const s = Math.floor(timeSec % 60);
+      const timeStr = `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+      const timeEl = document.getElementById('timeReadout');
+      if (timeEl) timeEl.innerText = `${timeStr} / 02:18`;
+
+      if (!window.timelineItems || window.timelineItems.length === 0) return;
+
+      const currentSeg = window.timelineItems.find(it => timeSec >= it.startSec && timeSec <= it.endSec)
+        || window.timelineItems.filter(it => it.startSec <= timeSec).pop()
+        || window.timelineItems[0];
+
+      const speakingSeg = window.timelineItems.find(it => timeSec >= it.startSec && timeSec <= it.endSec);
+
+      // Slide & Texto
+      document.querySelectorAll('.slide-view').forEach(sv => sv.classList.remove('active'));
+      const activeView = document.getElementById(`view-slide-${currentSeg.slide}`);
+      if (activeView) activeView.classList.add('active');
+
+      document.getElementById('slideIndicator').innerText = currentSeg.slide;
+      const tInfo = slideTitles[currentSeg.slide - 1];
+      if (tInfo) {
+        document.getElementById('mainSlideTitle').innerHTML = `<span>⚡</span> ${tInfo.t}`;
+        document.getElementById('mainSlideSubtitle').innerText = tInfo.s;
+      }
+
+      document.getElementById('speechContent').innerText = `"${currentSeg.text}"`;
+      document.getElementById('speakerName').innerText = currentSeg.actor;
+      const pill = document.getElementById('speakerPill');
+      pill.className = `spk-pill ${currentSeg.who}`;
+
+      // Avatars e Waveform
+      const cardEliezer = document.getElementById('card-eliezer');
+      const cardLeigo = document.getElementById('card-leigo');
+      const waveBars = document.getElementById('waveBars');
+
+      if (speakingSeg) {
+        cardEliezer.classList.toggle('talking', speakingSeg.who === 'eliezer');
+        cardLeigo.classList.toggle('talking', speakingSeg.who === 'leigo');
+        waveBars.classList.add('active');
+      } else {
+        cardEliezer.classList.remove('talking');
+        cardLeigo.classList.remove('talking');
+        waveBars.classList.remove('active');
+      }
+    };
+  </script>
+</body>
+</html>

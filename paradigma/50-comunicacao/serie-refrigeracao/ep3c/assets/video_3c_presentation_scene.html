@@ -1,0 +1,797 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=1920, height=1080, initial-scale=1.0">
+  <title>Episódio 3C — Metodologia IDD: Bounded Contexts & Modularidade — Decomposição de UCs de 1º e 2º Nível</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-dark: #050811;
+      --bg-card: rgba(11, 20, 38, 0.90);
+      --bg-card-border: rgba(56, 189, 248, 0.25);
+      --cyan-frost: #38bdf8;
+      --cyan-glow: rgba(56, 189, 248, 0.45);
+      --ice-blue: #0284c7;
+      --emerald-ok: #10b981;
+      --amber-alert: #f59e0b;
+      --purple-tech: #a855f7;
+      --rose-warn: #f43f5e;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      width: 1920px;
+      height: 1080px;
+      overflow: hidden;
+      background: #050811;
+      color: var(--text-main);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      position: relative;
+    }
+
+    #bg-canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 1920px;
+      height: 1080px;
+      z-index: 1;
+    }
+
+    .app-container {
+      position: relative;
+      z-index: 10;
+      width: 1920px;
+      height: 1080px;
+      display: flex;
+      flex-direction: column;
+      padding: 30px 45px;
+      justify-content: space-between;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 18px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .brand-wrap {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .brand-logo {
+      width: 50px;
+      height: 50px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #059669, #0284c7);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 26px;
+      box-shadow: 0 0 20px rgba(16, 185, 129, 0.5);
+    }
+    .brand-text h1 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 22px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      color: #fff;
+    }
+    .brand-text span {
+      font-size: 13px;
+      color: #34d399;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+    }
+
+    .header-badges {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .h-badge {
+      padding: 8px 18px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      background: rgba(16, 185, 129, 0.15);
+      border: 1px solid rgba(16, 185, 129, 0.35);
+      color: #34d399;
+    }
+    .h-badge.live {
+      background: rgba(56, 189, 248, 0.15);
+      border-color: rgba(56, 189, 248, 0.4);
+      color: #38bdf8;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .pulse-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #38bdf8;
+      box-shadow: 0 0 10px #38bdf8;
+      animation: pulse 1.5s infinite;
+    }
+    @keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.4; transform: scale(0.85); } }
+
+    /* Main Stage */
+    .stage-row {
+      display: grid;
+      grid-template-columns: 1180px 610px;
+      gap: 35px;
+      height: 720px;
+      align-items: stretch;
+    }
+
+    /* Left: Slides Viewport */
+    .slides-viewport {
+      background: var(--bg-card);
+      border: 1.5px solid var(--bg-card-border);
+      border-radius: 24px;
+      padding: 26px 32px;
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6);
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .slide-badge-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+    .s-badge {
+      padding: 5px 14px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      background: rgba(56, 189, 248, 0.15);
+      color: var(--cyan-frost);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+    }
+    .slide-num-pill {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      color: #94a3b8;
+      font-weight: 700;
+    }
+
+    .slide-title-wrap h2 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 26px;
+      font-weight: 900;
+      color: #fff;
+      letter-spacing: -0.5px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .slide-title-wrap p {
+      font-size: 14.5px;
+      color: #94a3b8;
+      margin-top: 4px;
+      line-height: 1.4;
+    }
+
+    .slide-content-area {
+      flex: 1;
+      margin-top: 20px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .slide-view {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(20px);
+      transition: opacity 0.4s ease, transform 0.4s ease;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .slide-view.active {
+      opacity: 1;
+      pointer-events: all;
+      transform: translateY(0);
+    }
+
+    /* Grids & Cards internos dos slides */
+    .inner-grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+      height: 100%;
+    }
+    .inner-grid-4 {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      grid-template-rows: repeat(2, 1fr);
+      gap: 16px;
+      height: 100%;
+    }
+
+    .info-card {
+      background: rgba(15, 23, 42, 0.85);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 16px;
+      padding: 18px 22px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .info-card.highlight {
+      border-color: rgba(56, 189, 248, 0.35);
+      box-shadow: 0 0 25px rgba(56, 189, 248, 0.1);
+    }
+    .card-head {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 16px;
+      font-weight: 800;
+      color: #38bdf8;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      padding-bottom: 8px;
+    }
+    .card-head.amber { color: #fbbf24; }
+    .card-head.green { color: #34d399; }
+    .card-head.purple { color: #c084fc; }
+
+    .bullet-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      font-size: 13.5px;
+      color: #cbd5e1;
+      line-height: 1.45;
+    }
+    .bullet-list li {
+      position: relative;
+      padding-left: 18px;
+    }
+    .bullet-list li::before {
+      content: '▹';
+      position: absolute;
+      left: 0;
+      color: #38bdf8;
+    }
+    .bullet-list strong { color: #fff; }
+
+    /* Right: Host Avatars and Live Speech Card */
+    .hosts-panel {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .avatars-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .avatar-card {
+      background: rgba(15, 23, 42, 0.7);
+      border: 1.5px solid rgba(255, 255, 255, 0.08);
+      border-radius: 18px;
+      padding: 16px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      transition: all 0.3s ease;
+    }
+    .avatar-circle {
+      width: 58px;
+      height: 58px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 26px;
+      font-weight: 900;
+      color: white;
+      flex-shrink: 0;
+      transition: all 0.3s ease;
+    }
+    .avatar-circle.eliezer {
+      background: linear-gradient(135deg, #0284c7, #0369a1);
+      border: 2px solid #38bdf8;
+    }
+    .avatar-circle.leigo {
+      background: linear-gradient(135deg, #d97706, #b45309);
+      border: 2px solid #fbbf24;
+    }
+
+    .avatar-info h4 {
+      font-size: 15px;
+      font-weight: 800;
+      color: #fff;
+    }
+    .avatar-info span {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: #94a3b8;
+    }
+    .avatar-card.talking {
+      background: rgba(30, 41, 59, 0.9);
+      transform: translateY(-3px);
+    }
+    .avatar-card.eliezer.talking {
+      border-color: #38bdf8;
+      box-shadow: 0 0 25px rgba(56, 189, 248, 0.35);
+    }
+    .avatar-card.eliezer.talking .avatar-circle {
+      box-shadow: 0 0 20px rgba(56, 189, 248, 0.7);
+    }
+    .avatar-card.leigo.talking {
+      border-color: #fbbf24;
+      box-shadow: 0 0 25px rgba(251, 191, 36, 0.35);
+    }
+    .avatar-card.leigo.talking .avatar-circle {
+      box-shadow: 0 0 20px rgba(251, 191, 36, 0.7);
+    }
+
+    .speech-card {
+      background: rgba(11, 20, 38, 0.95);
+      border: 1.5px solid var(--bg-card-border);
+      border-radius: 20px;
+      padding: 24px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+    }
+    .speech-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 14px;
+    }
+    .spk-pill {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 16px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    .spk-pill.eliezer { background: rgba(56, 189, 248, 0.15); border: 1px solid rgba(56, 189, 248, 0.4); color: #38bdf8; }
+    .spk-pill.leigo { background: rgba(245, 158, 11, 0.15); border: 1px solid rgba(245, 158, 11, 0.4); color: #fbbf24; }
+
+    .wave-bars {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      height: 20px;
+    }
+    .wave-bar {
+      width: 3.5px;
+      height: 4px;
+      background: #34d399;
+      border-radius: 2px;
+      transition: height 0.15s ease;
+    }
+    .wave-bars.active .wave-bar:nth-child(1) { animation: waveA 0.6s infinite 0.1s; }
+    .wave-bars.active .wave-bar:nth-child(2) { animation: waveA 0.6s infinite 0.25s; }
+    .wave-bars.active .wave-bar:nth-child(3) { animation: waveA 0.6s infinite 0.15s; }
+    .wave-bars.active .wave-bar:nth-child(4) { animation: waveA 0.6s infinite 0.3s; }
+    .wave-bars.active .wave-bar:nth-child(5) { animation: waveA 0.6s infinite 0.2s; }
+    @keyframes waveA { 0%, 100% { height: 4px; } 50% { height: 20px; } }
+
+    .speech-body {
+      font-size: 17px;
+      line-height: 1.55;
+      color: #f1f5f9;
+      font-weight: 500;
+      flex: 1;
+      display: flex;
+      align-items: center;
+    }
+    .speech-foot {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      padding-top: 14px;
+      font-size: 12px;
+      color: #94a3b8;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 14px;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      font-size: 13px;
+      color: #94a3b8;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="bg-canvas" width="1920" height="1080"></canvas>
+
+  <div class="app-container">
+    <header>
+      <div class="brand-wrap">
+        <div class="brand-logo">📐</div>
+        <div class="brand-text">
+          <h1>Paradigma IDD • Série Oficial na Prática</h1>
+          <span>Episódio 3C: Bounded Contexts &amp; Modularidade Estrita</span>
+        </div>
+      </div>
+
+      <div class="header-badges">
+        <div class="h-badge">Arquitetura Orientada à Intenção</div>
+        <div class="h-badge live">
+          <div class="pulse-dot"></div>
+          Decomposição UML Preliminar
+        </div>
+      </div>
+    </header>
+
+    <div class="stage-row">
+      <!-- SLIDES VIEWPORT -->
+      <div class="slides-viewport">
+        <div class="slide-badge-row">
+          <span class="s-badge">Metodologia IDD</span>
+          <span class="slide-num-pill">Slide <span id="slideIndicator">1</span> de 4</span>
+        </div>
+
+        <div class="slide-title-wrap">
+          <h2 id="mainSlideTitle"><span>🎯</span> O Desafio da Modularidade no IDD</h2>
+          <p id="mainSlideSubtitle">Por que a IA necessita de Bounded Contexts rígidos para não gerar código monolítico espaguete.</p>
+        </div>
+
+        <div class="slide-content-area">
+          <!-- SLIDE 1 -->
+          <div class="slide-view active" id="view-slide-1">
+            <div class="inner-grid-2">
+              <div class="info-card highlight">
+                <div class="card-head amber">⚠️ O Risco do Código Espaguete com IA</div>
+                <p style="font-size: 13.5px; color: #cbd5e1; line-height: 1.5;">
+                  Sem fronteiras estritas, a IA mistura todas as regras no mesmo ponto:
+                </p>
+                <ul class="bullet-list">
+                  <li><strong>Acoplamento Tóxico:</strong> Função que valida foto, baixa peça no carro do técnico e dispara WhatsApp no mesmo bloco.</li>
+                  <li><strong>Falhas Parciais:</strong> Queda de rede corrompe o saldo do estoque e deixa a OS em limbo.</li>
+                  <li><strong>Inconsistência Semântica:</strong> A máquina de estados perde o trilho e quebra as regras do negócio.</li>
+                </ul>
+              </div>
+
+              <div class="info-card highlight">
+                <div class="card-head green">🛡️ A Blindagem dos Bounded Contexts</div>
+                <p style="font-size: 13.5px; color: #cbd5e1; line-height: 1.5;">
+                  No Paradigma IDD, cada sub-módulo tem soberania absoluta:
+                </p>
+                <ul class="bullet-list">
+                  <li><strong>Fronteiras Invioláveis:</strong> UCs de 1º Nível delimitam os limites semânticos de cada contexto.</li>
+                  <li><strong>Zero Dependência Circular:</strong> Comunicação entre contextos ocorre via eventos de domínio.</li>
+                  <li><strong>Integridade Garantida:</strong> A IA constrói módulos autocontidos, testáveis e auditáveis.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <!-- SLIDE 2 -->
+          <div class="slide-view" id="view-slide-2">
+            <div class="inner-grid-4">
+              <div class="info-card">
+                <div class="card-head">📦 BC1: Ativos &amp; Prontuário</div>
+                <ul class="bullet-list">
+                  <li>Identidade física única (QR Code).</li>
+                  <li>Placa e histórico vitalício da máquina.</li>
+                  <li>Retrofit com aprovação de ART/TRT.</li>
+                </ul>
+              </div>
+
+              <div class="info-card">
+                <div class="card-head green">📜 BC2: PMOC Normativo</div>
+                <ul class="bullet-list">
+                  <li>Compliance com Lei 13.589/18.</li>
+                  <li>Checklist sanitário da Portaria 3.523.</li>
+                  <li>Laudos selados com Hash SHA-256.</li>
+                </ul>
+              </div>
+
+              <div class="info-card">
+                <div class="card-head purple">🌡️ BC3: Física &amp; Fluidos</div>
+                <ul class="bullet-list">
+                  <li>Leitura manométrica (Alta &gt; Baixa).</li>
+                  <li>Recarga precedida por estanqueidade.</li>
+                  <li>Balanço de recolhimento ecológico.</li>
+                </ul>
+              </div>
+
+              <div class="info-card">
+                <div class="card-head amber">🚚 BC4: Field Service</div>
+                <ul class="bullet-list">
+                  <li>Despacho sem conflito de agenda.</li>
+                  <li>Consumo atômico do estoque móvel.</li>
+                  <li>Fechamento bi-partite (Foto + Assinatura).</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <!-- SLIDE 3 -->
+          <div class="slide-view" id="view-slide-3">
+            <div class="inner-grid-2">
+              <div class="info-card highlight">
+                <div class="card-head">🎯 UCs de 1º Nível (Intenções Macro)</div>
+                <ul class="bullet-list">
+                  <li><strong>UC-1.0:</strong> Gestão do Parque de Ativos &amp; Histórico</li>
+                  <li><strong>UC-2.0:</strong> Governança Sanitária &amp; Plano PMOC</li>
+                  <li><strong>UC-3.0:</strong> Manobras Termodinâmicas &amp; Fluidos</li>
+                  <li><strong>UC-4.0:</strong> Execução Operacional de OS em Campo</li>
+                </ul>
+                <p style="font-size: 12.5px; color: #94a3b8; margin-top: 8px;">
+                  Representam a capacidade central do Bounded Context perante os atores do negócio.
+                </p>
+              </div>
+
+              <div class="info-card highlight">
+                <div class="card-head amber">⚡ UCs de 2º Nível (Transações)</div>
+                <ul class="bullet-list">
+                  <li><strong>UC-1.1-TX:</strong> Provisionar Tag QR Code no Ativo</li>
+                  <li><strong>UC-1.2-TX:</strong> Executar Retrofit de Compressor/Gás</li>
+                  <li><strong>UC-2.2-TX:</strong> Concluir Checklist da Portaria 3.523</li>
+                  <li><strong>UC-2.3-TX:</strong> Selar Laudo com Hash Criptográfico</li>
+                  <li><strong>UC-4.3-TX:</strong> Fechamento Bi-Partite &amp; Outbox WhatsApp</li>
+                </ul>
+                <p style="font-size: 12.5px; color: #34d399; margin-top: 8px;">
+                  Operações atômicas com ACID de negócio: tudo ou nada!
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- SLIDE 4 -->
+          <div class="slide-view" id="view-slide-4">
+            <div class="inner-grid-2">
+              <div class="info-card highlight">
+                <div class="card-head green">🗄️ A Conexão Direta com o MER</div>
+                <p style="font-size: 13.5px; color: #cbd5e1; line-height: 1.5;">
+                  Os Bounded Contexts não são abstrações soltas no ar:
+                </p>
+                <ul class="bullet-list">
+                  <li><strong>Integridade Referencial:</strong> Chaves estrangeiras e constraints do MER protegem os limites de cada módulo.</li>
+                  <li><strong>Imutabilidade Auditável:</strong> O histórico de intervenções e laudos nunca sofre update destrutivo.</li>
+                  <li><strong>Isolamento Multi-tenant:</strong> Cada empresa de climatização opera em seu espaço isolado.</li>
+                </ul>
+              </div>
+
+              <div class="info-card highlight">
+                <div class="card-head purple">🚀 Próximo Passo: Episódio 3D</div>
+                <p style="font-size: 13.5px; color: #cbd5e1; line-height: 1.5;">
+                  No Episódio 3D nós vamos aprofundar na mecânica fina:
+                </p>
+                <ul class="bullet-list">
+                  <li><strong>Atomicidade na Prática:</strong> Unit of Work e Sagas de Agregado.</li>
+                  <li><strong>Invariantes Profundas:</strong> Regras termodinâmicas e conformidade PMOC.</li>
+                  <li><strong>Métodos UML:</strong> A anatomia das 4 fases (Guarda, Mutação, Pós-Condição e Compensação).</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT: HOSTS & SPEECH CARD -->
+      <div class="hosts-panel">
+        <div class="avatars-row">
+          <div class="avatar-card eliezer" id="card-eliezer">
+            <div class="avatar-circle eliezer">ER</div>
+            <div class="avatar-info">
+              <h4>Eliézer Rosa</h4>
+              <span>Orquestrador IDD</span>
+            </div>
+          </div>
+
+          <div class="avatar-card leigo" id="card-leigo">
+            <div class="avatar-circle leigo">UL</div>
+            <div class="avatar-info">
+              <h4>Usuária Leiga</h4>
+              <span>Visão de Negócio</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="speech-card">
+          <div class="speech-head">
+            <div class="spk-pill leigo" id="speakerPill">
+              <span id="speakerName">Usuária Leiga</span>
+            </div>
+            <div class="wave-bars active" id="waveBars">
+              <div class="wave-bar"></div>
+              <div class="wave-bar"></div>
+              <div class="wave-bar"></div>
+              <div class="wave-bar"></div>
+              <div class="wave-bar"></div>
+            </div>
+          </div>
+
+          <div class="speech-body" id="speechContent">
+            "Carregando apresentação do Episódio 3C..."
+          </div>
+
+          <div class="speech-foot">
+            <span>PARADIGMA IDD · SÉRIE METODOLÓGICA</span>
+            <span id="timeReadout">00:00 / 02:10</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      <span>IDD: Intent-Driven Development • Modelagem de Bounded Contexts em HVAC-R</span>
+      <span>Metodologia IDD Oficial @EliézerJPRosa</span>
+    </footer>
+  </div>
+
+  <script>
+    // Partículas de fundo animadas
+    const canvas = document.getElementById('bg-canvas');
+    const ctx = canvas.getContext('2d');
+    const particles = [];
+    for (let i = 0; i < 40; i++) {
+      particles.push({
+        x: Math.random() * 1920,
+        y: Math.random() * 1080,
+        speedY: -0.2 - Math.random() * 0.4,
+        speedX: (Math.random() - 0.5) * 0.3,
+        radius: 1 + Math.random() * 2,
+        alpha: 0.2 + Math.random() * 0.5,
+        color: Math.random() > 0.5 ? '#38bdf8' : '#34d399'
+      });
+    }
+
+    function animateBg() {
+      ctx.fillStyle = '#050811';
+      ctx.fillRect(0, 0, 1920, 1080);
+      particles.forEach(p => {
+        p.x += p.speedX; p.y += p.speedY;
+        if (p.y < 0) p.y = 1080;
+        if (p.x < 0) p.x = 1920;
+        if (p.x > 1920) p.x = 0;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+        ctx.fillStyle = p.color;
+        ctx.globalAlpha = p.alpha;
+        ctx.fill();
+      });
+      requestAnimationFrame(animateBg);
+    }
+    requestAnimationFrame(animateBg);
+
+    // Timeline embutida
+    window.timelineItems = [
+      {
+        "index": 0, "id": "seg_00_leigo", "who": "leigo", "actor": "Usuária Leiga",
+        "slide": 1, "startSec": 0.5, "durSec": 15.096, "endSec": 15.596,
+        "text": "Eliézer, no episódio três B nós vimos os Casos de Uso gerais e o diagrama de classes. Mas quando o projeto cresce e a gente pede para a inteligência artificial gerar o sistema, como garantir que ela não crie um código espaguete todo misturado?"
+      },
+      {
+        "index": 1, "id": "seg_01_eliezer", "who": "eliezer", "actor": "Eliézer Rosa",
+        "slide": 1, "startSec": 16.246, "durSec": 22.392, "endSec": 38.638,
+        "text": "Essa é a chave de ouro da engenharia de software com IA! No Paradigma IDD nós aplicamos o primeiro pilar de sustentação: Bounded Contexts Rígidos. A gente nunca joga o sistema inteiro no prompt. Nós usamos os Casos de Uso de primeiro nível do UML para delimitar sub-módulos completamente desacoplados."
+      },
+      {
+        "index": 2, "id": "seg_02_leigo", "who": "leigo", "actor": "Usuária Leiga",
+        "slide": 2, "startSec": 39.288, "durSec": 12.84, "endSec": 52.128,
+        "text": "Olha que interessante no Slide dois! Nós dividimos o aplicativo de Refrigeração em quatro Bounded Contexts soberanos: Ativos e Prontuário, PMOC Sanitário, Física Térmica e Operação em Campo."
+      },
+      {
+        "index": 3, "id": "seg_03_eliezer", "who": "eliezer", "actor": "Eliézer Rosa",
+        "slide": 2, "startSec": 52.778, "durSec": 17.496, "endSec": 70.274,
+        "text": "Exatamente! Cada sub-módulo possui autoridade exclusiva sobre suas regras. O módulo de Ativos cuida da placa física e do local de instalação. Já o PMOC cuida da conformidade legal e sanitária da Anvisa, sem invadir a física manométrica."
+      },
+      {
+        "index": 4, "id": "seg_04_leigo", "who": "leigo", "actor": "Usuária Leiga",
+        "slide": 3, "startSec": 70.924, "durSec": 7.704, "endSec": 78.628,
+        "text": "E como isso se desdobra na prática? Como os Casos de Uso de primeiro nível se conectam com o dia a dia do técnico?"
+      },
+      {
+        "index": 5, "id": "seg_05_eliezer", "who": "eliezer", "actor": "Eliézer Rosa",
+        "slide": 3, "startSec": 79.278, "durSec": 20.544, "endSec": 99.822,
+        "text": "Veja no Slide três: cada Caso de Uso de primeiro nível dá origem a Casos de Uso de segundo nível! Por exemplo, no sub-módulo de Ativos, nós temos a emissão da Tag QR Code, o Retrofit de gás e a baixa com preservação histórica. Cada um deles opera com autonomia sem dependências circulares."
+      },
+      {
+        "index": 6, "id": "seg_06_leigo", "who": "leigo", "actor": "Usuária Leiga",
+        "slide": 4, "startSec": 100.472, "durSec": 13.752, "endSec": 114.224,
+        "text": "Entendi perfeitamente! E no próximo episódio, o três D, nós vamos ver como esses Casos de Uso de segundo nível se transformam em transações atômicas seguras no banco de dados e nos métodos das classes UML!"
+      },
+      {
+        "index": 7, "id": "seg_07_eliezer", "who": "eliezer", "actor": "Eliézer Rosa",
+        "slide": 4, "startSec": 114.874, "durSec": 14.136, "endSec": 129.01,
+        "text": "Isso mesmo! O IDD transforma a intenção humana em fronteiras arquiteturais inquebráveis. Acompanhe a nossa playlist oficial e veja a engenharia de software orientada à intenção em ação!"
+      }
+    ];
+
+    const slideTitles = [
+      { t: "O Desafio da Modularidade no IDD", s: "Por que a IA necessita de Bounded Contexts rígidos para não gerar código monolítico espaguete." },
+      { t: "Os 4 Bounded Contexts em HVAC-R", s: "Divisão do sistema em sub-módulos com soberania estrita de regras." },
+      { t: "Decomposição Hierárquica: 1º e 2º Nível", s: "Como os UCs de 1º Nível delimitam sub-módulos e UCs de 2º Nível transacionais." },
+      { t: "A Conexão com o MER e Transições Seguras", s: "Alinhamento com o banco de dados e preparação para as transações atômicas do Ep. 3D." }
+    ];
+
+    // Atualizador de Frame Determinístico Frame-Pipe
+    window.updateFrameAtTime = function(timeSec) {
+      const curtain = document.getElementById('sync-curtain');
+      if (curtain && curtain.style.display !== 'none') curtain.style.display = 'none';
+
+      const m = Math.floor(timeSec / 60);
+      const s = Math.floor(timeSec % 60);
+      const timeStr = `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+      const timeEl = document.getElementById('timeReadout');
+      if (timeEl) timeEl.innerText = `${timeStr} / 02:10`;
+
+      if (!window.timelineItems || window.timelineItems.length === 0) return;
+
+      const currentSeg = window.timelineItems.find(it => timeSec >= it.startSec && timeSec <= it.endSec)
+        || window.timelineItems.filter(it => it.startSec <= timeSec).pop()
+        || window.timelineItems[0];
+
+      const speakingSeg = window.timelineItems.find(it => timeSec >= it.startSec && timeSec <= it.endSec);
+
+      // Slide & Texto
+      document.querySelectorAll('.slide-view').forEach(sv => sv.classList.remove('active'));
+      const activeView = document.getElementById(`view-slide-${currentSeg.slide}`);
+      if (activeView) activeView.classList.add('active');
+
+      document.getElementById('slideIndicator').innerText = currentSeg.slide;
+      const tInfo = slideTitles[currentSeg.slide - 1];
+      if (tInfo) {
+        document.getElementById('mainSlideTitle').innerHTML = `<span>🎯</span> ${tInfo.t}`;
+        document.getElementById('mainSlideSubtitle').innerText = tInfo.s;
+      }
+
+      document.getElementById('speechContent').innerText = `"${currentSeg.text}"`;
+      document.getElementById('speakerName').innerText = currentSeg.actor;
+      const pill = document.getElementById('speakerPill');
+      pill.className = `spk-pill ${currentSeg.who}`;
+
+      // Avatars e Waveform
+      const cardEliezer = document.getElementById('card-eliezer');
+      const cardLeigo = document.getElementById('card-leigo');
+      const waveBars = document.getElementById('waveBars');
+
+      if (speakingSeg) {
+        cardEliezer.classList.toggle('talking', speakingSeg.who === 'eliezer');
+        cardLeigo.classList.toggle('talking', speakingSeg.who === 'leigo');
+        waveBars.classList.add('active');
+      } else {
+        cardEliezer.classList.remove('talking');
+        cardLeigo.classList.remove('talking');
+        waveBars.classList.remove('active');
+      }
+    };
+  </script>
+</body>
+</html>

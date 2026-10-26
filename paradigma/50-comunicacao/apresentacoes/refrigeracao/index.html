@@ -1,0 +1,1329 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Apresentação Estratégica: Gestão de Refrigeração (HVAC-R)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --bg-dark: #070d18;
+      --bg-card: rgba(15, 23, 42, 0.85);
+      --bg-card-border: rgba(56, 189, 248, 0.2);
+      --cyan-frost: #38bdf8;
+      --cyan-glow: rgba(56, 189, 248, 0.45);
+      --ice-blue: #0284c7;
+      --deep-navy: #0b1528;
+      --emerald-ok: #10b981;
+      --amber-alert: #f59e0b;
+      --rose-warn: #f43f5e;
+      --text-main: #f1f5f9;
+      --text-muted: #94a3b8;
+      --handwriting-font: 'Caveat', cursive, sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: radial-gradient(circle at 50% 10%, #102647 0%, #070d18 65%, #02050b 100%);
+      color: var(--text-main);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+    }
+
+    /* Top Navigation Bar */
+    header {
+      background: rgba(7, 13, 24, 0.9);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(56, 189, 248, 0.2);
+      padding: 10px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-icon {
+      width: 42px;
+      height: 42px;
+      background: linear-gradient(135deg, #0284c7, #38bdf8);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 16px var(--cyan-glow);
+      flex-shrink: 0;
+    }
+
+    .brand-title {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 700;
+      font-size: 1.15rem;
+      letter-spacing: -0.02em;
+      color: #fff;
+    }
+
+    .brand-subtitle {
+      font-size: 0.75rem;
+      color: var(--cyan-frost);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-weight: 600;
+    }
+
+    /* Presentation Controls */
+    .controls-container {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      background: rgba(30, 41, 59, 0.85);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      color: var(--text-main);
+      padding: 8px 15px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 0.85rem;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s ease;
+      user-select: none;
+    }
+
+    .btn:hover {
+      background: rgba(56, 189, 248, 0.18);
+      border-color: var(--cyan-frost);
+      transform: translateY(-1px);
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #0284c7, #0369a1);
+      border-color: #38bdf8;
+      box-shadow: 0 0 14px rgba(2, 132, 199, 0.5);
+    }
+
+    .btn-primary:hover {
+      background: linear-gradient(135deg, #0369a1, #0284c7);
+      box-shadow: 0 0 20px var(--cyan-glow);
+    }
+
+    .mode-pill {
+      display: flex;
+      background: #0b1528;
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      border-radius: 20px;
+      padding: 3px;
+      font-size: 0.75rem;
+    }
+
+    .mode-btn {
+      padding: 5px 12px;
+      border-radius: 16px;
+      border: none;
+      background: transparent;
+      color: var(--text-muted);
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.2s;
+    }
+
+    .mode-btn.active {
+      background: var(--cyan-frost);
+      color: #070d18;
+      box-shadow: 0 0 10px var(--cyan-glow);
+    }
+
+    .voice-select {
+      background: #0b1528;
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      color: #e2e8f0;
+      border-radius: 8px;
+      padding: 6px 10px;
+      font-size: 0.78rem;
+      max-width: 160px;
+      outline: none;
+      cursor: pointer;
+    }
+
+    /* Voice Animation Wave */
+    .audio-wave {
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+      height: 16px;
+    }
+
+    .audio-wave span {
+      width: 3px;
+      height: 5px;
+      background: var(--cyan-frost);
+      border-radius: 3px;
+      transition: height 0.2s ease;
+    }
+
+    .audio-wave.speaking span:nth-child(1) { animation: wave 0.7s infinite 0.1s; }
+    .audio-wave.speaking span:nth-child(2) { animation: wave 0.7s infinite 0.25s; }
+    .audio-wave.speaking span:nth-child(3) { animation: wave 0.7s infinite 0.15s; }
+    .audio-wave.speaking span:nth-child(4) { animation: wave 0.7s infinite 0.3s; }
+
+    @keyframes wave {
+      0%, 100% { height: 4px; }
+      50% { height: 16px; }
+    }
+
+    /* Progress bar */
+    .presentation-progress {
+      width: 100%;
+      height: 4px;
+      background: rgba(255, 255, 255, 0.08);
+      position: relative;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #0284c7, #38bdf8, #10b981);
+      width: 14%;
+      transition: width 0.4s ease;
+    }
+
+    /* Slides Container */
+    main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 24px 20px;
+      max-width: 1280px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    .slide {
+      display: none;
+      width: 100%;
+      animation: fadeInSlide 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .slide.active {
+      display: block;
+    }
+
+    @keyframes fadeInSlide {
+      from {
+        opacity: 0;
+        transform: translateY(12px) scale(0.99);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    /* Card System */
+    .card-panel {
+      background: var(--bg-card);
+      border: 1px solid var(--bg-card-border);
+      border-radius: 20px;
+      padding: 32px 38px;
+      backdrop-filter: blur(20px);
+      box-shadow: 0 20px 45px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .slide-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 12px;
+      background: rgba(56, 189, 248, 0.12);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      border-radius: 30px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--cyan-frost);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 12px;
+    }
+
+    .slide-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 2.1rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+      margin-bottom: 8px;
+      background: linear-gradient(135deg, #ffffff 60%, var(--cyan-frost) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .slide-subtitle {
+      font-size: 1.02rem;
+      color: var(--text-muted);
+      margin-bottom: 24px;
+      max-width: 920px;
+      line-height: 1.5;
+    }
+
+    /* Grids & Columns */
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 22px;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    @media (max-width: 900px) {
+      .grid-2, .grid-3 {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Feature Box */
+    .feature-box {
+      background: rgba(11, 21, 40, 0.88);
+      border: 1px solid rgba(56, 189, 248, 0.16);
+      border-radius: 14px;
+      padding: 18px 20px;
+      position: relative;
+      transition: all 0.25s;
+    }
+
+    .feature-box:hover {
+      border-color: rgba(56, 189, 248, 0.45);
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.35);
+    }
+
+    .feature-icon {
+      font-size: 1.5rem;
+      margin-bottom: 10px;
+    }
+
+    .feature-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.12rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .feature-desc {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    /* Tag Pills */
+    .tag {
+      font-size: 0.72rem;
+      padding: 2px 8px;
+      border-radius: 6px;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    .tag-gas {
+      background: rgba(14, 165, 233, 0.2);
+      color: #38bdf8;
+      border: 1px solid rgba(14, 165, 233, 0.4);
+    }
+
+    .tag-law {
+      background: rgba(245, 158, 11, 0.2);
+      color: #fbbf24;
+      border: 1px solid rgba(245, 158, 11, 0.4);
+    }
+
+    .tag-safe {
+      background: rgba(16, 185, 129, 0.2);
+      color: #34d399;
+      border: 1px solid rgba(16, 185, 129, 0.4);
+    }
+
+    /* Excalidraw Sketchy Vector Styling */
+    .excalidraw-container {
+      background: #091322;
+      border: 2px dashed rgba(56, 189, 248, 0.35);
+      border-radius: 16px;
+      padding: 16px;
+      position: relative;
+    }
+
+    .excalidraw-badge {
+      position: absolute;
+      top: 12px;
+      right: 14px;
+      font-family: var(--handwriting-font);
+      font-size: 1.15rem;
+      color: #38bdf8;
+      transform: rotate(-3deg);
+    }
+
+    /* Comparison Table */
+    .comp-table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      border-radius: 12px;
+      overflow: hidden;
+      margin-top: 10px;
+    }
+
+    .comp-table th {
+      background: #0d1a30;
+      padding: 12px 16px;
+      font-size: 0.82rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+      border-bottom: 1px solid rgba(56, 189, 248, 0.25);
+      text-align: left;
+    }
+
+    .comp-table td {
+      padding: 13px 16px;
+      background: rgba(15, 23, 42, 0.6);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      font-size: 0.88rem;
+      vertical-align: middle;
+    }
+
+    .comp-table tr:hover td {
+      background: rgba(56, 189, 248, 0.06);
+    }
+
+    .col-highlight {
+      background: rgba(56, 189, 248, 0.08) !important;
+      border-left: 2px solid var(--cyan-frost);
+      font-weight: 600;
+    }
+
+    /* Question Cards */
+    .q-card {
+      display: flex;
+      gap: 16px;
+      background: rgba(11, 21, 40, 0.9);
+      border: 1px solid rgba(56, 189, 248, 0.2);
+      border-radius: 14px;
+      padding: 16px 20px;
+      align-items: flex-start;
+    }
+
+    .q-num {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #0284c7, #38bdf8);
+      color: #070d18;
+      font-weight: 800;
+      font-size: 1.05rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .q-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.08rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 4px;
+    }
+
+    .q-desc {
+      font-size: 0.86rem;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+
+    /* Subtitle / Closed Caption Bar */
+    .caption-box {
+      width: 100%;
+      margin-top: 18px;
+      background: rgba(11, 21, 40, 0.95);
+      border: 1px solid rgba(56, 189, 248, 0.25);
+      border-radius: 12px;
+      padding: 12px 18px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    }
+
+    .caption-icon {
+      color: var(--cyan-frost);
+      font-size: 1rem;
+      flex-shrink: 0;
+    }
+
+    .caption-text {
+      font-size: 0.92rem;
+      color: #e2e8f0;
+      line-height: 1.4;
+      font-style: italic;
+    }
+
+    /* Footer / Slide Navigation */
+    footer {
+      background: rgba(7, 13, 24, 0.96);
+      border-top: 1px solid rgba(56, 189, 248, 0.18);
+      padding: 12px 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+
+    .slide-counter {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+
+    .slide-counter span {
+      color: var(--cyan-frost);
+    }
+
+    .nav-buttons {
+      display: flex;
+      gap: 10px;
+    }
+
+    /* Hand-drawn note styling */
+    .sketch-note {
+      font-family: var(--handwriting-font);
+      font-size: 1.25rem;
+      color: #ffd166;
+      line-height: 1.2;
+    }
+  </style>
+  <style id="idd-selos-style">
+    .idd-selo{display:inline-block;vertical-align:middle;font:700 11px/1.4 system-ui,"Segoe UI",sans-serif;letter-spacing:.02em;text-transform:none;padding:2px 8px;border-radius:999px;margin:0 6px;white-space:nowrap;-webkit-text-fill-color:currentColor;-webkit-background-clip:border-box;background-clip:border-box;}
+    .idd-selo-proposta{color:#f3e8ff;background:rgba(88,28,135,.88);border:1px solid #c084fc;}
+    .idd-selo-demo{color:#fef3c7;background:rgba(120,53,15,.88);border:1px solid #fbbf24;}
+    .idd-selo-impl{color:#d1fae5;background:rgba(6,78,59,.88);border:1px solid #34d399;}
+    .idd-nota{font:italic 500 11px/1.4 system-ui,"Segoe UI",sans-serif;color:#cbd5e1;text-transform:none;letter-spacing:0;-webkit-text-fill-color:currentColor;}
+  </style>
+</head>
+<body>
+  <div id="idd-status-banner" role="note" aria-label="Status do conteúdo" style="position:fixed;left:50%;bottom:6px;transform:translateX(-50%);z-index:2147483000;pointer-events:none;max-width:min(46vw,640px);white-space:normal;text-align:center;font:600 11px/1.3 system-ui,'Segoe UI',sans-serif;color:#f8fafc;-webkit-text-fill-color:#f8fafc;background:rgba(15,23,42,.9);border:1px solid rgba(148,163,184,.65);border-radius:10px;padding:3px 10px;box-shadow:0 2px 8px rgba(0,0,0,.4);text-transform:none;letter-spacing:0;">🔭 PROPOSTA — escopo para o cliente; não há app de refrigeração implementado · Cânone v1.0-rc1 · ✅ implementado · 🧪 demonstração · 🔭 proposta</div>
+
+  <!-- Header / App Bar -->
+  <header>
+    <div class="brand">
+      <div class="brand-icon">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#070d18" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+          <path d="m5 15 7 7 7-7"/>
+        </svg>
+      </div>
+      <div>
+        <div class="brand-title">Gestão de Refrigeração & PMOC</div>
+        <div class="brand-subtitle">Alinhamento Estratégico de Escopo (HVAC-R)</div>
+      </div>
+    </div>
+
+    <!-- Central Audio & Playback Controls -->
+    <div class="controls-container">
+      <a href="apresentacao_bounded_contexts_transacoes.html" class="btn" title="Ver apresentação de Bounded Contexts & Transações Atômicas" style="background: rgba(16, 185, 129, 0.2); border-color: #10b981; color: #34d399; text-decoration: none;">
+        <span>📐</span>
+        <span>Bounded Contexts &amp; Transações</span>
+      </a>
+
+      <button class="btn btn-primary" id="btnPlayPause">
+        <span id="playIcon">▶</span>
+        <span id="playLabel">Iniciar Apresentação com Voz</span>
+        <div class="audio-wave" id="audioWave">
+          <span></span><span></span><span></span><span></span>
+        </div>
+      </button>
+
+      <div class="mode-pill">
+        <button class="mode-btn active" id="btnModeContinuous" title="Avança o slide automaticamente após a fala">Contínua</button>
+        <button class="mode-btn" id="btnModePaused" title="Pausa após cada slide e aguarda o usuário avançar">Pausada</button>
+      </div>
+
+      <!-- Voice Selector -->
+      <select class="voice-select" id="voiceSelect" title="Selecione a voz de narração"></select>
+
+      <button class="btn" id="btnVoiceToggle" title="Ativar ou desativar áudio">
+        <span id="voiceMuteIcon">🔊</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Progress bar -->
+  <div class="presentation-progress">
+    <div class="progress-fill" id="progressFill"></div>
+  </div>
+
+  <!-- Main Slide Viewport -->
+  <main>
+
+    <!-- SLIDE 1: Capa & Proposta Estratégica -->
+    <div class="slide active" data-slide="1" data-title="Visão Geral">
+      <div class="card-panel">
+        <span class="slide-badge">Alinhamento Estratégico com o Cliente</span><span class="idd-selo idd-selo-proposta">🔭 PROPOSTA</span><span class="idd-nota">proposta de escopo ao cliente; não há app implementado</span>
+        <h1 class="slide-title">Gestão e Controle Operacional em Refrigeração</h1>
+        <p class="slide-subtitle">
+          Por que a manutenção de sistemas frigoríficos e ar condicionado central exige uma solução desenhada especificamente para os desafios da área térmica.
+        </p>
+
+        <div class="grid-3" style="margin-top: 15px;">
+          <div class="feature-box">
+            <div class="feature-icon">❄️</div>
+            <div class="feature-title">Ciclo Termodinâmico Real</div>
+            <p class="feature-desc">
+              Máquinas trabalham com gases pressurizados e trocas de calor críticas. Acompanhar pressões e temperaturas é indispensável para evitar quebras repentinas.
+            </p>
+          </div>
+
+          <div class="feature-box">
+            <div class="feature-icon">⚖️</div>
+            <div class="feature-title">Rigor Sanitário & PMOC</div>
+            <p class="feature-desc">
+              Cumprimento rigoroso da Lei 13.589/2018 com laudos técnicos válidos perante a Vigilância Sanitária e Responsável Técnico habilitado (CREA/CFT).
+            </p>
+          </div>
+
+          <div class="feature-box">
+            <div class="feature-icon">🛡️</div>
+            <div class="feature-title">Sustentabilidade e Custos</div>
+            <p class="feature-desc">
+              Controle de cargas e recolhimento de fluido refrigerante. Vazamento de gás representa prejuízo financeiro e infração ambiental.
+            </p>
+          </div>
+        </div>
+
+        <div style="margin-top: 22px; padding: 12px 18px; background: rgba(56, 189, 248, 0.08); border-left: 4px solid var(--cyan-frost); border-radius: 8px;">
+          <p style="font-size: 0.92rem; color: #e2e8f0;">
+            <strong>Objetivo desta apresentação:</strong> Validar em conjunto com a diretoria técnica as regras que o sistema deve cumprir e decidir o melhor tamanho de escopo para a primeira fase da empresa.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 2: O Desafio & O Que Falha Hoje -->
+    <div class="slide" data-slide="2" data-title="O Desafio">
+      <div class="card-panel">
+        <span class="slide-badge">Diagnóstico do Setor</span>
+        <h2 class="slide-title">Por que Softwares Genéricos Falham na Refrigeração?</h2>
+        <p class="slide-subtitle">
+          Na refrigeração comercial e industrial, a máquina não pode ser tratada como um ventilador ou lâmpada comum.
+        </p>
+
+        <div class="grid-2">
+          <!-- Coluna Esquerda: Erros Comuns -->
+          <div style="display: flex; flex-direction: column; gap: 14px;">
+            <div class="feature-box" style="border-left: 4px solid var(--rose-warn);">
+              <div class="feature-title" style="color: #f43f5e;">❌ Falta de Rastreio Termodinâmico</div>
+              <p class="feature-desc">O técnico anota que a máquina "está gelando", mas não registra o superaquecimento, a pressão de sucção ou a corrente do compressor. O compressor trava dias depois.</p>
+            </div>
+
+            <div class="feature-box" style="border-left: 4px solid var(--amber-alert);">
+              <div class="feature-title" style="color: #fbbf24;">⚠️ Risco Jurídico de Fiscalização do PMOC</div>
+              <p class="feature-desc">Ordens de serviço de papel que se perdem ou laudos preventivos sem comprovação fotográfica e sem vínculo a um profissional responsável geram autuações pesadas.</p>
+            </div>
+
+            <div class="feature-box" style="border-left: 4px solid var(--rose-warn);">
+              <div class="feature-title" style="color: #f43f5e;">📉 Desperdício Descontrolado de Gás Refrigerante</div>
+              <p class="feature-desc">Reposições repetidas de gás sem teste prévio de estanqueidade mascaram microvazamentos e elevam os custos operacionais da empresa.</p>
+            </div>
+          </div>
+
+          <!-- Coluna Direita: Ilustração Excalidraw Manifold e Equipamento -->
+          <div class="excalidraw-container">
+            <div class="excalidraw-badge">Diagnóstico em Campo ✏️</div>
+            
+            <svg viewBox="0 0 500 320" width="100%" height="240" style="overflow: visible;">
+              <!-- Condensadora Esboço -->
+              <rect x="30" y="50" width="180" height="150" rx="8" fill="#0f1d33" stroke="#38bdf8" stroke-width="2.5" stroke-dasharray="4 2" />
+              <circle cx="120" cy="110" r="45" fill="#091424" stroke="#60a5fa" stroke-width="2" />
+              <!-- Hélice / Ventilador -->
+              <path d="M120 75 Q135 110 120 145" stroke="#93c5fd" stroke-width="3" fill="none" />
+              <path d="M85 110 Q120 125 155 110" stroke="#93c5fd" stroke-width="3" fill="none" />
+              <text x="50" y="80" fill="#94a3b8" font-family="'Plus Jakarta Sans'" font-size="12" font-weight="bold">CONDENSADORA</text>
+              <text x="50" y="180" fill="#38bdf8" font-family="'Plus Jakarta Sans'" font-size="11">Pressão Descarga: Alta</text>
+
+              <!-- Conexão Frigorífica Tubulação -->
+              <path d="M210 90 L300 90" stroke="#f43f5e" stroke-width="4" stroke-linecap="round" />
+              <text x="220" y="80" fill="#f87171" font-size="10" font-weight="bold">Linha Líquido (Alta)</text>
+
+              <path d="M300 150 L210 150" stroke="#38bdf8" stroke-width="5" stroke-linecap="round" />
+              <text x="220" y="170" fill="#38bdf8" font-size="10" font-weight="bold">Linha Sucção (Baixa)</text>
+
+              <!-- Manifold Instrumento -->
+              <g transform="translate(300, 40)">
+                <rect x="10" y="20" width="150" height="160" rx="10" fill="#0e223d" stroke="#f59e0b" stroke-width="2.5" />
+                <circle cx="50" cy="70" r="28" fill="#071224" stroke="#38bdf8" stroke-width="3" />
+                <line x1="50" y1="70" x2="62" y2="55" stroke="#38bdf8" stroke-width="2.5" stroke-linecap="round" />
+                <text x="35" y="112" fill="#38bdf8" font-size="10" font-weight="bold">BAIXA</text>
+
+                <circle cx="120" cy="70" r="28" fill="#071224" stroke="#f43f5e" stroke-width="3" />
+                <line x1="120" y1="70" x2="135" y2="60" stroke="#f43f5e" stroke-width="2.5" stroke-linecap="round" />
+                <text x="108" y="112" fill="#f43f5e" font-size="10" font-weight="bold">ALTA</text>
+
+                <text x="35" y="150" fill="#ffd166" font-family="'Caveat'" font-size="17">Manifold Digital / Analógico</text>
+              </g>
+
+              <!-- Nota manuscrita explicativa -->
+              <text x="60" y="250" fill="#ffd166" font-family="'Caveat'" font-size="20">
+                "Não basta gelar: se o superaquecimento estiver fora, o compressor quebra!"
+              </text>
+            </svg>
+            <div style="font-size: 0.8rem; color: #94a3b8; text-align: center; margin-top: 5px;">
+              Esquema técnico de campo: verificação de pressões e vazão térmica
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 3: As Intenções do Negócio -->
+    <div class="slide" data-slide="3" data-title="Intenções">
+      <div class="card-panel">
+        <span class="slide-badge">O Que o Sistema Deverá Entregar</span><span class="idd-selo idd-selo-proposta">🔭 PROPOSTA</span>
+        <h2 class="slide-title">As Grandes Capacidades Operacionais</h2>
+        <p class="slide-subtitle">
+          O que a proposta prevê colocar nas mãos da sua equipe técnica e da gestão para controlar as máquinas e os contratos.
+        </p>
+
+        <div class="grid-3">
+          <div class="feature-box">
+            <div class="feature-icon">🏷️</div>
+            <div class="feature-title">Prontuário por QR Code</div>
+            <p class="feature-desc">
+              O técnico bate a câmera na condensadora ou evaporadora e acessa na hora: histórico completo de manutenções, peças trocadas e capacidade nominal (BTUs/TR).
+            </p>
+          </div>
+
+          <div class="feature-box">
+            <div class="feature-icon">📅</div>
+            <div class="feature-title">PMOC Automatizado</div>
+            <p class="feature-desc">
+              Calendários mensais e trimestrais gerados automaticamente. Checklists normativos com verificação de filtros, bandejas, dreno e aplicação de bactericida.
+            </p>
+          </div>
+
+          <div class="feature-box">
+            <div class="feature-icon">🚨</div>
+            <div class="feature-title">Chamados de Emergência</div>
+            <p class="feature-desc">
+              Triagem de severidade: prioridade máxima para câmaras frigoríficas de carnes/vacinas com risco de degelo imediato versus climatização de conforto.
+            </p>
+          </div>
+
+          <div class="feature-box">
+            <div class="feature-icon">🌡️</div>
+            <div class="feature-title">Rotina Técnica em Campo</div>
+            <p class="feature-desc">
+              Registro das pressões de sucção e descarga, temperatura ambiente, insuflamento e retorno (&Delta;T), fotos de antes e depois e assinatura do cliente na tela.
+            </p>
+          </div>
+
+          <div class="feature-box">
+            <div class="feature-icon">🧪</div>
+            <div class="feature-title">Controle de Fluidos (Gás)</div>
+            <p class="feature-desc">
+              Registro de quilos e gramas de fluido aplicado ou recolhido (R410A, R32, R134a, R404A), identificando possíveis vazamentos reincidentes.
+            </p>
+          </div>
+
+          <div class="feature-box">
+            <div class="feature-icon">📡</div>
+            <div class="feature-title">Trabalho Sem Conexão <span class="idd-selo idd-selo-proposta">🔭 PROPOSTA</span></div>
+            <p class="feature-desc">
+              O técnico atende normalmente dentro de subsolos, casas de máquinas ou câmaras frigoríficas isoladas. Proposta (offline-first, ainda não implementada): ao recuperar sinal, os dados seriam sincronizados automaticamente.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 4: As Invariantes (Regras Invioláveis) -->
+    <div class="slide" data-slide="4" data-title="Invariantes">
+      <div class="card-panel">
+        <span class="slide-badge">Segurança Jurídica & Integridade</span><span class="idd-selo idd-selo-proposta">🔭 PROPOSTA</span>
+        <h2 class="slide-title">Regras Inegociáveis do Negócio (Invariantes)</h2>
+        <p class="slide-subtitle">
+          Critérios que o sistema proposto <strong>deverá verificar e bloquear quando violados</strong>, reduzindo a exposição da empresa a passivos trabalhistas, fiscais e técnicos.
+        </p>
+
+        <div class="grid-2">
+          <div style="display: flex; flex-direction: column; gap: 15px;">
+            <div class="feature-box" style="border-left: 4px solid var(--emerald-ok);">
+              <div class="feature-title">
+                <span class="tag tag-safe">REGRA 1</span>
+                Laudo Concluído é Intocável
+              </div>
+              <p class="feature-desc">
+                Após o encerramento do serviço com assinatura do cliente, nenhum dado técnico, foto ou peça pode ser modificado. Qualquer alteração exige abrir uma ordem de revisão com registro formal.
+              </p>
+            </div>
+
+            <div class="feature-box" style="border-left: 4px solid var(--amber-alert);">
+              <div class="feature-title">
+                <span class="tag tag-law">REGRA 2</span>
+                Proibição de Datas Falsas no PMOC
+              </div>
+              <p class="feature-desc">
+                Se a preventiva de janeiro só foi executada em fevereiro, o sistema registra com a data real da presença física do técnico. O histórico não é maquiado para parecer em dia.
+              </p>
+            </div>
+          </div>
+
+          <div style="display: flex; flex-direction: column; gap: 15px;">
+            <div class="feature-box" style="border-left: 4px solid var(--cyan-frost);">
+              <div class="feature-title">
+                <span class="tag tag-gas">REGRA 3</span>
+                Validação Física Termodinâmica
+              </div>
+              <p class="feature-desc">
+                Em compressores operando normalmente, a pressão de descarga (alta) deve ser maior que a de sucção (baixa). Nenhuma recarga de gás é aceita com valores zerados ou negativos.
+              </p>
+            </div>
+
+            <div class="feature-box" style="border-left: 4px solid var(--emerald-ok);">
+              <div class="feature-title">
+                <span class="tag tag-law">REGRA 4</span>
+                Responsabilidade Técnica Ativa
+              </div>
+              <p class="feature-desc">
+                Para ambientes com carga térmica superior a 5 TR (60.000 BTUs), o plano de PMOC exige o registro de Engenheiro Mecânico ou Técnico em Refrigeração habilitado (CREA ou CFT).
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="sketch-note" style="margin-top: 20px; text-align: center;">
+          ✍️ "Estas regras foram pensadas para que seu laudo tenha a rastreabilidade exigida pela Vigilância Sanitária."
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 5: Diagrama do Ciclo Frigorífico & Atendimento -->
+    <div class="slide" data-slide="5" data-title="Fluxo Operacional">
+      <div class="card-panel">
+        <span class="slide-badge">Esquema Operacional</span><span class="idd-selo idd-selo-proposta">🔭 PROPOSTA</span>
+        <h2 class="slide-title">A Jornada do Atendimento Técnico em Campo</h2>
+        <p class="slide-subtitle">
+          Visualização em estilo esquemático de como a informação flui da máquina até o laudo final.
+        </p>
+
+        <div class="excalidraw-container">
+          <div class="excalidraw-badge">Fluxo de Conformidade Técnica 📐</div>
+          
+          <svg viewBox="0 0 920 320" width="100%" height="260">
+            <!-- Passo 1: Leitura QR Code -->
+            <g transform="translate(40, 40)">
+              <rect x="0" y="0" width="160" height="190" rx="12" fill="#0f223f" stroke="#38bdf8" stroke-width="2.5" />
+              <rect x="25" y="22" width="110" height="55" rx="6" fill="#091426" stroke="#60a5fa" stroke-width="1.5" />
+              <text x="45" y="55" fill="#38bdf8" font-family="'Outfit'" font-weight="bold" font-size="16">QR CODE</text>
+              <text x="20" y="110" fill="#f1f5f9" font-family="'Outfit'" font-weight="bold" font-size="14">1. Identificação</text>
+              <text x="20" y="135" fill="#94a3b8" font-size="11">Leitura do selo na condensadora ou evaporadora</text>
+            </g>
+
+            <!-- Seta 1 para 2 -->
+            <path d="M205 135 L245 135" stroke="#38bdf8" stroke-width="3" stroke-dasharray="4 2" />
+
+            <!-- Passo 2: Execução & Checklists -->
+            <g transform="translate(255, 40)">
+              <rect x="0" y="0" width="180" height="190" rx="12" fill="#0f223f" stroke="#10b981" stroke-width="2.5" />
+              <text x="20" y="38" fill="#34d399" font-family="'Outfit'" font-weight="bold" font-size="17">📋 CHECKLIST</text>
+              <text x="20" y="66" fill="#94a3b8" font-size="11">✓ Filtros limpos</text>
+              <text x="20" y="86" fill="#94a3b8" font-size="11">✓ Dreno desobstruído</text>
+              <text x="20" y="106" fill="#94a3b8" font-size="11">✓ Bactericida aplicado</text>
+              <text x="20" y="126" fill="#94a3b8" font-size="11">✓ Tensão e Corrente (A)</text>
+              <text x="20" y="165" fill="#f1f5f9" font-family="'Outfit'" font-weight="bold" font-size="13">2. Rotina Técnica</text>
+            </g>
+
+            <!-- Seta 2 para 3 -->
+            <path d="M440 135 L480 135" stroke="#10b981" stroke-width="3" stroke-dasharray="4 2" />
+
+            <!-- Passo 3: Medições e Gás -->
+            <g transform="translate(490, 40)">
+              <rect x="0" y="0" width="170" height="190" rx="12" fill="#0f223f" stroke="#f59e0b" stroke-width="2.5" />
+              <text x="20" y="38" fill="#fbbf24" font-family="'Outfit'" font-weight="bold" font-size="17">🌡️ MEDIÇÕES</text>
+              <text x="20" y="66" fill="#94a3b8" font-size="11">Pressão Baixa / Alta</text>
+              <text x="20" y="88" fill="#94a3b8" font-size="11">Delta T: Insufl./Retorno</text>
+              <text x="20" y="110" fill="#94a3b8" font-size="11">Pesagem de Gás (kg)</text>
+              <text x="20" y="165" fill="#f1f5f9" font-family="'Outfit'" font-weight="bold" font-size="13">3. Diagnóstico Físico</text>
+            </g>
+
+            <!-- Seta 3 para 4 -->
+            <path d="M665 135 L705 135" stroke="#f59e0b" stroke-width="3" stroke-dasharray="4 2" />
+
+            <!-- Passo 4: Assinatura e Bloqueio -->
+            <g transform="translate(715, 40)">
+              <rect x="0" y="0" width="165" height="190" rx="12" fill="#0f223f" stroke="#a855f7" stroke-width="2.5" />
+              <text x="20" y="38" fill="#c084fc" font-family="'Outfit'" font-weight="bold" font-size="17">🔒 LAUDO PMOC</text>
+              <text x="20" y="66" fill="#94a3b8" font-size="11">✓ Fotos Antes/Depois</text>
+              <text x="20" y="88" fill="#94a3b8" font-size="11">✓ Assinatura na tela</text>
+              <text x="20" y="110" fill="#94a3b8" font-size="11">✓ Dados Bloqueados</text>
+              <text x="20" y="165" fill="#f1f5f9" font-family="'Outfit'" font-weight="bold" font-size="13">4. Entrega e Auditoria</text>
+            </g>
+
+            <!-- Legenda inferior desenhada -->
+            <text x="260" y="275" fill="#ffd166" font-family="'Caveat'" font-size="22">
+              "Ciclo completo e rastreável: do campo até a gaveta de auditoria do cliente."
+            </text>
+          </svg>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 6: Dimensionamento de Escopo (Proposto vs. Alternativo) -->
+    <div class="slide" data-slide="6" data-title="Dimensionamento de Escopo">
+      <div class="card-panel">
+        <span class="slide-badge">Decisão Estratégica</span><span class="idd-selo idd-selo-proposta">🔭 PROPOSTA</span>
+        <h2 class="slide-title">Cenário Proposto vs. Cenário Alternativo</h2>
+        <p class="slide-subtitle">
+          Podemos ir direto para a solução completa ou focar primeiro no essencial com implantação imediata.
+        </p>
+
+        <table class="comp-table">
+          <thead>
+            <tr>
+              <th style="width: 28%;">Critério de Comparação</th>
+              <th style="width: 36%;">Cenário 1: Proposto (Solução Integral)</th>
+              <th style="width: 36%;" class="col-highlight">Cenário 2: Alternativo (Foco Ágil / Fase 1)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Objetivo Principal</strong></td>
+              <td>Controle corporativo total e conformidade integral de grandes plantas</td>
+              <td class="col-highlight">Eliminação imediata do papel e rotina rápida de campo</td>
+            </tr>
+            <tr>
+              <td><strong>Tempo de Implantação</strong></td>
+              <td>6 a 10 semanas (estimativa)</td>
+              <td class="col-highlight"><span style="color: #34d399; font-weight: bold;">3 a 4 semanas</span> (estimativa; entrada rápida em operação)</td>
+            </tr>
+            <tr>
+              <td><strong>Curva de Aprendizado</strong></td>
+              <td>Média (exige cálculo de superaquecimento e pesagem milimétrica)</td>
+              <td class="col-highlight">Baixa (fluxo direto de fotos, checklist e assinatura)</td>
+            </tr>
+            <tr>
+              <td><strong>Conformidade PMOC</strong></td>
+              <td>Laudo de engenharia automatizado completo com gráficos</td>
+              <td class="col-highlight">Laudo preventivo com checklist estruturado e fotos</td>
+            </tr>
+            <tr>
+              <td><strong>Fluidos Refrigerantes</strong></td>
+              <td>Balanço rigoroso por número de botija e logística reversa</td>
+              <td class="col-highlight">Registro operacional da quantidade inserida no serviço</td>
+            </tr>
+            <tr>
+              <td><strong>Investimento Inicial</strong></td>
+              <td>Completo e proporcional à profundidade da solução</td>
+              <td class="col-highlight">Faseado e de menor impacto inicial</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div style="margin-top: 16px; display: flex; justify-content: space-between; align-items: center;">
+          <div class="sketch-note">
+            💡 Recomendação: Iniciar pelo Cenário 2 para aculturar a equipe e expandir para o Cenário 1.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 7: Perguntas Estratégicas para o Refinamento -->
+    <div class="slide" data-slide="7" data-title="Próximos Passos">
+      <div class="card-panel">
+        <span class="slide-badge">Refinamento com o Cliente</span>
+        <h2 class="slide-title">4 Decisões Práticas para Fechar o Projeto</h2>
+        <p class="slide-subtitle">
+          Respostas objetivas que definirão o caminho exato do desenvolvimento:
+        </p>
+
+        <div class="grid-2">
+          <div class="q-card">
+            <div class="q-num">1</div>
+            <div>
+              <div class="q-title">Perfil Principal das Máquinas</div>
+              <p class="q-desc">
+                A maior parte do atendimento é em aparelhos compactos (Splits, Cassetes) ou maquinário pesado (VRF, Chillers, Câmaras Frigoríficas industriais)?
+              </p>
+            </div>
+          </div>
+
+          <div class="q-card">
+            <div class="q-num">2</div>
+            <div>
+              <div class="q-title">Instrumentação da Equipe de Campo</div>
+              <p class="q-desc">
+                Os técnicos utilizam ferramentas digitais ou usam manômetros convencionais analógicos de ponteiro nas rotinas diárias?
+              </p>
+            </div>
+          </div>
+
+          <div class="q-card">
+            <div class="q-num">3</div>
+            <div>
+              <div class="q-title">Rotina de Recolhimento de Gás</div>
+              <p class="q-desc">
+                A sua empresa costuma recolher fluido contaminado com máquina recolhedora para reciclagem ou o foco é estancar vazamentos e completar carga?
+              </p>
+            </div>
+          </div>
+
+          <div class="q-card">
+            <div class="q-num">4</div>
+            <div>
+              <div class="q-title">Responsabilidade Técnica (ART/TRT)</div>
+              <p class="q-desc">
+                A empresa já conta com Engenheiro Mecânico ou Técnico em Refrigeração próprio habilitado (CREA/CFT) ou terceiriza a assinatura técnica do PMOC?
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-top: 22px; text-align: center; padding: 16px; background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 12px;">
+          <h3 style="color: #34d399; font-family: 'Outfit'; font-size: 1.15rem; margin-bottom: 4px;">Tudo pronto para iniciarmos a prototipagem!</h3>
+          <p style="color: #94a3b8; font-size: 0.88rem;">
+            Com a sua escolha de escopo, partiremos imediatamente para a estrutura de telas e o fluxo operacional do mecânico.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Closed Caption / Subtitle Box -->
+    <div class="caption-box">
+      <span class="caption-icon">🎙️</span>
+      <span class="caption-text" id="captionText">
+        Clique em "Iniciar Apresentação com Voz" ou use as setas para navegar nos slides.
+      </span>
+    </div>
+
+  </main>
+
+  <!-- Bottom Bar: Counter & Navigation -->
+  <footer>
+    <div class="slide-counter">
+      Slide <span id="currentSlideNum">1</span> de <span id="totalSlidesNum">7</span>: 
+      <strong id="slideTitleDisplay" style="color: #fff; margin-left: 5px;">Visão Geral</strong>
+    </div>
+
+    <div class="nav-buttons">
+      <button class="btn" id="btnPrevSlide">← Anterior</button>
+      <button class="btn btn-primary" id="btnNextSlide">Próximo →</button>
+    </div>
+  </footer>
+
+  <!-- Script: Slide Engine + Speech Synthesis Voice System with Subtitles -->
+  <script>
+    const slideScripts = {
+      1: "Bem-vindos à apresentação de alinhamento da gestão e controle operacional em refrigeração e climatização. Nosso objetivo é definir as regras fundamentais e o escopo da solução para atender com precisão as exigências termodinâmicas, o PMOC da Lei 13.589 e a rastreabilidade ambiental dos fluidos refrigerantes.",
+      2: "Por que softwares genéricos de manutenção falham na refrigeração? Porque ignoram o ciclo térmico. Se o mecânico não registrar pressões de trabalho, superaquecimento e vazamentos reais, o compressor quebra pouco tempo depois. Além disso, a falta de histórico físico e laudos normativos expõe a empresa a pesadas autuações da Vigilância Sanitária.",
+      3: "Aqui apresentamos as grandes capacidades do sistema: prontuário do equipamento por QR Code, cronograma automatizado do PMOC com checklists de filtros e bactericidas, triagem rápida de chamados com prioridade para câmaras frigoríficas, rotina de campo com medição de pressões e temperaturas, e, como proposta ainda não implementada, funcionamento mesmo em subsolos e câmaras frias sem sinal de internet.",
+      4: "Estas são as regras inegociáveis propostas para o negócio: uma vez concluído o serviço e assinado pelo cliente, o laudo não poderia mais ser alterado. Datas do PMOC não podem ser retroagidas para simular conformidade. E na parte física, a pressão de descarga deve ser sempre maior que a de sucção, sob pena de bloqueio por inconsistência técnica.",
+      5: "Neste diagrama operacional, vemos o fluxo rigoroso de campo: o mecânico faz a leitura do QR Code na condensadora, executa o checklist normativo de limpeza e componentes elétricos, insere as medições de pressão e temperatura, e encerra o chamado com fotos de antes e depois e a assinatura digital do responsável no local.",
+      6: "Para dimensionar o projeto, apresentamos dois caminhos. O Cenário Proposto é a solução corporativa completa, ideal para grandes plantas industriais e múltiplos contratos de PMOC. O Cenário Alternativo foca no essencial de campo: eliminação rápida do papel, checklists com fotos e assinatura na tela com estimativa de três a quatro semanas de implantação.",
+      7: "Para concluirmos a definição do projeto, precisamos do seu direcionamento em quatro pontos: o porte predominante dos equipamentos, se a equipe utiliza manômetros digitais ou analógicos, a rotina atual de recolhimento de gás refrigerante, e se a responsabilidade técnica do CREA ou CFT é própria ou terceirizada. Estamos prontos para iniciar!"
+    };
+
+    let currentSlide = 1;
+    const totalSlides = 7;
+    let isPlaying = false;
+    let isContinuous = true;
+    let isVoiceMuted = false;
+    let synth = window.speechSynthesis;
+    let currentUtterance = null;
+    let advanceTimeout = null;
+    let speechHeartbeat = null;
+    let availableVoices = [];
+
+    // Elements
+    const slides = document.querySelectorAll('.slide');
+    const currentSlideNumEl = document.getElementById('currentSlideNum');
+    const totalSlidesNumEl = document.getElementById('totalSlidesNum');
+    const slideTitleDisplayEl = document.getElementById('slideTitleDisplay');
+    const progressFillEl = document.getElementById('progressFill');
+    const captionTextEl = document.getElementById('captionText');
+    const btnPlayPause = document.getElementById('btnPlayPause');
+    const playIcon = document.getElementById('playIcon');
+    const playLabel = document.getElementById('playLabel');
+    const audioWave = document.getElementById('audioWave');
+    const btnModeContinuous = document.getElementById('btnModeContinuous');
+    const btnModePaused = document.getElementById('btnModePaused');
+    const btnVoiceToggle = document.getElementById('btnVoiceToggle');
+    const voiceMuteIcon = document.getElementById('voiceMuteIcon');
+    const voiceSelectEl = document.getElementById('voiceSelect');
+    const btnPrevSlide = document.getElementById('btnPrevSlide');
+    const btnNextSlide = document.getElementById('btnNextSlide');
+
+    totalSlidesNumEl.textContent = totalSlides;
+
+    // Populate Voice Selection List
+    function populateVoices() {
+      if (!synth) return;
+      availableVoices = synth.getVoices();
+      voiceSelectEl.innerHTML = '';
+
+      const ptVoices = availableVoices.filter(v => v.lang.startsWith('pt'));
+      const voicesToUse = ptVoices.length > 0 ? ptVoices : availableVoices;
+
+      voicesToUse.forEach((voice, index) => {
+        const option = document.createElement('option');
+        option.value = voice.name;
+        option.textContent = `${voice.name.replace(/Microsoft|Google/g, '').trim()} (${voice.lang})`;
+        if (voice.lang === 'pt-BR' && option.value.includes('Maria') || index === 0) {
+          option.selected = true;
+        }
+        voiceSelectEl.appendChild(option);
+      });
+
+      if (voicesToUse.length === 0) {
+        const option = document.createElement('option');
+        option.value = "";
+        option.textContent = "Voz padrão do sistema";
+        voiceSelectEl.appendChild(option);
+      }
+    }
+
+    if (synth) {
+      populateVoices();
+      if (synth.onvoiceschanged !== undefined) {
+        synth.onvoiceschanged = populateVoices;
+      }
+    }
+
+    // Slide Navigation Function
+    function goToSlide(index) {
+      if (index < 1 || index > totalSlides) return;
+
+      clearTimeout(advanceTimeout);
+      clearInterval(speechHeartbeat);
+
+      if (synth && synth.speaking) {
+        synth.cancel();
+      }
+      audioWave.classList.remove('speaking');
+
+      slides.forEach(slide => slide.classList.remove('active'));
+      const activeSlide = document.querySelector(`.slide[data-slide="${index}"]`);
+      if (activeSlide) {
+        activeSlide.classList.add('active');
+        currentSlide = index;
+        currentSlideNumEl.textContent = currentSlide;
+        slideTitleDisplayEl.textContent = activeSlide.dataset.title || '';
+        progressFillEl.style.width = `${(currentSlide / totalSlides) * 100}%`;
+      }
+
+      captionTextEl.textContent = slideScripts[currentSlide] || "";
+
+      if (isPlaying && !isVoiceMuted) {
+        speakCurrentSlide();
+      }
+    }
+
+    // Voice Synthesis with Heartbeat & Chrome Stability Fix
+    function speakCurrentSlide() {
+      if (!synth || isVoiceMuted) {
+        handleSlideSpeechEnd();
+        return;
+      }
+
+      synth.cancel();
+      clearInterval(speechHeartbeat);
+
+      const text = slideScripts[currentSlide] || "";
+      captionTextEl.textContent = text;
+
+      currentUtterance = new SpeechSynthesisUtterance(text);
+      currentUtterance.lang = 'pt-BR';
+      currentUtterance.rate = 1.05;
+      currentUtterance.pitch = 1.0;
+
+      // Select chosen voice
+      const selectedVoiceName = voiceSelectEl.value;
+      if (selectedVoiceName && availableVoices.length > 0) {
+        const found = availableVoices.find(v => v.name === selectedVoiceName);
+        if (found) currentUtterance.voice = found;
+      } else {
+        const ptVoice = availableVoices.find(v => v.lang === 'pt-BR');
+        if (ptVoice) currentUtterance.voice = ptVoice;
+      }
+
+      currentUtterance.onstart = () => {
+        audioWave.classList.add('speaking');
+        // Speech heartbeat to prevent Chrome silent freeze on long utterances
+        speechHeartbeat = setInterval(() => {
+          if (synth.speaking && !synth.paused) {
+            synth.pause();
+            synth.resume();
+          }
+        }, 12000);
+      };
+
+      currentUtterance.onend = () => {
+        clearInterval(speechHeartbeat);
+        audioWave.classList.remove('speaking');
+        handleSlideSpeechEnd();
+      };
+
+      currentUtterance.onerror = (e) => {
+        clearInterval(speechHeartbeat);
+        audioWave.classList.remove('speaking');
+        handleSlideSpeechEnd();
+      };
+
+      synth.speak(currentUtterance);
+    }
+
+    function handleSlideSpeechEnd() {
+      if (!isPlaying) return;
+
+      if (isContinuous) {
+        if (currentSlide < totalSlides) {
+          advanceTimeout = setTimeout(() => {
+            goToSlide(currentSlide + 1);
+          }, 1800);
+        } else {
+          stopPresentation();
+        }
+      } else {
+        audioWave.classList.remove('speaking');
+      }
+    }
+
+    function startPresentation() {
+      isPlaying = true;
+      playIcon.textContent = "⏸";
+      playLabel.textContent = "Pausar";
+      speakCurrentSlide();
+    }
+
+    function pausePresentation() {
+      isPlaying = false;
+      clearTimeout(advanceTimeout);
+      clearInterval(speechHeartbeat);
+      if (synth && synth.speaking) {
+        synth.cancel();
+      }
+      playIcon.textContent = "▶";
+      playLabel.textContent = "Continuar";
+      audioWave.classList.remove('speaking');
+    }
+
+    function stopPresentation() {
+      isPlaying = false;
+      clearTimeout(advanceTimeout);
+      clearInterval(speechHeartbeat);
+      playIcon.textContent = "▶";
+      playLabel.textContent = "Reiniciar Apresentação";
+      audioWave.classList.remove('speaking');
+    }
+
+    // Event Listeners
+    btnPlayPause.addEventListener('click', () => {
+      if (!isPlaying) {
+        startPresentation();
+      } else {
+        pausePresentation();
+      }
+    });
+
+    btnModeContinuous.addEventListener('click', () => {
+      isContinuous = true;
+      btnModeContinuous.classList.add('active');
+      btnModePaused.classList.remove('active');
+    });
+
+    btnModePaused.addEventListener('click', () => {
+      isContinuous = false;
+      btnModePaused.classList.add('active');
+      btnModeContinuous.classList.remove('active');
+      clearTimeout(advanceTimeout);
+    });
+
+    btnVoiceToggle.addEventListener('click', () => {
+      isVoiceMuted = !isVoiceMuted;
+      if (isVoiceMuted) {
+        voiceMuteIcon.textContent = "🔇";
+        if (synth && synth.speaking) synth.cancel();
+        audioWave.classList.remove('speaking');
+      } else {
+        voiceMuteIcon.textContent = "🔊";
+        if (isPlaying) speakCurrentSlide();
+      }
+    });
+
+    voiceSelectEl.addEventListener('change', () => {
+      if (isPlaying) {
+        speakCurrentSlide();
+      }
+    });
+
+    btnPrevSlide.addEventListener('click', () => {
+      if (currentSlide > 1) {
+        goToSlide(currentSlide - 1);
+      }
+    });
+
+    btnNextSlide.addEventListener('click', () => {
+      if (currentSlide < totalSlides) {
+        goToSlide(currentSlide + 1);
+      }
+    });
+
+    // Keyboard Shortcuts
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight' || e.key === 'PageDown') {
+        if (currentSlide < totalSlides) goToSlide(currentSlide + 1);
+      } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+        if (currentSlide > 1) goToSlide(currentSlide - 1);
+      } else if (e.key === ' ') {
+        e.preventDefault();
+        btnPlayPause.click();
+      }
+    });
+
+    // Initialize Caption
+    captionTextEl.textContent = slideScripts[1];
+  </script>
+</body>
+</html>

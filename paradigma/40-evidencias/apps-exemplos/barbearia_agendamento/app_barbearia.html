@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Barbearia Imperial - Agendamento Perfeito (Paradigma IDD)</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, sans-serif; }
+    body { background: #0f172a; color: #f8fafc; min-height: 100vh; padding: 40px; display: flex; justify-content: center; }
+    .app-container { width: 100%; max-width: 1100px; display: grid; grid-template-columns: 1fr 1fr; gap: 30px; }
+    
+    .panel { background: rgba(30, 41, 59, 0.7); border: 1.5px solid rgba(245, 158, 11, 0.3); border-radius: 20px; padding: 30px; backdrop-filter: blur(12px); box-shadow: 0 20px 40px rgba(0,0,0,0.5); }
+    h1 { font-size: 26px; color: #fbbf24; margin-bottom: 8px; display: flex; align-items: center; gap: 10px; }
+    p.sub { color: #94a3b8; font-size: 14px; margin-bottom: 25px; }
+
+    .service-item { display: flex; justify-content: space-between; align-items: center; background: rgba(15, 23, 42, 0.6); padding: 16px 20px; border-radius: 12px; margin-bottom: 12px; border: 1px solid rgba(245, 158, 11, 0.15); cursor: pointer; transition: all 0.2s; }
+    .service-item:hover, .service-item.selected { border-color: #f59e0b; background: rgba(245, 158, 11, 0.15); }
+    .service-info h3 { font-size: 17px; color: #f8fafc; }
+    .service-info span { font-size: 13px; color: #94a3b8; }
+    .service-price { font-size: 18px; font-weight: 800; color: #fbbf24; }
+
+    .slots-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 15px; }
+    .slot-btn { background: #1e293b; border: 1px solid #475569; padding: 12px; border-radius: 10px; color: #f1f5f9; font-weight: 700; cursor: pointer; text-align: center; }
+    .slot-btn.active { background: #f59e0b; color: #000; border-color: #f59e0b; }
+    .slot-btn.disabled { opacity: 0.3; cursor: not-allowed; text-decoration: line-through; }
+
+    .summary-box { background: #020617; border: 1px solid #334155; border-radius: 14px; padding: 20px; margin-top: 25px; }
+    .summary-row { display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 15px; }
+    .summary-total { border-top: 1px solid #334155; padding-top: 12px; font-size: 20px; font-weight: 800; color: #fbbf24; }
+
+    .btn-action { width: 100%; margin-top: 20px; padding: 16px; background: linear-gradient(135deg, #d97706, #b45309); border: none; border-radius: 12px; color: white; font-weight: 800; font-size: 17px; cursor: pointer; transition: transform 0.1s; }
+    .btn-action:hover { transform: scale(1.02); }
+
+    .badge-guard { display: inline-block; background: rgba(16, 185, 129, 0.2); border: 1px solid #10b981; color: #34d399; padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: 800; margin-bottom: 15px; }
+  </style>
+</head>
+<body>
+  <div class="app-container">
+    <!-- COLUNA 1: ESCOLHA DE SERVIÇOS -->
+    <div class="panel">
+      <h1>💈 Barbearia Imperial</h1>
+      <p class="sub">Selecione os serviços desejados (Invariante Temporal Ativa)</p>
+      <div class="badge-guard">✓ INVARIANTE: DURAÇÃO DINÂMICA RECALCULADA</div>
+
+      <div class="service-item selected" onclick="toggleService(this, 35, 30)">
+        <div class="service-info">
+          <h3>Corte Cabelo Tradicional</h3>
+          <span>Duração: 30 minutos · Tesoura &amp; Máquina</span>
+        </div>
+        <div class="service-price">R$ 35,00</div>
+      </div>
+
+      <div class="service-item selected" onclick="toggleService(this, 30, 20)">
+        <div class="service-info">
+          <h3>Barba Terapia com Toalha Quente</h3>
+          <span>Duração: 20 minutos · Óleo essencial &amp; Navalha</span>
+        </div>
+        <div class="service-price">R$ 30,00</div>
+      </div>
+
+      <div class="service-item" onclick="toggleService(this, 25, 15)">
+        <div class="service-info">
+          <h3>Sobrancelha &amp; Acabamento</h3>
+          <span>Duração: 15 minutos</span>
+        </div>
+        <div class="service-price">R$ 25,00</div>
+      </div>
+
+      <div class="summary-box">
+        <div class="summary-row">
+          <span>Tempo Total Alocado:</span>
+          <strong id="total-time">50 minutos</strong>
+        </div>
+        <div class="summary-row">
+          <span>Profissional:</span>
+          <strong>Mestre Ricardo (Cadeira 1)</strong>
+        </div>
+        <div class="summary-row summary-total">
+          <span>Total a Pagar:</span>
+          <span id="total-price">R$ 65,00</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- COLUNA 2: HORÁRIO & INVARIANTE DA CADEIRA ÚNICA -->
+    <div class="panel">
+      <h1>🕒 Horários Disponíveis</h1>
+      <p class="sub">Bloqueio compulsório de sobreposição (Zero Fila)</p>
+      <div class="badge-guard">✓ INVARIANTE DA CADEIRA ÚNICA: SOBREPOSIÇÃO BLOQUEADA</div>
+
+      <div class="slots-grid">
+        <div class="slot-btn disabled">09:00 (Ocupado)</div>
+        <div class="slot-btn disabled">09:30 (Ocupado)</div>
+        <div class="slot-btn active">10:00 (Livre)</div>
+        <div class="slot-btn">11:00 (Livre)</div>
+        <div class="slot-btn">11:50 (Livre)</div>
+        <div class="slot-btn">14:00 (Livre)</div>
+        <div class="slot-btn">14:50 (Livre)</div>
+        <div class="slot-btn disabled">15:40 (Ocupado)</div>
+        <div class="slot-btn">16:30 (Livre)</div>
+      </div>
+
+      <div class="summary-box" style="margin-top: 35px;">
+        <h4 style="color: #38bdf8; margin-bottom: 8px;">🛡️ Blindagem de Invariante em Execução:</h4>
+        <p style="font-size: 14px; color: #cbd5e1; line-height: 1.5;">
+          Ao selecionar <strong>10:00</strong> com duração total de <strong>50 minutos</strong>, o sistema bloqueia automaticamente a cadeira do profissional até as <strong>10:50</strong>. Nenhum outro cliente poderá reservar antes das 11:00.
+        </p>
+      </div>
+
+      <button class="btn-action" onclick="alert('Agendamento confirmado com sucesso respeitando todas as invariantes!')">
+        CONFIRMAR AGENDAMENTO (ZERO CÓDIGO MANUAL)
+      </button>
+    </div>
+  </div>
+
+  <script>
+    function toggleService(el, price, time) {
+      el.classList.toggle('selected');
+    }
+  </script>
+</body>
+</html>

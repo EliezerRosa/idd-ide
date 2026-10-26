@@ -1,0 +1,1355 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IDD — Desenvolvimento Orientado à Intenção | RVM Designações</title>
+<style>
+/* ═══════════════ RESET & BASE ═══════════════ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 16px; scroll-behavior: smooth; }
+body {
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  background: #0a0a1a;
+  color: #e0e0e8;
+  overflow: hidden;
+  height: 100vh;
+  width: 100vw;
+}
+
+/* ═══════════════ NAVIGATION ═══════════════ */
+.nav-bar {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 8px 24px;
+  background: rgba(10,10,26,0.95);
+  border-bottom: 1px solid rgba(100,100,200,0.2);
+  backdrop-filter: blur(12px);
+}
+.nav-bar .logo { font-weight: 700; font-size: 1rem; color: #8b8bff; letter-spacing: 1px; }
+.nav-tabs { display: flex; gap: 4px; }
+.nav-tab {
+  padding: 6px 14px; border-radius: 6px; cursor: pointer;
+  font-size: 0.78rem; font-weight: 600; letter-spacing: 0.3px;
+  transition: all 0.25s; border: 1px solid transparent;
+  color: #888;
+}
+.nav-tab:hover { color: #bbb; background: rgba(255,255,255,0.05); }
+.nav-tab.active { color: #fff; border-color: rgba(100,100,255,0.4); background: rgba(100,100,255,0.12); }
+.nav-tab[data-perspective="user"] { --accent: #4ecdc4; }
+.nav-tab[data-perspective="dev"] { --accent: #8b8bff; }
+.nav-tab[data-perspective="future"] { --accent: #ff6b9d; }
+.nav-tab.active[data-perspective="user"] { color: #4ecdc4; border-color: rgba(78,205,196,0.4); background: rgba(78,205,196,0.12); }
+.nav-tab.active[data-perspective="dev"] { color: #8b8bff; border-color: rgba(139,139,255,0.4); background: rgba(139,139,255,0.12); }
+.nav-tab.active[data-perspective="future"] { color: #ff6b9d; border-color: rgba(255,107,157,0.4); background: rgba(255,107,157,0.12); }
+
+.nav-controls { display: flex; gap: 8px; align-items: center; }
+.nav-btn {
+  width: 34px; height: 34px; border-radius: 8px; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1);
+  color: #aaa; font-size: 1rem; transition: all 0.2s;
+}
+.nav-btn:hover { background: rgba(255,255,255,0.12); color: #fff; }
+.nav-btn.playing { color: #4ecdc4; border-color: rgba(78,205,196,0.4); background: rgba(78,205,196,0.12); }
+.slide-counter { font-size: 0.75rem; color: #666; min-width: 50px; text-align: center; font-variant-numeric: tabular-nums; }
+
+/* ═══════════════ VOICE CONTROLS ═══════════════ */
+.voice-panel {
+  position: fixed; top: 52px; right: 16px; z-index: 99;
+  background: rgba(20,20,40,0.96); border: 1px solid rgba(100,100,200,0.2);
+  border-radius: 12px; padding: 14px 18px;
+  display: none; min-width: 260px;
+  backdrop-filter: blur(12px);
+}
+.voice-panel.open { display: block; }
+.voice-panel label { display: block; font-size: 0.72rem; color: #888; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.5px; }
+.voice-panel select, .voice-panel input[type="range"] {
+  width: 100%; margin-bottom: 12px; background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.1); color: #ddd;
+  border-radius: 6px; padding: 6px 8px; font-size: 0.82rem;
+}
+.voice-panel input[type="range"] { padding: 2px; height: 6px; -webkit-appearance: none; appearance: none; }
+.voice-panel input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; width: 14px; height: 14px; background: #8b8bff; border-radius: 50%; cursor: pointer; }
+
+/* ═══════════════ PROGRESS BAR ═══════════════ */
+.progress-track {
+  position: fixed; top: 51px; left: 0; right: 0; height: 3px; z-index: 98;
+  background: rgba(255,255,255,0.05);
+}
+.progress-fill {
+  height: 100%; width: 0%; transition: width 0.4s ease;
+  background: linear-gradient(90deg, #4ecdc4, #8b8bff, #ff6b9d);
+}
+
+/* ═══════════════ SLIDES CONTAINER ═══════════════ */
+.slides-viewport {
+  position: fixed; top: 54px; left: 0; right: 0; bottom: 0;
+  overflow: hidden;
+}
+.slide {
+  position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+  display: flex; flex-direction: column; justify-content: center; align-items: center;
+  padding: 40px 60px;
+  opacity: 0; transform: translateX(60px);
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  pointer-events: none;
+  overflow-y: auto;
+}
+.slide.active {
+  opacity: 1; transform: translateX(0);
+  pointer-events: auto;
+}
+.slide.exit-left {
+  opacity: 0; transform: translateX(-60px);
+}
+
+/* ═══════════════ SLIDE CONTENT TYPES ═══════════════ */
+.slide-inner {
+  max-width: 960px; width: 100%; text-align: left;
+}
+.slide-section-label {
+  font-size: 0.7rem; text-transform: uppercase; letter-spacing: 2px;
+  margin-bottom: 10px; font-weight: 600;
+}
+.perspective-user .slide-section-label { color: #4ecdc4; }
+.perspective-dev .slide-section-label { color: #8b8bff; }
+.perspective-future .slide-section-label { color: #ff6b9d; }
+
+h1 { font-size: 2.6rem; font-weight: 800; line-height: 1.15; margin-bottom: 18px; }
+h2 { font-size: 1.8rem; font-weight: 700; line-height: 1.25; margin-bottom: 14px; }
+h3 { font-size: 1.2rem; font-weight: 600; line-height: 1.3; margin-bottom: 10px; color: #bbb; }
+
+.subtitle { font-size: 1.1rem; color: #999; line-height: 1.6; margin-bottom: 20px; }
+.lead { font-size: 1.05rem; color: #bbb; line-height: 1.7; margin-bottom: 16px; }
+p { font-size: 0.95rem; color: #aaa; line-height: 1.7; margin-bottom: 12px; }
+
+.quote-block {
+  border-left: 3px solid; padding: 16px 20px; margin: 20px 0;
+  background: rgba(255,255,255,0.03); border-radius: 0 8px 8px 0;
+  font-style: italic; font-size: 1.05rem; color: #ccc; line-height: 1.6;
+}
+.perspective-user .quote-block { border-color: #4ecdc4; }
+.perspective-dev .quote-block { border-color: #8b8bff; }
+.perspective-future .quote-block { border-color: #ff6b9d; }
+
+.quote-author { font-size: 0.8rem; color: #888; font-style: normal; margin-top: 8px; display: block; }
+
+/* ═══════════════ CARDS & GRIDS ═══════════════ */
+.card-grid { display: grid; gap: 16px; margin: 20px 0; }
+.card-grid-2 { grid-template-columns: 1fr 1fr; }
+.card-grid-3 { grid-template-columns: 1fr 1fr 1fr; }
+
+.card {
+  background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 12px; padding: 20px; transition: all 0.3s;
+}
+.card:hover { background: rgba(255,255,255,0.07); border-color: rgba(255,255,255,0.15); transform: translateY(-2px); }
+.card-icon { font-size: 1.8rem; margin-bottom: 10px; display: block; }
+.card-title { font-size: 0.95rem; font-weight: 700; color: #ddd; margin-bottom: 6px; }
+.card-text { font-size: 0.82rem; color: #999; line-height: 1.6; }
+
+/* ═══════════════ COMPARISON TABLE ═══════════════ */
+.compare-table { width: 100%; border-collapse: separate; border-spacing: 0; margin: 20px 0; }
+.compare-table th, .compare-table td { padding: 10px 14px; text-align: left; font-size: 0.85rem; }
+.compare-table th { color: #888; font-weight: 600; text-transform: uppercase; font-size: 0.72rem; letter-spacing: 0.5px; border-bottom: 1px solid rgba(255,255,255,0.1); }
+.compare-table td { color: #bbb; border-bottom: 1px solid rgba(255,255,255,0.04); }
+.compare-table tr:last-child td { border-bottom: none; }
+.badge { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 0.72rem; font-weight: 600; }
+.badge-done { background: rgba(78,205,196,0.15); color: #4ecdc4; }
+.badge-partial { background: rgba(255,180,50,0.15); color: #ffb432; }
+.badge-planned { background: rgba(139,139,255,0.15); color: #8b8bff; }
+.badge-blocked { background: rgba(255,80,80,0.15); color: #ff5050; }
+
+/* ═══════════════ FLOW DIAGRAM ═══════════════ */
+.flow-vertical { display: flex; flex-direction: column; align-items: center; gap: 4px; margin: 20px 0; }
+.flow-step {
+  width: 100%; max-width: 600px; padding: 14px 20px;
+  background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 10px; display: flex; align-items: center; gap: 14px;
+  transition: all 0.3s;
+}
+.flow-step:hover { background: rgba(255,255,255,0.07); }
+.flow-num {
+  width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+  font-weight: 800; font-size: 0.85rem; flex-shrink: 0;
+}
+.perspective-user .flow-num { background: rgba(78,205,196,0.2); color: #4ecdc4; }
+.perspective-dev .flow-num { background: rgba(139,139,255,0.2); color: #8b8bff; }
+.perspective-future .flow-num { background: rgba(255,107,157,0.2); color: #ff6b9d; }
+.flow-arrow { color: #555; font-size: 1.2rem; }
+.flow-label { font-size: 0.88rem; color: #ccc; }
+.flow-detail { font-size: 0.75rem; color: #888; display: block; margin-top: 2px; }
+
+/* ═══════════════ TIMELINE ═══════════════ */
+.timeline { position: relative; margin: 20px 0 20px 20px; padding-left: 24px; border-left: 2px solid rgba(255,255,255,0.1); }
+.timeline-item { position: relative; margin-bottom: 20px; }
+.timeline-item::before {
+  content: ''; position: absolute; left: -30px; top: 6px;
+  width: 12px; height: 12px; border-radius: 50%;
+  border: 2px solid; background: #0a0a1a;
+}
+.perspective-user .timeline-item::before { border-color: #4ecdc4; }
+.perspective-dev .timeline-item::before { border-color: #8b8bff; }
+.perspective-future .timeline-item::before { border-color: #ff6b9d; }
+.timeline-date { font-size: 0.72rem; color: #888; text-transform: uppercase; letter-spacing: 0.5px; }
+.timeline-title { font-size: 0.95rem; color: #ddd; font-weight: 600; margin: 4px 0 2px; }
+.timeline-desc { font-size: 0.82rem; color: #999; line-height: 1.5; }
+
+/* ═══════════════ CODE BLOCK ═══════════════ */
+.code-block {
+  background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 10px; padding: 16px 20px; margin: 16px 0;
+  font-family: 'Cascadia Code', 'Fira Code', 'JetBrains Mono', monospace;
+  font-size: 0.8rem; line-height: 1.6; color: #c8c8d8;
+  overflow-x: auto; white-space: pre;
+}
+.code-keyword { color: #c792ea; }
+.code-string { color: #c3e88d; }
+.code-comment { color: #546e7a; }
+.code-type { color: #ffcb6b; }
+.code-fn { color: #82aaff; }
+
+/* ═══════════════ HIGHLIGHT BOXES ═══════════════ */
+.highlight-box {
+  border-radius: 12px; padding: 20px 24px; margin: 16px 0;
+}
+.highlight-insight { background: rgba(78,205,196,0.08); border: 1px solid rgba(78,205,196,0.2); }
+.highlight-technical { background: rgba(139,139,255,0.08); border: 1px solid rgba(139,139,255,0.2); }
+.highlight-vision { background: rgba(255,107,157,0.08); border: 1px solid rgba(255,107,157,0.2); }
+.highlight-box .highlight-title { font-weight: 700; font-size: 0.9rem; margin-bottom: 6px; }
+.highlight-insight .highlight-title { color: #4ecdc4; }
+.highlight-technical .highlight-title { color: #8b8bff; }
+.highlight-vision .highlight-title { color: #ff6b9d; }
+
+/* ═══════════════ SPEAKING INDICATOR ═══════════════ */
+.speaking-indicator {
+  position: fixed; bottom: 16px; right: 16px; z-index: 100;
+  display: flex; align-items: center; gap: 8px;
+  padding: 8px 14px; border-radius: 20px;
+  background: rgba(78,205,196,0.12); border: 1px solid rgba(78,205,196,0.3);
+  opacity: 0; transition: opacity 0.3s;
+  pointer-events: none;
+}
+.speaking-indicator.active { opacity: 1; }
+.speaking-bars { display: flex; gap: 2px; align-items: center; height: 16px; }
+.speaking-bar {
+  width: 3px; background: #4ecdc4; border-radius: 2px;
+  animation: speak-bar 0.6s ease-in-out infinite alternate;
+}
+.speaking-bar:nth-child(1) { height: 6px; animation-delay: 0s; }
+.speaking-bar:nth-child(2) { height: 12px; animation-delay: 0.15s; }
+.speaking-bar:nth-child(3) { height: 8px; animation-delay: 0.3s; }
+.speaking-bar:nth-child(4) { height: 14px; animation-delay: 0.1s; }
+.speaking-bar:nth-child(5) { height: 5px; animation-delay: 0.25s; }
+@keyframes speak-bar {
+  to { height: 4px; }
+}
+.speaking-label { font-size: 0.72rem; color: #4ecdc4; font-weight: 600; }
+
+/* ═══════════════ RESPONSIVE ═══════════════ */
+@media (max-width: 768px) {
+  .slide { padding: 24px 20px; }
+  h1 { font-size: 1.8rem; }
+  h2 { font-size: 1.3rem; }
+  .card-grid-2, .card-grid-3 { grid-template-columns: 1fr; }
+  .nav-tabs { display: none; }
+}
+
+/* ═══════════════ KEYBOARD HINT ═══════════════ */
+.keyboard-hint {
+  position: fixed; bottom: 16px; left: 16px; z-index: 100;
+  font-size: 0.68rem; color: #555; display: flex; gap: 12px;
+}
+.keyboard-hint kbd {
+  display: inline-block; padding: 2px 6px; border-radius: 3px;
+  background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1);
+  font-family: inherit; font-size: 0.68rem; color: #888;
+}
+</style>
+<style id="idd-selos-style">
+/* idd- : selos de status (Cânone v1.0-rc1) */
+html body #idd-status-banner{position:fixed;bottom:2px;left:50%;transform:translateX(-50%);z-index:2147483000;max-width:94vw;margin:0;padding:2px 10px;font:500 10.5px/1.45 system-ui,-apple-system,'Segoe UI',sans-serif;letter-spacing:0;color:#e6e6ee;background:rgba(12,12,24,.82);border:1px solid rgba(255,255,255,.16);border-radius:6px;pointer-events:none;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;-webkit-text-fill-color:currentColor;text-align:center}
+html body span.idd-selo{display:inline-block;margin-left:.45em;padding:1px 7px;border-radius:4px;font:600 11px/1.5 system-ui,-apple-system,'Segoe UI',sans-serif;letter-spacing:.2px;text-transform:none;vertical-align:middle;white-space:nowrap;color:#e8e8f0;-webkit-text-fill-color:currentColor;background:rgba(255,255,255,.08);background-clip:border-box;-webkit-background-clip:border-box;border:1px solid rgba(255,255,255,.22)}
+html body span.idd-selo.idd-selo-ok{color:#7ee2b8;border-color:rgba(126,226,184,.45);background:rgba(126,226,184,.10)}
+html body span.idd-selo.idd-selo-demo{color:#ffd27a;border-color:rgba(255,210,122,.45);background:rgba(255,210,122,.10)}
+html body span.idd-selo.idd-selo-prop{color:#c4b5fd;border-color:rgba(196,181,253,.45);background:rgba(196,181,253,.10)}
+</style>
+</head>
+<body>
+<div id="idd-status-banner" role="note">✅ IMPLEMENTADO no RVM Designações (trechos 🔭 sinalizados) · Cânone v1.0-rc1 · ✅ implementado · 🧪 demonstração · 🔭 proposta</div>
+
+<!-- ═══════════════ NAVIGATION BAR ═══════════════ -->
+<nav class="nav-bar">
+  <div class="logo">IDD &middot; RVM</div>
+  <div class="nav-tabs">
+    <div class="nav-tab active" data-perspective="user" onclick="switchPerspective('user')">Usuário Final</div>
+    <div class="nav-tab" data-perspective="dev" onclick="switchPerspective('dev')">Desenvolvedor</div>
+    <div class="nav-tab" data-perspective="future" onclick="switchPerspective('future')">Profissional do Futuro</div>
+  </div>
+  <div class="nav-controls">
+    <button class="nav-btn" id="btnVoice" onclick="toggleVoicePanel()" title="Configurar voz">🔊</button>
+    <button class="nav-btn" id="btnPlayPause" onclick="toggleNarration()" title="Narrar slide">▶</button>
+    <button class="nav-btn" id="btnAutoPlay" onclick="toggleAutoPlay()" title="Auto-avançar com narração">⏭</button>
+    <button class="nav-btn" onclick="prevSlide()" title="Anterior">◀</button>
+    <span class="slide-counter" id="slideCounter">1 / 1</span>
+    <button class="nav-btn" onclick="nextSlide()" title="Próximo">▶</button>
+  </div>
+</nav>
+
+<!-- ═══════════════ VOICE PANEL ═══════════════ -->
+<div class="voice-panel" id="voicePanel">
+  <label>Voz</label>
+  <select id="voiceSelect"></select>
+  <label>Velocidade: <span id="rateVal">1.0</span></label>
+  <input type="range" id="rateRange" min="0.5" max="2" step="0.1" value="1.0" oninput="updateRate()">
+  <label>Tom: <span id="pitchVal">1.0</span></label>
+  <input type="range" id="pitchRange" min="0.5" max="1.5" step="0.1" value="1.0" oninput="updatePitch()">
+</div>
+
+<!-- ═══════════════ PROGRESS BAR ═══════════════ -->
+<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+
+<!-- ═══════════════ SLIDES VIEWPORT ═══════════════ -->
+<div class="slides-viewport" id="slidesViewport">
+
+<!-- ╔══════════════════════════════════════════════════════════════════╗ -->
+<!-- ║               PERSPECTIVA 1: USUÁRIO FINAL                      ║ -->
+<!-- ╚══════════════════════════════════════════════════════════════════╝ -->
+
+<!-- SLIDE U-01: TÍTULO -->
+<div class="slide perspective-user" data-perspective="user" data-narration="Bem-vindo à apresentação do Desenvolvimento Orientado à Intenção no R V M Designações. Esta primeira perspectiva é para você, usuário final, a pessoa que realmente opera o sistema no dia a dia. Vamos entender como a sua forma de trabalhar está mudando, e por que isso importa.">
+  <div class="slide-inner">
+    <div class="slide-section-label">Perspectiva do Usuário Final</div>
+    <h1>Fale o que precisa.<br>O sistema faz o resto.<span class="idd-selo idd-selo-ok">✅ IMPLEMENTADO · RVM</span></h1>
+    <p class="subtitle">Uma nova forma de interagir com o RVM Designações — onde a sua intenção é o comando.</p>
+    <div class="card-grid card-grid-3" style="margin-top: 30px;">
+      <div class="card"><span class="card-icon">💬</span><div class="card-title">Fale naturalmente</div><div class="card-text">"Designar semana 9 de fevereiro" — sem menus, sem formulários.</div></div>
+      <div class="card"><span class="card-icon">🛡️</span><div class="card-title">Segurança invisível</div><div class="card-text">O sistema só mostra o que você pode fazer. Nada desabilitado — nada proibido visível.</div></div>
+      <div class="card"><span class="card-icon">📄</span><div class="card-title">Resultado visual</div><div class="card-text">O S-140 aparece pronto — não como texto, mas como o documento real.</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE U-02: O PROBLEMA ANTIGO -->
+<div class="slide perspective-user" data-perspective="user" data-narration="Antes, para designar participantes para uma reunião, você precisava navegar por várias telas, preencher formulários, verificar quem já participou, consultar disponibilidades, e depois montar o documento manualmente. Cada etapa exigia que você traduzisse mentalmente o que queria fazer para a linguagem do sistema — botões, campos, menus. Isso se chama impedância cognitiva: a distância entre o que você pensa e o que o sistema entende.">
+  <div class="slide-inner">
+    <div class="slide-section-label">O Antes</div>
+    <h2>O caminho antigo: traduzir pensamento em cliques</h2>
+    <div class="flow-vertical">
+      <div class="flow-step"><div class="flow-num">1</div><div><span class="flow-label">Pensar: "Preciso designar a semana de fevereiro"</span></div></div>
+      <div class="flow-arrow">↓</div>
+      <div class="flow-step"><div class="flow-num">2</div><div><span class="flow-label">Navegar: Aba Workbook → selecionar semana → ver partes</span></div></div>
+      <div class="flow-arrow">↓</div>
+      <div class="flow-step"><div class="flow-num">3</div><div><span class="flow-label">Verificar: quem participou? quem está disponível? quem pode?</span></div></div>
+      <div class="flow-arrow">↓</div>
+      <div class="flow-step"><div class="flow-num">4</div><div><span class="flow-label">Atribuir: um por um, campo por campo, parte por parte</span></div></div>
+      <div class="flow-arrow">↓</div>
+      <div class="flow-step"><div class="flow-num">5</div><div><span class="flow-label">Conferir: o documento ficou correto? faltou alguém?</span></div></div>
+      <div class="flow-arrow">↓</div>
+      <div class="flow-step"><div class="flow-num">6</div><div><span class="flow-label">Publicar: gerar S-140, enviar por WhatsApp</span></div></div>
+    </div>
+    <div class="highlight-box highlight-insight">
+      <div class="highlight-title">Impedância Cognitiva</div>
+      <p style="margin:0">A distância entre o que você <em>pensa</em> e o que o sistema <em>entende</em>. Cada etapa acima é tradução — e tradução é esforço mental.</p>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE U-03: O NOVO CAMINHO -->
+<div class="slide perspective-user" data-perspective="user" data-narration="Agora, o caminho é direto. Você diz: designar semana 9 de fevereiro. O sistema entende quem você é, o que pode fazer, qual o contexto, e executa. O resultado aparece como o documento S-140 pronto, não como texto explicativo, mas como o documento real que será usado na reunião. Se algo não ficar bom, você diz: trocar fulano por ciclano na leitura bíblica. Sem renavegar. Sem resetar. Continuidade.">
+  <div class="slide-inner">
+    <div class="slide-section-label">O Depois</div>
+    <h2>O caminho novo: expressar intenção, receber resultado<span class="idd-selo idd-selo-ok">✅ IMPLEMENTADO</span></h2>
+    <div class="flow-vertical">
+      <div class="flow-step" style="border-color: rgba(78,205,196,0.3);"><div class="flow-num">1</div><div><span class="flow-label">"Designar semana 9 de fevereiro"</span><span class="flow-detail">Sua intenção — em linguagem natural</span></div></div>
+      <div class="flow-arrow" style="color: #4ecdc4;">↓</div>
+      <div class="flow-step" style="border-color: rgba(78,205,196,0.3);"><div class="flow-num">2</div><div><span class="flow-label">S-140 aparece pronto — documento visual completo</span><span class="flow-detail">Todas as partes atribuídas, rotação respeitada, cooldowns verificados</span></div></div>
+      <div class="flow-arrow" style="color: #4ecdc4;">↓</div>
+      <div class="flow-step" style="border-color: rgba(78,205,196,0.3);"><div class="flow-num">3</div><div><span class="flow-label">"Trocar Carlos pela leitura bíblica por Marcos"</span><span class="flow-detail">Ajuste natural, sem renavegar</span></div></div>
+    </div>
+    <p style="text-align:center; margin-top: 20px; color: #4ecdc4; font-weight: 600;">De 6 etapas para 1 frase. (Ganho de tempo estimado, não medido.)</p>
+  </div>
+</div>
+
+<!-- SLIDE U-04: COMO FUNCIONA PARA VOCÊ -->
+<div class="slide perspective-user" data-perspective="user" data-narration="Existem três formas de expressar o que você quer. Primeira: digitando naturalmente, como se falasse com um assistente humano. Segunda: usando chips rápidos — aqueles botões que aparecem no contexto certo, como 'Ver S-140' quando você está olhando para uma semana. Terceira: usando comandos com barra, como barra gerar, barra aprovar, barra limpar. Todas as formas levam ao mesmo lugar: o sistema entende sua intenção, verifica se você tem permissão, e executa.">
+  <div class="slide-inner">
+    <div class="slide-section-label">Formas de Interagir</div>
+    <h2>Três caminhos, um destino<span class="idd-selo idd-selo-ok">✅ IMPLEMENTADO</span></h2>
+    <div class="card-grid card-grid-3">
+      <div class="card">
+        <span class="card-icon">💬</span>
+        <div class="card-title">Linguagem Natural</div>
+        <div class="card-text">"Gerar designações para a próxima semana"<br><br>"Quem pode fazer leitura bíblica?"<br><br>"Aprovar todas as propostas pendentes"</div>
+      </div>
+      <div class="card">
+        <span class="card-icon">🏷️</span>
+        <div class="card-title">Chips Contextuais</div>
+        <div class="card-text">Botões inteligentes que aparecem <strong>quando fazem sentido</strong>:<br><br>🔵 Status da semana<br>🔵 Ver S-140<br>🔵 Gerar semana<br>🔵 Propostas pendentes</div>
+      </div>
+      <div class="card">
+        <span class="card-icon">⌨️</span>
+        <div class="card-title">Comandos com /</div>
+        <div class="card-text">Para quem gosta de atalhos:<br><br><code>/gerar</code> — designar semana<br><code>/aprovar</code> — aprovar propostas<br><code>/s140</code> — ver documento<br><code>/limpar</code> — resetar semana</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE U-05: SEGURANÇA QUE PROTEGE SEM INCOMODAR -->
+<div class="slide perspective-user" data-perspective="user" data-narration="A segurança do sistema é discreta, mas efetiva. Se você é um publicador comum, não verá opções de administrador. Elas não aparecem desabilitadas — simplesmente não existem na sua interface. Se você é um ancião, verá as ações de aprovação. Se é administrador, terá acesso completo. Isso se chama 'filtro de descoberta'. O princípio é simples: o que você não pode fazer, você não precisa saber que existe. Isso reduz a complexidade visual e evita frustrações com botões cinzas.">
+  <div class="slide-inner">
+    <div class="slide-section-label">Segurança Ergonômica</div>
+    <h2>Proteção invisível: o sistema se adapta a quem você é<span class="idd-selo idd-selo-ok">✅ IMPLEMENTADO</span></h2>
+    <div class="card-grid card-grid-2">
+      <div class="card">
+        <span class="card-icon">👤</span>
+        <div class="card-title">Publicador</div>
+        <div class="card-text">Vê: sua agenda, suas designações, seus dados.<br>Pode: consultar, informar disponibilidade.<br>Não vê: ações de aprovação, configuração, dados de outros.</div>
+      </div>
+      <div class="card">
+        <span class="card-icon">🏛️</span>
+        <div class="card-title">Ancião / Gestor</div>
+        <div class="card-text">Vê: todos os publicadores, propostas, analytics.<br>Pode: designar, aprovar, gerar S-140, comunicar.<br>Controle: acesso completo ao domínio congregacional.</div>
+      </div>
+    </div>
+    <div class="highlight-box highlight-insight" style="margin-top: 16px;">
+      <div class="highlight-title">Princípio: O que você não pode fazer, você não precisa ver</div>
+      <p style="margin:0">Nada "desabilitado" ou "cinza". Se a ação não aparece, é porque não é para o seu perfil. A interface fica mais limpa, mais focada, mais segura.</p>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE U-06: S-140 COMO RESPOSTA -->
+<div class="slide perspective-user" data-perspective="user" data-narration="O S-140 é o documento oficial de designações para reuniões. No paradigma antigo, você teria que gerar esse documento manualmente em planilhas ou processadores de texto. No RVM, quando você diz 'designar semana', o resultado já aparece como o documento S-140 formatado, com todas as partes preenchidas, pronto para imprimir ou enviar por WhatsApp. Isso é o que chamamos de 'resposta visual semântica' — o sistema não responde com texto explicativo, mas com o artefato real do domínio.">
+  <div class="slide-inner">
+    <div class="slide-section-label">Resposta Visual</div>
+    <h2>O resultado não é texto. É o documento real.<span class="idd-selo idd-selo-ok">✅ IMPLEMENTADO</span></h2>
+    <div class="card-grid card-grid-2">
+      <div class="card" style="text-align:center;">
+        <div class="card-title" style="color:#ff5050;">❌ Antes</div>
+        <div class="card-text" style="font-family: monospace; text-align: left; font-size: 0.78rem; line-height: 1.8; margin-top: 8px;">
+          Designações para 09/02/2026:<br>
+          - Presidente: João Silva<br>
+          - Oração Inicial: Pedro Santos<br>
+          - Tesouros: Maria Oliveira<br>
+          - Leitura Bíblica: ...<br>
+          (texto corrido, sem formatação)
+        </div>
+      </div>
+      <div class="card" style="text-align:center; border-color: rgba(78,205,196,0.3);">
+        <div class="card-title" style="color:#4ecdc4;">✅ Agora</div>
+        <div class="card-text" style="text-align: left; font-size: 0.78rem; margin-top: 8px;">
+          <div style="background: white; color: #333; padding: 12px; border-radius: 6px; font-size: 0.72rem;">
+            <div style="text-align:center; font-weight:700; color:#4a6fa5; margin-bottom:6px;">S-140 — Designações para a Reunião</div>
+            <div style="text-align:center; font-size:0.68rem; color:#666; margin-bottom:8px;">Semana de 09/02/2026</div>
+            <table style="width:100%; font-size:0.66rem; border-collapse:collapse;">
+              <tr style="border-bottom:1px solid #ddd;"><td style="padding:3px;color:#888;">Presidente</td><td style="padding:3px;font-weight:600;">João Silva</td></tr>
+              <tr style="border-bottom:1px solid #ddd;"><td style="padding:3px;color:#888;">Oração Inicial</td><td style="padding:3px;font-weight:600;">Pedro Santos</td></tr>
+              <tr style="border-bottom:1px solid #ddd;"><td style="padding:3px;color:#888;">Tesouros</td><td style="padding:3px;font-weight:600;">Maria Oliveira</td></tr>
+              <tr><td style="padding:3px;color:#888;">Leitura Bíblica</td><td style="padding:3px;font-weight:600;">Lucas Mendes</td></tr>
+            </table>
+          </div>
+          <div style="margin-top:6px; color:#4ecdc4; font-size:0.72rem; text-align:center;">Documento oficial, pronto para impressão ou envio</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE U-07: CONTINUIDADE -->
+<div class="slide perspective-user" data-perspective="user" data-narration="Um dos aspectos mais frustrantes de sistemas tradicionais é ter que recomeçar do zero a cada operação. No RVM, após cada resposta do sistema, aparecem ações de continuidade. Designou a semana? Agora pode: ver o S-140, aprovar propostas, enviar por WhatsApp, refinar uma atribuição. Tudo sem sair do fluxo. Isso se chama 'post-response actions'. O sistema nunca te deixa num beco sem saída.">
+  <div class="slide-inner">
+    <div class="slide-section-label">Continuidade</div>
+    <h2>Nunca um beco sem saída<span class="idd-selo idd-selo-ok">✅ IMPLEMENTADO</span></h2>
+    <p class="lead">Após cada ação, o sistema oferece os próximos passos naturais.</p>
+    <div class="flow-vertical">
+      <div class="flow-step" style="border-color: rgba(78,205,196,0.3);">
+        <div class="flow-num">→</div>
+        <div><span class="flow-label">"Semana designada com sucesso"</span></div>
+      </div>
+      <div class="flow-arrow" style="color: #4ecdc4;">⬇ O que fazer agora?</div>
+      <div class="card-grid card-grid-2" style="width: 100%; max-width: 600px;">
+        <div class="card" style="padding: 12px; text-align: center;"><span style="font-size:1.2rem;">📄</span><div class="card-text">Ver S-140</div></div>
+        <div class="card" style="padding: 12px; text-align: center;"><span style="font-size:1.2rem;">✅</span><div class="card-text">Aprovar propostas</div></div>
+        <div class="card" style="padding: 12px; text-align: center;"><span style="font-size:1.2rem;">📱</span><div class="card-text">Enviar por WhatsApp</div></div>
+        <div class="card" style="padding: 12px; text-align: center;"><span style="font-size:1.2rem;">🔄</span><div class="card-text">Refinar atribuição</div></div>
+      </div>
+    </div>
+    <div class="highlight-box highlight-insight">
+      <div class="highlight-title">Regra de Ouro</div>
+      <p style="margin:0">Se a IA falhar ou o resultado não agradar, você sempre pode completar a tarefa pela interface convencional (tabs, formulários). As duas camadas coexistem.</p>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE U-08: RESUMO USUÁRIO -->
+<div class="slide perspective-user" data-perspective="user" data-narration="Recapitulando: o paradigma intencional transforma sua experiência em três dimensões. Primeiro, eficiência: o que exigia múltiplas telas agora pode começar com uma frase. Segundo, segurança: o sistema protege sem complicar, mostrando apenas o que é relevante para você. Terceiro, continuidade: nunca um beco sem saída, sempre um próximo passo natural. A interface se adapta a você — não você à interface.">
+  <div class="slide-inner">
+    <div class="slide-section-label">Resumo</div>
+    <h2>A sua experiência transformada</h2>
+    <div class="card-grid card-grid-3">
+      <div class="card" style="border-top: 3px solid #4ecdc4;">
+        <span class="card-icon">⚡</span>
+        <div class="card-title">Eficiência</div>
+        <div class="card-text">De 6 etapas para 1 frase (ganho de tempo estimado, não medido). Sem menus, sem formulários desnecessários.</div>
+      </div>
+      <div class="card" style="border-top: 3px solid #4ecdc4;">
+        <span class="card-icon">🔒</span>
+        <div class="card-title">Segurança</div>
+        <div class="card-text">Proteção invisível. A interface mostra exatamente o que é relevante para o seu perfil e contexto.</div>
+      </div>
+      <div class="card" style="border-top: 3px solid #4ecdc4;">
+        <span class="card-icon">🔗</span>
+        <div class="card-title">Continuidade</div>
+        <div class="card-text">Nunca um beco sem saída. Sempre um próximo passo. Duas camadas que se complementam.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ╔══════════════════════════════════════════════════════════════════╗ -->
+<!-- ║              PERSPECTIVA 2: DESENVOLVEDOR                       ║ -->
+<!-- ╚══════════════════════════════════════════════════════════════════╝ -->
+
+<!-- SLIDE D-01: TÍTULO -->
+<div class="slide perspective-dev" data-perspective="dev" data-narration="Agora mudamos de perspectiva. Esta seção é para você, desenvolvedor, arquiteto, engenheiro de software. Vamos mergulhar na arquitetura técnica do IDD, na formulação de Eliézer Rosa, tal como aplicada no RVM Designações. O que é o IDD, como se compara com outras metodologias emergentes, e como traduzimos conceitos acadêmicos em código operacional TypeScript.">
+  <div class="slide-inner">
+    <div class="slide-section-label">Perspectiva do Desenvolvedor</div>
+    <h1>Intent-Driven Development:<br>Arquitetura de um Paradigma<span class="idd-selo idd-selo-ok">✅ IMPLEMENTADO · RVM</span></h1>
+    <p class="subtitle">Da intenção ao domínio, do domínio ao código, do código à resposta visual.</p>
+    <div class="card-grid card-grid-2" style="margin-top: 24px;">
+      <div class="card">
+        <div class="card-title" style="color: #8b8bff;">O Novo Paradigma</div>
+        <div class="card-text">No IDD, a fonte de autoridade é a <strong>intenção</strong>; o código é derivado e rastreável a ela. Analogia: o LLM atua como compilador de intenções e o domínio, como type system.</div>
+      </div>
+      <div class="card">
+        <div class="card-title" style="color: #8b8bff;">Metodologias Emergentes</div>
+        <div class="card-text">Exadra37 IDD Guidelines, SQUER Intent Engineer, BMAD-METHOD, Spec-Driven Dev — convergem em pontos comuns.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE D-02: MAPA DAS CORRENTES -->
+<div class="slide perspective-dev" data-perspective="dev" data-narration="O IDD não surgiu do nada. Ele dialoga com pelo menos cinco correntes independentes de 2025 e 2026. Primeiro, o Exadra37 publicou guidelines estruturadas para AI agents com o formato WHY, WHAT, HOW. Depois, a SQUER criou o papel de Intent Engineer, que vive no departamento de negócio, não em TI. Vishal Mysore formalizou os três princípios canônicos. O BMAD-METHOD, um projeto open source popular, indica que sistemas multi-agente coordenados são viáveis. E o estudo acadêmico sobre Vibe Coding documentou o anti-padrão: a classe de desenvolvedores vulneráveis que constroem mas não debugam. O IDD se propõe como resposta disciplinada ao vibe coding.">
+  <div class="slide-inner">
+    <div class="slide-section-label">Estado da Arte</div>
+    <h2>Correntes convergentes em 2026</h2>
+    <table class="compare-table">
+      <tr><th>Corrente</th><th>Contribuição</th><th>Relevância</th></tr>
+      <tr><td style="color:#8b8bff;font-weight:600;">Exadra37 IDD</td><td>Intent = WHY + WHAT (Gherkin) + HOW (Tasks)</td><td>Formato de contrato, nosso agentIntentCatalog.ts</td></tr>
+      <tr><td style="color:#8b8bff;font-weight:600;">SQUER Intent Engineer</td><td>Papel organizacional, 11 campos, 5 métodos de descoberta</td><td>"Mais contexto, mais liberdade" — nosso system prompt</td></tr>
+      <tr><td style="color:#8b8bff;font-weight:600;">Vishal Mysore IDD</td><td>3 princípios: intent primário, docs gerados, humanos supervisionam</td><td>Fundamento teórico formal</td></tr>
+      <tr><td style="color:#8b8bff;font-weight:600;">BMAD-METHOD</td><td>12+ agentes especializados, scale-adaptive, 34+ workflows</td><td>Indício de viabilidade multi-agente</td></tr>
+      <tr><td style="color:#ff5050;font-weight:600;">Vibe Coding (arXiv)</td><td>Speed-quality paradox, "nova classe de devs vulneráveis"</td><td>O anti-padrão que o IDD corrige</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- SLIDE D-03: ARQUITETURA DUAS CAMADAS -->
+<div class="slide perspective-dev" data-perspective="dev" data-narration="A arquitetura do RVM opera em duas camadas complementares. A Camada 1 é a interface convencional: tabs, formulários, tabelas, modais. É o fallback, o treinamento, a operação direta. A Camada 2 é a interface intencional: linguagem natural entra, ação de domínio sai, resposta visual materializa. O tab Agente é o portal semântico. A regra de ouro é um invariante de projeto: se a Camada 2 falhar, a Camada 1 continua disponível. As duas camadas compartilham os mesmos serviços de domínio, as mesmas permissões, o mesmo estado.">
+  <div class="slide-inner">
+    <div class="slide-section-label">Arquitetura</div>
+    <h2>Duas camadas, um domínio<span class="idd-selo idd-selo-ok">✅ IMPLEMENTADO</span></h2>
+    <div class="card-grid card-grid-2">
+      <div class="card" style="border-left: 3px solid #ffb432;">
+        <div class="card-title">Camada 1 — UI Convencional</div>
+        <div class="card-text">
+          Tabs, formulários, tabelas, modais<br>
+          Operação direta, determinística<br>
+          Fallback quando IA falha<br>
+          Treinamento e familiarização<br><br>
+          <strong>Tabs:</strong> Workbook, Aprovações, Publicadores, Comunicação, S-140
+        </div>
+      </div>
+      <div class="card" style="border-left: 3px solid #8b8bff;">
+        <div class="card-title">Camada 2 — Interface Intencional</div>
+        <div class="card-text">
+          Linguagem natural → ação de domínio → resposta visual<br>
+          Chips contextuais, slash commands, post-response actions<br>
+          S-140 como output semântico<br>
+          Micro-UIs two-phase<br><br>
+          <strong>Portal:</strong> Tab Agente (portal semântico)
+        </div>
+      </div>
+    </div>
+    <div class="highlight-box highlight-technical">
+      <div class="highlight-title">Regra de Ouro (invariante arquitetural)</div>
+      <p style="margin:0">Se a IA falhar, o usuário pode completar a tarefa pela Camada 1. As duas camadas compartilham: serviços de domínio, permissões, estado, banco de dados.</p>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE D-04: PIPELINE DA INTENÇÃO -->
+<div class="slide perspective-dev" data-perspective="dev" data-narration="Vejamos o pipeline técnico completo. A intenção entra como texto, chip ou slash command. O hook useTemporalChatSemanticContext detecta publisher em foco, semana ativa, tópico conversacional. O useTemporalChatSemanticControls produz chips, comandos e ações filtrados por permissão. O agentService injeta tudo isso no system prompt do LLM, junto com a lista de ações permitidas. O LLM interpreta e emite blocos JSON de ação. O agentActionService faz parse, verifica permissão via canAgentAction, e despacha para o serviço de domínio correto. São 29 action types, 15 mais serviços de domínio, e o resultado materializa como S-140, tabela, card, modal ou confirmação.">
+  <div class="slide-inner">
+    <div class="slide-section-label">Pipeline Técnico</div>
+    <h2>Da intenção à materialização<span class="idd-selo idd-selo-ok">✅ IMPLEMENTADO</span></h2>
+    <div class="flow-vertical">
+      <div class="flow-step"><div class="flow-num">1</div><div><span class="flow-label">Intenção (texto / chip / slash)</span><span class="flow-detail">useTemporalChatSemanticContext → detecta contexto</span></div></div>
+      <div class="flow-arrow">↓</div>
+      <div class="flow-step"><div class="flow-num">2</div><div><span class="flow-label">agentService.ts → LLM (Gemini)</span><span class="flow-detail">System prompt com permissões + contexto → JSON action blocks</span></div></div>
+      <div class="flow-arrow">↓</div>
+      <div class="flow-step"><div class="flow-num">3</div><div><span class="flow-label">agentActionService.ts → Permission Gate</span><span class="flow-detail">canAgentAction() verificado antes de cada execução</span></div></div>
+      <div class="flow-arrow">↓</div>
+      <div class="flow-step"><div class="flow-num">4</div><div><span class="flow-label">Serviço de Domínio (1 de 15+)</span><span class="flow-detail">generationService, workbookLifecycleService, undoService...</span></div></div>
+      <div class="flow-arrow">↓</div>
+      <div class="flow-step"><div class="flow-num">5</div><div><span class="flow-label">Resposta Visual</span><span class="flow-detail">S140PreviewCarousel / ChatMessageBubble / AgentModalHost / PostResponseActions</span></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE D-05: CONTRATOS DE INTENÇÃO -->
+<div class="slide perspective-dev" data-perspective="dev" data-narration="O coração da tipagem é o AgentIntentContract. Cada intenção é um contrato formal com: intentId único, actionType que mapeia para o executor, discoveryGate que controla visibilidade por permissão, fase de transação (single-step, two-phase, impact-preview ou staged-communication), nível de risco, preparação necessária, preview antes do commit, serviço de execução, e mecanismo de recovery. São 9 contratos implementados na Wave 1, cobrindo aprovação, rejeição, reatribuição, disponibilidade, edição de publicador, revisão S-140, necessidades locais, conclusão e desfazer conclusão. Cada micro-UI futura precisa ter seu contrato definido antes de uma linha de código.">
+  <div class="slide-inner">
+    <div class="slide-section-label">Contratos Tipados</div>
+    <h2>AgentIntentContract — o type system do domínio<span class="idd-selo idd-selo-ok">✅ IMPLEMENTADO</span></h2>
+    <div class="code-block"><span class="code-keyword">type</span> <span class="code-type">AgentIntentContract</span> = {
+  <span class="code-fn">intentId</span>: <span class="code-type">string</span>;        <span class="code-comment">// "approve-designation"</span>
+  <span class="code-fn">actionType</span>: <span class="code-type">AgentActionType</span>;  <span class="code-comment">// APPROVE_PROPOSAL</span>
+  <span class="code-fn">discoveryGate</span>: <span class="code-type">DiscoveryGate</span>; <span class="code-comment">// quem vê a ação</span>
+  <span class="code-fn">visibility</span>: <span class="code-type">VisibilityScope</span>;  <span class="code-comment">// agent | scoped-data | sensitive</span>
+  <span class="code-fn">phase</span>: <span class="code-type">TransactionPhase</span>;     <span class="code-comment">// single-step | two-phase | impact-preview</span>
+  <span class="code-fn">risk</span>: <span class="code-type">'low'</span> | <span class="code-type">'medium'</span> | <span class="code-type">'high'</span>;
+  <span class="code-fn">prepare</span>: <span class="code-type">string[]</span>;         <span class="code-comment">// dados necessários</span>
+  <span class="code-fn">preview</span>: <span class="code-type">string[]</span>;         <span class="code-comment">// o que o usuário vê antes</span>
+  <span class="code-fn">commit</span>: <span class="code-type">string</span>;            <span class="code-comment">// serviço que executa</span>
+  <span class="code-fn">recovery</span>: <span class="code-type">string</span>;          <span class="code-comment">// como desfazer</span>
+};</div>
+    <p>9 contratos Wave 1 implementados: approve, reject, reassign, availability, edit-publisher, review-s140, local-needs, complete, undo-complete.</p>
+  </div>
+</div>
+
+<!-- SLIDE D-06: 4 FILTROS DE SEGURANÇA -->
+<div class="slide perspective-dev" data-perspective="dev" data-narration="O modelo de segurança opera em quatro camadas por micro-UI. Primeiro, o Discovery Filter: se o perfil não pode executar a ação, a UI simplesmente não aparece, não como disabled, como inexistente. Segundo, o Data Visibility Filter: respeita dataAccessLevel e canSeeSensitiveData, dados sensíveis só para quem pode. Terceiro, o Execution Filter: abrir a micro-UI não autoriza execução. Ao commit, re-valida permissão. Quarto, o Channel Filter: superfícies de comunicação só aparecem se o perfil pode operar o canal, como WhatsApp. Isso é implementado em três camadas: Supabase RLS no banco, permissionService no backend React, e usePermissions hook no frontend.">
+  <div class="slide-inner">
+    <div class="slide-section-label">Modelo de Segurança</div>
+    <h2>4 filtros por micro-UI<span class="idd-selo idd-selo-ok">✅ IMPLEMENTADO</span></h2>
+    <div class="card-grid card-grid-2">
+      <div class="card">
+        <div class="card-title" style="color:#4ecdc4;">1. Discovery Filter</div>
+        <div class="card-text">Se o perfil não pode executar → UI <strong>não aparece</strong> (invisível, não disabled).<br><code>canAgentAction(type)</code></div>
+      </div>
+      <div class="card">
+        <div class="card-title" style="color:#4ecdc4;">2. Data Visibility Filter</div>
+        <div class="card-text">Respeita <code>dataAccessLevel</code> e <code>canSeeSensitiveData</code>. Dados sensíveis só para quem pode.</div>
+      </div>
+      <div class="card">
+        <div class="card-title" style="color:#ffb432;">3. Execution Filter</div>
+        <div class="card-text">Abrir micro-UI ≠ autorizar execução. Re-valida permissão no <strong>commit</strong>.</div>
+      </div>
+      <div class="card">
+        <div class="card-title" style="color:#ffb432;">4. Channel Filter</div>
+        <div class="card-text">Comunicação (WhatsApp, S-89) só se <code>canSendZap</code> está ativo no perfil.</div>
+      </div>
+    </div>
+    <div class="highlight-box highlight-technical" style="margin-top: 12px;">
+      <div class="highlight-title">3 camadas de enforcement</div>
+      <p style="margin:0">Supabase RLS (banco) → permissionService.ts (serviço) → usePermissions.ts (hook React). Cache com TTL de 5 minutos. 7 seed policies. Fallback seguro: só tab agente + 6 ações read-only.</p>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE D-07: LLM COMO COMPILADOR -->
+<div class="slide perspective-dev" data-perspective="dev" data-narration="A tese técnica central, como analogia: o LLM funciona como um compilador de intenções. Em compiladores tradicionais, a entrada é código-fonte e a saída é binário. No IDD, a entrada é linguagem natural contextualizada e a saída são ações tipadas de domínio. O system prompt é o equivalente à gramática do compilador: define as regras de parsing, o vocabulário permitido, as restrições. As permissões injetadas são as type constraints. O agentActionService é o runtime. Os serviços de domínio são a standard library. É uma analogia estrutural útil, não uma equivalência formal: o LLM não é determinístico como um compilador. Por isso o vocabulário fechado de ações e o gate de permissões ficam em código determinístico.">
+  <div class="slide-inner">
+    <div class="slide-section-label">Tese Central</div>
+    <h2>O LLM como compilador de intenções <span style="font-size:.6em;color:#999;">(analogia)</span></h2>
+    <table class="compare-table">
+      <tr><th>Compilador Tradicional</th><th>Compilador de Intenções (IDD)</th></tr>
+      <tr><td>Entrada: código-fonte (sintaxe formal)</td><td>Entrada: linguagem natural + contexto</td></tr>
+      <tr><td>Gramática: BNF/PEG da linguagem</td><td>Gramática: system prompt + permissões</td></tr>
+      <tr><td>Análise léxica → tokens</td><td>NLP → entidades, ações, restrições</td></tr>
+      <tr><td>Análise semântica → AST tipada</td><td>Contexto + domínio → JSON action blocks</td></tr>
+      <tr><td>Type checking</td><td>Permission gate (canAgentAction)</td></tr>
+      <tr><td>Code generation → binário</td><td>Action dispatch → serviços de domínio</td></tr>
+      <tr><td>Runtime: VM/OS</td><td>Runtime: agentActionService.ts</td></tr>
+      <tr><td>Standard library</td><td>15+ serviços de domínio</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- SLIDE D-08: FUNDAMENTOS FILOSÓFICOS -->
+<div class="slide perspective-dev" data-perspective="dev" data-narration="Os fundamentos não são apenas técnicos. A linhagem intelectual remonta a Frege, que distinguiu sentido de referência. A interface trabalha com o sentido, a intenção do usuário, não com a referência direta, o ID no banco. Wittgenstein disse que o significado de uma palavra é seu uso na linguagem. A Linguagem Ubíqua do DDD ganha significado pelo uso no domínio, não por definição estática. Rosch demonstrou que categorias mentais têm protótipos. Nossos chips são protótipos de ações, os mais frequentes são os mais visíveis. Minsky criou frames com slots e defaults. Nossos AgentIntentContracts são frames com slots: prepare, preview, commit, recovery. Schank formalizou scripts cognitivos. Nosso fluxo de 7 passos é um script: intenção, ancoragem, restrição, resposta, complemento, execução, continuidade.">
+  <div class="slide-inner">
+    <div class="slide-section-label">Fundamentos</div>
+    <h2>A linhagem intelectual do paradigma</h2>
+    <table class="compare-table">
+      <tr><th>Pensador</th><th>Contribuição</th><th>No Código</th></tr>
+      <tr><td>Frege (1892)</td><td>Sinn vs Bedeutung (sentido vs referência)</td><td>Interface trabalha com sentido (intenção), não referência (UUID)</td></tr>
+      <tr><td>Wittgenstein (1953)</td><td>"Significado = uso na linguagem"</td><td>Linguagem Ubíqua ganha sentido pelo uso no domínio</td></tr>
+      <tr><td>Rosch (1973)</td><td>Protótipos (categorias com membros típicos)</td><td>Chips = protótipos de ações (mais frequente = mais visível)</td></tr>
+      <tr><td>Minsky (1975)</td><td>Frames (slots + defaults)</td><td>IntentContract = frame (prepare, preview, commit, recovery)</td></tr>
+      <tr><td>Schank (1977)</td><td>Scripts (sequências estereotipadas)</td><td>Fluxo de 7 passos = script cognitivo do domínio</td></tr>
+      <tr><td>Evans (2003)</td><td>DDD: Bounded Contexts, Ubiquitous Language</td><td>15+ domain services, cada um um bounded context</td></tr>
+    </table>
+    <div class="highlight-box highlight-technical" style="margin-top: 10px;">
+      <div class="highlight-title">O Modelo de Domínio como Teoria</div>
+      <p style="margin:0"><strong>Ontologia</strong> (o que existe) → Publishers, Parts, Weeks | <strong>Axiologia</strong> (o que vale) → rotação justa, cobertura | <strong>Deontologia</strong> (o que é permitido) → cooldowns, permissões | <strong>Epistemologia</strong> (como sabemos) → histórico, scores, audit</p>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE D-09: MAPA DE MATURIDADE -->
+<div class="slide perspective-dev" data-perspective="dev" data-narration="Vejamos o estado real da implementação no R V M. A arquitetura de duas camadas está implementada. Intenção como input primário está operacional. Permissões gatilhadas por descoberta, operacional. 9 contratos tipados Wave 1, operacional. Chips contextuais, slash commands, post-response actions, tudo operacional. S-140 como resposta visual, operacional. Os 29 action types no executor, operacional. O que está parcial: micro-UIs two-phase, parcialmente implementadas. O que está planejado: topic tracking conversacional, useChatContext hook. O que está bloqueado: reimport com diff semântico, merge de publicadores, rename com propagação atômica. Esses bloqueios não são de código, são de boundary transacional: os serviços de domínio precisam de hardening antes de ganhar micro-UI.">
+  <div class="slide-inner">
+    <div class="slide-section-label">Maturidade</div>
+    <h2>O que está implementado vs. planejado<span class="idd-selo idd-selo-ok">✅ IMPLEMENTADO</span><span class="idd-selo idd-selo-prop">🔭 PROPOSTA</span></h2>
+    <table class="compare-table">
+      <tr><th>Conceito</th><th>Status</th><th>Código</th></tr>
+      <tr><td>Arquitetura duas camadas</td><td><span class="badge badge-done">✅ Implementado</span></td><td>Layer 1 tabs + Layer 2 Agent</td></tr>
+      <tr><td>Intenção como input</td><td><span class="badge badge-done">✅ Implementado</span></td><td>agentService, chips, slash</td></tr>
+      <tr><td>29 action types</td><td><span class="badge badge-done">✅ Implementado</span></td><td>agentActionService.ts</td></tr>
+      <tr><td>9 contratos tipados</td><td><span class="badge badge-done">✅ Implementado</span></td><td>agentIntentCatalog.ts</td></tr>
+      <tr><td>4-filter security model</td><td><span class="badge badge-done">✅ Implementado</span></td><td>permissionService.ts</td></tr>
+      <tr><td>S-140 como resposta visual</td><td><span class="badge badge-done">✅ Implementado</span></td><td>S140PreviewCarousel.tsx</td></tr>
+      <tr><td>Micro-UIs two-phase</td><td><span class="badge badge-partial">✅ Parcial</span></td><td>Approval, Availability</td></tr>
+      <tr><td>Topic tracking</td><td><span class="badge badge-planned">🔭 Proposta</span></td><td>useChatContext() pendente</td></tr>
+      <tr><td>Reimport com diff</td><td><span class="badge badge-blocked">🔭 Bloqueado</span></td><td>Precisa hardening de boundary</td></tr>
+    </table>
+    <p style="margin-top: 12px; font-size: 0.85rem; color: #999;">29 action types · 9 intent contracts · 15+ domain services · 7 seed policies · 14 docs de paradigma</p>
+  </div>
+</div>
+
+<!-- SLIDE D-10: MODELO DE MATURIDADE -->
+<div class="slide perspective-dev" data-perspective="dev" data-narration="Definimos 5 níveis de maturidade para o paradigma. Nível 1, Reativo: o agente responde a comandos explícitos. Já está implementado com os 29 action types. Nível 2, Contextual: o agente considera permissões, semana, perfil, tópico. Já implementado com IntentContextBar e SemanticContext. Nível 3, Antecipatório: o agente sugere ações baseado em padrões observados. Planejado para Onda 4. Nível 4, Orquestrador: o agente decompõe macro-intenções em cadeias de sub-ações. Visão futura. Nível 5, Autônomo Supervisionado: o agente executa rotinas periódicas com validação humana assíncrona. Horizonte de longo prazo. Hoje estamos no Nível 2; o Nível 3 é proposta.">
+  <div class="slide-inner">
+    <div class="slide-section-label">Evolução</div>
+    <h2>5 níveis de maturidade do paradigma<span class="idd-selo idd-selo-ok">✅ níveis 1–2</span><span class="idd-selo idd-selo-prop">🔭 níveis 3–5</span></h2>
+    <div class="flow-vertical">
+      <div class="flow-step" style="border-color: rgba(78,205,196,0.4); background: rgba(78,205,196,0.06);">
+        <div class="flow-num" style="background: rgba(78,205,196,0.3); color: #4ecdc4;">1</div>
+        <div><span class="flow-label" style="color:#4ecdc4;">Reativo</span><span class="flow-detail">Responde a comandos explícitos. ✅ 29 action types.</span></div>
+      </div>
+      <div class="flow-arrow">↓</div>
+      <div class="flow-step" style="border-color: rgba(78,205,196,0.4); background: rgba(78,205,196,0.06);">
+        <div class="flow-num" style="background: rgba(78,205,196,0.3); color: #4ecdc4;">2</div>
+        <div><span class="flow-label" style="color:#4ecdc4;">Contextual</span><span class="flow-detail">Considera permissões, semana, perfil, tópico. ✅ IntentContextBar + SemanticContext.</span></div>
+      </div>
+      <div class="flow-arrow">↓</div>
+      <div class="flow-step" style="border-color: rgba(139,139,255,0.3);">
+        <div class="flow-num">3</div>
+        <div><span class="flow-label">Antecipatório</span><span class="flow-detail">Sugere ações baseado em padrões. 🔭 Proposta (Onda 4).</span></div>
+      </div>
+      <div class="flow-arrow">↓</div>
+      <div class="flow-step" style="border-color: rgba(139,139,255,0.15);">
+        <div class="flow-num">4</div>
+        <div><span class="flow-label">Orquestrador</span><span class="flow-detail">Decompõe macro-intenções em sub-ações. 🔭 Proposta (visão).</span></div>
+      </div>
+      <div class="flow-arrow">↓</div>
+      <div class="flow-step" style="border-color: rgba(139,139,255,0.08);">
+        <div class="flow-num">5</div>
+        <div><span class="flow-label">Autônomo Supervisionado</span><span class="flow-detail">Rotinas periódicas com validação assíncrona. 🔭 Proposta (horizonte).</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE D-11: RESUMO DEV -->
+<div class="slide perspective-dev" data-perspective="dev" data-narration="Recapitulando a perspectiva técnica. No RVM Designações há código real: 29 action types, 9 contratos tipados, 15 mais serviços de domínio, modelo de segurança com 4 filtros, e S-140 como resposta semântica. Por analogia, o LLM é compilador, não oráculo; o domínio é o type system; a intenção é a fonte de autoridade; as permissões são type constraints. Isso está em produção no R V M, com duas camadas complementares e a regra de ouro preservada. Os níveis 3 a 5 continuam sendo proposta. O roadmap é profundidade, não extensão lateral: hardening de boundaries, useChatContext, micro-UIs Wave 2 e 3, e eventualmente sugestões proativas.">
+  <div class="slide-inner">
+    <div class="slide-section-label">Síntese Técnica</div>
+    <h2>O que construímos — em números<span class="idd-selo idd-selo-ok">✅ IMPLEMENTADO · RVM</span></h2>
+    <div class="card-grid card-grid-3">
+      <div class="card" style="text-align:center; border-top: 3px solid #8b8bff;">
+        <div style="font-size: 2rem; font-weight: 800; color: #8b8bff;">29</div>
+        <div class="card-text">Action Types</div>
+      </div>
+      <div class="card" style="text-align:center; border-top: 3px solid #8b8bff;">
+        <div style="font-size: 2rem; font-weight: 800; color: #8b8bff;">9</div>
+        <div class="card-text">Intent Contracts</div>
+      </div>
+      <div class="card" style="text-align:center; border-top: 3px solid #8b8bff;">
+        <div style="font-size: 2rem; font-weight: 800; color: #8b8bff;">15+</div>
+        <div class="card-text">Domain Services</div>
+      </div>
+      <div class="card" style="text-align:center; border-top: 3px solid #4ecdc4;">
+        <div style="font-size: 2rem; font-weight: 800; color: #4ecdc4;">4</div>
+        <div class="card-text">Security Filters / UI</div>
+      </div>
+      <div class="card" style="text-align:center; border-top: 3px solid #4ecdc4;">
+        <div style="font-size: 2rem; font-weight: 800; color: #4ecdc4;">7</div>
+        <div class="card-text">Seed Policies</div>
+      </div>
+      <div class="card" style="text-align:center; border-top: 3px solid #4ecdc4;">
+        <div style="font-size: 2rem; font-weight: 800; color: #4ecdc4;">14</div>
+        <div class="card-text">Paradigm Documents</div>
+      </div>
+    </div>
+    <div class="quote-block" style="margin-top: 20px;">
+      "Os números acima vêm do código do RVM Designações. O que ainda é agenda está marcado como 🔭 proposta."
+    </div>
+  </div>
+</div>
+
+<!-- ╔══════════════════════════════════════════════════════════════════╗ -->
+<!-- ║          PERSPECTIVA 3: PROFISSIONAL DO FUTURO                  ║ -->
+<!-- ╚══════════════════════════════════════════════════════════════════╝ -->
+
+<!-- SLIDE F-01: TÍTULO -->
+<div class="slide perspective-future" data-perspective="future" data-narration="Esta terceira perspectiva é especial. É para quem não é programador, não é técnico, mas quer entender o que está acontecendo no mundo da tecnologia e como isso muda o perfil do profissional do futuro. Vamos explicar o novo paradigma sem jargão, usando analogias do mundo real. E vamos mostrar que a habilidade mais valiosa do futuro não é escrever código: é saber pedir.">
+  <div class="slide-inner">
+    <div class="slide-section-label">Perspectiva do Profissional do Futuro</div>
+    <h1>A habilidade mais valiosa<br>não é programar.<br>É saber pedir.</h1>
+    <p class="subtitle">Como a Inteligência Artificial está mudando o que significa "trabalhar com tecnologia" — explicado sem jargão.</p>
+  </div>
+</div>
+
+<!-- SLIDE F-02: A ANALOGIA DO RESTAURANTE -->
+<div class="slide perspective-future" data-perspective="future" data-narration="Imagine que ir a um restaurante antigamente fosse assim: você entrava na cozinha, escolhia os ingredientes, cortava os legumes, temperava a carne, controlava o fogo, e depois lavava a louça. Isso é o que programar um computador significou por décadas. Cada etapa manual, cada detalhe controlado pelo humano. Agora imagine que você simplesmente se senta e diz ao garçom: quero algo leve, sem glúten, com bastante proteína, para duas pessoas. O garçom entende sua intenção, o chef executa com expertise, e o resultado chega à mesa. Essa é a ideia do Desenvolvimento Orientado à Intenção. Você expressa o que quer e por que importa. O sistema cuida do como, e você confere o resultado.">
+  <div class="slide-inner">
+    <div class="slide-section-label">Uma Analogia</div>
+    <h2>O restaurante do futuro</h2>
+    <div class="card-grid card-grid-2">
+      <div class="card" style="border-top: 3px solid #ff5050;">
+        <span class="card-icon">👨‍🍳</span>
+        <div class="card-title">Antigamente: você era o chef</div>
+        <div class="card-text">
+          Entrar na cozinha<br>
+          Escolher ingredientes<br>
+          Cortar, temperar, cozinhar<br>
+          Controlar o fogo<br>
+          Lavar a louça<br><br>
+          <em>= Escrever cada linha de código manualmente</em>
+        </div>
+      </div>
+      <div class="card" style="border-top: 3px solid #ff6b9d;">
+        <span class="card-icon">🍽️</span>
+        <div class="card-title">Agora: você é o cliente</div>
+        <div class="card-text">
+          "Quero algo leve, sem glúten,<br>
+          com bastante proteína,<br>
+          para duas pessoas"<br><br>
+          O garçom entende. O chef executa.<br>
+          O resultado chega à mesa.<br><br>
+          <em>= Expressar intenção com clareza</em>
+        </div>
+      </div>
+    </div>
+    <div class="highlight-box highlight-vision" style="margin-top: 12px;">
+      <div class="highlight-title">A mudança fundamental</div>
+      <p style="margin:0">Você não precisa saber cozinhar para comer bem. Mas precisa saber <strong>o que quer</strong> e <strong>comunicar suas restrições</strong>. "Sem glúten" é uma restrição. "Para duas pessoas" é contexto. "Com proteína" é um requisito.</p>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE F-03: A EVOLUÇÃO EM CAMADAS -->
+<div class="slide perspective-future" data-perspective="future" data-narration="A história da tecnologia é uma história de simplificação. Nos anos 50, para usar um computador, você precisava entender eletricidade e circuitos. Nos anos 70, linguagens como Cobol e Fortran permitiram escrever em algo parecido com inglês, mas ainda muito técnico. Nos anos 90, interfaces gráficas, Windows, Mac, permitiram clicar em vez de digitar comandos. Nos anos 2010, aplicativos de celular simplificaram ainda mais. E agora, em 2026, chegamos à linguagem natural: você simplesmente fala o que precisa. Cada camada reduziu uma barreira. A barreira que agora diminui é a distância entre o que você pensa e o que a tecnologia faz.">
+  <div class="slide-inner">
+    <div class="slide-section-label">A Grande Escada</div>
+    <h2>De circuitos a conversas: 70 anos de simplificação</h2>
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="timeline-date">Anos 1950</div>
+        <div class="timeline-title">Circuitos e fios</div>
+        <div class="timeline-desc">Para usar um computador, você precisava entender eletricidade.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-date">Anos 1970</div>
+        <div class="timeline-title">Linguagens de programação</div>
+        <div class="timeline-desc">Cobol, Fortran — parecido com inglês, mas ainda muito técnico.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-date">Anos 1990</div>
+        <div class="timeline-title">Interfaces gráficas</div>
+        <div class="timeline-desc">Windows, Mac — clicar em vez de digitar comandos.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-date">Anos 2010</div>
+        <div class="timeline-title">Apps e smartphones</div>
+        <div class="timeline-desc">Tocar em ícones. Um app para cada coisa.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-date" style="color: #ff6b9d; font-weight: 700;">2026</div>
+        <div class="timeline-title" style="color: #ff6b9d;">Linguagem natural</div>
+        <div class="timeline-desc" style="color: #ccc;">Falar o que precisa. A máquina entende e faz.</div>
+      </div>
+    </div>
+    <p style="text-align: center; color: #ff6b9d; font-weight: 600;">Cada camada reduziu uma barreira. A da vez: a distância entre pensar e fazer.</p>
+  </div>
+</div>
+
+<!-- SLIDE F-04: O NOVO PROFISSIONAL -->
+<div class="slide perspective-future" data-perspective="future" data-narration="Então, se a máquina faz o trabalho técnico, o que sobra para o profissional? Três coisas cruciais. Primeiro: saber o que pedir. Isso significa entender profundamente o problema, o contexto, as restrições, os critérios de sucesso. A SQUER, uma empresa austríaca, criou um novo cargo: o Engenheiro de Intenção. Essa pessoa não programa. Ela vive no departamento de negócios e passa o dia entendendo o que as pessoas realmente precisam. Segundo: saber avaliar o resultado. A IA pode errar. O profissional precisa reconhecer quando o resultado não corresponde à intenção. Terceiro: saber refinar. Se o primeiro resultado não for perfeito, saber ajustar a intenção com mais contexto e restrições.">
+  <div class="slide-inner">
+    <div class="slide-section-label">O Novo Profissional</div>
+    <h2>Três habilidades que importam agora</h2>
+    <div class="card-grid card-grid-3">
+      <div class="card" style="border-top: 3px solid #ff6b9d;">
+        <span class="card-icon">🎯</span>
+        <div class="card-title">Saber Pedir</div>
+        <div class="card-text">
+          Entender o problema profundamente.<br>
+          Conhecer o contexto.<br>
+          Definir restrições.<br>
+          Estabelecer critérios de sucesso.<br><br>
+          <em>"O que queremos? Por que importa? O que não pode acontecer?"</em>
+        </div>
+      </div>
+      <div class="card" style="border-top: 3px solid #ff6b9d;">
+        <span class="card-icon">🔍</span>
+        <div class="card-title">Saber Avaliar</div>
+        <div class="card-text">
+          A IA pode errar.<br>
+          O profissional reconhece quando o resultado não corresponde à intenção.<br><br>
+          <em>"Isso é o que eu pedi? Atende os critérios? Falta algo?"</em>
+        </div>
+      </div>
+      <div class="card" style="border-top: 3px solid #ff6b9d;">
+        <span class="card-icon">🔄</span>
+        <div class="card-title">Saber Refinar</div>
+        <div class="card-text">
+          Se o resultado não for perfeito, ajustar a intenção.<br>
+          Mais contexto. Mais restrições. Mais clareza.<br><br>
+          <em>"Na verdade, preciso que leve em conta que Carlos não pode na terça."</em>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE F-05: O INTENT ENGINEER -->
+<div class="slide perspective-future" data-perspective="future" data-narration="A SQUER, uma consultoria de software na Áustria, criou oficialmente o cargo de Engenheiro de Intenção em 2026. Essa pessoa não programa. Não fica no departamento de TI. Ela vive no departamento de negócios. Seu trabalho diário é entrevistar pessoas, acompanhar processos, mapear domínios, analisar dados, e transformar tudo isso em documentos de intenção claros o suficiente para que agentes de IA executem sem ambiguidade. O modelo de equipe deles se chama Focused Impact Pair: um Engenheiro de Intenção, mais um Engenheiro de Sistemas que orquestra os agentes, mais os agentes de IA. Segundo a proposta da SQUER, duas pessoas mais IA podem cobrir o trabalho de equipes maiores, apoiadas na clareza da comunicação, não na automação crua.">
+  <div class="slide-inner">
+    <div class="slide-section-label">Um Novo Cargo</div>
+    <h2>O Engenheiro de Intenção</h2>
+    <div class="quote-block">
+      "Agentes de IA não precisam de instruções mais precisas. Precisam de mais contexto e mais liberdade."
+      <span class="quote-author">— Manuel Klein, SQUER, 2026</span>
+    </div>
+    <div class="card-grid card-grid-2" style="margin-top: 16px;">
+      <div class="card">
+        <div class="card-title" style="color: #ff6b9d;">O que faz</div>
+        <div class="card-text">
+          Entrevista stakeholders<br>
+          Acompanha processos reais (process shadowing)<br>
+          Mapeia domínios (event storming)<br>
+          Analisa dados (taxas de erro, tempos)<br>
+          Transforma tudo em documentos de intenção<br>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title" style="color: #ff6b9d;">O modelo de equipe</div>
+        <div class="card-text">
+          <strong>Focused Impact Pair:</strong><br><br>
+          🎯 Engenheiro de Intenção (o que + por que)<br>
+          ⚙️ Engenheiro de Sistemas (como + orquestra IA)<br>
+          🤖 Agentes de IA (executam)<br><br>
+          2 pessoas + IA (proposta da SQUER)
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE F-06: VIBE CODING - O AVISO -->
+<div class="slide perspective-future" data-perspective="future" data-narration="Mas atenção: existe um caminho perigoso. É chamado de Vibe Coding. Um estudo acadêmico de 2025 analisou 101 fontes e 518 relatos de pessoas que usam IA para programar por intuição, sem entender o que estão fazendo. O resultado? Velocidade espetacular no início, mas código frágil, sem testes, sem segurança. Uma nova classe de profissionais vulneráveis surgiu: pessoas que conseguem construir algo, mas não conseguem consertar quando quebra. Isso é como dirigir um carro sem saber mecânica básica. Funciona até o dia que não funciona. O IDD é a resposta responsável: não elimina a compreensão, muda o nível. Você precisa entender o problema, não a sintaxe da solução.">
+  <div class="slide-inner">
+    <div class="slide-section-label">O Aviso</div>
+    <h2>O perigo do "Vibe Coding"</h2>
+    <div class="card-grid card-grid-2">
+      <div class="card" style="border-left: 3px solid #ff5050;">
+        <span class="card-icon">⚠️</span>
+        <div class="card-title" style="color:#ff5050;">Vibe Coding</div>
+        <div class="card-text">
+          "Pede pra IA e vai"<br>
+          Sem entender o resultado<br>
+          Sem testar<br>
+          Sem verificar segurança<br><br>
+          <strong>Resultado:</strong> funciona até o dia que quebra. E aí ninguém sabe consertar.
+        </div>
+      </div>
+      <div class="card" style="border-left: 3px solid #4ecdc4;">
+        <span class="card-icon">✅</span>
+        <div class="card-title" style="color:#4ecdc4;">IDD (Intent-Driven)</div>
+        <div class="card-text">
+          Expressa intenção com clareza<br>
+          Define restrições e critérios<br>
+          Valida o resultado<br>
+          Refina quando necessário<br><br>
+          <strong>Resultado:</strong> compreensão no nível certo. Não da sintaxe, mas do problema.
+        </div>
+      </div>
+    </div>
+    <div class="highlight-box highlight-vision" style="margin-top: 12px;">
+      <div class="highlight-title">A diferença em uma frase</div>
+      <p style="margin:0">Vibe Coding: "Confia na IA e vai." — IDD: "Entende o problema, expressa com clareza, valida o resultado."</p>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE F-07: EXEMPLO PRÁTICO -->
+<div class="slide perspective-future" data-perspective="future" data-narration="Vamos ver um exemplo concreto. Imagine que você é responsável por organizar as designações de reuniões numa congregação. Antes, você abria uma planilha, verificava manualmente quem participou recentemente, consultava disponibilidades, preenchia nome por nome, formatava o documento, imprimia e distribuía. Agora, você abre o RVM e diz: designar semana 9 de fevereiro. O sistema sabe quem você é, o que pode fazer, quais as regras de rotação, quem está disponível, e gera a proposta automaticamente. O resultado aparece como o documento oficial, para revisão. Os tempos mostrados no slide são estimativas ilustrativas. Se algo não ficar bom, você diz: trocar fulano por ciclano na leitura bíblica. Ajuste natural, sem recomeçar. Isso é IDD na prática: intenção clara, contexto rico, resultado imediato.">
+  <div class="slide-inner">
+    <div class="slide-section-label">Na Prática</div>
+    <h2>Um exemplo real: designar reuniões<span class="idd-selo idd-selo-ok">✅ IMPLEMENTADO</span><span class="idd-selo idd-selo-demo">🧪 tempos ilustrativos</span></h2>
+    <div class="card-grid card-grid-2">
+      <div class="card" style="border-top: 3px solid #888;">
+        <div class="card-title">Antes (manual)</div>
+        <div class="card-text" style="line-height: 2;">
+          1. Abrir planilha ⏱ 2min<br>
+          2. Verificar quem participou ⏱ 5min<br>
+          3. Consultar disponibilidades ⏱ 5min<br>
+          4. Preencher nome por nome ⏱ 10min<br>
+          5. Formatar documento ⏱ 5min<br>
+          6. Imprimir e distribuir ⏱ 5min<br>
+          <strong>Total: ~30 minutos (estimativa)</strong>
+        </div>
+      </div>
+      <div class="card" style="border-top: 3px solid #ff6b9d;">
+        <div class="card-title" style="color: #ff6b9d;">Agora (IDD)</div>
+        <div class="card-text" style="line-height: 2;">
+          1. "Designar semana 9 de fevereiro" ⏱ 5s<br>
+          2. Documento pronto aparece ⏱ 10s<br>
+          3. "Trocar Carlos na leitura" ⏱ 5s<br>
+          4. "Enviar por WhatsApp" ⏱ 3s<br>
+          <br><br>
+          <strong style="color: #ff6b9d;">Total: ~25 segundos (estimativa ilustrativa)</strong>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE F-08: O FUTURO -->
+<div class="slide perspective-future" data-perspective="future" data-narration="Então, o que vem a seguir? A tendência é clara: interfaces cada vez mais naturais, mais contextuais, mais inteligentes. Os sistemas vão não apenas responder, mas antecipar. Vão não apenas executar, mas explicar. Vão não apenas produzir, mas ensinar. O profissional do futuro não é aquele que sabe mais comandos ou mais linguagens de programação. É aquele que entende profundamente o problema que precisa resolver, comunica com clareza o que precisa, e valida com senso crítico o que recebe. Essa habilidade não depende de formação técnica. Depende de pensamento claro, conhecimento do domínio, e capacidade de comunicação. Quem entende o problema a fundo continua indispensável para decidir o quê e o porquê.">
+  <div class="slide-inner">
+    <div class="slide-section-label">O Horizonte</div>
+    <h2>O profissional do futuro<span class="idd-selo idd-selo-prop">🔭 VISÃO</span></h2>
+    <div class="card-grid card-grid-3">
+      <div class="card" style="border-top: 3px solid #ff6b9d;">
+        <span class="card-icon">🧠</span>
+        <div class="card-title">Pensamento Claro</div>
+        <div class="card-text">Entender o problema profundamente. Decompor em partes. Identificar o que importa e o que é ruído.</div>
+      </div>
+      <div class="card" style="border-top: 3px solid #ff6b9d;">
+        <span class="card-icon">🗣️</span>
+        <div class="card-title">Comunicação Precisa</div>
+        <div class="card-text">Expressar intenção com contexto, restrições e critérios. A nova "programação" é saber pedir.</div>
+      </div>
+      <div class="card" style="border-top: 3px solid #ff6b9d;">
+        <span class="card-icon">🔎</span>
+        <div class="card-title">Senso Crítico</div>
+        <div class="card-text">Avaliar resultados. Reconhecer erros. Refinar. Nunca aceitar cegamente o que a máquina produz.</div>
+      </div>
+    </div>
+    <div class="quote-block" style="margin-top: 20px;">
+      "Quem entende o problema a fundo continua indispensável para decidir o quê e o porquê."
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE F-09: RESUMO FINAL -->
+<div class="slide perspective-future" data-perspective="future" data-narration="Para encerrar, a tese: estamos vivendo uma mudança comparável à chegada da interface gráfica nos anos 90, agora na distância entre pensamento humano e ação da máquina. O Desenvolvimento Orientado à Intenção, na formulação de Eliézer Rosa, é uma proposta de disciplina para essa mudança. Ele não elimina profissionais. Ele muda o nível em que trabalham. De executores manuais a supervisores inteligentes. De programadores de sintaxe a engenheiros de intenção. O código mais poderoso do futuro não é escrito em Python, JavaScript ou C. É escrito em linguagem clara, contextualizada e com propósito. Obrigado pela atenção.">
+  <div class="slide-inner">
+    <div class="slide-section-label">Encerramento</div>
+    <h1>O código mais poderoso do futuro<br>é escrito em linguagem clara.<span class="idd-selo idd-selo-prop">🔭 TESE</span></h1>
+    <p class="subtitle" style="margin-top: 20px;">
+      Não em Python. Não em JavaScript. Não em C++.<br>
+      Em intenção clara, contextualizada e com propósito.
+    </p>
+    <div class="card-grid card-grid-3" style="margin-top: 30px;">
+      <div class="card" style="text-align:center; border-top: 3px solid #4ecdc4;">
+        <div class="card-title" style="color: #4ecdc4;">Para o Usuário</div>
+        <div class="card-text">Fale o que precisa. O sistema faz o resto.</div>
+      </div>
+      <div class="card" style="text-align:center; border-top: 3px solid #8b8bff;">
+        <div class="card-title" style="color: #8b8bff;">Para o Desenvolvedor</div>
+        <div class="card-text">Por analogia: o LLM compila intenções; o domínio é o type system.</div>
+      </div>
+      <div class="card" style="text-align:center; border-top: 3px solid #ff6b9d;">
+        <div class="card-title" style="color: #ff6b9d;">Para o Futuro</div>
+        <div class="card-text">Quem entende o problema continua indispensável.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div><!-- /slides-viewport -->
+
+<!-- ═══════════════ SPEAKING INDICATOR ═══════════════ -->
+<div class="speaking-indicator" id="speakingIndicator">
+  <div class="speaking-bars">
+    <div class="speaking-bar"></div><div class="speaking-bar"></div><div class="speaking-bar"></div><div class="speaking-bar"></div><div class="speaking-bar"></div>
+  </div>
+  <span class="speaking-label">Narrando...</span>
+</div>
+
+<!-- ═══════════════ KEYBOARD HINT ═══════════════ -->
+<div class="keyboard-hint">
+  <span><kbd>←</kbd><kbd>→</kbd> navegar</span>
+  <span><kbd>Space</kbd> narrar</span>
+  <span><kbd>1</kbd><kbd>2</kbd><kbd>3</kbd> perspectiva</span>
+  <span><kbd>A</kbd> auto-play</span>
+</div>
+
+<!-- ═══════════════ JAVASCRIPT ═══════════════ -->
+<script>
+// ═══════════════ STATE ═══════════════
+let currentPerspective = 'user';
+let currentSlideIndex = 0;
+let isNarrating = false;
+let autoPlayActive = false;
+let synth = window.speechSynthesis;
+let selectedVoice = null;
+let speechRate = 1.0;
+let speechPitch = 1.0;
+
+// ═══════════════ SLIDES BY PERSPECTIVE ═══════════════
+function getSlides(perspective) {
+  return Array.from(document.querySelectorAll(`.slide[data-perspective="${perspective}"]`));
+}
+
+function getAllSlideCount() {
+  return getSlides(currentPerspective).length;
+}
+
+// ═══════════════ PERSPECTIVE SWITCHING ═══════════════
+function switchPerspective(perspective) {
+  if (isNarrating) stopNarration();
+  
+  // Update tabs
+  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+  document.querySelector(`.nav-tab[data-perspective="${perspective}"]`).classList.add('active');
+  
+  // Hide all slides
+  document.querySelectorAll('.slide').forEach(s => {
+    s.classList.remove('active', 'exit-left');
+  });
+  
+  currentPerspective = perspective;
+  currentSlideIndex = 0;
+  showSlide(0);
+}
+
+// ═══════════════ SLIDE NAVIGATION ═══════════════
+function showSlide(index) {
+  const slides = getSlides(currentPerspective);
+  if (index < 0 || index >= slides.length) return;
+  
+  // Hide all slides of current perspective
+  slides.forEach((s, i) => {
+    s.classList.remove('active', 'exit-left');
+    if (i < index) s.classList.add('exit-left');
+  });
+  
+  // Show target slide
+  slides[index].classList.add('active');
+  currentSlideIndex = index;
+  
+  // Update counter
+  document.getElementById('slideCounter').textContent = `${index + 1} / ${slides.length}`;
+  
+  // Update progress
+  const progress = slides.length > 1 ? (index / (slides.length - 1)) * 100 : 100;
+  document.getElementById('progressFill').style.width = `${progress}%`;
+}
+
+function nextSlide() {
+  const slides = getSlides(currentPerspective);
+  if (currentSlideIndex < slides.length - 1) {
+    if (isNarrating) stopNarration();
+    showSlide(currentSlideIndex + 1);
+    if (autoPlayActive) {
+      setTimeout(() => startNarration(), 400);
+    }
+  } else if (autoPlayActive) {
+    // Auto-advance to next perspective
+    const perspectives = ['user', 'dev', 'future'];
+    const currentIdx = perspectives.indexOf(currentPerspective);
+    if (currentIdx < perspectives.length - 1) {
+      switchPerspective(perspectives[currentIdx + 1]);
+      if (autoPlayActive) {
+        setTimeout(() => startNarration(), 600);
+      }
+    } else {
+      autoPlayActive = false;
+      document.getElementById('btnAutoPlay').classList.remove('playing');
+    }
+  }
+}
+
+function prevSlide() {
+  if (currentSlideIndex > 0) {
+    if (isNarrating) stopNarration();
+    showSlide(currentSlideIndex - 1);
+  }
+}
+
+// ═══════════════ VOICE SYNTHESIS ═══════════════
+function populateVoices() {
+  const voices = synth.getVoices();
+  const select = document.getElementById('voiceSelect');
+  select.innerHTML = '';
+  
+  // Prefer pt-BR voices, then pt, then any
+  const ptBrVoices = voices.filter(v => v.lang.startsWith('pt-BR') || v.lang.startsWith('pt'));
+  const otherVoices = voices.filter(v => !v.lang.startsWith('pt'));
+  const sorted = [...ptBrVoices, ...otherVoices];
+  
+  sorted.forEach((voice, i) => {
+    const opt = document.createElement('option');
+    opt.value = voices.indexOf(voice);
+    opt.textContent = `${voice.name} (${voice.lang})`;
+    if (voice.lang.startsWith('pt-BR') && !selectedVoice) {
+      opt.selected = true;
+      selectedVoice = voice;
+    }
+    select.appendChild(opt);
+  });
+  
+  if (!selectedVoice && voices.length > 0) {
+    selectedVoice = ptBrVoices[0] || voices[0];
+  }
+  
+  select.addEventListener('change', () => {
+    selectedVoice = voices[parseInt(select.value)];
+  });
+}
+
+if (synth.onvoiceschanged !== undefined) {
+  synth.onvoiceschanged = populateVoices;
+}
+setTimeout(populateVoices, 100);
+
+function updateRate() {
+  speechRate = parseFloat(document.getElementById('rateRange').value);
+  document.getElementById('rateVal').textContent = speechRate.toFixed(1);
+}
+
+function updatePitch() {
+  speechPitch = parseFloat(document.getElementById('pitchRange').value);
+  document.getElementById('pitchVal').textContent = speechPitch.toFixed(1);
+}
+
+// ═══════════════ NARRATION ═══════════════
+function startNarration() {
+  const slides = getSlides(currentPerspective);
+  const slide = slides[currentSlideIndex];
+  const text = slide.getAttribute('data-narration');
+  if (!text) return;
+  
+  stopNarration();
+  
+  const utterance = new SpeechSynthesisUtterance(text);
+  if (selectedVoice) utterance.voice = selectedVoice;
+  utterance.rate = speechRate;
+  utterance.pitch = speechPitch;
+  utterance.lang = 'pt-BR';
+  
+  utterance.onstart = () => {
+    isNarrating = true;
+    document.getElementById('speakingIndicator').classList.add('active');
+    document.getElementById('btnPlayPause').textContent = '⏸';
+    document.getElementById('btnPlayPause').classList.add('playing');
+  };
+  
+  utterance.onend = () => {
+    isNarrating = false;
+    document.getElementById('speakingIndicator').classList.remove('active');
+    document.getElementById('btnPlayPause').textContent = '▶';
+    document.getElementById('btnPlayPause').classList.remove('playing');
+    
+    if (autoPlayActive) {
+      setTimeout(() => nextSlide(), 800);
+    }
+  };
+  
+  utterance.onerror = () => {
+    isNarrating = false;
+    document.getElementById('speakingIndicator').classList.remove('active');
+    document.getElementById('btnPlayPause').textContent = '▶';
+    document.getElementById('btnPlayPause').classList.remove('playing');
+  };
+  
+  synth.speak(utterance);
+}
+
+function stopNarration() {
+  synth.cancel();
+  isNarrating = false;
+  document.getElementById('speakingIndicator').classList.remove('active');
+  document.getElementById('btnPlayPause').textContent = '▶';
+  document.getElementById('btnPlayPause').classList.remove('playing');
+}
+
+function toggleNarration() {
+  if (isNarrating) {
+    stopNarration();
+  } else {
+    startNarration();
+  }
+}
+
+function toggleAutoPlay() {
+  autoPlayActive = !autoPlayActive;
+  const btn = document.getElementById('btnAutoPlay');
+  if (autoPlayActive) {
+    btn.classList.add('playing');
+    if (!isNarrating) startNarration();
+  } else {
+    btn.classList.remove('playing');
+    stopNarration();
+  }
+}
+
+function toggleVoicePanel() {
+  document.getElementById('voicePanel').classList.toggle('open');
+}
+
+// ═══════════════ KEYBOARD CONTROLS ═══════════════
+document.addEventListener('keydown', (e) => {
+  if (e.target.tagName === 'INPUT' || e.target.tagName === 'SELECT') return;
+  
+  switch(e.key) {
+    case 'ArrowRight':
+    case 'PageDown':
+      nextSlide();
+      break;
+    case 'ArrowLeft':
+    case 'PageUp':
+      prevSlide();
+      break;
+    case ' ':
+      e.preventDefault();
+      toggleNarration();
+      break;
+    case '1':
+      switchPerspective('user');
+      break;
+    case '2':
+      switchPerspective('dev');
+      break;
+    case '3':
+      switchPerspective('future');
+      break;
+    case 'a':
+    case 'A':
+      toggleAutoPlay();
+      break;
+    case 'Escape':
+      stopNarration();
+      autoPlayActive = false;
+      document.getElementById('btnAutoPlay').classList.remove('playing');
+      document.getElementById('voicePanel').classList.remove('open');
+      break;
+  }
+});
+
+// ═══════════════ TOUCH SUPPORT ═══════════════
+let touchStartX = 0;
+document.addEventListener('touchstart', (e) => { touchStartX = e.touches[0].clientX; });
+document.addEventListener('touchend', (e) => {
+  const diff = e.changedTouches[0].clientX - touchStartX;
+  if (Math.abs(diff) > 50) {
+    if (diff > 0) prevSlide(); else nextSlide();
+  }
+});
+
+// ═══════════════ INIT ═══════════════
+showSlide(0);
+</script>
+</body>
+</html>

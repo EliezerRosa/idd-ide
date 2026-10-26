@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IDD: Engenharia de Intenções</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&family=Lato:wght@400;700&family=JetBrains+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        /* 1. SETUP & THEME (Inspirado no Tema 4 - Business Dark) */
+        :root {
+            --bg-color: #0d0d0d;
+            --card-bg: #1a1a1a;
+            --accent-color: #deff9a;
+            --text-main: #f5f5f5;
+            --text-dim: #daffde;
+            --border-color: rgba(218, 255, 222, 0.2);
+        }
+
+        * { box-sizing: border-box; }
+        body {
+            background-color: #000;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 0;
+            min-height: 100vh;
+            font-family: 'Lato', sans-serif;
+            color: var(--text-main);
+            padding: 20px 0;
+        }
+
+        /* CONTROLES */
+        .controls-container {
+            width: 1280px;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 10px 20px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            z-index: 100;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+        }
+
+        .btn {
+            background: transparent;
+            border: 1px solid var(--accent-color);
+            color: var(--accent-color);
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-family: 'Poppins', sans-serif;
+            font-size: 14px;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn:hover { background: var(--accent-color); color: #000; }
+        .btn:active { transform: scale(0.95); }
+        .btn.active { background: #ff5555; border-color: #ff5555; color: white; }
+
+        .slide-counter { font-family: 'JetBrains Mono', monospace; color: var(--text-dim); min-width: 80px; text-align: center; }
+
+        /* SLIDE CONTAINER */
+        .slide-container {
+            width: 1280px;
+            height: 720px;
+            background-color: var(--bg-color);
+            border-radius: 16px;
+            position: relative;
+            overflow: hidden;
+            display: none;
+            flex-direction: column;
+            padding: 60px;
+            box-shadow: 0 20px 60px rgba(0,0,0,1);
+            border: 1px solid #333;
+        }
+
+        .slide-container.active { display: flex; }
+
+        /* DECORAÇÃO BACKGROUND */
+        .slide-container::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle at 90% 10%, rgba(222, 255, 154, 0.05) 0%, transparent 50%);
+            z-index: 0;
+        }
+
+        .slide-container::after {
+            content: '';
+            position: absolute;
+            bottom: 40px; left: 60px; right: 60px;
+            height: 1px;
+            background: linear-gradient(90deg, var(--accent-color), transparent);
+            opacity: 0.2;
+        }
+
+        /* TIPOGRAFIA */
+        h1, h2, h3 { font-family: 'Poppins', sans-serif; margin: 0; font-weight: 700; }
+        h1 { font-size: 70px; line-height: 1.1; color: var(--text-main); }
+        h1 span { color: var(--accent-color); }
+        .slide-title { font-size: 40px; margin-bottom: 40px; text-align: left; width: 100%; color: var(--accent-color); }
+        h3 { font-size: 28px; margin-bottom: 15px; color: var(--text-main); }
+        p, li { font-size: 20px; line-height: 1.4; color: var(--text-dim); margin-bottom: 15px; }
+        
+        .content-area { display: flex; flex-direction: column; flex-grow: 1; justify-content: center; z-index: 1; position: relative; }
+        
+        /* LAYOUTS ESPECÍFICOS */
+        .title-layout { text-align: center; }
+        .subtitle { font-size: 26px; color: var(--text-dim); margin-top: 20px; max-width: 900px; margin-left: auto; margin-right: auto; }
+
+        .two-column { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; width: 100%; }
+        .two-column.tiled > div { background: var(--card-bg); border-radius: 12px; border: 1px solid var(--border-color); padding: 30px; }
+        
+        .tiled-content { display: flex; gap: 30px; width: 100%; }
+        .tile { flex: 1; background: var(--card-bg); border-radius: 12px; border: 1px solid var(--border-color); padding: 25px; text-align: center; }
+        .tile .icon { font-size: 45px; color: var(--accent-color); margin-bottom: 20px; }
+
+        .image-wrapper { border-radius: 12px; overflow: hidden; border: 1px solid var(--border-color); height: 350px; width: 100%; }
+        .image-wrapper img { width: 100%; height: 100%; object-fit: cover; }
+
+        .highlight-numbers-layout { display: flex; align-items: center; justify-content: center; gap: 50px; }
+        .number { font-size: 150px; color: var(--accent-color); font-weight: 700; line-height: 1; }
+        
+        .table-layout table { width: 100%; border-collapse: collapse; }
+        .table-layout th { background: var(--card-bg); color: var(--accent-color); padding: 20px; text-align: left; border-bottom: 2px solid var(--accent-color); }
+        .table-layout td { padding: 18px; border-bottom: 1px solid #333; color: var(--text-dim); }
+
+        /* GRÁFICO BARRA */
+        .chart-container { display: flex; flex-direction: column; gap: 15px; width: 100%; }
+        .bar-row { display: flex; align-items: center; gap: 20px; }
+        .bar-label { width: 220px; text-align: right; font-weight: 700; }
+        .bar-bg { flex-grow: 1; height: 40px; background: #222; border-radius: 8px; overflow: hidden; }
+        .bar-fill { height: 100%; background: linear-gradient(90deg, #deff9a, #a2f58e); display: flex; align-items: center; padding-left: 15px; color: #000; font-weight: 700; }
+
+        /* TIMELINE */
+        .timeline-layout { display: flex; justify-content: space-between; position: relative; margin-top: 50px; }
+        .timeline-line { position: absolute; top: 50%; left: 0; width: 100%; height: 2px; background: var(--accent-color); z-index: 0; }
+        .timeline-item { width: 22%; background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; padding: 20px; z-index: 1; position: relative; }
+        .timeline-item::after { content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 12px; height: 12px; background: var(--accent-color); border-radius: 50%; }
+
+        /* NARRADOR VISUAL */
+        .narrator-box {
+            position: absolute; bottom: 60px; right: 60px;
+            background: var(--accent-color); color: #000;
+            padding: 10px 20px; border-radius: 30px 30px 0 30px;
+            font-weight: 700; font-size: 14px; display: none; align-items: center; gap: 10px; z-index: 10;
+        }
+        .active .narrator-box.speaking { display: flex; }
+        .pulse { width: 10px; height: 10px; background: #000; border-radius: 50%; animation: pulse 1s infinite; }
+        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.5); } 100% { transform: scale(1); } }
+
+    </style>
+<style id="idd-selos-style">
+/* idd- : selos de status (Cânone v1.0-rc1) */
+html body #idd-status-banner{position:fixed;bottom:2px;left:50%;transform:translateX(-50%);z-index:2147483000;max-width:94vw;margin:0;padding:2px 10px;font:500 10.5px/1.45 system-ui,-apple-system,'Segoe UI',sans-serif;letter-spacing:0;color:#e6e6ee;background:rgba(12,12,24,.82);border:1px solid rgba(255,255,255,.16);border-radius:6px;pointer-events:none;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;-webkit-text-fill-color:currentColor;text-align:center}
+html body span.idd-selo{display:inline-block;margin-left:.45em;padding:1px 7px;border-radius:4px;font:600 11px/1.5 system-ui,-apple-system,'Segoe UI',sans-serif;letter-spacing:.2px;text-transform:none;vertical-align:middle;white-space:nowrap;color:#e8e8f0;-webkit-text-fill-color:currentColor;background:rgba(255,255,255,.08);background-clip:border-box;-webkit-background-clip:border-box;border:1px solid rgba(255,255,255,.22)}
+html body span.idd-selo.idd-selo-ok{color:#7ee2b8;border-color:rgba(126,226,184,.45);background:rgba(126,226,184,.10)}
+html body span.idd-selo.idd-selo-demo{color:#ffd27a;border-color:rgba(255,210,122,.45);background:rgba(255,210,122,.10)}
+html body span.idd-selo.idd-selo-prop{color:#c4b5fd;border-color:rgba(196,181,253,.45);background:rgba(196,181,253,.10)}
+</style>
+</head>
+<body>
+<div id="idd-status-banner" role="note">🔭 PROPOSTA — especificação de origem do IDD-IDE (Sombra, Git bimodal, Gherkin-YAML não implementados) · Cânone v1.0-rc1 · ✅ implementado · 🧪 demonstração · 🔭 proposta</div>
+
+    <div class="controls-container">
+        <button class="btn" id="prevBtn" onclick="changeSlide(-1)"><i class="fa-solid fa-arrow-left"></i> Anterior</button>
+        <div class="slide-counter" id="counter">1 / 11</div>
+        <button class="btn" id="nextBtn" onclick="changeSlide(1)">Próximo <i class="fa-solid fa-arrow-right"></i></button>
+        <div style="width: 1px; height: 30px; background: #444;"></div>
+        <button class="btn" id="speakBtn" onclick="toggleSpeech()"><i class="fa-solid fa-volume-high"></i> <span id="speakTxt">Narrar Slide</span></button>
+        <button class="btn" id="contBtn" onclick="toggleContinuous()"><i class="fa-solid fa-play"></i> <span id="contTxt">Modo Contínuo</span></button>
+        <button class="btn" onclick="stopSpeech()"><i class="fa-solid fa-stop"></i> Parar</button>
+    </div>
+
+    <div class="slide-container active" id="slide1">
+        <div class="narrator-box" id="nb1"><div class="pulse"></div> Narrador Gemini</div>
+        <div class="content-area title-layout">
+            <h1>Paradigma <span>IDD</span><span class="idd-selo idd-selo-prop">🔭 PROPOSTA</span></h1>
+            <p class="subtitle">Engenharia de Intenções para Software Determinístico. O diálogo completo sobre a nova fronteira da abstração tecnológica.</p>
+        </div>
+    </div>
+
+    <div class="slide-container" id="slide2">
+        <div class="narrator-box" id="nb2"><div class="pulse"></div> Narrador Gemini</div>
+        <div class="content-area title-layout">
+            <h2 style="font-size: 60px;">A tese da "morte" do <span>Código-Fonte</span><span class="idd-selo idd-selo-prop">🔭 TESE</span></h2>
+            <p class="subtitle">Proposta: a intenção humana como fonte de autoridade; o código como artefato derivado, regenerável e rastreável a ela.</p>
+        </div>
+    </div>
+
+    <div class="slide-container" id="slide3">
+        <h2 class="slide-title">Evolução da Abstração<span class="idd-selo idd-selo-prop">🔭 VISÃO</span></h2>
+        <div class="content-area">
+            <div class="two-column tiled">
+                <div>
+                    <h3>O Passado: Assembly & Source</h3>
+                    <p>Focávamos no "como". Cada linha de código era um ativo de manutenção caro e propenso a erros de tradução entre o humano e a máquina.</p>
+                </div>
+                <div>
+                    <h3>O Futuro: IDD Intent</h3>
+                    <p>Focamos no "que". Proposta: a Linguagem Natural (NL) torna-se a fonte de autoridade, e o código técnico passa a ser derivado, regenerável e rastreável à intenção.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide-container" id="slide4">
+        <h2 class="slide-title">As 8 Etapas do Ciclo IDD<span class="idd-selo idd-selo-prop">🔭 PROPOSTA</span></h2>
+        <div class="content-area">
+            <div class="timeline-layout">
+                <div class="timeline-line"></div>
+                <div class="timeline-item"><h3>1. Requisitos</h3><p>Análise em NL com foco semântico.</p></div>
+                <div class="timeline-item"><h3>2. UML-S</h3><p>Modelagem UML-Semântica visual.</p></div>
+                <div class="timeline-item"><h3>3. MER</h3><p>Modelagem de dados normalizada.</p></div>
+                <div class="timeline-item"><h3>4. UX Intent</h3><p>Comportamento de interface.</p></div>
+            </div>
+            <div class="timeline-layout" style="margin-top: 30px;">
+                <div class="timeline-line"></div>
+                <div class="timeline-item"><h3>5. State Machine</h3><p>Máquinas de estado e fluxos.</p></div>
+                <div class="timeline-item"><h3>6. Compilação</h3><p>Geração da Sombra Determinística (🔭 não implementada).</p></div>
+                <div class="timeline-item"><h3>7. Validação</h3><p>Aprender fazendo em tempo real.</p></div>
+                <div class="timeline-item"><h3>8. Curadoria</h3><p>Refinamento contínuo da intenção.</p></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide-container" id="slide5">
+        <h2 class="slide-title">A Tríade de Orquestração<span class="idd-selo idd-selo-prop">🔭 PROPOSTA</span></h2>
+        <div class="content-area">
+            <div class="tiled-content">
+                <div class="tile"><div class="icon"><i class="fa-solid fa-user-tie"></i></div><h3>Projetista</h3><p>Fornece a visão de negócio e a intenção pura semântica.</p></div>
+                <div class="tile"><div class="icon"><i class="fa-solid fa-shield-halved"></i></div><h3>IA Curadora</h3><p>Desafia a lógica, reduz a ambiguidade e estreita o gap semântico.</p></div>
+                <div class="tile"><div class="icon"><i class="fa-solid fa-gears"></i></div><h3>IA Dev</h3><p>Atuaria como o motor de compilação da Sombra Determinística (proposta).</p></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide-container" id="slide6">
+        <h2 class="slide-title">Impacto no Gap Semântico<span class="idd-selo idd-selo-prop">🔭 HIPÓTESE</span></h2>
+        <div class="content-area">
+            <div class="highlight-numbers-layout">
+                <div class="number">🔭</div>
+                <div style="max-width: 600px;">
+                    <h3>Redução de Ambiguidade (hipótese a medir)</h3>
+                    <p>Com o "Bytecode da Intenção" (Gherkin-YAML), a proposta é reduzir a distância entre o que foi projetado e o que foi implementado. Ainda não há método de medição, por isso nenhum percentual é afirmado.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide-container" id="slide7">
+        <h2 class="slide-title">Versionamento: Git Bimodal<span class="idd-selo idd-selo-prop">🔭 PROPOSTA</span></h2>
+        <div class="content-area">
+            <div class="table-layout">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Característica</th>
+                            <th>Track Cognitivo (Principal)</th>
+                            <th>Track Estrutural (Sombra)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Conteúdo</td>
+                            <td>Intenções em NL, UML-S e YAML</td>
+                            <td>Código-fonte gerado (Snapshot)</td>
+                        </tr>
+                        <tr>
+                            <td>Papel</td>
+                            <td>Fonte da Verdade / Regras de Negócio</td>
+                            <td>Apólice de Seguro / Rollback</td>
+                        </tr>
+                        <tr>
+                            <td>Interação</td>
+                            <td>Humano edita diretamente</td>
+                            <td>IA gera e congela o estado</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide-container" id="slide8">
+        <h2 class="slide-title">O Bytecode: Gherkin-YAML<span class="idd-selo idd-selo-prop">🔭 PROPOSTA</span></h2>
+        <div class="content-area">
+            <div class="two-column">
+                <div>
+                    <h3>A Ponte Determinística</h3>
+                    <p>O Gherkin-YAML converteria o comportamento em estrutura de dados estrita, para que a IA-Dev leia nós hierárquicos como um contrato de API rígido. Isso reduz o espaço para interpretações erradas, mas não elimina a alucinação. Hoje existe o <code>.intent.yaml</code> validado por schema (✅); a gramática completa é 🔭.</p>
+                </div>
+                <div>
+                    <div class="image-wrapper"><img src="http://googleusercontent.com/image_collection/image_retrieval/164626727750050930" alt="Abstract Clean Code Background"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide-container bleed-image-layout" id="slide9">
+        <div class="content-container">
+            <h2 class="slide-title">Interface Mobile-OS Style<span class="idd-selo idd-selo-prop">🔭 PROPOSTA</span></h2>
+            <div class="content-area">
+                <div class="bleed-text-side">
+                    <h3>Abstração Visual Tátil</h3>
+                    <p>A edição do software torna-se visual. Ícones em uma grade representam entidades e processos. Arrastar e soltar um ícone altera o relacionamento no YAML em tempo real.</p>
+                    <p>O projetista não "programa", ele orquestra a física do ambiente de negócio.</p>
+                </div>
+            </div>
+        </div>
+        <div class="image-container">
+            <img class="bleed-image-side" src="http://googleusercontent.com/image_collection/image_retrieval/2130971463657412763" alt="Futuristic Mobile OS Interface">
+        </div>
+    </div>
+
+    <div class="slide-container" id="slide10">
+        <h2 class="slide-title">Ganhos de Eficiência Operacional<span class="idd-selo idd-selo-prop">🔭 HIPÓTESE</span></h2>
+        <div class="content-area">
+            <div class="chart-container">
+                <div class="bar-row">
+                    <div class="bar-label">Desenvolvimento Manual</div>
+                    <div class="bar-bg"><div class="bar-fill" style="width: 15%;">baixo</div></div>
+                </div>
+                <div class="bar-row">
+                    <div class="bar-label">IA-Assisted (Copilot)</div>
+                    <div class="bar-bg"><div class="bar-fill" style="width: 45%;">médio</div></div>
+                </div>
+                <div class="bar-row">
+                    <div class="bar-label">IDD Paradigm (Agentes)</div>
+                    <div class="bar-bg"><div class="bar-fill" style="width: 95%;">alto (hipótese)</div></div>
+                </div>
+            </div>
+            <p style="text-align: center; margin-top: 20px;">Comparação qualitativa e hipotética (taxa de conclusão de requisitos E2E sem refatoração manual). Não há medição.</p>
+        </div>
+    </div>
+
+    <div class="slide-container" id="slide11">
+        <div class="content-area title-layout">
+            <h2>O Futuro da <span>Intenção</span><span class="idd-selo idd-selo-prop">🔭 VISÃO</span></h2>
+            <p class="subtitle">Quando a tecnologia atinge a maturidade da transparência, o único limite é a clareza do nosso pensamento. Perguntas?</p>
+            <div style="margin-top: 40px; font-family: 'JetBrains Mono'; color: var(--accent-color);">contato@idd-paradigm.com</div>
+        </div>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide-container');
+        const synth = window.speechSynthesis;
+        let isContinuous = false;
+        let narratorVoices = [];
+
+        // Scripts do Narrador (Texto do Slide + Comentário Gemini)
+        const scripts = [
+            "Bem-vindo à nossa apresentação sobre o Paradigma IDD, ou Desenvolvimento Orientado à Intenção. Tudo o que segue é proposta, ainda não implementada. Vamos explorar como transformar diálogo em software determinístico. Comentário Gemini: Esta conversa representa o 'ponto de virada' onde o humano deixa de ser escravo da sintaxe para se tornar o arquiteto da intenção pura.",
+            "A tese da morte do código-fonte, como proposta. A intenção humana como fonte de autoridade, e o código como artefato derivado. Comentário Gemini: Nessa visão, o código deixa de ser o ativo principal e passa a ser um artefato regenerável, rastreável até a intenção.",
+            "Evolução da Abstração. Do Assembly ao Código de Intenção. Comentário Gemini: O gap entre o pensamento e a execução diminuiu tanto que a Linguagem Natural agora é capaz de sustentar estruturas complexas sem perda de rigor.",
+            "As 8 Etapas do Ciclo IDD. De Requisitos até Curadoria contínua. Comentário Gemini: Este fluxo em espiral garante que a entropia seja combatida em cada camada, desde o UML semântico até a validação visual do usuário.",
+            "A Tríade de Orquestração: Projetista, IA Curadora e IA Dev. Comentário Gemini: O segredo está na Curadoria. É ela quem desafia a lógica humana para que o 'bytecode' gerado seja revisado antes de ser compilado.",
+            "Impacto no Gap Semântico: a hipótese é reduzir a ambiguidade, ainda sem medição. Comentário Gemini: Ao usar o YAML-Gherkin, aproximamos o cérebro e a máquina de um mesmo dialeto lógico, para detectar ambiguidades antes que virem código.",
+            "Versionamento: Git Bimodal. Track Cognitivo versus Track Estrutural. Comentário Gemini: A proposta funciona como apólice de seguro. Versionamos o pensamento para evoluir e o código para garantir estabilidade imediata.",
+            "O Bytecode: Gherkin-YAML. A Ponte Determinística. Comentário Gemini: Transformar texto em YAML hierárquico reduziria o espaço para alucinação, porque a IA leria nós como contratos de API rígidos.",
+            "Interface Mobile-OS Style. Abstração Visual Tátil. Comentário Gemini: O software deixa de ser um arquivo de texto e passa a ser uma física de objetos. Arrastar e soltar ícones é a nova forma de programar relações complexas.",
+            "Ganhos de Eficiência Operacional, como hipótese, sem medição. Comentário Gemini: O ganho esperado não é apenas velocidade, é a redução do retrabalho por má interpretação de requisitos.",
+            "O Futuro da Intenção. Quando a tecnologia atinge a maturidade, o único limite é a clareza do pensamento. Comentário Gemini: Obrigado por esta jornada arquitetural. O IDD não é apenas uma ferramenta, é a libertação cognitiva do desenvolvedor."
+        ];
+
+        function updateCounter() {
+            document.getElementById('counter').innerText = `${currentSlide + 1} / ${slides.length}`;
+        }
+
+        function changeSlide(dir) {
+            slides[currentSlide].classList.remove('active');
+            currentSlide += dir;
+            if (currentSlide < 0) currentSlide = 0;
+            if (currentSlide >= slides.length) currentSlide = slides.length - 1;
+            slides[currentSlide].classList.add('active');
+            updateCounter();
+            
+            if (synth.speaking) synth.cancel();
+            if (isContinuous) {
+                setTimeout(speakCurrentSlide, 500);
+            }
+        }
+
+        function speakCurrentSlide() {
+            if (synth.speaking) synth.cancel();
+            
+            const utterance = new SpeechSynthesisUtterance(scripts[currentSlide]);
+            utterance.lang = 'pt-BR';
+            utterance.rate = 1.1;
+            
+            const narratorBox = document.getElementById(`nb${currentSlide + 1}`);
+            if (narratorBox) narratorBox.classList.add('speaking');
+            
+            utterance.onend = () => {
+                if (narratorBox) narratorBox.classList.remove('speaking');
+                if (isContinuous && currentSlide < slides.length - 1) {
+                    setTimeout(() => changeSlide(1), 1500);
+                } else if (isContinuous && currentSlide === slides.length - 1) {
+                    toggleContinuous(); 
+                }
+            };
+            
+            synth.speak(utterance);
+        }
+
+        function toggleSpeech() {
+            if (synth.speaking) {
+                synth.cancel();
+                document.getElementById('speakTxt').innerText = "Narrar Slide";
+            } else {
+                speakCurrentSlide();
+                document.getElementById('speakTxt').innerText = "Silenciar";
+            }
+        }
+
+        function toggleContinuous() {
+            isContinuous = !isContinuous;
+            const btn = document.getElementById('contBtn');
+            const txt = document.getElementById('contTxt');
+            if (isContinuous) {
+                btn.classList.add('active');
+                txt.innerText = "Parar Contínuo";
+                speakCurrentSlide();
+            } else {
+                btn.classList.remove('active');
+                txt.innerText = "Modo Contínuo";
+                synth.cancel();
+            }
+        }
+
+        function stopSpeech() {
+            synth.cancel();
+            isContinuous = false;
+            document.getElementById('contBtn').classList.remove('active');
+            document.getElementById('contTxt').innerText = "Modo Contínuo";
+            document.getElementById('speakTxt').innerText = "Narrar Slide";
+            const boxes = document.querySelectorAll('.narrator-box');
+            boxes.forEach(b => b.classList.remove('speaking'));
+        }
+
+        window.speechSynthesis.onvoiceschanged = () => {
+            narratorVoices = window.speechSynthesis.getVoices();
+        };
+
+        window.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight') changeSlide(1);
+            if (e.key === 'ArrowLeft') changeSlide(-1);
+            if (e.key === ' ') { e.preventDefault(); toggleSpeech(); }
+        });
+    </script>
+</body>
+</html>

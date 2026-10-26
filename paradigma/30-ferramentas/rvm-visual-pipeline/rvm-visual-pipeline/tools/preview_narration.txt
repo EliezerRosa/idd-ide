@@ -1,0 +1,931 @@
+
+=== intro ===
+[original]  Bem-vindo à apresentação interativa do RVM Designações.
+
+Objetivo: mostrar, em quatro grafos navegáveis, como o RVM Designações decide quem faz o quê na reunião — do construtor de contexto até a elegibilidade fina por modalidade — e como as quatro superfícies (motor automático, UI manual, painel de diagnóstico e agente de IA) chegam à mesma verdade.
+
+Esta apresentação tem quatro abas: Overview do Fluxo, Generation Flow, Eligibility Decision Tree e Comparação UI vs Agente. Cada uma é um ângulo diferente do mesmo sistema.
+
+Em cada aba, o vídeo percorre o grafo caminho por caminho, anunciando primeiro o objetivo de cada caminho, e depois cada nó com uma descrição coloquial e um comentário mais profundo da IA. O dedo apontador segue o nó que está sendo narrado, e o painel à direita mostra a explicação e o comentário do nó ativo.
+
+Vamos começar pela visão geral.
+[expandido] Bem-vindo à apresentação interativa do RVM Designações.
+
+Objetivo: mostrar, em quatro grafos navegáveis, como o RVM Designações decide quem faz o quê na reunião — do construtor de contexto até a elegibilidade fina por modalidade — e como as quatro superfícies (motor automático, interface manual do dirigente, painel de diagnóstico e agente de inteligência artificial) chegam à mesma verdade.
+
+Esta apresentação tem quatro abas: Overview do Fluxo, Fluxo de Geração, Árvore de Decisão de Elegibilidade e Comparação UI vs Agente. Cada uma é um ângulo diferente do mesmo sistema.
+
+Em cada aba, o vídeo percorre o grafo caminho por caminho, anunciando primeiro o objetivo de cada caminho, e depois cada nó com uma descrição coloquial e um comentário mais profundo da IA. O dedo apontador segue o nó que está sendo narrado, e o painel à direita mostra a explicação e o comentário do nó ativo.
+
+Vamos começar pela visão geral.
+
+=== tab-overview ===
+[original]  Overview do Fluxo. distribuir designacoes com justica, transparencia e rastreabilidade
+
+=== flow-overview-0 ===
+[original]  Caminho 1: Apresentação dos quatro caminhos. Objetivo: Mostrar as portas de entrada que o sistema oferece para designar partes.
+
+=== node-overview-0-explanation ===
+[original]  Tudo começa aqui quando o sistema decide montar a programação da semana sem ajuda humana: ele varre as partes, junta o contexto e dispara a eleição automática dos nomes.
+
+=== node-overview-0-aicomment ===
+[original]  Intenção: oferecer um primeiro rascunho coerente do quadro inteiro aplicando regras unificadas. Impacto: economiza horas do dirigente e já entrega uma proposta auditável, que serve como ponto de partida para revisão humana, em vez de partir do zero a cada semana.
+
+=== node-overview-1-explanation ===
+[original]  Este é o caminho oposto: o dirigente abre uma parte específica e escolhe à mão. Mesmo manual, o sistema entra junto e oferece só os nomes que cumprem as regras.
+
+=== node-overview-1-aicomment ===
+[original]  Intenção: preservar a decisão humana sem abrir mão da disciplina das regras. Impacto: evita que escolhas pontuais quebrem a coerência geral da designação, porque a UI manual e o motor automático partilham o mesmo gate de elegibilidade.
+[expandido] Intenção: preservar a decisão humana sem abrir mão da disciplina das regras. Impacto: evita que escolhas pontuais quebrem a coerência geral da designação, porque a interface manual do dirigente e o motor automático partilham o mesmo gate de elegibilidade.
+
+=== node-overview-2-explanation ===
+[original]  Aqui é o painel de diagnóstico, acionado quando alguém quer entender por que tal nome apareceu (ou não). Mostra o ranking completo lado a lado com os bloqueios.
+[expandido] Aqui é o painel de diagnóstico, acionado quando alguém quer entender por que tal nome apareceu (ou não). Mostra o classificação ordenada completo lado a lado com os bloqueios.
+
+=== node-overview-2-aicomment ===
+[original]  Intenção: transformar a caixa-preta da eleição em uma vitrine transparente. Impacto: ganha-se confiança no sistema porque cada nome do ranking tem justificativa visível e auditável, o que sustenta conversas pastorais difíceis com base em dados.
+[expandido] Intenção: transformar a caixa-preta da eleição em uma vitrine transparente. Impacto: ganha-se confiança no sistema porque cada nome do classificação ordenada tem justificativa visível e auditável, o que sustenta conversas pastorais difíceis com base em dados.
+
+=== node-overview-3-explanation ===
+[original]  Quando o usuário pergunta ao agente IA do chat algo como "quem é melhor para esta parte?", é por aqui que passa: o agente busca o ranking e devolve com explicação textual.
+[expandido] Quando o usuário pergunta ao agente de inteligência artificial do chat algo como "quem é melhor para esta parte?", é por aqui que passa: o agente busca o classificação ordenada e devolve com explicação textual.
+
+=== node-overview-3-aicomment ===
+[original]  Intenção: levar a mesma lógica de eleição para dentro da conversa, no idioma natural do usuário. Impacto: o agente nunca opina por intuição — sempre fala em cima da mesma engrenagem que o painel usa, garantindo respostas reprodutíveis.
+
+=== flow-overview-1 ===
+[original]  Caminho 2: Base comum partilhada. Objetivo: Ver o que todos os caminhos consultam por baixo: contexto, elegibilidade, ranking, score e cooldown.
+[expandido] Caminho 2: Base comum partilhada. Objetivo: Ver o que todos os caminhos consultam por baixo: contexto, elegibilidade, classificação ordenada, nota de prioridade e intervalo obrigatório entre designações.
+
+=== node-overview-4-explanation ===
+[original]  Antes de qualquer escolha, é preciso saber a semana inteira: data, titular, presidente e o que já foi designado. Esse contexto comum alimenta todos os caminhos acima.
+
+=== node-overview-4-aicomment ===
+[original]  Intenção: ter uma única verdade sobre a semana para que cada caminho enxergue o mesmo cenário. Impacto: elimina divergência entre superfícies — chat, painel e UI manual consultam a mesma fonte e nunca contradizem uns aos outros.
+[expandido] Intenção: ter uma única verdade sobre a semana para que cada caminho enxergue o mesmo cenário. Impacto: elimina divergência entre superfícies — chat, painel e interface manual do dirigente consultam a mesma fonte e nunca contradizem uns aos outros.
+
+=== node-overview-5-explanation ===
+[original]  Com o contexto pronto, este é o portão: para cada candidato e cada parte, responde "pode ou não pode" — e, se não pode, devolve o motivo exato.
+
+=== node-overview-5-aicomment ===
+[original]  Intenção: regra única declarada em um só lugar, sempre acompanhada de causa. Impacto: nenhum nome é descartado em silêncio — todo bloqueio deixa rastro auditável, o que permite explicar a decisão a anciãos e publicadores.
+
+=== node-overview-6-explanation ===
+[original]  Passados pelo portão, os elegíveis caem aqui para serem ordenados por mérito de rotação. O ranking é determinístico — mesmas entradas geram a mesma ordem.
+[expandido] Passados pelo portão, os elegíveis caem aqui para serem ordenados por mérito de rotação. O classificação ordenada é determinístico — mesmas entradas geram a mesma ordem.
+
+=== node-overview-6-aicomment ===
+[original]  Intenção: garantir justiça reproduzível, sem sorteios ocultos. Impacto: a mesma situação sempre gera a mesma sugestão, e isso protege o processo contra suspeita de favoritismo ou influência indevida.
+
+=== node-overview-7-explanation ===
+[original]  O ranking não inventa nota: cada candidato recebe um score baseado em quanto tempo está sem servir, quão frequente foi e se acabou de carregar uma parte pesada.
+[expandido] O classificação ordenada não inventa nota: cada candidato recebe um nota de prioridade baseado em quanto tempo está sem servir, quão frequente foi e se acabou de carregar uma parte pesada.
+
+=== node-overview-7-aicomment ===
+[original]  Intenção: equilibrar oportunidades sem sobrecarregar quem acabou de servir. Impacto: ao longo do ano, quem está há mais tempo sem designação tende a ser puxado naturalmente, sem precisar de planilha paralela do dirigente.
+
+=== node-overview-8-explanation ===
+[original]  Mesmo depois de ordenado, o sistema checa se algum candidato está em descanso obrigatório (cooldown) — e marca essa informação para tratamento diferente conforme a tela.
+[expandido] Mesmo depois de ordenado, o sistema checa se algum candidato está em descanso obrigatório (intervalo obrigatório entre designações) — e marca essa informação para tratamento diferente conforme a tela.
+
+=== node-overview-8-aicomment ===
+[original]  Intenção: respeitar o intervalo entre designações como sinal claro, sem apagar o candidato do ranking. Impacto: o painel pode mostrar com aviso, o agente pode explicar, e a UI manual pode bloquear — cada um a seu modo, mas todos cientes.
+[expandido] Intenção: respeitar o intervalo entre designações como sinal claro, sem apagar o candidato do classificação ordenada. Impacto: o painel pode mostrar com aviso, o agente pode explicar, e a interface manual do dirigente pode bloquear — cada um a seu modo, mas todos cientes.
+
+=== flow-overview-2 ===
+[original]  Caminho 3: Encontros e divergência entre caminhos. Objetivo: Entender onde os caminhos convergem na regra e onde divergem propositalmente.
+
+=== node-overview-9-explanation ===
+[original]  Aqui se enxerga o primeiro encontro: por mais que existam quatro entradas diferentes, todas passam pelo mesmo portão de elegibilidade.
+
+=== node-overview-9-aicomment ===
+[original]  Intenção: forçar coerência no que mais importa — quem pode servir. Impacto: nunca acontece de um caminho aceitar alguém que outro recusaria, eliminando contradições entre superfícies e protegendo a confiança no app.
+
+=== node-overview-10-explanation ===
+[original]  Segundo encontro: a ordem dos candidatos também sai do mesmo serviço de rotação para todos os caminhos.
+
+=== node-overview-10-aicomment ===
+[original]  Intenção: que "melhor candidato" signifique a mesma coisa em todo o app. Impacto: alinha o discurso do agente, a lista do painel e a seleção automática, garantindo que três usuários vejam a mesma resposta para a mesma pergunta.
+
+=== node-overview-11-explanation ===
+[original]  Mas há um ponto onde os caminhos divergem: o cooldown é tratado de jeito diferente conforme a tela — em algumas é só um aviso, em outras é bloqueio efetivo.
+[expandido] Mas há um ponto onde os caminhos divergem: o intervalo obrigatório entre designações é tratado de jeito diferente conforme a tela — em algumas é só um aviso, em outras é bloqueio efetivo.
+
+=== node-overview-11-aicomment ===
+[original]  Intenção: respeitar o contexto de uso (a UI manual exige proteção forte; o diagnóstico exige transparência total). Impacto: experiência adaptada por superfície, mas com a mesma regra por trás — divergência intencional, não acidental.
+[expandido] Intenção: respeitar o contexto de uso (a interface manual do dirigente exige proteção forte; o diagnóstico exige transparência total). Impacto: experiência adaptada por superfície, mas com a mesma regra por trás — divergência intencional, não acidental.
+
+=== flow-overview-3 ===
+[original]  Caminho 4: Como cada caminho termina. Objetivo: Ver a entrega final de cada porta: motor, UI manual, painel de diagnóstico e agente IA.
+[expandido] Caminho 4: Como cada caminho termina. Objetivo: Ver a entrega final de cada porta: motor, interface manual do dirigente, painel de diagnóstico e agente de inteligência artificial.
+
+=== node-overview-12-explanation ===
+[original]  Fim do caminho automático: cada parte ganha um nome e o sistema grava no quadro semanal.
+
+=== node-overview-12-aicomment ===
+[original]  Intenção: entregar uma programação semanal pronta, porém reversível. Impacto: o dirigente recebe um rascunho consistente que pode ajustar com poucos cliques, em vez de montar tudo do zero.
+
+=== node-overview-13-explanation ===
+[original]  Fim do caminho manual: o dropdown só mostra os elegíveis, escondendo bloqueados.
+[expandido] Fim do caminho manual: o lista suspensa de opções só mostra os elegíveis, escondendo bloqueados.
+
+=== node-overview-13-aicomment ===
+[original]  Intenção: simplificar a escolha humana sem dar a opção de errar. Impacto: o dirigente foca em decidir entre os bons, não em filtrar os ruins, reduzindo o tempo da designação manual.
+
+=== node-overview-14-explanation ===
+[original]  Fim do caminho diagnóstico: o painel exibe o melhor e o top da lista, separando claramente bloqueados de aptos.
+
+=== node-overview-14-aicomment ===
+[original]  Intenção: dar visão completa para auditoria e ajustes finos. Impacto: o usuário entende a fila inteira, não só o vencedor, o que sustenta conversas sobre por que tal nome ainda não apareceu.
+
+=== node-overview-15-explanation ===
+[original]  Fim do caminho agente IA: a resposta do chat traz ranking acompanhado de tags de elegibilidade — quem é melhor e por quê.
+[expandido] Fim do caminho agente de inteligência artificial: a resposta do chat traz classificação ordenada acompanhado de tags de elegibilidade — quem é melhor e por quê.
+
+=== node-overview-15-aicomment ===
+[original]  Intenção: levar transparência conversacional ao processo de eleição. Impacto: o usuário entende em linguagem natural a mesma decisão que o painel visualiza, com explicação e tag de cooldown quando faz sentido.
+[expandido] Intenção: levar transparência conversacional ao processo de eleição. Impacto: o usuário entende em linguagem natural a mesma decisão que o painel visualiza, com explicação e tag de intervalo obrigatório entre designações quando faz sentido.
+
+=== tab-generation ===
+[original]  Generation Flow. sugerir nomes viaveis sem ferir regras e com equilibrio entre pessoas
+[expandido] Fluxo de Geração. sugerir nomes viaveis sem ferir regras e com equilibrio entre pessoas
+
+=== flow-generation-0 ===
+[original]  Caminho 1: Carga e triagem das partes. Objetivo: Reunir o contexto e descartar partes que não cabem na rodada.
+
+=== node-generation-0-explanation ===
+[original]  O motor começa carregando os três insumos da rodada: as partes da semana, os publicadores disponíveis e o histórico recente de designações.
+
+=== node-generation-0-aicomment ===
+[original]  Intenção: nunca decidir no escuro — sempre com contexto completo da congregação. Impacto: a rotação faz sentido porque enxerga o passado próximo, em vez de tratar cada semana como evento isolado.
+
+=== node-generation-1-explanation ===
+[original]  Da pilha de partes recebida, separa só as que realmente precisam de nome agora, descartando o que já está resolvido.
+
+=== node-generation-1-aicomment ===
+[original]  Intenção: trabalhar apenas onde há decisão a tomar, sem mexer no que está bom. Impacto: processo mais rápido e foco nas pendências reais, evitando reprocessamento desnecessário.
+
+=== node-generation-2-explanation ===
+[original]  Para cada parte filtrada, pergunta: é de uma data já passada? Porque atribuir nome retroativo geralmente não faz sentido.
+
+=== node-generation-2-aicomment ===
+[original]  Intenção: respeitar o fluxo cronológico das reuniões. Impacto: evita poluir o histórico com sugestões inúteis e mantém o motor focado em ajudar de fato a próxima reunião.
+
+=== node-generation-3-explanation ===
+[original]  Se a data é válida, próxima pergunta: a parte é de um tipo que o sistema não atribui sozinho (canto, comentários iniciais etc.)?
+
+=== node-generation-3-aicomment ===
+[original]  Intenção: o motor não tenta automatizar o que pertence à decisão manual ou ao desenho da reunião. Impacto: respeita os limites do escopo automatizável e evita conflitos com o que o dirigente prefere controlar.
+
+=== node-generation-4-explanation ===
+[original]  Passou pela não-designabilidade. Agora: a parte já está num estado final (CONCLUIDA ou CANCELADA)?
+[expandido] Passou pela não-designabilidade. Agora: a parte já está num estado final (concluída ou cancelada)?
+
+=== node-generation-4-aicomment ===
+[original]  Intenção: respeitar estados firmados — uma parte concluída não pode ser sobrescrita por uma decisão automática. Impacto: protege decisões passadas contra retrabalho indevido.
+
+=== node-generation-5-explanation ===
+[original]  Última triagem: a parte está realmente pendente, sem nome ou com nome inválido? Só nesse caso vale a pena seguir.
+
+=== node-generation-5-aicomment ===
+[original]  Intenção: foco cirúrgico nas lacunas reais. Impacto: nada é tocado sem motivo claro, o que mantém o motor previsível e conservador.
+
+=== node-generation-6-explanation ===
+[original]  Se qualquer pergunta anterior disse "não vale", a parte cai aqui e é descartada da rodada.
+
+=== node-generation-6-aicomment ===
+[original]  Intenção: enxugar o trabalho ao essencial. Impacto: o motor só investe esforço onde há algo a ganhar, mantendo a rodada eficiente.
+
+=== node-generation-7-explanation ===
+[original]  Quando a parte é não-designável mas ainda tem nome residual, esta fase entra para limpar — marca o resíduo com CLEANUP.
+[expandido] Quando a parte é não-designável mas ainda tem nome residual, esta fase entra para limpar — marca o resíduo com limpeza de resíduo.
+
+=== node-generation-7-aicomment ===
+[original]  Intenção: deixar a base coerente antes de qualquer eleição nova. Impacto: evita que sujeira de histórico (nomes em partes que não deveriam tê-los) contamine decisões futuras.
+
+=== flow-generation-1 ===
+[original]  Caminho 2: Sanidade dos já designados. Objetivo: Verificar se nomes existentes ainda passam nas regras antes de gerar novos.
+
+=== node-generation-8-explanation ===
+[original]  Antes de inventar novidades, esta fase faz sanidade: quem já está designado ainda passa nas regras atuais?
+
+=== node-generation-8-aicomment ===
+[original]  Intenção: corrigir designações que ficaram inválidas (alguém ficou inativo, mudou de status). Impacto: estabiliza o quadro antes de evoluir, evitando construir em cima de base quebrada.
+
+=== node-generation-9-explanation ===
+[original]  Pergunta sanitária: o nome atualmente atribuído ainda é elegível para essa parte?
+
+=== node-generation-9-aicomment ===
+[original]  Intenção: confiar mas verificar. Impacto: ninguém fica numa parte que não pode mais cumprir, e o quadro chega à fase de eleição com integridade.
+
+=== flow-generation-2 ===
+[original]  Caminho 3: Eleição da presidência. Objetivo: Definir presidência primeiro e propagar para as partes dependentes.
+
+=== node-generation-10-explanation ===
+[original]  Agora começa a eleição de verdade. Primeiro a presidência da semana — porque ela influencia várias escolhas seguintes.
+
+=== node-generation-10-aicomment ===
+[original]  Intenção: ancorar a semana inteira no papel mais sensível antes de tudo. Impacto: cascata coerente — ajudante depende do titular, titular depende do presidente, então o presidente vem primeiro.
+
+=== node-generation-11-explanation ===
+[original]  Para presidir, aplica eligibility de PRESIDENCIA, checa disponibilidade na quinta, ordena os elegíveis e escolhe o primeiro sem cooldown.
+[expandido] Para presidir, aplica eligibility de PRESIDENCIA, checa disponibilidade na quinta, ordena os elegíveis e escolhe o primeiro sem intervalo obrigatório entre designações.
+
+=== node-generation-11-aicomment ===
+[original]  Intenção: regras explícitas e ordenadas, nada subjetivo. Impacto: o presidente da semana sempre é o mais apto disponível, não o mais lembrado, eliminando vieses involuntários.
+
+=== node-generation-12-explanation ===
+[original]  Logo depois, propaga o presidente escolhido como assignee automático nas partes que dependem dele (comentários iniciais, oração inicial).
+
+=== node-generation-12-aicomment ===
+[original]  Intenção: economizar trabalho repetitivo do dirigente naquilo que naturalmente segue a presidência. Impacto: o quadro fica coerente sem clique extra para partes que sempre vão para o presidente.
+
+=== node-generation-13-explanation ===
+[original]  Regra simples desta cascata: só persiste a vinculação automática se o presidente já estiver definido.
+
+=== node-generation-13-aicomment ===
+[original]  Intenção: proteção contra cascata fantasma. Impacto: não grava ligação sem âncora real, evitando dados inconsistentes na base.
+
+=== flow-generation-3 ===
+[original]  Caminho 4: Faixa de ensino. Objetivo: Designar partes de ensino com perfil específico (Tesouros, Joias, EBC).
+[expandido] Caminho 4: Faixa de ensino. Objetivo: Designar partes de ensino com perfil específico (Tesouros, Joias, Estudo Bíblico de Congregação).
+
+=== node-generation-14-explanation ===
+[original]  Com presidência resolvida, entra a faixa de partes de ensino (Tesouros, Joias, EBC Vida etc.).
+[expandido] Com presidência resolvida, entra a faixa de partes de ensino (Tesouros, Joias, Estudo Bíblico de Congregação Vida etc.).
+
+=== node-generation-14-aicomment ===
+[original]  Intenção: tratar primeiro as partes que pedem perfil mais específico. Impacto: as exigentes são preenchidas enquanto ainda há muitos candidatos com perfil amplo disponíveis.
+
+=== node-generation-15-explanation ===
+[original]  Pergunta o subtipo de ensino (Discurso, Joias, EBC Vida) para aplicar a regra certa de cada uma.
+[expandido] Pergunta o subtipo de ensino (Discurso, Joias, Estudo Bíblico de Congregação Vida) para aplicar a regra certa de cada uma.
+
+=== node-generation-15-aicomment ===
+[original]  Intenção: cada subtipo de ensino tem público e perfil próprios. Impacto: a eleição é especializada por tipo, não genérica, refletindo a estrutura real da apostila.
+
+=== node-generation-16-explanation ===
+[original]  Para a parte de ensino: verifica elegibilidade pela modalidade, prioriza irmão batizado para Leitor de EBC (irmão > MS > ancião), ordena por rotação e escolhe sem cooldown.
+[expandido] Para a parte de ensino: verifica elegibilidade pela modalidade, prioriza irmão batizado para Leitor de Estudo Bíblico de Congregação (irmão > MS > ancião), ordena por rotação e escolhe sem intervalo obrigatório entre designações.
+
+=== node-generation-16-aicomment ===
+[original]  Intenção: respeitar o desenho organizacional (quem pode fazer o quê) sem sacrificar a justiça da rotação. Impacto: a eleição é ao mesmo tempo regulamentar e equilibrada, sem repetir sempre o ancião disponível.
+
+=== flow-generation-4 ===
+[original]  Caminho 5: Faixa estudantil. Objetivo: Designar leituras e demonstrações da escola, incluindo o ajudante.
+
+=== node-generation-17-explanation ===
+[original]  Em seguida, a faixa estudantil — leituras e demonstrações da escola.
+
+=== node-generation-17-aicomment ===
+[original]  Intenção: cuidar do treinamento progressivo dos publicadores. Impacto: novos têm oportunidade equilibrada de progredir, e o motor previne que sempre os mesmos sejam chamados.
+
+=== node-generation-18-explanation ===
+[original]  Diferencia agora: a parte estudantil é demonstração (precisa de ajudante) ou leitura solo?
+
+=== node-generation-18-aicomment ===
+[original]  Intenção: ramificar a regra porque demonstração envolve par titular/ajudante. Impacto: o motor monta o par junto e coerente, não em duas decisões soltas que poderiam não combinar.
+
+=== node-generation-19-explanation ===
+[original]  Para demonstrações: prioriza irmãs, depois irmãos, depois MS, depois ancião — depois ordena por rotação e tira bloqueados.
+
+=== node-generation-19-aicomment ===
+[original]  Intenção: dar protagonismo às irmãs nas partes próprias delas. Impacto: equilíbrio real de oportunidade por gênero, especialmente nas partes onde a apostila prevê isso.
+
+=== node-generation-20-explanation ===
+[original]  Para leituras: aplica a lista de elegíveis, ordena por rotação e descarta cooldown — a fórmula universal.
+[expandido] Para leituras: aplica a lista de elegíveis, ordena por rotação e descarta intervalo obrigatório entre designações — a fórmula universal.
+
+=== node-generation-20-aicomment ===
+[original]  Intenção: usar o algoritmo padrão quando o perfil exigido é mais aberto. Impacto: simplicidade onde o caso permite, sem inventar regra nova à toa.
+
+=== flow-generation-5 ===
+[original]  Caminho 6: Demais partes da semana. Objetivo: Resolver ajudantes, orações, o restante das partes pendentes e ir injetando essas escolhas no histórico interno da rodada.
+
+=== node-generation-21-explanation ===
+[original]  Faixa final: tudo que sobrou (orações, partes da seção da congregação, necessidades locais).
+
+=== node-generation-21-aicomment ===
+[original]  Intenção: fechar o quadro completo da semana, sem deixar buraco. Impacto: a programação não termina pela metade, e o dirigente recebe algo realmente publicável.
+
+=== node-generation-22-explanation ===
+[original]  Antes de escolher cada parte que sobrou, pergunta: a função é AJUDANTE? Porque o ajudante depende do titular já escolhido.
+
+=== node-generation-22-aicomment ===
+[original]  Intenção: jamais escolher um ajudante sem saber quem é o titular dele. Impacto: protege a coerência do par titular/ajudante, que é uma das regras mais sensíveis da reunião.
+
+=== node-generation-23-explanation ===
+[original]  Para ajudante: resolve quem é o titular, limpa modalidades-solo, aplica eligibility de AJUDANTE, exige mesmo gênero (ou bypass familiar) e ordena.
+[expandido] Para ajudante: resolve quem é o titular, limpa modalidades-solo, aplica eligibility de AJUDANTE, exige mesmo gênero (ou exceção para casal ou familiar) e ordena.
+
+=== node-generation-23-aicomment ===
+[original]  Intenção: respeitar tanto a regra organizacional quanto a sensibilidade pastoral (casal e família ganham passagem suave). Impacto: ajudantes naturais entram limpo; entre estranhos, segue a regra padrão de gênero.
+
+=== node-generation-24-explanation ===
+[original]  Se não é ajudante, próxima pergunta: é a oração final? Ela tem regra própria de preferência.
+
+=== node-generation-24-aicomment ===
+[original]  Intenção: a oração final tem ordem específica (livre prevalece sobre ocupado; presidente entra só por fallback). Impacto: distribui o convite com sensibilidade ao papel já assumido pelo candidato na mesma semana.
+[expandido] Intenção: a oração final tem ordem específica (livre prevalece sobre ocupado; presidente entra só por opção de último recurso). Impacto: distribui o convite com sensibilidade ao papel já assumido pelo candidato na mesma semana.
+
+=== node-generation-25-explanation ===
+[original]  Para a oração final: aplica três grupos — livres sem cargo de presidente, ocupados sem presidência, e o presidente como último recurso.
+
+=== node-generation-25-aicomment ===
+[original]  Intenção: priorizar quem ainda não está envolvido na semana. Impacto: distribui visibilidade na reunião sem sobrecarregar quem já cumpriu outra parte.
+
+=== node-generation-26-explanation ===
+[original]  Para o resto das partes: pega elegíveis, ordena por rotação, tira bloqueados, e exclui quem já apareceu na semana.
+
+=== node-generation-26-aicomment ===
+[original]  Intenção: evitar repetir o mesmo nome em duas partes da mesma semana. Impacto: percepção de variedade no quadro, sem que o motor caia na facilidade de repetir o disponível.
+
+=== node-generation-27-explanation ===
+[original]  Conforme atribui, vai injetando essas atribuições num histórico interno temporário — para que a próxima parte da rodada já enxergue o que acabou de ser feito.
+
+=== node-generation-27-aicomment ===
+[original]  Intenção: o cooldown e a rotação enxergam decisões do próprio lote, não só do passado já salvo. Impacto: evita escalar a mesma pessoa duas vezes numa rodada longa, mesmo antes de qualquer gravação no banco.
+[expandido] Intenção: o intervalo obrigatório entre designações e a rotação enxergam decisões do próprio lote, não só do passado já salvo. Impacto: evita escalar a mesma pessoa duas vezes numa rodada longa, mesmo antes de qualquer gravação no banco.
+
+=== flow-generation-6 ===
+[original]  Caminho 7: Persistência e auditoria. Objetivo: Gravar tudo de forma reprodutível ou apenas simular sem efeito colateral.
+
+=== node-generation-28-explanation ===
+[original]  Antes de gravar qualquer coisa: isso é simulação ou pra valer?
+
+=== node-generation-28-aicomment ===
+[original]  Intenção: blindar contra escrita acidental. Impacto: o usuário pode experimentar cenários sem medo de comprometer a programação real.
+
+=== node-generation-29-explanation ===
+[original]  Se for simulação, devolve só o resultado para inspeção e sai sem tocar na base.
+
+=== node-generation-29-aicomment ===
+[original]  Intenção: ferramenta segura de exploração e auditoria. Impacto: testar cenários é barato e sem efeito colateral — o motor pode ser usado para análises e não só para gerar.
+
+=== node-generation-30-explanation ===
+[original]  Se for pra valer, persiste todas as atribuições da rodada no banco.
+
+=== node-generation-30-aicomment ===
+[original]  Intenção: efetivar a programação como resultado oficial. Impacto: a partir daqui as designações entram nos S-89, nas notificações e no fluxo de aprovação.
+[expandido] Intenção: efetivar a programação como resultado oficial. Impacto: a partir daqui as designações entram nos formulário de designação, nas notificações e no fluxo de aprovação.
+
+=== node-generation-31-explanation ===
+[original]  Junto com o commit, grava um snapshot completo da configuração do motor e da versão das regras de elegibilidade usadas.
+[expandido] Junto com o commit, grava um registro instantâneo do estado completo da configuração do motor e da versão das regras de elegibilidade usadas.
+
+=== node-generation-31-aicomment ===
+[original]  Intenção: poder reproduzir no futuro exatamente a decisão tomada agora, mesmo que as regras evoluam. Impacto: auditoria perfeita e investigações pastorais sustentadas por evidência reprodutível.
+
+=== tab-eligibility ===
+[original]  Eligibility Decision Tree. proteger regras de elegibilidade sem excluir injustamente
+[expandido] Árvore de Decisão de Elegibilidade. proteger regras de elegibilidade sem excluir injustamente
+
+=== flow-eligibility-0 ===
+[original]  Caminho 1: Triagem universal. Objetivo: Filtros que valem para qualquer candidato e qualquer parte.
+
+=== node-eligibility-0-explanation ===
+[original]  Tudo começa quando alguém pergunta: "fulano pode fazer esta parte?". A função recebe publicador, modalidade, função e contexto da semana.
+
+=== node-eligibility-0-aicomment ===
+[original]  Intenção: ter um único ponto de entrada para qualquer pergunta de elegibilidade no app. Impacto: não importa quem chama (motor automático, UI manual, painel ou agente IA) — a resposta sempre sai do mesmo lugar.
+[expandido] Intenção: ter um único ponto de entrada para qualquer pergunta de elegibilidade no app. Impacto: não importa quem chama (motor automático, interface manual do dirigente, painel ou agente de inteligência artificial) — a resposta sempre sai do mesmo lugar.
+
+=== node-eligibility-1-explanation ===
+[original]  Primeira pergunta universal e mais barata: o publicador está ativo na congregação?
+
+=== node-eligibility-1-aicomment ===
+[original]  Intenção: descartar logo quem nem está em atividade, antes de gastar análise pesada. Impacto: filtro mais barato vem primeiro, economizando ciclos e mantendo a função rápida.
+
+=== node-eligibility-2-explanation ===
+[original]  Se está servindo, próxima pergunta: foi marcado como "não qualificado" pelo ancionato?
+
+=== node-eligibility-2-aicomment ===
+[original]  Intenção: respeitar o flag pastoral acima de qualquer cálculo automatizado. Impacto: a decisão manual do corpo de anciãos sempre prevalece sobre qualquer otimização do algoritmo.
+[expandido] Intenção: respeitar o marcação de status pastoral acima de qualquer cálculo automatizado. Impacto: a decisão manual do corpo de anciãos sempre prevalece sobre qualquer otimização do algoritmo.
+
+=== node-eligibility-3-explanation ===
+[original]  Está qualificado. Agora: o publicador pediu para não participar (suspensão temporária)?
+
+=== node-eligibility-3-aicomment ===
+[original]  Intenção: honrar pedidos pessoais sem precisar deletar o cadastro. Impacto: respeito ao publicador combinado com flexibilidade — basta um clique para suspender e outro para retomar quando ele quiser.
+
+=== node-eligibility-4-explanation ===
+[original]  Para semanas correntes ou futuras, checa o calendário de disponibilidade. Para passado, pula esta checagem.
+
+=== node-eligibility-4-aicomment ===
+[original]  Intenção: não punir histórico aplicando regra de agora. Impacto: análise retroativa não cria bloqueios artificiais sobre quem já cumpriu a parte no passado.
+
+=== node-eligibility-5-explanation ===
+[original]  Disponível. Mas atenção: se a pessoa se declarou "só ajudante" e estão pedindo para titular, bloqueia aqui.
+
+=== node-eligibility-5-aicomment ===
+[original]  Intenção: preservar o perfil declarado pelo próprio publicador. Impacto: evita escalações que contrariam o que o irmão definiu sobre seu próprio nível de participação.
+
+=== node-eligibility-6-explanation ===
+[original]  Checa os privilégios da seção (presidência, oração, ensino, EBC etc.) cruzando com a modalidade pedida.
+[expandido] Checa os privilégios da seção (presidência, oração, ensino, Estudo Bíblico de Congregação etc.) cruzando com a modalidade pedida.
+
+=== node-eligibility-6-aicomment ===
+[original]  Intenção: aplicar o mapa de privilégios sem improvisos. Impacto: a regra organizacional vira código auditável, não memória ou intuição do dirigente.
+
+=== node-eligibility-7-explanation ===
+[original]  Última camada textual: gênero, condição, função e batismo conferem com a parte específica?
+
+=== node-eligibility-7-aicomment ===
+[original]  Intenção: capturar restrições literais previstas pela apostila e pelos materiais publicados. Impacto: alinhamento automático com o que o material já diz, sem o dirigente precisar reler tudo.
+
+=== flow-eligibility-1 ===
+[original]  Caminho 2: Saídas de bloqueio universal. Objetivo: Mostrar os motivos rastreáveis quando alguém é reprovado na triagem.
+
+=== node-eligibility-9-explanation ===
+[original]  Saída de bloqueio se a pessoa não está servindo: retorna com motivo claro.
+
+=== node-eligibility-9-aicomment ===
+[original]  Intenção: bloqueio com causa rastreável, nunca silencioso. Impacto: o painel e o chat podem mostrar exatamente por que o nome não entra na lista, sustentando explicações pastorais.
+
+=== node-eligibility-10-explanation ===
+[original]  Saída de bloqueio para quem está marcado como não-qualificado, com motivo registrado.
+
+=== node-eligibility-10-aicomment ===
+[original]  Intenção: respeitar a marcação pastoral acima da otimização do motor. Impacto: nenhum algoritmo passa por cima de uma decisão dos anciãos.
+
+=== node-eligibility-11-explanation ===
+[original]  Saída de bloqueio para quem pediu para não participar nesta janela.
+
+=== node-eligibility-11-aicomment ===
+[original]  Intenção: respeito ao pedido pessoal do publicador. Impacto: o irmão confia que seu pedido é honrado de fato pelo sistema, fortalecendo a relação com a ferramenta.
+
+=== node-eligibility-12-explanation ===
+[original]  Saída de bloqueio para quem marcou indisponibilidade nesta semana específica.
+
+=== node-eligibility-12-aicomment ===
+[original]  Intenção: nunca escalar quem informou que não pode. Impacto: zero substituição de última hora por esquecimento — o dirigente confia na disponibilidade declarada.
+
+=== node-eligibility-13-explanation ===
+[original]  Saída de bloqueio para titular quando a pessoa se declarou "só ajudante".
+
+=== node-eligibility-13-aicomment ===
+[original]  Intenção: preservar o perfil declarado. Impacto: ninguém é puxado para titular contra a própria definição, e o sistema parece atencioso.
+
+=== node-eligibility-14-explanation ===
+[original]  Saída de bloqueio quando o privilégio de seção do candidato não bate com a modalidade pedida.
+
+=== node-eligibility-14-aicomment ===
+[original]  Intenção: respeitar o mapa formal de privilégios. Impacto: cada parte recebe alguém qualificado para ela, e a regra organizacional fica visível em vez de implícita.
+
+=== node-eligibility-15-explanation ===
+[original]  Saída de bloqueio por restrição textual (gênero, condição, função ou batismo não conferem com a parte).
+
+=== node-eligibility-15-aicomment ===
+[original]  Intenção: cumprir a letra da apostila. Impacto: o sistema atua dentro do que a publicação prevê, sem improvisar exceções.
+
+=== flow-eligibility-2 ===
+[original]  Caminho 3: Ramo Ajudante. Objetivo: Regras especiais do par titular/ajudante, incluindo bypass familiar.
+[expandido] Caminho 3: Ramo Ajudante. Objetivo: Regras especiais do par titular/ajudante, incluindo exceção para casal ou familiar.
+
+=== node-eligibility-8-explanation ===
+[original]  Passou em tudo. Agora abre a ramificação especial: a função pedida é AJUDANTE?
+
+=== node-eligibility-8-aicomment ===
+[original]  Intenção: separar a lógica do ajudante porque ela depende de outro candidato — o titular. Impacto: as regras de par são tratadas no lugar certo, sem misturar com regras de candidato único.
+
+=== node-eligibility-16-explanation ===
+[original]  Entrou na trilha de ajudante. Primeira pergunta: o gênero do titular dessa parte já está definido?
+
+=== node-eligibility-16-aicomment ===
+[original]  Intenção: jamais decidir ajudante no escuro, sem saber com quem ele faria par. Impacto: protege a regra de mesmo gênero contra falsos positivos por contexto incompleto.
+
+=== node-eligibility-17-explanation ===
+[original]  Saída de bloqueio para ajudante quando o titular ainda não está definido — sem contexto, sem decisão.
+
+=== node-eligibility-17-aicomment ===
+[original]  Intenção: integridade primeiro, otimização depois. Impacto: erro silencioso vira erro explícito, muito mais fácil de corrigir pelo dirigente.
+
+=== node-eligibility-18-explanation ===
+[original]  Tem titular. Próxima pergunta sensível: o candidato é cônjuge ou parente direto do titular (pai-filho, mãe-filha)? Se sim, pode acompanhar com qualquer gênero.
+
+=== node-eligibility-18-aicomment ===
+[original]  Intenção: respeitar a sensibilidade pastoral do par familiar. Impacto: marido/esposa e pai/filho passam suave, sem ferir a regra geral nem expor a família a constrangimento.
+
+=== node-eligibility-19-explanation ===
+[original]  Aprovação do ajudante via bypass familiar.
+[expandido] Aprovação do ajudante via exceção para casal ou familiar.
+
+=== node-eligibility-19-aicomment ===
+[original]  Intenção: reconhecer relações que justificam exceção legítima à regra geral. Impacto: a prática real da congregação é refletida no código, sem o sistema parecer rígido demais.
+
+=== node-eligibility-20-explanation ===
+[original]  Sem laço familiar. Agora a regra padrão: o ajudante tem o mesmo gênero do titular?
+
+=== node-eligibility-20-aicomment ===
+[original]  Intenção: aplicar a regra padrão de gênero quando não há laço familiar que justifique exceção. Impacto: ordem espiritual mantida no caso geral, sem deixar de cuidar dos casos sensíveis.
+
+=== node-eligibility-21-explanation ===
+[original]  Saída de bloqueio para ajudante de gênero diferente sem laço familiar.
+
+=== node-eligibility-21-aicomment ===
+[original]  Intenção: cumprir orientação organizacional sobre par titular/ajudante. Impacto: evita constrangimento e mal-entendido na hora da execução da parte.
+
+=== flow-eligibility-3 ===
+[original]  Caminho 4: Ramo Presidência. Objetivo: Filtro pelo privilégio formal de presidir a reunião.
+
+=== node-eligibility-22-explanation ===
+[original]  Não é ajudante. Aqui o fluxo ramifica por modalidade da parte: presidência, oração, discurso de ensino, demonstração, EBC e assim por diante.
+[expandido] Não é ajudante. Aqui o fluxo ramifica por modalidade da parte: presidência, oração, discurso de ensino, demonstração, Estudo Bíblico de Congregação e assim por diante.
+
+=== node-eligibility-22-aicomment ===
+[original]  Intenção: cada modalidade tem critério próprio de qualificação. Impacto: regras tratadas no nível certo de especialização, sem misturar lógicas que não se aplicam entre si.
+
+=== node-eligibility-23-explanation ===
+[original]  Ramo PRESIDÊNCIA: o candidato tem permissão formal de presidir?
+
+=== node-eligibility-23-aicomment ===
+[original]  Intenção: filtrar pelo privilégio mais alto da reunião antes de qualquer outra coisa. Impacto: só presidem irmãos explicitamente qualificados para tal.
+
+=== node-eligibility-24-explanation ===
+[original]  Saída de bloqueio: sem permissão de presidir, fora da modalidade PRESIDÊNCIA.
+
+=== node-eligibility-24-aicomment ===
+[original]  Intenção: respeitar o privilégio formal de presidência. Impacto: integridade da presidência preservada em todas as semanas.
+
+=== node-eligibility-25-explanation ===
+[original]  Aprovação para PRESIDÊNCIA: o candidato tem o privilégio e entra no pool de eleição.
+[expandido] Aprovação para PRESIDÊNCIA: o candidato tem o privilégio e entra no conjunto de candidatos de eleição.
+
+=== node-eligibility-25-aicomment ===
+[original]  Intenção: oferecer ao motor de eleição apenas candidatos realmente aptos. Impacto: a presidência da semana sairá de um conjunto verdadeiramente qualificado.
+
+=== flow-eligibility-4 ===
+[original]  Caminho 5: Ramo Oração. Objetivo: Critérios próprios para oração inicial e final.
+
+=== node-eligibility-26-explanation ===
+[original]  Ramo ORAÇÃO: é irmão batizado e tem permissão de orar publicamente?
+
+=== node-eligibility-26-aicomment ===
+[original]  Intenção: respeitar quem pode representar a congregação em oração pública. Impacto: oração na reunião só com quem tem essa condição formalmente reconhecida.
+
+=== node-eligibility-27-explanation ===
+[original]  Saída de bloqueio: não é irmão batizado com permissão de orar.
+
+=== node-eligibility-27-aicomment ===
+[original]  Intenção: cumprir a orientação publicada sobre quem ora na reunião. Impacto: nenhuma escalação fora desse critério, mesmo em emergência.
+
+=== node-eligibility-28-explanation ===
+[original]  Sub-pergunta da oração: se é Oração Inicial, exige também o privilégio de presidir?
+
+=== node-eligibility-28-aicomment ===
+[original]  Intenção: a oração inicial costuma estar ligada a quem dirige a reunião. Impacto: alinhamento natural entre presidência e abertura, evitando arranjos estranhos.
+
+=== node-eligibility-29-explanation ===
+[original]  Saída de bloqueio: candidato não preside, então não pode fazer a Oração Inicial.
+
+=== node-eligibility-29-aicomment ===
+[original]  Intenção: coerência entre quem abre a reunião e quem a dirige. Impacto: evita o caso desconfortável de abertura por um irmão e direção por outro.
+
+=== node-eligibility-30-explanation ===
+[original]  Outra sub-pergunta: para Oração Final, prefere quem não é o presidente da semana.
+
+=== node-eligibility-30-aicomment ===
+[original]  Intenção: ampliar a participação na oração final para além do presidente. Impacto: o presidente entra só como fallback, distribuindo a visibilidade.
+[expandido] Intenção: ampliar a participação na oração final para além do presidente. Impacto: o presidente entra só como opção de último recurso, distribuindo a visibilidade.
+
+=== node-eligibility-31-explanation ===
+[original]  Saída de bloqueio: candidato é o presidente — bloqueio da oração final (a menos que entre como fallback explícito).
+[expandido] Saída de bloqueio: candidato é o presidente — bloqueio da oração final (a menos que entre como opção de último recurso explícito).
+
+=== node-eligibility-31-aicomment ===
+[original]  Intenção: priorizar outros irmãos qualificados na oração final. Impacto: distribuição mais ampla da participação e quebra de monotonia.
+
+=== node-eligibility-32-explanation ===
+[original]  Aprovação para ORAÇÃO: candidato passou em todas as sub-condições.
+
+=== node-eligibility-32-aicomment ===
+[original]  Intenção: liberar para o motor de eleição apenas quem realmente atende ao critério completo. Impacto: pool real de orantes elegíveis para a semana.
+[expandido] Intenção: liberar para o motor de eleição apenas quem realmente atende ao critério completo. Impacto: conjunto de candidatos real de orantes elegíveis para a semana.
+
+=== flow-eligibility-5 ===
+[original]  Caminho 6: Ramos de ensino e escola. Objetivo: Quem pode ensinar, quem pode ler, quem pode demonstrar e quem pode discursar.
+
+=== node-eligibility-33-explanation ===
+[original]  Ramo DISCURSO DE ENSINO: é irmão com permissão de discursar, ancião ou servo ministerial?
+
+=== node-eligibility-33-aicomment ===
+[original]  Intenção: discurso de ensino exige preparo formal e privilégio. Impacto: a parte de ensino recebe nome com perfil realmente compatível com a responsabilidade.
+
+=== node-eligibility-34-explanation ===
+[original]  Saída de bloqueio: perfil não bate com discurso de ensino.
+
+=== node-eligibility-34-aicomment ===
+[original]  Intenção: respeitar a exigência de qualificação formal. Impacto: ensino não vai a quem ainda não foi designado para essa responsabilidade.
+
+=== node-eligibility-35-explanation ===
+[original]  Aprovação para DISCURSO DE ENSINO.
+
+=== node-eligibility-35-aicomment ===
+[original]  Intenção: pool real de quem pode ensinar na reunião. Impacto: a rotação dessas partes acontece dentro do círculo qualificado, sem improviso.
+[expandido] Intenção: conjunto de candidatos real de quem pode ensinar na reunião. Impacto: a rotação dessas partes acontece dentro do círculo qualificado, sem improviso.
+
+=== node-eligibility-36-explanation ===
+[original]  Ramo LEITURA ESTUDANTE: é irmão e cumpre as regras de aluno?
+
+=== node-eligibility-36-aicomment ===
+[original]  Intenção: a leitura estudante é parte do treinamento progressivo dos irmãos. Impacto: o palco é dado a quem está sendo preparado, fortalecendo a escola.
+
+=== node-eligibility-37-explanation ===
+[original]  Saída de bloqueio: não cumpre regras de leitura estudante.
+
+=== node-eligibility-37-aicomment ===
+[original]  Intenção: manter o caráter formativo da parte. Impacto: a parte cumpre sua função pedagógica em vez de virar formalidade.
+
+=== node-eligibility-38-explanation ===
+[original]  Aprovação para LEITURA ESTUDANTE.
+
+=== node-eligibility-38-aicomment ===
+[original]  Intenção: incluir no pool de estudantes leitores aptos. Impacto: rotação saudável entre os aprendizes ao longo do mês.
+[expandido] Intenção: incluir no conjunto de candidatos de estudantes leitores aptos. Impacto: rotação saudável entre os aprendizes ao longo do mês.
+
+=== node-eligibility-39-explanation ===
+[original]  Ramo DEMONSTRAÇÃO: passa nas regras de aluno (que aqui incluem irmãs naturalmente)?
+
+=== node-eligibility-39-aicomment ===
+[original]  Intenção: a demonstração contempla par de candidatos e abre espaço a irmãs. Impacto: tanto irmãs quanto irmãos têm seu espaço de treino prático.
+
+=== node-eligibility-40-explanation ===
+[original]  Saída de bloqueio: não cumpre as regras de aluno para demonstração.
+
+=== node-eligibility-40-aicomment ===
+[original]  Intenção: preservar a integridade do propósito da parte. Impacto: nenhum atalho que viole o desenho da escola.
+
+=== node-eligibility-41-explanation ===
+[original]  Aprovação para DEMONSTRAÇÃO.
+
+=== node-eligibility-41-aicomment ===
+[original]  Intenção: pool real de estudantes em fase de treino prático. Impacto: a rotação cresce entre quem precisa do palco para se desenvolver.
+[expandido] Intenção: conjunto de candidatos real de estudantes em fase de treino prático. Impacto: a rotação cresce entre quem precisa do palco para se desenvolver.
+
+=== node-eligibility-42-explanation ===
+[original]  Ramo DISCURSO ESTUDANTE: é irmão habilitado para discurso estudante?
+
+=== node-eligibility-42-aicomment ===
+[original]  Intenção: parte específica para irmãos em desenvolvimento como oradores. Impacto: respeita a progressão didática prevista na escola atual.
+
+=== node-eligibility-43-explanation ===
+[original]  Saída de bloqueio: não está habilitado para discurso estudante.
+
+=== node-eligibility-43-aicomment ===
+[original]  Intenção: a parte vai a quem foi de fato treinado para o formato. Impacto: progressão didática preservada, sem queimar etapas.
+
+=== node-eligibility-44-explanation ===
+[original]  Aprovação para DISCURSO ESTUDANTE.
+
+=== node-eligibility-44-aicomment ===
+[original]  Intenção: pool real de irmãos aptos nesse formato. Impacto: oportunidades equilibradas dentro do grupo em treinamento.
+[expandido] Intenção: conjunto de candidatos real de irmãos aptos nesse formato. Impacto: oportunidades equilibradas dentro do grupo em treinamento.
+
+=== flow-eligibility-6 ===
+[original]  Caminho 7: Ramo EBC. Objetivo: Quem conduz e quem é leitor do Estudo Bíblico da Congregação.
+[expandido] Caminho 7: Ramo Estudo Bíblico de Congregação. Objetivo: Quem conduz e quem é leitor do Estudo Bíblico da Congregação.
+
+=== node-eligibility-45-explanation ===
+[original]  Ramo DIRIGENTE EBC: é ancião com permissão de conduzir o Estudo Bíblico da Congregação?
+[expandido] Ramo DIRIGENTE Estudo Bíblico de Congregação: é ancião com permissão de conduzir o Estudo Bíblico da Congregação?
+
+=== node-eligibility-45-aicomment ===
+[original]  Intenção: a condução do EBC pede privilégio elevado. Impacto: a parte é entregue a quem tem o encargo pastoral apropriado.
+[expandido] Intenção: a condução do Estudo Bíblico de Congregação pede privilégio elevado. Impacto: a parte é entregue a quem tem o encargo pastoral apropriado.
+
+=== node-eligibility-46-explanation ===
+[original]  Saída de bloqueio: não é ancião apto para conduzir EBC.
+[expandido] Saída de bloqueio: não é ancião apto para conduzir Estudo Bíblico de Congregação.
+
+=== node-eligibility-46-aicomment ===
+[original]  Intenção: respeitar o perfil pastoral de quem conduz. Impacto: condução sempre dentro do critério organizacional.
+
+=== node-eligibility-47-explanation ===
+[original]  Aprovação para DIRIGENTE EBC.
+[expandido] Aprovação para DIRIGENTE Estudo Bíblico de Congregação.
+
+=== node-eligibility-47-aicomment ===
+[original]  Intenção: pool real dos dirigentes habilitados. Impacto: rotação justa entre os anciãos qualificados, sem repetir sempre o mais disponível.
+[expandido] Intenção: conjunto de candidatos real dos dirigentes habilitados. Impacto: rotação justa entre os anciãos qualificados, sem repetir sempre o mais disponível.
+
+=== node-eligibility-48-explanation ===
+[original]  Ramo LEITOR EBC: é irmão batizado com permissão específica de leitor de EBC?
+[expandido] Ramo LEITOR Estudo Bíblico de Congregação: é irmão batizado com permissão específica de leitor de EBC?
+
+=== node-eligibility-48-aicomment ===
+[original]  Intenção: o leitor de EBC tem perfil bem específico (irmão, batizado, com privilégio). Impacto: a parte vai a quem realmente pode cumprir o papel.
+[expandido] Intenção: o leitor de Estudo Bíblico de Congregação tem perfil bem específico (irmão, batizado, com privilégio). Impacto: a parte vai a quem realmente pode cumprir o papel.
+
+=== node-eligibility-49-explanation ===
+[original]  Saída de bloqueio: não é irmão batizado apto para leitor EBC.
+[expandido] Saída de bloqueio: não é irmão batizado apto para leitor Estudo Bíblico de Congregação.
+
+=== node-eligibility-49-aicomment ===
+[original]  Intenção: respeitar o perfil declarado. Impacto: nenhuma escalação fora do critério, mesmo em semanas apertadas.
+
+=== node-eligibility-50-explanation ===
+[original]  Aprovação para LEITOR EBC.
+[expandido] Aprovação para LEITOR Estudo Bíblico de Congregação.
+
+=== node-eligibility-50-aicomment ===
+[original]  Intenção: pool real de leitores qualificados. Impacto: equilibra os elegíveis ao longo das semanas, evitando concentrar sempre no mesmo irmão.
+[expandido] Intenção: conjunto de candidatos real de leitores qualificados. Impacto: equilibra os elegíveis ao longo das semanas, evitando concentrar sempre no mesmo irmão.
+
+=== flow-eligibility-7 ===
+[original]  Caminho 8: Ramo Necessidades Locais. Objetivo: Quem pode cuidar dessa parte pastoral local.
+
+=== node-eligibility-51-explanation ===
+[original]  Ramo NECESSIDADES LOCAIS: é ancião com permissão de discursos?
+
+=== node-eligibility-51-aicomment ===
+[original]  Intenção: parte sensível, costuma ser do ancião por seu caráter pastoral local. Impacto: preserva o tom de cuidado e direção da parte.
+
+=== node-eligibility-52-explanation ===
+[original]  Saída de bloqueio: perfil não bate com Necessidades Locais.
+
+=== node-eligibility-52-aicomment ===
+[original]  Intenção: respeitar a expectativa pastoral da parte. Impacto: a parte chega a quem foi efetivamente designado para esse encargo.
+
+=== node-eligibility-53-explanation ===
+[original]  Aprovação para NECESSIDADES LOCAIS.
+
+=== node-eligibility-53-aicomment ===
+[original]  Intenção: incluir no pool dos anciãos aptos para essa parte. Impacto: distribuição equilibrada ao longo do ano entre os qualificados.
+[expandido] Intenção: incluir no conjunto de candidatos dos anciãos aptos para essa parte. Impacto: distribuição equilibrada ao longo do ano entre os qualificados.
+
+=== tab-uiAgent ===
+[original]  Comparacao UI vs Agent. alinhar decisao humana e assistencia da IA com coerencia entre superficies
+
+=== flow-uiAgent-0 ===
+[original]  Caminho 1: Caminho Manual. Objetivo: Como a UI manual oferece um dropdown filtrado pelas mesmas regras do motor.
+[expandido] Caminho 1: Caminho Manual. Objetivo: Como a interface manual do dirigente oferece um lista suspensa de opções filtrado pelas mesmas regras do motor.
+
+=== node-uiAgent-0-explanation ===
+[original]  Caminho manual começa preparando o contexto da semana — exatamente o mesmo construtor usado pelo motor automático.
+
+=== node-uiAgent-0-aicomment ===
+[original]  Intenção: humano e automação partem do mesmo ponto. Impacto: a UI manual não tem regras paralelas — apenas oferece a decisão visual sobre a mesma base de verdade.
+[expandido] Intenção: humano e automação partem do mesmo ponto. Impacto: a interface manual do dirigente não tem regras paralelas — apenas oferece a decisão visual sobre a mesma base de verdade.
+
+=== node-uiAgent-1-explanation ===
+[original]  Para cada publicador disponível, a UI pergunta ao mesmo gate central: pode ou não pode?
+
+=== node-uiAgent-1-aicomment ===
+[original]  Intenção: filtragem honesta antes de mostrar opções ao dirigente. Impacto: a tela não tenta o usuário com nomes que seriam reprovados depois, evitando frustração e correção.
+
+=== node-uiAgent-2-explanation ===
+[original]  Decisão exclusiva do caminho manual: esse nome já está designado para outra parte nesta mesma semana?
+
+=== node-uiAgent-2-aicomment ===
+[original]  Intenção: na escolha manual, repetir nome na semana é considerado erro duro e bloqueado. Impacto: protege a diversidade semanal contra deslize do usuário que não lembrou do que já designou.
+
+=== node-uiAgent-3-explanation ===
+[original]  Calcula o score e descobre se há cooldown — exatamente as mesmas funções que o motor automático usa para rankear.
+[expandido] Calcula o nota de prioridade e descobre se há intervalo obrigatório entre designações — exatamente as mesmas funções que o motor automático usa para rankear.
+
+=== node-uiAgent-3-aicomment ===
+[original]  Intenção: enriquecer a UI com a mesma inteligência da eleição automática. Impacto: o dirigente decide com a mesma informação que a IA usaria, em vez de ter uma versão simplificada da realidade.
+
+=== node-uiAgent-4-explanation ===
+[original]  O dropdown mostra apenas os elegíveis e ranqueados.
+[expandido] O lista suspensa de opções mostra apenas os elegíveis e ranqueados.
+
+=== node-uiAgent-4-aicomment ===
+[original]  Intenção: simplificar a escolha humana ao máximo. Impacto: o dirigente foca em decidir entre os bons, não em filtrar os impedidos.
+
+=== node-uiAgent-5-explanation ===
+[original]  Quem está em cooldown, se aparecer, vem com tooltip explicando o motivo do alerta.
+[expandido] Quem está em intervalo obrigatório entre designações, se aparecer, vem com dica flutuante explicando o motivo do alerta.
+
+=== node-uiAgent-5-aicomment ===
+[original]  Intenção: transparência sem censura — o usuário vê o motivo do alerta. Impacto: decisão informada em vez de cega, preservando autonomia humana com responsabilidade.
+
+=== flow-uiAgent-1 ===
+[original]  Caminho 2: Caminho Diagnóstico. Objetivo: Como o painel exibe o ranking completo e separa bloqueados para auditoria.
+[expandido] Caminho 2: Caminho Diagnóstico. Objetivo: Como o painel exibe o classificação ordenada completo e separa bloqueados para auditoria.
+
+=== node-uiAgent-6-explanation ===
+[original]  Caminho diagnóstico (painel de controle) também começa pelo mesmo construtor de contexto.
+
+=== node-uiAgent-6-aicomment ===
+[original]  Intenção: garantir consistência entre superfícies do app. Impacto: o painel de diagnóstico vê o mesmo cenário que o motor — análise sobre dados reais, não simulação.
+
+=== node-uiAgent-7-explanation ===
+[original]  Levanta a lista de elegíveis chamando o mesmo gate central de elegibilidade.
+
+=== node-uiAgent-7-aicomment ===
+[original]  Intenção: zero divergência na regra entre superfícies. Impacto: o painel diagnostica a partir da verdade real do sistema, sustentando conversas e investigações pastorais.
+
+=== node-uiAgent-8-explanation ===
+[original]  Pega o ranking determinístico — exatamente o mesmo que o motor automático usaria.
+[expandido] Pega o classificação ordenada determinístico — exatamente o mesmo que o motor automático usaria.
+
+=== node-uiAgent-8-aicomment ===
+[original]  Intenção: "melhor candidato" significa a mesma coisa em qualquer tela. Impacto: explicabilidade real, não simulação — quem aparece no top do painel é quem o motor escolheria.
+
+=== node-uiAgent-9-explanation ===
+[original]  Para cada candidato no ranking, pergunta: está bloqueado por cooldown?
+[expandido] Para cada candidato no classificação ordenada, pergunta: está bloqueado por intervalo obrigatório entre designações?
+
+=== node-uiAgent-9-aicomment ===
+[original]  Intenção: separar visualmente quem está apto agora de quem está em descanso. Impacto: o usuário entende o estado atual da rotação e antecipa quem voltará a estar elegível.
+
+=== node-uiAgent-10-explanation ===
+[original]  Define como "melhor candidato" o primeiro não-bloqueado do ranking.
+[expandido] Define como "melhor candidato" o primeiro não-bloqueado do classificação ordenada.
+
+=== node-uiAgent-10-aicomment ===
+[original]  Intenção: o painel sugere de fato uma escolha viável, não teórica. Impacto: "melhor candidato" nunca é alguém em cooldown, evitando recomendação que precisaria ser desfeita.
+[expandido] Intenção: o painel sugere de fato uma escolha viável, não teórica. Impacto: "melhor candidato" nunca é alguém em intervalo obrigatório entre designações, evitando recomendação que precisaria ser desfeita.
+
+=== node-uiAgent-11-explanation ===
+[original]  Mostra também o top 4 do ranking — incluindo bloqueados, para análise visual.
+[expandido] Mostra também o top 4 do classificação ordenada — incluindo bloqueados, para análise visual.
+
+=== node-uiAgent-11-aicomment ===
+[original]  Intenção: dar visão da fila inteira, não só do vencedor. Impacto: o usuário entende quem viria depois e por que alguns ainda estão bloqueados, sustentando decisões pastorais conscientes.
+
+=== flow-uiAgent-2 ===
+[original]  Caminho 3: Caminho Agente IA. Objetivo: Como o chat traduz a pergunta e devolve ranking com tags de elegibilidade.
+[expandido] Caminho 3: Caminho agente de inteligência artificial. Objetivo: Como o chat traduz a pergunta e devolve classificação ordenada com tags de elegibilidade.
+
+=== node-uiAgent-12-explanation ===
+[original]  Caminho agente IA começa traduzindo o pedido em linguagem natural para a parte concreta do sistema.
+[expandido] Caminho agente de inteligência artificial começa traduzindo o pedido em linguagem natural para a parte concreta do sistema.
+
+=== node-uiAgent-12-aicomment ===
+[original]  Intenção: o agente entende sinônimos, abreviações e referências livres do usuário. Impacto: "quem vai dar a primeira parte de Joias?" vira identificador de parte e modalidade reais.
+
+=== node-uiAgent-13-explanation ===
+[original]  Agente monta o mesmo contexto comum da semana.
+
+=== node-uiAgent-13-aicomment ===
+[original]  Intenção: a conversa fala com a mesma verdade que o painel e a UI manual. Impacto: o usuário pode confiar que a explicação do chat bate com o que ele vê em outra tela.
+[expandido] Intenção: a conversa fala com a mesma verdade que o painel e a interface manual do dirigente. Impacto: o usuário pode confiar que a explicação do chat bate com o que ele vê em outra tela.
+
+=== node-uiAgent-14-explanation ===
+[original]  Levanta elegíveis pelo mesmo gate central.
+
+=== node-uiAgent-14-aicomment ===
+[original]  Intenção: o agente não inventa nem alucina nome — só responde com base na verdade verificada. Impacto: confiança no canal conversacional como fonte legítima de decisão.
+
+=== node-uiAgent-15-explanation ===
+[original]  Pega o ranking determinístico (mesmo serviço dos outros caminhos).
+[expandido] Pega o classificação ordenada determinístico (mesmo serviço dos outros caminhos).
+
+=== node-uiAgent-15-aicomment ===
+[original]  Intenção: "melhor candidato" do chat é idêntico ao "melhor candidato" do painel. Impacto: respostas reprodutíveis e auditáveis, mesmo via conversa natural.
+
+=== node-uiAgent-16-explanation ===
+[original]  Marca quem está em cooldown — mas, diferente da UI manual, não esconde.
+[expandido] Marca quem está em intervalo obrigatório entre designações — mas, diferente da interface manual do dirigente, não esconde.
+
+=== node-uiAgent-16-aicomment ===
+[original]  Intenção: o chat tem caráter pedagógico, por isso mostra a tag em vez de filtrar. Impacto: o usuário aprende a lógica da rotação enquanto consome a resposta.
+
+=== node-uiAgent-17-explanation ===
+[original]  Devolve a lista ordenada: aptos primeiro, bloqueados em seguida com tag de motivo.
+
+=== node-uiAgent-17-aicomment ===
+[original]  Intenção: pedagogia + utilidade no mesmo retorno. Impacto: o usuário escolhe com contexto e descobre quando precisaria esperar ou substituir alguém.
+
+=== flow-uiAgent-3 ===
+[original]  Caminho 4: Convergências e divergências propositais. Objetivo: Onde os três caminhos batem na mesma regra e onde divergem por estilo da superfície.
+
+=== node-uiAgent-18-explanation ===
+[original]  Aqui aparece o pacto entre os três caminhos: todos usam o mesmo gate de elegibilidade e o mesmo construtor de contexto.
+
+=== node-uiAgent-18-aicomment ===
+[original]  Intenção: blindar a regra de elegibilidade contra divergência por superfície. Impacto: independente da porta de entrada, o critério é único — coerência arquitetural garantida.
+
+=== node-uiAgent-19-explanation ===
+[original]  Segundo pacto: ranking também é o mesmo serviço, idêntico para todos os caminhos.
+[expandido] Segundo pacto: classificação ordenada também é o mesmo serviço, idêntico para todos os caminhos.
+
+=== node-uiAgent-19-aicomment ===
+[original]  Intenção: que "melhor" signifique a mesma coisa em qualquer superfície. Impacto: explicações alinhadas entre tela, painel e chat — zero contradição visível ao usuário.
+
+=== node-uiAgent-20-explanation ===
+[original]  Divergência exclusiva da UI manual: bloqueia duro repetir o mesmo nome na mesma semana.
+[expandido] Divergência exclusiva da interface manual do dirigente: bloqueia duro repetir o mesmo nome na mesma semana.
+
+=== node-uiAgent-20-aicomment ===
+[original]  Intenção: a UI manual protege contra o deslize humano de não lembrar do que já designou. Impacto: a tela é mais rígida que motor/agente porque o usuário decide isolado, sem rede.
+[expandido] Intenção: a interface manual do dirigente protege contra o deslize humano de não lembrar do que já designou. Impacto: a tela é mais rígida que motor/agente porque o usuário decide isolado, sem rede.
+
+=== node-uiAgent-21-explanation ===
+[original]  Cooldown é tratado distinto por superfície: aviso na UI, ordenação no painel, tag no agente.
+[expandido] intervalo obrigatório entre designações é tratado distinto por superfície: aviso na UI, ordenação no painel, tag no agente.
+
+=== node-uiAgent-21-aicomment ===
+[original]  Intenção: respeitar o estilo de cada superfície sem violar a regra central. Impacto: experiência adaptada ao contexto de uso, mas com regra única por trás — divergência intencional, não acidental.
+
+=== node-uiAgent-22-explanation ===
+[original]  No painel, o top da lista pode mostrar bloqueados (para análise), mas o "melhor candidato" nunca é bloqueado.
+
+=== node-uiAgent-22-aicomment ===
+[original]  Intenção: dar visão completa para auditoria e ao mesmo tempo recomendar com segurança. Impacto: o usuário diagnostica e age sem ambiguidade — vê tudo, mas recebe sugestão segura.
+
+=== outro ===
+[original]  Fim da apresentação. Obrigado por acompanhar o RVM Designações.

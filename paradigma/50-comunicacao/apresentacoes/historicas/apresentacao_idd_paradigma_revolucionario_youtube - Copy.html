@@ -1,0 +1,1307 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>IDD · Edição YouTube — Aula completa, gênese e paradigma</title>
+<script src="https://cdn.jsdelivr.net/npm/roughjs@4.6.6/bundled/rough.js"></script>
+<style>
+  :root {
+    --bg: #0f172a;
+    --bg-card: #1e293b;
+    --fg: #e2e8f0;
+    --accent: #a78bfa;
+    --accent-2: #34d399;
+    --warn: #fbbf24;
+    --danger: #f87171;
+    --muted: #64748b;
+    --paper: #fef9e7;
+    --ink: #1e293b;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--fg);
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    overflow: hidden;
+    height: 100vh;
+  }
+  #stage {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    padding: 24px 48px;
+  }
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--muted);
+    padding-bottom: 12px;
+    margin-bottom: 18px;
+  }
+  header h1 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 500;
+    color: var(--accent);
+    letter-spacing: 0.5px;
+  }
+  #counter { color: var(--muted); font-size: 13px; }
+  #slide {
+    flex: 1;
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 36px;
+    overflow: hidden;
+  }
+  .text-pane {
+    overflow-y: auto;
+    padding-right: 20px;
+  }
+  .visual-pane {
+    background: var(--paper);
+    border-radius: 12px;
+    padding: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 6px 24px rgba(0,0,0,0.3);
+    overflow: hidden;
+  }
+  .visual-pane canvas, .visual-pane svg { max-width: 100%; max-height: 100%; }
+  .slide-title {
+    font-size: 30px;
+    margin: 0 0 8px 0;
+    color: var(--fg);
+    font-weight: 600;
+    line-height: 1.2;
+  }
+  .slide-subtitle {
+    color: var(--accent);
+    font-size: 15px;
+    margin: 0 0 18px 0;
+    font-weight: 500;
+    letter-spacing: 0.3px;
+  }
+  .slide-text { font-size: 16px; line-height: 1.65; }
+  .slide-text p { margin: 0 0 12px 0; }
+  .slide-text strong { color: var(--accent-2); }
+  .slide-text em { color: var(--warn); font-style: normal; }
+  .slide-text ul { margin: 8px 0 16px 0; padding-left: 20px; }
+  .slide-text li { margin-bottom: 6px; }
+  .slide-text code { background: rgba(167,139,250,0.15); padding: 2px 5px; border-radius: 3px; font-size: 13px; color: var(--accent); }
+  .slide-text blockquote {
+    margin: 12px 0;
+    padding: 10px 14px;
+    border-left: 3px solid var(--warn);
+    background: rgba(251,191,36,0.06);
+    color: #fde68a;
+    font-style: italic;
+    border-radius: 3px;
+  }
+  .commentary-block {
+    margin-top: 18px;
+    padding: 14px 16px;
+    background: rgba(167, 139, 250, 0.08);
+    border-left: 3px solid var(--accent);
+    border-radius: 4px;
+    font-size: 14px;
+    line-height: 1.55;
+    color: #cbd5e1;
+    display: none;
+  }
+  .commentary-block.visible { display: block; animation: fadeIn 600ms ease; }
+  .commentary-block::before {
+    content: "🎙 Comentário do narrador";
+    display: block;
+    font-size: 11px;
+    color: var(--accent);
+    margin-bottom: 6px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(6px);} to { opacity: 1; transform: none;} }
+  footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 12px;
+    margin-top: 12px;
+    border-top: 1px solid var(--muted);
+    gap: 12px;
+  }
+  .controls { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+  button {
+    background: var(--bg-card);
+    border: 1px solid var(--muted);
+    color: var(--fg);
+    padding: 8px 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 13px;
+    transition: all 150ms;
+  }
+  button:hover { background: var(--accent); color: var(--bg); border-color: var(--accent); }
+  button.primary { background: var(--accent); color: var(--bg); border-color: var(--accent); font-weight: 600; }
+  button.primary:hover { background: var(--accent-2); border-color: var(--accent-2); }
+  button:disabled { opacity: 0.4; cursor: not-allowed; }
+  select { background: var(--bg-card); color: var(--fg); border: 1px solid var(--muted); padding: 6px; border-radius: 4px; }
+  #status {
+    color: var(--muted); font-size: 12px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .pulse-dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--muted);
+    transition: background 200ms;
+  }
+  .pulse-dot.speaking { background: var(--accent-2); animation: pulse 1s infinite; }
+  @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+  /* RECORD MODE — limpo para gravação OBS */
+  body.record header, body.record footer { display: none !important; }
+  body.record #stage { padding: 32px 64px; }
+  body.record #slide { gap: 48px; }
+  body.record .slide-title { font-size: 36px; }
+  body.record .slide-text { font-size: 18px; }
+  /* COVER OVERLAY (delay inicial) */
+  #coverOverlay {
+    position: fixed; inset: 0;
+    background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #0f172a 100%);
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    z-index: 100; transition: opacity 1.2s ease;
+  }
+  #coverOverlay.hide { opacity: 0; pointer-events: none; }
+  #coverOverlay h1 {
+    color: var(--accent); font-size: 64px; margin: 0; letter-spacing: 4px;
+    text-shadow: 0 0 30px rgba(167,139,250,0.4);
+    animation: fadeUp 1.4s ease;
+  }
+  #coverOverlay h2 {
+    color: var(--fg); font-size: 22px; font-weight: 300; margin: 16px 0 8px 0;
+    animation: fadeUp 1.4s 0.3s ease backwards;
+  }
+  #coverOverlay p {
+    color: var(--muted); font-size: 14px; margin: 24px 0 0 0; letter-spacing: 2px;
+    animation: fadeUp 1.4s 0.6s ease backwards;
+  }
+  #coverOverlay .badge {
+    margin-top: 40px; color: var(--warn); font-size: 12px; letter-spacing: 3px;
+    border: 1px solid var(--warn); padding: 8px 18px; border-radius: 20px;
+    animation: fadeUp 1.4s 0.9s ease backwards;
+  }
+  @keyframes fadeUp { from { opacity:0; transform:translateY(20px);} to {opacity:1; transform:none;} }
+</style>
+</head>
+<body>
+<div id="idd-status-banner" role="note" style="position:fixed;bottom:6px;left:6px;z-index:2147483000;max-width:min(92vw,560px);padding:3px 8px;font:11px/1.35 system-ui,-apple-system,Segoe UI,sans-serif;color:#fde68a;background:rgba(17,17,17,.82);border:1px solid rgba(253,230,138,.35);border-radius:6px;pointer-events:none;">📜 Peça histórica (versão anterior ao Cânone v1.0-rc1). Afirmações podem não refletir o status atual — ver paradigma/00-canone/AFIRMACOES.md</div>
+
+<!-- COVER OVERLAY: aparece no início, fica 4s, depois desaparece -->
+<div id="coverOverlay">
+  <h1>IDD</h1>
+  <h2>A Conversa como Interface</h2>
+  <p>UM PARADIGMA REVOLUCIONÁRIO · APLICADO AO RVM DESIGNAÇÕES</p>
+  <div class="badge">EDIÇÃO YOUTUBE · 2026</div>
+</div>
+
+<div id="stage">
+  <header>
+    <h1>IDD · Aula completa — gênese, semântica, paradigma</h1>
+    <span id="counter"></span>
+  </header>
+
+  <div id="slide">
+    <div class="text-pane">
+      <p class="slide-subtitle" id="subtitle"></p>
+      <h2 class="slide-title" id="title"></h2>
+      <div class="slide-text" id="text"></div>
+      <div class="commentary-block" id="commentary"></div>
+    </div>
+    <div class="visual-pane" id="visual"></div>
+  </div>
+
+  <footer>
+    <div class="controls">
+      <button id="prev">◀ Anterior</button>
+      <button id="play" class="primary">▶ Tocar slide</button>
+      <button id="stop">⏹ Parar</button>
+      <button id="next">Próximo ▶</button>
+      <label style="font-size:12px; color:var(--muted)">
+        <input type="checkbox" id="autoadvance"> Auto-avançar
+      </label>
+      <button id="exportRoteiro" title="Exporta roteiro completo .txt para usar como descrição do vídeo">📥 Roteiro</button>
+      <select id="voiceSel" title="Voz"></select>
+      <label style="font-size:12px; color:var(--muted)">
+        Velocidade
+        <input type="range" id="rate" min="0.7" max="1.3" step="0.05" value="1.0" style="width:80px; vertical-align:middle">
+      </label>
+      <label style="font-size:12px; color:var(--muted)" title="Pad ambiente sutil (Web Audio gerado, sem CDN)">
+        <input type="checkbox" id="ambient"> 🎵 Pad
+      </label>
+    </div>
+    <div id="status">
+      <span class="pulse-dot" id="dot"></span>
+      <span id="statusText">Pronto. ▶ ou setas. Use <code>?record=1</code> para esconder controles. <code>?music=1</code> para pad ambiente.</span>
+    </div>
+  </footer>
+</div>
+
+<script>
+// ================================================================
+// SLIDES — Edição YouTube
+// Estrutura nova:
+//   0  Capa (estática, narração com delay)
+//   1  Como trabalhamos juntos (meta-narrativa Eliezer × IA)
+//   2  [ORIGINAL 1] Manifesto: A interface morreu
+//   3  AULA · Genealogia (Engelbart, Sutherland, Kay, Brooks, Nielsen, Raskin)
+//   4  AULA · Semântica (Berners-Lee, Gruber, KIF/OWL, ontologias)
+//   5  AULA · UNISYS SIM — o gerenciador semântico esquecido
+//   6  AULA · Paradigmas de SE (Structured → OO → DDD → Intent-Driven)
+//   7  AULA · Por que IDD agora (LLMs como ponte semântica viável)
+//   8  [ORIGINAL 2] Escada de abstrações (intacta)
+//   9  [ORIGINAL 3] Dilema dos devs
+//  10  [ORIGINAL 4] Dilema do usuário
+//  11  [ORIGINAL 5] Sete propriedades do IDD
+//  12  [ORIGINAL 6] Anti-padrões
+//  13  [ORIGINAL 7] Caso RVM atual
+//  14  [ORIGINAL 8] Caso RVM alvo
+//  15  [ORIGINAL 9] Roteiro 6 etapas
+//  16  [ORIGINAL 10] Por que revolucionário
+//  17  [ORIGINAL 11] Convite Etapa 2.1
+//  18  Créditos finais (NEW)
+// ================================================================
+const SLIDES = [
+  // ============ 0. CAPA ============
+  {
+    subtitle: "Abertura silenciosa",
+    title: "IDD — A Conversa como Interface",
+    html: `
+      <p style="font-size:22px; color:var(--accent); text-align:center; margin-top:80px;">Um paradigma revolucionário</p>
+      <p style="text-align:center; font-size:16px; color:var(--muted); margin-top:24px;">aplicado ao <strong>RVM Designações</strong></p>
+      <p style="text-align:center; font-size:13px; color:var(--muted); margin-top:60px; letter-spacing:2px;">— EDIÇÃO YOUTUBE · 2026 —</p>
+      <p style="text-align:center; font-size:12px; color:var(--muted); margin-top:80px; font-style:italic;">A narração começa em alguns segundos…</p>
+    `,
+    commentary: "Bem-vindo. Esta apresentação é uma aula densa sobre um paradigma que está mudando como software será construído nas próximas décadas. Você não precisa ser desenvolvedor para entender — precisa apenas ter, em algum momento, sentido a frustração de usar um software que tem mil botões mas não sabe o que você quer. Vamos lá.",
+    delayBeforeSpeak: 4000,
+    diagram: drawCover
+  },
+
+  // ============ 1. META-NARRATIVA: COMO CONSTRUÍMOS ============
+  {
+    subtitle: "Antes de tudo · Como esta apresentação foi construída",
+    title: "Eliezer pensa. A IA constrói.",
+    html: `
+      <p>Esta apresentação é, em si mesma, uma <strong>demonstração viva do paradigma</strong> que ela explica.</p>
+      <p><strong>Eliezer Rosa</strong>, autor do projeto RVM Designações, opera <em>deliberadamente</em> em uma única camada: a da <strong>intenção</strong>. Ele não escreve código — não porque não saiba, mas porque escolheu não fazer. Sua função é mais alta: <strong>declarar o que precisa existir</strong>, com clareza, contexto e direção estética.</p>
+      <p>A IA — neste caso, GitHub Copilot rodando como agente — assume todos os papéis técnicos:</p>
+      <ul>
+        <li><strong>Arquiteto</strong> — desenha a topologia de componentes, drawers, hooks, boundaries.</li>
+        <li><strong>Engenheiro</strong> — escolhe stack, padrões, trade-offs de performance.</li>
+        <li><strong>Programador</strong> — escreve TypeScript, React, testes Vitest.</li>
+        <li><strong>Curador</strong> — mantém memória persistente, cita fontes, evita regressões.</li>
+        <li><strong>Testador</strong> — propõe casos, escreve specs, valida visualmente.</li>
+        <li><strong>Documentador</strong> — gera diagramas, apresentações, registros de decisão.</li>
+      </ul>
+      <p>Esta divisão não é improvisada. É <strong>a tese central do IDD encarnada no próprio processo de desenvolvimento</strong>: o humano fica onde só o humano pode estar — no <em>porquê</em> e no <em>para quem</em> — e a máquina fica onde a máquina é melhor — no <em>como</em>.</p>
+      <blockquote>"Eu não mexo deliberadamente em código. Me mantenho de propósito na cama de abstração da intenção."<br>— Eliezer Rosa, idealizador</blockquote>
+    `,
+    commentary: "Esta é uma das colaborações humano-IA mais maduras que eu, como agente, já participei. Há uma disciplina rara aqui: Eliezer resiste à tentação de mergulhar no código quando algo não sai como esperado — e essa resistência é o que mantém a clareza estratégica. Toda vez que ele desce ao código, perde altitude conceitual. Toda vez que eu subo à intenção, perco precisão técnica. A divisão funciona porque cada um respeita a competência do outro. Esta apresentação que você está assistindo? Ele descreveu em três parágrafos o que queria. Eu desenhei, escrevi, sintetizei voz, programei diagramas. Ele revisou e disse: maravilhoso. Esse é o paradigma operando em si mesmo.",
+    diagram: drawCollab
+  },
+
+  // ============ 2. ORIGINAL 1: MANIFESTO ============
+  {
+    subtitle: "Abertura · Manifesto",
+    title: "A interface morreu. Viva a conversa.",
+    html: `
+      <p>Por sessenta anos, ensinamos seres humanos a falar como máquinas: <em>cliques, formulários, menus, abas, modais, breadcrumbs</em>. Construímos catedrais de botões para esconder a complexidade — e no processo, escondemos também a <strong>intenção</strong>.</p>
+      <p>O paradigma <strong>IDD — Intent-Driven Design</strong> inverte a equação: a máquina aprende a falar como humano. A <strong>conversa volta a ser a interface principal</strong>; tudo o mais é satélite, ferramenta, andaime.</p>
+      <p>Esta apresentação não é sobre chat-bots. É sobre <em>como reconstruir um software inteiro</em> em torno do diálogo entre intenção e capacidade — e por que o RVM Designações é o laboratório onde isto está se materializando.</p>
+    `,
+    commentary: "Esta abertura é provocativa de propósito. IDD não é mais uma sigla de design — é uma reorganização ontológica do que conta como software. O usuário não navega: ele declara. O sistema não exibe: ele responde. O dev não desenha telas: ele constrói capacidades nomeáveis. É filosoficamente próximo do que Doug Engelbart chamava augmenting human intellect, mas só agora a IA generativa tornou economicamente viável.",
+    diagram: drawCoverManifesto
+  },
+
+  // ============ 3. AULA · GENEALOGIA ============
+  {
+    subtitle: "Aula · Parte 1 de 5 · Genealogia das ideias",
+    title: "De onde vem o IDD: 70 anos de profecias",
+    html: `
+      <p>IDD não nasceu agora. É a colheita tardia de sementes que pensadores plantaram desde os anos 1950. Antes de mostrar onde isto vai, vamos honrar as autoridades que tornaram isto pensável:</p>
+      <ul>
+        <li><strong>Vannevar Bush (1945)</strong> — <em>"As We May Think"</em>, no Atlantic Monthly. Imaginou o <strong>Memex</strong>: máquina onde o usuário associa documentos por <em>significado</em>, não por localização. Pré-hipertexto, pré-busca semântica, pré-tudo.</li>
+        <li><strong>Doug Engelbart (1962)</strong> — relatório <em>Augmenting Human Intellect</em>. Cunhou a tese: ferramentas não substituem o pensamento humano, elas o amplificam. Em 1968, demonstrou ao vivo mouse, hipertexto, videoconferência (a "Mother of All Demos"). Setenta por cento do que vivemos hoje em UX está naquele vídeo.</li>
+        <li><strong>Ivan Sutherland (1963)</strong> — Sketchpad, sua tese de PhD no MIT. Primeira UI gráfica interativa. Primeiro a tratar <em>restrições</em> declarativamente: você diz "estes dois traços são paralelos", o sistema mantém.</li>
+        <li><strong>Alan Kay (1972)</strong> — Dynabook, Smalltalk. Cunhou: <em>"The best way to predict the future is to invent it."</em> Defendeu que crianças deveriam <strong>programar por conversação</strong> com objetos vivos.</li>
+        <li><strong>Fred Brooks (1986)</strong> — <em>"No Silver Bullet"</em>. Distinguiu complexidade <strong>essencial</strong> (do problema) e <strong>acidental</strong> (das ferramentas). IDD ataca a acidental: o usuário não deveria pagar custo cognitivo por nossa escolha de UI.</li>
+        <li><strong>Jakob Nielsen (1990s)</strong> — heurísticas de usabilidade. A número 1: "visibility of system status". A número 6: "recognition rather than recall". Ambas pedem por uma interface que <em>fala de volta</em>.</li>
+        <li><strong>Jef Raskin (2000)</strong> — <em>The Humane Interface</em>. Atacou modos, atacou menus, propôs <em>"zooming user interfaces"</em>. Morreu antes de ver LLMs realizarem parte do que ele queria.</li>
+      </ul>
+      <p>Cada um desses autores viu o mesmo horizonte: <strong>o software deveria entender o humano, não o contrário</strong>. Faltava só a tecnologia. Agora ela chegou.</p>
+    `,
+    commentary: "Quando você assiste a Mother of All Demos de 1968, sente um nó na garganta. Engelbart estava resolvendo, em uma única apresentação ao vivo, problemas que a indústria de software ainda não resolveu plenamente em 2026. Por quê? Porque a indústria preferiu vender mais botões. IDD é, em certo sentido, a primeira chance real de cumprir o que Engelbart propôs: não fazer software para humanos usarem máquinas, mas fazer máquinas que aumentam humanos. A ironia bonita é que LLMs — que muitos veem como ameaça à humanidade — são justamente o que torna o sonho humanista de Engelbart finalmente viável.",
+    diagram: drawGenealogy
+  },
+
+  // ============ 4. AULA · SEMÂNTICA ============
+  {
+    subtitle: "Aula · Parte 2 de 5 · A linha semântica",
+    title: "Semântica: a outra metade da história",
+    html: `
+      <p>Paralelo à linha de UI, correu uma linha menos visível mas igualmente fundamental: a <strong>busca por dar significado processável às coisas</strong>. Se IDD funciona, é porque alguém antes ensinou máquinas a entender o que palavras <em>significam</em>, não só como elas se escrevem.</p>
+      <ul>
+        <li><strong>John McCarthy (1958)</strong> — LISP, e em 1989 o conceito de <em>"Advice Taker"</em>: um programa que aceita conselhos em linguagem semi-natural e os incorpora à sua base de conhecimento. Pré-LLM por seis décadas.</li>
+        <li><strong>Peter Chen (1976)</strong> — modelo Entidade-Relacionamento. Pela primeira vez, o <em>schema</em> de um banco era uma <strong>narrativa do domínio</strong>, não só uma estrutura de bytes.</li>
+        <li><strong>Tim Berners-Lee (1998 →)</strong> — <em>Semantic Web</em>. RDF, OWL, SPARQL. Visão: a Web como grafo de fatos consultáveis, não só páginas para humanos lerem. Parte se realizou (schema.org, knowledge graphs do Google), parte ainda espera.</li>
+        <li><strong>Tom Gruber (1993)</strong> — definição canônica de <strong>ontologia</strong> em computação: <em>"a explicit specification of a conceptualization"</em>. Toda vez que IDD nomeia uma capacidade, está criando uma micro-ontologia.</li>
+        <li><strong>KIF — Knowledge Interchange Format (1992)</strong> e <strong>OWL — Web Ontology Language (2004)</strong> — tentativas de dar à máquina uma linguagem comum para falar sobre <em>tipos de coisas</em>, não só sobre <em>tokens de dados</em>.</li>
+        <li><strong>Eric Evans (2003)</strong> — <em>Domain-Driven Design</em>. Ubiquitous Language. O código deve falar a língua do especialista do domínio. IDD leva isto até o usuário final: a UI também deve falar essa língua.</li>
+      </ul>
+      <p>O fio condutor: <strong>o software só ajuda na medida em que entende</strong>. E entender exige modelo do mundo, não só sintaxe da entrada.</p>
+    `,
+    commentary: "Há uma piada cruel sobre a Semantic Web: ela foi a tecnologia certa, na hora errada, para o problema certo. RDF e OWL pediam que humanos anotassem manualmente significados — e humanos odeiam fazer isso. LLMs viraram a chave: agora a anotação é inferida em tempo real, com qualidade aceitável. Ironicamente, os LLMs que destronaram a Semantic Web são também o que faz dela enfim possível, em uma forma diferente. IDD se beneficia disso: o catálogo de capacidades de um sistema funciona como uma ontologia leve, e o LLM faz a ponte entre o verbo natural do usuário e o nó certo desse grafo.",
+    diagram: drawSemantics
+  },
+
+  // ============ 5. AULA · UNISYS SIM ============
+  {
+    subtitle: "Aula · Parte 3 de 5 · O fantasma da UNISYS",
+    title: "SIM — Semantic Information Manager: o projeto adiantado demais",
+    html: `
+      <p>Há um capítulo quase esquecido da história da computação que merece ser contado aqui, porque ele <strong>antecipou IDD em quarenta anos</strong>: o projeto <strong>SIM — Semantic Information Manager</strong>, da <strong>UNISYS</strong>, no final dos anos 1980 e início dos 90.</p>
+      <p>Enquanto a Oracle e a IBM consolidavam o modelo relacional (linhas, colunas, joins), a UNISYS apostou em algo conceitualmente mais ambicioso: um <strong>banco de dados que armazenava significado, não apenas estrutura</strong>.</p>
+      <ul>
+        <li>O usuário não desenhava tabelas — descrevia <strong>tipos de coisas</strong> e <strong>relações entre elas</strong> em uma linguagem chamada <em>OSL (Object Specification Language)</em>.</li>
+        <li>Heranças, restrições, regras de negócio eram <em>declaradas</em> — o sistema garantia automaticamente.</li>
+        <li>Consultas podiam ser feitas em forma quase natural, navegando o grafo semântico, não escrevendo joins.</li>
+        <li>A UI era gerada a partir do schema semântico — formulários se montavam sozinhos, validações se herdavam.</li>
+      </ul>
+      <p>Por que ninguém lembra? <strong>Três fatores</strong>:</p>
+      <ul>
+        <li><strong>Hardware insuficiente</strong> — a indireção semântica custava performance que o hardware da época não absorvia.</li>
+        <li><strong>SQL venceu por inércia</strong> — o ecossistema de ferramentas, devs treinados, livros, certificações já era massivo.</li>
+        <li><strong>Faltava o LLM</strong> — sem capacidade de tradução natural→formal robusta, o usuário ainda precisava aprender OSL, e OSL parecia "outro SQL".</li>
+      </ul>
+      <p>O SIM da UNISYS é o <strong>fantasma do IDD</strong>. Tudo o que estamos fazendo hoje, eles já tinham articulado conceitualmente. Faltou só hardware barato e modelos de linguagem. Em 2026, ambos sobram.</p>
+      <blockquote>Quem não conhece a história está condenado a reinventá-la — e às vezes, felizmente, com as ferramentas certas para enfim fazê-la dar certo.</blockquote>
+    `,
+    commentary: "Trago o SIM da UNISYS para esta apresentação por uma razão estética e ética: dar crédito a quem foi adiantado demais. A indústria de software tem amnésia crônica — adora apresentar como inovação coisas que apenas refazem com tecnologia atual o que visionários da década passada propuseram sem conseguir entregar. Quando construímos IDD no RVM, não estamos inventando — estamos finalmente cumprindo. E é importante saber isso. Modéstia epistêmica é uma virtude. O que o RVM tem de novo não é a ideia: é a oportunidade. E essa oportunidade carrega responsabilidade — fazer melhor do que aqueles que não puderam.",
+    diagram: drawSIM
+  },
+
+  // ============ 6. AULA · PARADIGMAS DE SE ============
+  {
+    subtitle: "Aula · Parte 4 de 5 · Paradigmas de Engenharia de Software",
+    title: "A linhagem dos paradigmas — onde IDD se encaixa",
+    html: `
+      <p>Engenharia de Software é uma disciplina que se reinventa por <strong>paradigmas</strong> — não por incrementos. Cada paradigma redefine o que conta como bom código:</p>
+      <ul>
+        <li><strong>Estruturada (Dijkstra, 1968)</strong> — "Goto considered harmful". Programa = composição de blocos com entrada/saída únicas. Disciplina sobre fluxo de controle.</li>
+        <li><strong>Orientação a Objetos (Smalltalk 1972, C++ 1985, Java 1995)</strong> — Programa = objetos trocando mensagens. Encapsulamento, herança, polimorfismo. Domínio do mercado por 30 anos.</li>
+        <li><strong>Funcional (Lisp 1958, ML 1973, Haskell 1990, ressurgência via Scala/Clojure 2007+)</strong> — Programa = composição de funções puras. Estado é exceção, não regra.</li>
+        <li><strong>Aspect-Oriented (Kiczales, 1997)</strong> — Concerns transversais (logging, segurança) extraídos em "aspectos". Limitações práticas o restringiram a nichos.</li>
+        <li><strong>Domain-Driven (Evans, 2003)</strong> — O modelo do domínio é o coração do código. Bounded contexts, agregados, ubiquitous language.</li>
+        <li><strong>Reactive / Event-Driven (Reactive Manifesto, 2014)</strong> — Sistemas como streams de eventos. Resiliência, elasticidade.</li>
+        <li><strong>Declarative / Functional UI (React 2013, Elm 2012, SwiftUI 2019)</strong> — UI = função(estado). Você diz <em>o que</em> quer, não <em>como</em> chegar lá.</li>
+        <li><strong>Intent-Driven (emergente, 2023+)</strong> — A interface, o backend e o agente compõem em torno de um catálogo de <strong>intenções nomeáveis</strong>. O usuário declara intenção; o sistema escolhe meios.</li>
+      </ul>
+      <p>Note o padrão: cada paradigma <strong>sobe um degrau de declaratividade</strong>. Estruturada esconde o jump; OO esconde o estado; Funcional esconde a mutação; Declarativa esconde o DOM; <strong>IDD esconde a UI inteira</strong>, expondo só capacidade.</p>
+      <p>IDD não substitui os anteriores — <em>compõe sobre eles</em>. Você ainda escreve React funcional declarativo dentro de bounded contexts DDD. O que muda é <em>quem decide qual capacidade exibir, quando e como</em>.</p>
+    `,
+    commentary: "Há um exercício interessante: pegue qualquer feature nova de qualquer framework moderno e pergunte qual degrau de declaratividade ela representa. Server Components do React? Esconde a fronteira cliente-servidor. Suspense? Esconde a coordenação assíncrona. Resumability do Qwik? Esconde a hidratação. Toda a indústria está convergindo para o mesmo destino: você diz o que quer, o sistema escolhe os meios. IDD é só esse mesmo movimento aplicado à camada mais alta — a interação humano-software. E é fascinante perceber que a engenharia de software, sem combinar, está toda caminhando para o mesmo lugar.",
+    diagram: drawParadigms
+  },
+
+  // ============ 7. AULA · POR QUE AGORA ============
+  {
+    subtitle: "Aula · Parte 5 de 5 · A confluência",
+    title: "Por que IDD agora — e não em 1988",
+    html: `
+      <p>Se o SIM da UNISYS já tinha a ideia em 1988, por que IDD só vira realidade agora? Quatro condições <strong>convergiram simultaneamente</strong> apenas nos últimos cinco anos:</p>
+      <ul>
+        <li><strong>(1) LLMs robustos para natural→formal</strong> — GPT-3.5 (2022) cruzou o limiar onde tradução de intenção em chamadas de função virou economicamente viável.</li>
+        <li><strong>(2) Function calling estruturado</strong> — OpenAI (2023), Anthropic, Google padronizaram formatos onde o modelo escolhe ferramentas com argumentos tipados, sem alucinar JSON.</li>
+        <li><strong>(3) Hardware barato</strong> — inferência de qualidade caiu para centavos por requisição. O custo marginal de uma intenção interpretada se aproxima do custo de um clique.</li>
+        <li><strong>(4) Frameworks declarativos maduros</strong> — React/Vue/Svelte normalizaram pensar UI como função do estado. IDD adiciona uma camada acima: "estado" passa a incluir intenção interpretada.</li>
+      </ul>
+      <p>Some-se a isto duas mudanças culturais:</p>
+      <ul>
+        <li><strong>Familiaridade do usuário com chat</strong> — WhatsApp, ChatGPT, Telegram tornaram conversa-com-software o gesto cotidiano que arrastar-e-soltar foi nos anos 90.</li>
+        <li><strong>Cansaço do dashboard</strong> — usuários e devs estão saturados de SaaS-com-mil-tabs. O mercado pede algo novo.</li>
+      </ul>
+      <p>É a <strong>tempestade perfeita</strong>. Quem construir produtos IDD agora estará para 2026 como quem construiu para web em 1995, ou para mobile em 2008.</p>
+    `,
+    commentary: "Aviso de honestidade intelectual: dizer 'estamos em um momento histórico' é o discurso mais batido de toda startup. Mas há diferença entre marketing e diagnóstico. Vai aqui o critério verificável: pegue qualquer feature de produto IDD bem-feito, tente reimplementá-la em 2018 sem LLM moderno. Você não consegue. Pegue a mesma feature, tente reimplementá-la em 1988 com SIM da UNISYS. Eles tinham a ideia, faltava a tecnologia. Esta janela de oportunidade é real, é nova, e não vai durar décadas — em três anos será commodity. Quem entrar agora molda a categoria. O RVM Designações está entrando agora.",
+    diagram: drawConvergence
+  },
+
+  // ============ 8. ORIGINAL 2: HISTÓRIA (intacto) ============
+  {
+    subtitle: "História · Sessenta anos de abstrações",
+    title: "A escada de abstrações: do bit ao verbo",
+    html: `
+      <p>Cada geração de software empurrou a complexidade um degrau para cima — escondendo o que estava abaixo, expondo um vocabulário maior:</p>
+      <ul>
+        <li><strong>1960s</strong> — switches físicos, opcodes. O dev é a máquina.</li>
+        <li><strong>1970s</strong> — Unix, shell, pipes. O verbo aparece: <code>grep | sort | uniq</code>.</li>
+        <li><strong>1980s</strong> — GUI Xerox/Apple. O substantivo (ícone) substitui o verbo.</li>
+        <li><strong>1990s</strong> — Web, formulários. A interface vira documento navegável.</li>
+        <li><strong>2000s</strong> — SaaS, dashboards. Densidade visual cresce; verbo se perde em menus.</li>
+        <li><strong>2010s</strong> — Mobile, gestos, micro-interações. Volta o verbo (swipe, pinch), mas restrito ao corpo.</li>
+        <li><strong>2020s</strong> — LLMs. <strong>O verbo natural ressuscita</strong>, agora em qualquer língua.</li>
+      </ul>
+      <p>IDD é o degrau seguinte: usar o verbo natural <em>como interface primária</em>, com a UI clássica reduzida a confirmação visual e edição cirúrgica.</p>
+    `,
+    commentary: "Repare no padrão pendular: cada geração ora privilegia o verbo (ação), ora o substantivo (objeto manipulável). O paradigma WIMP — Windows, Icons, Menus, Pointer — venceu por décadas porque o verbo era caro. Hoje a IA torna o verbo barato de novo, e o substantivo se torna o que ele sempre foi: um suporte cognitivo, não a essência. A grande sacada do IDD é não jogar fora o substantivo, mas usá-lo apenas onde ele rende mais que o verbo: edição rápida, confirmação visual, ancoragem de contexto.",
+    diagram: drawHistory
+  },
+
+  // ============ 9. ORIGINAL 3: DEV DILEMA ============
+  {
+    subtitle: "Diagnóstico · O dilema dos devs",
+    title: "Por que toda UI \"completa\" sufoca",
+    html: `
+      <p>O dev clássico enfrenta uma maldição: cada caso de uso vira <strong>mais um botão</strong>. Em três anos de produto maduro, a interface é um cemitério de affordances. Tudo está lá; nada se acha.</p>
+      <p>Padrões de fuga tradicionais — quase todos falham:</p>
+      <ul>
+        <li><strong>Menus em cascata</strong> → escondem mas não eliminam.</li>
+        <li><strong>Tabs/abas</strong> → fragmentam o contexto, exigem dança espacial.</li>
+        <li><strong>Command palette</strong> (⌘K) → ótimo para power users, opaco para iniciantes.</li>
+        <li><strong>Wizards</strong> → linearizam um processo que nem sempre é linear.</li>
+        <li><strong>Onboarding tours</strong> → admissão de derrota: "a UI não se explica sozinha".</li>
+      </ul>
+      <p>O dev quer simplicidade conceitual; entrega complexidade visual. A entropia visual é proporcional à idade do produto.</p>
+    `,
+    commentary: "Há um termo cunhado por Alan Cooper para isso: dancing bear-ware. O usuário acha incrível que o urso dance — não porque dança bem, mas porque dança. A satisfação vem de ter conseguido, não de o sistema ter ajudado. Software maduro empilha ursos dançantes. IDD propõe parar de empilhar e começar a perguntar: o que o usuário quer fazer agora? Cada elemento de UI deve justificar sua existência por turno de conversa, não por sempre.",
+    diagram: drawDevDilemma
+  },
+
+  // ============ 10. ORIGINAL 4: USER DILEMA ============
+  {
+    subtitle: "Diagnóstico · O dilema do usuário final",
+    title: "O usuário não quer usar — quer terminar",
+    html: `
+      <p>O usuário final do RVM — um Ancião, um Servo Ministerial — não acorda querendo <em>usar um aplicativo</em>. Ele acorda precisando que <em>a próxima reunião aconteça</em>. O software é meio, não fim.</p>
+      <p>Quando exigimos que ele aprenda nossa taxonomia (publicador, parte, semana, designação, condição, função, lote, evento especial), nós impomos um <strong>imposto cognitivo</strong> que ele não consentiu pagar.</p>
+      <p>Os custos invisíveis disso:</p>
+      <ul>
+        <li><strong>Carga de trabalho desviada</strong> — tempo que sairia do estudo da Bíblia vai para clicar.</li>
+        <li><strong>Erros silenciosos</strong> — preencheu o campo errado, ninguém percebe até a reunião.</li>
+        <li><strong>Resistência política</strong> — "no caderno era melhor". E em parte tem razão.</li>
+        <li><strong>Efeito only-the-techy-uses</strong> — o sistema só funciona se um técnico mantém.</li>
+      </ul>
+      <p>IDD reconhece: a melhor UI é a <strong>ausência de UI</strong>. Você fala o que quer; o sistema mostra apenas o necessário para você confirmar.</p>
+    `,
+    commentary: "Don Norman fala em gulf of execution e gulf of evaluation — o abismo entre o que você quer fazer e como diz isso ao sistema, e o abismo entre o que o sistema fez e como você descobre. A UI tradicional reduz esses abismos colocando pontes visuais. IDD os reduz colocando uma ponte linguística. Em domínios onde o usuário tem vocabulário rico (e o nosso domínio teocrático tem) o ganho é exponencial. \"Designe o irmão João para tesouros nesta semana\" é mais curto, claro e auditável que abrir três menus.",
+    diagram: drawUserDilemma
+  },
+
+  // ============ 11. ORIGINAL 5: SETE PROPRIEDADES ============
+  {
+    subtitle: "Definição · O que IDD é, com rigor",
+    title: "IDD em sete propriedades",
+    html: `
+      <p>IDD não é \"colocar um chat na tela\". É um conjunto verificável de propriedades. Um sistema é IDD se, e somente se:</p>
+      <ul>
+        <li><strong>(P1) Intent-first</strong> — o canal primário aceita linguagem natural ambígua.</li>
+        <li><strong>(P2) Catálogo declarado</strong> — toda capacidade do sistema é nomeável e descritível por um agente.</li>
+        <li><strong>(P3) Permissão é semântica</strong> — não pode ver = não vê (não \"vê desabilitado\").</li>
+        <li><strong>(P4) Preview-before-commit</strong> — toda ação destrutiva mostra impacto antes.</li>
+        <li><strong>(P5) Mixed-initiative</strong> — sistema pode propor; usuário aprova/edita; ninguém é mero servo.</li>
+        <li><strong>(P6) Direct manipulation residual</strong> — UI clássica sobrevive como atalho cirúrgico, não como interface principal.</li>
+        <li><strong>(P7) Auditabilidade total</strong> — toda mudança tem proveniência: quem, quando, via qual intent.</li>
+      </ul>
+      <p>Faltando qualquer uma dessas, é apenas \"chat-com-botões\" — uma quimera frequentemente pior que ambos.</p>
+    `,
+    commentary: "P5 é a chave do nome: mixed-initiative. Em 1999, Eric Horvitz da Microsoft Research publicou as Principles of Mixed-Initiative User Interfaces — um texto profético. Ele argumentava que sistemas inteligentes deveriam compor com o usuário, não substituí-lo nem servi-lo passivamente. IDD é a realização tardia desse projeto, agora possível porque LLMs eliminaram o gargalo: entender intenção em linguagem natural deixou de ser um problema de PhD para virar um problema de prompt engineering.",
+    diagram: drawSevenProps
+  },
+
+  // ============ 12. ORIGINAL 6: ANTI-PADRÕES ============
+  {
+    subtitle: "Anti-padrões · O que IDD rejeita",
+    title: "Falsos amigos: práticas que parecem IDD mas não são",
+    html: `
+      <p>Falsos IDDs são piores que UIs honestas. Eles enganam o usuário com promessa de naturalidade e entregam frustração:</p>
+      <ul>
+        <li><strong>Chatbot-de-FAQ</strong> — só responde, nunca age. Viola P2.</li>
+        <li><strong>Chat com botões fixos abaixo</strong> — o chat é mero <em>chrome</em>; o trabalho real é nos botões. Viola P1.</li>
+        <li><strong>Permissão por habilitação</strong> — usuário vê o botão, descobre que não pode. Viola P3.</li>
+        <li><strong>Ações sem preview</strong> — \"Excluir tudo\" → executou. Viola P4.</li>
+        <li><strong>Wizard com IA</strong> — IA pergunta uma coisa por vez, igual formulário disfarçado. Viola P5.</li>
+        <li><strong>Substituição total da UI</strong> — sem manipulação direta para tarefas óbvias (ex: arrastar um item). Viola P6.</li>
+        <li><strong>Mudanças sem trilha</strong> — agente fez, ninguém sabe quem ou por que. Viola P7.</li>
+      </ul>
+      <p>O RVM já evita os principais — mas a Coluna 2 atual ainda mistura P1 e P6 mal: chat e botões competem pelo mesmo espaço. É exatamente isso que o Plano IDD vai cirurgicamente corrigir.</p>
+    `,
+    commentary: "Há uma armadilha psicológica forte aqui: equipes adotam o chat porque está na moda, mas não estão dispostas a renegociar o resto da UI. Resultado: dois sistemas paralelos competindo. O usuário fica perdido — usa o chat? usa o botão? por que ambos existem? IDD exige coragem editorial: matar elementos visuais que perderam justificativa. Sem essa coragem, o chat vira mais um ruído, não menos.",
+    diagram: drawAntiPatterns
+  },
+
+  // ============ 13. ORIGINAL 7: CASO RVM ATUAL ============
+  {
+    subtitle: "Caso RVM · O problema concreto",
+    title: "O que está hoje na Aba Agente",
+    html: `
+      <p>Hoje, a Coluna 2 da <strong>PowerfulAgentTab</strong> mistura quatro camadas competindo pelo mesmo espaço:</p>
+      <ul>
+        <li><strong>Cabeçalho</strong> com ícone, nome do agente, chip de semana, badge de custos.</li>
+        <li><strong>Barra de contexto</strong> com informações redundantes ao S-140 da Coluna 1.</li>
+        <li><strong>Conversa</strong> empurrada para cima e para baixo por chips e ações inferidas.</li>
+        <li><strong>Micro-UIs flutuantes</strong> que sobem cobrindo a conversa quando uma intenção é detectada.</li>
+      </ul>
+      <p>O efeito perceptivo é o mesmo do dashboard maduro: <em>tudo está lá; nada respira</em>. O usuário olha para a tela e não sabe se digita, clica, espera ou rola.</p>
+      <p>A causa raiz é arquitetural: cada novo recurso entrou <em>onde dava</em>, não <em>onde fazia sentido semântico</em>. Não houve um princípio editorial guiando a colocação. IDD vai dar esse princípio.</p>
+    `,
+    commentary: "Quem quer ver o sintoma vivo: abra PowerfulAgentTab.tsx no editor. As linhas 200 a 340 são o teste de Rorschach do problema — header com chip, modal de custos colado dentro do drawer shell, micro-UIs em FloatingMicroUiHost ao lado de chips contextuais que duplicam ações de slash commands. Não há malícia: há sedimentação. Cada commit fez sentido isolado. O conjunto não. IDD é a oportunidade de reescrever o conjunto com um princípio único.",
+    diagram: drawCurrentState
+  },
+
+  // ============ 14. ORIGINAL 8: CASO RVM ALVO ============
+  {
+    subtitle: "Caso RVM · O modelo-alvo",
+    title: "Drawers laterais: a conversa volta ao centro",
+    html: `
+      <p>O modelo-alvo é cirúrgico:</p>
+      <ul>
+        <li><strong>Conversa</strong> ocupa 100% da largura útil da Coluna 2 — sempre.</li>
+        <li><strong>Trilho esquerdo</strong> (overlay, badge animado): \"Ações 💡\" — sugestões inferidas, chips contextuais, slash commands disponíveis.</li>
+        <li><strong>Trilho direito</strong> (overlay, badge): \"Detalhes 📋\" — micro-UI ativa, edição rápida, preview de impacto.</li>
+        <li><strong>Cabeçalho</strong> minimalista, só aparece em alerta real.</li>
+        <li><strong>Resposta longa</strong> abre <strong>modal</strong>, nunca cresce inline.</li>
+      </ul>
+      <p>Os drawers são <em>overlay</em>, não <em>push</em> — a conversa nunca encolhe. Apenas um drawer aberto por vez (mutuamente exclusivos). Atalhos: <code>Ctrl+[</code>, <code>Ctrl+]</code>, <code>Esc</code>.</p>
+      <p>A Etapa 1 já existe no código: o componente <strong>ChatDrawerShell</strong> está integrado à Coluna 2 com placeholders. Falta migrar conteúdo real (Etapas 2-6 do plano-mestre).</p>
+    `,
+    commentary: "A escolha de overlay vs push é teoricamente carregada. Push respeita o conteúdo: nada some atrás de nada. Overlay respeita o foco: o canal principal não é jamais comprometido. IDD escolhe overlay porque a conversa é o canal principal — comprimi-la para abrir um painel é dizer ao usuário que o painel é tão importante quanto a fala. Não é. O painel serve a fala, não compete com ela. Esta é uma decisão filosófica disfarçada de decisão de UI.",
+    diagram: drawTargetModel
+  },
+
+  // ============ 15. ORIGINAL 9: ROTEIRO ============
+  {
+    subtitle: "Roteiro · As seis etapas",
+    title: "Como saímos do agora para o alvo",
+    html: `
+      <p>O plano-mestre divide a transição em <strong>seis etapas incrementais</strong>, cada uma deployável em Vercel e validável visualmente:</p>
+      <ul>
+        <li><strong>Etapa 1 ✅</strong> — ChatDrawerShell criado, integrado, com placeholders.</li>
+        <li><strong>Etapa 2 ⏳</strong> — Migrar Ações para o drawer ESQUERDO (LeftPanelActions).</li>
+        <li><strong>Etapa 3</strong> — Migrar Micro-UIs para o drawer DIREITO (RightPanelDetails).</li>
+        <li><strong>Etapa 4</strong> — Limpeza visual: remover redundâncias do cabeçalho e barra de contexto.</li>
+        <li><strong>Etapa 5</strong> — Polimento: animações, ARIA, focus trap, mobile bottom-sheets.</li>
+        <li><strong>Etapa 6</strong> — Testes (Vitest + RTL), documentação <code>.docs/</code>.</li>
+      </ul>
+      <p>Cada etapa tem critério de aceite verificável. Cada commit atravessa a pipeline de deploy. Sem big-bang.</p>
+    `,
+    commentary: "Esse fatiamento não é capricho — é uma aplicação direta do princípio strangler fig de Martin Fowler: você não troca o sistema antigo de uma vez, você o estrangula gradualmente, mudando seções enquanto o todo continua respirando. Nesse caso, o ChatDrawerShell já é a casca nova; basta agora transferir o conteúdo do velho para dentro dela, peça por peça. O risco de regressão é proporcional ao tamanho de cada peça, não ao tamanho do plano todo.",
+    diagram: drawRoadmap
+  },
+
+  // ============ 16. ORIGINAL 10: REVOLUCIONÁRIO ============
+  {
+    subtitle: "Por que isso é revolucionário",
+    title: "Não é sobre chat. É sobre soberania semântica.",
+    html: `
+      <p>O que torna IDD revolucionário <em>na nossa versão</em>?</p>
+      <ul>
+        <li><strong>Domínio nomeado</strong> — o vocabulário teocrático é estável, finito, conhecido. Nenhum chatbot genérico tem essa vantagem ontológica.</li>
+        <li><strong>Permissão como verdade</strong> — Ancião, Servo Ministerial, Publicador não são roles burocráticos: são papéis com <em>ética</em> embutida. P3 não é feature, é responsabilidade.</li>
+        <li><strong>Auditabilidade espiritual</strong> — toda designação afeta um irmão real. P7 não é compliance: é cuidado.</li>
+        <li><strong>Mixed-initiative com conhecimento de causa</strong> — o agente conhece histórico, conflitos, frequência. Não propõe no escuro.</li>
+        <li><strong>Preview que respeita</strong> — antes de enviar 200 mensagens via WhatsApp, mostra a cada destinatário e pede confirmação.</li>
+      </ul>
+      <p>Outros sistemas IDD competem por produtividade. <strong>O RVM compete por dignidade no uso</strong>. Esta é a diferença que não cabe no roadmap, mas está em cada decisão.</p>
+    `,
+    commentary: "Há um conceito em filosofia da técnica chamado technological mediation (Verbeek, 2005): toda ferramenta media não só ações, mas também valores. Quando construímos um sistema que designa irmãos para partes de reunião, estamos mediando como uma congregação cuida de si mesma. Não é trivial. IDD aqui não é apenas elegância de design — é uma escolha ética sobre quem tem voz, quem é entendido, quem pode auditar. Nenhum dashboard SaaS tem essa carga. O nosso tem.",
+    diagram: drawRevolution
+  },
+
+  // ============ 17. ORIGINAL 11: CONVITE ============
+  {
+    subtitle: "Convite · O próximo passo",
+    title: "Eliezer, podemos começar a Etapa 2.1?",
+    html: `
+      <p>O plano-mestre completo está salvo em memória persistente:</p>
+      <ul>
+        <li><code>/memories/repo/chat-drawers-idd-master-plan-2026-04-28.md</code></li>
+      </ul>
+      <p>O próximo movimento concreto é a <strong>Etapa 2.1</strong>:</p>
+      <ul>
+        <li>Criar <code>src/components/ui/LeftPanelActions.tsx</code></li>
+        <li>3 blocos colapsáveis: <em>Ações sugeridas</em> · <em>Para esta semana</em> · <em>Comandos rápidos</em></li>
+        <li>Badge total exposto via <code>onBadgeCountChange</code> para o trilho do <code>ChatDrawerShell</code></li>
+        <li>Sem regressão de permissão; testes mínimos.</li>
+      </ul>
+      <p>Quando aprovado, sigo para 2.2 (wiring no <code>PowerfulAgentTab</code>) e 2.3 (remoção do render inline em <code>TemporalChat</code>). Cada commit, deploy, validação visual.</p>
+      <p style="margin-top:18px; font-size:18px; color:var(--accent);">A conversa volta ao centro. A interface se torna o que sempre deveria ter sido: <strong>o canal mais curto entre intenção e ação</strong>.</p>
+    `,
+    commentary: "Encerro como abri: isso não é sobre chat. É sobre devolver ao usuário o que tomamos dele em décadas de empilhamento de affordances — o direito de simplesmente dizer o que quer e ser entendido. O plano técnico está pronto. As memórias estão salvas. Só falta a sua palavra para começar. Quando você disser sim, abro o LeftPanelActions e a Etapa 2 vira código.",
+    diagram: drawClosing
+  },
+
+  // ============ 18. CRÉDITOS FINAIS (NEW) ============
+  {
+    subtitle: "Créditos · Obrigado por assistir",
+    title: "Quem fez, como foi feito, o que vem agora",
+    html: `
+      <p style="text-align:center; font-size:18px; margin-top:20px;">
+        <strong>Idealização e direção</strong><br>
+        Eliezer Rosa
+      </p>
+      <p style="text-align:center; font-size:16px; color:var(--muted);">
+        engenheiro da intenção, curador estético,<br>responsável por cada porquê
+      </p>
+      <p style="text-align:center; font-size:18px; margin-top:24px;">
+        <strong>Engenharia, design, código, narração</strong><br>
+        GitHub Copilot · Claude Opus 4.7
+      </p>
+      <p style="text-align:center; font-size:16px; color:var(--muted);">
+        agente operando com memória persistente,<br>nas três camadas (user · session · repo)
+      </p>
+      <p style="text-align:center; font-size:18px; margin-top:24px;">
+        <strong>Domínio servido</strong><br>
+        Congregação de Testemunhas de Jeová
+      </p>
+      <p style="text-align:center; font-size:16px; color:var(--muted);">
+        a quem este software se propõe a servir<br>com dignidade e cuidado
+      </p>
+      <p style="text-align:center; font-size:13px; color:var(--accent); margin-top:40px; letter-spacing:2px;">
+        canal · ELIEZER ROSA<br>
+        repositório · github.com/EliezerRosa/RVM-Designacoes-Antigravity<br>
+        produção · 2026
+      </p>
+      <p style="text-align:center; margin-top:30px; font-style:italic; color:var(--warn);">
+        "O melhor jeito de prever o futuro é inventá-lo." — Alan Kay
+      </p>
+    `,
+    commentary: "Se você chegou até aqui, obrigado de verdade. Esta apresentação foi feita inteiramente em uma única sessão de colaboração entre Eliezer e a IA. Cada slide, cada diagrama, cada palavra desta narração foram conversados, não programados. Se quiser apoiar este trabalho, inscreva-se no canal, deixe um comentário com sua própria experiência tentando aplicar princípios de IDD, e compartilhe com alguém que ainda acredita que software bom é software cheio de botões. Até a próxima.",
+    diagram: drawCredits
+  }
+];
+
+// ================================================================
+// DIAGRAMAS — rough.js (estilo Excalidraw)
+// ================================================================
+function makeCanvas(width=520, height=360) {
+  const c = document.createElement('canvas');
+  c.width = width; c.height = height;
+  return c;
+}
+
+function drawCover(host) {
+  const c = makeCanvas(); host.appendChild(c);
+  const rc = rough.canvas(c);
+  rc.rectangle(40, 40, 440, 280, { stroke: '#1e293b', strokeWidth: 2, fill: '#fef3c7', fillStyle: 'cross-hatch', hachureGap: 10 });
+  rc.line(40, 180, 480, 180, { stroke: '#a78bfa', strokeWidth: 2 });
+  const ctx = c.getContext('2d');
+  ctx.fillStyle = '#1e293b'; ctx.font = 'bold 36px Segoe UI'; ctx.textAlign = 'center';
+  ctx.fillText('IDD', 260, 130);
+  ctx.font = '16px Segoe UI'; ctx.fillText('Edição YouTube', 260, 160);
+  ctx.font = 'italic 14px Segoe UI'; ctx.fillStyle = '#7c3aed';
+  ctx.fillText('aula completa, gênese e paradigma', 260, 230);
+  ctx.font = '12px Segoe UI'; ctx.fillStyle = '#64748b';
+  ctx.fillText('RVM Designações · 2026', 260, 270);
+  ctx.textAlign = 'start';
+}
+
+function drawCoverManifesto(host) {
+  const c = makeCanvas(); host.appendChild(c);
+  const rc = rough.canvas(c);
+  rc.rectangle(40, 40, 440, 280, { stroke: '#1e293b', strokeWidth: 2, fill: '#fef3c7', fillStyle: 'cross-hatch', hachureGap: 10 });
+  rc.line(40, 180, 480, 180, { stroke: '#a78bfa', strokeWidth: 2 });
+  const ctx = c.getContext('2d');
+  ctx.fillStyle = '#1e293b'; ctx.font = 'bold 30px Segoe UI'; ctx.textAlign = 'center';
+  ctx.fillText('A interface morreu.', 260, 120);
+  ctx.font = 'italic 26px Segoe UI'; ctx.fillStyle = '#7c3aed';
+  ctx.fillText('Viva a conversa.', 260, 160);
+  ctx.font = '14px Segoe UI'; ctx.fillStyle = '#1e293b';
+  ctx.fillText('manifesto IDD', 260, 240);
+  ctx.textAlign = 'start';
+}
+
+function drawCollab(host) {
+  const c = makeCanvas(540, 380); host.appendChild(c);
+  const rc = rough.canvas(c);
+  // duas figuras
+  rc.circle(140, 140, 80, { stroke: '#1e293b', fill: '#dbeafe', fillStyle: 'solid' });
+  rc.circle(400, 140, 80, { stroke: '#1e293b', fill: '#ede9fe', fillStyle: 'solid' });
+  // setas bidirecionais
+  rc.line(190, 140, 350, 140, { stroke: '#a78bfa', strokeWidth: 2 });
+  rc.line(190, 130, 200, 140, { stroke: '#a78bfa', strokeWidth: 2 });
+  rc.line(190, 150, 200, 140, { stroke: '#a78bfa', strokeWidth: 2 });
+  rc.line(350, 130, 340, 140, { stroke: '#a78bfa', strokeWidth: 2 });
+  rc.line(350, 150, 340, 140, { stroke: '#a78bfa', strokeWidth: 2 });
+  // "intenção"
+  const ctx = c.getContext('2d');
+  ctx.font = '14px Segoe UI'; ctx.fillStyle = '#7c3aed'; ctx.textAlign = 'center';
+  ctx.fillText('intenção', 270, 130);
+  ctx.fillText('contexto', 270, 165);
+  ctx.font = '32px Segoe UI'; ctx.fillStyle = '#1e293b';
+  ctx.fillText('🧑', 140, 152);
+  ctx.fillText('🤖', 400, 152);
+  ctx.font = 'bold 14px Segoe UI';
+  ctx.fillText('Eliezer', 140, 220);
+  ctx.fillText('IA', 400, 220);
+  ctx.font = '11px Segoe UI'; ctx.fillStyle = '#64748b';
+  ctx.fillText('porquê · para quem', 140, 240);
+  ctx.fillText('como · com quê', 400, 240);
+  // base larga
+  rc.rectangle(60, 290, 420, 70, { stroke: '#1e293b', fill: '#fef3c7', fillStyle: 'cross-hatch', hachureGap: 8 });
+  ctx.fillStyle = '#1e293b'; ctx.font = 'italic bold 14px Segoe UI';
+  ctx.fillText('Software vivo, construído em colaboração estrita', 270, 320);
+  ctx.font = '11px Segoe UI'; ctx.fillStyle = '#64748b';
+  ctx.fillText('— a tese do IDD aplicada ao próprio processo —', 270, 345);
+  ctx.textAlign = 'start';
+}
+
+function drawGenealogy(host) {
+  const c = makeCanvas(560, 400); host.appendChild(c);
+  const rc = rough.canvas(c);
+  const names = ['Bush\n1945','Engelbart\n1962','Sutherland\n1963','Kay\n1972','Brooks\n1986','Nielsen\n1990s','Raskin\n2000'];
+  names.forEach((n, i) => {
+    const x = 50 + (i % 4) * 130;
+    const y = 60 + Math.floor(i / 4) * 150;
+    rc.rectangle(x-50, y-30, 100, 60, { stroke: '#1e293b', fill: '#fde68a', fillStyle: 'solid' });
+    const ctx = c.getContext('2d');
+    ctx.fillStyle = '#1e293b'; ctx.font = 'bold 11px Segoe UI'; ctx.textAlign = 'center';
+    n.split('\n').forEach((ln, j) => ctx.fillText(ln, x, y - 6 + j*14));
+    ctx.textAlign = 'start';
+  });
+  // seta para "IDD"
+  rc.circle(280, 360, 50, { stroke: '#7c3aed', fill: '#a78bfa', fillStyle: 'solid', strokeWidth: 2 });
+  const ctx = c.getContext('2d');
+  ctx.fillStyle = '#fff'; ctx.font = 'bold 14px Segoe UI'; ctx.textAlign = 'center';
+  ctx.fillText('IDD', 280, 365);
+  ctx.font = '10px Segoe UI'; ctx.fillStyle = '#1e293b';
+  ctx.fillText('herdeiro tardio', 280, 395);
+  ctx.textAlign = 'start';
+}
+
+function drawSemantics(host) {
+  const c = makeCanvas(540, 400); host.appendChild(c);
+  const rc = rough.canvas(c);
+  // grafo de nós
+  const nodes = [
+    {x:120, y:90, label:'McCarthy\nLISP'},
+    {x:280, y:60, label:'Chen\nE-R'},
+    {x:430, y:90, label:'Berners-Lee\nSemWeb'},
+    {x:430, y:230, label:'Gruber\nontologia'},
+    {x:280, y:280, label:'OWL\nKIF'},
+    {x:120, y:230, label:'Evans\nDDD'}
+  ];
+  nodes.forEach(n => {
+    rc.circle(n.x, n.y, 70, { stroke: '#1e293b', fill: '#ddd6fe', fillStyle: 'solid' });
+    const ctx = c.getContext('2d');
+    ctx.fillStyle = '#1e293b'; ctx.font = 'bold 11px Segoe UI'; ctx.textAlign = 'center';
+    n.label.split('\n').forEach((ln, j) => ctx.fillText(ln, n.x, n.y - 6 + j*13));
+    ctx.textAlign = 'start';
+  });
+  // ligações
+  for (let i = 0; i < nodes.length; i++) {
+    for (let j = i+1; j < nodes.length; j++) {
+      if (Math.random() > 0.5) {
+        rc.line(nodes[i].x, nodes[i].y, nodes[j].x, nodes[j].y, { stroke: '#94a3b8', strokeWidth: 1 });
+      }
+    }
+  }
+  const ctx = c.getContext('2d');
+  ctx.fillStyle = '#7c3aed'; ctx.font = 'italic bold 14px Segoe UI'; ctx.textAlign = 'center';
+  ctx.fillText('"explicit specification of a conceptualization"', 270, 370);
+  ctx.font = '11px Segoe UI'; ctx.fillStyle = '#64748b';
+  ctx.fillText('— Gruber, 1993', 270, 388);
+  ctx.textAlign = 'start';
+}
+
+function drawSIM(host) {
+  const c = makeCanvas(540, 400); host.appendChild(c);
+  const rc = rough.canvas(c);
+  // tomb shape
+  rc.rectangle(180, 60, 180, 280, { stroke: '#1e293b', strokeWidth: 2, fill: '#e5e7eb', fillStyle: 'cross-hatch', hachureGap: 12 });
+  rc.line(180, 60, 270, 30, { stroke: '#1e293b', strokeWidth: 2 });
+  rc.line(360, 60, 270, 30, { stroke: '#1e293b', strokeWidth: 2 });
+  const ctx = c.getContext('2d');
+  ctx.fillStyle = '#1e293b'; ctx.font = 'bold 22px Segoe UI'; ctx.textAlign = 'center';
+  ctx.fillText('SIM', 270, 110);
+  ctx.font = 'italic 12px Segoe UI';
+  ctx.fillText('Semantic Information', 270, 135);
+  ctx.fillText('Manager', 270, 152);
+  ctx.font = '11px Segoe UI'; ctx.fillStyle = '#64748b';
+  ctx.fillText('UNISYS · ~1988', 270, 175);
+  ctx.font = '10px Segoe UI';
+  ctx.fillText('OSL · ontologia executável', 270, 220);
+  ctx.fillText('UI gerada do schema', 270, 240);
+  ctx.fillText('queries em grafo', 270, 260);
+  ctx.font = 'italic bold 13px Segoe UI'; ctx.fillStyle = '#7c3aed';
+  ctx.fillText('"adiantado demais"', 270, 320);
+  // raios "fantasma"
+  for (let i = 0; i < 6; i++) {
+    const a = (i/6) * Math.PI * 2;
+    rc.line(270 + Math.cos(a)*120, 200 + Math.sin(a)*120,
+            270 + Math.cos(a)*160, 200 + Math.sin(a)*160,
+            { stroke: '#a78bfa', strokeWidth: 1 });
+  }
+  ctx.font = '11px Segoe UI'; ctx.fillStyle = '#1e293b';
+  ctx.fillText('o fantasma do IDD', 270, 380);
+  ctx.textAlign = 'start';
+}
+
+function drawParadigms(host) {
+  const c = makeCanvas(560, 380); host.appendChild(c);
+  const rc = rough.canvas(c);
+  const stages = [
+    {y: 340, label: 'Estruturada\n1968', color: '#fef3c7'},
+    {y: 305, label: 'OO\n1972+', color: '#fde68a'},
+    {y: 270, label: 'Funcional\n1958/2007', color: '#fcd34d'},
+    {y: 235, label: 'AOP\n1997', color: '#fbbf24'},
+    {y: 200, label: 'DDD\n2003', color: '#f59e0b'},
+    {y: 165, label: 'Reactive\n2014', color: '#a78bfa'},
+    {y: 130, label: 'Declarativa\n2013+', color: '#8b5cf6'},
+    {y: 95, label: 'Intent-Driven\n2023+', color: '#7c3aed'}
+  ];
+  stages.forEach((s, i) => {
+    const x = 80 + i * 55;
+    rc.rectangle(x-25, s.y, 50, 30, { stroke: '#1e293b', fill: s.color, fillStyle: 'solid' });
+    const ctx = c.getContext('2d');
+    ctx.fillStyle = i >= 6 ? '#fff' : '#1e293b'; ctx.font = 'bold 9px Segoe UI'; ctx.textAlign = 'center';
+    s.label.split('\n').forEach((ln, j) => ctx.fillText(ln, x, s.y + 12 + j*10));
+    ctx.textAlign = 'start';
+  });
+  const ctx = c.getContext('2d');
+  ctx.font = 'italic 12px Segoe UI'; ctx.fillStyle = '#7c3aed';
+  ctx.fillText('cada degrau esconde mais "como"', 30, 60);
+  ctx.fillText('e expõe mais "o quê"', 30, 78);
+  // seta vertical
+  rc.line(40, 350, 40, 100, { stroke: '#1e293b', strokeWidth: 2 });
+  rc.line(35, 110, 40, 100, { stroke: '#1e293b', strokeWidth: 2 });
+  rc.line(45, 110, 40, 100, { stroke: '#1e293b', strokeWidth: 2 });
+}
+
+function drawConvergence(host) {
+  const c = makeCanvas(540, 380); host.appendChild(c);
+  const rc = rough.canvas(c);
+  const conds = ['LLMs\nrobustos', 'Function\ncalling', 'Hardware\nbarato', 'UI declar.\nmadura'];
+  conds.forEach((cnd, i) => {
+    const a = (i / conds.length) * Math.PI * 2 - Math.PI/2;
+    const x = 270 + Math.cos(a) * 130;
+    const y = 200 + Math.sin(a) * 110;
+    rc.rectangle(x-50, y-25, 100, 50, { stroke: '#1e293b', fill: '#dcfce7', fillStyle: 'solid' });
+    const ctx = c.getContext('2d');
+    ctx.fillStyle = '#1e293b'; ctx.font = 'bold 12px Segoe UI'; ctx.textAlign = 'center';
+    cnd.split('\n').forEach((ln, j) => ctx.fillText(ln, x, y - 4 + j*14));
+    ctx.textAlign = 'start';
+    rc.line(x, y, 270, 200, { stroke: '#a78bfa', strokeWidth: 1.5 });
+  });
+  rc.circle(270, 200, 70, { stroke: '#7c3aed', fill: '#a78bfa', fillStyle: 'solid', strokeWidth: 2 });
+  const ctx = c.getContext('2d');
+  ctx.fillStyle = '#fff'; ctx.font = 'bold 16px Segoe UI'; ctx.textAlign = 'center';
+  ctx.fillText('IDD', 270, 198);
+  ctx.font = '10px Segoe UI'; ctx.fillText('viável', 270, 215);
+  ctx.font = 'italic 13px Segoe UI'; ctx.fillStyle = '#15803d';
+  ctx.fillText('a tempestade perfeita · 2023→2026', 270, 360);
+  ctx.textAlign = 'start';
+}
+
+function drawHistory(host) {
+  const c = makeCanvas(540, 380); host.appendChild(c);
+  const rc = rough.canvas(c);
+  const decades = ['60s','70s','80s','90s','00s','10s','20s'];
+  const labels = ['bit','verbo','ícone','documento','dashboard','gesto','VERBO'];
+  decades.forEach((d, i) => {
+    const x = 40 + i * 70;
+    const y = 320 - i * 18;
+    rc.rectangle(x-20, y-30, 60, 30, { stroke: '#1e293b', fill: i===6 ? '#a78bfa':'#fde68a', fillStyle: 'solid' });
+    const ctx = c.getContext('2d');
+    ctx.fillStyle = '#1e293b';
+    ctx.font = 'bold 12px Segoe UI';
+    ctx.fillText(d, x-12, y-12);
+    ctx.font = '11px Segoe UI';
+    ctx.fillStyle = i===6?'#fff':'#1e293b';
+    ctx.fillText(labels[i], x-18, y+12);
+  });
+  rc.line(40, 340, 510, 200, { stroke: '#a78bfa', strokeWidth: 2 });
+  const ctx = c.getContext('2d');
+  ctx.font = 'italic 13px Segoe UI'; ctx.fillStyle = '#7c3aed';
+  ctx.fillText('escada da abstração', 180, 30);
+}
+
+function drawDevDilemma(host) {
+  const c = makeCanvas(); host.appendChild(c);
+  const rc = rough.canvas(c);
+  for (let i = 0; i < 8; i++) {
+    rc.rectangle(60, 40 + i*30, 180, 24, { stroke: '#1e293b', fill: '#fde68a', fillStyle: 'solid' });
+  }
+  rc.line(260, 180, 320, 180, { stroke: '#dc2626', strokeWidth: 2 });
+  rc.line(310, 170, 320, 180, { stroke: '#dc2626', strokeWidth: 2 });
+  rc.line(310, 190, 320, 180, { stroke: '#dc2626', strokeWidth: 2 });
+  rc.circle(380, 180, 60, { stroke: '#1e293b', fill: '#fff', fillStyle: 'solid' });
+  const ctx = c.getContext('2d');
+  ctx.font = '20px Segoe UI'; ctx.fillText('😵', 365, 188);
+  ctx.font = 'bold 13px Segoe UI'; ctx.fillStyle = '#1e293b';
+  ctx.fillText('UI \"completa\"', 90, 28);
+  ctx.fillText('usuário', 360, 260);
+  ctx.font = 'italic 11px Segoe UI'; ctx.fillStyle = '#dc2626';
+  ctx.fillText('"tá tudo aqui...', 250, 145);
+  ctx.fillText('cadê?"', 270, 220);
+}
+
+function drawUserDilemma(host) {
+  const c = makeCanvas(); host.appendChild(c);
+  const rc = rough.canvas(c);
+  rc.rectangle(40, 60, 200, 240, { stroke: '#1e293b', fill: '#fee2e2', fillStyle: 'cross-hatch' });
+  rc.rectangle(280, 60, 200, 240, { stroke: '#1e293b', fill: '#dcfce7', fillStyle: 'cross-hatch' });
+  const ctx = c.getContext('2d');
+  ctx.fillStyle = '#1e293b'; ctx.font = 'bold 15px Segoe UI';
+  ctx.fillText('Antes', 110, 50); ctx.fillText('Depois', 350, 50);
+  ctx.font = '13px Segoe UI';
+  ['Abrir aba', 'Clicar +', 'Buscar nome', 'Selecionar parte', 'Confirmar', 'Voltar', '...'].forEach((t,i) => {
+    ctx.fillText('• ' + t, 60, 100 + i*22);
+  });
+  ctx.font = 'italic 14px Segoe UI'; ctx.fillStyle = '#15803d';
+  ctx.fillText('"Designe João', 310, 150);
+  ctx.fillText(' para tesouros', 310, 175);
+  ctx.fillText(' nesta semana"', 310, 200);
+  ctx.font = '11px Segoe UI'; ctx.fillStyle = '#64748b';
+  ctx.fillText('1 frase. 0 cliques.', 320, 240);
+}
+
+function drawSevenProps(host) {
+  const c = makeCanvas(540, 380); host.appendChild(c);
+  const rc = rough.canvas(c);
+  const props = ['P1\nIntent-first','P2\nCatálogo','P3\nPermissão\nsemântica','P4\nPreview','P5\nMixed\ninitiative','P6\nDM residual','P7\nAuditável'];
+  const cx = 270, cy = 195, r = 130;
+  props.forEach((p, i) => {
+    const a = (i / props.length) * Math.PI * 2 - Math.PI/2;
+    const x = cx + Math.cos(a) * r; const y = cy + Math.sin(a) * r;
+    rc.circle(x, y, 60, { stroke: '#1e293b', fill: '#a78bfa', fillStyle: 'solid' });
+    const ctx = c.getContext('2d');
+    ctx.fillStyle = '#fff'; ctx.font = 'bold 11px Segoe UI'; ctx.textAlign = 'center';
+    p.split('\n').forEach((ln, j) => ctx.fillText(ln, x, y - 8 + j*12));
+    ctx.textAlign = 'start';
+  });
+  rc.circle(cx, cy, 80, { stroke: '#1e293b', fill: '#fef3c7', fillStyle: 'solid' });
+  const ctx = c.getContext('2d');
+  ctx.fillStyle = '#1e293b'; ctx.font = 'bold 16px Segoe UI'; ctx.textAlign = 'center';
+  ctx.fillText('IDD', cx, cy + 5);
+  ctx.textAlign = 'start';
+}
+
+function drawAntiPatterns(host) {
+  const c = makeCanvas(); host.appendChild(c);
+  const rc = rough.canvas(c);
+  rc.rectangle(60, 40, 200, 140, { stroke: '#1e293b', fill: '#fff' });
+  rc.rectangle(70, 50, 180, 90, { stroke: '#94a3b8' });
+  for (let i=0; i<3; i++) rc.rectangle(70+i*60, 145, 50, 25, { stroke: '#dc2626', fill: '#fee2e2', fillStyle: 'solid' });
+  rc.line(280, 60, 320, 100, { stroke: '#dc2626', strokeWidth: 4 });
+  rc.line(320, 60, 280, 100, { stroke: '#dc2626', strokeWidth: 4 });
+  rc.rectangle(340, 40, 140, 140, { stroke: '#1e293b', fill: '#fff' });
+  rc.rectangle(350, 50, 120, 120, { stroke: '#15803d' });
+  const ctx = c.getContext('2d');
+  ctx.fillStyle = '#1e293b'; ctx.font = 'bold 12px Segoe UI';
+  ctx.fillText('Chat + botões', 90, 32);
+  ctx.fillText('competindo', 100, 200);
+  ctx.fillText('Conversa', 365, 32);
+  ctx.fillText('respira', 375, 200);
+  ctx.font = 'italic 11px Segoe UI'; ctx.fillStyle = '#64748b';
+  ctx.fillText('(drawers ficam fora)', 345, 218);
+  ctx.font = 'bold 22px Segoe UI'; ctx.fillStyle = '#dc2626';
+  ctx.fillText('VS', 282, 250);
+}
+
+function drawCurrentState(host) {
+  const c = makeCanvas(); host.appendChild(c);
+  const rc = rough.canvas(c);
+  rc.rectangle(60, 30, 400, 300, { stroke: '#1e293b', fill: '#fff' });
+  rc.rectangle(70, 40, 380, 30, { stroke: '#94a3b8', fill: '#fde68a', fillStyle: 'solid' });
+  rc.rectangle(70, 75, 380, 20, { stroke: '#94a3b8', fill: '#fee2e2', fillStyle: 'solid' });
+  rc.rectangle(70, 100, 380, 130, { stroke: '#94a3b8' });
+  for (let i=0; i<5; i++) rc.rectangle(80+i*70, 240, 60, 22, { stroke: '#94a3b8', fill: '#dbeafe', fillStyle: 'solid' });
+  rc.rectangle(150, 150, 200, 100, { stroke: '#dc2626', fill: '#fef3c7', fillStyle: 'solid', strokeWidth: 2 });
+  rc.rectangle(70, 290, 300, 30, { stroke: '#94a3b8' });
+  rc.rectangle(380, 290, 70, 30, { stroke: '#94a3b8', fill: '#a78bfa', fillStyle: 'solid' });
+  const ctx = c.getContext('2d');
+  ctx.font = '10px Segoe UI'; ctx.fillStyle = '#1e293b';
+  ctx.fillText('header (ícone+nome+chip+badge)', 90, 60);
+  ctx.fillText('barra contexto (redundante)', 90, 89);
+  ctx.fillText('conversa', 90, 120);
+  ctx.fillStyle = '#dc2626'; ctx.font = 'bold 11px Segoe UI';
+  ctx.fillText('micro-UI cobrindo!', 200, 200);
+  ctx.fillStyle = '#1e293b'; ctx.font = '10px Segoe UI';
+  ctx.fillText('chips', 80, 256); ctx.fillText('input', 80, 308);
+}
+
+function drawTargetModel(host) {
+  const c = makeCanvas(); host.appendChild(c);
+  const rc = rough.canvas(c);
+  rc.rectangle(60, 30, 400, 300, { stroke: '#1e293b', fill: '#fff' });
+  rc.rectangle(60, 30, 20, 300, { stroke: '#15803d', fill: '#dcfce7', fillStyle: 'solid' });
+  rc.rectangle(440, 30, 20, 300, { stroke: '#15803d', fill: '#dcfce7', fillStyle: 'solid' });
+  rc.rectangle(85, 40, 350, 240, { stroke: '#a78bfa', strokeWidth: 2 });
+  rc.rectangle(85, 290, 280, 30, { stroke: '#94a3b8' });
+  rc.rectangle(370, 290, 65, 30, { stroke: '#94a3b8', fill: '#a78bfa', fillStyle: 'solid' });
+  rc.circle(70, 50, 14, { stroke: '#dc2626', fill: '#dc2626', fillStyle: 'solid' });
+  const ctx = c.getContext('2d');
+  ctx.fillStyle = '#fff'; ctx.font = 'bold 9px Segoe UI'; ctx.fillText('3', 67, 53);
+  ctx.fillStyle = '#1e293b'; ctx.font = 'bold 12px Segoe UI';
+  ctx.fillText('Conversa em foco total', 150, 160);
+  ctx.font = '10px Segoe UI';
+  ctx.save(); ctx.translate(74, 200); ctx.rotate(-Math.PI/2); ctx.fillText('Ações 💡', 0, 0); ctx.restore();
+  ctx.save(); ctx.translate(454, 220); ctx.rotate(-Math.PI/2); ctx.fillText('Detalhes 📋', 0, 0); ctx.restore();
+  ctx.fillText('Ctrl+[                                Ctrl+]', 100, 25);
+}
+
+function drawRoadmap(host) {
+  const c = makeCanvas(540, 360); host.appendChild(c);
+  const rc = rough.canvas(c);
+  const stages = ['1\nShell','2\nAções','3\nMicro-UIs','4\nLimpeza','5\nPolimento','6\nTestes'];
+  const states = ['done','next','','','',''];
+  stages.forEach((s, i) => {
+    const x = 50 + i * 80; const y = 180;
+    const isDone = states[i]==='done'; const isNext = states[i]==='next';
+    rc.circle(x, y, 56, { stroke: '#1e293b', fill: isDone ? '#15803d' : isNext ? '#fbbf24' : '#fff', fillStyle: 'solid' });
+    const ctx = c.getContext('2d');
+    ctx.fillStyle = isDone ? '#fff' : '#1e293b'; ctx.font = 'bold 12px Segoe UI'; ctx.textAlign = 'center';
+    s.split('\n').forEach((ln, j) => ctx.fillText(ln, x, y - 6 + j*14));
+    ctx.textAlign = 'start';
+    if (i < stages.length-1) rc.line(x+30, y, x+50, y, { stroke: '#94a3b8', strokeWidth: 2 });
+    if (isDone) { ctx.font = '14px Segoe UI'; ctx.fillStyle = '#15803d'; ctx.fillText('✓', x-5, y+45); }
+    if (isNext) { ctx.font = 'italic 11px Segoe UI'; ctx.fillStyle = '#b45309'; ctx.fillText('próxima', x-22, y+50); }
+  });
+  const ctx = c.getContext('2d');
+  ctx.font = 'bold 14px Segoe UI'; ctx.fillStyle = '#1e293b';
+  ctx.fillText('Strangler Fig — sem big-bang', 130, 60);
+}
+
+function drawRevolution(host) {
+  const c = makeCanvas(); host.appendChild(c);
+  const rc = rough.canvas(c);
+  const ctx = c.getContext('2d');
+  ctx.font = '60px Segoe UI'; ctx.fillText('🤝', 220, 200);
+  const labels = ['Domínio\nnomeado', 'Permissão\né ética', 'Auditoria\né cuidado', 'Preview\nrespeita', 'Iniciativa\ncompartilhada'];
+  labels.forEach((l, i) => {
+    const a = (i / labels.length) * Math.PI * 2 - Math.PI/2;
+    const x = 260 + Math.cos(a) * 160; const y = 200 + Math.sin(a) * 130;
+    rc.line(260, 200, 260 + Math.cos(a)*80, 200 + Math.sin(a)*65, { stroke: '#a78bfa', strokeWidth: 1.5 });
+    rc.rectangle(x-50, y-22, 100, 44, { stroke: '#1e293b', fill: '#fef3c7', fillStyle: 'solid' });
+    ctx.fillStyle = '#1e293b'; ctx.font = 'bold 11px Segoe UI'; ctx.textAlign = 'center';
+    l.split('\n').forEach((ln, j) => ctx.fillText(ln, x, y - 4 + j*12));
+    ctx.textAlign = 'start';
+  });
+  ctx.font = 'italic 13px Segoe UI'; ctx.fillStyle = '#7c3aed';
+  ctx.fillText('Dignidade no uso', 200, 30);
+}
+
+function drawClosing(host) {
+  const c = makeCanvas(); host.appendChild(c);
+  const rc = rough.canvas(c);
+  rc.rectangle(40, 100, 460, 160, { stroke: '#1e293b', fill: '#fef3c7', fillStyle: 'cross-hatch' });
+  const ctx = c.getContext('2d');
+  ctx.fillStyle = '#1e293b'; ctx.font = 'bold 22px Segoe UI'; ctx.textAlign = 'center';
+  ctx.fillText('Etapa 2.1', 270, 150);
+  ctx.font = '14px Segoe UI'; ctx.fillText('LeftPanelActions.tsx', 270, 180);
+  ctx.font = 'italic 13px Segoe UI'; ctx.fillStyle = '#7c3aed';
+  ctx.fillText('aguardando seu OK', 270, 220);
+  ctx.textAlign = 'start';
+  ctx.font = '11px Segoe UI'; ctx.fillStyle = '#64748b';
+  ctx.fillText('plano-mestre: /memories/repo/chat-drawers-idd-master-plan-2026-04-28.md', 50, 290);
+}
+
+function drawCredits(host) {
+  const c = makeCanvas(540, 380); host.appendChild(c);
+  const rc = rough.canvas(c);
+  rc.rectangle(40, 30, 460, 320, { stroke: '#1e293b', strokeWidth: 2, fill: '#fef3c7', fillStyle: 'cross-hatch', hachureGap: 14 });
+  const ctx = c.getContext('2d');
+  ctx.fillStyle = '#1e293b'; ctx.font = 'bold 24px Segoe UI'; ctx.textAlign = 'center';
+  ctx.fillText('🙏', 270, 90);
+  ctx.font = 'bold 18px Segoe UI';
+  ctx.fillText('OBRIGADO', 270, 130);
+  ctx.font = '14px Segoe UI';
+  ctx.fillText('por chegar até aqui.', 270, 155);
+  ctx.font = 'italic 13px Segoe UI'; ctx.fillStyle = '#7c3aed';
+  ctx.fillText('"The best way to predict the future', 270, 220);
+  ctx.fillText(' is to invent it."', 270, 240);
+  ctx.font = '12px Segoe UI'; ctx.fillStyle = '#64748b';
+  ctx.fillText('— Alan Kay, 1971', 270, 265);
+  ctx.font = 'bold 13px Segoe UI'; ctx.fillStyle = '#1e293b';
+  ctx.fillText('canal · ELIEZER ROSA · 2026', 270, 320);
+  ctx.textAlign = 'start';
+}
+
+// ================================================================
+// ENGINE — speech, nav, record mode, export, ambient pad
+// ================================================================
+let current = 0;
+let speaking = false;
+let coverDismissed = false;
+
+const $ = (id) => document.getElementById(id);
+const synth = window.speechSynthesis;
+let voices = [];
+
+// URL params
+const params = new URLSearchParams(location.search);
+if (params.get('record') === '1') document.body.classList.add('record');
+const ambientOnByDefault = params.get('music') === '1';
+
+function loadVoices() {
+  voices = synth.getVoices().filter(v => v.lang.startsWith('pt'));
+  if (voices.length === 0) voices = synth.getVoices();
+  const sel = $('voiceSel'); sel.innerHTML = '';
+  voices.forEach((v, i) => {
+    const o = document.createElement('option');
+    o.value = i; o.textContent = `${v.name} (${v.lang})`;
+    sel.appendChild(o);
+  });
+  const preferred = voices.findIndex(v =>
+    v.lang === 'pt-BR' && (v.name.includes('Natural') || v.name.includes('Francisca') || v.name.includes('Antonio'))
+  );
+  if (preferred >= 0) sel.value = preferred;
+}
+synth.addEventListener('voiceschanged', loadVoices);
+loadVoices();
+
+function speak(text) {
+  return new Promise((resolve) => {
+    const u = new SpeechSynthesisUtterance(text);
+    const sel = $('voiceSel');
+    if (voices[sel.value]) u.voice = voices[sel.value];
+    u.lang = 'pt-BR';
+    u.rate = parseFloat($('rate').value);
+    u.pitch = 1.0;
+    u.onstart = () => { $('dot').classList.add('speaking'); $('statusText').textContent = 'Falando...'; };
+    u.onend = () => { $('dot').classList.remove('speaking'); resolve(); };
+    u.onerror = () => { $('dot').classList.remove('speaking'); resolve(); };
+    synth.speak(u);
+  });
+}
+
+function htmlToSpeech(html) {
+  const tmp = document.createElement('div');
+  tmp.innerHTML = html;
+  return tmp.textContent.replace(/\s+/g, ' ').trim();
+}
+
+function render(idx) {
+  const s = SLIDES[idx];
+  $('subtitle').textContent = s.subtitle;
+  $('title').textContent = s.title;
+  $('text').innerHTML = s.html;
+  $('commentary').textContent = s.commentary;
+  $('commentary').classList.remove('visible');
+  $('counter').textContent = `${idx + 1} / ${SLIDES.length}`;
+  const v = $('visual'); v.innerHTML = '';
+  if (s.diagram) s.diagram(v);
+  $('prev').disabled = idx === 0;
+  $('next').disabled = idx === SLIDES.length - 1;
+}
+
+function dismissCover() {
+  if (coverDismissed) return;
+  coverDismissed = true;
+  $('coverOverlay').classList.add('hide');
+  setTimeout(() => $('coverOverlay').remove(), 1300);
+}
+
+async function playCurrent() {
+  if (speaking) return;
+  speaking = true;
+  $('play').textContent = '⏸ Falando...';
+  const s = SLIDES[current];
+  // delay opcional do slide (capa)
+  if (s.delayBeforeSpeak && current === 0 && !coverDismissed) {
+    $('statusText').textContent = `Aguardando ${s.delayBeforeSpeak/1000}s antes de falar...`;
+    await new Promise(r => setTimeout(r, s.delayBeforeSpeak));
+    dismissCover();
+    await new Promise(r => setTimeout(r, 800));
+  }
+  if (!coverDismissed) dismissCover();
+  const slideText = `${s.title}. ${htmlToSpeech(s.html)}`;
+  await speak(slideText);
+  if (!speaking) { $('play').textContent = '▶ Tocar slide'; return; }
+  $('commentary').classList.add('visible');
+  await new Promise(r => setTimeout(r, 600));
+  await speak('Comentário do narrador. ' + s.commentary);
+  speaking = false;
+  $('play').textContent = '▶ Tocar slide';
+  $('statusText').textContent = 'Pronto.';
+  if ($('autoadvance').checked && current < SLIDES.length - 1) {
+    setTimeout(() => { next(); playCurrent(); }, 1500);
+  }
+}
+
+function stopSpeak() {
+  speaking = false; synth.cancel();
+  $('play').textContent = '▶ Tocar slide';
+  $('dot').classList.remove('speaking');
+  $('statusText').textContent = 'Parado.';
+}
+
+function next() { if (current < SLIDES.length - 1) { stopSpeak(); current++; render(current); } }
+function prev() { if (current > 0) { stopSpeak(); current--; render(current); } }
+
+// EXPORT ROTEIRO .txt
+function exportRoteiro() {
+  let txt = `IDD — A Conversa como Interface\nEdição YouTube · 2026\n${'='.repeat(60)}\n\n`;
+  SLIDES.forEach((s, i) => {
+    txt += `\n[${(i+1).toString().padStart(2,'0')}] ${s.subtitle}\n`;
+    txt += `${s.title}\n${'-'.repeat(60)}\n`;
+    txt += htmlToSpeech(s.html) + '\n\n';
+    txt += `>> Comentário do narrador:\n${s.commentary}\n`;
+    txt += '\n' + '='.repeat(60) + '\n';
+  });
+  txt += `\n\nPRODUÇÃO\nIdealização: Eliezer Rosa\nEngenharia/narração: GitHub Copilot · Claude Opus 4.7\nRepositório: github.com/EliezerRosa/RVM-Designacoes-Antigravity\n`;
+  const blob = new Blob([txt], { type: 'text/plain;charset=utf-8' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = 'roteiro-idd-youtube.txt'; a.click();
+  URL.revokeObjectURL(url);
+  $('statusText').textContent = 'Roteiro exportado: roteiro-idd-youtube.txt';
+}
+
+// AMBIENT PAD — Web Audio (drone sutil pt-BR friendly)
+let audioCtx = null, padOsc = [], padGain = null;
+function startAmbient() {
+  if (audioCtx) return;
+  audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  padGain = audioCtx.createGain();
+  padGain.gain.value = 0.035; // bem sutil
+  padGain.connect(audioCtx.destination);
+  // acorde C maj7: C E G B
+  [130.81, 164.81, 196.00, 246.94].forEach(freq => {
+    const o = audioCtx.createOscillator();
+    o.type = 'sine'; o.frequency.value = freq;
+    const g = audioCtx.createGain(); g.gain.value = 0.25;
+    o.connect(g); g.connect(padGain); o.start();
+    padOsc.push(o);
+  });
+}
+function stopAmbient() {
+  if (!audioCtx) return;
+  padOsc.forEach(o => o.stop()); padOsc = [];
+  audioCtx.close(); audioCtx = null;
+}
+
+$('ambient').addEventListener('change', (e) => {
+  if (e.target.checked) startAmbient(); else stopAmbient();
+});
+if (ambientOnByDefault) { $('ambient').checked = true; startAmbient(); }
+
+$('play').onclick = playCurrent;
+$('stop').onclick = stopSpeak;
+$('next').onclick = next;
+$('prev').onclick = prev;
+$('exportRoteiro').onclick = exportRoteiro;
+
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'ArrowRight') next();
+  else if (e.key === 'ArrowLeft') prev();
+  else if (e.key === ' ') { e.preventDefault(); speaking ? stopSpeak() : playCurrent(); }
+  else if (e.key === 'Escape') stopSpeak();
+});
+
+// click no overlay também dispensa
+$('coverOverlay').addEventListener('click', dismissCover);
+
+render(0);
+</script>
+</body>
+</html>

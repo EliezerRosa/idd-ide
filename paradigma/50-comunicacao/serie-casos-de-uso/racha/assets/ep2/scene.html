@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>IDD Racha de Pix - Ep. 2 Design de Telas & Comanda Digital</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, sans-serif; }
+    body {
+      width: 1920px; height: 1080px; background: #030712; color: #f8fafc;
+      overflow: hidden; position: relative;
+    }
+    .grid-bg {
+      position: absolute; inset: 0;
+      background-image: linear-gradient(rgba(56, 189, 248, 0.05) 1px, transparent 1px),
+                        linear-gradient(90deg, rgba(56, 189, 248, 0.05) 1px, transparent 1px);
+      background-size: 60px 60px;
+    }
+    .glow-ambient {
+      position: absolute; width: 1100px; height: 1100px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(14, 165, 233, 0.28) 0%, rgba(6, 182, 212, 0.16) 45%, transparent 70%);
+      top: 50%; left: 50%; transform: translate(-50%, -50%); filter: blur(90px); pointer-events: none;
+    }
+
+    /* TOP BAR */
+    .top-bar {
+      position: absolute; top: 0; left: 0; right: 0; height: 80px;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 60px; background: rgba(15, 23, 42, 0.88);
+      border-bottom: 1px solid rgba(56, 189, 248, 0.35); backdrop-filter: blur(12px); z-index: 50;
+    }
+    .top-title { display: flex; align-items: center; gap: 18px; }
+    .badge-ep {
+      background: linear-gradient(135deg, #0284c7, #0369a1); color: white;
+      font-weight: 800; font-size: 16px; letter-spacing: 1.5px;
+      padding: 6px 18px; border-radius: 999px; text-transform: uppercase;
+      box-shadow: 0 0 20px rgba(56, 189, 248, 0.4);
+    }
+    .series-name { font-size: 20px; font-weight: 700; color: #cbd5e1; }
+    .series-name span { color: #38bdf8; font-weight: 800; }
+    .timer-box { font-size: 18px; font-family: monospace; color: #38bdf8; font-weight: 700; }
+
+    /* STAGE */
+    .stage {
+      position: absolute; top: 80px; bottom: 220px; left: 0; right: 0;
+      padding: 40px 60px; display: flex; flex-direction: column; z-index: 20;
+    }
+    .slide-view {
+      display: none; width: 100%; height: 100%; flex-direction: column;
+      animation: fadeIn 0.4s ease-out forwards;
+    }
+    .slide-view.active { display: flex; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+    .slide-header { margin-bottom: 25px; }
+    .slide-category { font-size: 16px; font-weight: 800; color: #38bdf8; text-transform: uppercase; letter-spacing: 2px; }
+    .slide-title { font-size: 40px; font-weight: 900; color: #ffffff; margin-top: 4px; }
+    .slide-subtitle { font-size: 20px; color: #94a3b8; margin-top: 6px; }
+
+    .cards-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; flex: 1; }
+    .feature-card {
+      background: rgba(15, 23, 42, 0.85); border: 1.5px solid rgba(56, 189, 248, 0.35);
+      border-radius: 18px; padding: 28px; display: flex; flex-direction: column;
+      backdrop-filter: blur(14px); box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+    }
+    .card-icon { font-size: 38px; margin-bottom: 16px; }
+    .card-title { font-size: 24px; font-weight: 800; color: #38bdf8; margin-bottom: 12px; }
+    .card-desc { font-size: 17px; color: #e2e8f0; line-height: 1.5; flex: 1; }
+    .card-tag {
+      margin-top: 15px; align-self: flex-start; background: rgba(56, 189, 248, 0.15);
+      border: 1px solid #38bdf8; color: #bae6fd; padding: 4px 12px; border-radius: 8px;
+      font-size: 13px; font-weight: 700;
+    }
+
+    /* SLIDE 2: MATRIZ DE CONSUMO */
+    .matrix-container { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; flex: 1; }
+    .table-card {
+      background: rgba(15, 23, 42, 0.88); border: 1.5px solid rgba(56, 189, 248, 0.35);
+      border-radius: 18px; padding: 24px; display: flex; flex-direction: column;
+    }
+    .table-card-title { font-size: 20px; font-weight: 800; color: #38bdf8; margin-bottom: 16px; display: flex; justify-content: space-between; align-items: center; }
+    .item-row {
+      display: flex; justify-content: space-between; align-items: center; padding: 14px 16px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08); background: rgba(30, 41, 59, 0.4); border-radius: 10px; margin-bottom: 8px;
+    }
+    .item-name { font-size: 16px; font-weight: 700; color: #f8fafc; }
+    .item-meta { font-size: 13px; color: #94a3b8; }
+    .item-price { font-size: 17px; font-weight: 800; color: #38bdf8; }
+    .split-badge {
+      background: rgba(16, 185, 129, 0.2); border: 1px solid #10b981; color: #6ee7b7;
+      padding: 3px 8px; border-radius: 6px; font-size: 12px; font-weight: 800; margin-left: 8px;
+    }
+
+    /* SLIDE 3: TERMINAL & RATEIO */
+    .terminal-container { display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 28px; flex: 1; }
+    .terminal-window {
+      background: #020617; border: 1.5px solid #1e293b; border-radius: 16px;
+      padding: 24px; font-family: 'Consolas', monospace; font-size: 14px;
+      color: #38bdf8; display: flex; flex-direction: column;
+    }
+    .terminal-header { display: flex; gap: 8px; margin-bottom: 16px; border-bottom: 1px solid #1e293b; padding-bottom: 12px; }
+    .t-dot { width: 12px; height: 12px; border-radius: 50%; }
+    .t-red { background: #ef4444; } .t-yellow { background: #f59e0b; } .t-green { background: #10b981; }
+    .terminal-body { flex: 1; line-height: 1.6; color: #e2e8f0; }
+
+    .chat-card {
+      background: rgba(15, 23, 42, 0.85); border: 1.5px solid rgba(56, 189, 248, 0.35);
+      border-radius: 16px; padding: 22px; display: flex; flex-direction: column;
+    }
+    .chat-bubble {
+      background: rgba(30, 41, 59, 0.85); border: 1px solid rgba(56, 189, 248, 0.25);
+      border-radius: 14px; padding: 16px; margin-bottom: 14px; line-height: 1.45; font-size: 15px;
+    }
+    .chat-author { font-size: 14px; font-weight: 800; margin-bottom: 6px; }
+    .author-ia { color: #38bdf8; }
+    .author-eliezer { color: #38bdf8; }
+
+    /* SLIDE 4: LIQUIDAÇÃO PIX */
+    .pix-container { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; flex: 1; }
+    .pix-card {
+      background: rgba(15, 23, 42, 0.9); border: 1.5px solid rgba(16, 185, 129, 0.4);
+      border-radius: 18px; padding: 24px; display: flex; flex-direction: column; align-items: center; text-align: center;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    }
+    .user-avatar-tag {
+      width: 60px; height: 60px; border-radius: 50%; background: #0284c7;
+      display: flex; align-items: center; justify-content: center; font-size: 24px; font-weight: 800; margin-bottom: 12px;
+    }
+    .pix-user-name { font-size: 20px; font-weight: 800; color: #f8fafc; margin-bottom: 4px; }
+    .pix-user-items { font-size: 14px; color: #94a3b8; margin-bottom: 16px; }
+    .pix-user-val { font-size: 32px; font-weight: 900; color: #34d399; margin-bottom: 16px; }
+    .pix-qr-box {
+      width: 140px; height: 140px; background: white; border-radius: 12px; padding: 8px;
+      display: flex; align-items: center; justify-content: center; margin-bottom: 14px;
+    }
+    .pix-btn {
+      width: 100%; background: #059669; color: white; font-weight: 800; padding: 10px;
+      border-radius: 10px; font-size: 14px; text-transform: uppercase; letter-spacing: 1px;
+    }
+
+    /* BOTTOM BAR */
+    .bottom-bar {
+      position: absolute; bottom: 0; left: 0; right: 0; height: 220px;
+      background: rgba(10, 15, 29, 0.96); border-top: 1px solid rgba(56, 189, 248, 0.35);
+      backdrop-filter: blur(16px); display: flex; align-items: center;
+      padding: 0 60px; gap: 40px; z-index: 50;
+    }
+    .avatars-container { display: flex; gap: 30px; align-items: center; }
+    .avatar-card {
+      display: flex; flex-direction: column; align-items: center;
+      transition: all 0.3s ease; opacity: 0.45; transform: scale(0.95);
+    }
+    .avatar-card.active { opacity: 1; transform: scale(1.05); }
+    .avatar-circle {
+      width: 90px; height: 90px; border-radius: 50%; overflow: hidden;
+      border: 3px solid #334155; position: relative; background: #0f172a;
+    }
+    .avatar-card.active .avatar-circle {
+      border-color: #38bdf8; box-shadow: 0 0 25px rgba(56, 189, 248, 0.7);
+    }
+    .avatar-circle img { width: 100%; height: 100%; object-fit: cover; }
+    .avatar-name { font-size: 15px; font-weight: 800; color: #f8fafc; margin-top: 8px; }
+    .avatar-role { font-size: 12px; color: #94a3b8; font-weight: 600; }
+
+    .subtitles-container {
+      flex: 1; height: 140px; background: rgba(15, 23, 42, 0.8);
+      border: 1.5px solid rgba(56, 189, 248, 0.35); border-radius: 16px;
+      padding: 20px 28px; display: flex; flex-direction: column; justify-content: center;
+    }
+    .sub-speaker { font-size: 15px; font-weight: 800; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 6px; }
+    .speaker-leigo { color: #f472b6; }
+    .speaker-eliezer { color: #38bdf8; }
+    .speaker-ia { color: #34d399; }
+    .sub-text { font-size: 21px; font-weight: 600; color: #f8fafc; line-height: 1.45; }
+
+    #black-curtain { position: absolute; inset: 0; background: #000; z-index: 9999; pointer-events: none; }
+  </style>
+</head>
+<body>
+  <div id="black-curtain"></div>
+  <div class="glow-ambient"></div>
+  <div class="grid-bg"></div>
+
+  <div class="top-bar">
+    <div class="top-title">
+      <div class="badge-ep">EPISÓDIO 2 · RACHA DE PIX</div>
+      <div class="series-name">IDD NA PRÁTICA · <span>DESIGN DE TELAS &amp; COMANDA DIGITAL</span></div>
+    </div>
+    <div class="timer-box" id="clock-display">00:00.0</div>
+  </div>
+
+  <div class="stage">
+    <!-- SLIDE 1: O DILEMA DAS TELAS NO RESTAURANTE -->
+    <div class="slide-view active" id="slide-1">
+      <div class="slide-header">
+        <div class="slide-category">INTERFACE HUMANA &amp; EXPERIÊNCIA DO USUÁRIO</div>
+        <div class="slide-title">Design Mobile-First: Fechamento em 3 Toques Rápidos</div>
+        <div class="slide-subtitle">Como eliminar formulários burocráticos e planilhas complexas na mesa de amigos</div>
+      </div>
+      <div class="cards-grid">
+        <div class="feature-card">
+          <div class="card-icon">🧾</div>
+          <div class="card-title">1. Comanda da Mesa</div>
+          <div class="card-desc">Lista consolidada de itens pedidos pelo grupo, com valores unitários, quantidades e taxa de serviço parametrizada.</div>
+          <div class="card-tag">ZONA SUPERIOR</div>
+        </div>
+        <div class="feature-card">
+          <div class="card-icon">👥</div>
+          <div class="card-title">2. Matriz de Atribuição</div>
+          <div class="card-desc">Seleção visual e imediata de quem participou de cada item: individual, duplas ou compartilhado pela mesa inteira.</div>
+          <div class="card-tag">ZONA CENTRAL</div>
+        </div>
+        <div class="feature-card">
+          <div class="card-icon">⚡</div>
+          <div class="card-title">3. Card Pix Instantâneo</div>
+          <div class="card-desc">Cota pessoal recalculada a cada toque. QR Code e código Copia e Cola gerados na hora para o pagador da comanda.</div>
+          <div class="card-tag">ZONA INFERIOR</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 2: MATRIZ VISUAL DE ATRIBUIÇÃO -->
+    <div class="slide-view" id="slide-2">
+      <div class="slide-header">
+        <div class="slide-category">MATRIZ VISUAL "QUEM COMEU O QUÊ"</div>
+        <div class="slide-title">Atribuição Inteligente de Itens na Prática</div>
+        <div class="slide-subtitle">Itens individuais não contaminam amigos que não consumiram</div>
+      </div>
+      <div class="matrix-container">
+        <div class="table-card">
+          <div class="table-card-title">
+            <span>🍕 Itens Pedidos na Mesa 04</span>
+            <span style="font-size:14px; color:#94a3b8;">Total: R$ 180,00</span>
+          </div>
+          <div class="item-row">
+            <div>
+              <div class="item-name">Pizza Grande Calabresa <span class="split-badge">3 pessoas</span></div>
+              <div class="item-meta">Consumidores: André, Bruno, Camila</div>
+            </div>
+            <div class="item-price">R$ 60,00</div>
+          </div>
+          <div class="item-row">
+            <div>
+              <div class="item-name">Porção de Batata Frita <span class="split-badge">4 pessoas</span></div>
+              <div class="item-meta">Consumidores: Todos da mesa</div>
+            </div>
+            <div class="item-price">R$ 40,00</div>
+          </div>
+          <div class="item-row">
+            <div>
+              <div class="item-name">Chope Artesanal IPA (x2) <span class="split-badge">1 pessoa</span></div>
+              <div class="item-meta">Consumidor: André</div>
+            </div>
+            <div class="item-price">R$ 30,00</div>
+          </div>
+          <div class="item-row">
+            <div>
+              <div class="item-name">Sucos Naturais e Sobremesa <span class="split-badge">2 pessoas</span></div>
+              <div class="item-meta">Consumidores: Camila, Daniel</div>
+            </div>
+            <div class="item-price">R$ 50,00</div>
+          </div>
+        </div>
+
+        <div class="table-card">
+          <div class="table-card-title">
+            <span>👥 Cotas Individuais Dinâmicas (+10%)</span>
+            <span style="font-size:14px; color:#10b981;">Auditado</span>
+          </div>
+          <div class="item-row">
+            <div>
+              <div class="item-name">André (Pizza + Fritas + Chopes)</div>
+              <div class="item-meta">Consumo: R$ 60,00 + R$ 6,00 taxa</div>
+            </div>
+            <div class="item-price">R$ 66,00</div>
+          </div>
+          <div class="item-row">
+            <div>
+              <div class="item-name">Bruno (Pizza + Fritas)</div>
+              <div class="item-meta">Consumo: R$ 30,00 + R$ 3,00 taxa</div>
+            </div>
+            <div class="item-price">R$ 33,00</div>
+          </div>
+          <div class="item-row">
+            <div>
+              <div class="item-name">Camila (Pizza + Fritas + Suco)</div>
+              <div class="item-meta">Consumo: R$ 55,00 + R$ 5,50 taxa</div>
+            </div>
+            <div class="item-price">R$ 60,50</div>
+          </div>
+          <div class="item-row">
+            <div>
+              <div class="item-name">Daniel (Fritas + Sobremesa)</div>
+              <div class="item-meta">Consumo: R$ 35,00 + R$ 3,50 taxa</div>
+            </div>
+            <div class="item-price">R$ 38,50</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 3: TERMINAL DA IA & CÁLCULO DE CENTAVOS -->
+    <div class="slide-view" id="slide-3">
+      <div class="slide-header">
+        <div class="slide-category">MOTOR DE CÁLCULO IDD EM TEMPO REAL</div>
+        <div class="slide-title">Compilação das Cotas &amp; Distribuição de Centavos</div>
+        <div class="slide-subtitle">A inteligência artificial aplicando as Invariantes Sagradas na prática</div>
+      </div>
+      <div class="terminal-container">
+        <div class="terminal-window">
+          <div class="terminal-header">
+            <div class="t-dot t-red"></div>
+            <div class="t-dot t-yellow"></div>
+            <div class="t-dot t-green"></div>
+            <span style="margin-left: 10px; font-weight: bold; color: #94a3b8;">racha-rateio-engine ~ v1.0.0</span>
+          </div>
+          <div class="terminal-body">
+            <p>> Calculando rateio para Mesa 04 (4 participantes)...</p>
+            <p style="color:#38bdf8;">[INVARIANTE 1] Soma dos itens: R$ 180.00 | Taxa 10%: R$ 18.00</p>
+            <p>> Total Geral da Mesa: R$ 198.00</p>
+            <p>> Validando atribuições individuais...</p>
+            <p style="color:#34d399;">✔ André: R$ 60.00 base + R$ 6.00 = R$ 66.00</p>
+            <p style="color:#34d399;">✔ Bruno: R$ 30.00 base + R$ 3.00 = R$ 33.00</p>
+            <p style="color:#34d399;">✔ Camila: R$ 55.00 base + R$ 5.50 = R$ 60.50</p>
+            <p style="color:#34d399;">✔ Daniel: R$ 35.00 base + R$ 3.50 = R$ 38.50</p>
+            <p style="color:#38bdf8;">[INVARIANTE 2] Verificação de Soma Zero: 66.00 + 33.00 + 60.50 + 38.50 = R$ 198.00</p>
+            <p style="color:#10b981; font-weight: bold;">[STATUS] ERRO DE ARREDONDAMENTO = R$ 0,00 (CONTRATO 100% CUMPRIDO)</p>
+          </div>
+        </div>
+
+        <div class="chat-card">
+          <div class="chat-bubble">
+            <div class="chat-author author-ia">🤖 IA Compilador</div>
+            <div>Simulador de Rateio IDD ativo. Mesa 4 com 4 participantes e consumo total de R$ 180,00. Cada cota recebe rigorosamente 10% sobre o consumo individual. Resto de centavos de R$ 0,02 distribuído aos dois primeiros participantes de forma auditada. Invariante da Soma Zero: saldo restante igual a zero centavos.</div>
+          </div>
+          <div class="chat-bubble">
+            <div class="chat-author author-eliezer">👤 Eliézer Rosa</div>
+            <div>Excelente! Nenhum centavo é inventado e nenhum centavo desaparece. Essa é a força de um design governado por invariantes matemáticas.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 4: LIQUIDAÇÃO INSTANTÂNEA VIA PIX -->
+    <div class="slide-view" id="slide-4">
+      <div class="slide-header">
+        <div class="slide-category">FECHAMENTO DA MESA &amp; LIQUIDAÇÃO</div>
+        <div class="slide-title">Transferência Instantânea em Menos de 10 Segundos</div>
+        <div class="slide-subtitle">Payload Pix automático gerado com o valor exato de cada participante</div>
+      </div>
+      <div class="pix-container">
+        <div class="pix-card">
+          <div class="user-avatar-tag">A</div>
+          <div class="pix-user-name">André Silva</div>
+          <div class="pix-user-items">Pizza + Fritas + Chopes</div>
+          <div class="pix-user-val">R$ 66,00</div>
+          <div class="pix-qr-box">
+            <svg viewBox="0 0 100 100" width="100%" height="100%">
+              <rect width="100" height="100" fill="white"/>
+              <rect x="10" y="10" width="25" height="25" fill="#0f172a"/>
+              <rect x="15" y="15" width="15" height="15" fill="white"/>
+              <rect x="18" y="18" width="9" height="9" fill="#0f172a"/>
+              <rect x="65" y="10" width="25" height="25" fill="#0f172a"/>
+              <rect x="70" y="15" width="15" height="15" fill="white"/>
+              <rect x="73" y="18" width="9" height="9" fill="#0f172a"/>
+              <rect x="10" y="65" width="25" height="25" fill="#0f172a"/>
+              <rect x="15" y="70" width="15" height="15" fill="white"/>
+              <rect x="18" y="73" width="9" height="9" fill="#0f172a"/>
+              <rect x="45" y="45" width="10" height="10" fill="#0284c7"/>
+            </svg>
+          </div>
+          <div class="pix-btn">Copiar Código Pix</div>
+        </div>
+
+        <div class="pix-card">
+          <div class="user-avatar-tag">B</div>
+          <div class="pix-user-name">Bruno Santos</div>
+          <div class="pix-user-items">Pizza + Fritas</div>
+          <div class="pix-user-val">R$ 33,00</div>
+          <div class="pix-qr-box">
+            <svg viewBox="0 0 100 100" width="100%" height="100%">
+              <rect width="100" height="100" fill="white"/>
+              <rect x="10" y="10" width="25" height="25" fill="#0f172a"/>
+              <rect x="15" y="15" width="15" height="15" fill="white"/>
+              <rect x="18" y="18" width="9" height="9" fill="#0f172a"/>
+              <rect x="65" y="10" width="25" height="25" fill="#0f172a"/>
+              <rect x="70" y="15" width="15" height="15" fill="white"/>
+              <rect x="73" y="18" width="9" height="9" fill="#0f172a"/>
+              <rect x="10" y="65" width="25" height="25" fill="#0f172a"/>
+              <rect x="15" y="70" width="15" height="15" fill="white"/>
+              <rect x="18" y="73" width="9" height="9" fill="#0f172a"/>
+              <rect x="45" y="45" width="10" height="10" fill="#0284c7"/>
+            </svg>
+          </div>
+          <div class="pix-btn">Copiar Código Pix</div>
+        </div>
+
+        <div class="pix-card">
+          <div class="user-avatar-tag">C</div>
+          <div class="pix-user-name">Camila Lima</div>
+          <div class="pix-user-items">Pizza + Fritas + Suco</div>
+          <div class="pix-user-val">R$ 60,50</div>
+          <div class="pix-qr-box">
+            <svg viewBox="0 0 100 100" width="100%" height="100%">
+              <rect width="100" height="100" fill="white"/>
+              <rect x="10" y="10" width="25" height="25" fill="#0f172a"/>
+              <rect x="15" y="15" width="15" height="15" fill="white"/>
+              <rect x="18" y="18" width="9" height="9" fill="#0f172a"/>
+              <rect x="65" y="10" width="25" height="25" fill="#0f172a"/>
+              <rect x="70" y="15" width="15" height="15" fill="white"/>
+              <rect x="73" y="18" width="9" height="9" fill="#0f172a"/>
+              <rect x="10" y="65" width="25" height="25" fill="#0f172a"/>
+              <rect x="15" y="70" width="15" height="15" fill="white"/>
+              <rect x="18" y="73" width="9" height="9" fill="#0f172a"/>
+              <rect x="45" y="45" width="10" height="10" fill="#0284c7"/>
+            </svg>
+          </div>
+          <div class="pix-btn">Copiar Código Pix</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BOTTOM BAR -->
+  <div class="bottom-bar">
+    <div class="avatars-container">
+      <div class="avatar-card" id="av-leigo">
+        <div class="avatar-circle">
+          <img src="../../avatares/avatar_usuaria_leiga.png" alt="Usuária Leiga">
+        </div>
+        <div class="avatar-name">Usuária Leiga</div>
+        <div class="avatar-role">Validadora de Domínio</div>
+      </div>
+      <div class="avatar-card" id="av-eliezer">
+        <div class="avatar-circle">
+          <img src="../../avatares/avatar_eliezer_oficial.png" alt="Eliézer Rosa">
+        </div>
+        <div class="avatar-name">Eliézer Rosa</div>
+        <div class="avatar-role">Orquestrador IDD</div>
+      </div>
+      <div class="avatar-card" id="av-ia">
+        <div class="avatar-circle">
+          <img src="../../avatares/avatar_ia_compilador.png" alt="IA Compilador">
+        </div>
+        <div class="avatar-name">IA Compilador</div>
+        <div class="avatar-role">Agente de Execução</div>
+      </div>
+    </div>
+    <div class="subtitles-container">
+      <div class="sub-speaker" id="sub-speaker">USUÁRIA LEIGA</div>
+      <div class="sub-text" id="sub-text">Iniciando episódio 2: Design de Telas &amp; Comanda Digital...</div>
+    </div>
+  </div>
+
+  <script>
+    let timelineItems = [];
+    let isRunning = false;
+    let startTimeMs = 0;
+
+    window.setTimeline = function(items) { timelineItems = items; };
+    window.stopPresentation = function() {
+      isRunning = false;
+    };
+    window.startPresentation = function() {
+      const curtain = document.getElementById('black-curtain');
+      if (curtain) {
+        curtain.style.opacity = '0';
+        setTimeout(() => curtain.remove(), 80);
+      }
+      isRunning = true;
+      startTimeMs = performance.now();
+      requestAnimationFrame(renderLoop);
+    };
+
+    function renderLoop(now) {
+      if (!isRunning) return;
+      const elapsedSec = (now - startTimeMs) / 1000;
+      const minutes = Math.floor(elapsedSec / 60);
+      const seconds = (elapsedSec % 60).toFixed(1);
+      document.getElementById('clock-display').innerText =
+        String(minutes).padStart(2, '0') + ':' + String(seconds).padStart(4, '0');
+
+      const curSeg = timelineItems.find(item => elapsedSec >= item.startSec && elapsedSec < item.endSec);
+      if (curSeg) {
+        const targetSlideId = 'slide-' + curSeg.slide;
+        document.querySelectorAll('.slide-view').forEach(s => {
+          if (s.id === targetSlideId) {
+            if (!s.classList.contains('active')) s.classList.add('active');
+          } else {
+            s.classList.remove('active');
+          }
+        });
+
+        ['leigo', 'eliezer', 'ia'].forEach(who => {
+          const el = document.getElementById('av-' + who);
+          if (el) {
+            if (curSeg.who === who) el.classList.add('active');
+            else el.classList.remove('active');
+          }
+        });
+
+        const speakerEl = document.getElementById('sub-speaker');
+        const textEl = document.getElementById('sub-text');
+        speakerEl.className = 'sub-speaker speaker-' + curSeg.who;
+        speakerEl.innerText = curSeg.actor;
+        textEl.innerText = curSeg.text;
+      }
+      requestAnimationFrame(renderLoop);
+    }
+  </script>
+</body>
+</html>

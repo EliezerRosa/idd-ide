@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>IDD Barbearia - Ep. 2 Dados & Telas</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, sans-serif; }
+    body {
+      width: 1920px; height: 1080px; background: #0c0f18; color: #f8fafc;
+      overflow: hidden; position: relative;
+    }
+    .grid-bg {
+      position: absolute; inset: 0;
+      background-image: linear-gradient(rgba(245, 158, 11, 0.05) 1px, transparent 1px),
+                        linear-gradient(90deg, rgba(245, 158, 11, 0.05) 1px, transparent 1px);
+      background-size: 60px 60px;
+    }
+    .glow-ambient {
+      position: absolute; width: 1100px; height: 1100px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(245, 158, 11, 0.22) 0%, rgba(217, 119, 6, 0.15) 45%, transparent 70%);
+      top: 50%; left: 50%; transform: translate(-50%, -50%); filter: blur(90px); pointer-events: none;
+    }
+
+    .top-bar {
+      position: absolute; top: 0; left: 0; right: 0; height: 80px;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 60px; background: rgba(15, 23, 42, 0.85);
+      border-bottom: 1px solid rgba(245, 158, 11, 0.35); backdrop-filter: blur(12px); z-index: 50;
+    }
+    .top-title { display: flex; align-items: center; gap: 18px; }
+    .badge-ep {
+      background: linear-gradient(135deg, #d97706, #b45309); color: white;
+      font-weight: 800; font-size: 16px; letter-spacing: 1.5px;
+      padding: 6px 18px; border-radius: 999px; text-transform: uppercase;
+      box-shadow: 0 0 20px rgba(245, 158, 11, 0.5);
+    }
+    .series-name { font-size: 20px; font-weight: 700; color: #94a3b8; }
+    .series-name span { color: #f8fafc; font-weight: 800; }
+    .timer-box { font-size: 18px; font-family: monospace; color: #fbbf24; font-weight: 700; }
+
+    .stage {
+      position: absolute; top: 80px; bottom: 220px; left: 0; right: 0;
+      padding: 40px 60px; display: flex; flex-direction: column; z-index: 20;
+    }
+    .slide-view {
+      display: none; width: 100%; height: 100%; flex-direction: column;
+      animation: fadeIn 0.4s ease-out forwards;
+    }
+    .slide-view.active { display: flex; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+    .slide-header { margin-bottom: 25px; }
+    .slide-category { font-size: 16px; font-weight: 800; color: #f59e0b; text-transform: uppercase; letter-spacing: 2px; }
+    .slide-title { font-size: 40px; font-weight: 900; color: #ffffff; margin-top: 4px; }
+    .slide-subtitle { font-size: 20px; color: #94a3b8; margin-top: 6px; }
+
+    .cards-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; flex: 1; }
+    .feature-card {
+      background: rgba(15, 23, 42, 0.85); border: 1.5px solid rgba(245, 158, 11, 0.35);
+      border-radius: 18px; padding: 28px; display: flex; flex-direction: column;
+      backdrop-filter: blur(14px); box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+    }
+    .card-icon { font-size: 38px; margin-bottom: 16px; }
+    .card-title { font-size: 24px; font-weight: 800; color: #fbbf24; margin-bottom: 12px; }
+    .card-desc { font-size: 17px; color: #cbd5e1; line-height: 1.5; flex: 1; }
+    .card-tag {
+      margin-top: 15px; align-self: flex-start; background: rgba(245, 158, 11, 0.15);
+      border: 1px solid #f59e0b; color: #fde68a; padding: 4px 12px; border-radius: 8px;
+      font-size: 13px; font-weight: 700;
+    }
+
+    /* SLIDE 2 - CATÁLOGO DE TELAS */
+    .menu-demo-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; flex: 1; }
+    .menu-box {
+      background: rgba(15, 23, 42, 0.9); border: 1.5px solid rgba(245, 158, 11, 0.3);
+      border-radius: 16px; padding: 22px; display: flex; flex-direction: column; justify-content: space-between;
+    }
+    .menu-head { font-size: 20px; font-weight: 800; color: #f8fafc; }
+    .menu-detail { font-size: 14px; color: #94a3b8; margin-top: 6px; }
+    .menu-price { font-size: 26px; font-weight: 900; color: #fbbf24; margin-top: 15px; }
+    .menu-badge { background: rgba(245, 158, 11, 0.2); color: #fde68a; padding: 4px 8px; border-radius: 6px; font-size: 12px; font-weight: 800; align-self: flex-start; }
+
+    /* TERMINAL SLIDE 3 */
+    .terminal-container { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; flex: 1; }
+    .terminal-window {
+      background: #020617; border: 1.5px solid #1e293b; border-radius: 16px;
+      padding: 24px; font-family: 'Consolas', monospace; font-size: 15px;
+      color: #38bdf8; display: flex; flex-direction: column;
+    }
+    .terminal-header { display: flex; gap: 8px; margin-bottom: 16px; border-bottom: 1px solid #1e293b; padding-bottom: 12px; }
+    .t-dot { width: 12px; height: 12px; border-radius: 50%; }
+    .t-red { background: #ef4444; } .t-yellow { background: #f59e0b; } .t-green { background: #10b981; }
+    .terminal-body { flex: 1; line-height: 1.6; color: #e2e8f0; }
+
+    .chat-card {
+      background: rgba(15, 23, 42, 0.85); border: 1.5px solid rgba(245, 158, 11, 0.35);
+      border-radius: 16px; padding: 24px; display: flex; flex-direction: column;
+    }
+    .chat-bubble {
+      background: rgba(30, 41, 59, 0.8); border: 1px solid rgba(245, 158, 11, 0.2);
+      border-radius: 14px; padding: 18px; margin-bottom: 16px; line-height: 1.5; font-size: 16px;
+    }
+    .chat-author { font-size: 14px; font-weight: 800; margin-bottom: 6px; }
+    .author-ia { color: #38bdf8; }
+    .author-eliezer { color: #fbbf24; }
+
+    .bottom-bar {
+      position: absolute; bottom: 0; left: 0; right: 0; height: 220px;
+      background: rgba(6, 12, 24, 0.95); border-top: 1px solid rgba(245, 158, 11, 0.3);
+      backdrop-filter: blur(16px); display: flex; align-items: center;
+      padding: 0 60px; gap: 40px; z-index: 50;
+    }
+    .avatars-container { display: flex; gap: 30px; align-items: center; }
+    .avatar-card {
+      display: flex; flex-direction: column; align-items: center;
+      transition: all 0.3s ease; opacity: 0.45; transform: scale(0.95);
+    }
+    .avatar-card.active { opacity: 1; transform: scale(1.05); }
+    .avatar-circle {
+      width: 90px; height: 90px; border-radius: 50%; overflow: hidden;
+      border: 3px solid #475569; position: relative;
+    }
+    .avatar-card.active .avatar-circle {
+      border-color: #f59e0b; box-shadow: 0 0 25px rgba(245, 158, 11, 0.7);
+    }
+    .avatar-circle img { width: 100%; height: 100%; object-fit: cover; }
+    .avatar-name { font-size: 15px; font-weight: 800; color: #f8fafc; margin-top: 8px; }
+    .avatar-role { font-size: 12px; color: #94a3b8; font-weight: 600; }
+
+    .subtitles-container {
+      flex: 1; height: 140px; background: rgba(15, 23, 42, 0.8);
+      border: 1.5px solid rgba(245, 158, 11, 0.35); border-radius: 16px;
+      padding: 20px 28px; display: flex; flex-direction: column; justify-content: center;
+    }
+    .sub-speaker { font-size: 15px; font-weight: 800; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 6px; }
+    .speaker-leigo { color: #f472b6; }
+    .speaker-eliezer { color: #fbbf24; }
+    .speaker-ia { color: #38bdf8; }
+    .sub-text { font-size: 21px; font-weight: 600; color: #f1f5f9; line-height: 1.45; }
+
+    #black-curtain { position: absolute; inset: 0; background: #000; z-index: 9999; pointer-events: none; }
+  </style>
+</head>
+<body>
+  <div id="black-curtain"></div>
+  <div class="glow-ambient"></div>
+  <div class="grid-bg"></div>
+
+  <div class="top-bar">
+    <div class="top-title">
+      <div class="badge-ep">EPISÓDIO 2 · BARBEARIA &amp; SALÃO</div>
+      <div class="series-name">IDD NA PRÁTICA · <span>DADOS &amp; TELAS DO NEGÓCIO</span></div>
+    </div>
+    <div class="timer-box" id="clock-display">00:00.0</div>
+  </div>
+
+  <div class="stage">
+    <!-- SLIDE 1: O MODELO DE NEGÓCIO EM TELAS -->
+    <div class="slide-view active" id="slide-1">
+      <div class="slide-header">
+        <div class="slide-category">DO MUNDO REAL PARA A ESTRUTURA</div>
+        <div class="slide-title">Desenhando os Dados e as Telas do Salão</div>
+        <div class="slide-subtitle">Como organizar as entidades fundamentais sem termos técnicos abstratos</div>
+      </div>
+      <div class="cards-grid">
+        <div class="feature-card">
+          <div class="card-icon">👥</div>
+          <div class="card-title">1. Profissionais &amp; Clientes</div>
+          <div class="card-desc">Quem atende e quem é atendido. Identificação única com telefone WhatsApp e taxa de comissão definida.</div>
+          <div class="card-tag">PESSOAS REAIS</div>
+        </div>
+        <div class="feature-card">
+          <div class="card-icon">✂️</div>
+          <div class="card-title">2. Catálogo de Serviços</div>
+          <div class="card-desc">Corte, Barba, Sobrancelha, Hidratação. Cada serviço com seu preço em reais e duração precisa em minutos.</div>
+          <div class="card-tag">CARDÁPIO DE ATENDIMENTO</div>
+        </div>
+        <div class="feature-card">
+          <div class="card-icon">🧾</div>
+          <div class="card-title">3. A Comanda / Agendamento</div>
+          <div class="card-desc">A união do cliente, barbeiro, data e horário, contendo todos os serviços solicitados na sessão.</div>
+          <div class="card-tag">CENTRO DE GRAVIDADE</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 2: CATÁLOGO DE SERVIÇOS VISUAL -->
+    <div class="slide-view" id="slide-2">
+      <div class="slide-header">
+        <div class="slide-category">INTERFACE DO CLIENTE</div>
+        <div class="slide-title">O Catálogo Interativo com Tempo e Preço</div>
+        <div class="slide-subtitle">A tela que alimenta a inteligência da agenda automaticamente</div>
+      </div>
+      <div class="menu-demo-grid">
+        <div class="menu-box">
+          <div>
+            <div class="menu-badge">30 MINUTOS</div>
+            <div class="menu-head" style="margin-top: 10px;">Corte Cabelo Tradicional</div>
+            <div class="menu-detail">Tesoura, máquina, acabamento e lavagem completa.</div>
+          </div>
+          <div class="menu-price">R$ 35,00</div>
+        </div>
+        <div class="menu-box">
+          <div>
+            <div class="menu-badge">20 MINUTOS</div>
+            <div class="menu-head" style="margin-top: 10px;">Barba Terapia com Toalha</div>
+            <div class="menu-detail">Vapor quente, navalha e óleo essencial relaxante.</div>
+          </div>
+          <div class="menu-price">R$ 30,00</div>
+        </div>
+        <div class="menu-box">
+          <div>
+            <div class="menu-badge">50 MINUTOS (COMBO)</div>
+            <div class="menu-head" style="margin-top: 10px;">Cabelo + Barba Completo</div>
+            <div class="menu-detail">Experiência completa com bloqueio contínuo da cadeira.</div>
+          </div>
+          <div class="menu-price">R$ 65,00</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 3: TERMINAL DA IA E RELACIONAMENTO 1:N -->
+    <div class="slide-view" id="slide-3">
+      <div class="slide-header">
+        <div class="slide-category">MODELAGEM SEMÂNTICA COM A IA</div>
+        <div class="slide-title">A Relação 1:N e o Registro Histórico</div>
+        <div class="slide-subtitle">Como a IA estrutura as tabelas e o orquestrador valida a regra de comissão</div>
+      </div>
+      <div class="terminal-container">
+        <div class="terminal-window">
+          <div class="terminal-header">
+            <div class="t-dot t-red"></div>
+            <div class="t-dot t-yellow"></div>
+            <div class="t-dot t-green"></div>
+            <span style="margin-left: auto; font-size: 12px; color: #64748b;">IDD COMPILER · DATA RELATIONS</span>
+          </div>
+          <div class="terminal-body">
+            <div>&gt; idd model --relations --scope=barbearia</div>
+            <div style="color: #38bdf8;">[ENTITIES] Profissionais, Clientes, Servicos, Agendamentos.</div>
+            <div style="color: #34d399;">[RELATION] Agendamento (1) -&gt; (N) Agendamento_Itens.</div>
+            <br>
+            <div style="color: #fbbf24;">[GOVERNANCE QUESTION] Comissão sobre item ou total da comanda?</div>
+            <div style="color: #34d399;">&gt; DECISÃO: Item a item com snapshot do preço histórico.</div>
+            <div style="color: #a855f7;">[SNAPSHOT PROTECTED] Preço congelado na data da realização.</div>
+          </div>
+        </div>
+        <div class="chat-card">
+          <div class="chat-bubble">
+            <div class="chat-author author-ia">🤖 IA Compilador</div>
+            <div>
+              Orquestrador Eliézer, estruturei a relação 1 para N: um agendamento pode conter múltiplos serviços. Registrei o preço e duração congelados no item.
+            </div>
+          </div>
+          <div class="chat-bubble">
+            <div class="chat-author author-eliezer">👤 Eliézer Rosa</div>
+            <div>
+              Excelente! Isso garante que relatórios de faturamento do mês passado permaneçam matematicamente invioláveis mesmo se o salão reajustar a tabela no futuro.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 4: SÍNTESE DO EPISÓDIO -->
+    <div class="slide-view" id="slide-4">
+      <div class="slide-header">
+        <div class="slide-category">O PODER DA ESTRUTURA VISUAL</div>
+        <div class="slide-title">Integridade Histórica e Rumo ao MER</div>
+        <div class="slide-subtitle">Os dados refletem o mundo real com transparência e precisão absoluta</div>
+      </div>
+      <div class="cards-grid">
+        <div class="feature-card">
+          <div class="card-icon">🛡️</div>
+          <div class="card-title">1. Dados Blindados</div>
+          <div class="card-desc">Preços históricos congelados garantem que a contabilidade da barbearia nunca se perca.</div>
+          <div class="card-tag">HISTÓRICO PERFEITO</div>
+        </div>
+        <div class="feature-card">
+          <div class="card-icon">🗄️</div>
+          <div class="card-title">2. Ep. 2B: O MER com IA</div>
+          <div class="card-desc">No próximo episódio veremos os diagramas de entidade e relacionamento sem digitar SQL.</div>
+          <div class="card-tag">PRÓXIMO VÍDEO</div>
+        </div>
+        <div class="feature-card">
+          <div class="card-icon">💻</div>
+          <div class="card-title">3. Ep. 3: Código Vivo</div>
+          <div class="card-desc">No Episódio 3 veremos o código SQL e TypeScript espelhando fielmente cada regra!</div>
+          <div class="card-tag">EM BREVE</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="bottom-bar">
+    <div class="avatars-container">
+      <div class="avatar-card" id="av-leigo">
+        <div class="avatar-circle">
+          <img src="../../avatares/avatar_usuaria_leiga.png" alt="Usuária Leiga">
+        </div>
+        <div class="avatar-name">Usuária Leiga</div>
+        <div class="avatar-role">Validadora de Domínio</div>
+      </div>
+      <div class="avatar-card" id="av-eliezer">
+        <div class="avatar-circle">
+          <img src="../../avatares/avatar_eliezer_oficial.png" alt="Eliézer Rosa">
+        </div>
+        <div class="avatar-name">Eliézer Rosa</div>
+        <div class="avatar-role">Orquestrador IDD</div>
+      </div>
+      <div class="avatar-card" id="av-ia">
+        <div class="avatar-circle">
+          <img src="../../avatares/avatar_ia_compilador.png" alt="IA Compilador">
+        </div>
+        <div class="avatar-name">IA Compilador</div>
+        <div class="avatar-role">Agente de Execução</div>
+      </div>
+    </div>
+    <div class="subtitles-container">
+      <div class="sub-speaker" id="sub-speaker">USUÁRIA LEIGA</div>
+      <div class="sub-text" id="sub-text">Iniciando episódio 2 do App da Barbearia no Paradigma IDD...</div>
+    </div>
+  </div>
+
+  <script>
+    let timelineItems = [];
+    let isRunning = false;
+    let startTimeMs = 0;
+
+    window.setTimeline = function(items) { timelineItems = items; };
+    window.startPresentation = function() {
+      const curtain = document.getElementById('black-curtain');
+      if (curtain) {
+        curtain.style.opacity = '0';
+        setTimeout(() => curtain.remove(), 80);
+      }
+      isRunning = true;
+      startTimeMs = performance.now();
+      requestAnimationFrame(renderLoop);
+    };
+
+    function renderLoop(now) {
+      if (!isRunning) return;
+      const elapsedSec = (now - startTimeMs) / 1000;
+      const minutes = Math.floor(elapsedSec / 60);
+      const seconds = (elapsedSec % 60).toFixed(1);
+      document.getElementById('clock-display').innerText =
+        String(minutes).padStart(2, '0') + ':' + String(seconds).padStart(4, '0');
+
+      const curSeg = timelineItems.find(item => elapsedSec >= item.startSec && elapsedSec < item.endSec);
+      if (curSeg) {
+        const targetSlideId = 'slide-' + curSeg.slide;
+        document.querySelectorAll('.slide-view').forEach(s => {
+          if (s.id === targetSlideId) {
+            if (!s.classList.contains('active')) s.classList.add('active');
+          } else {
+            s.classList.remove('active');
+          }
+        });
+
+        ['leigo', 'eliezer', 'ia'].forEach(who => {
+          const el = document.getElementById('av-' + who);
+          if (el) {
+            if (curSeg.who === who) el.classList.add('active');
+            else el.classList.remove('active');
+          }
+        });
+
+        const speakerEl = document.getElementById('sub-speaker');
+        const textEl = document.getElementById('sub-text');
+        speakerEl.className = 'sub-speaker speaker-' + curSeg.who;
+        speakerEl.innerText = curSeg.actor;
+        textEl.innerText = curSeg.text;
+      }
+      requestAnimationFrame(renderLoop);
+    }
+  </script>
+</body>
+</html>

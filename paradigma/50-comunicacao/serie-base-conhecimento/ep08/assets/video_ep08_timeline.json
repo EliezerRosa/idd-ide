@@ -1,0 +1,110 @@
+{
+  "projectName": "IDD_Base_Conhecimento_Ep08",
+  "totalDurationSec": 186.0,
+  "items": [
+    {
+      "index": 0,
+      "id": "seg_00_leigo",
+      "who": "leigo",
+      "actor": "Usuária Leiga",
+      "avatar": "leigo",
+      "slide": 1,
+      "text": "Eliézer, chegamos ao episódio oito da nossa Base de Conhecimento! Até aqui nós vimos como o IDD define a ontologia do domínio, compila intenções com DSPy, valida invariantes com Z3 e governa a evolução com diff semântico. Mas no mundo real, um sistema não é feito apenas de tabelas paradas, ele é feito de ações e comportamento! Qual é o grande perigo quando agentes de inteligência artificial executam operações complexas?",
+      "wav": "C:\\Antigravity - IDD Refrigeração\\motion_graphics_renderer\\idd_teoria_ep08_assets\\audio\\seg_00_leigo.wav",
+      "startSec": 0.5,
+      "durSec": 27.408,
+      "endSec": 27.908
+    },
+    {
+      "index": 1,
+      "id": "seg_01_eliezer",
+      "who": "eliezer",
+      "actor": "Eliézer Rosa",
+      "avatar": "eliezer",
+      "slide": 1,
+      "text": "Esse é o calcanhar de Aquiles do desenvolvimento com IA! Se você deixar um agente gerar código imperativo livre, ele faz meia-operação: debita um saldo e cai antes de registrar o pedido, deixando o banco em estado inconsistente e corrompido! No Paradigma IDD, nós não permitimos código comportamental ad-hoc. Toda mutação de estado obedece rigorosamente à Teoria da Ação Atômica!",
+      "wav": "C:\\Antigravity - IDD Refrigeração\\motion_graphics_renderer\\idd_teoria_ep08_assets\\audio\\seg_01_eliezer.wav",
+      "startSec": 28.558,
+      "durSec": 26.832,
+      "endSec": 55.39
+    },
+    {
+      "index": 2,
+      "id": "seg_02_leigo",
+      "who": "leigo",
+      "actor": "Usuária Leiga",
+      "avatar": "leigo",
+      "slide": 2,
+      "text": "E é fascinante ver no Slide dois como o IDD resolve isso através do Protocolo Canônico em Quatro Fases! Explique para quem está nos assistindo como funciona essa esteira de execução blindada!",
+      "wav": "C:\\Antigravity - IDD Refrigeração\\motion_graphics_renderer\\idd_teoria_ep08_assets\\audio\\seg_02_leigo.wav",
+      "startSec": 56.04,
+      "durSec": 11.928,
+      "endSec": 67.968
+    },
+    {
+      "index": 3,
+      "id": "seg_03_eliezer",
+      "who": "eliezer",
+      "actor": "Eliézer Rosa",
+      "avatar": "eliezer",
+      "slide": 2,
+      "text": "É uma garantia matemática! Primeira fase: Guarda. Validamos precondições e invariantes de domínio com falha rápida antes de tocar qualquer dado. Segunda fase: Mutação. O estado é modificado em escopo estritamente isolado e idempotente. Terceira fase: Selagem. As pós-condições são verificadas e o evento de domínio é emitido como log imutável. E quarta fase: Compensação. Se qualquer elo da cadeia falhar, o protocolo dispara a reversão simétrica garantindo consistência total!",
+      "wav": "C:\\Antigravity - IDD Refrigeração\\motion_graphics_renderer\\idd_teoria_ep08_assets\\audio\\seg_03_eliezer.wav",
+      "startSec": 68.618,
+      "durSec": 36.696,
+      "endSec": 105.314
+    },
+    {
+      "index": 4,
+      "id": "seg_04_leigo",
+      "who": "leigo",
+      "actor": "Usuária Leiga",
+      "avatar": "leigo",
+      "slide": 3,
+      "text": "E no Slide três nós conectamos isso diretamente com a literatura clássica de sistemas distribuídos: as Sagas de Hector Garcia-Molina e a teoria de Pat Helland de dados através do tempo! Como o IDD aplica Sagas sem o pesadelo de bloqueios distribuídos?",
+      "wav": "C:\\Antigravity - IDD Refrigeração\\motion_graphics_renderer\\idd_teoria_ep08_assets\\audio\\seg_04_leigo.wav",
+      "startSec": 105.964,
+      "durSec": 16.08,
+      "endSec": 122.044
+    },
+    {
+      "index": 5,
+      "id": "seg_05_eliezer",
+      "who": "eliezer",
+      "actor": "Eliézer Rosa",
+      "avatar": "eliezer",
+      "slide": 3,
+      "text": "Exatamente! Transações distribuídas de duas fases tradicionais causam deadlocks e não escalam. O IDD adota Sagas declarativas: cada intenção já declara formalmente a sua ação compensatória correspondente. Se um serviço externo falha, o compilador já sabe exatamente como desfazer os passos anteriores sem travar o banco. É a engenharia de software no seu mais alto nível de maturidade!",
+      "wav": "C:\\Antigravity - IDD Refrigeração\\motion_graphics_renderer\\idd_teoria_ep08_assets\\audio\\seg_05_eliezer.wav",
+      "startSec": 122.694,
+      "durSec": 27.24,
+      "endSec": 149.934
+    },
+    {
+      "index": 6,
+      "id": "seg_06_leigo",
+      "who": "leigo",
+      "actor": "Usuária Leiga",
+      "avatar": "leigo",
+      "slide": 4,
+      "text": "Que jornada espetacular! Fechamos a série conceitual fundamental provando que a engenharia de software pós-sintaxe não é tentativa e erro, é ciência rigorosa, ontologia clara e matemática aplicada!",
+      "wav": "C:\\Antigravity - IDD Refrigeração\\motion_graphics_renderer\\idd_teoria_ep08_assets\\audio\\seg_06_leigo.wav",
+      "startSec": 150.584,
+      "durSec": 13.152,
+      "endSec": 163.736
+    },
+    {
+      "index": 7,
+      "id": "seg_07_eliezer",
+      "who": "eliezer",
+      "actor": "Eliézer Rosa",
+      "avatar": "eliezer",
+      "slide": 4,
+      "text": "Com certeza! O Paradigma IDD substitui a fragilidade do Vibe Coding por uma fortaleza de confiabilidade. Inscreva-se no canal, estude essa Base de Conhecimento, confira as nossas playlists de aplicação prática de campo e lidere o futuro da criação de software com inteligência artificial!",
+      "wav": "C:\\Antigravity - IDD Refrigeração\\motion_graphics_renderer\\idd_teoria_ep08_assets\\audio\\seg_07_eliezer.wav",
+      "startSec": 164.386,
+      "durSec": 19.464,
+      "endSec": 183.85
+    }
+  ]
+}

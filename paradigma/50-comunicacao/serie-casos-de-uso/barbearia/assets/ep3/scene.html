@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>IDD Barbearia - Ep. 3 (Implementação, Código Vivo & Amarração Total)</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, sans-serif; }
+    body {
+      width: 1920px; height: 1080px; background: #0c0f18; color: #f8fafc;
+      overflow: hidden; position: relative;
+    }
+    .grid-bg {
+      position: absolute; inset: 0;
+      background-image: linear-gradient(rgba(16, 185, 129, 0.05) 1px, transparent 1px),
+                        linear-gradient(90deg, rgba(16, 185, 129, 0.05) 1px, transparent 1px);
+      background-size: 60px 60px;
+    }
+    .glow-ambient {
+      position: absolute; width: 1100px; height: 1100px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(16, 185, 129, 0.22) 0%, rgba(5, 150, 105, 0.15) 45%, transparent 70%);
+      top: 50%; left: 50%; transform: translate(-50%, -50%); filter: blur(90px); pointer-events: none;
+    }
+
+    .top-bar {
+      position: absolute; top: 0; left: 0; right: 0; height: 80px;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 60px; background: rgba(15, 23, 42, 0.85);
+      border-bottom: 1px solid rgba(16, 185, 129, 0.35); backdrop-filter: blur(12px); z-index: 50;
+    }
+    .top-title { display: flex; align-items: center; gap: 18px; }
+    .badge-ep {
+      background: linear-gradient(135deg, #059669, #047857); color: white;
+      font-weight: 800; font-size: 16px; letter-spacing: 1.5px;
+      padding: 6px 18px; border-radius: 999px; text-transform: uppercase;
+      box-shadow: 0 0 20px rgba(16, 185, 129, 0.5);
+    }
+    .series-name { font-size: 20px; font-weight: 700; color: #94a3b8; }
+    .series-name span { color: #f8fafc; font-weight: 800; }
+    .timer-box { font-size: 18px; font-family: monospace; color: #34d399; font-weight: 700; }
+
+    .stage {
+      position: absolute; top: 80px; bottom: 220px; left: 0; right: 0;
+      padding: 40px 60px; display: flex; flex-direction: column; z-index: 20;
+    }
+    .slide-view {
+      display: none; width: 100%; height: 100%; flex-direction: column;
+      animation: fadeIn 0.4s ease-out forwards;
+    }
+    .slide-view.active { display: flex; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+    .slide-header { margin-bottom: 25px; }
+    .slide-category { font-size: 16px; font-weight: 800; color: #34d399; text-transform: uppercase; letter-spacing: 2px; }
+    .slide-title { font-size: 40px; font-weight: 900; color: #ffffff; margin-top: 4px; }
+    .slide-subtitle { font-size: 20px; color: #94a3b8; margin-top: 6px; }
+
+    .code-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; flex: 1; }
+    
+    .code-card {
+      background: #020617; border: 1.5px solid #1e293b; border-radius: 16px;
+      padding: 22px; font-family: 'Consolas', monospace; font-size: 14.5px;
+      color: #e2e8f0; display: flex; flex-direction: column; box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+    }
+    .code-header {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 14px; border-bottom: 1px solid #1e293b; padding-bottom: 10px;
+    }
+    .code-title { color: #34d399; font-weight: 700; font-size: 15px; }
+    .code-tag { background: rgba(16, 185, 129, 0.2); color: #6ee7b7; padding: 3px 10px; border-radius: 6px; font-size: 12px; }
+    .code-content { flex: 1; line-height: 1.6; white-space: pre; overflow-x: auto; }
+    
+    .kw { color: #f43f5e; font-weight: bold; }
+    .fn { color: #38bdf8; }
+    .str { color: #a3e635; }
+    .comm { color: #64748b; font-style: italic; }
+    .num { color: #fbbf24; }
+    .type { color: #c084fc; }
+
+    .matrix-table {
+      width: 100%; border-collapse: collapse; background: rgba(15, 23, 42, 0.85);
+      border-radius: 14px; overflow: hidden; border: 1.5px solid rgba(16, 185, 129, 0.3);
+      flex: 1;
+    }
+    .matrix-table th {
+      background: rgba(16, 185, 129, 0.2); color: #34d399; font-size: 16px;
+      padding: 16px 20px; text-align: left; font-weight: 800; border-bottom: 1px solid rgba(16, 185, 129, 0.3);
+    }
+    .matrix-table td {
+      padding: 16px 20px; font-size: 15px; border-bottom: 1px solid rgba(148, 163, 184, 0.1);
+      vertical-align: middle;
+    }
+    .badge-invar { background: rgba(244, 63, 94, 0.2); color: #fda4af; padding: 4px 10px; border-radius: 6px; font-weight: 700; font-size: 13px; }
+    .badge-mer { background: rgba(14, 165, 233, 0.2); color: #7dd3fc; padding: 4px 10px; border-radius: 6px; font-weight: 700; font-size: 13px; }
+    .badge-code { background: rgba(16, 185, 129, 0.2); color: #86efac; padding: 4px 10px; border-radius: 6px; font-weight: 700; font-size: 13px; font-family: monospace; }
+
+    .bottom-bar {
+      position: absolute; bottom: 0; left: 0; right: 0; height: 220px;
+      background: rgba(6, 12, 24, 0.95); border-top: 1px solid rgba(16, 185, 129, 0.3);
+      backdrop-filter: blur(16px); display: flex; align-items: center;
+      padding: 0 60px; gap: 40px; z-index: 50;
+    }
+    .avatars-row { display: flex; gap: 30px; align-items: center; }
+    .avatar-wrapper {
+      display: flex; flex-direction: column; align-items: center; gap: 8px;
+      opacity: 0.45; transform: scale(0.92); transition: all 0.3s ease;
+    }
+    .avatar-wrapper.active {
+      opacity: 1; transform: scale(1.05);
+    }
+    .avatar-circle {
+      width: 90px; height: 90px; border-radius: 50%;
+      border: 3px solid transparent; overflow: hidden; position: relative;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.6);
+    }
+    .avatar-wrapper.active .avatar-circle {
+      border-color: #34d399;
+      box-shadow: 0 0 25px rgba(16, 185, 129, 0.6);
+    }
+    .avatar-img { width: 100%; height: 100%; object-fit: cover; }
+    .avatar-name { font-size: 14px; font-weight: 700; color: #94a3b8; }
+    .avatar-wrapper.active .avatar-name { color: #34d399; }
+
+    .speech-box {
+      flex: 1; background: rgba(15, 23, 42, 0.85); border: 1.5px solid rgba(16, 185, 129, 0.35);
+      border-radius: 16px; padding: 20px 28px; display: flex; flex-direction: column;
+      justify-content: center; min-height: 140px;
+    }
+    .speech-speaker { font-size: 15px; font-weight: 800; color: #34d399; margin-bottom: 6px; }
+    .speech-text { font-size: 21px; font-weight: 600; color: #f8fafc; line-height: 1.45; }
+
+    #blackCurtain {
+      position: absolute; inset: 0; background: #000000; z-index: 9999;
+      pointer-events: none; transition: opacity 0.05s linear;
+    }
+  </style>
+</head>
+<body>
+  <div id="blackCurtain"></div>
+  <div class="grid-bg"></div>
+  <div class="glow-ambient"></div>
+
+  <div class="top-bar">
+    <div class="top-title">
+      <div class="badge-ep">Ep. 3 · Implementação &amp; Código Vivo</div>
+      <div class="series-name">IDD na Prática: <span>A Amarração Semântica do App</span></div>
+    </div>
+    <div class="timer-box" id="timer">00:00</div>
+  </div>
+
+  <div class="stage">
+    <!-- SLIDE 1 -->
+    <div class="slide-view active" id="slide1">
+      <div class="slide-header">
+        <div class="slide-category">Matriz de Rastreabilidade IDD</div>
+        <div class="slide-title">A Amarração: Intenção → Invariante → MER/UML → Código</div>
+        <div class="slide-subtitle">Como cada linha gerada pela IA responde a um contrato sagrado de negócio</div>
+      </div>
+      <table class="matrix-table">
+        <thead>
+          <tr>
+            <th>Intenção Humana</th>
+            <th>Invariante Sagrada</th>
+            <th>Modelo MER &amp; UML</th>
+            <th>Código Concreto</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Zero Espera na Cadeira</strong><br><span style="color:#94a3b8; font-size:13px;">Cliente nunca espera por reserva dupla</span></td>
+            <td><span class="badge-invar">Cadeira Única</span><br><span style="color:#cbd5e1; font-size:13px;">Proibição de overlap temporal</span></td>
+            <td><span class="badge-mer">Agendamento.ts</span><br><span style="color:#cbd5e1; font-size:13px;">Método validarCadeiraUnica()</span></td>
+            <td><span class="badge-code">TRIGGER PostgreSQL</span><br><span style="color:#86efac; font-size:12px;">fn_check_cadeira_unica()</span></td>
+          </tr>
+          <tr>
+            <td><strong>Comissão Justa Sem Atrito</strong><br><span style="color:#94a3b8; font-size:13px;">Rateio exato no fechamento</span></td>
+            <td><span class="badge-invar">Centavos Inteiros</span><br><span style="color:#cbd5e1; font-size:13px;">Tolerância zero a dízimas</span></td>
+            <td><span class="badge-mer">ItemServico (MER)</span><br><span style="color:#cbd5e1; font-size:13px;">preco_congelado_centavos</span></td>
+            <td><span class="badge-code">TypeScript Domain</span><br><span style="color:#86efac; font-size:12px;">Math.floor(v * pct / 100)</span></td>
+          </tr>
+          <tr>
+            <td><strong>Ordem do Atendimento</strong><br><span style="color:#94a3b8; font-size:13px;">Fluxo linear sem pular etapas</span></td>
+            <td><span class="badge-invar">Máquina de Estados</span><br><span style="color:#cbd5e1; font-size:13px;">Transição estrita finita</span></td>
+            <td><span class="badge-mer">Diag. Estados UML</span><br><span style="color:#cbd5e1; font-size:13px;">Reservado → Concluído</span></td>
+            <td><span class="badge-code">Domain State Machine</span><br><span style="color:#86efac; font-size:12px;">throw InvalidStateError</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- SLIDE 2 -->
+    <div class="slide-view" id="slide2">
+      <div class="slide-header">
+        <div class="slide-category">Blindagem a Nível de Banco de Dados</div>
+        <div class="slide-title">Código PostgreSQL: Trigger da Cadeira Única</div>
+        <div class="slide-subtitle">A infraestrutura rejeita ativamente qualquer tentativa de reserva sobreposta</div>
+      </div>
+      <div class="code-grid">
+        <div class="code-card">
+          <div class="code-header">
+            <span class="code-title">schema.sql (Trigger Anti-Sobreposição)</span>
+            <span class="code-tag">PostgreSQL 16</span>
+          </div>
+          <div class="code-content"><span class="comm">-- INVARIANTE SAGRADA 1: CADEIRA ÚNICA</span>
+<span class="kw">CREATE OR REPLACE FUNCTION</span> <span class="fn">fn_check_cadeira_unica</span>()
+<span class="kw">RETURNS TRIGGER AS</span> $$
+<span class="kw">BEGIN</span>
+  <span class="comm">-- Verifica se já existe agendamento ativo no mesmo horário</span>
+  <span class="kw">IF EXISTS</span> (
+    <span class="kw">SELECT</span> <span class="num">1</span> <span class="kw">FROM</span> agendamentos
+    <span class="kw">WHERE</span> profissional_id = NEW.profissional_id
+      <span class="kw">AND</span> status != <span class="str">'CANCELADO'</span>
+      <span class="kw">AND</span> tsrange(data_hora_inicio, data_hora_fim) &amp;&amp;
+          tsrange(NEW.data_hora_inicio, NEW.data_hora_fim)
+  ) <span class="kw">THEN</span>
+    <span class="kw">RAISE EXCEPTION</span> <span class="str">'VIOLACAO_INVARIANTE_CADEIRA_UNICA: Barbeiro ocupado!'</span>;
+  <span class="kw">END IF</span>;
+  <span class="kw">RETURN</span> NEW;
+<span class="kw">END</span>;
+$$ <span class="kw">LANGUAGE</span> plpgsql;</div>
+        </div>
+
+        <div class="code-card">
+          <div class="code-header">
+            <span class="code-title">Tabela com Snapshot Imutável</span>
+            <span class="code-tag">Integridade Histórica</span>
+          </div>
+          <div class="code-content"><span class="comm">-- INVARIANTE SAGRADA 2: PREÇO CONGELADO</span>
+<span class="kw">CREATE TABLE</span> agendamento_itens (
+  id <span class="type">UUID PRIMARY KEY</span>,
+  agendamento_id <span class="type">UUID REFERENCES</span> agendamentos(id),
+  servico_id <span class="type">UUID REFERENCES</span> servicos(id),
+  
+  <span class="comm">-- Valores congelados em centavos (sem dízima!)</span>
+  preco_centavos_congelado <span class="type">INTEGER NOT NULL</span>,
+  comissao_centavos <span class="type">INTEGER NOT NULL</span>,
+  duracao_minutos <span class="type">INTEGER NOT NULL</span>,
+  
+  <span class="kw">CONSTRAINT</span> chk_preco_positivo
+    <span class="kw">CHECK</span> (preco_centavos_congelado &gt; <span class="num">0</span>)
+);</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 3 -->
+    <div class="slide-view" id="slide3">
+      <div class="slide-header">
+        <div class="slide-category">Lógica de Domínio &amp; Comportamento</div>
+        <div class="slide-title">Código TypeScript: Máquina de Estados e Comissão</div>
+        <div class="slide-subtitle">Transição estrita entre estados e cálculo exato no centavo</div>
+      </div>
+      <div class="code-grid">
+        <div class="code-card">
+          <div class="code-header">
+            <span class="code-title">domain_rules.ts (Máquina de Estados)</span>
+            <span class="code-tag">TypeScript Strict</span>
+          </div>
+          <div class="code-content"><span class="kw">export type</span> <span class="type">Status</span> = <span class="str">'RESERVADO'</span> | <span class="str">'CONFIRMADO'</span> | <span class="str">'NA_CADEIRA'</span> | <span class="str">'CONCLUIDO'</span>;
+
+<span class="kw">export class</span> <span class="type">AgendamentoDominio</span> {
+  <span class="kw">public</span> status: <span class="type">Status</span> = <span class="str">'RESERVADO'</span>;
+
+  <span class="fn">iniciarAtendimento</span>(): <span class="type">void</span> {
+    <span class="kw">if</span> (<span class="kw">this</span>.status !== <span class="str">'CONFIRMADO'</span>) {
+      <span class="kw">throw new</span> <span class="type">Error</span>(<span class="str">'Apenas reservas confirmadas vão para a cadeira!'</span>);
+    }
+    <span class="kw">this</span>.status = <span class="str">'NA_CADEIRA'</span>;
+  }
+
+  <span class="fn">concluirAtendimento</span>(): <span class="type">void</span> {
+    <span class="kw">if</span> (<span class="kw">this</span>.status !== <span class="str">'NA_CADEIRA'</span>) {
+      <span class="kw">throw new</span> <span class="type">Error</span>(<span class="str">'Não é possível concluir sem passar pela cadeira!'</span>);
+    }
+    <span class="kw">this</span>.status = <span class="str">'CONCLUIDO'</span>;
+  }
+}</div>
+        </div>
+
+        <div class="code-card">
+          <div class="code-header">
+            <span class="code-title">Cálculo de Comissão em Centavos</span>
+            <span class="code-tag">Precisão Monetária</span>
+          </div>
+          <div class="code-content"><span class="comm">// Cálculo matemático puro em centavos inteiros</span>
+<span class="kw">export function</span> <span class="fn">calcularComissaoCentavos</span>(
+  precoTotalCentavos: <span class="type">number</span>,
+  comissaoPct: <span class="type">number</span>
+): { barbeiroCentavos: <span class="type">number</span>; casaCentavos: <span class="type">number</span> } {
+  <span class="kw">if</span> (comissaoPct &lt; <span class="num">0</span> || comissaoPct &gt; <span class="num">100</span>) {
+    <span class="kw">throw new</span> <span class="type">Error</span>(<span class="str">'Percentual de comissão inválido'</span>);
+  }
+
+  <span class="comm">// Math.floor garante conservação monetária sem dízima</span>
+  <span class="kw">const</span> barbeiroCentavos = Math.floor((precoTotalCentavos * comissaoPct) / <span class="num">100</span>);
+  <span class="kw">const</span> casaCentavos = precoTotalCentavos - barbeiroCentavos;
+
+  <span class="kw">return</span> { barbeiroCentavos, casaCentavos };
+}</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 4 -->
+    <div class="slide-view" id="slide4">
+      <div class="slide-header">
+        <div class="slide-category">O Aplicativo Vivo em Produção</div>
+        <div class="slide-title">Da Intenção ao App Funcionando no Celular</div>
+        <div class="slide-subtitle">A barbearia automatizada com zero linhas de código digitadas pelo empreendedor</div>
+      </div>
+      <div style="display:grid; grid-template-columns: 1fr 1fr; gap:30px; flex:1; align-items:center;">
+        <div style="background: rgba(15, 23, 42, 0.85); border: 1.5px solid rgba(16, 185, 129, 0.35); border-radius:18px; padding:30px;">
+          <h3 style="color:#34d399; font-size:24px; margin-bottom:14px;">💈 Barbearia Imperial App</h3>
+          <p style="color:#cbd5e1; font-size:17px; line-height:1.6; margin-bottom:16px;">
+            O cliente seleciona <strong>Corte Tradicional (R$ 35,00)</strong> + <strong>Barba Terapia (R$ 30,00)</strong>.
+            O aplicativo bloqueia 50 minutos na agenda do Barbeiro Lucas, garantindo que o próximo cliente só possa agendar a partir das 10:50.
+          </p>
+          <div style="display:flex; gap:12px; margin-top:20px;">
+            <span style="background:rgba(16,185,129,0.2); color:#6ee7b7; padding:8px 16px; border-radius:8px; font-weight:700;">✅ Total: R$ 65,00</span>
+            <span style="background:rgba(56,189,248,0.2); color:#7dd3fc; padding:8px 16px; border-radius:8px; font-weight:700;">✂️ Lucas (60%): R$ 39,00</span>
+            <span style="background:rgba(251,191,36,0.2); color:#fde68a; padding:8px 16px; border-radius:8px; font-weight:700;">🏠 Casa (40%): R$ 26,00</span>
+          </div>
+        </div>
+
+        <div style="background: #020617; border: 1.5px solid #1e293b; border-radius:18px; padding:28px;">
+          <h4 style="color:#fbbf24; font-size:18px; margin-bottom:10px;">📋 Próximos Passos Metodológicos:</h4>
+          <ul style="color:#cbd5e1; font-size:16px; line-height:1.8; margin-left:20px;">
+            <li><strong>Episódio 3B:</strong> O Diagrama de Classes UML &amp; Casos de Uso detalhados pela IA</li>
+            <li><strong>Episódio 4:</strong> A Bateria de 240 Testes Automatizados anti-regressão</li>
+            <li><strong>Episódio 4B:</strong> O Paradigma Confirm-Once e Deploy Autônomo em 4 segundos</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="bottom-bar">
+    <div class="avatars-row">
+      <div class="avatar-wrapper" id="av_eliezer">
+        <div class="avatar-circle">
+          <img class="avatar-img" src="../../../motion_graphics_renderer/assets/avatars/eliezer.png" alt="Eliézer">
+        </div>
+        <div class="avatar-name">Eliézer Rosa</div>
+      </div>
+      <div class="avatar-wrapper" id="av_leigo">
+        <div class="avatar-circle">
+          <img class="avatar-img" src="../../../motion_graphics_renderer/assets/avatars/leigo.png" alt="Usuária Leiga">
+        </div>
+        <div class="avatar-name">Usuária Leiga</div>
+      </div>
+      <div class="avatar-wrapper" id="av_ia">
+        <div class="avatar-circle">
+          <img class="avatar-img" src="../../../motion_graphics_renderer/assets/avatars/ia.png" alt="IA Compilador">
+        </div>
+        <div class="avatar-name">IA Compilador</div>
+      </div>
+    </div>
+
+    <div class="speech-box">
+      <div class="speech-speaker" id="speakerName">Aguardando início...</div>
+      <div class="speech-text" id="speechText">O episódio começará em instantes.</div>
+    </div>
+  </div>
+
+  <script>
+    let timelineItems = [];
+    let currentIndex = -1;
+    let animInterval = null;
+
+    window.setTimeline = function(items) {
+      timelineItems = items;
+      console.log('Timeline configurada com ' + items.length + ' segmentos.');
+    };
+
+    window.startPresentation = function() {
+      const curtain = document.getElementById('blackCurtain');
+      if (curtain) curtain.style.display = 'none';
+
+      let currentSec = 0;
+      animInterval = setInterval(() => {
+        currentSec += 0.1;
+        const mins = Math.floor(currentSec / 60).toString().padStart(2, '0');
+        const secs = Math.floor(currentSec % 60).toString().padStart(2, '0');
+        document.getElementById('timer').innerText = `${mins}:${secs}`;
+
+        const activeItem = timelineItems.find(it => currentSec >= it.startSec && currentSec < it.endSec);
+        if (activeItem) {
+          updateDisplay(activeItem);
+        }
+      }, 100);
+    };
+
+    function updateDisplay(item) {
+      if (currentIndex === item.index) return;
+      currentIndex = item.index;
+
+      ['av_eliezer', 'av_leigo', 'av_ia'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.classList.remove('active');
+      });
+      const currentAv = document.getElementById('av_' + item.who);
+      if (currentAv) currentAv.classList.add('active');
+
+      document.getElementById('speakerName').innerText = item.actor;
+      document.getElementById('speechText').innerText = item.text;
+
+      for (let i = 1; i <= 4; i++) {
+        const s = document.getElementById('slide' + i);
+        if (s) s.classList.remove('active');
+      }
+      const targetSlide = document.getElementById('slide' + item.slide);
+      if (targetSlide) targetSlide.classList.add('active');
+    }
+  </script>
+</body>
+</html>

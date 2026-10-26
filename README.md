@@ -137,6 +137,8 @@ idd-ide/
 ├── schemas/
 │   └── intent.schema.json      # JSON Schema do .intent.yaml
 │
+├── paradigma/                  # Acervo consolidado do Paradigma IDD (docs, casos, canal YT, mídias)
+│
 └── docs/
     ├── ARCHITECTURE.md         # Arquitetura detalhada dos 5 componentes
     ├── ROADMAP.md              # Fases de implementação

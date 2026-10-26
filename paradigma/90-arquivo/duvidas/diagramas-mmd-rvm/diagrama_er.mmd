@@ -1,0 +1,76 @@
+erDiagram
+    APOSTILA ||--o{ SEMANA : contem
+    SEMANA ||--o{ SECAO : contem
+    SEMANA ||--o| EVENTO : pode_ter
+    SECAO ||--o{ PARTE : contem
+    PUBLICADOR }o--o{ PARTE : elegivel_para
+    
+    APOSTILA {
+        string id PK
+        string codigo
+        date mes_inicio
+        date mes_fim
+        string idioma
+    }
+    
+    SEMANA {
+        string id PK
+        string apostila_id FK
+        string titulo
+        date data_inicio
+        date data_fim
+        string leitura_biblica
+        json canticos
+    }
+    
+    SECAO {
+        string id PK
+        string semana_id FK
+        string tipo
+        string titulo
+        string cor
+        int ordem
+    }
+    
+    PARTE {
+        string id PK
+        string secao_id FK
+        string tipo
+        string titulo
+        int duracao
+        int ordem
+        string indicado_por
+        string publico_alvo
+        string tipo_conteudo
+        string nivel
+        boolean requer_ajudante
+        boolean tem_sala_b
+        json cenarios_permitidos
+    }
+    
+    EVENTO {
+        string id PK
+        string semana_id FK
+        string tipo
+        string descricao
+        string impacto
+        boolean reduz_partes
+        int minutos_recapitulacao
+    }
+    
+    PUBLICADOR {
+        string id PK
+        string nome
+        string telefone
+        string genero
+        date data_nascimento
+        date data_batismo
+        string privilegio
+        json capacitacoes
+        string categoria
+        json datas_indisponiveis
+        json periodos
+        string tipo_exclusao
+        string motivo_exclusao
+        date exclusao_ate
+    }

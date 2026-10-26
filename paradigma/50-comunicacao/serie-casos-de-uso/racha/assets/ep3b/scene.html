@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>IDD Racha de Pix - Ep. 3B Metodologia: UML Preliminar com IA</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, sans-serif; }
+    body {
+      width: 1920px; height: 1080px; background: #030712; color: #f8fafc;
+      overflow: hidden; position: relative;
+    }
+    .grid-bg {
+      position: absolute; inset: 0;
+      background-image: linear-gradient(rgba(56, 189, 248, 0.05) 1px, transparent 1px),
+                        linear-gradient(90deg, rgba(56, 189, 248, 0.05) 1px, transparent 1px);
+      background-size: 60px 60px;
+    }
+    .glow-ambient {
+      position: absolute; width: 1100px; height: 1100px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(14, 165, 233, 0.28) 0%, rgba(6, 182, 212, 0.16) 45%, transparent 70%);
+      top: 50%; left: 50%; transform: translate(-50%, -50%); filter: blur(90px); pointer-events: none;
+    }
+
+    /* TOP BAR */
+    .top-bar {
+      position: absolute; top: 0; left: 0; right: 0; height: 80px;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 60px; background: rgba(15, 23, 42, 0.88);
+      border-bottom: 1px solid rgba(56, 189, 248, 0.35); backdrop-filter: blur(12px); z-index: 50;
+    }
+    .top-title { display: flex; align-items: center; gap: 18px; }
+    .badge-ep {
+      background: linear-gradient(135deg, #0284c7, #0369a1); color: white;
+      font-weight: 800; font-size: 16px; letter-spacing: 1.5px;
+      padding: 6px 18px; border-radius: 999px; text-transform: uppercase;
+      box-shadow: 0 0 20px rgba(56, 189, 248, 0.4);
+    }
+    .series-name { font-size: 20px; font-weight: 700; color: #cbd5e1; }
+    .series-name span { color: #38bdf8; font-weight: 800; }
+    .timer-box { font-size: 18px; font-family: monospace; color: #38bdf8; font-weight: 700; }
+
+    /* STAGE */
+    .stage {
+      position: absolute; top: 80px; bottom: 220px; left: 0; right: 0;
+      padding: 40px 60px; display: flex; flex-direction: column; z-index: 20;
+    }
+    .slide-view {
+      display: none; width: 100%; height: 100%; flex-direction: column;
+      animation: fadeIn 0.4s ease-out forwards;
+    }
+    .slide-view.active { display: flex; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+    .slide-header { margin-bottom: 25px; }
+    .slide-category { font-size: 16px; font-weight: 800; color: #38bdf8; text-transform: uppercase; letter-spacing: 2px; }
+    .slide-title { font-size: 40px; font-weight: 900; color: #ffffff; margin-top: 4px; }
+    .slide-subtitle { font-size: 20px; color: #94a3b8; margin-top: 6px; }
+
+    .cards-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; flex: 1; }
+    .feature-card {
+      background: rgba(15, 23, 42, 0.85); border: 1.5px solid rgba(56, 189, 248, 0.35);
+      border-radius: 18px; padding: 28px; display: flex; flex-direction: column;
+      backdrop-filter: blur(14px); box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+    }
+    .card-icon { font-size: 38px; margin-bottom: 16px; }
+    .card-title { font-size: 24px; font-weight: 800; color: #38bdf8; margin-bottom: 12px; }
+    .card-desc { font-size: 17px; color: #e2e8f0; line-height: 1.5; flex: 1; }
+    .card-tag {
+      margin-top: 15px; align-self: flex-start; background: rgba(56, 189, 248, 0.15);
+      border: 1px solid #38bdf8; color: #bae6fd; padding: 4px 12px; border-radius: 8px;
+      font-size: 13px; font-weight: 700;
+    }
+
+    /* SLIDE 2: MÁQUINA DE ESTADOS (FSM) */
+    .fsm-container { display: flex; flex-direction: column; gap: 20px; flex: 1; justify-content: center; }
+    .fsm-pipeline {
+      display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px; align-items: center;
+    }
+    .fsm-state-box {
+      background: rgba(15, 23, 42, 0.9); border: 1.5px solid rgba(56, 189, 248, 0.4);
+      border-radius: 14px; padding: 20px 16px; display: flex; flex-direction: column; align-items: center; text-align: center;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+    }
+    .fsm-state-badge {
+      font-size: 11px; font-weight: 800; padding: 3px 8px; border-radius: 6px; margin-bottom: 8px;
+    }
+    .fsm-state-title { font-size: 17px; font-weight: 800; color: #f8fafc; margin-bottom: 6px; }
+    .fsm-state-desc { font-size: 13px; color: #94a3b8; line-height: 1.4; }
+
+    /* SLIDE 3: TERMINAL & CHAT */
+    .terminal-container { display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 28px; flex: 1; }
+    .terminal-window {
+      background: #020617; border: 1.5px solid #1e293b; border-radius: 16px;
+      padding: 24px; font-family: 'Consolas', monospace; font-size: 14px;
+      color: #38bdf8; display: flex; flex-direction: column;
+    }
+    .terminal-header { display: flex; gap: 8px; margin-bottom: 16px; border-bottom: 1px solid #1e293b; padding-bottom: 12px; }
+    .t-dot { width: 12px; height: 12px; border-radius: 50%; }
+    .t-red { background: #ef4444; } .t-yellow { background: #f59e0b; } .t-green { background: #10b981; }
+    .terminal-body { flex: 1; line-height: 1.6; color: #e2e8f0; }
+
+    .chat-card {
+      background: rgba(15, 23, 42, 0.85); border: 1.5px solid rgba(56, 189, 248, 0.35);
+      border-radius: 16px; padding: 22px; display: flex; flex-direction: column;
+    }
+    .chat-bubble {
+      background: rgba(30, 41, 59, 0.85); border: 1px solid rgba(56, 189, 248, 0.25);
+      border-radius: 14px; padding: 16px; margin-bottom: 14px; line-height: 1.45; font-size: 15px;
+    }
+    .chat-author { font-size: 14px; font-weight: 800; margin-bottom: 6px; }
+    .author-ia { color: #38bdf8; }
+    .author-eliezer { color: #38bdf8; }
+
+    /* BOTTOM BAR */
+    .bottom-bar {
+      position: absolute; bottom: 0; left: 0; right: 0; height: 220px;
+      background: rgba(10, 15, 29, 0.96); border-top: 1px solid rgba(56, 189, 248, 0.35);
+      backdrop-filter: blur(16px); display: flex; align-items: center;
+      padding: 0 60px; gap: 40px; z-index: 50;
+    }
+    .avatars-container { display: flex; gap: 30px; align-items: center; }
+    .avatar-card {
+      display: flex; flex-direction: column; align-items: center;
+      transition: all 0.3s ease; opacity: 0.45; transform: scale(0.95);
+    }
+    .avatar-card.active { opacity: 1; transform: scale(1.05); }
+    .avatar-circle {
+      width: 90px; height: 90px; border-radius: 50%; overflow: hidden;
+      border: 3px solid #334155; position: relative; background: #0f172a;
+    }
+    .avatar-card.active .avatar-circle {
+      border-color: #38bdf8; box-shadow: 0 0 25px rgba(56, 189, 248, 0.7);
+    }
+    .avatar-circle img { width: 100%; height: 100%; object-fit: cover; }
+    .avatar-name { font-size: 15px; font-weight: 800; color: #f8fafc; margin-top: 8px; }
+    .avatar-role { font-size: 12px; color: #94a3b8; font-weight: 600; }
+
+    .subtitles-container {
+      flex: 1; height: 140px; background: rgba(15, 23, 42, 0.8);
+      border: 1.5px solid rgba(56, 189, 248, 0.35); border-radius: 16px;
+      padding: 20px 28px; display: flex; flex-direction: column; justify-content: center;
+    }
+    .sub-speaker { font-size: 15px; font-weight: 800; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 6px; }
+    .speaker-leigo { color: #f472b6; }
+    .speaker-eliezer { color: #38bdf8; }
+    .speaker-ia { color: #34d399; }
+    .sub-text { font-size: 21px; font-weight: 600; color: #f8fafc; line-height: 1.45; }
+
+    #black-curtain { position: absolute; inset: 0; background: #000; z-index: 9999; pointer-events: none; }
+  </style>
+</head>
+<body>
+  <div id="black-curtain"></div>
+  <div class="glow-ambient"></div>
+  <div class="grid-bg"></div>
+
+  <div class="top-bar">
+    <div class="top-title">
+      <div class="badge-ep">EPISÓDIO 3B · METODOLOGIA IDD</div>
+      <div class="series-name">IDD NA PRÁTICA · <span>O 3º PASSO SAGRADO: UML PRELIMINAR COM IA</span></div>
+    </div>
+    <div class="timer-box" id="clock-display">00:00.0</div>
+  </div>
+
+  <div class="stage">
+    <!-- SLIDE 1: O 3º PASSO METODOLÓGICO -->
+    <div class="slide-view active" id="slide-1">
+      <div class="slide-header">
+        <div class="slide-category">METODOLOGIA IDD • O 3º PASSO SAGRADO</div>
+        <div class="slide-title">UML Preliminar: Máquina de Estados &amp; Comportamento com IA</div>
+        <div class="slide-subtitle">Como orquestrar o ciclo de vida formal da mesa antes de compilar código</div>
+      </div>
+      <div class="cards-grid">
+        <div class="feature-card">
+          <div class="card-icon">🎭</div>
+          <div class="card-title">1. Atores &amp; Casos de Uso</div>
+          <div class="card-desc">Papéis estritos: Amigos marcam itens; Pagador comanda fechamento; Garçom atesta mesa.</div>
+          <div class="card-tag">CASOS DE USO</div>
+        </div>
+        <div class="feature-card">
+          <div class="card-icon">⚙️</div>
+          <div class="card-title">2. Máquina de Estados (FSM)</div>
+          <div class="card-desc">Transições determinísticas blindam a aplicação contra saltos de etapas e estados inconsistentes.</div>
+          <div class="card-tag">COMPORTAMENTO</div>
+        </div>
+        <div class="feature-card">
+          <div class="card-icon">🔄</div>
+          <div class="card-title">3. Reversão Atômica</div>
+          <div class="card-desc">A governança do dinheiro exige que reabrir uma mesa anule atomicamente os QR Codes anteriores.</div>
+          <div class="card-tag">GOVERNANÇA</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 2: MÁQUINA DE ESTADOS DA MESA -->
+    <div class="slide-view" id="slide-2">
+      <div class="slide-header">
+        <div class="slide-category">MÁQUINA DE ESTADOS FINITOS (FSM) DA MESA</div>
+        <div class="slide-title">O Ciclo de Vida Inviolável do Rateio de Contas</div>
+        <div class="slide-subtitle">Cada transição é acionada por um evento auditado no sistema</div>
+      </div>
+      <div class="fsm-container">
+        <div class="fsm-pipeline">
+          <div class="fsm-state-box">
+            <span class="fsm-state-badge" style="background:rgba(2,132,199,0.2); color:#38bdf8; border:1px solid #0284c7;">INICIAL</span>
+            <div class="fsm-state-title">1. ABERTA</div>
+            <div class="fsm-state-desc">Mesa ativa. Amigos entram e associam itens consumidos livremente.</div>
+          </div>
+          <div class="fsm-state-box">
+            <span class="fsm-state-badge" style="background:rgba(245,158,11,0.2); color:#fbbf24; border:1px solid #f59e0b;">TRAVA</span>
+            <div class="fsm-state-title">2. EM FECHAMENTO</div>
+            <div class="fsm-state-desc">Novos pedidos bloqueados. Conferência da taxa de serviço.</div>
+          </div>
+          <div class="fsm-state-box">
+            <span class="fsm-state-badge" style="background:rgba(168,85,247,0.2); color:#c084fc; border:1px solid #a855f7;">CÁLCULO</span>
+            <div class="fsm-state-title">3. COTAS GERADAS</div>
+            <div class="fsm-state-desc">Centavos atômicos distribuídos. QR Codes Pix gerados por pessoa.</div>
+          </div>
+          <div class="fsm-state-box">
+            <span class="fsm-state-badge" style="background:rgba(16,185,129,0.2); color:#34d399; border:1px solid #10b981;">DINÂMICO</span>
+            <div class="fsm-state-title">4. LIQUIDAÇÃO PARCIAL</div>
+            <div class="fsm-state-desc">Pagamentos Pix individuais baixados conforme os amigos pagam.</div>
+          </div>
+          <div class="fsm-state-box">
+            <span class="fsm-state-badge" style="background:rgba(34,197,94,0.3); color:#4ade80; border:1px solid #22c55e;">TERMINAL</span>
+            <div class="fsm-state-title">5. FINALIZADA</div>
+            <div class="fsm-state-desc">Saldo aberto zero centavos. Mesa arquivada com sucesso.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 3: TERMINAL DA IA & GOVERNANÇA -->
+    <div class="slide-view" id="slide-3">
+      <div class="slide-header">
+        <div class="slide-category">GOVERNANÇA COMPORTAMENTAL NO TERMINAL</div>
+        <div class="slide-title">Terminal da IA: Transição Reversa para Saideira na Mesa</div>
+        <div class="slide-subtitle">A IA submete um caso de borda dinâmico para validação do orquestrador</div>
+      </div>
+      <div class="terminal-container">
+        <div class="terminal-window">
+          <div class="terminal-header">
+            <div class="t-dot t-red"></div>
+            <div class="t-dot t-yellow"></div>
+            <div class="t-dot t-green"></div>
+            <span style="margin-left: 10px; font-weight: bold; color: #94a3b8;">idd-fsm-engine ~ v3.0.0</span>
+          </div>
+          <div class="terminal-body">
+            <p>> Validando grafo de transições da Máquina de Estados...</p>
+            <p style="color:#f59e0b;">[EVENTO INESPERADO] Pedido de novo chope submetido no estado 'COTAS GERADAS'.</p>
+            <p>> Consulta ao Orquestrador Eliézer Rosa:</p>
+            <p style="color:#38bdf8;">"Se permitirmos a transição reversa para 'ABERTA', os QR Codes Pix gerados com valores antigos podem ser pagos por engano. Qual é a regra de transição?"</p>
+            <p style="color:#34d399;">✔ Resposta: Transição reversa autorizada, com anulação atômica imediata de todos os QR Codes anteriores e recálculo da Invariante da Soma Zero antes do próximo fechamento.</p>
+            <p style="color:#10b981; font-weight: bold;">[STATUS] TRANSIÇÃO REVERSA BLINDADA IMPLEMENTADA COM SUCESSO.</p>
+          </div>
+        </div>
+
+        <div class="chat-card">
+          <div class="chat-bubble">
+            <div class="chat-author author-ia">🤖 IA Compilador</div>
+            <div>Orquestrador Eliézer e Usuária Leiga, ao validar o grafo de transições da Máquina de Estados, identifiquei um cenário dinâmico: se um participante solicitar um novo chope após a geração das cotas, a máquina de estados deve bloquear a adição ou permitir a transição reversa para 'ABERTA' com anulação atômica dos QR Codes anteriores?</div>
+          </div>
+          <div class="chat-bubble">
+            <div class="chat-author author-eliezer">👤 Eliézer Rosa</div>
+            <div>Excelente observação! A transição reversa para 'ABERTA' é autorizada, desde que anule atomicamente os QR Codes gerados e exija novo cálculo da Invariante da Soma Zero antes do próximo fechamento. A governança do dinheiro exige estado consistente!</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 4: SÍNTESE E PRÓXIMO PASSO -->
+    <div class="slide-view" id="slide-4">
+      <div class="slide-header">
+        <div class="slide-category">SÍNTESE DOS 3 PASSOS SAGRADOS</div>
+        <div class="slide-title">Fundações Completas para a Compilação do App</div>
+        <div class="slide-subtitle">O software agora pode ser codificado sem nenhum risco de retrabalho</div>
+      </div>
+      <div class="cards-grid">
+        <div class="feature-card">
+          <div class="card-icon">1️⃣</div>
+          <div class="card-title">Passo 1: Intenções</div>
+          <div class="card-desc">Linguagem humana blindando as Invariantes Sagradas da Soma Zero e Não-Cobrança Indevida.</div>
+          <div class="card-tag">EPISÓDIO 1B</div>
+        </div>
+        <div class="feature-card">
+          <div class="card-icon">2️⃣</div>
+          <div class="card-title">Passo 2: MER</div>
+          <div class="card-desc">Entidades conceituais com relação N:N de Consumo e Cotas Imutáveis com versionamento.</div>
+          <div class="card-tag">EPISÓDIO 2B</div>
+        </div>
+        <div class="feature-card">
+          <div class="card-icon">3️⃣</div>
+          <div class="card-title">Passo 3: UML</div>
+          <div class="card-desc">Máquina de estados finitos garantindo ciclo de vida inviolável e reversão atômica de Pix.</div>
+          <div class="card-tag">EPISÓDIO 3B</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BOTTOM BAR -->
+  <div class="bottom-bar">
+    <div class="avatars-container">
+      <div class="avatar-card" id="av-leigo">
+        <div class="avatar-circle">
+          <img src="../../avatares/avatar_usuaria_leiga.png" alt="Usuária Leiga">
+        </div>
+        <div class="avatar-name">Usuária Leiga</div>
+        <div class="avatar-role">Validadora de Domínio</div>
+      </div>
+      <div class="avatar-card" id="av-eliezer">
+        <div class="avatar-circle">
+          <img src="../../avatares/avatar_eliezer_oficial.png" alt="Eliézer Rosa">
+        </div>
+        <div class="avatar-name">Eliézer Rosa</div>
+        <div class="avatar-role">Orquestrador IDD</div>
+      </div>
+      <div class="avatar-card" id="av-ia">
+        <div class="avatar-circle">
+          <img src="../../avatares/avatar_ia_compilador.png" alt="IA Compilador">
+        </div>
+        <div class="avatar-name">IA Compilador</div>
+        <div class="avatar-role">Agente de Execução</div>
+      </div>
+    </div>
+    <div class="subtitles-container">
+      <div class="sub-speaker" id="sub-speaker">USUÁRIA LEIGA</div>
+      <div class="sub-text" id="sub-text">Iniciando episódio 3B metodológico: UML Preliminar com IA...</div>
+    </div>
+  </div>
+
+  <script>
+    let timelineItems = [];
+    let isRunning = false;
+    let startTimeMs = 0;
+
+    window.setTimeline = function(items) { timelineItems = items; };
+    window.stopPresentation = function() {
+      isRunning = false;
+    };
+    window.startPresentation = function() {
+      const curtain = document.getElementById('black-curtain');
+      if (curtain) {
+        curtain.style.opacity = '0';
+        setTimeout(() => curtain.remove(), 80);
+      }
+      isRunning = true;
+      startTimeMs = performance.now();
+      requestAnimationFrame(renderLoop);
+    };
+
+    function renderLoop(now) {
+      if (!isRunning) return;
+      const elapsedSec = (now - startTimeMs) / 1000;
+      const minutes = Math.floor(elapsedSec / 60);
+      const seconds = (elapsedSec % 60).toFixed(1);
+      document.getElementById('clock-display').innerText =
+        String(minutes).padStart(2, '0') + ':' + String(seconds).padStart(4, '0');
+
+      const curSeg = timelineItems.find(item => elapsedSec >= item.startSec && elapsedSec < item.endSec);
+      if (curSeg) {
+        const targetSlideId = 'slide-' + curSeg.slide;
+        document.querySelectorAll('.slide-view').forEach(s => {
+          if (s.id === targetSlideId) {
+            if (!s.classList.contains('active')) s.classList.add('active');
+          } else {
+            s.classList.remove('active');
+          }
+        });
+
+        ['leigo', 'eliezer', 'ia'].forEach(who => {
+          const el = document.getElementById('av-' + who);
+          if (el) {
+            if (curSeg.who === who) el.classList.add('active');
+            else el.classList.remove('active');
+          }
+        });
+
+        const speakerEl = document.getElementById('sub-speaker');
+        const textEl = document.getElementById('sub-text');
+        speakerEl.className = 'sub-speaker speaker-' + curSeg.who;
+        speakerEl.innerText = curSeg.actor;
+        textEl.innerText = curSeg.text;
+      }
+      requestAnimationFrame(renderLoop);
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,973 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quiz IDD — Base de Conhecimento</title>
+<style>
+  :root {
+    --bg: #0a0e1a;
+    --card: #111827;
+    --card2: #1a2235;
+    --accent: #6366f1;
+    --accent2: #818cf8;
+    --green: #22c55e;
+    --red: #ef4444;
+    --yellow: #f59e0b;
+    --text: #e2e8f0;
+    --muted: #94a3b8;
+    --border: #1e293b;
+    --ep1: #6366f1;
+    --ep2: #0ea5e9;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  /* ── HEADER ── */
+  header {
+    width: 100%;
+    background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
+    padding: 1rem 2rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    border-bottom: 1px solid var(--border);
+  }
+  header .logo {
+    font-size: 1.5rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, var(--accent), var(--ep2));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    letter-spacing: -0.5px;
+  }
+  header .subtitle {
+    color: var(--muted);
+    font-size: 0.85rem;
+  }
+
+  /* ── MAIN LAYOUT ── */
+  main {
+    width: 100%;
+    max-width: 900px;
+    padding: 2rem 1.5rem;
+    flex: 1;
+  }
+
+  /* ── AVATAR ── */
+  .avatar-container {
+    display: flex;
+    gap: 1.5rem;
+    align-items: flex-start;
+    margin-bottom: 2rem;
+  }
+  .avatar-wrap {
+    flex-shrink: 0;
+    position: relative;
+    width: 90px;
+    height: 90px;
+  }
+  .avatar-circle {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #1e1b4b, #0f172a);
+    border: 3px solid var(--accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.5rem;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.3s;
+  }
+  .avatar-circle.speaking {
+    border-color: var(--green);
+    animation: pulse-ring 1s ease-in-out infinite;
+  }
+  @keyframes pulse-ring {
+    0%   { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.4); }
+    70%  { box-shadow: 0 0 0 14px rgba(34, 197, 94, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); }
+  }
+  /* Mouth animation */
+  .avatar-mouth {
+    position: absolute;
+    bottom: 22px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 18px;
+    height: 3px;
+    background: #e2e8f0;
+    border-radius: 10px;
+    transition: height 0.08s ease;
+  }
+  .avatar-circle.speaking .avatar-mouth {
+    animation: talk 0.25s steps(3) infinite;
+  }
+  @keyframes talk {
+    0%   { height: 2px;  width: 14px; }
+    33%  { height: 8px;  width: 18px; border-radius: 0 0 10px 10px; }
+    66%  { height: 4px;  width: 16px; }
+    100% { height: 2px;  width: 14px; }
+  }
+  .avatar-badge {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    background: var(--accent);
+    color: white;
+    border-radius: 50%;
+    width: 22px;
+    height: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.65rem;
+    font-weight: 700;
+    border: 2px solid var(--bg);
+  }
+  .avatar-speech {
+    flex: 1;
+    background: var(--card2);
+    border: 1px solid var(--border);
+    border-radius: 0 16px 16px 16px;
+    padding: 1rem 1.2rem;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: var(--text);
+    position: relative;
+    min-height: 70px;
+    display: flex;
+    align-items: center;
+  }
+  .avatar-speech::before {
+    content: '';
+    position: absolute;
+    left: -10px;
+    top: 14px;
+    width: 0;
+    height: 0;
+    border-top: 8px solid transparent;
+    border-bottom: 8px solid transparent;
+    border-right: 10px solid var(--border);
+  }
+  .avatar-speech::after {
+    content: '';
+    position: absolute;
+    left: -8px;
+    top: 15px;
+    width: 0;
+    height: 0;
+    border-top: 7px solid transparent;
+    border-bottom: 7px solid transparent;
+    border-right: 9px solid var(--card2);
+  }
+  .avatar-name {
+    font-size: 0.7rem;
+    color: var(--muted);
+    margin-top: 4px;
+    text-align: center;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  /* ── PROGRESS ── */
+  .progress-bar {
+    background: var(--border);
+    border-radius: 999px;
+    height: 6px;
+    margin-bottom: 0.5rem;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent), var(--ep2));
+    border-radius: 999px;
+    transition: width 0.5s ease;
+  }
+  .progress-meta {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.75rem;
+    color: var(--muted);
+    margin-bottom: 1.5rem;
+  }
+  .ep-tag {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 999px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+  }
+  .ep-tag.ep1 { background: rgba(99,102,241,0.2); color: var(--ep1); border: 1px solid rgba(99,102,241,0.3); }
+  .ep-tag.ep2 { background: rgba(14,165,233,0.2); color: var(--ep2); border: 1px solid rgba(14,165,233,0.3); }
+
+  /* ── QUESTION CARD ── */
+  .question-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 2rem;
+    margin-bottom: 1.5rem;
+  }
+  .question-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1.2rem;
+  }
+  .q-number {
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    color: white;
+    font-weight: 800;
+    font-size: 0.85rem;
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .question-text {
+    font-size: 1.05rem;
+    font-weight: 600;
+    line-height: 1.5;
+    color: var(--text);
+  }
+
+  /* ── OPTIONS ── */
+  .options {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  .option-btn {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    background: var(--card2);
+    border: 1.5px solid var(--border);
+    border-radius: 12px;
+    padding: 0.9rem 1.1rem;
+    cursor: pointer;
+    text-align: left;
+    color: var(--text);
+    font-size: 0.92rem;
+    line-height: 1.5;
+    transition: all 0.2s ease;
+    font-family: inherit;
+    width: 100%;
+  }
+  .option-btn:hover:not(:disabled) {
+    border-color: var(--accent);
+    background: rgba(99,102,241,0.08);
+    transform: translateX(3px);
+  }
+  .option-btn .key {
+    flex-shrink: 0;
+    width: 26px;
+    height: 26px;
+    border-radius: 6px;
+    background: var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.8rem;
+    color: var(--muted);
+    transition: all 0.2s;
+  }
+  .option-btn.selected-correct {
+    border-color: var(--green);
+    background: rgba(34,197,94,0.08);
+  }
+  .option-btn.selected-correct .key {
+    background: var(--green);
+    color: white;
+  }
+  .option-btn.selected-wrong {
+    border-color: var(--red);
+    background: rgba(239,68,68,0.08);
+  }
+  .option-btn.selected-wrong .key {
+    background: var(--red);
+    color: white;
+  }
+  .option-btn.correct-reveal {
+    border-color: var(--green);
+    background: rgba(34,197,94,0.05);
+  }
+  .option-btn.correct-reveal .key {
+    background: rgba(34, 197, 94, 0.2);
+    color: var(--green);
+  }
+  .option-btn:disabled { cursor: default; }
+
+  /* ── FEEDBACK ── */
+  .feedback {
+    display: none;
+    border-radius: 10px;
+    padding: 0.8rem 1rem;
+    font-size: 0.88rem;
+    margin-top: 1rem;
+    line-height: 1.5;
+  }
+  .feedback.correct {
+    display: block;
+    background: rgba(34,197,94,0.1);
+    border: 1px solid rgba(34,197,94,0.3);
+    color: #86efac;
+  }
+  .feedback.wrong {
+    display: block;
+    background: rgba(239,68,68,0.08);
+    border: 1px solid rgba(239,68,68,0.2);
+    color: #fca5a5;
+  }
+
+  /* ── NAV BUTTON ── */
+  .nav-btn {
+    display: block;
+    width: 100%;
+    padding: 1rem;
+    background: linear-gradient(135deg, var(--accent), #4f46e5);
+    color: white;
+    font-weight: 700;
+    font-size: 1rem;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: inherit;
+    letter-spacing: 0.02em;
+  }
+  .nav-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(99,102,241,0.4); }
+  .nav-btn:disabled { opacity: 0.4; cursor: default; transform: none; box-shadow: none; }
+
+  /* ── SCORE SCREEN ── */
+  #score-screen {
+    display: none;
+    text-align: center;
+    padding: 3rem 2rem;
+  }
+  .score-ring {
+    width: 150px;
+    height: 150px;
+    margin: 0 auto 2rem;
+    position: relative;
+  }
+  .score-ring svg {
+    transform: rotate(-90deg);
+  }
+  .score-ring .ring-bg {
+    fill: none;
+    stroke: var(--border);
+    stroke-width: 10;
+  }
+  .score-ring .ring-fill {
+    fill: none;
+    stroke-width: 10;
+    stroke-linecap: round;
+    transition: stroke-dashoffset 1.5s ease;
+    stroke: var(--accent);
+  }
+  .score-center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 2.2rem;
+    font-weight: 900;
+    color: var(--text);
+  }
+  .score-label {
+    font-size: 0.8rem;
+    color: var(--muted);
+    display: block;
+    margin-top: -4px;
+  }
+  .score-title {
+    font-size: 1.8rem;
+    font-weight: 800;
+    margin-bottom: 0.5rem;
+    background: linear-gradient(135deg, var(--accent), var(--ep2));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .score-subtitle { color: var(--muted); margin-bottom: 2rem; font-size: 0.95rem; }
+  .score-breakdown {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin-bottom: 2rem;
+  }
+  .score-ep-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1rem 1.5rem;
+    min-width: 130px;
+  }
+  .score-ep-card .ep-score { font-size: 1.6rem; font-weight: 900; }
+  .score-ep-card .ep-label { font-size: 0.75rem; color: var(--muted); }
+  .restart-btn {
+    display: inline-block;
+    padding: 0.8rem 2rem;
+    background: var(--card2);
+    border: 1.5px solid var(--border);
+    border-radius: 12px;
+    color: var(--text);
+    font-weight: 600;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 0.9rem;
+    transition: all 0.2s;
+    margin-top: 0.5rem;
+  }
+  .restart-btn:hover { border-color: var(--accent); color: var(--accent); }
+
+  /* ── TRANSITION SCREEN ── */
+  #transition-screen {
+    display: none;
+    text-align: center;
+    padding: 3rem 1.5rem;
+  }
+  .transition-icon { font-size: 3rem; margin-bottom: 1rem; }
+  .transition-title { font-size: 1.4rem; font-weight: 700; margin-bottom: 0.5rem; }
+  .transition-sub { color: var(--muted); margin-bottom: 2rem; }
+
+  /* ── INTRO SCREEN ── */
+  #intro-screen {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 2rem 0;
+  }
+  .intro-badge {
+    background: rgba(99,102,241,0.15);
+    border: 1px solid rgba(99,102,241,0.3);
+    color: var(--accent2);
+    padding: 4px 14px;
+    border-radius: 999px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+  }
+  .intro-title {
+    font-size: 2.2rem;
+    font-weight: 900;
+    line-height: 1.2;
+    margin-bottom: 1rem;
+    max-width: 600px;
+  }
+  .intro-title span {
+    background: linear-gradient(135deg, var(--accent), var(--ep2));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .intro-desc {
+    color: var(--muted);
+    max-width: 520px;
+    line-height: 1.7;
+    margin-bottom: 2rem;
+    font-size: 0.95rem;
+  }
+  .intro-tags {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-bottom: 2.5rem;
+  }
+  .tag {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 4px 12px;
+    font-size: 0.78rem;
+    color: var(--muted);
+  }
+  .start-btn {
+    padding: 1rem 3rem;
+    background: linear-gradient(135deg, var(--accent), #4f46e5);
+    color: white;
+    font-weight: 700;
+    font-size: 1.1rem;
+    border: none;
+    border-radius: 14px;
+    cursor: pointer;
+    font-family: inherit;
+    transition: all 0.2s;
+    letter-spacing: 0.03em;
+  }
+  .start-btn:hover { transform: translateY(-2px); box-shadow: 0 12px 30px rgba(99,102,241,0.5); }
+
+  /* mute toggle */
+  .mute-btn {
+    position: fixed;
+    top: 1.2rem;
+    right: 1.2rem;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 6px 10px;
+    font-size: 1rem;
+    cursor: pointer;
+    color: var(--muted);
+    transition: all 0.2s;
+    z-index: 100;
+  }
+  .mute-btn:hover { color: var(--text); border-color: var(--accent); }
+
+  /* SCORE STARS */
+  .stars { font-size: 1.8rem; margin-bottom: 0.5rem; }
+</style>
+<style id="idd-selos-style">
+/* idd- : selos de status (Cânone v1.0-rc1) */
+html body #idd-status-banner{position:fixed;bottom:2px;left:50%;transform:translateX(-50%);z-index:2147483000;max-width:94vw;margin:0;padding:2px 10px;font:500 10.5px/1.45 system-ui,-apple-system,'Segoe UI',sans-serif;letter-spacing:0;color:#e6e6ee;background:rgba(12,12,24,.82);border:1px solid rgba(255,255,255,.16);border-radius:6px;pointer-events:none;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;-webkit-text-fill-color:currentColor;text-align:center}
+html body span.idd-selo{display:inline-block;margin-left:.45em;padding:1px 7px;border-radius:4px;font:600 11px/1.5 system-ui,-apple-system,'Segoe UI',sans-serif;letter-spacing:.2px;text-transform:none;vertical-align:middle;white-space:nowrap;color:#e8e8f0;-webkit-text-fill-color:currentColor;background:rgba(255,255,255,.08);background-clip:border-box;-webkit-background-clip:border-box;border:1px solid rgba(255,255,255,.22)}
+html body span.idd-selo.idd-selo-ok{color:#7ee2b8;border-color:rgba(126,226,184,.45);background:rgba(126,226,184,.10)}
+html body span.idd-selo.idd-selo-demo{color:#ffd27a;border-color:rgba(255,210,122,.45);background:rgba(255,210,122,.10)}
+html body span.idd-selo.idd-selo-prop{color:#c4b5fd;border-color:rgba(196,181,253,.45);background:rgba(196,181,253,.10)}
+</style>
+</head>
+<body>
+<div id="idd-status-banner" role="note">✅ CONCEITO — quiz dos Ep01–02 (ferramentas futuras: 🔭) · Cânone v1.0-rc1 · ✅ implementado · 🧪 demonstração · 🔭 proposta</div>
+
+<button class="mute-btn" id="muteBtn" title="Toggle audio">🔊</button>
+
+<header>
+  <div>
+    <div class="logo">IDD Knowledge Base</div>
+    <div class="subtitle">Base de Conhecimento — Quiz Interativo</div>
+  </div>
+</header>
+
+<main>
+
+<!-- ══ INTRO SCREEN ══ -->
+<div id="intro-screen">
+  <div class="avatar-container" style="justify-content:center;margin-bottom:2rem;">
+    <div class="avatar-wrap">
+      <div class="avatar-circle" id="intro-avatar">
+        🧑‍💻
+        <div class="avatar-mouth"></div>
+      </div>
+      <div class="avatar-badge">IDD</div>
+    </div>
+  </div>
+  <div class="avatar-speech" style="max-width:520px;border-radius:16px;margin-bottom:2rem;" id="intro-speech">
+    Aguardando...
+  </div>
+
+  <div class="intro-badge">Quiz Interativo</div>
+  <h1 class="intro-title">
+    Você entendeu o<br><span>Intent-Driven Development</span>?<span class="idd-selo idd-selo-ok">✅ CONCEITO</span>
+  </h1>
+  <p class="intro-desc">
+    10 perguntas baseadas nos dois primeiros episódios da série IDD.<br>
+    Cada resposta traz uma explicação do Eliezer em voz real.<br><small>Conceitos <span class="idd-selo idd-selo-ok">✅</span> · ferramentas futuras (prova formal, Intent IR etc.) <span class="idd-selo idd-selo-prop">🔭</span></small>
+  </p>
+  <div class="intro-tags">
+    <span class="tag">📺 Ep1 — O que é IDD?</span>
+    <span class="tag">📺 Ep2 — Comando Epistêmico</span>
+    <span class="tag">⏱ ~5 minutos</span>
+    <span class="tag">🎤 Avatar com voz real</span>
+    <span class="tag">10 questões</span>
+  </div>
+  <button class="start-btn" onclick="startQuiz()">Iniciar Quiz →</button>
+</div>
+
+<!-- ══ TRANSITION EP2 ══ -->
+<div id="transition-screen">
+  <div class="avatar-container" style="justify-content:center;">
+    <div class="avatar-wrap">
+      <div class="avatar-circle" id="trans-avatar">🧑‍💻<div class="avatar-mouth"></div></div>
+      <div class="avatar-badge">IDD</div>
+    </div>
+  </div>
+  <div class="avatar-speech" style="max-width:520px;border-radius:16px;margin:1rem auto 2rem;" id="trans-speech">
+    Preparando episódio 2...
+  </div>
+  <div class="transition-icon">🎯</div>
+  <div class="transition-title">Episódio 1 completo!</div>
+  <div class="transition-sub">Agora entramos no Ep2: Comando Epistêmico vs. Operacional</div>
+  <button class="nav-btn" style="max-width:300px;margin:0 auto;" onclick="continueToEp2()">Continuar →</button>
+</div>
+
+<!-- ══ QUIZ SCREEN ══ -->
+<div id="quiz-screen" style="display:none;">
+  <div class="avatar-container">
+    <div class="avatar-wrap">
+      <div class="avatar-circle" id="quiz-avatar">🧑‍💻<div class="avatar-mouth"></div></div>
+      <div class="avatar-badge">IDD</div>
+    </div>
+    <div>
+      <div class="avatar-speech" id="avatar-speech">Pronto para a pergunta!</div>
+      <div class="avatar-name">Eliezer Rosa — IDD</div>
+    </div>
+  </div>
+
+  <div class="progress-bar"><div class="progress-fill" id="progress-fill" style="width:0%"></div></div>
+  <div class="progress-meta">
+    <span id="progress-text">Pergunta 1 de 10</span>
+    <span id="score-text">✅ 0 &nbsp;|&nbsp; ❌ 0</span>
+  </div>
+
+  <div class="question-card">
+    <div class="question-header">
+      <div class="q-number" id="q-number">1</div>
+      <span class="ep-tag ep1" id="ep-tag">Ep1</span>
+      <div class="question-text" id="question-text">Carregando...</div>
+    </div>
+    <div class="options" id="options-container"></div>
+    <div class="feedback" id="feedback"></div>
+  </div>
+
+  <button class="nav-btn" id="next-btn" disabled onclick="nextQuestion()">
+    Próxima pergunta →
+  </button>
+</div>
+
+<!-- ══ SCORE SCREEN ══ -->
+<div id="score-screen">
+  <div class="avatar-container" style="justify-content:center;">
+    <div class="avatar-wrap">
+      <div class="avatar-circle" id="score-avatar">🧑‍💻<div class="avatar-mouth"></div></div>
+      <div class="avatar-badge">IDD</div>
+    </div>
+  </div>
+  <div class="avatar-speech" style="max-width:520px;border-radius:16px;margin:1rem auto 2rem;" id="score-speech">
+    Calculando...
+  </div>
+
+  <div class="stars" id="score-stars">⭐⭐⭐</div>
+  <div class="score-ring">
+    <svg viewBox="0 0 100 100" width="150" height="150">
+      <circle class="ring-bg" cx="50" cy="50" r="40"/>
+      <circle class="ring-fill" id="ring-fill" cx="50" cy="50" r="40"
+        stroke-dasharray="251.2"
+        stroke-dashoffset="251.2"/>
+    </svg>
+    <div class="score-center">
+      <span id="score-pct">0%</span>
+      <span class="score-label">acertos</span>
+    </div>
+  </div>
+
+  <h2 class="score-title" id="score-title">Resultado</h2>
+  <p class="score-subtitle" id="score-msg"></p>
+
+  <div class="score-breakdown">
+    <div class="score-ep-card">
+      <div class="ep-score" id="ep1-score" style="color:var(--ep1)">0/5</div>
+      <div class="ep-label">Ep1 — O que é IDD</div>
+    </div>
+    <div class="score-ep-card">
+      <div class="ep-score" id="ep2-score" style="color:var(--ep2)">0/5</div>
+      <div class="ep-label">Ep2 — Comando Epistêmico</div>
+    </div>
+  </div>
+
+  <button class="nav-btn" style="max-width:280px;margin:0 auto 1rem;" onclick="location.href='https://www.youtube.com/playlist?list=PLkbRMhsplHjaLEi9O7SsJN3pH8TvsS6k7'">
+    📺 Ver a série IDD
+  </button>
+  <br>
+  <button class="restart-btn" onclick="restartQuiz()">↺ Tentar novamente</button>
+</div>
+
+</main>
+
+<script>
+// ══ QUIZ DATA ══════════════════════════════════════════════════
+const QUESTIONS = [{"id":1,"episode":1,"question":"Como a propriedade da 'Governança Persistente' no IDD se diferencia da documentação tradicional ou do gerenciamento estático de requisitos?","options":{"A":"É um processo rigoroso de aprovação manual feito por um comitê de arquitetura antes de cada deploy.","B":"Depende de revisões de código semanais onde os desenvolvedores comparam o sistema com fluxogramas antigos.","C":"É um guardião automatizado e programático que verifica a relação entre intenção e código, vivendo no ecossistema do desenvolvedor.","D":"Consiste na geração inicial do código ('scaffold') que, uma vez criado, é gerenciado livremente pelos desenvolvedores."},"correct":"C","explanation_correct":"Exatamente! A governança no IDD não é um comitê burocrático, mas sim um guardião automatizado. Ela vive nas ferramentas do desenvolvedor, validando a intenção contra o código de forma programática e contínua.","hint_wrong":"Lembre-se de como Eliezer descreveu a governança não como um obstáculo humano ou burocrático, mas como uma validação ágil que acontece no terminal e no fluxo de CI/CD."},{"id":2,"episode":1,"question":"Apesar de elogiar o Domain-Driven Design (DDD), Eliezer aponta que o IDD resolve um problema específico que o DDD não conseguiu superar. Qual é esse problema?","options":{"A":"No DDD, a Linguagem Ubíqua não possui vocabulário de negócios suficiente para modelar sistemas complexos.","B":"O DDD é focado primariamente em testes de comportamento (Behavior), o que atrasa o ciclo de desenvolvimento.","C":"O DDD incentiva a prática do 'vibe coding', resultando em códigos sem auditoria ou governança.","D":"No DDD, a Linguagem Ubíqua acaba sendo traduzida para código e perde seu status de artefato canônico, enquanto no IDD ela própria comanda a tradução."},"correct":"D","explanation_correct":"Muito bem observado. No DDD, a linguagem rica do negócio acaba diluída em classes de programação. No IDD, a linguagem natural se mantém como a fonte primária e governante dessa tradução, sem se perder na sintaxe.","hint_wrong":"Pense no que acontece com os termos de negócio no DDD quando chega a hora de realmente escrever o software. Onde a fonte da verdade vai parar segundo o episódio?"},{"id":3,"episode":1,"question":"Qual é a principal vantagem cognitiva e prática do 'Confirm-Once Pattern' no desenvolvimento de software guiado por intenção?","options":{"A":"Permite que os desenvolvedores escrevam testes unitários em múltiplas linguagens simultaneamente sem intervenção humana.","B":"O humano aprova o plano uma vez e o agente executa até o fim, reportando tudo; a autonomia concedida cresce com a evidência acumulada.","C":"Elimina a necessidade de definir invariantes de negócio, pois o modelo de IA auto-deduz as regras do domínio.","D":"Delega inteiramente a autoria do sistema para a IA, transformando o desenvolvedor em um mero digitador."},"correct":"B","explanation_correct":"Perfeito. No Confirm-Once, o esforço de decisão humana se concentra na aprovação do plano, uma única vez. Depois disso o agente executa até o fim e reporta tudo. A autonomia cresce com a evidência, nunca com a fé.","hint_wrong":"O nome 'Confirmar Uma Vez' diz respeito a aprovar o plano uma vez, sem microgerenciar cada passo do agente. Reflita sobre onde a decisão humana é mais necessária."},{"id":4,"episode":1,"question":"No ecossistema do IDD, qual é o papel exato das 'Invariantes de Negócio'?","options":{"A":"São regras de negócio inegociáveis, declaradas explicitamente e checadas por mecanismo determinístico (schema, testes, constraints), que barram mudanças que as violem.","B":"São diretrizes estáticas de boas práticas usadas exclusivamente para o treinamento de desenvolvedores juniores.","C":"São scripts de monitoramento pós-deploy que enviam alertas no Slack para os engenheiros de confiabilidade (SRE).","D":"Representam a camada final de testes escritos em Gherkin ('Given-When-Then') focados puramente em UI."},"correct":"A","explanation_correct":"É exatamente isso. As invariantes funcionam como as 'leis da física' do sistema. Se uma mudança viola uma invariante declarada, a verificação determinística detecta a violação e barra a mudança.","hint_wrong":"Recorde a analogia sobre o 'saldo não-negativo' e o que o sistema IDD diria a um desenvolvedor que tentasse submeter uma intenção que contorna essa regra."},{"id":5,"episode":1,"question":"No final do primeiro episódio, discute-se a diferença entre um 'Requisito de Software' tradicional e a 'Intenção' no IDD. Qual é o diferencial crucial da intenção nesse contexto?","options":{"A":"A intenção dispensa a etapa de refinação, permitindo pular direto para a compilação do sistema.","B":"A intenção é focada apenas em aspectos operacionais de infraestrutura, enquanto o requisito descreve as regras do negócio.","C":"A intenção é efêmera e descartada após a criação inicial do código, servindo apenas como um 'prompt' de partida.","D":"A intenção é a fonte de autoridade versionada do sistema: o código permanece rastreável a ela e é verificado continuamente contra seus contratos."},"correct":"D","explanation_correct":"Isso mesmo. Um requisito tradicional é passivo e fica obsoleto na gaveta. No IDD, a intenção é compilada em contratos que a verificação confere continuamente, como um GPS que recalcula a rota.","hint_wrong":"Contraste um documento de especificações estático no Word com algo que atua diretamente no ciclo do sistema, como a analogia do GPS apresentada no episódio."},{"id":6,"episode":2,"question":"Baseado na analogia do voo Air France 447, como Eliezer diferencia o 'Comando Epistêmico' do 'Comando Operacional' no uso de inteligências artificiais?","options":{"A":"O comando epistêmico foca na sintaxe da linguagem de programação, enquanto o operacional lida com a governança dos dados.","B":"O comando epistêmico é a autoridade sobre o 'o quê' e o 'porquê', mantida pelo humano, enquanto o comando operacional é a execução do 'como', delegada à IA.","C":"O comando epistêmico é exercido exclusivamente pela inteligência artificial para definir a estratégia, deixando a execução manual para o humano no comando operacional.","D":"Ambos os comandos se fundem em sistemas avançados, tornando impossível distinguir o autor da decisão arquitetural final."},"correct":"B","explanation_correct":"Brilhante! O Comando Epistêmico é a bússola estratégica e ética do projeto humano. Já o Comando Operacional é a mecânica técnica, que podemos delegar com segurança aos agentes inteligentes.","hint_wrong":"Lembre-se do que os pilotos do voo perderam. Eles ainda tinham o controle manual das alavancas, mas deixaram de entender a razão fundamental das ações do avião."},{"id":7,"episode":2,"question":"Qual das seguintes atitudes de um desenvolvedor representa o conceito de 'Credulidade' em vez de 'Fé Bayesiana' no desenvolvimento auxiliado por IA?","options":{"A":"Exigir que a IA apresente um plano detalhado e rastreável de modificação antes de autorizar a execução do código.","B":"Aprovar um Pull Request gerado pela IA que resolve um bug imediato, sem conseguir explicar o porquê daquele código funcionar.","C":"Pausar o ciclo de desenvolvimento quando a IA alerta que uma nova implementação poderá ferir uma Invariante de Negócio.","D":"Aumentar gradativamente a complexidade das tarefas operacionais delegadas à IA após sucessivas entregas corretas e auditáveis."},"correct":"B","explanation_correct":"Exatamente. Aceitar um código gerado por IA sem compreender a lógica subjacente é um salto no escuro. Isso caracteriza a credulidade e leva à perda do Comando Epistêmico.","hint_wrong":"A credulidade acontece quando pulamos a validação de evidências. Qual das opções mostra o desenvolvedor agindo apenas como passageiro do próprio projeto, torcendo pelo melhor?"},{"id":8,"episode":2,"question":"Eliezer traça uma linhagem histórica para o IDD. Por que ele alinha a filosofia do IDD mais proximamente ao pensamento de Douglas Engelbart do que à cibernética de Norbert Wiener?","options":{"A":"Porque Engelbart focou na tecnologia como meio de amplificar a capacidade cognitiva humana para resolver problemas complexos (augmenting), enquanto a cibernética prioriza sistemas auto-regulados de controle e feedback.","B":"Porque Wiener acreditava que os computadores deveriam ser instrumentos apenas para cálculos matemáticos isolados do ambiente corporativo.","C":"Porque a cibernética proibia o uso de inteligência artificial em sistemas de negócios, algo que Engelbart reverteu com o projeto Dynabook.","D":"Porque Engelbart foi o inventor da 'Fé Bayesiana', que é um algoritmo matemático estrito do IDD."},"correct":"A","explanation_correct":"Excelente conexão histórica. Enquanto a cibernética lida fortemente com sistemas de feedback mecânico, Engelbart pensou a interface como uma extensão da mente. O IDD bebe dessa fonte ao colocar o humano sempre como centro da intenção.","hint_wrong":"Pense na diferença central entre focar primariamente em automatizar um mecanismo e fornecer ferramentas focadas em dar superpoderes cognitivos e intelectuais a uma pessoa."},{"id":9,"episode":2,"question":"Embora o conceito de Invariantes no IDD lembre o 'Design by Contract' de Bertrand Meyer, existe uma diferença conceitual importante. Qual é?","options":{"A":"O Design by Contract requer testes exaustivos escritos em Gherkin, enquanto as Invariantes do IDD não são testáveis.","B":"As Invariantes do IDD são definidas em alto nível de abstração e linguagem natural para governar o agente de IA, antes mesmo de funções ou classes existirem.","C":"As Invariantes do IDD operam apenas em tempo de compilação de código legado em COBOL ou DCAlgol.","D":"Não há diferença. Eliezer afirma categoricamente que o IDD é apenas o Design by Contract renomeado para a era da inteligência artificial."},"correct":"B","explanation_correct":"Na mosca! Enquanto o Design by Contract tradicional foca em garantias no nível estrutural do código (classes e métodos), as invariantes do IDD cercam o limite semântico e comportamental do próprio agente de IA antes do código nascer.","hint_wrong":"O Design by Contract opera primariamente na semântica das linguagens de programação durante o desenvolvimento tradicional. No IDD, em que formato e momento definimos nossas regras inegociáveis?"},{"id":10,"episode":2,"question":"Qual é a recomendação prática inicial dada no Episódio 2 para que um desenvolvedor comece a cultivar o Comando Epistêmico, mesmo se ainda não utilizar as ferramentas formais do IDD?","options":{"A":"Proibir completamente o uso de ferramentas como GitHub Copilot em projetos críticos para evitar contaminação do código.","B":"Escrever um comentário no topo do arquivo explicitando o objetivo, restrições inegociáveis e critérios de sucesso em linguagem natural antes de pedir ajuda à IA.","C":"Escrever a arquitetura completa em COBOL estruturado antes de fazer a tradução final para linguagens modernas.","D":"Delegar a criação da regra de negócio à IA e em seguida revisar a formatação sintática manualmente em ferramentas de lint."},"correct":"B","explanation_correct":"Excelente escolha. Esse simples ato de registrar a intenção formaliza uma âncora epistêmica. Ele garante que você cristalizou o 'o quê' e o 'porquê' antes de entregar a direção operacional do 'como' ao agente.","hint_wrong":"Mesmo sem um ecossistema complexo de governança IDD instalado, qual atitude prévia garante que você delimitou as regras do jogo e reteve a responsabilidade pela lógica?"}];
+
+// WAV files that exist locally (relative to HTML)
+const AUDIO_BASE = './idd_quiz_audio/';
+const AVAILABLE_WAVS = new Set([
+  'welcome','transition_ep2','final_pass','final_fail',
+  'q1_correct','q1_wrong','q2_correct','q2_wrong','q3_correct','q3_wrong'
+]);
+
+// ══ STATE ═══════════════════════════════════════════════════════
+let currentIdx = 0;
+let score = { correct: 0, wrong: 0, ep1: 0, ep2: 0 };
+let answered = false;
+let muted = false;
+let currentAudio = null;
+
+// ══ AUDIO ENGINE ════════════════════════════════════════════════
+function speak(text, slug) {
+  if (muted) return;
+  stopAudio();
+  const wavKey = slug ? slug.replace('.wav','') : null;
+  if (wavKey && AVAILABLE_WAVS.has(wavKey)) {
+    currentAudio = new Audio(AUDIO_BASE + wavKey + '.wav');
+    currentAudio.onplay = () => setAvatarSpeaking(true);
+    currentAudio.onended = () => setAvatarSpeaking(false);
+    currentAudio.onerror = () => { speakTTS(text); };
+    currentAudio.play().catch(() => speakTTS(text));
+  } else {
+    speakTTS(text);
+  }
+}
+
+function speakTTS(text) {
+  if (!window.speechSynthesis) return;
+  stopAudio();
+  const utt = new SpeechSynthesisUtterance(text);
+  utt.lang = 'pt-BR';
+  utt.rate = 0.95;
+  utt.pitch = 0.85;
+  // try to pick a PT-BR voice
+  const voices = speechSynthesis.getVoices();
+  const ptVoice = voices.find(v => v.lang === 'pt-BR') || voices.find(v => v.lang.startsWith('pt'));
+  if (ptVoice) utt.voice = ptVoice;
+  utt.onstart = () => setAvatarSpeaking(true);
+  utt.onend = () => setAvatarSpeaking(false);
+  utt.onerror = () => setAvatarSpeaking(false);
+  currentAudio = { stop: () => speechSynthesis.cancel(), isTTS: true };
+  speechSynthesis.speak(utt);
+}
+
+function stopAudio() {
+  if (currentAudio) {
+    if (currentAudio.isTTS) { speechSynthesis.cancel(); }
+    else { try { currentAudio.pause(); } catch(e){} }
+    currentAudio = null;
+  }
+  setAvatarSpeaking(false);
+}
+
+function setAvatarSpeaking(on) {
+  document.querySelectorAll('.avatar-circle').forEach(el => {
+    el.classList.toggle('speaking', on);
+  });
+}
+
+// ══ AVATAR SPEECH BUBBLE ════════════════════════════════════════
+function setSpeech(elId, text) {
+  document.getElementById(elId).textContent = text;
+}
+
+// ══ SCREENS ══════════════════════════════════════════════════════
+function show(id) {
+  ['intro-screen','quiz-screen','transition-screen','score-screen'].forEach(s => {
+    document.getElementById(s).style.display = s === id ? (s === 'intro-screen' ? 'flex' : 'block') : 'none';
+  });
+}
+
+// ══ QUIZ FLOW ════════════════════════════════════════════════════
+function startQuiz() {
+  currentIdx = 0;
+  score = { correct: 0, wrong: 0, ep1: 0, ep2: 0 };
+  show('quiz-screen');
+  renderQuestion();
+  speak(
+    'Bem-vindo ao Quiz IDD! Sou Eliezer Rosa. Este quiz trata do Intent-Driven Development, o IDD, na minha formulação. ' +
+    'Vamos testar seus conhecimentos sobre os dois primeiros episódios da nossa série. ' +
+    'São 10 perguntas: 5 do Episódio 1 e 5 do Episódio 2. Vamos lá!',
+    'welcome'
+  );
+  setSpeech('avatar-speech', 'Pronto! Leia a pergunta e escolha sua resposta.');
+}
+
+function renderQuestion() {
+  const q = QUESTIONS[currentIdx];
+  answered = false;
+
+  // progress
+  const pct = (currentIdx / QUESTIONS.length) * 100;
+  document.getElementById('progress-fill').style.width = pct + '%';
+  document.getElementById('progress-text').textContent = `Pergunta ${currentIdx+1} de ${QUESTIONS.length}`;
+  document.getElementById('score-text').innerHTML = `✅ ${score.correct} &nbsp;|&nbsp; ❌ ${score.wrong}`;
+
+  // ep tag
+  const tag = document.getElementById('ep-tag');
+  tag.textContent = `Ep${q.episode}`;
+  tag.className = `ep-tag ep${q.episode}`;
+
+  // question
+  document.getElementById('q-number').textContent = q.id;
+  document.getElementById('question-text').textContent = q.question;
+
+  // options
+  const container = document.getElementById('options-container');
+  container.innerHTML = '';
+  Object.entries(q.options).forEach(([key, text]) => {
+    const btn = document.createElement('button');
+    btn.className = 'option-btn';
+    btn.innerHTML = `<span class="key">${key}</span><span>${text}</span>`;
+    btn.onclick = () => selectAnswer(key, btn, q);
+    container.appendChild(btn);
+  });
+
+  // feedback
+  const fb = document.getElementById('feedback');
+  fb.className = 'feedback';
+  fb.textContent = '';
+
+  // next btn
+  document.getElementById('next-btn').disabled = true;
+  document.getElementById('next-btn').textContent =
+    currentIdx < QUESTIONS.length - 1 ? 'Próxima pergunta →' : 'Ver resultado →';
+}
+
+function selectAnswer(key, btn, q) {
+  if (answered) return;
+  answered = true;
+
+  const correct = key === q.correct;
+  const allBtns = document.querySelectorAll('#options-container .option-btn');
+
+  allBtns.forEach(b => {
+    b.disabled = true;
+    const k = b.querySelector('.key').textContent;
+    if (k === q.correct) b.classList.add('correct-reveal');
+  });
+
+  const fb = document.getElementById('feedback');
+  if (correct) {
+    btn.classList.add('selected-correct');
+    score.correct++;
+    if (q.episode === 1) score.ep1++; else score.ep2++;
+    fb.className = 'feedback correct';
+    fb.textContent = '✅ ' + q.explanation_correct;
+    setSpeech('avatar-speech', q.explanation_correct);
+    speak(q.explanation_correct, `q${q.id}_correct`);
+  } else {
+    btn.classList.add('selected-wrong');
+    score.wrong++;
+    fb.className = 'feedback wrong';
+    fb.textContent = '💡 ' + q.hint_wrong;
+    setSpeech('avatar-speech', q.hint_wrong);
+    speak(q.hint_wrong, `q${q.id}_wrong`);
+  }
+
+  document.getElementById('score-text').innerHTML = `✅ ${score.correct} &nbsp;|&nbsp; ❌ ${score.wrong}`;
+  document.getElementById('next-btn').disabled = false;
+}
+
+function nextQuestion() {
+  stopAudio();
+  currentIdx++;
+
+  // transition after Q5
+  if (currentIdx === 5) {
+    show('transition-screen');
+    const msg = 'Excelente! Você completou as perguntas do primeiro episódio. ' +
+      'Agora vamos para o Episódio 2, onde exploramos a distinção entre Comando Epistêmico e Operacional. Prepare-se!';
+    setSpeech('trans-speech', msg);
+    speak(msg, 'transition_ep2');
+    return;
+  }
+
+  if (currentIdx >= QUESTIONS.length) {
+    showScore();
+    return;
+  }
+  renderQuestion();
+}
+
+function continueToEp2() {
+  stopAudio();
+  show('quiz-screen');
+  renderQuestion();
+}
+
+function showScore() {
+  show('score-screen');
+  const total = QUESTIONS.length;
+  const pct = Math.round((score.correct / total) * 100);
+
+  document.getElementById('score-pct').textContent = pct + '%';
+  document.getElementById('ep1-score').textContent = `${score.ep1}/5`;
+  document.getElementById('ep2-score').textContent = `${score.ep2}/5`;
+
+  // ring animation
+  const circumference = 251.2;
+  const offset = circumference - (pct / 100) * circumference;
+  setTimeout(() => {
+    document.getElementById('ring-fill').style.strokeDashoffset = offset;
+    document.getElementById('ring-fill').style.stroke =
+      pct >= 70 ? 'var(--green)' : pct >= 40 ? 'var(--yellow)' : 'var(--red)';
+  }, 100);
+
+  // stars & message
+  let stars, title, msg, wav;
+  if (pct >= 80) {
+    stars = '⭐⭐⭐';
+    title = 'Excelente domínio do IDD!';
+    msg = 'Você internalizou os conceitos com profundidade. Está pronto para o Ep3!';
+    wav = 'final_pass';
+    speak('Parabéns! Você demonstrou um sólido entendimento do IDD. ' +
+      'Lembre-se: o objetivo não é apenas saber os conceitos, mas incorporá-los na sua prática diária. ' +
+      'A intenção é o artefato primário. Até o próximo episódio!', wav);
+  } else if (pct >= 50) {
+    stars = '⭐⭐';
+    title = 'Bom progresso!';
+    msg = 'Você captou a essência. Revisar os episódios vai consolidar os detalhes.';
+    wav = 'final_pass';
+    speak('Bom esforço! O IDD é um paradigma profundo. Revise os episódios para aprofundar. ' +
+      'A separação entre comando epistêmico e operacional é o coração de tudo!', wav);
+  } else {
+    stars = '⭐';
+    title = 'Continue explorando!';
+    msg = 'O IDD tem muitas camadas. Assista aos episódios e tente novamente!';
+    wav = 'final_fail';
+    speak('Bom esforço! O IDD é um paradigma profundo, e cada revisão aprofunda a compreensão. ' +
+      'Recomendo rever os episódios com atenção. Você consegue! Tente novamente.', wav);
+  }
+
+  document.getElementById('score-stars').textContent = stars;
+  document.getElementById('score-title').textContent = title;
+  document.getElementById('score-msg').textContent = msg;
+  setSpeech('score-speech', msg);
+}
+
+function restartQuiz() {
+  stopAudio();
+  currentIdx = 0;
+  score = { correct: 0, wrong: 0, ep1: 0, ep2: 0 };
+  document.getElementById('ring-fill').style.strokeDashoffset = '251.2';
+  show('intro-screen');
+}
+
+// ══ MUTE TOGGLE ══════════════════════════════════════════════════
+document.getElementById('muteBtn').onclick = function() {
+  muted = !muted;
+  this.textContent = muted ? '🔇' : '🔊';
+  if (muted) stopAudio();
+};
+
+// ══ INTRO TTS ON LOAD ════════════════════════════════════════════
+window.addEventListener('load', () => {
+  // Prime voices list for Web Speech API
+  if (window.speechSynthesis) speechSynthesis.getVoices();
+
+  // Welcome on intro screen
+  setTimeout(() => {
+    const intro = 'Bem-vindo! Estou feliz em ver você aqui. ' +
+      'Este quiz testa seus conhecimentos sobre os dois primeiros episódios do IDD. Clique em "Iniciar Quiz" quando estiver pronto.';
+    setSpeech('intro-speech', intro);
+    // No auto-play on load (browser policies) — plays on start click
+    document.getElementById('intro-speech').textContent = intro;
+  }, 500);
+});
+</script>
+</body>
+</html>

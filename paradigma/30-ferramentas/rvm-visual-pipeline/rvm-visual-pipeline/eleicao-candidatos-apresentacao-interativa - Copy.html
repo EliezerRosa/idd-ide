@@ -1,0 +1,2003 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Apresentacao Interativa - Eleicao de Candidatos</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Fraunces:opsz,wght@9..144,600;9..144,800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg-0: #0b1220;
+      --bg-1: #101a2e;
+      --panel: rgba(255, 255, 255, 0.08);
+      --line: rgba(255, 255, 255, 0.16);
+      --ink: #e7edf8;
+      --muted: #a7b4cd;
+      --brand: #2dd4bf;
+      --brand-2: #f59e0b;
+      --ok: #22c55e;
+      --warn: #fb7185;
+      --shadow: 0 20px 60px rgba(1, 7, 17, 0.45);
+      --radius: 18px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      margin: 0;
+      height: 100%;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 8% 8%, rgba(45, 212, 191, 0.18), transparent 28%),
+        radial-gradient(circle at 92% 18%, rgba(245, 158, 11, 0.18), transparent 30%),
+        linear-gradient(165deg, var(--bg-0) 0%, var(--bg-1) 100%);
+      font-family: "Space Grotesk", "Segoe UI", sans-serif;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0.22;
+      background-image:
+        linear-gradient(to right, rgba(255, 255, 255, 0.06) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.06) 1px, transparent 1px);
+      background-size: 42px 42px;
+      mask-image: radial-gradient(circle at center, black 20%, transparent 75%);
+    }
+
+    .app {
+      position: relative;
+      z-index: 1;
+      min-height: 100%;
+      padding: 24px;
+      display: grid;
+      grid-template-rows: auto auto 1fr;
+      gap: 18px;
+    }
+
+    .hero {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 18px 20px;
+      backdrop-filter: blur(14px);
+      animation: rise-in 700ms ease both;
+    }
+
+    .hero h1 {
+      margin: 0;
+      font-family: "Fraunces", serif;
+      font-size: clamp(1.4rem, 1.2rem + 1vw, 2rem);
+      color: #fefcf6;
+      letter-spacing: 0.5px;
+    }
+
+    .hero p {
+      margin: 8px 0 0;
+      color: var(--muted);
+      font-size: 0.95rem;
+      max-width: 1000px;
+      line-height: 1.5;
+    }
+
+    .compat-banner {
+      margin-top: 12px;
+      display: none;
+      border: 1px solid rgba(251, 113, 133, 0.45);
+      border-radius: 12px;
+      background: rgba(127, 29, 29, 0.2);
+      padding: 10px 12px;
+      font-size: 0.83rem;
+      color: #ffe2e8;
+      line-height: 1.45;
+    }
+
+    .compat-banner.show {
+      display: block;
+    }
+
+    .compat-banner a {
+      color: #7efce8;
+      font-weight: 700;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+
+    .toolbar {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      align-items: center;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 14px;
+      backdrop-filter: blur(14px);
+      animation: rise-in 800ms ease both;
+    }
+
+    .tabs {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-right: auto;
+    }
+
+    .tab {
+      border: 1px solid rgba(255, 255, 255, 0.24);
+      color: var(--ink);
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 12px;
+      padding: 8px 12px;
+      font-size: 0.84rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 180ms ease, background 180ms ease, border-color 180ms ease;
+    }
+
+    .tab:hover {
+      transform: translateY(-2px);
+      border-color: var(--brand);
+    }
+
+    .tab.active {
+      background: linear-gradient(135deg, rgba(45, 212, 191, 0.26), rgba(16, 185, 129, 0.15));
+      border-color: rgba(45, 212, 191, 0.8);
+    }
+
+    .controls {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .btn,
+    .field,
+    .slider {
+      border-radius: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      background: rgba(255, 255, 255, 0.08);
+      color: var(--ink);
+      font-family: inherit;
+      font-size: 0.82rem;
+      padding: 8px 10px;
+    }
+
+    .btn {
+      cursor: pointer;
+      font-weight: 700;
+      min-width: 88px;
+      transition: transform 180ms ease, border-color 180ms ease;
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+      border-color: var(--brand);
+    }
+
+    .btn.primary {
+      border-color: rgba(45, 212, 191, 0.85);
+      background: linear-gradient(135deg, rgba(45, 212, 191, 0.24), rgba(13, 148, 136, 0.3));
+    }
+
+    .layout {
+      min-height: 0;
+      display: grid;
+      grid-template-columns: 1.3fr 0.7fr;
+      gap: 16px;
+      animation: rise-in 900ms ease both;
+    }
+
+    .viewer-card,
+    .info-card {
+      min-height: 0;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(14px);
+    }
+
+    .viewer-card {
+      position: relative;
+      overflow: hidden;
+      padding: 10px;
+    }
+
+    .viewer {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      /* Capar altura para que o overflow:auto funcione DE FATO. Sem isso, o <object>
+         cresce até a altura intrínseca do SVG (centenas/milhares de px), o .viewer
+         acompanha e quem rola é o body — o dedo (position:absolute dentro do viewer)
+         então "some" para o usuário, embora esteja no lugar certo no espaço do viewer. */
+      max-height: calc(100vh - 260px);
+      min-height: 460px;
+      border-radius: 12px;
+      background: linear-gradient(145deg, rgba(255, 255, 255, 0.95), rgba(243, 248, 255, 0.98));
+      border: 1px solid rgba(15, 23, 42, 0.14);
+      overflow: auto;
+    }
+
+    .viewer object {
+      width: 100%;
+      /* height:auto permite o SVG manter altura intrínseca; o scroll vertical fica
+         por conta do .viewer (que agora tem max-height). */
+      height: auto;
+      min-height: 560px;
+      display: block;
+    }
+
+    .thumb-pointer {
+      position: absolute;
+      z-index: 25;
+      transform: translate(-50%, -50%);
+      font-size: 40px;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 200ms ease;
+      filter: drop-shadow(0 6px 12px rgba(13, 24, 43, 0.4));
+    }
+
+    .thumb-pointer.active {
+      opacity: 1;
+      animation: thumb-bounce 720ms ease-in-out infinite;
+    }
+
+    /* Tooltip flutuante desativado: a explicação aparece sempre no painel lateral
+       para não cobrir o dedo apontador nem competir com a leitura guiada. */
+    .tooltip-float {
+      display: none !important;
+    }
+
+    .tooltip-float.visible {
+      display: none !important;
+    }
+
+    .tooltip-float strong {
+      color: var(--brand);
+      display: block;
+      margin-bottom: 6px;
+      font-size: 0.85rem;
+      letter-spacing: 0.2px;
+    }
+
+    .tooltip-float p {
+      margin: 0;
+      font-size: 0.82rem;
+      line-height: 1.45;
+      color: #d9e7ff;
+    }
+
+    .tooltip-float p + p {
+      margin-top: 8px;
+      color: #fcdcb0;
+    }
+
+    .info-card {
+      padding: 16px;
+      display: grid;
+      grid-template-rows: auto auto auto 1fr;
+      gap: 12px;
+      overflow: auto;
+    }
+
+    .info-card h2 {
+      margin: 0;
+      font-family: "Fraunces", serif;
+      font-size: 1.3rem;
+      color: #fff8ea;
+    }
+
+    .status {
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 12px;
+      padding: 10px;
+      color: #d5e3fa;
+      font-size: 0.84rem;
+      line-height: 1.45;
+    }
+
+    .status .dot {
+      display: inline-block;
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      margin-right: 7px;
+      background: #9ca3af;
+      vertical-align: middle;
+    }
+
+    .status.speaking .dot {
+      background: var(--ok);
+      animation: pulse 900ms ease infinite;
+    }
+
+    .block {
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 12px;
+      padding: 12px;
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .block h3 {
+      margin: 0 0 8px;
+      font-size: 0.88rem;
+      color: var(--brand-2);
+      letter-spacing: 0.35px;
+      text-transform: uppercase;
+    }
+
+    .block p {
+      margin: 0;
+      font-size: 0.85rem;
+      color: #d7e5fb;
+      line-height: 1.5;
+      white-space: pre-line;
+    }
+
+    .node-list {
+      display: grid;
+      gap: 6px;
+      max-height: 230px;
+      overflow: auto;
+      padding-right: 2px;
+    }
+
+    .node-item {
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 10px;
+      background: rgba(15, 23, 42, 0.4);
+      color: #e8f1ff;
+      text-align: left;
+      padding: 8px 9px;
+      font-size: 0.78rem;
+      cursor: pointer;
+      transition: border-color 160ms ease, transform 160ms ease;
+    }
+
+    .node-item:hover {
+      border-color: var(--brand);
+      transform: translateX(2px);
+    }
+
+    .hint {
+      color: var(--muted);
+      font-size: 0.77rem;
+      margin-top: 4px;
+    }
+
+    @keyframes rise-in {
+      from {
+        opacity: 0;
+        transform: translateY(12px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes thumb-bounce {
+      0%, 100% {
+        transform: translate(-100%, -50%) translateX(0);
+      }
+      50% {
+        transform: translate(-100%, -50%) translateX(-7px);
+      }
+    }
+
+    /* Quando o nó está colado à margem esquerda do viewer, o dedo é flipado para o
+       lado direito do nó (apontando para a esquerda com 👈). Anchor passa a ser o
+       canto esquerdo do emoji em vez do direito. */
+    .thumb-pointer.flip-right {
+      animation-name: thumb-bounce-right !important;
+    }
+
+    @keyframes thumb-bounce-right {
+      0%, 100% {
+        transform: translate(0, -50%) translateX(0);
+      }
+      50% {
+        transform: translate(0, -50%) translateX(7px);
+      }
+    }
+
+    .block p.speaking,
+    .flow-block.speaking {
+      background: rgba(45, 212, 191, 0.16);
+      border-left: 3px solid var(--brand);
+      padding-left: 10px;
+      border-radius: 6px;
+      transition: background 220ms ease;
+    }
+
+    .flow-block {
+      border: 1px solid rgba(245, 158, 11, 0.35);
+      background: rgba(245, 158, 11, 0.08);
+      padding: 10px 12px;
+      border-radius: 12px;
+    }
+
+    .flow-block h3 {
+      margin: 0 0 4px;
+      color: var(--brand-2);
+      font-size: 0.95rem;
+      letter-spacing: 0.2px;
+    }
+
+    /* Overlay de boas-vindas: apresenta o objetivo da apresentação antes de entrar nos grafos. */
+    .intro-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(8, 13, 28, 0.78);
+      z-index: 100;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      backdrop-filter: blur(6px);
+    }
+    .intro-overlay.show { display: flex; }
+    .intro-card {
+      max-width: 720px;
+      width: 100%;
+      background: linear-gradient(145deg, #ffffff, #f4f8ff);
+      border-radius: 18px;
+      padding: 28px 32px;
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
+      border: 1px solid rgba(45, 212, 191, 0.35);
+      color: #0f172a;
+    }
+    .intro-card h2 { margin: 0 0 12px; font-size: 22px; color: #0b3b6f; }
+    .intro-card p { margin: 10px 0; line-height: 1.55; }
+    .intro-card ul { margin: 10px 0 16px 18px; line-height: 1.6; }
+    .intro-card li strong { color: #0b3b6f; }
+    .intro-actions {
+      display: flex;
+      gap: 10px;
+      justify-content: flex-end;
+      margin-top: 16px;
+    }
+    .intro-card .meta {
+      font-size: 13px;
+      color: #475569;
+      border-top: 1px solid rgba(15, 23, 42, 0.1);
+      padding-top: 10px;
+      margin-top: 14px;
+    }
+
+    .flow-block p {
+      margin: 0;
+      color: #f5e7c8;
+      font-size: 0.85rem;
+      line-height: 1.45;
+    }
+
+    .flow-counter {
+      display: inline-block;
+      margin-left: 8px;
+      font-size: 0.75rem;
+      color: var(--muted);
+      font-weight: 500;
+    }
+
+    @keyframes pulse {
+      0%, 100% {
+        transform: scale(1);
+        opacity: 1;
+      }
+      50% {
+        transform: scale(0.75);
+        opacity: 0.45;
+      }
+    }
+
+    @media (max-width: 1080px) {
+      .layout {
+        grid-template-columns: 1fr;
+      }
+
+      .viewer object {
+        min-height: 480px;
+      }
+    }
+
+    @media (max-width: 760px) {
+      .app {
+        padding: 14px;
+      }
+
+      .toolbar {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .tabs {
+        margin-right: 0;
+      }
+
+      .controls {
+        justify-content: space-between;
+      }
+
+      .btn {
+        min-width: 74px;
+      }
+
+      .thumb-pointer {
+        font-size: 34px;
+      }
+
+      .tooltip-float {
+        max-width: min(88vw, 340px);
+      }
+    }
+    /* ============================================================
+       MODO VÍDEO (?video=1) — apresentação 1920×1080 sem controles
+       ============================================================ */
+    body.video-mode .toolbar,
+    body.video-mode .controls,
+    body.video-mode .compat-banner,
+    body.video-mode .status,
+    body.video-mode .intro-actions,
+    body.video-mode .hero { display: none !important; }
+
+    body.video-mode {
+      overflow: hidden;
+      background: #0b1220;
+      pointer-events: none;
+    }
+
+    body.video-mode .app {
+      height: 1080px;
+      padding: 24px;
+      grid-template-rows: 1fr;
+      gap: 0;
+    }
+
+    body.video-mode .layout {
+      display: grid;
+      grid-template-columns: 1180px 700px;
+      gap: 24px;
+      width: 1904px;
+      height: 1032px;
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body.video-mode .viewer {
+      max-height: 1032px;
+      height: 1032px;
+    }
+
+    body.video-mode .info-card {
+      max-height: 1032px;
+      overflow: hidden;
+    }
+
+    /* Mini header flutuante sobre o viewer em modo vídeo */
+    .video-header {
+      display: none;
+      position: absolute;
+      top: 14px;
+      left: 14px;
+      color: #e2e8f0;
+      font: 600 17px/1.2 system-ui, sans-serif;
+      text-shadow: 0 1px 4px rgba(0,0,0,.7);
+      background: rgba(11,18,32,.62);
+      padding: 4px 12px;
+      border-radius: 8px;
+      z-index: 30;
+      pointer-events: none;
+    }
+
+    body.video-mode .video-header { display: block; }
+  </style>
+</head>
+<body>
+  <main class="app">
+    <section class="hero">
+      <h1>Eleicao de Candidatos - Apresentacao Interativa</h1>
+      <p>
+        Clique em qualquer vértice do grafo para ver descrição, leitura da IA e narração por voz.
+        O dedo apontador indica o nó ativo a partir da esquerda, sem cobri-lo. Use o Play auto para percorrer cada caminho por vez, com objetivo anunciado.
+      </p>
+      <div class="compat-banner" id="compatBanner">
+        <span id="compatText"></span>
+        <a id="compatLink" href="#" target="_blank" rel="noopener">Abrir em localhost</a>
+      </div>
+    </section>
+
+    <section class="toolbar">
+      <div class="tabs" id="tabs"></div>
+      <div class="controls">
+        <button class="btn primary" id="playBtn" type="button">Play auto</button>
+        <button class="btn" id="pauseBtn" type="button">Pausar</button>
+        <button class="btn" id="nextBtn" type="button">Proximo no</button>
+        <button class="btn" id="speakBtn" type="button">Falar agora</button>
+        <button class="btn" id="introBtn" type="button" title="Ver introdução">ℹ️ Sobre</button>
+        <select class="field" id="voiceSel" aria-label="Voz"></select>
+        <label class="field" for="rateSel">
+          Velocidade
+          <input class="slider" id="rateSel" type="range" min="0.75" max="1.3" step="0.05" value="1" />
+        </label>
+      </div>
+    </section>
+
+    <section class="layout">
+      <article class="viewer-card">
+        <div class="viewer" id="viewer">
+          <object id="svgObject" type="image/svg+xml"></object>
+          <div class="thumb-pointer" id="thumbPointer" aria-hidden="true">👉</div>
+          <div class="tooltip-float" id="tooltipFloat" aria-hidden="true"></div>
+        </div>
+        <div class="video-header" id="videoHeader"></div>
+      </article>
+
+      <aside class="info-card">
+        <h2 id="graphTitle">Grafo</h2>
+
+        <div class="status" id="statusBox">
+          <span class="dot"></span>
+          <span id="statusText">Pronto para interagir.</span>
+        </div>
+
+        <div class="block flow-block" id="flowBlock" hidden>
+          <h3 id="flowName">Caminho atual<span class="flow-counter" id="flowCounter"></span></h3>
+          <p id="flowObjective">Objetivo do caminho aparece aqui.</p>
+        </div>
+
+        <div class="block">
+          <h3>Descrição do vértice</h3>
+          <p id="explainBox">Selecione um nó para ver a descrição.</p>
+        </div>
+
+        <div class="block">
+          <h3>Comentario da IA</h3>
+          <p id="commentBox">O comentario contextual da IA aparece aqui apos selecionar um no.</p>
+          <div class="hint">Dica: Play auto percorre cada caminho por vez, anunciando o objetivo antes de entrar nele.</div>
+        </div>
+
+        <div class="block">
+          <h3>Vertices detectados no grafo</h3>
+          <div class="node-list" id="nodeList"></div>
+        </div>
+      </aside>
+    </section>
+  </main>
+
+  <!-- Overlay de introdução (mostra no primeiro acesso e pelo botão "Sobre"). -->
+  <div class="intro-overlay" id="introOverlay" role="dialog" aria-modal="true" aria-labelledby="introTitle">
+    <div class="intro-card">
+      <h2 id="introTitle">Bem-vindo à apresentação interativa</h2>
+      <p><strong>Objetivo:</strong> mostrar, em quatro grafos navegaáveis, como o RVM Designações decide “quem faz o quê” na reunião — do construtor de contexto até a elegíbilidade fina por modalidade — e como as quatro superfícies (motor automático, UI manual, painel de diagnóstico e agente IA) chegam à mesma verdade.</p>
+      <p><strong>Como funciona a navegação:</strong></p>
+      <ul>
+        <li><strong>4 abas</strong> em cima — cada uma é um ângulo diferente do mesmo sistema.</li>
+        <li><strong>Play auto</strong> — percorre o grafo <em>caminho por caminho</em>, anunciando primeiro o objetivo de cada caminho, depois cada nó com descrição e leitura da IA.</li>
+        <li><strong>Clique em qualquer vértice</strong> — abre aquele nó imediatamente e narra; quebra o caminho automático.</li>
+        <li><strong>Dedo 👉</strong> — aponta para o nó ativo a partir da esquerda, sem cobri-lo.</li>
+        <li><strong>Painel à direita</strong> — mostra caminho atual, descrição do vértice e comentário da IA; cada bloco fica destacado enquanto é falado.</li>
+      </ul>
+      <p class="meta">Sugestão: comece pela aba <strong>Overview do Fluxo</strong> e deixe o Play auto rodar até o fim para captar a visão geral antes de mergulhar nos detalhes das outras abas.</p>
+      <div class="intro-actions">
+        <button class="btn primary" id="introStartBtn" type="button">Começar</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    /* EXTRACT_CONSTANTS_BEGIN */
+    const INTRO_SCRIPT = `Bem-vindo à apresentação interativa do RVM Designações.
+
+Objetivo: mostrar, em quatro grafos navegáveis, como o RVM Designações decide quem faz o quê na reunião — do construtor de contexto até a elegibilidade fina por modalidade — e como as quatro superfícies (motor automático, UI manual, painel de diagnóstico e agente de IA) chegam à mesma verdade.
+
+Esta apresentação tem quatro abas: Overview do Fluxo, Generation Flow, Eligibility Decision Tree e Comparação UI vs Agente. Cada uma é um ângulo diferente do mesmo sistema.
+
+Em cada aba, o vídeo percorre o grafo caminho por caminho, anunciando primeiro o objetivo de cada caminho, e depois cada nó com uma descrição coloquial e um comentário mais profundo da IA. O dedo apontador segue o nó que está sendo narrado, e o painel à direita mostra a explicação e o comentário do nó ativo.
+
+Vamos começar pela visão geral.`;
+
+    const GRAPHS = [
+      {
+        id: "overview",
+        title: "Overview do Fluxo",
+        file: "eleicao-candidatos-overview.svg",
+        zoom: 1.0
+      },
+      {
+        id: "generation",
+        title: "Generation Flow",
+        file: "eleicao-candidatos-generation-flow.svg",
+        zoom: 1.55
+      },
+      {
+        id: "eligibility",
+        title: "Eligibility Decision Tree",
+        file: "eleicao-candidatos-eligibility-decision-tree.svg",
+        zoom: 1.55
+      },
+      {
+        id: "uiAgent",
+        title: "Comparacao UI vs Agent",
+        file: "eleicao-candidatos-ui-agent-comparison.svg",
+        zoom: 1.15
+      }
+    ];
+
+    const GRAPH_INTENT = {
+      overview: "distribuir designacoes com justica, transparencia e rastreabilidade",
+      generation: "sugerir nomes viaveis sem ferir regras e com equilibrio entre pessoas",
+      eligibility: "proteger regras de elegibilidade sem excluir injustamente",
+      uiAgent: "alinhar decisao humana e assistencia da IA com coerencia entre superficies"
+    };
+
+    // Narrativas indexadas: cada array segue exatamente a ordem dos nós como aparecem no SVG.
+    // explanation = leitura coloquial, com fluxo de entrada/saída entre nós vizinhos.
+    // aiComment = leitura semântica profunda do pipeline no contexto de designações de partes.
+    const NARRATIVE_BY_INDEX = {
+      overview: [
+        { explanation: `Tudo começa aqui quando o sistema decide montar a programação da semana sem ajuda humana: ele varre as partes, junta o contexto e dispara a eleição automática dos nomes.`,
+          aiComment: `Intenção: oferecer um primeiro rascunho coerente do quadro inteiro aplicando regras unificadas. Impacto: economiza horas do dirigente e já entrega uma proposta auditável, que serve como ponto de partida para revisão humana, em vez de partir do zero a cada semana.` },
+        { explanation: `Este é o caminho oposto: o dirigente abre uma parte específica e escolhe à mão. Mesmo manual, o sistema entra junto e oferece só os nomes que cumprem as regras.`,
+          aiComment: `Intenção: preservar a decisão humana sem abrir mão da disciplina das regras. Impacto: evita que escolhas pontuais quebrem a coerência geral da designação, porque a UI manual e o motor automático partilham o mesmo gate de elegibilidade.` },
+        { explanation: `Aqui é o painel de diagnóstico, acionado quando alguém quer entender por que tal nome apareceu (ou não). Mostra o ranking completo lado a lado com os bloqueios.`,
+          aiComment: `Intenção: transformar a caixa-preta da eleição em uma vitrine transparente. Impacto: ganha-se confiança no sistema porque cada nome do ranking tem justificativa visível e auditável, o que sustenta conversas pastorais difíceis com base em dados.` },
+        { explanation: `Quando o usuário pergunta ao agente IA do chat algo como "quem é melhor para esta parte?", é por aqui que passa: o agente busca o ranking e devolve com explicação textual.`,
+          aiComment: `Intenção: levar a mesma lógica de eleição para dentro da conversa, no idioma natural do usuário. Impacto: o agente nunca opina por intuição — sempre fala em cima da mesma engrenagem que o painel usa, garantindo respostas reprodutíveis.` },
+        { explanation: `Antes de qualquer escolha, é preciso saber a semana inteira: data, titular, presidente e o que já foi designado. Esse contexto comum alimenta todos os caminhos acima.`,
+          aiComment: `Intenção: ter uma única verdade sobre a semana para que cada caminho enxergue o mesmo cenário. Impacto: elimina divergência entre superfícies — chat, painel e UI manual consultam a mesma fonte e nunca contradizem uns aos outros.` },
+        { explanation: `Com o contexto pronto, este é o portão: para cada candidato e cada parte, responde "pode ou não pode" — e, se não pode, devolve o motivo exato.`,
+          aiComment: `Intenção: regra única declarada em um só lugar, sempre acompanhada de causa. Impacto: nenhum nome é descartado em silêncio — todo bloqueio deixa rastro auditável, o que permite explicar a decisão a anciãos e publicadores.` },
+        { explanation: `Passados pelo portão, os elegíveis caem aqui para serem ordenados por mérito de rotação. O ranking é determinístico — mesmas entradas geram a mesma ordem.`,
+          aiComment: `Intenção: garantir justiça reproduzível, sem sorteios ocultos. Impacto: a mesma situação sempre gera a mesma sugestão, e isso protege o processo contra suspeita de favoritismo ou influência indevida.` },
+        { explanation: `O ranking não inventa nota: cada candidato recebe um score baseado em quanto tempo está sem servir, quão frequente foi e se acabou de carregar uma parte pesada.`,
+          aiComment: `Intenção: equilibrar oportunidades sem sobrecarregar quem acabou de servir. Impacto: ao longo do ano, quem está há mais tempo sem designação tende a ser puxado naturalmente, sem precisar de planilha paralela do dirigente.` },
+        { explanation: `Mesmo depois de ordenado, o sistema checa se algum candidato está em descanso obrigatório (cooldown) — e marca essa informação para tratamento diferente conforme a tela.`,
+          aiComment: `Intenção: respeitar o intervalo entre designações como sinal claro, sem apagar o candidato do ranking. Impacto: o painel pode mostrar com aviso, o agente pode explicar, e a UI manual pode bloquear — cada um a seu modo, mas todos cientes.` },
+        { explanation: `Aqui se enxerga o primeiro encontro: por mais que existam quatro entradas diferentes, todas passam pelo mesmo portão de elegibilidade.`,
+          aiComment: `Intenção: forçar coerência no que mais importa — quem pode servir. Impacto: nunca acontece de um caminho aceitar alguém que outro recusaria, eliminando contradições entre superfícies e protegendo a confiança no app.` },
+        { explanation: `Segundo encontro: a ordem dos candidatos também sai do mesmo serviço de rotação para todos os caminhos.`,
+          aiComment: `Intenção: que "melhor candidato" signifique a mesma coisa em todo o app. Impacto: alinha o discurso do agente, a lista do painel e a seleção automática, garantindo que três usuários vejam a mesma resposta para a mesma pergunta.` },
+        { explanation: `Mas há um ponto onde os caminhos divergem: o cooldown é tratado de jeito diferente conforme a tela — em algumas é só um aviso, em outras é bloqueio efetivo.`,
+          aiComment: `Intenção: respeitar o contexto de uso (a UI manual exige proteção forte; o diagnóstico exige transparência total). Impacto: experiência adaptada por superfície, mas com a mesma regra por trás — divergência intencional, não acidental.` },
+        { explanation: `Fim do caminho automático: cada parte ganha um nome e o sistema grava no quadro semanal.`,
+          aiComment: `Intenção: entregar uma programação semanal pronta, porém reversível. Impacto: o dirigente recebe um rascunho consistente que pode ajustar com poucos cliques, em vez de montar tudo do zero.` },
+        { explanation: `Fim do caminho manual: o dropdown só mostra os elegíveis, escondendo bloqueados.`,
+          aiComment: `Intenção: simplificar a escolha humana sem dar a opção de errar. Impacto: o dirigente foca em decidir entre os bons, não em filtrar os ruins, reduzindo o tempo da designação manual.` },
+        { explanation: `Fim do caminho diagnóstico: o painel exibe o melhor e o top da lista, separando claramente bloqueados de aptos.`,
+          aiComment: `Intenção: dar visão completa para auditoria e ajustes finos. Impacto: o usuário entende a fila inteira, não só o vencedor, o que sustenta conversas sobre por que tal nome ainda não apareceu.` },
+        { explanation: `Fim do caminho agente IA: a resposta do chat traz ranking acompanhado de tags de elegibilidade — quem é melhor e por quê.`,
+          aiComment: `Intenção: levar transparência conversacional ao processo de eleição. Impacto: o usuário entende em linguagem natural a mesma decisão que o painel visualiza, com explicação e tag de cooldown quando faz sentido.` }
+      ],
+      generation: [
+        { explanation: `O motor começa carregando os três insumos da rodada: as partes da semana, os publicadores disponíveis e o histórico recente de designações.`,
+          aiComment: `Intenção: nunca decidir no escuro — sempre com contexto completo da congregação. Impacto: a rotação faz sentido porque enxerga o passado próximo, em vez de tratar cada semana como evento isolado.` },
+        { explanation: `Da pilha de partes recebida, separa só as que realmente precisam de nome agora, descartando o que já está resolvido.`,
+          aiComment: `Intenção: trabalhar apenas onde há decisão a tomar, sem mexer no que está bom. Impacto: processo mais rápido e foco nas pendências reais, evitando reprocessamento desnecessário.` },
+        { explanation: `Para cada parte filtrada, pergunta: é de uma data já passada? Porque atribuir nome retroativo geralmente não faz sentido.`,
+          aiComment: `Intenção: respeitar o fluxo cronológico das reuniões. Impacto: evita poluir o histórico com sugestões inúteis e mantém o motor focado em ajudar de fato a próxima reunião.` },
+        { explanation: `Se a data é válida, próxima pergunta: a parte é de um tipo que o sistema não atribui sozinho (canto, comentários iniciais etc.)?`,
+          aiComment: `Intenção: o motor não tenta automatizar o que pertence à decisão manual ou ao desenho da reunião. Impacto: respeita os limites do escopo automatizável e evita conflitos com o que o dirigente prefere controlar.` },
+        { explanation: `Passou pela não-designabilidade. Agora: a parte já está num estado final (CONCLUIDA ou CANCELADA)?`,
+          aiComment: `Intenção: respeitar estados firmados — uma parte concluída não pode ser sobrescrita por uma decisão automática. Impacto: protege decisões passadas contra retrabalho indevido.` },
+        { explanation: `Última triagem: a parte está realmente pendente, sem nome ou com nome inválido? Só nesse caso vale a pena seguir.`,
+          aiComment: `Intenção: foco cirúrgico nas lacunas reais. Impacto: nada é tocado sem motivo claro, o que mantém o motor previsível e conservador.` },
+        { explanation: `Se qualquer pergunta anterior disse "não vale", a parte cai aqui e é descartada da rodada.`,
+          aiComment: `Intenção: enxugar o trabalho ao essencial. Impacto: o motor só investe esforço onde há algo a ganhar, mantendo a rodada eficiente.` },
+        { explanation: `Quando a parte é não-designável mas ainda tem nome residual, esta fase entra para limpar — marca o resíduo com CLEANUP.`,
+          aiComment: `Intenção: deixar a base coerente antes de qualquer eleição nova. Impacto: evita que sujeira de histórico (nomes em partes que não deveriam tê-los) contamine decisões futuras.` },
+        { explanation: `Antes de inventar novidades, esta fase faz sanidade: quem já está designado ainda passa nas regras atuais?`,
+          aiComment: `Intenção: corrigir designações que ficaram inválidas (alguém ficou inativo, mudou de status). Impacto: estabiliza o quadro antes de evoluir, evitando construir em cima de base quebrada.` },
+        { explanation: `Pergunta sanitária: o nome atualmente atribuído ainda é elegível para essa parte?`,
+          aiComment: `Intenção: confiar mas verificar. Impacto: ninguém fica numa parte que não pode mais cumprir, e o quadro chega à fase de eleição com integridade.` },
+        { explanation: `Agora começa a eleição de verdade. Primeiro a presidência da semana — porque ela influencia várias escolhas seguintes.`,
+          aiComment: `Intenção: ancorar a semana inteira no papel mais sensível antes de tudo. Impacto: cascata coerente — ajudante depende do titular, titular depende do presidente, então o presidente vem primeiro.` },
+        { explanation: `Para presidir, aplica eligibility de PRESIDENCIA, checa disponibilidade na quinta, ordena os elegíveis e escolhe o primeiro sem cooldown.`,
+          aiComment: `Intenção: regras explícitas e ordenadas, nada subjetivo. Impacto: o presidente da semana sempre é o mais apto disponível, não o mais lembrado, eliminando vieses involuntários.` },
+        { explanation: `Logo depois, propaga o presidente escolhido como assignee automático nas partes que dependem dele (comentários iniciais, oração inicial).`,
+          aiComment: `Intenção: economizar trabalho repetitivo do dirigente naquilo que naturalmente segue a presidência. Impacto: o quadro fica coerente sem clique extra para partes que sempre vão para o presidente.` },
+        { explanation: `Regra simples desta cascata: só persiste a vinculação automática se o presidente já estiver definido.`,
+          aiComment: `Intenção: proteção contra cascata fantasma. Impacto: não grava ligação sem âncora real, evitando dados inconsistentes na base.` },
+        { explanation: `Com presidência resolvida, entra a faixa de partes de ensino (Tesouros, Joias, EBC Vida etc.).`,
+          aiComment: `Intenção: tratar primeiro as partes que pedem perfil mais específico. Impacto: as exigentes são preenchidas enquanto ainda há muitos candidatos com perfil amplo disponíveis.` },
+        { explanation: `Pergunta o subtipo de ensino (Discurso, Joias, EBC Vida) para aplicar a regra certa de cada uma.`,
+          aiComment: `Intenção: cada subtipo de ensino tem público e perfil próprios. Impacto: a eleição é especializada por tipo, não genérica, refletindo a estrutura real da apostila.` },
+        { explanation: `Para a parte de ensino: verifica elegibilidade pela modalidade, prioriza irmão batizado para Leitor de EBC (irmão > MS > ancião), ordena por rotação e escolhe sem cooldown.`,
+          aiComment: `Intenção: respeitar o desenho organizacional (quem pode fazer o quê) sem sacrificar a justiça da rotação. Impacto: a eleição é ao mesmo tempo regulamentar e equilibrada, sem repetir sempre o ancião disponível.` },
+        { explanation: `Em seguida, a faixa estudantil — leituras e demonstrações da escola.`,
+          aiComment: `Intenção: cuidar do treinamento progressivo dos publicadores. Impacto: novos têm oportunidade equilibrada de progredir, e o motor previne que sempre os mesmos sejam chamados.` },
+        { explanation: `Diferencia agora: a parte estudantil é demonstração (precisa de ajudante) ou leitura solo?`,
+          aiComment: `Intenção: ramificar a regra porque demonstração envolve par titular/ajudante. Impacto: o motor monta o par junto e coerente, não em duas decisões soltas que poderiam não combinar.` },
+        { explanation: `Para demonstrações: prioriza irmãs, depois irmãos, depois MS, depois ancião — depois ordena por rotação e tira bloqueados.`,
+          aiComment: `Intenção: dar protagonismo às irmãs nas partes próprias delas. Impacto: equilíbrio real de oportunidade por gênero, especialmente nas partes onde a apostila prevê isso.` },
+        { explanation: `Para leituras: aplica a lista de elegíveis, ordena por rotação e descarta cooldown — a fórmula universal.`,
+          aiComment: `Intenção: usar o algoritmo padrão quando o perfil exigido é mais aberto. Impacto: simplicidade onde o caso permite, sem inventar regra nova à toa.` },
+        { explanation: `Faixa final: tudo que sobrou (orações, partes da seção da congregação, necessidades locais).`,
+          aiComment: `Intenção: fechar o quadro completo da semana, sem deixar buraco. Impacto: a programação não termina pela metade, e o dirigente recebe algo realmente publicável.` },
+        { explanation: `Antes de escolher cada parte que sobrou, pergunta: a função é AJUDANTE? Porque o ajudante depende do titular já escolhido.`,
+          aiComment: `Intenção: jamais escolher um ajudante sem saber quem é o titular dele. Impacto: protege a coerência do par titular/ajudante, que é uma das regras mais sensíveis da reunião.` },
+        { explanation: `Para ajudante: resolve quem é o titular, limpa modalidades-solo, aplica eligibility de AJUDANTE, exige mesmo gênero (ou bypass familiar) e ordena.`,
+          aiComment: `Intenção: respeitar tanto a regra organizacional quanto a sensibilidade pastoral (casal e família ganham passagem suave). Impacto: ajudantes naturais entram limpo; entre estranhos, segue a regra padrão de gênero.` },
+        { explanation: `Se não é ajudante, próxima pergunta: é a oração final? Ela tem regra própria de preferência.`,
+          aiComment: `Intenção: a oração final tem ordem específica (livre prevalece sobre ocupado; presidente entra só por fallback). Impacto: distribui o convite com sensibilidade ao papel já assumido pelo candidato na mesma semana.` },
+        { explanation: `Para a oração final: aplica três grupos — livres sem cargo de presidente, ocupados sem presidência, e o presidente como último recurso.`,
+          aiComment: `Intenção: priorizar quem ainda não está envolvido na semana. Impacto: distribui visibilidade na reunião sem sobrecarregar quem já cumpriu outra parte.` },
+        { explanation: `Para o resto das partes: pega elegíveis, ordena por rotação, tira bloqueados, e exclui quem já apareceu na semana.`,
+          aiComment: `Intenção: evitar repetir o mesmo nome em duas partes da mesma semana. Impacto: percepção de variedade no quadro, sem que o motor caia na facilidade de repetir o disponível.` },
+        { explanation: `Conforme atribui, vai injetando essas atribuições num histórico interno temporário — para que a próxima parte da rodada já enxergue o que acabou de ser feito.`,
+          aiComment: `Intenção: o cooldown e a rotação enxergam decisões do próprio lote, não só do passado já salvo. Impacto: evita escalar a mesma pessoa duas vezes numa rodada longa, mesmo antes de qualquer gravação no banco.` },
+        { explanation: `Antes de gravar qualquer coisa: isso é simulação ou pra valer?`,
+          aiComment: `Intenção: blindar contra escrita acidental. Impacto: o usuário pode experimentar cenários sem medo de comprometer a programação real.` },
+        { explanation: `Se for simulação, devolve só o resultado para inspeção e sai sem tocar na base.`,
+          aiComment: `Intenção: ferramenta segura de exploração e auditoria. Impacto: testar cenários é barato e sem efeito colateral — o motor pode ser usado para análises e não só para gerar.` },
+        { explanation: `Se for pra valer, persiste todas as atribuições da rodada no banco.`,
+          aiComment: `Intenção: efetivar a programação como resultado oficial. Impacto: a partir daqui as designações entram nos S-89, nas notificações e no fluxo de aprovação.` },
+        { explanation: `Junto com o commit, grava um snapshot completo da configuração do motor e da versão das regras de elegibilidade usadas.`,
+          aiComment: `Intenção: poder reproduzir no futuro exatamente a decisão tomada agora, mesmo que as regras evoluam. Impacto: auditoria perfeita e investigações pastorais sustentadas por evidência reprodutível.` }
+      ],
+      eligibility: [
+        { explanation: `Tudo começa quando alguém pergunta: "fulano pode fazer esta parte?". A função recebe publicador, modalidade, função e contexto da semana.`,
+          aiComment: `Intenção: ter um único ponto de entrada para qualquer pergunta de elegibilidade no app. Impacto: não importa quem chama (motor automático, UI manual, painel ou agente IA) — a resposta sempre sai do mesmo lugar.` },
+        { explanation: `Primeira pergunta universal e mais barata: o publicador está ativo na congregação?`,
+          aiComment: `Intenção: descartar logo quem nem está em atividade, antes de gastar análise pesada. Impacto: filtro mais barato vem primeiro, economizando ciclos e mantendo a função rápida.` },
+        { explanation: `Se está servindo, próxima pergunta: foi marcado como "não qualificado" pelo ancionato?`,
+          aiComment: `Intenção: respeitar o flag pastoral acima de qualquer cálculo automatizado. Impacto: a decisão manual do corpo de anciãos sempre prevalece sobre qualquer otimização do algoritmo.` },
+        { explanation: `Está qualificado. Agora: o publicador pediu para não participar (suspensão temporária)?`,
+          aiComment: `Intenção: honrar pedidos pessoais sem precisar deletar o cadastro. Impacto: respeito ao publicador combinado com flexibilidade — basta um clique para suspender e outro para retomar quando ele quiser.` },
+        { explanation: `Para semanas correntes ou futuras, checa o calendário de disponibilidade. Para passado, pula esta checagem.`,
+          aiComment: `Intenção: não punir histórico aplicando regra de agora. Impacto: análise retroativa não cria bloqueios artificiais sobre quem já cumpriu a parte no passado.` },
+        { explanation: `Disponível. Mas atenção: se a pessoa se declarou "só ajudante" e estão pedindo para titular, bloqueia aqui.`,
+          aiComment: `Intenção: preservar o perfil declarado pelo próprio publicador. Impacto: evita escalações que contrariam o que o irmão definiu sobre seu próprio nível de participação.` },
+        { explanation: `Checa os privilégios da seção (presidência, oração, ensino, EBC etc.) cruzando com a modalidade pedida.`,
+          aiComment: `Intenção: aplicar o mapa de privilégios sem improvisos. Impacto: a regra organizacional vira código auditável, não memória ou intuição do dirigente.` },
+        { explanation: `Última camada textual: gênero, condição, função e batismo conferem com a parte específica?`,
+          aiComment: `Intenção: capturar restrições literais previstas pela apostila e pelos materiais publicados. Impacto: alinhamento automático com o que o material já diz, sem o dirigente precisar reler tudo.` },
+        { explanation: `Passou em tudo. Agora abre a ramificação especial: a função pedida é AJUDANTE?`,
+          aiComment: `Intenção: separar a lógica do ajudante porque ela depende de outro candidato — o titular. Impacto: as regras de par são tratadas no lugar certo, sem misturar com regras de candidato único.` },
+        { explanation: `Saída de bloqueio se a pessoa não está servindo: retorna com motivo claro.`,
+          aiComment: `Intenção: bloqueio com causa rastreável, nunca silencioso. Impacto: o painel e o chat podem mostrar exatamente por que o nome não entra na lista, sustentando explicações pastorais.` },
+        { explanation: `Saída de bloqueio para quem está marcado como não-qualificado, com motivo registrado.`,
+          aiComment: `Intenção: respeitar a marcação pastoral acima da otimização do motor. Impacto: nenhum algoritmo passa por cima de uma decisão dos anciãos.` },
+        { explanation: `Saída de bloqueio para quem pediu para não participar nesta janela.`,
+          aiComment: `Intenção: respeito ao pedido pessoal do publicador. Impacto: o irmão confia que seu pedido é honrado de fato pelo sistema, fortalecendo a relação com a ferramenta.` },
+        { explanation: `Saída de bloqueio para quem marcou indisponibilidade nesta semana específica.`,
+          aiComment: `Intenção: nunca escalar quem informou que não pode. Impacto: zero substituição de última hora por esquecimento — o dirigente confia na disponibilidade declarada.` },
+        { explanation: `Saída de bloqueio para titular quando a pessoa se declarou "só ajudante".`,
+          aiComment: `Intenção: preservar o perfil declarado. Impacto: ninguém é puxado para titular contra a própria definição, e o sistema parece atencioso.` },
+        { explanation: `Saída de bloqueio quando o privilégio de seção do candidato não bate com a modalidade pedida.`,
+          aiComment: `Intenção: respeitar o mapa formal de privilégios. Impacto: cada parte recebe alguém qualificado para ela, e a regra organizacional fica visível em vez de implícita.` },
+        { explanation: `Saída de bloqueio por restrição textual (gênero, condição, função ou batismo não conferem com a parte).`,
+          aiComment: `Intenção: cumprir a letra da apostila. Impacto: o sistema atua dentro do que a publicação prevê, sem improvisar exceções.` },
+        { explanation: `Entrou na trilha de ajudante. Primeira pergunta: o gênero do titular dessa parte já está definido?`,
+          aiComment: `Intenção: jamais decidir ajudante no escuro, sem saber com quem ele faria par. Impacto: protege a regra de mesmo gênero contra falsos positivos por contexto incompleto.` },
+        { explanation: `Saída de bloqueio para ajudante quando o titular ainda não está definido — sem contexto, sem decisão.`,
+          aiComment: `Intenção: integridade primeiro, otimização depois. Impacto: erro silencioso vira erro explícito, muito mais fácil de corrigir pelo dirigente.` },
+        { explanation: `Tem titular. Próxima pergunta sensível: o candidato é cônjuge ou parente direto do titular (pai-filho, mãe-filha)? Se sim, pode acompanhar com qualquer gênero.`,
+          aiComment: `Intenção: respeitar a sensibilidade pastoral do par familiar. Impacto: marido/esposa e pai/filho passam suave, sem ferir a regra geral nem expor a família a constrangimento.` },
+        { explanation: `Aprovação do ajudante via bypass familiar.`,
+          aiComment: `Intenção: reconhecer relações que justificam exceção legítima à regra geral. Impacto: a prática real da congregação é refletida no código, sem o sistema parecer rígido demais.` },
+        { explanation: `Sem laço familiar. Agora a regra padrão: o ajudante tem o mesmo gênero do titular?`,
+          aiComment: `Intenção: aplicar a regra padrão de gênero quando não há laço familiar que justifique exceção. Impacto: ordem espiritual mantida no caso geral, sem deixar de cuidar dos casos sensíveis.` },
+        { explanation: `Saída de bloqueio para ajudante de gênero diferente sem laço familiar.`,
+          aiComment: `Intenção: cumprir orientação organizacional sobre par titular/ajudante. Impacto: evita constrangimento e mal-entendido na hora da execução da parte.` },
+        { explanation: `Não é ajudante. Aqui o fluxo ramifica por modalidade da parte: presidência, oração, discurso de ensino, demonstração, EBC e assim por diante.`,
+          aiComment: `Intenção: cada modalidade tem critério próprio de qualificação. Impacto: regras tratadas no nível certo de especialização, sem misturar lógicas que não se aplicam entre si.` },
+        { explanation: `Ramo PRESIDÊNCIA: o candidato tem permissão formal de presidir?`,
+          aiComment: `Intenção: filtrar pelo privilégio mais alto da reunião antes de qualquer outra coisa. Impacto: só presidem irmãos explicitamente qualificados para tal.` },
+        { explanation: `Saída de bloqueio: sem permissão de presidir, fora da modalidade PRESIDÊNCIA.`,
+          aiComment: `Intenção: respeitar o privilégio formal de presidência. Impacto: integridade da presidência preservada em todas as semanas.` },
+        { explanation: `Aprovação para PRESIDÊNCIA: o candidato tem o privilégio e entra no pool de eleição.`,
+          aiComment: `Intenção: oferecer ao motor de eleição apenas candidatos realmente aptos. Impacto: a presidência da semana sairá de um conjunto verdadeiramente qualificado.` },
+        { explanation: `Ramo ORAÇÃO: é irmão batizado e tem permissão de orar publicamente?`,
+          aiComment: `Intenção: respeitar quem pode representar a congregação em oração pública. Impacto: oração na reunião só com quem tem essa condição formalmente reconhecida.` },
+        { explanation: `Saída de bloqueio: não é irmão batizado com permissão de orar.`,
+          aiComment: `Intenção: cumprir a orientação publicada sobre quem ora na reunião. Impacto: nenhuma escalação fora desse critério, mesmo em emergência.` },
+        { explanation: `Sub-pergunta da oração: se é Oração Inicial, exige também o privilégio de presidir?`,
+          aiComment: `Intenção: a oração inicial costuma estar ligada a quem dirige a reunião. Impacto: alinhamento natural entre presidência e abertura, evitando arranjos estranhos.` },
+        { explanation: `Saída de bloqueio: candidato não preside, então não pode fazer a Oração Inicial.`,
+          aiComment: `Intenção: coerência entre quem abre a reunião e quem a dirige. Impacto: evita o caso desconfortável de abertura por um irmão e direção por outro.` },
+        { explanation: `Outra sub-pergunta: para Oração Final, prefere quem não é o presidente da semana.`,
+          aiComment: `Intenção: ampliar a participação na oração final para além do presidente. Impacto: o presidente entra só como fallback, distribuindo a visibilidade.` },
+        { explanation: `Saída de bloqueio: candidato é o presidente — bloqueio da oração final (a menos que entre como fallback explícito).`,
+          aiComment: `Intenção: priorizar outros irmãos qualificados na oração final. Impacto: distribuição mais ampla da participação e quebra de monotonia.` },
+        { explanation: `Aprovação para ORAÇÃO: candidato passou em todas as sub-condições.`,
+          aiComment: `Intenção: liberar para o motor de eleição apenas quem realmente atende ao critério completo. Impacto: pool real de orantes elegíveis para a semana.` },
+        { explanation: `Ramo DISCURSO DE ENSINO: é irmão com permissão de discursar, ancião ou servo ministerial?`,
+          aiComment: `Intenção: discurso de ensino exige preparo formal e privilégio. Impacto: a parte de ensino recebe nome com perfil realmente compatível com a responsabilidade.` },
+        { explanation: `Saída de bloqueio: perfil não bate com discurso de ensino.`,
+          aiComment: `Intenção: respeitar a exigência de qualificação formal. Impacto: ensino não vai a quem ainda não foi designado para essa responsabilidade.` },
+        { explanation: `Aprovação para DISCURSO DE ENSINO.`,
+          aiComment: `Intenção: pool real de quem pode ensinar na reunião. Impacto: a rotação dessas partes acontece dentro do círculo qualificado, sem improviso.` },
+        { explanation: `Ramo LEITURA ESTUDANTE: é irmão e cumpre as regras de aluno?`,
+          aiComment: `Intenção: a leitura estudante é parte do treinamento progressivo dos irmãos. Impacto: o palco é dado a quem está sendo preparado, fortalecendo a escola.` },
+        { explanation: `Saída de bloqueio: não cumpre regras de leitura estudante.`,
+          aiComment: `Intenção: manter o caráter formativo da parte. Impacto: a parte cumpre sua função pedagógica em vez de virar formalidade.` },
+        { explanation: `Aprovação para LEITURA ESTUDANTE.`,
+          aiComment: `Intenção: incluir no pool de estudantes leitores aptos. Impacto: rotação saudável entre os aprendizes ao longo do mês.` },
+        { explanation: `Ramo DEMONSTRAÇÃO: passa nas regras de aluno (que aqui incluem irmãs naturalmente)?`,
+          aiComment: `Intenção: a demonstração contempla par de candidatos e abre espaço a irmãs. Impacto: tanto irmãs quanto irmãos têm seu espaço de treino prático.` },
+        { explanation: `Saída de bloqueio: não cumpre as regras de aluno para demonstração.`,
+          aiComment: `Intenção: preservar a integridade do propósito da parte. Impacto: nenhum atalho que viole o desenho da escola.` },
+        { explanation: `Aprovação para DEMONSTRAÇÃO.`,
+          aiComment: `Intenção: pool real de estudantes em fase de treino prático. Impacto: a rotação cresce entre quem precisa do palco para se desenvolver.` },
+        { explanation: `Ramo DISCURSO ESTUDANTE: é irmão habilitado para discurso estudante?`,
+          aiComment: `Intenção: parte específica para irmãos em desenvolvimento como oradores. Impacto: respeita a progressão didática prevista na escola atual.` },
+        { explanation: `Saída de bloqueio: não está habilitado para discurso estudante.`,
+          aiComment: `Intenção: a parte vai a quem foi de fato treinado para o formato. Impacto: progressão didática preservada, sem queimar etapas.` },
+        { explanation: `Aprovação para DISCURSO ESTUDANTE.`,
+          aiComment: `Intenção: pool real de irmãos aptos nesse formato. Impacto: oportunidades equilibradas dentro do grupo em treinamento.` },
+        { explanation: `Ramo DIRIGENTE EBC: é ancião com permissão de conduzir o Estudo Bíblico da Congregação?`,
+          aiComment: `Intenção: a condução do EBC pede privilégio elevado. Impacto: a parte é entregue a quem tem o encargo pastoral apropriado.` },
+        { explanation: `Saída de bloqueio: não é ancião apto para conduzir EBC.`,
+          aiComment: `Intenção: respeitar o perfil pastoral de quem conduz. Impacto: condução sempre dentro do critério organizacional.` },
+        { explanation: `Aprovação para DIRIGENTE EBC.`,
+          aiComment: `Intenção: pool real dos dirigentes habilitados. Impacto: rotação justa entre os anciãos qualificados, sem repetir sempre o mais disponível.` },
+        { explanation: `Ramo LEITOR EBC: é irmão batizado com permissão específica de leitor de EBC?`,
+          aiComment: `Intenção: o leitor de EBC tem perfil bem específico (irmão, batizado, com privilégio). Impacto: a parte vai a quem realmente pode cumprir o papel.` },
+        { explanation: `Saída de bloqueio: não é irmão batizado apto para leitor EBC.`,
+          aiComment: `Intenção: respeitar o perfil declarado. Impacto: nenhuma escalação fora do critério, mesmo em semanas apertadas.` },
+        { explanation: `Aprovação para LEITOR EBC.`,
+          aiComment: `Intenção: pool real de leitores qualificados. Impacto: equilibra os elegíveis ao longo das semanas, evitando concentrar sempre no mesmo irmão.` },
+        { explanation: `Ramo NECESSIDADES LOCAIS: é ancião com permissão de discursos?`,
+          aiComment: `Intenção: parte sensível, costuma ser do ancião por seu caráter pastoral local. Impacto: preserva o tom de cuidado e direção da parte.` },
+        { explanation: `Saída de bloqueio: perfil não bate com Necessidades Locais.`,
+          aiComment: `Intenção: respeitar a expectativa pastoral da parte. Impacto: a parte chega a quem foi efetivamente designado para esse encargo.` },
+        { explanation: `Aprovação para NECESSIDADES LOCAIS.`,
+          aiComment: `Intenção: incluir no pool dos anciãos aptos para essa parte. Impacto: distribuição equilibrada ao longo do ano entre os qualificados.` }
+      ],
+      uiAgent: [
+        { explanation: `Caminho manual começa preparando o contexto da semana — exatamente o mesmo construtor usado pelo motor automático.`,
+          aiComment: `Intenção: humano e automação partem do mesmo ponto. Impacto: a UI manual não tem regras paralelas — apenas oferece a decisão visual sobre a mesma base de verdade.` },
+        { explanation: `Para cada publicador disponível, a UI pergunta ao mesmo gate central: pode ou não pode?`,
+          aiComment: `Intenção: filtragem honesta antes de mostrar opções ao dirigente. Impacto: a tela não tenta o usuário com nomes que seriam reprovados depois, evitando frustração e correção.` },
+        { explanation: `Decisão exclusiva do caminho manual: esse nome já está designado para outra parte nesta mesma semana?`,
+          aiComment: `Intenção: na escolha manual, repetir nome na semana é considerado erro duro e bloqueado. Impacto: protege a diversidade semanal contra deslize do usuário que não lembrou do que já designou.` },
+        { explanation: `Calcula o score e descobre se há cooldown — exatamente as mesmas funções que o motor automático usa para rankear.`,
+          aiComment: `Intenção: enriquecer a UI com a mesma inteligência da eleição automática. Impacto: o dirigente decide com a mesma informação que a IA usaria, em vez de ter uma versão simplificada da realidade.` },
+        { explanation: `O dropdown mostra apenas os elegíveis e ranqueados.`,
+          aiComment: `Intenção: simplificar a escolha humana ao máximo. Impacto: o dirigente foca em decidir entre os bons, não em filtrar os impedidos.` },
+        { explanation: `Quem está em cooldown, se aparecer, vem com tooltip explicando o motivo do alerta.`,
+          aiComment: `Intenção: transparência sem censura — o usuário vê o motivo do alerta. Impacto: decisão informada em vez de cega, preservando autonomia humana com responsabilidade.` },
+        { explanation: `Caminho diagnóstico (painel de controle) também começa pelo mesmo construtor de contexto.`,
+          aiComment: `Intenção: garantir consistência entre superfícies do app. Impacto: o painel de diagnóstico vê o mesmo cenário que o motor — análise sobre dados reais, não simulação.` },
+        { explanation: `Levanta a lista de elegíveis chamando o mesmo gate central de elegibilidade.`,
+          aiComment: `Intenção: zero divergência na regra entre superfícies. Impacto: o painel diagnostica a partir da verdade real do sistema, sustentando conversas e investigações pastorais.` },
+        { explanation: `Pega o ranking determinístico — exatamente o mesmo que o motor automático usaria.`,
+          aiComment: `Intenção: "melhor candidato" significa a mesma coisa em qualquer tela. Impacto: explicabilidade real, não simulação — quem aparece no top do painel é quem o motor escolheria.` },
+        { explanation: `Para cada candidato no ranking, pergunta: está bloqueado por cooldown?`,
+          aiComment: `Intenção: separar visualmente quem está apto agora de quem está em descanso. Impacto: o usuário entende o estado atual da rotação e antecipa quem voltará a estar elegível.` },
+        { explanation: `Define como "melhor candidato" o primeiro não-bloqueado do ranking.`,
+          aiComment: `Intenção: o painel sugere de fato uma escolha viável, não teórica. Impacto: "melhor candidato" nunca é alguém em cooldown, evitando recomendação que precisaria ser desfeita.` },
+        { explanation: `Mostra também o top 4 do ranking — incluindo bloqueados, para análise visual.`,
+          aiComment: `Intenção: dar visão da fila inteira, não só do vencedor. Impacto: o usuário entende quem viria depois e por que alguns ainda estão bloqueados, sustentando decisões pastorais conscientes.` },
+        { explanation: `Caminho agente IA começa traduzindo o pedido em linguagem natural para a parte concreta do sistema.`,
+          aiComment: `Intenção: o agente entende sinônimos, abreviações e referências livres do usuário. Impacto: "quem vai dar a primeira parte de Joias?" vira identificador de parte e modalidade reais.` },
+        { explanation: `Agente monta o mesmo contexto comum da semana.`,
+          aiComment: `Intenção: a conversa fala com a mesma verdade que o painel e a UI manual. Impacto: o usuário pode confiar que a explicação do chat bate com o que ele vê em outra tela.` },
+        { explanation: `Levanta elegíveis pelo mesmo gate central.`,
+          aiComment: `Intenção: o agente não inventa nem alucina nome — só responde com base na verdade verificada. Impacto: confiança no canal conversacional como fonte legítima de decisão.` },
+        { explanation: `Pega o ranking determinístico (mesmo serviço dos outros caminhos).`,
+          aiComment: `Intenção: "melhor candidato" do chat é idêntico ao "melhor candidato" do painel. Impacto: respostas reprodutíveis e auditáveis, mesmo via conversa natural.` },
+        { explanation: `Marca quem está em cooldown — mas, diferente da UI manual, não esconde.`,
+          aiComment: `Intenção: o chat tem caráter pedagógico, por isso mostra a tag em vez de filtrar. Impacto: o usuário aprende a lógica da rotação enquanto consome a resposta.` },
+        { explanation: `Devolve a lista ordenada: aptos primeiro, bloqueados em seguida com tag de motivo.`,
+          aiComment: `Intenção: pedagogia + utilidade no mesmo retorno. Impacto: o usuário escolhe com contexto e descobre quando precisaria esperar ou substituir alguém.` },
+        { explanation: `Aqui aparece o pacto entre os três caminhos: todos usam o mesmo gate de elegibilidade e o mesmo construtor de contexto.`,
+          aiComment: `Intenção: blindar a regra de elegibilidade contra divergência por superfície. Impacto: independente da porta de entrada, o critério é único — coerência arquitetural garantida.` },
+        { explanation: `Segundo pacto: ranking também é o mesmo serviço, idêntico para todos os caminhos.`,
+          aiComment: `Intenção: que "melhor" signifique a mesma coisa em qualquer superfície. Impacto: explicações alinhadas entre tela, painel e chat — zero contradição visível ao usuário.` },
+        { explanation: `Divergência exclusiva da UI manual: bloqueia duro repetir o mesmo nome na mesma semana.`,
+          aiComment: `Intenção: a UI manual protege contra o deslize humano de não lembrar do que já designou. Impacto: a tela é mais rígida que motor/agente porque o usuário decide isolado, sem rede.` },
+        { explanation: `Cooldown é tratado distinto por superfície: aviso na UI, ordenação no painel, tag no agente.`,
+          aiComment: `Intenção: respeitar o estilo de cada superfície sem violar a regra central. Impacto: experiência adaptada ao contexto de uso, mas com regra única por trás — divergência intencional, não acidental.` },
+        { explanation: `No painel, o top da lista pode mostrar bloqueados (para análise), mas o "melhor candidato" nunca é bloqueado.`,
+          aiComment: `Intenção: dar visão completa para auditoria e ao mesmo tempo recomendar com segurança. Impacto: o usuário diagnostica e age sem ambiguidade — vê tudo, mas recebe sugestão segura.` }
+      ]
+    };
+
+    // Caminhos didáticos por grafo. O Play auto percorre fluxo a fluxo,
+    // anunciando o objetivo de cada caminho antes de entrar nele.
+    const FLOWS = {
+      overview: [
+        { name: "Apresentação dos quatro caminhos", objective: "Mostrar as portas de entrada que o sistema oferece para designar partes.", indexes: [0, 1, 2, 3] },
+        { name: "Base comum partilhada", objective: "Ver o que todos os caminhos consultam por baixo: contexto, elegibilidade, ranking, score e cooldown.", indexes: [4, 5, 6, 7, 8] },
+        { name: "Encontros e divergência entre caminhos", objective: "Entender onde os caminhos convergem na regra e onde divergem propositalmente.", indexes: [9, 10, 11] },
+        { name: "Como cada caminho termina", objective: "Ver a entrega final de cada porta: motor, UI manual, painel de diagnóstico e agente IA.", indexes: [12, 13, 14, 15] }
+      ],
+      generation: [
+        { name: "Carga e triagem das partes", objective: "Reunir o contexto e descartar partes que não cabem na rodada.", indexes: [0, 1, 2, 3, 4, 5, 6, 7] },
+        { name: "Sanidade dos já designados", objective: "Verificar se nomes existentes ainda passam nas regras antes de gerar novos.", indexes: [8, 9] },
+        { name: "Eleição da presidência", objective: "Definir presidência primeiro e propagar para as partes dependentes.", indexes: [10, 11, 12, 13] },
+        { name: "Faixa de ensino", objective: "Designar partes de ensino com perfil específico (Tesouros, Joias, EBC).", indexes: [14, 15, 16] },
+        { name: "Faixa estudantil", objective: "Designar leituras e demonstrações da escola, incluindo o ajudante.", indexes: [17, 18, 19, 20] },
+        { name: "Demais partes da semana", objective: "Resolver ajudantes, orações, o restante das partes pendentes e ir injetando essas escolhas no histórico interno da rodada.", indexes: [21, 22, 23, 24, 25, 26, 27] },
+        { name: "Persistência e auditoria", objective: "Gravar tudo de forma reprodutível ou apenas simular sem efeito colateral.", indexes: [28, 29, 30, 31] }
+      ],
+      eligibility: [
+        { name: "Triagem universal", objective: "Filtros que valem para qualquer candidato e qualquer parte.", indexes: [0, 1, 2, 3, 4, 5, 6, 7] },
+        { name: "Saídas de bloqueio universal", objective: "Mostrar os motivos rastreáveis quando alguém é reprovado na triagem.", indexes: [9, 10, 11, 12, 13, 14, 15] },
+        { name: "Ramo Ajudante", objective: "Regras especiais do par titular/ajudante, incluindo bypass familiar.", indexes: [8, 16, 17, 18, 19, 20, 21] },
+        { name: "Ramo Presidência", objective: "Filtro pelo privilégio formal de presidir a reunião.", indexes: [22, 23, 24, 25] },
+        { name: "Ramo Oração", objective: "Critérios próprios para oração inicial e final.", indexes: [26, 27, 28, 29, 30, 31, 32] },
+        { name: "Ramos de ensino e escola", objective: "Quem pode ensinar, quem pode ler, quem pode demonstrar e quem pode discursar.", indexes: [33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44] },
+        { name: "Ramo EBC", objective: "Quem conduz e quem é leitor do Estudo Bíblico da Congregação.", indexes: [45, 46, 47, 48, 49, 50] },
+        { name: "Ramo Necessidades Locais", objective: "Quem pode cuidar dessa parte pastoral local.", indexes: [51, 52, 53] }
+      ],
+      uiAgent: [
+        { name: "Caminho Manual", objective: "Como a UI manual oferece um dropdown filtrado pelas mesmas regras do motor.", indexes: [0, 1, 2, 3, 4, 5] },
+        { name: "Caminho Diagnóstico", objective: "Como o painel exibe o ranking completo e separa bloqueados para auditoria.", indexes: [6, 7, 8, 9, 10, 11] },
+        { name: "Caminho Agente IA", objective: "Como o chat traduz a pergunta e devolve ranking com tags de elegibilidade.", indexes: [12, 13, 14, 15, 16, 17] },
+        { name: "Convergências e divergências propositais", objective: "Onde os três caminhos batem na mesma regra e onde divergem por estilo da superfície.", indexes: [18, 19, 20, 21, 22] }
+      ]
+    };
+    /* EXTRACT_CONSTANTS_END */
+
+    const state = {
+      graphIndex: 0,
+      svgDoc: null,
+      nodes: [],
+      activeNodeIndex: -1,
+      isPlaying: false,
+      voices: [],
+      currentUtterance: null,
+      selectedNarrative: null,
+      currentFlowIndex: -1,
+      playOrder: [],
+      cancelSpeak: null
+    };
+
+    const tabsEl = document.getElementById("tabs");
+    const svgObject = document.getElementById("svgObject");
+    const graphTitle = document.getElementById("graphTitle");
+    const nodeListEl = document.getElementById("nodeList");
+    const explainBox = document.getElementById("explainBox");
+    const commentBox = document.getElementById("commentBox");
+    const statusText = document.getElementById("statusText");
+    const statusBox = document.getElementById("statusBox");
+    const thumbPointer = document.getElementById("thumbPointer");
+    const tooltipFloat = document.getElementById("tooltipFloat");
+    const voiceSel = document.getElementById("voiceSel");
+    const rateSel = document.getElementById("rateSel");
+    const compatBanner = document.getElementById("compatBanner");
+    const compatText = document.getElementById("compatText");
+    const compatLink = document.getElementById("compatLink");
+    const flowBlock = document.getElementById("flowBlock");
+    const flowName = document.getElementById("flowName");
+    const flowCounter = document.getElementById("flowCounter");
+    const flowObjective = document.getElementById("flowObjective");
+
+    function getLocalhostUrl() {
+      return "http://localhost:5500/eleicao-candidatos-apresentacao-interativa.html";
+    }
+
+    function showCompatBanner(message, withLink = false) {
+      compatText.textContent = message;
+      compatBanner.classList.add("show");
+      compatLink.style.display = withLink ? "inline" : "none";
+      compatLink.href = getLocalhostUrl();
+    }
+
+    function hideCompatBanner() {
+      compatBanner.classList.remove("show");
+    }
+
+    function normalizeText(value) {
+      return String(value || "")
+        .toLowerCase()
+        .replace(/\s+/g, " ")
+        .replace(/[^a-z0-9 ]/g, "")
+        .trim();
+    }
+
+    function fallbackNarrative(label) {
+      const graphId = GRAPHS[state.graphIndex]?.id;
+      const key = normalizeText(label);
+      const labelLower = String(label || "").toLowerCase();
+      const intent = GRAPH_INTENT[graphId] || "apoiar uma designacao justa e compreensivel";
+
+      let explanation = "Neste ponto, o sistema interpreta o contexto atual antes de seguir para a proxima decisao.";
+      let impact = "organiza o fluxo para que a escolha final seja clara para quem decide";
+
+      if (labelLower.includes("build context") || key.includes("build context")) {
+        explanation = "Este no prepara o contexto da decisao, reunindo as informacoes necessarias para avaliar bem cada nome.";
+        impact = "evita sugestoes fora de contexto e aumenta a qualidade da recomendacao";
+      } else if (labelLower.includes("checkeligibility") || key.includes("checkeligibility")) {
+        explanation = "Aqui o sistema valida, de forma objetiva, se a pessoa pode assumir essa parte agora.";
+        impact = "bloqueia opcoes inviaveis cedo e economiza tempo de analise";
+      } else if (labelLower.includes("rank") || labelLower.includes("score") || key.includes("rank") || key.includes("score")) {
+        explanation = "Neste ponto o sistema organiza os nomes por prioridade, buscando equilibrio e oportunidade justa.";
+        impact = "melhora a ordem da lista e facilita uma escolha humana mais segura";
+      } else if (labelLower.includes("cooldown")) {
+        explanation = "Aqui se protege o intervalo entre designacoes para nao sobrecarregar sempre as mesmas pessoas.";
+        impact = "favorece rotacao saudavel e percepcao de justica no grupo";
+      } else if (labelLower.includes("isblocked") || key.includes("isblocked") || key.startsWith("block") || labelLower.includes("block")) {
+        explanation = "Neste no o sistema interrompe esta opcao porque encontrou uma restricao relevante.";
+        impact = "evita uma designacao em desacordo com as regras e protege a consistencia do processo";
+      } else if (key.startsWith("pass") || labelLower.includes(" pass")) {
+        explanation = "Aqui o candidato passou nos criterios e pode seguir como opcao valida para a parte.";
+        impact = "mantem no funil apenas nomes com base adequada para decisao";
+      } else if (labelLower.includes("?") || labelLower.includes("is") || labelLower.includes("equals") || key.includes(" is ")) {
+        explanation = "Este no faz uma pergunta de decisao: conforme a resposta, o caminho muda para o proximo passo.";
+        impact = "torna o criterio explicito e facilita auditoria da trilha de decisao";
+      }
+
+      const aiComment = "Intenção: " + intent + ". Impacto neste ponto: " + impact + ".";
+
+      return {
+        explanation,
+        aiComment
+      };
+    }
+
+    function getNarrative(graphId, label, indexInList) {
+      const byIndex = NARRATIVE_BY_INDEX[graphId];
+      if (byIndex && typeof indexInList === "number" && byIndex[indexInList]) {
+        return byIndex[indexInList];
+      }
+      return fallbackNarrative(label);
+    }
+
+    function renderTabs() {
+      tabsEl.innerHTML = "";
+      GRAPHS.forEach((graph, index) => {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = "tab" + (index === state.graphIndex ? " active" : "");
+        button.textContent = graph.title;
+        button.addEventListener("click", () => {
+          state.graphIndex = index;
+          state.isPlaying = false;
+          stopSpeech();
+          loadGraph();
+          renderTabs();
+        });
+        tabsEl.appendChild(button);
+      });
+    }
+
+    function setStatus(text, speaking = false) {
+      statusText.textContent = text;
+      statusBox.classList.toggle("speaking", speaking);
+    }
+
+    function updateVoiceList() {
+      const allVoices = window.speechSynthesis ? window.speechSynthesis.getVoices() : [];
+      state.voices = allVoices.filter((voice) => /pt|brazil|brasil/i.test(voice.lang + " " + voice.name));
+
+      if (state.voices.length === 0) {
+        state.voices = allVoices;
+      }
+
+      const scoreVoice = (voice) => {
+        const text = (voice.name + " " + voice.lang).toLowerCase();
+        let score = 0;
+        if (text.includes("pt-br")) score += 6;
+        if (text.includes("natural") || text.includes("neural")) score += 5;
+        if (text.includes("maria") || text.includes("female") || text.includes("feminina")) score += 2;
+        if (text.includes("microsoft")) score += 1;
+        return score;
+      };
+
+      state.voices.sort((a, b) => scoreVoice(b) - scoreVoice(a));
+
+      voiceSel.innerHTML = "";
+      state.voices.forEach((voice, idx) => {
+        const option = document.createElement("option");
+        option.value = String(idx);
+        option.textContent = voice.name + " (" + voice.lang + ")";
+        voiceSel.appendChild(option);
+      });
+    }
+
+    function clearSpeakingHighlights() {
+      explainBox.classList.remove("speaking");
+      commentBox.classList.remove("speaking");
+      flowBlock.classList.remove("speaking");
+    }
+
+    function stopSpeech() {
+      if (state.cancelSpeak) {
+        state.cancelSpeak();
+      }
+      if (window.speechSynthesis) {
+        window.speechSynthesis.cancel();
+      }
+      state.cancelSpeak = null;
+      state.currentUtterance = null;
+      statusBox.classList.remove("speaking");
+      clearSpeakingHighlights();
+      // Também apaga halo persistente nos nós narrados.
+      if (state.nodes && state.nodes.length) {
+        state.nodes.forEach((entry) => entry.node.classList.remove("node-speaking"));
+      }
+    }
+
+    // Fala em segmentos: cada segmento pode aplicar destaque, ter pausa antes do próximo
+    // e voz com pitch próprio. Permite cancelamento limpo via state.cancelSpeak.
+    function speakSegments(segments, onEnd) {
+      if (!window.speechSynthesis) {
+        setStatus("SpeechSynthesis indisponível neste navegador.");
+        if (onEnd) onEnd();
+        return;
+      }
+
+      stopSpeech();
+
+      const selectedVoice = state.voices[Number(voiceSel.value || 0)];
+      const baseRate = Number(rateSel.value || 0.95);
+      let cancelled = false;
+      let pendingTimer = null;
+
+      state.cancelSpeak = () => {
+        cancelled = true;
+        if (pendingTimer) {
+          clearTimeout(pendingTimer);
+          pendingTimer = null;
+        }
+      };
+
+      statusBox.classList.add("speaking");
+
+      const speakIdx = (i) => {
+        if (cancelled) return;
+        if (i >= segments.length) {
+          statusBox.classList.remove("speaking");
+          clearSpeakingHighlights();
+          state.cancelSpeak = null;
+          state.currentUtterance = null;
+          setStatus("Narração concluída.");
+          if (onEnd) onEnd();
+          return;
+        }
+        const seg = segments[i];
+        if (typeof seg.before === "function") seg.before();
+        const u = new SpeechSynthesisUtterance(seg.text);
+        u.lang = "pt-BR";
+        u.rate = baseRate;
+        u.pitch = typeof seg.pitch === "number" ? seg.pitch : 1.0;
+        u.volume = 1;
+        if (selectedVoice) u.voice = selectedVoice;
+        u.onend = () => {
+          if (cancelled) return;
+          if (typeof seg.after === "function") seg.after();
+          const pause = typeof seg.pauseAfter === "number" ? seg.pauseAfter : 350;
+          pendingTimer = setTimeout(() => {
+            pendingTimer = null;
+            speakIdx(i + 1);
+          }, pause);
+        };
+        u.onerror = () => {
+          if (cancelled) return;
+          statusBox.classList.remove("speaking");
+          clearSpeakingHighlights();
+          state.cancelSpeak = null;
+          setStatus("Falha ao narrar. Tente outra voz.");
+          if (onEnd) onEnd();
+        };
+        state.currentUtterance = u;
+        window.speechSynthesis.speak(u);
+      };
+
+      speakIdx(0);
+    }
+
+    function findFlow(graphId, nodeIdx) {
+      const flows = FLOWS[graphId] || [];
+      for (let i = 0; i < flows.length; i++) {
+        if (flows[i].indexes.includes(nodeIdx)) {
+          return Object.assign({ flowIdx: i, total: flows.length }, flows[i]);
+        }
+      }
+      return null;
+    }
+
+    function updateFlowUI(flow, nodeIdx) {
+      if (!flow) {
+        flowBlock.hidden = true;
+        return;
+      }
+      flowBlock.hidden = false;
+      flowName.firstChild.textContent = flow.name;
+      const posInFlow = flow.indexes.indexOf(nodeIdx) + 1;
+      flowCounter.textContent = " — caminho " + (flow.flowIdx + 1) + "/" + flow.total + " · nó " + posInFlow + "/" + flow.indexes.length;
+      flowObjective.textContent = flow.objective;
+    }
+
+    function buildPlayOrder(graphId) {
+      const flows = FLOWS[graphId] || [];
+      const order = [];
+      flows.forEach((flow) => flow.indexes.forEach((ni) => order.push(ni)));
+      const seen = new Set(order);
+      state.nodes.forEach((_, i) => {
+        if (!seen.has(i)) order.push(i);
+      });
+      return order;
+    }
+
+    function injectSvgStyles(doc) {
+      const style = doc.createElement("style");
+      style.textContent = [
+        "g.node { cursor: pointer; transition: filter 140ms ease; }",
+        "g.node:hover { filter: drop-shadow(0 3px 8px rgba(4, 18, 38, 0.3)); }",
+        "g.node.node-active rect,",
+        "g.node.node-active polygon,",
+        "g.node.node-active circle,",
+        "g.node.node-active ellipse,",
+        "g.node.node-active path {",
+        "  stroke: #ef4444 !important;",
+        "  stroke-width: 3px !important;",
+        "}",
+        /* Halo pulsante no nó que está sendo NARRADO agora (persistente durante a fala) */
+        "@keyframes node-speaking-pulse {",
+        "  0%, 100% { filter: drop-shadow(0 0 0 rgba(239,68,68,0)); }",
+        "  50%      { filter: drop-shadow(0 0 14px rgba(239,68,68,0.95)); }",
+        "}",
+        "g.node.node-speaking {",
+        "  animation: node-speaking-pulse 1100ms ease-in-out infinite;",
+        "}",
+        "g.node.node-speaking rect,",
+        "g.node.node-speaking polygon,",
+        "g.node.node-speaking circle,",
+        "g.node.node-speaking ellipse,",
+        "g.node.node-speaking path {",
+        "  stroke: #ef4444 !important;",
+        "  stroke-width: 4px !important;",
+        "}"
+      ].join("\n");
+      doc.documentElement.appendChild(style);
+    }
+
+    function extractNodeLabel(node) {
+      const target = node.querySelector(".nodeLabel") || node.querySelector("text") || node;
+      const text = (target.textContent || "").replace(/\s+/g, " ").trim();
+      return text || "Vertice sem rotulo";
+    }
+
+    function getNodePointInViewer(node /*, viewerEl */) {
+      // CRÍTICO: o SVG está dentro de um <object>, que tem seu próprio documento.
+      // node.getBoundingClientRect() dentro desse iframe-doc devolve coordenadas
+      // relativas ao TOPO do iframe-doc — que coincide com o topo unscrolled do
+      // conteúdo do viewer (já que o <object> não tem scroll próprio: o viewer
+      // é quem rola). Portanto, essas coordenadas são exatamente as que precisamos
+      // para position:absolute dentro do viewer (que também é ancorada ao topo
+      // unscrolled do conteúdo). NÃO somar scrollLeft/scrollTop — isso quebra.
+      const svg = node.ownerSVGElement;
+      if (!svg) return null;
+      let r;
+      try { r = node.getBoundingClientRect(); } catch (e) { return null; }
+      if (!r || (r.width === 0 && r.height === 0)) return null;
+      return {
+        centerX: r.left + r.width / 2,
+        centerY: r.top + r.height / 2,
+        leftX: r.left,
+        leftY: r.top + r.height / 2,
+        width: r.width,
+        height: r.height
+      };
+    }
+
+    function positionThumb(point) {
+      if (!point) return;
+      // point.* já está em coordenadas relativas ao topo unscrolled do conteúdo do viewer
+      // (vide comentário em getNodePointInViewer). Position:absolute dentro do viewer
+      // também é ancorada nesse mesmo sistema. NÃO somar scroll.
+      const THUMB_W = 40; // largura aproximada do emoji (font-size 40px)
+      const GAP = 6;
+      // Se o nó está colado à margem esquerda do conteúdo do viewer, não cabe o dedo
+      // do lado esquerdo: flipa para o lado DIREITO do nó apontando para a esquerda.
+      if (point.leftX < THUMB_W + GAP + 4) {
+        thumbPointer.textContent = "👈";
+        thumbPointer.classList.add("flip-right");
+        thumbPointer.style.left = (point.leftX + point.width + GAP) + "px";
+        thumbPointer.style.top = point.leftY + "px";
+      } else {
+        thumbPointer.textContent = "👉";
+        thumbPointer.classList.remove("flip-right");
+        thumbPointer.style.left = (point.leftX - GAP) + "px";
+        thumbPointer.style.top = point.leftY + "px";
+      }
+    }
+
+    // Reposiciona o dedo no nó atualmente ativo (após scroll manual, resize, ou layout async do SVG).
+    function refreshThumbPosition() {
+      if (state.activeNodeIndex < 0 || !state.nodes[state.activeNodeIndex]) return;
+      const node = state.nodes[state.activeNodeIndex].node;
+      const p = getNodePointInViewer(node);
+      if (p) positionThumb(p);
+    }
+
+    function scrollNodeIntoView(point) {
+      const viewer = document.getElementById("viewer");
+      const margin = 80;
+      const viewportH = viewer.clientHeight;
+      const viewportW = viewer.clientWidth;
+      // point.centerY está no espaço do conteúdo (unscrolled). Posição visível = centerY - scrollTop.
+      const visibleY = point.centerY - viewer.scrollTop;
+      // Para X considera também a "pegada" do dedo à esquerda do nó, senão quando o nó fica
+      // bem no início da área visível o dedo fica clipado pela borda esquerda do viewer.
+      const THUMB_BUDGET = 50;
+      const visibleLeftEdge = (point.leftX - THUMB_BUDGET) - viewer.scrollLeft;
+      const visibleRightEdge = (point.leftX + point.width) - viewer.scrollLeft;
+      if (visibleY < margin || visibleY > viewportH - margin) {
+        viewer.scrollTop = Math.max(0, point.centerY - viewportH / 2);
+      }
+      if (visibleLeftEdge < 8 || visibleRightEdge > viewportW - 8) {
+        // centraliza o nó no eixo X (ou cola à esquerda se isso revelar a pegada do dedo)
+        const desired = Math.max(0, point.centerX - viewportW / 2);
+        viewer.scrollLeft = desired;
+      }
+    }
+
+    function positionTooltip() {
+      // Tooltip flutuante intencionalmente desativado para não cobrir o dedo
+      // apontador. A descrição e o comentário da IA aparecem no painel lateral.
+      tooltipFloat.classList.remove("visible");
+    }
+
+    function hideTooltip() {
+      tooltipFloat.classList.remove("visible");
+    }
+
+    function clearSpeakingNodes() {
+      state.nodes.forEach((entry) => entry.node.classList.remove("node-speaking"));
+    }
+
+    function focusNode(index, shouldSpeak = false) {
+      if (!state.nodes.length || index < 0 || index >= state.nodes.length) {
+        return;
+      }
+
+      // Quando o usuário pede para narrar um nó novo, cancela qualquer fala em andamento
+      // antes de trocar o nó "em destaque" — assim dedo, halo vermelho e voz ficam casados.
+      if (shouldSpeak) {
+        stopSpeech();
+        clearSpeakingNodes();
+      }
+
+      state.nodes.forEach((entry) => entry.node.classList.remove("node-active"));
+
+      const entry = state.nodes[index];
+      const node = entry.node;
+      const label = entry.label;
+      const narrative = entry.narrative || fallbackNarrative(label);
+      const graph = GRAPHS[state.graphIndex];
+      const flow = findFlow(graph.id, index);
+
+      node.classList.add("node-active");
+      state.activeNodeIndex = index;
+      state.selectedNarrative = narrative;
+
+      thumbPointer.classList.add("active");
+      // Primeiro tenta posicionar imediato (caso o nó já esteja visível);
+      const p0 = getNodePointInViewer(node);
+      if (p0) {
+        scrollNodeIntoView(p0);
+        positionThumb(p0);
+      }
+      // Depois reposiciona em rAF duplo, para garantir que o scroll/layout assentaram
+      // antes de pegarmos a posição final do dedo (causa real do "dedo não aparece").
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          const pFinal = getNodePointInViewer(node);
+          if (pFinal) positionThumb(pFinal);
+        });
+      });
+      hideTooltip();
+
+      updateFlowUI(flow, index);
+      explainBox.textContent = narrative.explanation;
+      commentBox.textContent = narrative.aiComment;
+      setStatus("Ponto ativo: " + label);
+
+      if (!shouldSpeak) {
+        return;
+      }
+
+      const segments = [];
+      const enteringNewFlow = flow && flow.flowIdx !== state.currentFlowIndex;
+
+      if (enteringNewFlow) {
+        state.currentFlowIndex = flow.flowIdx;
+        segments.push({
+          text: "Caminho " + (flow.flowIdx + 1) + " de " + flow.total + ": " + flow.name + ". Objetivo: " + flow.objective,
+          pitch: 1.06,
+          pauseAfter: 750,
+          before: () => {
+            flowBlock.classList.add("speaking");
+            setStatus("Apresentando caminho: " + flow.name, true);
+          },
+          after: () => flowBlock.classList.remove("speaking")
+        });
+      }
+
+      // Halo persistente no nó NARRADO: marca antes da fala começar,
+      // limpa quando a fala daquele nó termina (ou é cancelada).
+      const markSpeakingNode = () => {
+        clearSpeakingNodes();
+        node.classList.add("node-speaking");
+        // Reposiciona o dedo no nó que efetivamente vai falar — mesmo que
+        // o usuário tenha hover/click em outro lugar nesse meio-tempo.
+        const pNow = getNodePointInViewer(node);
+        if (pNow) positionThumb(pNow);
+      };
+
+      segments.push({
+        text: narrative.explanation,
+        pitch: 1.03,
+        pauseAfter: 650,
+        before: () => {
+          markSpeakingNode();
+          explainBox.classList.add("speaking");
+          setStatus("Descrição do vértice...", true);
+        },
+        after: () => explainBox.classList.remove("speaking")
+      });
+
+      segments.push({
+        text: narrative.aiComment,
+        pitch: 0.97,
+        pauseAfter: 250,
+        before: () => {
+          markSpeakingNode();
+          commentBox.classList.add("speaking");
+          setStatus("Leitura da IA...", true);
+        },
+        after: () => commentBox.classList.remove("speaking")
+      });
+
+      speakSegments(segments, () => {
+        clearSpeakingNodes();
+        if (state.isPlaying) {
+          queueNextNode();
+        }
+      });
+    }
+
+    function renderNodeList() {
+      nodeListEl.innerHTML = "";
+      state.nodes.forEach((entry, idx) => {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = "node-item";
+        const summary = entry.narrative && entry.narrative.explanation
+          ? entry.narrative.explanation
+          : ("Vertice: " + entry.label);
+        const shortSummary = summary.length > 110
+          ? summary.slice(0, 107) + "..."
+          : summary;
+        button.textContent = (idx + 1) + ". " + shortSummary;
+        button.title = "Rótulo técnico: " + entry.label;
+        button.addEventListener("click", () => {
+          state.isPlaying = false;
+          focusNode(idx, true);
+        });
+        nodeListEl.appendChild(button);
+      });
+    }
+
+    function wireNodeInteractions(doc) {
+      injectSvgStyles(doc);
+      const graph = GRAPHS[state.graphIndex];
+
+      const nodes = Array.from(doc.querySelectorAll("g.node"));
+      state.nodes = nodes.map((node) => ({
+        node,
+        label: extractNodeLabel(node),
+        narrative: null
+      }));
+
+      state.nodes.forEach((entry, idx) => {
+        entry.narrative = getNarrative(graph.id, entry.label, idx);
+      });
+
+      state.playOrder = buildPlayOrder(graph.id);
+      state.currentFlowIndex = -1;
+
+      state.nodes.forEach((entry, idx) => {
+        // IMPORTANTE: removido mouseenter que trocava o foco. Antes ele
+        // "roubava" o nó ativo enquanto a fala continuava no nó anterior,
+        // causando o aparente dessincronismo dedo X fala. Hover agora é só
+        // efeito visual (cursor pointer + drop-shadow já injetados no SVG).
+        entry.node.addEventListener("click", () => {
+          state.isPlaying = false;
+          state.currentFlowIndex = -1;
+          focusNode(idx, true);
+        });
+      });
+
+      renderNodeList();
+
+      if (state.nodes.length) {
+        focusNode(0, false);
+      } else {
+        explainBox.textContent = "Nenhum vertice detectado neste SVG.";
+        commentBox.textContent = "Verifique se o arquivo SVG contem grupos com classe node.";
+      }
+    }
+
+    // Aplica fator de zoom configurado por grafo: estica o <object> para (viewerW * zoom)
+    // e força o SVG interno a esticar junto (largura/altura 100%). Mantém viewBox,
+    // então tudo escala proporcionalmente sem distorção. Como o iframe-doc cresce
+    // junto, getBoundingClientRect dos nós continua coincidindo com o espaço do viewer.
+    function applyGraphZoom(graph, doc) {
+      const viewer = document.getElementById("viewer");
+      const zoom = (graph && typeof graph.zoom === "number") ? graph.zoom : 1.0;
+      const targetWidth = Math.max(viewer.clientWidth, Math.round(viewer.clientWidth * zoom));
+      svgObject.style.width = targetWidth + "px";
+      svgObject.style.minWidth = targetWidth + "px";
+      // Força SVG root a usar 100% do <object> (Mermaid às vezes fixa width/height absolutos)
+      try {
+        const svgRoot = doc && doc.querySelector("svg");
+        if (svgRoot) {
+          svgRoot.setAttribute("width", "100%");
+          svgRoot.setAttribute("height", "100%");
+          svgRoot.style.width = "100%";
+          svgRoot.style.height = "100%";
+          svgRoot.setAttribute("preserveAspectRatio", "xMinYMin meet");
+        }
+      } catch (e) { /* contentDocument bloqueado em file://; benigno */ }
+    }
+
+    function loadGraph() {
+      const graph = GRAPHS[state.graphIndex];
+      graphTitle.textContent = graph.title;
+
+      // Reseta zoom: object volta a 100% antes de carregar; será reaplicado no onload.
+      svgObject.style.width = "";
+      svgObject.style.minWidth = "";
+
+      hideTooltip();
+      thumbPointer.classList.remove("active");
+      nodeListEl.innerHTML = "";
+      state.nodes = [];
+      state.activeNodeIndex = -1;
+      state.currentFlowIndex = -1;
+      state.playOrder = [];
+      state.isPlaying = false;
+      stopSpeech();
+      flowBlock.hidden = true;
+
+      setStatus("Carregando " + graph.file + "...");
+
+      svgObject.onload = () => {
+        const doc = svgObject.contentDocument;
+        if (!doc) {
+          showCompatBanner(
+            "Seu navegador bloqueou acesso interativo ao SVG em file://. Rode um servidor local nesta pasta (ex.: py -m http.server 5500) e abra em localhost.",
+            true
+          );
+          setStatus("Nao foi possivel acessar o SVG. Abra via servidor local.");
+          return;
+        }
+
+        state.svgDoc = doc;
+        applyGraphZoom(graph, doc);
+        wireNodeInteractions(doc);
+        hideCompatBanner();
+        setStatus("SVG carregado. Clique em um vertice para iniciar.");
+      };
+
+      svgObject.onerror = () => {
+        showCompatBanner(
+          "Falha ao carregar SVG. Verifique se os arquivos .svg estao na mesma pasta do HTML e prefira executar em localhost.",
+          true
+        );
+        setStatus("Falha ao carregar SVG.");
+      };
+
+      svgObject.data = graph.file;
+    }
+
+    function queueNextNode() {
+      if (!state.isPlaying || state.nodes.length === 0) {
+        return;
+      }
+      const order = state.playOrder && state.playOrder.length
+        ? state.playOrder
+        : state.nodes.map((_, i) => i);
+      const curPos = order.indexOf(state.activeNodeIndex);
+      const nextPos = (curPos + 1) % order.length;
+      // Quando a fila reinicia do começo, zera o fluxo para reanunciar.
+      if (nextPos === 0) {
+        state.currentFlowIndex = -1;
+      }
+      const nextIdx = order[nextPos];
+      setTimeout(() => {
+        if (state.isPlaying) {
+          focusNode(nextIdx, true);
+        }
+      }, 400);
+    }
+
+    document.getElementById("playBtn").addEventListener("click", () => {
+      if (!state.nodes.length) {
+        setStatus("Aguarde o SVG terminar de carregar.");
+        return;
+      }
+      state.isPlaying = true;
+      const order = state.playOrder && state.playOrder.length
+        ? state.playOrder
+        : state.nodes.map((_, i) => i);
+      // Se ainda não havia nada ativo, começa no primeiro do primeiro fluxo;
+      // senão continua de onde parou (sem reanunciar fluxo desnecessariamente).
+      const startIdx = state.activeNodeIndex >= 0 && order.includes(state.activeNodeIndex)
+        ? state.activeNodeIndex
+        : order[0];
+      if (state.activeNodeIndex < 0) {
+        state.currentFlowIndex = -1;
+      }
+      focusNode(startIdx, true);
+    });
+
+    document.getElementById("pauseBtn").addEventListener("click", () => {
+      state.isPlaying = false;
+      stopSpeech();
+      setStatus("Auto narracao pausada.");
+    });
+
+    document.getElementById("nextBtn").addEventListener("click", () => {
+      if (!state.nodes.length) {
+        return;
+      }
+      state.isPlaying = false;
+      const order = state.playOrder && state.playOrder.length
+        ? state.playOrder
+        : state.nodes.map((_, i) => i);
+      const curPos = order.indexOf(state.activeNodeIndex);
+      const next = order[(curPos + 1) % order.length];
+      focusNode(next, true);
+    });
+
+    document.getElementById("speakBtn").addEventListener("click", () => {
+      if (!state.selectedNarrative) {
+        setStatus("Selecione um vértice antes de narrar.");
+        return;
+      }
+      state.isPlaying = false;
+      focusNode(state.activeNodeIndex, true);
+    });
+
+    document.getElementById("viewer").addEventListener("mouseleave", () => {
+      hideTooltip();
+    });
+
+    // Dedo precisa seguir o nó ativo quando o usuário rola o viewer manualmente
+    // ou redimensiona a janela (senão ele descola do vértice).
+    document.getElementById("viewer").addEventListener("scroll", () => {
+      refreshThumbPosition();
+    }, { passive: true });
+    window.addEventListener("resize", () => {
+      // reaplica zoom proporcional ao novo tamanho do viewer e depois reposiciona o dedo
+      const graph = GRAPHS[state.graphIndex];
+      if (graph && state.svgDoc) {
+        applyGraphZoom(graph, state.svgDoc);
+      }
+      requestAnimationFrame(() => requestAnimationFrame(() => refreshThumbPosition()));
+    });
+
+    if (window.speechSynthesis) {
+      if (typeof window.speechSynthesis.addEventListener === "function") {
+        window.speechSynthesis.addEventListener("voiceschanged", updateVoiceList);
+      } else {
+        window.speechSynthesis.onvoiceschanged = updateVoiceList;
+      }
+    }
+
+    if (location.protocol === "file:") {
+      showCompatBanner(
+        "Modo arquivo local detectado. Se algo nao reproduzir igual, execute em localhost para liberar total interatividade e comportamento consistente.",
+        true
+      );
+    }
+
+    // ── VIDEO MODE (?video=1) ─────────────────────────────────────────────────
+    const IS_VIDEO_MODE = new URLSearchParams(location.search).has('video');
+    const IS_AUTOSTART  = new URLSearchParams(location.search).has('autostart');
+    const IS_DEBUG      = new URLSearchParams(location.search).has('debug');
+
+    if (IS_VIDEO_MODE) document.body.classList.add('video-mode');
+
+    /** Toca WAV pré-sintetizado. Retorna Promise que resolve em ended. */
+    function playAudio(segmentId) {
+      return new Promise((resolve) => {
+        const a = new Audio('tools/audio/' + segmentId + '.wav');
+        a.addEventListener('ended', resolve, { once: true });
+        a.addEventListener('error', () => {
+          if (IS_DEBUG) console.warn('[video] audio missing:', segmentId + '.wav');
+          resolve();
+        }, { once: true });
+        a.play().catch(resolve);
+      });
+    }
+
+    /** Aplica halo node-speaking e reposiciona dedo no nó indicado. */
+    function setNodeSpeaking(index) {
+      state.nodes.forEach(e => e.node.classList.remove('node-speaking'));
+      if (index >= 0 && state.nodes[index]) {
+        state.nodes[index].node.classList.add('node-speaking');
+        const p = getNodePointInViewer(state.nodes[index].node);
+        if (p) positionThumb(p);
+      }
+    }
+
+    /** Carrega state.graphIndex e retorna Promise resolvida quando os nós estão prontos. */
+    function loadGraphAsync() {
+      return new Promise((resolve) => {
+        const graph = GRAPHS[state.graphIndex];
+        graphTitle.textContent = graph.title;
+        svgObject.style.width = '';
+        svgObject.style.minWidth = '';
+        hideTooltip();
+        thumbPointer.classList.remove('active');
+        nodeListEl.innerHTML = '';
+        state.nodes = [];
+        state.activeNodeIndex = -1;
+        state.currentFlowIndex = -1;
+        state.playOrder = [];
+        state.isPlaying = false;
+        stopSpeech();
+        flowBlock.hidden = true;
+        setStatus('Carregando ' + graph.file + '...');
+        svgObject.onload = () => {
+          const doc = svgObject.contentDocument;
+          if (!doc) { resolve(); return; }
+          state.svgDoc = doc;
+          applyGraphZoom(graph, doc);
+          wireNodeInteractions(doc);
+          hideCompatBanner();
+          setStatus('SVG carregado.');
+          setTimeout(resolve, 800); // 800 ms extra para SVG assentar
+        };
+        svgObject.onerror = () => resolve();
+        svgObject.data = graph.file;
+      });
+    }
+
+    /** Emite CustomEvent de debug/sincronização para o recorder. */
+    function emitTick(detail) {
+      window.dispatchEvent(new CustomEvent('rvmVideoTick', { detail }));
+      if (IS_DEBUG) console.log('[rvmVideoTick]', detail);
+    }
+
+    /** Orquestra a apresentação completa em modo vídeo. */
+    async function runVideoPresentation() {
+      const delay = ms => new Promise(r => setTimeout(r, ms));
+
+      // 1. Intro — mantém overlay visível enquanto toca áudio
+      introOverlay.classList.add('show');
+      emitTick({ event: 'intro-start' });
+      await playAudio('intro');
+
+      // Fade-out do overlay (400 ms)
+      introOverlay.style.transition = 'opacity 400ms ease';
+      introOverlay.style.opacity = '0';
+      await delay(400);
+      introOverlay.classList.remove('show');
+      introOverlay.style.opacity = '';
+      introOverlay.style.transition = '';
+
+      // 2. Loop pelas 4 abas
+      for (let gi = 0; gi < GRAPHS.length; gi++) {
+        state.graphIndex = gi;
+        await loadGraphAsync();
+        renderTabs();
+
+        const graph = GRAPHS[gi];
+        document.getElementById('videoHeader').textContent = graph.title;
+
+        emitTick({ event: 'tab', graphId: graph.id, title: graph.title });
+        await playAudio('tab-' + graph.id);
+
+        const flows = FLOWS[graph.id] || [];
+        for (let fi = 0; fi < flows.length; fi++) {
+          const flow = flows[fi];
+          emitTick({ event: 'flow', graphId: graph.id, flowIdx: fi, flowName: flow.name });
+          await playAudio('flow-' + graph.id + '-' + fi);
+          await delay(600);
+
+          document.getElementById('videoHeader').textContent =
+            graph.title + ' · Caminho ' + (fi + 1) + '/' + flows.length + ': ' + flow.name;
+
+          for (const ni of flow.indexes) {
+            state.nodes.forEach(e => e.node.classList.remove('node-active'));
+            if (state.nodes[ni]) {
+              state.nodes[ni].node.classList.add('node-active');
+              state.activeNodeIndex = ni;
+              thumbPointer.classList.add('active');
+              const p = getNodePointInViewer(state.nodes[ni].node);
+              if (p) { scrollNodeIntoView(p); positionThumb(p); }
+              requestAnimationFrame(() => requestAnimationFrame(() => {
+                const pf = getNodePointInViewer(state.nodes[ni].node);
+                if (pf) positionThumb(pf);
+              }));
+              const narr = state.nodes[ni].narrative || fallbackNarrative(state.nodes[ni].label);
+              const fInfo = findFlow(graph.id, ni);
+              updateFlowUI(fInfo, ni);
+              explainBox.textContent = narr.explanation;
+              commentBox.textContent = narr.aiComment;
+              state.selectedNarrative = narr;
+            }
+
+            emitTick({ event: 'node', graphId: graph.id, nodeIdx: ni });
+            setNodeSpeaking(ni);
+            explainBox.classList.add('speaking');
+            await playAudio('node-' + graph.id + '-' + ni + '-explanation');
+            explainBox.classList.remove('speaking');
+
+            emitTick({ event: 'node-ai', graphId: graph.id, nodeIdx: ni });
+            setNodeSpeaking(ni);
+            commentBox.classList.add('speaking');
+            await playAudio('node-' + graph.id + '-' + ni + '-aicomment');
+            commentBox.classList.remove('speaking');
+
+            state.nodes.forEach(e => e.node.classList.remove('node-speaking'));
+            await delay(350);
+          }
+          await delay(600);
+        }
+        await delay(1200);
+      }
+
+      // 3. Encerramento
+      emitTick({ event: 'outro' });
+      await playAudio('outro');
+      await delay(500);
+      emitTick({ event: 'done' });
+      window._rvmVideoDone = true;
+      window.dispatchEvent(new Event('rvmVideoDone'));
+    }
+    // ── FIM VIDEO MODE ────────────────────────────────────────────────────────
+
+    updateVoiceList();
+
+    renderTabs();
+    if (!IS_VIDEO_MODE) loadGraph();
+
+    // --- Overlay de introdução ---
+    const introOverlay = document.getElementById("introOverlay");
+    const introStartBtn = document.getElementById("introStartBtn");
+    const introBtn = document.getElementById("introBtn");
+    const INTRO_KEY = "rvm-eleicao-intro-visto";
+
+    function openIntro() {
+      stopSpeech();
+      introOverlay.classList.add("show");
+    }
+    function closeIntro() {
+      introOverlay.classList.remove("show");
+      try { localStorage.setItem(INTRO_KEY, "1"); } catch (e) { /* ignore */ }
+    }
+    introStartBtn.addEventListener("click", closeIntro);
+    introOverlay.addEventListener("click", (ev) => {
+      if (ev.target === introOverlay) closeIntro();
+    });
+    introBtn.addEventListener("click", openIntro);
+    document.addEventListener("keydown", (ev) => {
+      if (ev.key === "Escape" && introOverlay.classList.contains("show")) closeIntro();
+    });
+
+    if (!IS_VIDEO_MODE) {
+      let introJaVisto = false;
+      try { introJaVisto = localStorage.getItem(INTRO_KEY) === "1"; } catch (e) { /* ignore */ }
+      if (!introJaVisto) openIntro();
+    } else if (IS_AUTOSTART) {
+      window.addEventListener('load', () => setTimeout(runVideoPresentation, 500));
+    }
+  </script>
+</body>
+</html>

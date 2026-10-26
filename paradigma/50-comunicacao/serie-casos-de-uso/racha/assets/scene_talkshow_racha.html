@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>IDD Racha de Pix — Talk Show Completo de Domínio (MER & UML)</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; }
+    
+    body {
+      width: 1920px;
+      height: 1080px;
+      background: #030712;
+      color: #f8fafc;
+      overflow: hidden;
+      position: relative;
+      user-select: none;
+    }
+
+    /* BACKGROUND GRID & GLOW */
+    .grid-bg {
+      position: absolute; inset: 0;
+      background-image: linear-gradient(rgba(56, 189, 248, 0.04) 1px, transparent 1px),
+                        linear-gradient(90deg, rgba(56, 189, 248, 0.04) 1px, transparent 1px);
+      background-size: 48px 48px;
+      pointer-events: none;
+    }
+    .ambient-glow {
+      position: absolute;
+      width: 1200px; height: 1200px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(14, 165, 233, 0.20) 0%, rgba(168, 85, 247, 0.12) 40%, transparent 70%);
+      top: 40%; left: 50%; transform: translate(-50%, -50%);
+      filter: blur(100px); pointer-events: none;
+    }
+
+    /* TOP BAR (BROADCAST HEADER) */
+    .top-bar {
+      position: absolute; top: 0; left: 0; right: 0; height: 75px;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 40px; background: rgba(10, 15, 29, 0.94);
+      border-bottom: 1.5px solid rgba(56, 189, 248, 0.3);
+      backdrop-filter: blur(14px); z-index: 50;
+    }
+    .top-left { display: flex; align-items: center; gap: 20px; }
+    .badge-live {
+      background: linear-gradient(135deg, #0284c7, #0ea5e9);
+      color: white; font-weight: 800; font-size: 13px; letter-spacing: 1.5px;
+      padding: 5px 14px; border-radius: 999px; text-transform: uppercase;
+      box-shadow: 0 0 15px rgba(14, 165, 233, 0.5);
+      display: flex; align-items: center; gap: 8px;
+    }
+    .badge-live::before {
+      content: ''; width: 8px; height: 8px; border-radius: 50%;
+      background: #38bdf8; box-shadow: 0 0 10px #38bdf8;
+      animation: pulseDot 1.4s infinite alternate;
+    }
+    @keyframes pulseDot { from { opacity: 0.4; } to { opacity: 1; } }
+
+    .show-title { font-size: 20px; font-weight: 800; color: #f8fafc; }
+    .show-title span { color: #38bdf8; font-weight: 900; }
+    .stage-indicator {
+      font-size: 13px; background: rgba(56, 189, 248, 0.12); border: 1px solid rgba(56, 189, 248, 0.3);
+      color: #7dd3fc; padding: 4px 14px; border-radius: 8px; font-weight: 700;
+    }
+    .top-clock {
+      font-size: 18px; font-family: 'Consolas', monospace; color: #38bdf8;
+      font-weight: 700; letter-spacing: 1px;
+    }
+
+    /* STAGE (PALCO PRINCIPAL) */
+    .stage-container {
+      position: absolute; top: 75px; bottom: 200px; left: 0; right: 0;
+      overflow: hidden; background: #050811;
+    }
+    .stage-frame {
+      width: 100%; height: 100%; border: none;
+      position: absolute; inset: 0;
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.5s ease;
+    }
+    .stage-frame.active {
+      opacity: 1; pointer-events: auto;
+    }
+
+    /* VIRTUAL HUMAN MOUSE OVERLAY */
+    #virtual-mouse {
+      position: absolute;
+      top: 400px; left: 960px;
+      width: 32px; height: 32px;
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-2px, -2px);
+      transition: top 0.8s cubic-bezier(0.22, 1, 0.36, 1), left 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    #virtual-mouse svg {
+      width: 30px; height: 30px;
+      filter: drop-shadow(0 4px 8px rgba(0,0,0,0.85)) drop-shadow(0 0 8px rgba(56, 189, 248, 0.7));
+    }
+    #click-ripple {
+      position: absolute;
+      top: 0; left: 0;
+      width: 48px; height: 48px;
+      border-radius: 50%;
+      border: 3px solid #38bdf8;
+      background: rgba(56, 189, 248, 0.35);
+      pointer-events: none;
+      transform: translate(-50%, -50%) scale(0);
+      opacity: 0;
+      z-index: 9998;
+    }
+    @keyframes rippleExpand {
+      0% { transform: translate(-50%, -50%) scale(0.2); opacity: 1; }
+      100% { transform: translate(-50%, -50%) scale(2.4); opacity: 0; }
+    }
+    .rippling {
+      animation: rippleExpand 0.6s ease-out forwards;
+    }
+
+    .mouse-halo {
+      position: absolute; top: -8px; left: -8px; width: 44px; height: 44px;
+      border-radius: 50%; background: radial-gradient(circle, rgba(56, 189, 248, 0.4) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    /* BOTTOM BAR (ESTÚDIO TALK SHOW & AVATARES) */
+    .bottom-bar {
+      position: absolute; bottom: 0; left: 0; right: 0; height: 200px;
+      background: rgba(10, 15, 29, 0.96);
+      border-top: 1.5px solid rgba(56, 189, 248, 0.35);
+      backdrop-filter: blur(18px);
+      display: grid;
+      grid-template-columns: 560px 1fr;
+      padding: 16px 40px;
+      gap: 30px;
+      align-items: center;
+      z-index: 60;
+    }
+
+    /* AVATARES */
+    .avatars-dock {
+      display: flex; gap: 20px; align-items: center; justify-content: flex-start;
+    }
+    .avatar-card {
+      display: flex; flex-direction: column; align-items: center;
+      transition: transform 0.25s ease, filter 0.25s ease, opacity 0.25s ease;
+      opacity: 0.65; transform: scale(0.92);
+    }
+    .avatar-card.talking {
+      opacity: 1; transform: scale(1.05);
+    }
+    .avatar-ring {
+      width: 84px; height: 84px; border-radius: 50%;
+      padding: 3px; background: rgba(30, 41, 59, 0.8);
+      border: 2px solid rgba(148, 163, 184, 0.3);
+      position: relative; box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+      transition: all 0.25s ease;
+    }
+    .avatar-ring img {
+      width: 100%; height: 100%; border-radius: 50%; object-fit: cover;
+    }
+    .avatar-card.talking .avatar-ring {
+      border-color: #38bdf8;
+      box-shadow: 0 0 25px rgba(56, 189, 248, 0.7);
+      animation: ringGlow 1.2s infinite alternate;
+    }
+    #av-leigo.talking .avatar-ring {
+      border-color: #fbbf24;
+      box-shadow: 0 0 25px rgba(251, 191, 36, 0.7);
+    }
+    #av-ia.talking .avatar-ring {
+      border-color: #10b981;
+      box-shadow: 0 0 25px rgba(16, 185, 129, 0.7);
+    }
+    @keyframes ringGlow {
+      from { transform: scale(1); filter: brightness(1); }
+      to { transform: scale(1.06); filter: brightness(1.25); }
+    }
+
+    .avatar-info { text-align: center; margin-top: 6px; }
+    .avatar-name { font-size: 13px; font-weight: 800; color: #f1f5f9; white-space: nowrap; }
+    .avatar-role {
+      font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px;
+      color: #94a3b8; white-space: nowrap; margin-top: 1px;
+    }
+    .avatar-card.talking .avatar-role { color: #38bdf8; }
+    #av-leigo.talking .avatar-role { color: #fbbf24; }
+    #av-ia.talking .avatar-role { color: #10b981; }
+
+    /* LEGENDA DINÂMICA */
+    .caption-box {
+      background: rgba(15, 23, 42, 0.88);
+      border: 1.5px solid rgba(56, 189, 248, 0.3);
+      border-radius: 16px;
+      padding: 16px 24px;
+      height: 140px;
+      display: flex; flex-direction: column; justify-content: center;
+      box-shadow: inset 0 2px 8px rgba(0,0,0,0.4);
+    }
+    .caption-speaker-tag {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: 1.5px;
+      margin-bottom: 8px; align-self: flex-start;
+      padding: 3px 12px; border-radius: 6px;
+      background: rgba(56, 189, 248, 0.15); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.4);
+    }
+    .caption-speaker-tag.speaker-leigo {
+      background: rgba(251, 191, 36, 0.15); color: #fbbf24; border-color: rgba(251, 191, 36, 0.4);
+    }
+    .caption-speaker-tag.speaker-ia {
+      background: rgba(16, 185, 129, 0.15); color: #10b981; border-color: rgba(16, 185, 129, 0.4);
+    }
+    .caption-text {
+      font-size: 20px; line-height: 1.45; font-weight: 600; color: #f8fafc;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+    }
+
+    /* BLACK CURTAIN (CALIBRAÇÃO MARCO ZERO DO BROADCAST) */
+    #black-curtain {
+      position: absolute; inset: 0; background: #000000; z-index: 99999;
+      display: flex; align-items: center; justify-content: center;
+      color: #38bdf8; font-family: monospace; font-size: 18px;
+      transition: opacity 0.15s ease-out;
+    }
+  </style>
+</head>
+<body>
+  <div class="grid-bg"></div>
+  <div class="ambient-glow"></div>
+
+  <!-- CALIBRAÇÃO DE CORREÇÃO TEMPORAL (MARCO ZERO) -->
+  <div id="black-curtain">
+    <span>● CALIBRANDO MARCO ZERO DE TRANSMISSÃO IDD...</span>
+  </div>
+
+  <!-- TOP BAR -->
+  <header class="top-bar">
+    <div class="top-left">
+      <div class="badge-live">Talk Show • IDD na Prática</div>
+      <div class="show-title">Modelagem de Domínio: <span>Racha de Conta & Pix (Fintech Social)</span></div>
+      <div class="stage-indicator" id="stageIndicator">Módulo 1: MER Canônico & Invariante Soma Zero</div>
+    </div>
+    <div class="top-clock" id="clockDisplay">00:00.0</div>
+  </header>
+
+  <!-- PALCO PRINCIPAL (IFRAME DO MER DO RACHA + IFRAME DO UML INTERATIVO) -->
+  <main class="stage-container">
+    <iframe id="frameMer" class="stage-frame active" src="../../docs/visualizar_mer_racha.html"></iframe>
+    <iframe id="frameUml" class="stage-frame" src="../../docs/visualizar_uml_racha.html"></iframe>
+
+    <!-- CURSOR VIRTUAL HUMANO -->
+    <div id="virtual-mouse">
+      <div class="mouse-halo"></div>
+      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M5.5 3.2L18.4 12.1C19.2 12.7 18.8 14 17.8 14H12.3L15.3 20.3C15.6 20.9 15.3 21.6 14.7 21.9L13 22.7C12.4 23 11.7 22.7 11.4 22.1L8.5 15.9L5.2 18.9C4.4 19.6 3.1 19 3.1 18V4.3C3.1 3.2 4.4 2.5 5.5 3.2Z" fill="#38bdf8" stroke="#ffffff" stroke-width="1.8"/>
+      </svg>
+    </div>
+    <div id="click-ripple"></div>
+  </main>
+
+  <!-- BANCADA DO TALK SHOW -->
+  <footer class="bottom-bar">
+    <div class="avatars-dock">
+      <!-- LEIGA -->
+      <div class="avatar-card" id="av-leigo">
+        <div class="avatar-ring">
+          <img src="../avatares/avatar_usuaria_leiga.png" alt="Usuária Leiga">
+        </div>
+        <div class="avatar-info">
+          <div class="avatar-name">Usuária Leiga</div>
+          <div class="avatar-role">Validadora de Domínio</div>
+        </div>
+      </div>
+
+      <!-- ELIÉZER (ORQUESTRADOR) -->
+      <div class="avatar-card talking" id="av-eliezer">
+        <div class="avatar-ring">
+          <img src="../avatares/avatar_eliezer_oficial.png" alt="Eliézer Rosa">
+        </div>
+        <div class="avatar-info">
+          <div class="avatar-name">Eliézer Rosa</div>
+          <div class="avatar-role">Orquestrador IDD</div>
+        </div>
+      </div>
+
+      <!-- IA COMPILADOR -->
+      <div class="avatar-card" id="av-ia">
+        <div class="avatar-ring">
+          <img src="../avatares/avatar_ia_compilador.png" alt="IA Compilador">
+        </div>
+        <div class="avatar-info">
+          <div class="avatar-name">IA Compilador</div>
+          <div class="avatar-role">Normalização & Contratos</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CAIXA DE LEGENDAS -->
+    <div class="caption-box">
+      <div class="caption-speaker-tag" id="subSpeaker">Eliézer Rosa</div>
+      <div class="caption-text" id="subText">Iniciando a homologação do aplicativo de Racha de Conta & Pix...</div>
+    </div>
+  </footer>
+
+  <script>
+    let timelineItems = [];
+    let isRunning = false;
+    let startTimeMs = 0;
+    let activeAction = null;
+
+    window.setTimeline = function(items) {
+      timelineItems = items;
+    };
+
+    window.startPresentation = function() {
+      const curtain = document.getElementById('black-curtain');
+      if (curtain) {
+        curtain.style.opacity = '0';
+        setTimeout(() => curtain.remove(), 80);
+      }
+      isRunning = true;
+      startTimeMs = performance.now();
+      requestAnimationFrame(renderLoop);
+    };
+
+    window.stopPresentation = function() {
+      isRunning = false;
+    };
+
+    function moveMouseTo(x, y) {
+      const mouse = document.getElementById('virtual-mouse');
+      if (mouse) {
+        mouse.style.left = x + 'px';
+        mouse.style.top = y + 'px';
+      }
+    }
+
+    function triggerClickRipple(x, y) {
+      const ripple = document.getElementById('click-ripple');
+      if (ripple) {
+        ripple.style.left = x + 'px';
+        ripple.style.top = y + 'px';
+        ripple.classList.remove('rippling');
+        void ripple.offsetWidth;
+        ripple.classList.add('rippling');
+      }
+    }
+
+    function switchView(viewName) {
+      const frameMer = document.getElementById('frameMer');
+      const frameUml = document.getElementById('frameUml');
+      const indicator = document.getElementById('stageIndicator');
+
+      if (viewName === 'mer') {
+        frameMer.classList.add('active');
+        frameUml.classList.remove('active');
+        if (indicator) indicator.innerText = 'Módulo 1: MER Canônico & Invariante da Soma Zero';
+      } else {
+        frameUml.classList.add('active');
+        frameMer.classList.remove('active');
+        if (indicator) indicator.innerText = 'Módulo 2: Modelo UML Interativo & Casos de Uso da Mesa';
+      }
+    }
+
+    function interactWithUmlFrame(action) {
+      const umlIframe = document.getElementById('frameUml');
+      if (!umlIframe || !umlIframe.contentWindow) return;
+      const doc = umlIframe.contentDocument || umlIframe.contentWindow.document;
+      if (!doc) return;
+
+      try {
+        if (action === 'click_amigo') {
+          const btn = doc.getElementById('btn-amigo');
+          if (btn) btn.click();
+        } else if (action === 'click_organizador') {
+          const btn = doc.getElementById('btn-organizador');
+          if (btn) btn.click();
+        } else if (action === 'click_garcom') {
+          const btn = doc.getElementById('btn-garcom');
+          if (btn) btn.click();
+        } else if (action === 'scroll_classes') {
+          const sec = doc.querySelector('.card:nth-of-type(2)');
+          if (sec) sec.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        } else if (action === 'scroll_statechart') {
+          const sec = doc.querySelector('.card:nth-of-type(3)');
+          if (sec) sec.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        } else if (action === 'reset_zoom') {
+          const btn = doc.getElementById('resetZoomBtn');
+          if (btn) btn.click();
+          umlIframe.contentWindow.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+      } catch (err) {
+        console.warn('Interação com frame UML:', err);
+      }
+    }
+
+    // LOOP PRINCIPAL DE SINCRONISMO
+    function renderLoop(now) {
+      if (!isRunning) return;
+
+      const elapsedSec = (now - startTimeMs) / 1000;
+      const minutes = Math.floor(elapsedSec / 60);
+      const seconds = (elapsedSec % 60).toFixed(1);
+      document.getElementById('clockDisplay').innerText =
+        String(minutes).padStart(2, '0') + ':' + String(seconds).padStart(4, '0');
+
+      const curSeg = timelineItems.find(item => elapsedSec >= item.startSec && elapsedSec < item.endSec);
+
+      if (curSeg) {
+        switchView(curSeg.stage || 'mer');
+
+        ['leigo', 'eliezer', 'ia'].forEach(who => {
+          const av = document.getElementById('av-' + who);
+          if (av) {
+            if (curSeg.who === who) av.classList.add('talking');
+            else av.classList.remove('talking');
+          }
+        });
+
+        const speakerEl = document.getElementById('subSpeaker');
+        const textEl = document.getElementById('subText');
+        speakerEl.className = 'caption-speaker-tag speaker-' + curSeg.who;
+        speakerEl.innerText = curSeg.actor;
+        textEl.innerText = curSeg.text;
+
+        if (activeAction !== curSeg.id) {
+          activeAction = curSeg.id;
+          executeRachaAction(curSeg);
+        }
+      }
+
+      requestAnimationFrame(renderLoop);
+    }
+
+    function executeRachaAction(seg) {
+      switch (seg.action) {
+        case 'point_header':
+          moveMouseTo(600, 280);
+          setTimeout(() => moveMouseTo(960, 360), 1500);
+          break;
+
+        case 'point_invariants_top':
+          moveMouseTo(960, 720);
+          setTimeout(() => triggerClickRipple(960, 720), 800);
+          break;
+
+        case 'point_mesa':
+          moveMouseTo(960, 300);
+          setTimeout(() => triggerClickRipple(960, 300), 900);
+          break;
+
+        case 'point_comanda':
+          moveMouseTo(680, 420);
+          break;
+
+        case 'point_consumo_item':
+          moveMouseTo(960, 450);
+          setTimeout(() => triggerClickRipple(960, 450), 900);
+          break;
+
+        case 'point_inv_soma_zero':
+          moveMouseTo(450, 730);
+          setTimeout(() => triggerClickRipple(450, 730), 1000);
+          break;
+
+        case 'question_early_leave':
+          moveMouseTo(1200, 480);
+          break;
+
+        case 'point_cota_rateio':
+          moveMouseTo(1150, 460);
+          setTimeout(() => triggerClickRipple(1150, 460), 800);
+          break;
+
+        case 'point_payload_pix':
+          moveMouseTo(1150, 600);
+          setTimeout(() => {
+            triggerClickRipple(1150, 600);
+            moveMouseTo(1250, 730);
+          }, 1200);
+          break;
+
+        case 'switch_to_uml_amigo':
+          switchView('uml');
+          interactWithUmlFrame('click_amigo');
+          moveMouseTo(190, 132);
+          setTimeout(() => triggerClickRipple(190, 132), 600);
+          setTimeout(() => moveMouseTo(800, 380), 1600);
+          break;
+
+        case 'point_whatsapp_notification':
+          moveMouseTo(1100, 450);
+          setTimeout(() => triggerClickRipple(1100, 450), 800);
+          break;
+
+        case 'switch_to_uml_organizador':
+          moveMouseTo(360, 132);
+          setTimeout(() => {
+            triggerClickRipple(360, 132);
+            interactWithUmlFrame('click_organizador');
+          }, 600);
+          break;
+
+        case 'point_saideira_extend':
+          moveMouseTo(960, 420);
+          setTimeout(() => triggerClickRipple(960, 420), 800);
+          break;
+
+        case 'switch_to_uml_garcom':
+          moveMouseTo(550, 132);
+          setTimeout(() => {
+            triggerClickRipple(550, 132);
+            interactWithUmlFrame('click_garcom');
+          }, 600);
+          break;
+
+        case 'point_caixa_view':
+          moveMouseTo(960, 400);
+          setTimeout(() => moveMouseTo(1150, 450), 1500);
+          break;
+
+        case 'scroll_to_classes_racha':
+          interactWithUmlFrame('scroll_classes');
+          setTimeout(() => {
+            moveMouseTo(960, 380);
+            triggerClickRipple(960, 380);
+          }, 800);
+          break;
+
+        case 'point_transacaopix_class':
+          moveMouseTo(1150, 480);
+          setTimeout(() => triggerClickRipple(1150, 480), 800);
+          break;
+
+        case 'scroll_to_statechart_racha':
+          interactWithUmlFrame('scroll_statechart');
+          setTimeout(() => {
+            moveMouseTo(960, 480);
+            triggerClickRipple(960, 480);
+          }, 800);
+          break;
+
+        case 'point_statechart_final':
+          moveMouseTo(960, 680);
+          setTimeout(() => triggerClickRipple(960, 680), 900);
+          break;
+
+        case 'conclude_racha':
+          moveMouseTo(960, 350);
+          break;
+
+        case 'approve_racha':
+          moveMouseTo(960, 450);
+          setTimeout(() => triggerClickRipple(960, 450), 800);
+          break;
+
+        case 'farewell_racha':
+          interactWithUmlFrame('reset_zoom');
+          moveMouseTo(960, 300);
+          setTimeout(() => moveMouseTo(960, 450), 1800);
+          break;
+
+        default:
+          break;
+      }
+    }
+  </script>
+</body>
+</html>

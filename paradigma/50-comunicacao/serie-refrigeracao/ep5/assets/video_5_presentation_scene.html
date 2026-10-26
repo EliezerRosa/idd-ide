@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>O Futuro do Software - Ep. 5 Grand Finale Paradigma IDD</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; }
+    body {
+      width: 1920px; height: 1080px; background: #060913; color: #f8fafc;
+      overflow: hidden; position: relative;
+    }
+    .grid-bg {
+      position: absolute; inset: 0;
+      background-image: linear-gradient(rgba(245, 158, 11, 0.05) 1px, transparent 1px),
+                        linear-gradient(90deg, rgba(245, 158, 11, 0.05) 1px, transparent 1px);
+      background-size: 70px 70px;
+    }
+    .glow-ambient {
+      position: absolute; width: 1200px; height: 1200px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(245, 158, 11, 0.16) 0%, rgba(139, 92, 246, 0.18) 40%, rgba(6, 182, 212, 0.12) 70%, transparent 85%);
+      top: 50%; left: 50%; transform: translate(-50%, -50%); filter: blur(100px); pointer-events: none;
+    }
+
+    /* TOP BAR */
+    .top-bar {
+      position: absolute; top: 0; left: 0; right: 0; height: 80px;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 60px; background: rgba(9, 14, 28, 0.9);
+      border-bottom: 1px solid rgba(245, 158, 11, 0.35); backdrop-filter: blur(12px); z-index: 50;
+    }
+    .top-title { display: flex; align-items: center; gap: 18px; }
+    .badge-ep {
+      background: linear-gradient(135deg, #d97706, #7c3aed); color: white;
+      font-weight: 800; font-size: 16px; letter-spacing: 1.5px;
+      padding: 6px 18px; border-radius: 999px; text-transform: uppercase;
+      box-shadow: 0 0 20px rgba(245, 158, 11, 0.5);
+    }
+    .series-name { font-size: 20px; font-weight: 700; color: #94a3b8; }
+    .series-name span { color: #f8fafc; font-weight: 800; }
+    .timer-box { font-size: 18px; font-family: monospace; color: #fbbf24; font-weight: 700; }
+
+    /* STAGE PRINCIPAL */
+    .stage {
+      position: absolute; top: 80px; bottom: 220px; left: 0; right: 0;
+      padding: 40px 60px; display: flex; flex-direction: column; z-index: 20;
+    }
+
+    /* SLIDES CONTAINER */
+    .slide-view {
+      display: none; width: 100%; height: 100%; flex-direction: column;
+      animation: fadeIn 0.4s ease-out forwards;
+    }
+    .slide-view.active { display: flex; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+    .slide-header { margin-bottom: 25px; }
+    .slide-category { font-size: 16px; font-weight: 800; color: #f59e0b; text-transform: uppercase; letter-spacing: 2px; }
+    .slide-title { font-size: 40px; font-weight: 900; color: #ffffff; margin-top: 4px; }
+    .slide-subtitle { font-size: 20px; color: #94a3b8; margin-top: 6px; }
+
+    /* SLIDE 1 - RETROSPECTIVA TIMELINE */
+    .journey-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; flex: 1; }
+    .journey-card {
+      background: rgba(15, 23, 42, 0.85); border: 1.5px solid rgba(245, 158, 11, 0.3);
+      border-radius: 18px; padding: 24px; display: flex; flex-direction: column;
+      backdrop-filter: blur(14px); box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+    }
+    .j-step { font-size: 13px; font-weight: 900; color: #f59e0b; letter-spacing: 1px; margin-bottom: 8px; }
+    .j-icon { font-size: 34px; margin-bottom: 12px; }
+    .j-title { font-size: 21px; font-weight: 800; color: #ffffff; margin-bottom: 10px; }
+    .j-desc { font-size: 15px; color: #94a3b8; line-height: 1.5; flex: 1; }
+    .j-tag {
+      margin-top: 14px; align-self: flex-start; background: rgba(245, 158, 11, 0.15);
+      border: 1px solid #f59e0b; color: #fde68a; padding: 4px 10px; border-radius: 8px;
+      font-size: 12px; font-weight: 700;
+    }
+
+    /* SLIDE 2 - PARADIGM SHIFT COMPARISON */
+    .compare-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; flex: 1; }
+    .compare-col {
+      background: rgba(15, 23, 42, 0.85); border-radius: 20px; padding: 30px;
+      display: flex; flex-direction: column; backdrop-filter: blur(14px);
+    }
+    .col-old { border: 1.5px solid rgba(239, 68, 68, 0.4); }
+    .col-new { border: 1.5px solid rgba(16, 185, 129, 0.5); box-shadow: 0 0 35px rgba(16, 185, 129, 0.2); }
+    .col-header { display: flex; align-items: center; gap: 14px; margin-bottom: 20px; }
+    .col-icon { font-size: 36px; }
+    .col-title { font-size: 26px; font-weight: 900; }
+    .col-title.red { color: #f87171; }
+    .col-title.green { color: #34d399; }
+    .col-list { list-style: none; display: flex; flex-direction: column; gap: 16px; flex: 1; }
+    .col-list li { font-size: 17px; line-height: 1.5; color: #cbd5e1; }
+    .col-list li strong { color: #ffffff; }
+
+    /* SLIDE 3 - HORIZONTES E POSSIBILIDADES */
+    .cards-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; flex: 1; }
+    .feature-card {
+      background: rgba(15, 23, 42, 0.85); border: 1.5px solid rgba(139, 92, 246, 0.4);
+      border-radius: 18px; padding: 28px; display: flex; flex-direction: column;
+      backdrop-filter: blur(14px); box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+    }
+    .card-icon { font-size: 38px; margin-bottom: 16px; }
+    .card-title { font-size: 24px; font-weight: 800; color: #c084fc; margin-bottom: 12px; }
+    .card-desc { font-size: 17px; color: #cbd5e1; line-height: 1.5; flex: 1; }
+    .card-tag {
+      margin-top: 15px; align-self: flex-start; background: rgba(139, 92, 246, 0.15);
+      border: 1px solid #8b5cf6; color: #ddd6fe; padding: 4px 12px; border-radius: 8px;
+      font-size: 13px; font-weight: 700;
+    }
+
+    /* SLIDE 4 - MANIFESTO FINAL */
+    .manifesto-box {
+      flex: 1; background: rgba(15, 23, 42, 0.9); border: 2px solid rgba(245, 158, 11, 0.5);
+      border-radius: 24px; padding: 45px 60px; display: flex; flex-direction: column;
+      justify-content: center; align-items: center; text-align: center;
+      box-shadow: 0 25px 60px rgba(0,0,0,0.7); backdrop-filter: blur(16px);
+    }
+    .m-quote {
+      font-size: 34px; font-weight: 900; line-height: 1.35; color: #ffffff; max-width: 1400px;
+    }
+    .m-quote span {
+      background: linear-gradient(135deg, #fbbf24 0%, #a855f7 50%, #38bdf8 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .m-author {
+      margin-top: 28px; font-size: 22px; font-weight: 800; color: #cbd5e1; letter-spacing: 1.5px;
+    }
+    .m-pillars {
+      display: flex; gap: 30px; margin-top: 35px;
+    }
+    .m-pill {
+      background: rgba(245, 158, 11, 0.15); border: 1.5px solid #f59e0b;
+      padding: 10px 24px; border-radius: 999px; font-weight: 800; font-size: 17px; color: #fde68a;
+    }
+
+    /* FOOTER COM OS 3 AVATARES */
+    .bottom-bar {
+      position: absolute; bottom: 0; left: 0; right: 0; height: 220px;
+      background: rgba(6, 12, 24, 0.95); border-top: 1px solid rgba(245, 158, 11, 0.3);
+      backdrop-filter: blur(16px); display: flex; align-items: center;
+      padding: 0 60px; gap: 40px; z-index: 50;
+    }
+    .avatars-container { display: flex; gap: 30px; align-items: center; }
+    .avatar-card {
+      display: flex; flex-direction: column; align-items: center;
+      transition: all 0.3s ease; opacity: 0.45; transform: scale(0.95);
+    }
+    .avatar-card.active {
+      opacity: 1; transform: scale(1.05);
+    }
+    .avatar-circle {
+      width: 90px; height: 90px; border-radius: 50%; overflow: hidden;
+      border: 3px solid #475569; position: relative;
+      box-shadow: 0 0 20px rgba(0,0,0,0.6);
+    }
+    .avatar-card.active .avatar-circle {
+      border-color: #f59e0b; box-shadow: 0 0 25px rgba(245, 158, 11, 0.7);
+    }
+    .avatar-circle img { width: 100%; height: 100%; object-fit: cover; }
+    .avatar-name { font-size: 15px; font-weight: 800; color: #f8fafc; margin-top: 8px; }
+    .avatar-role { font-size: 12px; color: #94a3b8; font-weight: 600; }
+
+    .subtitles-container {
+      flex: 1; height: 140px; background: rgba(15, 23, 42, 0.8);
+      border: 1.5px solid rgba(245, 158, 11, 0.35); border-radius: 16px;
+      padding: 20px 28px; display: flex; flex-direction: column; justify-content: center;
+    }
+    .sub-speaker { font-size: 15px; font-weight: 800; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 6px; }
+    .speaker-leigo { color: #f472b6; }
+    .speaker-eliezer { color: #fbbf24; }
+    .speaker-ia { color: #38bdf8; }
+    .sub-text { font-size: 21px; font-weight: 600; color: #f1f5f9; line-height: 1.45; }
+
+    /* CORTINA PRETA DE SINCRONIA */
+    #black-curtain {
+      position: absolute; inset: 0; background: #000000; z-index: 9999;
+      pointer-events: none; transition: opacity 0.05s linear;
+    }
+  </style>
+</head>
+<body>
+  <div id="black-curtain"></div>
+  <div class="glow-ambient"></div>
+  <div class="grid-bg"></div>
+
+  <!-- TOP BAR -->
+  <div class="top-bar">
+    <div class="top-title">
+      <div class="badge-ep">EPISÓDIO 5 · GRAND FINALE INÉDITO</div>
+      <div class="series-name">O FUTURO DO SOFTWARE · <span>PARADIGMA IDD &amp; MULTIAGENTE</span></div>
+    </div>
+    <div class="timer-box" id="clock-display">00:00.0</div>
+  </div>
+
+  <!-- MAIN STAGE -->
+  <div class="stage">
+    
+    <!-- SLIDE 1: RETROSPECTIVA DA JORNADA -->
+    <div class="slide-view active" id="slide-1">
+      <div class="slide-header">
+        <div class="slide-category">RETROSPECTIVA COMPLETA DA SÉRIE</div>
+        <div class="slide-title">A Jornada do IDD na Prática</div>
+        <div class="slide-subtitle">Como transformamos a intenção humana em um sistema industrial sem digitar código</div>
+      </div>
+      <div class="journey-grid">
+        <div class="journey-card">
+          <div class="j-step">PASSO 1 · EPISÓDIO 1B</div>
+          <div class="j-icon">🎯</div>
+          <div class="j-title">Requisitos &amp; Invariantes</div>
+          <div class="j-desc">
+            Definição de objetivos de negócio, intenções semânticas e invariantes invioláveis com a IA antes de tocar no teclado.
+          </div>
+          <div class="j-tag">CONTRATO PRELIMINAR</div>
+        </div>
+        <div class="journey-card">
+          <div class="j-step">PASSO 2 · EPISÓDIO 2B</div>
+          <div class="j-icon">🗄️</div>
+          <div class="j-title">MER do Negócio</div>
+          <div class="j-desc">
+            Modelo semântico refletindo o mundo real da refrigeração, isolamento multitenant criptográfico e prontuário vitalício.
+          </div>
+          <div class="j-tag">DADOS SEM CÓDIGO</div>
+        </div>
+        <div class="journey-card">
+          <div class="j-step">PASSO 3 · EPISÓDIO 3B</div>
+          <div class="j-icon">📐</div>
+          <div class="j-title">Modelagem UML</div>
+          <div class="j-desc">
+            Atores, casos de uso, classes de domínio e a máquina de estados que funciona como trilho inviolável de transições.
+          </div>
+          <div class="j-tag">COMPORTAMENTO VISUAL</div>
+        </div>
+        <div class="journey-card">
+          <div class="j-step">PASSO 4 · EPISÓDIO 4B</div>
+          <div class="j-icon">🚀</div>
+          <div class="j-title">Governança &amp; Deploy</div>
+          <div class="j-desc">
+            240 testes de invariantes, governança no padrão Confirm-Once e deploy autônomo na nuvem em apenas 4 segundos.
+          </div>
+          <div class="j-tag">PRODUÇÃO REAL</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 2: MUDANÇA DE PARADIGMA -->
+    <div class="slide-view" id="slide-2">
+      <div class="slide-header">
+        <div class="slide-category">RUPTURA HISTÓRICA NA ENGENHARIA</div>
+        <div class="slide-title">A Grande Virada: Sintaxe vs. Intenção</div>
+        <div class="slide-subtitle">Por que a programação manual se tornou o maior gargalo da tecnologia</div>
+      </div>
+      <div class="compare-grid">
+        <div class="compare-col col-old">
+          <div class="col-header">
+            <div class="col-icon">⏳</div>
+            <div class="col-title red">O Velho Paradigma (Code-Centric)</div>
+          </div>
+          <ul class="col-list">
+            <li>• <strong>Escravidão da Sintaxe:</strong> O dev passa 80% do tempo brigando com vírgulas, imports e versões de frameworks.</li>
+            <li>• <strong>Falso Code Review:</strong> Revisar milhares de linhas manuais gera fadiga mental e ilusão de controle.</li>
+            <li>• <strong>Abismo Semântico:</strong> O negócio fala em "manutenção preventiva" e o dev fala em "loops, arrays e proxies".</li>
+            <li>• <strong>Lentidão &amp; Fragilidade:</strong> Semanas para alterar uma regra de banco com alto risco de quebra em cadeia.</li>
+          </ul>
+        </div>
+        <div class="compare-col col-new">
+          <div class="col-header">
+            <div class="col-icon">✨</div>
+            <div class="col-title green">O Paradigma IDD (Intent-Centric)</div>
+          </div>
+          <ul class="col-list">
+            <li>• <strong>Soberania da Intenção:</strong> O humano define o escopo, as metas e as invariantes sagradas com clareza.</li>
+            <li>• <strong>Compilador Semântico:</strong> A IA implementa arquitetura, dados e telas obedecendo contratos estritos.</li>
+            <li>• <strong>Governança de Invariantes:</strong> Testes automáticos validam física, segurança e estados em segundos.</li>
+            <li>• <strong>Velocidade Industrial:</strong> Da ideia à produção com zero fricção de sintaxe e máxima confiabilidade.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 3: O QUE VEM PELA FRENTE (NOVAS POSSIBILIDADES) -->
+    <div class="slide-view" id="slide-3">
+      <div class="slide-header">
+        <div class="slide-category">OS HORIZONTES DO AMANHÃ</div>
+        <div class="slide-title">As Novas Fronteiras com o Paradigma IDD</div>
+        <div class="slide-subtitle">O que se abre quando a barreira da escrita manual é superada para sempre</div>
+      </div>
+      <div class="cards-grid">
+        <div class="feature-card">
+          <div class="card-icon">🤖🤝🤖</div>
+          <div class="card-title">Enxame Multiagente</div>
+          <div class="card-desc">
+            Múltiplos agentes de IA especializados (Segurança, Domínio Térmico, UX e Banco) colaborando e fiscalizando uns aos outros sob governança humana.
+          </div>
+          <div class="card-tag">COLABORAÇÃO AGÊNTICA</div>
+        </div>
+        <div class="feature-card">
+          <div class="card-icon">🧬</div>
+          <div class="card-title">Sistemas Auto-regenerativos</div>
+          <div class="card-desc">
+            Aplicações que monitoram suas próprias invariantes em tempo real: ao detectar desvios de latência ou dados, o agente sintetiza patches autônomos.
+          </div>
+          <div class="card-tag">SELF-HEALING ARCHITECTURE</div>
+        </div>
+        <div class="feature-card">
+          <div class="card-icon">🌍</div>
+          <div class="card-title">Democratização Radical</div>
+          <div class="card-desc">
+            Especialistas de campo, engenheiros mecânicos, médicos e leigos criando sistemas de missão crítica diretamente, sem intermediários que distorcem o valor.
+          </div>
+          <div class="card-tag">TECNOLOGIA PARA TODOS</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 4: O MANIFESTO FINAL -->
+    <div class="slide-view" id="slide-4">
+      <div class="slide-header">
+        <div class="slide-category">O MANIFESTO FINAL DO PARADIGMA IDD</div>
+        <div class="slide-title">A Nova Era da Criação de Software</div>
+        <div class="slide-subtitle">A síntese filosófica e técnica de uma revolução que apenas começou</div>
+      </div>
+      <div class="manifesto-box">
+        <div class="m-quote">
+          "A programação não morreu. A escravidão da sintaxe manual morreu.<br>
+          No Paradigma IDD, <span>o Ser Humano volta a ser Arquiteto e Maestro</span>, guiando a Inteligência Artificial com Intenções Nobres e Invariantes Sagradas."
+        </div>
+        <div class="m-author">
+          ELIÉZER ROSA · CRIADOR DO PARADIGMA INTENT-DRIVEN DEVELOPMENT
+        </div>
+        <div class="m-pillars">
+          <div class="m-pill">🎯 INTENÇÃO CLARA</div>
+          <div class="m-pill">🛡️ INVARIANTES ABSOLUTAS</div>
+          <div class="m-pill">⚖️ GOVERNANÇA HUMANA</div>
+          <div class="m-pill">⚡ VELOCIDADE INDUSTRIAL</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- BOTTOM BAR (AVATARES & LEGENDAS) -->
+  <div class="bottom-bar">
+    <div class="avatars-container">
+      <div class="avatar-card" id="av-leigo">
+        <div class="avatar-circle">
+          <img src="../../producao_yt/avatares/avatar_usuaria_leiga.png" alt="Usuária Leiga">
+        </div>
+        <div class="avatar-name">Usuária Leiga</div>
+        <div class="avatar-role">Validadora de Domínio</div>
+      </div>
+      <div class="avatar-card" id="av-eliezer">
+        <div class="avatar-circle">
+          <img src="../../producao_yt/avatares/avatar_eliezer_oficial.png" alt="Eliézer Rosa">
+        </div>
+        <div class="avatar-name">Eliézer Rosa</div>
+        <div class="avatar-role">Orquestrador IDD</div>
+      </div>
+      <div class="avatar-card" id="av-ia">
+        <div class="avatar-circle">
+          <img src="../../producao_yt/avatares/avatar_ia_compilador.png" alt="IA Compilador">
+        </div>
+        <div class="avatar-name">IA Compilador</div>
+        <div class="avatar-role">Agente de Execução</div>
+      </div>
+    </div>
+
+    <div class="subtitles-container">
+      <div class="sub-speaker" id="sub-speaker">ORQUESTRADOR ELIÉZER ROSA</div>
+      <div class="sub-text" id="sub-text">Iniciando episódio especial de encerramento da série metodológica IDD...</div>
+    </div>
+  </div>
+
+  <script>
+    let timelineItems = [];
+    let isRunning = false;
+    let startTimeMs = 0;
+
+    window.setTimeline = function(items) {
+      timelineItems = items;
+    };
+
+    window.startPresentation = function() {
+      const curtain = document.getElementById('black-curtain');
+      if (curtain) {
+        curtain.style.opacity = '0';
+        setTimeout(() => curtain.remove(), 80);
+      }
+      isRunning = true;
+      startTimeMs = performance.now();
+      requestAnimationFrame(renderLoop);
+    };
+
+    function renderLoop(now) {
+      if (!isRunning) return;
+      const elapsedSec = (now - startTimeMs) / 1000;
+
+      // Relógio
+      const minutes = Math.floor(elapsedSec / 60);
+      const seconds = (elapsedSec % 60).toFixed(1);
+      document.getElementById('clock-display').innerText =
+        String(minutes).padStart(2, '0') + ':' + String(seconds).padStart(4, '0');
+
+      // Buscar segmento atual
+      const curSeg = timelineItems.find(item => elapsedSec >= item.startSec && elapsedSec < item.endSec);
+      if (curSeg) {
+        // Atualizar slide
+        const targetSlideId = 'slide-' + curSeg.slide;
+        const slides = document.querySelectorAll('.slide-view');
+        slides.forEach(s => {
+          if (s.id === targetSlideId) {
+            if (!s.classList.contains('active')) s.classList.add('active');
+          } else {
+            s.classList.remove('active');
+          }
+        });
+
+        // Atualizar avatar ativo
+        const avs = ['leigo', 'eliezer', 'ia'];
+        avs.forEach(who => {
+          const el = document.getElementById('av-' + who);
+          if (el) {
+            if (curSeg.who === who) el.classList.add('active');
+            else el.classList.remove('active');
+          }
+        });
+
+        // Atualizar legenda
+        const speakerEl = document.getElementById('sub-speaker');
+        const textEl = document.getElementById('sub-text');
+
+        speakerEl.className = 'sub-speaker speaker-' + curSeg.who;
+        speakerEl.innerText = curSeg.actor;
+        textEl.innerText = curSeg.text;
+      }
+
+      requestAnimationFrame(renderLoop);
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,66 @@
+%%{init: {
+  'theme': 'base',
+  'themeVariables': {
+    'fontSize': '20px',
+    'fontFamily': 'Arial, sans-serif',
+    'primaryColor': '#E65100',
+    'primaryTextColor': '#ffffff',
+    'primaryBorderColor': '#BF360C',
+    'lineColor': '#37474F',
+    'textColor': '#212121'
+  }
+}}%%
+
+classDiagram
+    direction TB
+
+    class EnumSecao["📑 SEÇÃO DA REUNIÃO"] {
+        <<enumeration>>
+        🎬 Início da Reunião
+        💎 Tesouros da Palavra de Deus
+        📢 Faça Seu Melhor no Ministério
+        ❤️ Nossa Vida Cristã
+        🏁 Final da Reunião
+    }
+
+    class EnumTipoParte["🎯 TIPO DE PARTE"] {
+        <<enumeration>>
+        👔 Presidente
+        🎵 Cântico Inicial
+        🙏 Oração Inicial
+        💬 Comentários Iniciais
+        📖 Discurso Tesouros
+        💎 Joias Espirituais
+        🎓 Parte de Estudante
+        📝 Elogios e Conselhos
+        🎵 Cântico do Meio
+        ❤️ Parte na Vida Cristã
+        📚 Dirigente do EBC
+        📄 Leitor do EBC
+        💬 Comentários Finais
+        🎵 Cântico Final
+        🙏 Oração Final
+    }
+
+    class EnumModalidade["🎭 MODALIDADE"] {
+        <<enumeration>>
+        👔 Presidência
+        🎵 Cântico
+        🙏 Oração
+        📝 Aconselhamento
+        📖 Discurso de Ensino
+        📄 Leitura de Estudante
+        🎬 Demonstração
+        🎤 Discurso de Estudante
+        📚 Dirigente de EBC
+        📄 Leitor de EBC
+    }
+
+    class EnumFuncao["🔄 FUNÇÃO"] {
+        <<enumeration>>
+        ⭐ Titular
+        🤝 Ajudante
+    }
+
+    EnumTipoParte --> EnumSecao : pertence a
+    EnumTipoParte --> EnumModalidade : executa como

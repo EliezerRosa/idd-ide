@@ -1,0 +1,15 @@
+{
+    "theme": "default",
+    "themeVariables": {
+        "fontSize": "18px",
+        "fontFamily": "Arial, Helvetica, sans-serif"
+    },
+    "flowchart": {
+        "htmlLabels": true,
+        "curve": "basis"
+    },
+    "class": {
+        "defaultRenderer": "dagre-wrapper",
+        "htmlLabels": true
+    }
+}

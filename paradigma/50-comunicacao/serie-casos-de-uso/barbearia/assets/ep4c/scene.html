@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>IDD Barbearia - Ep. 4C Código Vivo & Invariantes</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, sans-serif; }
+    body {
+      width: 1920px; height: 1080px; background: #030712; color: #f8fafc;
+      overflow: hidden; position: relative;
+    }
+    .grid-bg {
+      position: absolute; inset: 0;
+      background-image: linear-gradient(rgba(16, 185, 129, 0.05) 1px, transparent 1px),
+                        linear-gradient(90deg, rgba(16, 185, 129, 0.05) 1px, transparent 1px);
+      background-size: 60px 60px;
+    }
+    .glow-ambient {
+      position: absolute; width: 1150px; height: 1150px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(16, 185, 129, 0.22) 0%, rgba(56, 189, 248, 0.14) 45%, transparent 70%);
+      top: 50%; left: 50%; transform: translate(-50%, -50%); filter: blur(95px); pointer-events: none;
+    }
+
+    /* TOP BAR */
+    .top-bar {
+      position: absolute; top: 0; left: 0; right: 0; height: 80px;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 60px; background: rgba(15, 23, 42, 0.88);
+      border-bottom: 1px solid rgba(16, 185, 129, 0.35); backdrop-filter: blur(12px); z-index: 50;
+    }
+    .top-title { display: flex; align-items: center; gap: 18px; }
+    .badge-ep {
+      background: linear-gradient(135deg, #059669, #10b981); color: white;
+      font-weight: 800; font-size: 16px; letter-spacing: 1.5px;
+      padding: 6px 18px; border-radius: 999px; text-transform: uppercase;
+      box-shadow: 0 0 20px rgba(16, 185, 129, 0.4);
+    }
+    .series-name { font-size: 20px; font-weight: 700; color: #cbd5e1; }
+    .series-name span { color: #6ee7b7; font-weight: 800; }
+    .timer-box { font-size: 18px; font-family: monospace; color: #6ee7b7; font-weight: 700; }
+
+    /* STAGE */
+    .stage {
+      position: absolute; top: 80px; bottom: 220px; left: 0; right: 0;
+      padding: 30px 60px; display: flex; flex-direction: column; z-index: 20;
+    }
+    .slide-view {
+      display: none; width: 100%; height: 100%; flex-direction: column;
+      animation: fadeIn 0.4s ease-out forwards;
+    }
+    .slide-view.active { display: flex; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+    .slide-header { margin-bottom: 18px; }
+    .slide-category { font-size: 15px; font-weight: 800; color: #6ee7b7; text-transform: uppercase; letter-spacing: 2px; }
+    .slide-title { font-size: 36px; font-weight: 900; color: #ffffff; margin-top: 4px; }
+    .slide-subtitle { font-size: 18px; color: #94a3b8; margin-top: 4px; }
+
+    /* SLIDE 1: O PARADIGMA DO CÓDIGO VIVO & FUNÇÕES PURAS */
+    .s1-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 30px; flex: 1; align-items: stretch;
+    }
+    .code-comparison-card {
+      background: rgba(15, 23, 42, 0.9); border: 1.5px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px; padding: 24px; display: flex; flex-direction: column;
+    }
+    .card-badge-bad {
+      display: inline-block; align-self: flex-start; background: rgba(239, 68, 68, 0.15);
+      border: 1px solid #ef4444; color: #fca5a5; font-size: 12px; font-weight: 800;
+      padding: 4px 12px; border-radius: 6px; text-transform: uppercase; margin-bottom: 14px;
+    }
+    .card-badge-good {
+      display: inline-block; align-self: flex-start; background: rgba(16, 185, 129, 0.15);
+      border: 1px solid #10b981; color: #6ee7b7; font-size: 12px; font-weight: 800;
+      padding: 4px 12px; border-radius: 6px; text-transform: uppercase; margin-bottom: 14px;
+    }
+    .code-snippet {
+      background: #020617; border: 1px solid #1e293b; border-radius: 10px;
+      padding: 16px; font-family: 'Consolas', monospace; font-size: 13px;
+      line-height: 1.6; color: #cbd5e1; flex: 1; overflow: hidden;
+    }
+    .hl-kw { color: #f43f5e; font-weight: 700; }
+    .hl-fn { color: #38bdf8; font-weight: 700; }
+    .hl-str { color: #fde047; }
+    .hl-num { color: #fb923c; }
+    .hl-com { color: #64748b; font-style: italic; }
+    .hl-inv { color: #4ade80; font-weight: 800; }
+
+    /* SLIDE 2: EDITOR DE CÓDIGO VSCODE COM @invariant */
+    .editor-window {
+      background: #0a0f1d; border: 1.5px solid rgba(16, 185, 129, 0.4);
+      border-radius: 16px; overflow: hidden; display: flex; flex-direction: column;
+      flex: 1; box-shadow: 0 20px 45px rgba(0,0,0,0.7);
+    }
+    .editor-topbar {
+      height: 40px; background: #020617; display: flex; align-items: center;
+      justify-content: space-between; padding: 0 16px; border-bottom: 1px solid #1e293b;
+    }
+    .editor-tabs { display: flex; gap: 8px; }
+    .editor-tab {
+      background: #0a0f1d; border-top: 2px solid #10b981; padding: 6px 16px;
+      font-size: 12px; font-family: 'Consolas', monospace; color: #f8fafc;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .editor-content {
+      padding: 24px 30px; font-family: 'Consolas', monospace; font-size: 13.5px;
+      line-height: 1.7; color: #e2e8f0; flex: 1;
+    }
+
+    /* SLIDE 3: TERMINAL DE 200 TESTES DE ESTRESSE */
+    .s3-grid {
+      display: grid; grid-template-columns: 1.25fr 0.75fr; gap: 24px; flex: 1;
+    }
+    .test-terminal {
+      background: #020617; border: 1.5px solid #1e293b; border-radius: 16px;
+      padding: 24px; font-family: 'Consolas', monospace; font-size: 13px;
+      color: #6ee7b7; display: flex; flex-direction: column;
+    }
+    .test-metrics-card {
+      background: rgba(15, 23, 42, 0.9); border: 1.5px solid rgba(16, 185, 129, 0.35);
+      border-radius: 16px; padding: 24px; display: flex; flex-direction: column;
+      justify-content: space-between;
+    }
+    .metric-box {
+      background: rgba(2, 6, 23, 0.6); border: 1px solid #1e293b;
+      border-radius: 12px; padding: 16px; margin-bottom: 12px;
+    }
+    .metric-val { font-size: 32px; font-weight: 900; color: #4ade80; }
+    .metric-label { font-size: 12px; color: #94a3b8; text-transform: uppercase; font-weight: 700; }
+
+    /* SLIDE 4: SÍNTESE & TRILHA COMPLETA */
+    .cards-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; flex: 1; }
+    .feature-card {
+      background: rgba(15, 23, 42, 0.85); border: 1.5px solid rgba(16, 185, 129, 0.35);
+      border-radius: 16px; padding: 24px; display: flex; flex-direction: column;
+      box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+    }
+    .card-icon { font-size: 36px; margin-bottom: 14px; }
+    .card-title { font-size: 20px; font-weight: 800; color: #6ee7b7; margin-bottom: 10px; }
+    .card-desc { font-size: 14px; color: #cbd5e1; line-height: 1.5; flex: 1; }
+    .card-tag {
+      margin-top: 14px; align-self: flex-start; background: rgba(16, 185, 129, 0.15);
+      border: 1px solid #10b981; color: #a7f3d0; padding: 4px 10px; border-radius: 6px;
+      font-size: 11px; font-weight: 700;
+    }
+
+    /* BOTTOM BAR */
+    .bottom-bar {
+      position: absolute; bottom: 0; left: 0; right: 0; height: 220px;
+      background: rgba(10, 15, 29, 0.96); border-top: 1px solid rgba(16, 185, 129, 0.35);
+      backdrop-filter: blur(16px); display: flex; align-items: center;
+      padding: 0 60px; gap: 40px; z-index: 50;
+    }
+    .avatars-container { display: flex; gap: 30px; align-items: center; }
+    .avatar-card {
+      display: flex; flex-direction: column; align-items: center;
+      transition: all 0.3s ease; opacity: 0.45; transform: scale(0.95);
+    }
+    .avatar-card.active { opacity: 1; transform: scale(1.05); }
+    .avatar-circle {
+      width: 90px; height: 90px; border-radius: 50%; overflow: hidden;
+      border: 3px solid #334155; position: relative; background: #0f172a;
+    }
+    .avatar-card.active .avatar-circle {
+      border-color: #10b981; box-shadow: 0 0 25px rgba(16, 185, 129, 0.7);
+    }
+    .avatar-circle img { width: 100%; height: 100%; object-fit: cover; }
+    .avatar-name { font-size: 15px; font-weight: 800; color: #f8fafc; margin-top: 8px; }
+    .avatar-role { font-size: 12px; color: #94a3b8; font-weight: 600; }
+
+    .subtitles-container {
+      flex: 1; height: 140px; background: rgba(15, 23, 42, 0.8);
+      border: 1.5px solid rgba(16, 185, 129, 0.35); border-radius: 16px;
+      padding: 20px 28px; display: flex; flex-direction: column; justify-content: center;
+    }
+    .sub-speaker {
+      font-size: 14px; font-weight: 800; text-transform: uppercase; letter-spacing: 1.5px;
+      margin-bottom: 8px;
+    }
+    .speaker-leigo { color: #f43f5e; }
+    .speaker-eliezer { color: #38bdf8; }
+    .speaker-ia { color: #10b981; }
+    .sub-text { font-size: 19px; line-height: 1.45; color: #f8fafc; font-weight: 500; }
+
+    #black-curtain {
+      position: absolute; inset: 0; background: #000000; z-index: 9999;
+      pointer-events: none; transition: opacity 0.08s linear;
+    }
+  </style>
+</head>
+<body>
+  <div id="black-curtain"></div>
+  <div class="glow-ambient"></div>
+  <div class="grid-bg"></div>
+
+  <!-- TOP BAR -->
+  <div class="top-bar">
+    <div class="top-title">
+      <div class="badge-ep">Episódio 4C • Implementação Pura</div>
+      <div class="series-name">IDD NA PRÁTICA: <span>BARBEARIA & CÓDIGO VIVO DETERMINÍSTICO</span></div>
+    </div>
+    <div class="timer-box" id="clock-display">00:00.0</div>
+  </div>
+
+  <!-- STAGE -->
+  <div class="stage">
+    <!-- SLIDE 1: O PARADIGMA DO CÓDIGO VIVO & FUNÇÕES PURAS -->
+    <div class="slide-view active" id="slide-1">
+      <div class="slide-header">
+        <div class="slide-category">Engenharia Determinística • Paradigma IDD</div>
+        <div class="slide-title">Do Modelo Visual ao Motor de Agenda sem Race Conditions</div>
+        <div class="slide-subtitle">Eliminação de Travas Concorrentes e Gestão Pura de Intervalos de Tempo</div>
+      </div>
+      <div class="s1-grid">
+        <div class="code-comparison-card">
+          <div class="card-badge-bad">Abordagem Convencional (Frágil a Conflito)</div>
+          <div class="code-snippet">
+            <span class="hl-com">// Checagem tardia no banco sujeita a race condition</span><br>
+            <span class="hl-kw">async function</span> <span class="hl-fn">agendar</span>(req) {<br>
+            &nbsp;&nbsp;<span class="hl-kw">const</span> ocupado = <span class="hl-kw">await</span> db.find({ barbeiroId, hora });<br>
+            &nbsp;&nbsp;<span class="hl-kw">if</span> (!ocupado) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="hl-com">// Se 2 requisições chegarem juntas, ambas passam!</span><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="hl-kw">await</span> db.insert({ barbeiroId, hora });<br>
+            &nbsp;&nbsp;}<br>
+            }
+          </div>
+        </div>
+        <div class="code-comparison-card" style="border-color: rgba(16, 185, 129, 0.5);">
+          <div class="card-badge-good">Abordagem IDD (Função Pura & Intervalo Imutável)</div>
+          <div class="code-snippet" style="border-color: #10b981;">
+            <span class="hl-com">// Puramente determinístico, teste de intersecção temporal</span><br>
+            <span class="hl-kw">export const</span> <span class="hl-fn">verificarOverlap</span> = (<br>
+            &nbsp;&nbsp;agenda: <span class="hl-str">ReadonlyArray&lt;Slot&gt;</span>,<br>
+            &nbsp;&nbsp;novoSlot: <span class="hl-str">Readonly&lt;Slot&gt;</span><br>
+            ): <span class="hl-str">boolean</span> =&gt; {<br>
+            &nbsp;&nbsp;<span class="hl-kw">return</span> agenda.some(s =&gt; max(s.inicio, novoSlot.inicio) &lt; min(s.fim, novoSlot.fim));<br>
+            };
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 2: O DECORADOR @invariant EM RUNTIME -->
+    <div class="slide-view" id="slide-2">
+      <div class="slide-header">
+        <div class="slide-category">Contratos em Tempo de Execução • Metaprogramação</div>
+        <div class="slide-title">O Decorador @invariant & Fiscalização Ativa de Agenda</div>
+        <div class="slide-subtitle">Interceptação de Pré e Pós-Condições com Aborto Imediato de Conflito</div>
+      </div>
+      <div class="editor-window">
+        <div class="editor-topbar">
+          <div class="editor-tabs">
+            <div class="editor-tab">
+              <span>TypeScript</span>
+              <span>BarbeariaService.ts</span>
+            </div>
+          </div>
+          <div style="font-size: 11px; font-family: monospace; color: #10b981;">● INVARIANTS ACTIVE</div>
+        </div>
+        <div class="editor-content">
+          <span class="hl-kw">class</span> <span class="hl-fn">BarbeariaService</span> {<br><br>
+          &nbsp;&nbsp;<span class="hl-inv">@invariant</span>({<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;<span class="hl-fn">pre</span>: (barbeiro, slot) =&gt; barbeiro.isAtivo &amp;&amp; slot.duracaoMinutos &gt; <span class="hl-num">0</span>,<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;<span class="hl-fn">post</span>: (agendamento, b, slot) =&gt; !verificarOverlap(b.agendaSlots, slot)<br>
+          &nbsp;&nbsp;})<br>
+          &nbsp;&nbsp;<span class="hl-kw">public</span> <span class="hl-fn">confirmarAgendamento</span>(<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;barbeiro: Barbeiro,<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;slot: Slot<br>
+          ): Result&lt;Agendamento&gt; {<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;<span class="hl-com">// Criação pura de agendamento com snapshot de comissão imutável</span><br>
+          &nbsp;&nbsp;&nbsp;&nbsp;<span class="hl-kw">return</span> AgendaEngine.alocarSlot(barbeiro, slot);<br>
+          &nbsp;&nbsp;}<br>
+          }
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 3: BATERIA DE 200 TESTES DE ESTRESSE -->
+    <div class="slide-view" id="slide-3">
+      <div class="slide-header">
+        <div class="slide-category">Homologação Matemática • Fuzzing e Estresse</div>
+        <div class="slide-title">Bateria de 200 Testes de Estresse Aprovados (100%)</div>
+        <div class="slide-subtitle">Simulação de 20 Clientes Concorrentes no Mesmo Horário e Validação Fiscal</div>
+      </div>
+      <div class="s3-grid">
+        <div class="test-terminal">
+          <div style="display: flex; gap: 8px; margin-bottom: 12px; border-bottom: 1px solid #1e293b; padding-bottom: 8px;">
+            <div style="width: 12px; height: 12px; border-radius: 50%; background: #ef4444;"></div>
+            <div style="width: 12px; height: 12px; border-radius: 50%; background: #f59e0b;"></div>
+            <div style="width: 12px; height: 12px; border-radius: 50%; background: #10b981;"></div>
+            <span style="margin-left: 10px; font-size: 12px; color: #64748b;">ai-compiler@barbershop-stress:~/fuzzing</span>
+          </div>
+          <div style="flex: 1; line-height: 1.55; font-size: 12px;">
+            <p style="color: #6ee7b7;">&gt; vitest run --stress --iterations=200</p>
+            <p style="color: #94a3b8;">✓ Test 001..050: Disputa Concorrente de Slot (20 threads no mesmo minuto) ... PASS</p>
+            <p style="color: #94a3b8;">✓ Test 051..100: Cancelamento com No-Show tardio (&lt; 2h antecedência) ... PASS</p>
+            <p style="color: #94a3b8;">✓ Test 101..150: Multi-serviços com comissões ponderadas ... PASS</p>
+            <p style="color: #94a3b8;">✓ Test 151..200: Tentativa de agendamento com overlap ... INVARIANT TRIGGERED &amp; ABORTED</p>
+            <br>
+            <p style="color: #4ade80; font-weight: 800;">Test Files  1 passed (1)</p>
+            <p style="color: #4ade80; font-weight: 800;">Tests       200 passed (200)</p>
+            <p style="color: #94a3b8;">Duration    14.18ms | Conflitos de Agenda: 0 | Furos Financeiros: 0</p>
+          </div>
+        </div>
+        <div class="test-metrics-card">
+          <div class="metric-box">
+            <div class="metric-val">200 / 200</div>
+            <div class="metric-label">Testes de Invariante Aprovados</div>
+          </div>
+          <div class="metric-box">
+            <div class="metric-val">0 Conflitos</div>
+            <div class="metric-label">Sobreposição de Cadeiras</div>
+          </div>
+          <div class="metric-box">
+            <div class="metric-val">100%</div>
+            <div class="metric-label">Fidelidade Contábil de Comissão</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 4: SÍNTESE DA TRILHA BARBEARIA & SALÃO -->
+    <div class="slide-view" id="slide-4">
+      <div class="slide-header">
+        <div class="slide-category">A Arquitetura Invencível • Paradigma IDD</div>
+        <div class="slide-title">Os Quatro Pilares do Desenvolvimento por Intenção</div>
+        <div class="slide-subtitle">Da Linguagem Natural à Engenharia de Alta Precisão no Salão</div>
+      </div>
+      <div class="cards-grid">
+        <div class="feature-card">
+          <div class="card-icon">💡</div>
+          <div class="card-title">1. Intenções (1B)</div>
+          <div class="card-desc">Contratos declarativos de agendamento e comissões sem ambiguidades.</div>
+          <div class="card-tag">Episódio 1B</div>
+        </div>
+        <div class="feature-card">
+          <div class="card-icon">🗄️</div>
+          <div class="card-title">2. MER Canônico (2C)</div>
+          <div class="card-desc">Notação Crow's Foot, normalização 1FN/2FN/3FN e snapshot de comissão.</div>
+          <div class="card-tag">Episódio 2C</div>
+        </div>
+        <div class="feature-card">
+          <div class="card-icon">📐</div>
+          <div class="card-title">3. UML Oficial (3C)</div>
+          <div class="card-desc">OMG Standard: Atores, Casos de Uso, Classes 3 compartimentos e Statecharts.</div>
+          <div class="card-tag">Episódio 3C</div>
+        </div>
+        <div class="feature-card">
+          <div class="card-icon">⚡</div>
+          <div class="card-title">4. Código Vivo (4C)</div>
+          <div class="card-desc">Funções Puras, @invariant em runtime e 200 testes de estresse de agenda.</div>
+          <div class="card-tag">Episódio 4C</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BOTTOM BAR -->
+  <div class="bottom-bar">
+    <div class="avatars-container">
+      <div class="avatar-card" id="av-leigo">
+        <div class="avatar-circle">
+          <img src="../../avatares/avatar_usuaria_leiga.png" alt="Usuária Leiga">
+        </div>
+        <div class="avatar-name">Usuária Leiga</div>
+        <div class="avatar-role">Validadora de Domínio</div>
+      </div>
+      <div class="avatar-card" id="av-eliezer">
+        <div class="avatar-circle">
+          <img src="../../avatares/avatar_eliezer_oficial.png" alt="Eliézer Rosa">
+        </div>
+        <div class="avatar-name">Eliézer Rosa</div>
+        <div class="avatar-role">Orquestrador IDD</div>
+      </div>
+      <div class="avatar-card" id="av-ia">
+        <div class="avatar-circle">
+          <img src="../../avatares/avatar_ia_compilador.png" alt="IA Compilador">
+        </div>
+        <div class="avatar-name">IA Compilador</div>
+        <div class="avatar-role">Compilação & Testes</div>
+      </div>
+    </div>
+    <div class="subtitles-container">
+      <div class="sub-speaker" id="sub-speaker">USUÁRIA LEIGA</div>
+      <div class="sub-text" id="sub-text">Iniciando episódio 4C: Implementação Completa & Funções Puras da Barbearia...</div>
+    </div>
+  </div>
+
+  <script>
+    let timelineItems = [];
+    let isRunning = false;
+    let startTimeMs = 0;
+
+    window.setTimeline = function(items) { timelineItems = items; };
+    window.stopPresentation = function() {
+      isRunning = false;
+    };
+    window.startPresentation = function() {
+      const curtain = document.getElementById('black-curtain');
+      if (curtain) {
+        curtain.style.opacity = '0';
+        setTimeout(() => curtain.remove(), 80);
+      }
+      isRunning = true;
+      startTimeMs = performance.now();
+      requestAnimationFrame(renderLoop);
+    };
+
+    function renderLoop(now) {
+      if (!isRunning) return;
+      const elapsedSec = (now - startTimeMs) / 1000;
+      const minutes = Math.floor(elapsedSec / 60);
+      const seconds = (elapsedSec % 60).toFixed(1);
+      document.getElementById('clock-display').innerText =
+        String(minutes).padStart(2, '0') + ':' + String(seconds).padStart(4, '0');
+
+      const curSeg = timelineItems.find(item => elapsedSec >= item.startSec && elapsedSec < item.endSec);
+      if (curSeg) {
+        const targetSlideId = 'slide-' + curSeg.slide;
+        document.querySelectorAll('.slide-view').forEach(s => {
+          if (s.id === targetSlideId) {
+            if (!s.classList.contains('active')) s.classList.add('active');
+          } else {
+            s.classList.remove('active');
+          }
+        });
+
+        ['leigo', 'eliezer', 'ia'].forEach(who => {
+          const el = document.getElementById('av-' + who);
+          if (el) {
+            if (curSeg.who === who) el.classList.add('active');
+            else el.classList.remove('active');
+          }
+        });
+
+        const speakerEl = document.getElementById('sub-speaker');
+        const textEl = document.getElementById('sub-text');
+        speakerEl.className = 'sub-speaker speaker-' + curSeg.who;
+        speakerEl.innerText = curSeg.actor;
+        textEl.innerText = curSeg.text;
+      }
+      requestAnimationFrame(renderLoop);
+    }
+  </script>
+</body>
+</html>

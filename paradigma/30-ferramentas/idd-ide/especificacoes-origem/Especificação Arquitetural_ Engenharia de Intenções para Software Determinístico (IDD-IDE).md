@@ -1,0 +1,98 @@
+# **Especificação Arquitetural: Engenharia de Intenções para Software Determinístico (IDD-IDE)**
+
+**Versão:** 1.0.0  
+**Autor:** Projetista de Negócios & Orquestrador IA  
+**Público-Alvo:** Claude (IA-Dev) / Camada de Execução Estrutural da IDE  
+Este documento estabelece as diretrizes formais, especificações de engenharia e contratos semânticos para a implementação da camada final da IDE baseada no paradigma de Desenvolvimento Guiado por Intenção (IDD \- Intent-Driven Development). O objetivo principal é consolidar a Linguagem Natural Formalizada como o código-fonte definitivo e eliminar o Gap Semântico entre a concepção do negócio e a execução do software.
+
+## **1\. Filosofia de Design e a Pirâmide de Abstração IDD**
+
+A Engenharia de Intenções baseia-se no princípio histórico de que o avanço da computação ocorre por meio do empilhamento e consolidação de camadas de abstração em que a humanidade aprende a confiar de forma cega e determinística. Assim como o desenvolvedor moderno não audita o fluxo de elétrons em portas lógicas ou o microcódigo de uma CPU, o paradigma IDD assume que o código-fonte tradicional legível por humanos (TypeScript, Python, SQL) tornou-se o novo "Assembly" — uma fiação efêmera, de baixo nível, gerida e descartada exclusivamente por agentes de IA.  
+O verdadeiro ativo intelectual, imutável e auditável do software passa a ser a **Intenção Humana Purificada**. Para garantir a estabilidade do sistema, o ecossistema proíbe terminantemente qualquer intervenção humana manual na Sombra Determinística (código gerado), forçando a maturidade e o refinamento do software estritamente por meio da especificação conceitual.
+
+## **2\. O Processo de Granulação Máxima: O Ciclo Espiral**
+
+A mitigação e eliminação de alucinações por parte da IA-Dev ocorrem por meio de um funil de refinamento contínuo em espiral, estruturado em cinco esferas lógicas de tradução incremental:
+
+### **Fase 1: Análise de Requisitos e Modelo UML-Semântico (UML-S)**
+
+O ciclo inicia-se por interações em Linguagem Natural livre (NL). A IA-Curadora mapeia os fluxos de negócio e constrói um modelo UML-Semântico (UML-S) que rastreia os atores, fronteiras de sistema e metas operacionais do nível mais alto de abstração ao mais baixo nível de detalhe semântico.
+
+### **Fase 2: Mapeamento de Classes de Negócio**
+
+Cada entidade é isolada estritamente sob a ótica e perspectiva natural do usuário final. Definem-se as especializações, generalizações e relacionamentos semânticos do domínio. Os atributos estruturais (propriedades) e funcionais (capacidades e regras de transição) de cada classe são detalhados e validados em linguagem humana.
+
+### **Fase 3: Modelo Entidade-Relacionamento (MER) Normalizado**
+
+Sujeito estritamente às restrições e intenções determinísticas validadas no UML-S, o sistema traduz a estrutura de dados para um Modelo Entidade-Relacionamento (MER) lógico e físico perfeitamente normalizado na Terceira Forma Normal (3FN), garantindo a integridade referencial intrínseca.
+
+### **Fase 4: Modelagem Comportamental e Experiência de Interface (UX/UI Intent)**
+
+A interface com o usuário não dita componentes de código rígidos, mas sim a física e a ergonomia de interação. O ecossistema visual mimetiza a experiência de um sistema operacional móvel estruturado em uma grade espacial de ícones e atalhos de aplicativos. O agrupamento de funcionalidades ocorre de forma tátil ou via ponteiro através de ações de arrastar e soltar (drag-and-drop), permitindo a criação e persistência de diretórios dinâmicos diretamente pelo usuário.
+
+### **Fase 5: Máquinas de Estado e Fluxos de Exceção**
+
+Mapeamento rigoroso de todas as transições de estados válidos para as classes de negócio e especificação detalhada de fluxos de contingência e isolamento (quarentena) para cenários em que integrações ou serviços de infraestrutura de rede externa falhem silenciosamente.
+
+## **3\. O Bytecode da Intenção: O Padrão Gherkin-YAML**
+
+Para atuar como o elo estável e isomórfico entre o pensamento humano e a compilação mecânica, a arquitetura unifica todas as esferas do software em um único contrato estruturado de dados: o padrão **Gherkin-YAML**. Este formato atua como o bytecode executável do sistema.
+
+esfera\_dados:  
+  entidades:  
+    \- nome: Voluntario  
+      tipo: ClasseNegocio  
+      atributos\_estruturais:  
+        \- id: "UUID, Primary Key"  
+        \- nome\_completo: "String, Obrigatorio"  
+        \- telefone\_emergencia: "String, Obrigatorio, Validacao: Telefone"  
+      atributos\_funcionais:  
+        \- acao: "VerificarDisponibilidade"  
+          retorno: "Booleano"
+
+esfera\_comportamento:  
+  id: gerenciar\_cancelamento\_urgente  
+  cenario:  
+    dado\_que:  
+      \- entidade: Designacao  
+        estado: "Cancelado"  
+      \- restricao: "tempo\_ate\_evento \< 24h"  
+    quando:  
+      \- evento: "confirmacao\_de\_cancelamento\_recebida"  
+    entao:  
+      acoes\_paralelas:  
+        \- disparar\_notificacao:  
+            nivel: "Critico"  
+            canal: "Push, SMS"  
+            ator: "Coordenador"  
+        \- iniciar\_processo\_background:  
+            nome: "BuscaAutomaticaSubstituto"  
+            algoritmo: "ProximidadeGeografica"
+
+## **4\. A Arquitetura do Agente Curador de Intenções**
+
+O Agente Curador atua como a malha de mediação crítica entre a criatividade do projetista e a rigidez do executor lógico. Ele elimina o gap de intenção operando em duas frequências concorrentes de validação:
+
+| Mecanismo de Controle | Frequência / Tipo | Responsabilidade e Escopo Principal   |
+| :---- | :---- | :---- |
+| **Micro-Curadoria** | Tempo Real / Linter Semântico | Intercepta ambiguidades lexicais, termos ambíguos ou vazios no momento em que são ditados ou inseridos, garantindo a conformidade com o vocabulário ontológico da aplicação instantaneamente. |
+| **Macro-Curadoria** | Etapa Formal / Pull Request Semântico | Executa testes de estresse lógico cruzando os módulos novos com regras de negócio e restrições legadas preexistentes. Utiliza o Método Socrático para desafiar o projetista caso detecte colisões ou paradoxos estruturais antes de liberar a compilação. |
+
+## **5\. Ciclo de Vida e Persistência: O Git Bimodal**
+
+O gerenciamento de código e versionamento no ecossistema IDD opera sob um modelo de trilha dupla paralela, garantindo rastreabilidade histórica e resiliência absoluta em ambientes produtivos:
+
+* **Track Cognitivo (A Árvore Principal):** Registra exclusivamente a evolução cronológica das intenções em linguagem natural livre, os mapas do modelo UML-S e as árvores do bytecode isomórfico Gherkin-YAML. Cada commit documenta uma alteração na lógica de negócios ou na arquitetura de regras.  
+* **Track Estrutural (A Sombra Determinística):** Armazena snapshots estritos, congelados e imutáveis do código técnico gerado pela IA-Dev (banco de dados, APIs, scripts de infraestrutura e interfaces físicas compiladas). Funciona como uma apólice de seguro contra variações probabilísticas de compilação da IA.
+
+### **Diretriz Absoluta para Resolução de Emergências**
+
+É terminantemente proibido realizar alterações pontuais ou ajustes diretos no código de baixo nível contido na Sombra Determinística em produção. Caso uma quebra operacional ocorra, o protocolo de engenharia exige:
+
+1. **Isolamento Imediato (Rollback):** O sistema em produção realiza o recuo para o snapshot estável anterior da Sombra Determinística via Git.  
+2. **Refinamento na Fonte:** O bug ou comportamento anômalo é analisado sob a perspectiva conceitual. O projetista edita o documento em Linguagem Natural dentro do Track Cognitivo para remover a ambiguidade.  
+3. **Recompilação Semântica:** A IA-Dev consome o YAML-Gherkin purificado pelo Curador e regera uma versão estrutural limpa e livre de regressões históricas.
+
+## **6\. Protocolo de Diagnóstico: Traceback Semântico Visual**
+
+Quando o comportamento visual ou os dados divergem da intenção projetada, a depuração gera um **Traceback Semântico Visual**. A IDE renderiza um mapa de calor na tela gráfica de design, realçando os exatos nós, cláusulas ou frases contraditórias no documento Gherkin-YAML que originaram a falha de interpretação sistêmica. A resolução ocorre reescrevendo a regra semântica, forçando a IA-Dev a reaprender e reestruturar o subproduto de forma transparente.

@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Diagrama Gráfico UML Canônico — Cafeteria & Padaria (IDD)</title>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, sans-serif; }
+    body {
+      background: #0c0a09;
+      color: #f5f5f4;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 30px;
+    }
+    header {
+      text-align: center;
+      margin-bottom: 25px;
+    }
+    .badge {
+      display: inline-block;
+      background: linear-gradient(135deg, #d97706, #f59e0b);
+      color: white;
+      font-weight: 800;
+      font-size: 13px;
+      padding: 5px 16px;
+      border-radius: 999px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+      box-shadow: 0 0 15px rgba(245, 158, 11, 0.4);
+    }
+    h1 {
+      font-size: 32px;
+      font-weight: 900;
+      color: #ffffff;
+      letter-spacing: -0.5px;
+    }
+    p {
+      color: #a8a29e;
+      font-size: 16px;
+      margin-top: 6px;
+    }
+
+    /* FILTRO DE PERSPECTIVAS */
+    .controls {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 25px;
+      background: rgba(28, 19, 14, 0.8);
+      padding: 8px;
+      border-radius: 14px;
+      border: 1px solid rgba(245, 158, 11, 0.3);
+    }
+    .btn-filter {
+      background: transparent;
+      border: none;
+      color: #d6d3d1;
+      padding: 8px 18px;
+      border-radius: 10px;
+      font-weight: 700;
+      font-size: 14px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .btn-filter:hover {
+      background: rgba(245, 158, 11, 0.15);
+      color: #fbbf24;
+    }
+    .btn-filter.active {
+      background: #d97706;
+      color: white;
+      box-shadow: 0 0 12px rgba(217, 119, 6, 0.5);
+    }
+
+    .container {
+      width: 100%;
+      max-width: 1400px;
+      background: rgba(28, 19, 14, 0.9);
+      border: 1.5px solid rgba(245, 158, 11, 0.35);
+      border-radius: 20px;
+      padding: 30px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 30px;
+    }
+
+    .section-title {
+      font-size: 22px;
+      font-weight: 800;
+      color: #fbbf24;
+      margin-bottom: 20px;
+      align-self: flex-start;
+      border-left: 4px solid #f59e0b;
+      padding-left: 12px;
+    }
+
+    .mermaid {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="badge">PARADIGMA IDD · MODELO UML DINÂMICO</div>
+    <h1>Modelo UML Canônico — Cafeteria & Padaria</h1>
+    <p>Casos de Uso por Ator, Diagrama de Classes OMG de 3 Compartimentos e Statechart do KDS</p>
+  </header>
+
+  <div class="controls">
+    <button class="btn-filter active" id="btn-all" onclick="filterView('all')">Todos os Casos de Uso</button>
+    <button class="btn-filter" id="btn-cliente" onclick="filterView('cliente')">Visão: Cliente (Mesa & QR Code)</button>
+    <button class="btn-filter" id="btn-barista" onclick="filterView('barista')">Visão: Barista & KDS Cozinha</button>
+    <button class="btn-filter" id="btn-atendente" onclick="filterView('atendente')">Visão: Atendente & Garçom</button>
+    <button class="btn-filter" id="btn-caixa" onclick="filterView('caixa')">Visão: Caixa & Fiscal NFC-e</button>
+  </div>
+
+  <!-- CASOS DE USO -->
+  <div class="container" id="usecase-container">
+    <div class="section-title">1. Diagrama de Casos de Uso com Perspectivas Múltiplas</div>
+    <div class="mermaid" id="usecase-diagram">
+flowchart LR
+    subgraph Atores ["Atores do Sistema de Cafeteria"]
+        CL["👤 Cliente Mesa/Balcão"]
+        BA["☕ Barista / Cozinheiro"]
+        AT["🛎️ Atendente / Garçom"]
+        CX["💳 Operador de Caixa / Gerente"]
+    end
+
+    subgraph ModuloCliente ["Módulo Experiência do Cliente"]
+        UC01(["UC01: Ler QR Code da Mesa"])
+        UC02(["UC02: Navegar Cardápio & Fotos"])
+        UC03(["UC03: Customizar Item (Leite vegetal, calda)"])
+        UC04(["UC04: Enviar Pedido para Preparo"])
+        UC05(["UC05: Solicitar Conta & Pagar via Pix"])
+    end
+
+    subgraph ModuloKDS ["Módulo KDS & Produção"]
+        UC06(["UC06: Receber Pedido no KDS em Tempo Real"])
+        UC07(["UC07: Iniciar Preparo do Item"])
+        UC08(["UC08: Marcar Item Pronto para Entrega"])
+        UC09(["UC09: Abater Insumos da Ficha Técnica"])
+        UC10(["UC10: Registrar Desperdício de Insumo"])
+    end
+
+    subgraph ModuloOperacional ["Módulo Salão & Atendimento"]
+        UC11(["UC11: Lançar Pedido Avulso Balcão"])
+        UC12(["UC12: Entregar Pedido na Mesa"])
+        UC13(["UC13: Transferir Itens entre Mesas"])
+    end
+
+    subgraph ModuloFiscal ["Módulo Caixa & Fiscal"]
+        UC14(["UC14: Conferir Extrato da Comanda"])
+        UC15(["UC15: Conciliar Pagamento Pix / Cartão"])
+        UC16(["UC16: Emitir NFC-e & Encerrar Comanda"])
+    end
+
+    CL --> UC01
+    CL --> UC02
+    CL --> UC03
+    CL --> UC04
+    CL --> UC05
+
+    BA --> UC06
+    BA --> UC07
+    BA --> UC08
+    UC07 -.->|«include»| UC09
+    BA --> UC10
+
+    AT --> UC11
+    AT --> UC12
+    AT --> UC13
+
+    CX --> UC14
+    CX --> UC15
+    CX --> UC16
+    UC15 -.->|«include»| UC16
+    </div>
+  </div>
+
+  <!-- DIAGRAMA DE CLASSES OMG -->
+  <div class="container" id="classes-container">
+    <div class="section-title">2. Diagrama de Classes OMG Standard (3 Compartimentos)</div>
+    <div class="mermaid">
+classDiagram
+    class Comanda {
+        +UUID id
+        +UUID mesaId
+        +String clienteIdentificador
+        +StatusComanda status
+        +DateTime abertaEm
+        +DateTime fechadaEm
+        +Decimal valorTotal
+        +adicionarItem(ItemCardapio item, int qtd, String obs) ItemComanda
+        +calcularTotal() Decimal
+        +solicitarConferencia() void
+        +liquidar(PagamentoFiscal pagto) void
+    }
+
+    class ItemComanda {
+        +UUID id
+        +UUID comandaId
+        +UUID itemCardapioId
+        +Decimal quantidade
+        +Decimal precoUnitario
+        +StatusKDS statusKds
+        +iniciarPreparo() void
+        +finalizarPreparo() void
+        +entregar() void
+        +cancelarComMotivo(String motivo) void
+    }
+
+    class FichaTecnica {
+        +UUID id
+        +UUID itemCardapioId
+        +UUID insumoId
+        +Decimal consumoPorUnidade
+        +String unidadeMedida
+        +calcularDeducaoEstoque(Decimal qtdItens) Decimal
+    }
+
+    class InsumoEstoque {
+        +UUID id
+        +String descricao
+        +Decimal saldoAtual
+        +Decimal estoqueMinimo
+        +abaterEstoque(Decimal qtd) void
+        +reporEstoque(Decimal qtd) void
+        +verificarEstoqueCritico() Boolean
+    }
+
+    class PagamentoFiscal {
+        +UUID id
+        +UUID comandaId
+        +FormaPagto forma
+        +Decimal valor
+        +String txidPix
+        +String chaveNFCe
+        +StatusTransacao status
+        +processarWebhookBacen() Boolean
+        +gerarChaveFiscal() String
+    }
+
+    Comanda "1" *-- "1..*" ItemComanda : contem
+    ItemComanda --> "1" FichaTecnica : consulta
+    FichaTecnica --> "1" InsumoEstoque : abate
+    Comanda "1" *-- "1..*" PagamentoFiscal : quita
+    </div>
+  </div>
+
+  <!-- STATECHART DO KDS & DA COMANDA -->
+  <div class="container" id="statechart-container">
+    <div class="section-title">3. Máquina de Estados Finita (Statechart FSM do Pedido & Comanda)</div>
+    <div class="mermaid">
+stateDiagram-v2
+    [*] --> ABERTA : Cliente abre comanda na mesa
+
+    state ABERTA {
+        [*] --> RECEBIDO : Pedido disparado via QR Code
+        RECEBIDO --> EM_PREPARO : Barista aceita ordem no KDS (Baixa Insumos)
+        EM_PREPARO --> PRONTO : Preparo finalizado no balcão
+        PRONTO --> ENTREGUE : Garçom leva à mesa
+    }
+
+    ABERTA --> EM_CONFERENCIA : Cliente solicita a conta
+    EM_CONFERENCIA --> PAGA : Webhook Pix / Cartão confirma 100% do saldo
+    PAGA --> ENCERRADA : Emissão do Cupom Fiscal NFC-e
+    ENCERRADA --> [*] : Mesa liberada para o próximo cliente
+    </div>
+  </div>
+
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: 'dark',
+      themeVariables: {
+        darkMode: true,
+        background: '#0c0a09',
+        primaryColor: '#d97706',
+        primaryTextColor: '#f5f5f4',
+        primaryBorderColor: '#f59e0b',
+        lineColor: '#f59e0b',
+        secondaryColor: '#1c1917',
+        tertiaryColor: '#292524'
+      }
+    });
+
+    function filterView(actor) {
+      document.querySelectorAll('.btn-filter').forEach(b => b.classList.remove('active'));
+      const btn = document.getElementById('btn-' + actor);
+      if (btn) btn.classList.add('active');
+
+      const container = document.getElementById('usecase-diagram');
+      let graphCode = '';
+
+      if (actor === 'cliente') {
+        graphCode = `flowchart LR
+          CL["👤 Cliente Mesa/Balcão"]
+          subgraph ModuloCliente ["Visão Exclusiva: Autoatendimento & Mesa"]
+              UC01(["UC01: Ler QR Code da Mesa"])
+              UC02(["UC02: Navegar Cardápio & Fotos"])
+              UC03(["UC03: Customizar Item"])
+              UC04(["UC04: Enviar Pedido para Preparo"])
+              UC05(["UC05: Solicitar Conta & Pagar via Pix"])
+          end
+          CL --> UC01
+          CL --> UC02
+          CL --> UC03
+          CL --> UC04
+          CL --> UC05`;
+      } else if (actor === 'barista') {
+        graphCode = `flowchart LR
+          BA["☕ Barista / Cozinheiro"]
+          subgraph ModuloKDS ["Visão Exclusiva: KDS & Produção"]
+              UC06(["UC06: Receber Pedido no KDS em Tempo Real"])
+              UC07(["UC07: Iniciar Preparo do Item"])
+              UC08(["UC08: Marcar Item Pronto para Entrega"])
+              UC09(["UC09: Abater Insumos da Ficha Técnica"])
+              UC10(["UC10: Registrar Desperdício de Insumo"])
+          end
+          BA --> UC06
+          BA --> UC07
+          BA --> UC08
+          UC07 -.->|«include»| UC09
+          BA --> UC10`;
+      } else if (actor === 'atendente') {
+        graphCode = `flowchart LR
+          AT["🛎️ Atendente / Garçom"]
+          subgraph ModuloOperacional ["Visão Exclusiva: Salão & Atendimento"]
+              UC11(["UC11: Lançar Pedido Avulso Balcão"])
+              UC12(["UC12: Entregar Pedido na Mesa"])
+              UC13(["UC13: Transferir Itens entre Mesas"])
+          end
+          AT --> UC11
+          AT --> UC12
+          AT --> UC13`;
+      } else if (actor === 'caixa') {
+        graphCode = `flowchart LR
+          CX["💳 Operador de Caixa / Gerente"]
+          subgraph ModuloFiscal ["Visão Exclusiva: Caixa & Fiscal"]
+              UC14(["UC14: Conferir Extrato da Comanda"])
+              UC15(["UC15: Conciliar Pagamento Pix / Cartão"])
+              UC16(["UC16: Emitir NFC-e & Encerrar Comanda"])
+          end
+          CX --> UC14
+          CX --> UC15
+          CX --> UC16
+          UC15 -.->|«include»| UC16`;
+      } else {
+        graphCode = `flowchart LR
+          subgraph Atores ["Atores do Sistema de Cafeteria"]
+              CL["👤 Cliente Mesa/Balcão"]
+              BA["☕ Barista / Cozinheiro"]
+              AT["🛎️ Atendente / Garçom"]
+              CX["💳 Operador de Caixa / Gerente"]
+          end
+          subgraph ModuloCliente ["Módulo Experiência do Cliente"]
+              UC01(["UC01: Ler QR Code da Mesa"])
+              UC02(["UC02: Navegar Cardápio & Fotos"])
+              UC03(["UC03: Customizar Item"])
+              UC04(["UC04: Enviar Pedido para Preparo"])
+              UC05(["UC05: Solicitar Conta & Pagar via Pix"])
+          end
+          subgraph ModuloKDS ["Módulo KDS & Produção"]
+              UC06(["UC06: Receber Pedido no KDS em Tempo Real"])
+              UC07(["UC07: Iniciar Preparo do Item"])
+              UC08(["UC08: Marcar Item Pronto para Entrega"])
+              UC09(["UC09: Abater Insumos da Ficha Técnica"])
+              UC10(["UC10: Registrar Desperdício de Insumo"])
+          end
+          subgraph ModuloOperacional ["Módulo Salão & Atendimento"]
+              UC11(["UC11: Lançar Pedido Avulso Balcão"])
+              UC12(["UC12: Entregar Pedido na Mesa"])
+              UC13(["UC13: Transferir Itens entre Mesas"])
+          end
+          subgraph ModuloFiscal ["Módulo Caixa & Fiscal"]
+              UC14(["UC14: Conferir Extrato da Comanda"])
+              UC15(["UC15: Conciliar Pagamento Pix / Cartão"])
+              UC16(["UC16: Emitir NFC-e & Encerrar Comanda"])
+          end
+          CL --> UC01
+          CL --> UC02
+          CL --> UC03
+          CL --> UC04
+          CL --> UC05
+          BA --> UC06
+          BA --> UC07
+          BA --> UC08
+          UC07 -.->|«include»| UC09
+          BA --> UC10
+          AT --> UC11
+          AT --> UC12
+          AT --> UC13
+          CX --> UC14
+          CX --> UC15
+          CX --> UC16
+          UC15 -.->|«include»| UC16`;
+      }
+
+      container.removeAttribute('data-processed');
+      container.innerHTML = graphCode;
+      mermaid.init(undefined, container);
+    }
+  </script>
+</body>
+</html>

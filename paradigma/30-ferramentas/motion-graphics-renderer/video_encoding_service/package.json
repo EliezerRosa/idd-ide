@@ -1,0 +1,16 @@
+{
+  "name": "video_encoding_service",
+  "version": "1.0.0",
+  "description": "Video Encoding Module for combining rendered image frames and audio tracks into high quality video using FFmpeg",
+  "main": "index.js",
+  "scripts": {
+    "test": "node test/test.js"
+  },
+  "keywords": [
+    "ffmpeg",
+    "video-encoding",
+    "motion-graphics"
+  ],
+  "author": "",
+  "license": "ISC"
+}

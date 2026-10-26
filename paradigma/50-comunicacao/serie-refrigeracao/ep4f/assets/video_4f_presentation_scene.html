@@ -1,0 +1,948 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=1920, height=1080, initial-scale=1.0">
+  <title>Episódio 4F — Metodologia IDD: Offline-First & Validação com Operadores Reais</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-dark: #050811;
+      --bg-card: rgba(11, 20, 38, 0.90);
+      --bg-card-border: rgba(56, 189, 248, 0.25);
+      --cyan-frost: #38bdf8;
+      --cyan-glow: rgba(56, 189, 248, 0.45);
+      --ice-blue: #0284c7;
+      --emerald-ok: #10b981;
+      --amber-alert: #f59e0b;
+      --purple-tech: #a855f7;
+      --teal-signal: #14b8a6;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      width: 1920px;
+      height: 1080px;
+      overflow: hidden;
+      background: #050811;
+      color: var(--text-main);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      position: relative;
+    }
+
+    #bg-canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 1920px;
+      height: 1080px;
+      z-index: 1;
+    }
+
+    .app-container {
+      position: relative;
+      z-index: 10;
+      width: 1920px;
+      height: 1080px;
+      display: flex;
+      flex-direction: column;
+      padding: 30px 45px;
+      justify-content: space-between;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 18px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .brand-wrap {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .brand-logo {
+      width: 50px;
+      height: 50px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #14b8a6, #0284c7);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 26px;
+      box-shadow: 0 0 20px rgba(20, 184, 166, 0.5);
+    }
+    .brand-text h1 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 22px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      color: #fff;
+    }
+    .brand-text span {
+      font-size: 13px;
+      color: #14b8a6;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+    }
+
+    .header-badges {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .h-badge {
+      padding: 8px 18px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      background: rgba(20, 184, 166, 0.15);
+      border: 1px solid rgba(20, 184, 166, 0.35);
+      color: #2dd4bf;
+    }
+    .h-badge.live {
+      background: rgba(16, 185, 129, 0.15);
+      border-color: rgba(16, 185, 129, 0.4);
+      color: #34d399;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .pulse-dot {
+      width: 10px;
+      height: 10px;
+      background: #10b981;
+      border-radius: 50%;
+      animation: pulse 1.8s infinite;
+    }
+    @keyframes pulse {
+      0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+      70% { transform: scale(1.15); box-shadow: 0 0 0 10px rgba(16, 185, 129, 0); }
+      100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+    }
+
+    main {
+      flex: 1;
+      display: grid;
+      grid-template-columns: 1fr 340px;
+      gap: 30px;
+      padding: 24px 0;
+      min-height: 0;
+    }
+
+    .slide-stage {
+      background: var(--bg-card);
+      border: 1px solid var(--bg-card-border);
+      border-radius: 20px;
+      padding: 30px 40px;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      box-shadow: 0 20px 45px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(16px);
+      overflow: hidden;
+    }
+
+    .slide-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 24px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      padding-bottom: 16px;
+    }
+    .slide-title-area h2 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 32px;
+      font-weight: 800;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .slide-title-area h2 span {
+      color: #14b8a6;
+    }
+    .slide-title-area p {
+      color: var(--text-muted);
+      font-size: 15px;
+      margin-top: 6px;
+    }
+    .slide-num-tag {
+      background: rgba(20, 184, 166, 0.15);
+      border: 1px solid #14b8a6;
+      color: #2dd4bf;
+      padding: 6px 16px;
+      border-radius: 12px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .slide-content-viewport {
+      flex: 1;
+      position: relative;
+      min-height: 0;
+    }
+    .slide-view {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.4s ease, transform 0.4s ease;
+      transform: translateY(10px);
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .slide-view.active {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0);
+    }
+
+    /* SLIDE 1: GAIOLA DE FARADAY */
+    .offline-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      flex: 1;
+    }
+    .off-card {
+      background: rgba(15, 23, 42, 0.7);
+      border-radius: 16px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .off-card.bad {
+      border-color: rgba(244, 63, 94, 0.4);
+      background: radial-gradient(circle at top right, rgba(244, 63, 94, 0.12), transparent 70%), rgba(15, 23, 42, 0.8);
+    }
+    .off-card.good {
+      border-color: rgba(20, 184, 166, 0.4);
+      background: radial-gradient(circle at top right, rgba(20, 184, 166, 0.12), transparent 70%), rgba(15, 23, 42, 0.8);
+    }
+    .o-head {
+      font-family: 'Outfit', sans-serif;
+      font-size: 19px;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .o-head.bad { color: #fb7185; }
+    .o-head.good { color: #2dd4bf; }
+    .o-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      font-size: 14px;
+      line-height: 1.5;
+      color: #cbd5e1;
+    }
+    .o-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      margin-top: 6px;
+      flex-shrink: 0;
+    }
+    .o-dot.red { background: #f43f5e; box-shadow: 0 0 8px rgba(244, 63, 94, 0.6); }
+    .o-dot.teal { background: #14b8a6; box-shadow: 0 0 8px rgba(20, 184, 166, 0.6); }
+
+    .faraday-banner {
+      background: rgba(20, 184, 166, 0.1);
+      border: 1px solid rgba(20, 184, 166, 0.35);
+      border-radius: 14px;
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      color: #ccfbf1;
+      font-size: 15px;
+    }
+
+    /* SLIDE 2: BANCO EMBARCADO & TRANSAÇÕES LOCAIS */
+    .storage-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      flex: 1;
+    }
+    .st-box {
+      background: rgba(15, 23, 42, 0.75);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      padding: 22px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .st-box.s1 { border-color: rgba(56, 189, 248, 0.4); }
+    .st-box.s2 { border-color: rgba(20, 184, 166, 0.4); }
+    .st-box.s3 { border-color: rgba(16, 185, 129, 0.4); }
+    .st-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 17px;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .st-box.s1 .st-title { color: #38bdf8; }
+    .st-box.s2 .st-title { color: #2dd4bf; }
+    .st-box.s3 .st-title { color: #34d399; }
+    .st-desc {
+      font-size: 13px;
+      color: #94a3b8;
+      line-height: 1.55;
+    }
+    .st-code {
+      background: #030712;
+      border-radius: 10px;
+      padding: 12px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      color: #cbd5e1;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      line-height: 1.6;
+    }
+
+    /* SLIDE 3: SINCRONIZAÇÃO RESILIENTE */
+    .sync-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 24px;
+      flex: 1;
+    }
+    .sync-flow-card {
+      background: #030712;
+      border: 1px solid rgba(20, 184, 166, 0.35);
+      border-radius: 16px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .sync-step {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 14px;
+      background: rgba(255, 255, 255, 0.03);
+      border-radius: 8px;
+      font-size: 13px;
+    }
+    .sync-badge {
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-weight: 700;
+      font-size: 12px;
+    }
+    .sync-badge.ok { background: rgba(20, 184, 166, 0.2); color: #2dd4bf; border: 1px solid #14b8a6; }
+    .crdt-card {
+      background: radial-gradient(circle at center, rgba(20, 184, 166, 0.15), transparent 70%), rgba(15, 23, 42, 0.8);
+      border: 1px solid rgba(20, 184, 166, 0.35);
+      border-radius: 16px;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      gap: 16px;
+    }
+    .crdt-icon {
+      font-size: 52px;
+      filter: drop-shadow(0 0 15px rgba(20, 184, 166, 0.6));
+    }
+
+    /* SLIDE 4: VALIDAÇÃO COM OPERADORES REAIS */
+    .closing-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      flex: 1;
+    }
+    .cl-card {
+      background: rgba(15, 23, 42, 0.7);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      padding: 22px 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      position: relative;
+    }
+    .cl-card.crown {
+      border-color: #14b8a6;
+      background: radial-gradient(circle at top center, rgba(20, 184, 166, 0.2), transparent 75%), rgba(15, 23, 42, 0.9);
+      box-shadow: 0 0 25px rgba(20, 184, 166, 0.25);
+    }
+    .cl-num {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      background: rgba(20, 184, 166, 0.2);
+      border: 1px solid #14b8a6;
+      color: #2dd4bf;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 700;
+      font-size: 14px;
+    }
+    .cl-title {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 800;
+      font-size: 16px;
+      color: #fff;
+    }
+    .cl-desc {
+      font-size: 13px;
+      color: #94a3b8;
+      line-height: 1.5;
+    }
+
+    /* PRESENTER CARDS */
+    .presenters-col {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .actor-card {
+      flex: 1;
+      background: var(--bg-card);
+      border: 1px solid var(--bg-card-border);
+      border-radius: 20px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      position: relative;
+      transition: all 0.3s ease;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+    }
+    .actor-card.talking {
+      border-color: #14b8a6;
+      box-shadow: 0 0 30px rgba(20, 184, 166, 0.45), inset 0 0 20px rgba(20, 184, 166, 0.15);
+      transform: scale(1.02);
+    }
+    .actor-avatar-wrap {
+      position: relative;
+      width: 100px;
+      height: 100px;
+      margin-bottom: 14px;
+    }
+    .actor-img {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      border: 3px solid rgba(255, 255, 255, 0.2);
+      object-fit: cover;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+    }
+    .actor-card.talking .actor-img {
+      border-color: #14b8a6;
+    }
+    .talking-halo {
+      position: absolute;
+      top: -8px; left: -8px; right: -8px; bottom: -8px;
+      border-radius: 50%;
+      border: 2px dashed #14b8a6;
+      opacity: 0;
+      animation: rotateHalo 6s linear infinite;
+    }
+    .actor-card.talking .talking-halo {
+      opacity: 1;
+    }
+    @keyframes rotateHalo {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+    .actor-name {
+      font-family: 'Outfit', sans-serif;
+      font-size: 18px;
+      font-weight: 800;
+      color: #fff;
+    }
+    .actor-role {
+      font-size: 12px;
+      color: #2dd4bf;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-top: 4px;
+    }
+
+    /* FOOTER */
+    footer {
+      height: 135px;
+      background: var(--bg-card);
+      border: 1px solid var(--bg-card-border);
+      border-radius: 18px;
+      padding: 16px 28px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+    }
+    .sub-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .spk-pill {
+      font-size: 12px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      padding: 4px 12px;
+      border-radius: 999px;
+    }
+    .spk-pill.eliezer { background: rgba(56, 189, 248, 0.2); color: #38bdf8; border: 1px solid #38bdf8; }
+    .spk-pill.leigo { background: rgba(20, 184, 166, 0.2); color: #2dd4bf; border: 1px solid #14b8a6; }
+
+    .time-readout {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+    .speech-box {
+      font-size: 18px;
+      line-height: 1.45;
+      font-weight: 600;
+      color: #f1f5f9;
+      display: flex;
+      align-items: center;
+      min-height: 52px;
+    }
+    .wave-bars {
+      display: flex;
+      align-items: center;
+      gap: 3px;
+      height: 16px;
+      opacity: 0;
+    }
+    .wave-bars.active { opacity: 1; }
+    .bar {
+      width: 3px;
+      height: 100%;
+      background: #14b8a6;
+      border-radius: 2px;
+      animation: soundWave 0.8s ease-in-out infinite alternate;
+    }
+    .bar:nth-child(2) { animation-delay: 0.15s; }
+    .bar:nth-child(3) { animation-delay: 0.3s; }
+    .bar:nth-child(4) { animation-delay: 0.45s; }
+    @keyframes soundWave {
+      0% { height: 4px; }
+      100% { height: 16px; }
+    }
+
+    #sync-curtain {
+      position: absolute;
+      top: 0; left: 0; width: 1920px; height: 1080px;
+      background: #050811;
+      z-index: 999;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+    }
+    .spinner {
+      width: 50px;
+      height: 50px;
+      border: 4px solid rgba(20, 184, 166, 0.2);
+      border-top-color: #14b8a6;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+  </style>
+</head>
+<body>
+  <div id="sync-curtain">
+    <div class="spinner"></div>
+    <div style="font-family:'Outfit',sans-serif; font-size:22px; font-weight:700; color:#2dd4bf;">
+      Carregando Ep. 4F: Offline-First & Validação com Operadores Reais...
+    </div>
+  </div>
+
+  <canvas id="bg-canvas"></canvas>
+
+  <div class="app-container">
+    <header>
+      <div class="brand-wrap">
+        <div class="brand-logo">📶</div>
+        <div class="brand-text">
+          <h1>Paradigma IDD &mdash; Intent-Driven Development</h1>
+          <span>Episódio 4F &bull; Offline-First & Validação com Operadores Reais</span>
+        </div>
+      </div>
+      <div class="header-badges">
+        <div class="h-badge">Gaiola de Faraday</div>
+        <div class="h-badge">CRDTs & SQLite</div>
+        <div class="h-badge live">
+          <div class="pulse-dot"></div>
+          Autonomia 100%
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section class="slide-stage">
+        <div class="slide-header">
+          <div class="slide-title-area">
+            <h2 id="mainSlideTitle"><span>📶</span> O Efeito Gaiola de Faraday na Indústria</h2>
+            <p id="mainSlideSubtitle">Por que sistemas dependentes de nuvem travam em subsolos e câmaras frigoríficas.</p>
+          </div>
+          <div class="slide-num-tag">SLIDE <span id="slideIndicator">1</span> / 4</div>
+        </div>
+
+        <div class="slide-content-viewport">
+          <!-- SLIDE 1: GAIOLA DE FARADAY -->
+          <div class="slide-view active" id="view-slide-1">
+            <div class="offline-grid">
+              <div class="off-card bad">
+                <div class="o-head bad">
+                  <span>❌</span> A Armadilha da Dependência da Nuvem
+                </div>
+                <div class="o-item">
+                  <div class="o-dot red"></div>
+                  <div>Câmaras frigoríficas de aço inoxidável e casas de máquinas em subsolos blindam sinais 4G/5G.</div>
+                </div>
+                <div class="o-item">
+                  <div class="o-dot red"></div>
+                  <div>Aplicativos web perdem a sessão, travam no meio da ordem de serviço e descartam dados preenchidos.</div>
+                </div>
+                <div class="o-item">
+                  <div class="o-dot red"></div>
+                  <div>Frustração do operador e retorno ao preenchimento arcaico em pranchetas de papel.</div>
+                </div>
+              </div>
+
+              <div class="off-card good">
+                <div class="o-head good">
+                  <span>🛡️</span> A Doutrina IDD: Offline-First Mandatório
+                </div>
+                <div class="o-item">
+                  <div class="o-dot teal"></div>
+                  <div>Autonomia Total: 100% das telas, formulários e regras rodam localmente no dispositivo.</div>
+                </div>
+                <div class="o-item">
+                  <div class="o-dot teal"></div>
+                  <div>Invariantes de Domínio Ativas: a validação matemática acontece sem consultar a internet.</div>
+                </div>
+                <div class="o-item">
+                  <div class="o-dot teal"></div>
+                  <div>Resiliência Absoluta: o aplicativo trata a conectividade como um bônus transitório, não como pré-requisito.</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="faraday-banner">
+              <div style="font-size: 26px;">💡</div>
+              <div>
+                <strong>Axioma IDD da Desconexão:</strong> O software industrial deve operar com a mesma perfeição se estiver a 10 metros da antena ou a 10 metros debaixo da terra.
+              </div>
+            </div>
+          </div>
+
+          <!-- SLIDE 2: BANCO EMBARCADO & TRANSAÇÕES LOCAIS -->
+          <div class="slide-view" id="view-slide-2">
+            <div class="storage-row">
+              <div class="st-box s1">
+                <div class="st-title"><span>💾</span> SQLite Relacional Local</div>
+                <div class="st-desc">Replica fiel do modelo MER no aparelho. Chaves estrangeiras, relacionamentos e restrições atômicas totalmente ativas offline.</div>
+                <div class="st-code">
+                  STORAGE: SQLite / WatermelonDB<br>
+                  CACHE: 100% Ativos + PMOC<br>
+                  STATUS: Gravado Localmente
+                </div>
+              </div>
+
+              <div class="st-box s2">
+                <div class="st-title"><span>🔒</span> Transações Atômicas</div>
+                <div class="st-desc">A baixa de peças e o fechamento da OS são selados como Unit of Work local. Zero risco de salvar metade dos dados.</div>
+                <div class="st-code">
+                  BEGIN LOCAL_TRANSACTION<br>
+                  &nbsp;GravarOS() + BaixarPeca()<br>
+                  COMMIT (Idempotente)
+                </div>
+              </div>
+
+              <div class="st-box s3">
+                <div class="st-title"><span>📦</span> Fila Criptografada</div>
+                <div class="st-desc">Eventos de domínio assinados e persistidos em storage seguro. Mesmo se descarregar a bateria, nada é perdido.</div>
+                <div class="st-code">
+                  QUEUE: 1 evento pendente<br>
+                  HASH: SHA-256 Selado<br>
+                  READY_FOR_DISPATCH: True
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- SLIDE 3: SINCRONIZAÇÃO RESILIENTE & CRDTS -->
+          <div class="slide-view" id="view-slide-3">
+            <div class="sync-grid">
+              <div class="sync-flow-card">
+                <div style="color:#2dd4bf; font-weight:700; margin-bottom:4px;">
+                  🔄 Fluxo de Sincronização ao Recuperar Sinal:
+                </div>
+                <div class="sync-step">
+                  <span>1. Detecção de Conexão (Wi-Fi / 4G)</span>
+                  <span class="sync-badge ok">SINAL ATIVO</span>
+                </div>
+                <div class="sync-step">
+                  <span>2. Handshake com Servidor Central</span>
+                  <span class="sync-badge ok">AUTENTICADO</span>
+                </div>
+                <div class="sync-step">
+                  <span>3. Despacho Idempotente de Transações</span>
+                  <span class="sync-badge ok">TRANSMITIDO</span>
+                </div>
+                <div class="sync-step">
+                  <span>4. Resolução de Concorrência (CRDT)</span>
+                  <span class="sync-badge ok">ZERO CONFLITOS</span>
+                </div>
+              </div>
+
+              <div class="crdt-card">
+                <div class="crdt-icon">⚡</div>
+                <div style="font-family:'Outfit',sans-serif; font-size:19px; font-weight:800; color:#2dd4bf;">CRDTs & Timestamps</div>
+                <div style="font-size:13px; color:#cbd5e1; line-height:1.6;">
+                  Mesmo com dois mecânicos trabalhando no mesmo equipamento em turnos distintos, os eventos se fundem deterministicamente sem perda de dados.
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- SLIDE 4: VALIDAÇÃO COM OPERADORES REAIS -->
+          <div class="slide-view" id="view-slide-4">
+            <div class="closing-row">
+              <div class="cl-card">
+                <div class="cl-num">1</div>
+                <div class="cl-title">Intenção Leiga</div>
+                <div class="cl-desc">Domínio especificado sem código acidental.</div>
+              </div>
+              <div class="cl-card">
+                <div class="cl-num">2</div>
+                <div class="cl-title">Rigor Formal</div>
+                <div class="cl-desc">MER, UML e transações atômicas seguras.</div>
+              </div>
+              <div class="cl-card">
+                <div class="cl-num">3</div>
+                <div class="cl-title">Evolução Viva</div>
+                <div class="cl-desc">Diff de intenções e guardas temporais.</div>
+              </div>
+              <div class="cl-card crown">
+                <div class="cl-num">4</div>
+                <div class="cl-title">Triunfo em Campo</div>
+                <div class="cl-desc">Ergonomia física, voz e autonomia offline comprovadas.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <aside class="presenters-col">
+        <div class="actor-card" id="card-eliezer">
+          <div class="talking-halo"></div>
+          <div class="actor-avatar-wrap">
+            <img class="actor-img" src="../avatares/eliezer.png" alt="Eliézer Rosa">
+          </div>
+          <div class="actor-name">Eliézer Rosa</div>
+          <div class="actor-role">Autor do Paradigma IDD</div>
+        </div>
+
+        <div class="actor-card" id="card-leigo">
+          <div class="talking-halo"></div>
+          <div class="actor-avatar-wrap">
+            <img class="actor-img" src="../avatares/leigo.png" alt="Usuária Leiga">
+          </div>
+          <div class="actor-name">Usuária Leiga</div>
+          <div class="actor-role">Engenheira de Negócio</div>
+        </div>
+      </aside>
+    </main>
+
+    <footer>
+      <div class="sub-meta">
+        <div style="display:flex; align-items:center; gap:12px;">
+          <div class="spk-pill" id="speakerPill">USUÁRIA LEIGA</div>
+          <span style="font-size:13px; font-weight:700; color:#94a3b8;" id="speakerName">Usuária Leiga</span>
+          <div class="wave-bars" id="waveBars">
+            <div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div>
+          </div>
+        </div>
+        <div class="time-readout" id="timeReadout">00:00 / 02:22</div>
+      </div>
+      <div class="speech-box" id="speechContent">
+        "Carregando narrativa..."
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    const canvas = document.getElementById('bg-canvas');
+    const ctx = canvas.getContext('2d');
+    canvas.width = 1920;
+    canvas.height = 1080;
+
+    const particles = [];
+    for (let i = 0; i < 70; i++) {
+      particles.push({
+        x: Math.random() * 1920,
+        y: Math.random() * 1080,
+        radius: Math.random() * 2 + 0.5,
+        speedX: (Math.random() - 0.5) * 0.3,
+        speedY: (Math.random() - 0.5) * 0.3,
+        color: Math.random() > 0.5 ? '#14b8a6' : '#38bdf8',
+        alpha: Math.random() * 0.4 + 0.1
+      });
+    }
+
+    function animateBg() {
+      ctx.fillStyle = '#050811';
+      ctx.fillRect(0, 0, 1920, 1080);
+      particles.forEach(p => {
+        p.x += p.speedX; p.y += p.speedY;
+        if (p.y < 0) p.y = 1080;
+        if (p.x < 0) p.x = 1920;
+        if (p.x > 1920) p.x = 0;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+        ctx.fillStyle = p.color;
+        ctx.globalAlpha = p.alpha;
+        ctx.fill();
+      });
+      requestAnimationFrame(animateBg);
+    }
+    requestAnimationFrame(animateBg);
+
+    window.timelineItems = [
+      {
+        "index": 0, "id": "seg_00_leigo", "who": "leigo", "actor": "Usuária Leiga",
+        "slide": 1, "startSec": 0.5, "durSec": 15.0, "endSec": 15.5,
+        "text": "Eliézer, no episódio quatro E nós vimos a ergonomia com luva e laudo por voz. Mas imagine a situação real: o mecânico desce no subsolo de um shopping ou entra numa câmara fria de concreto e aço. Como o aplicativo funciona se não tem nenhum sinal de internet?"
+      },
+      {
+        "index": 1, "id": "seg_01_eliezer", "who": "eliezer", "actor": "Eliézer Rosa",
+        "slide": 1, "startSec": 16.15, "durSec": 20.0, "endSec": 36.15,
+        "text": "Esse é o clássico efeito Gaiola de Faraday da indústria! A maioria dos aplicativos trava ou perde dados porque foram feitos dependentes de nuvem. No Paradigma IDD, a premissa é estrita: Offline-First mandatório! O sistema precisa ser totalmente autônomo e relacional dentro do próprio dispositivo."
+      },
+      {
+        "index": 2, "id": "seg_02_leigo", "who": "leigo", "actor": "Usuária Leiga",
+        "slide": 2, "startSec": 36.8, "durSec": 14.0, "endSec": 50.8,
+        "text": "Veja no Slide dois a inteligência do banco embarcado! O dispositivo roda um SQLite local completo, executando as mesmas invariantes de negócio e transações atômicas que vimos nos episódios três e quatro!"
+      },
+      {
+        "index": 3, "id": "seg_03_eliezer", "who": "eliezer", "actor": "Eliézer Rosa",
+        "slide": 2, "startSec": 51.45, "durSec": 17.0, "endSec": 68.45,
+        "text": "Exatamente! Quando o técnico fecha a ordem de serviço, dá baixa na peça e assina o laudo, a transação é gravada localmente com integridade criptográfica. Nenhuma informação se perde se a bateria acabar ou se o sinal demorar horas para voltar."
+      },
+      {
+        "index": 4, "id": "seg_04_leigo", "who": "leigo", "actor": "Usuária Leiga",
+        "slide": 3, "startSec": 69.1, "durSec": 14.0, "endSec": 83.1,
+        "text": "E no Slide três nós vemos a reconciliação ao reconectar! Quando o técnico sobe ao térreo e pega o sinal de rede, o despachante de eventos sincroniza os dados sem nenhum conflito de concorrência!"
+      },
+      {
+        "index": 5, "id": "seg_05_eliezer", "who": "eliezer", "actor": "Eliézer Rosa",
+        "slide": 3, "startSec": 83.75, "durSec": 19.0, "endSec": 102.75,
+        "text": "Isso é garantido por tipos de dados replicados sem conflito, os CRDTs, e marcação temporal determinística. Mesmo se dois técnicos mexeram no mesmo sistema em turnos diferentes, o IDD reconcilia o estado do ativo sem sobrescrever nem duplicar relatórios."
+      },
+      {
+        "index": 6, "id": "seg_06_leigo", "who": "leigo", "actor": "Usuária Leiga",
+        "slide": 4, "startSec": 103.4, "durSec": 13.0, "endSec": 116.4,
+        "text": "E o Slide quatro fecha com a validação assistida com operadores reais! O teste da luva, a medição do tempo de tela e a aprovação dos mecânicos veteranos antes do lançamento oficial!"
+      },
+      {
+        "index": 7, "id": "seg_07_eliezer", "who": "eliezer", "actor": "Eliézer Rosa",
+        "slide": 4, "startSec": 117.05, "durSec": 20.0, "endSec": 137.05,
+        "text": "Com isso fechamos o ciclo de excelência do Paradigma IDD: da intenção pura sem código, passando pela modelagem MER e UML, transações atômicas, evolução de esquema, até a ergonomia viva no campo de batalha. O software profissional com IA finalmente é uma realidade robusta!"
+      }
+    ];
+
+    window.setTimeline = function(items) {
+      if (items && items.length > 0) window.timelineItems = items;
+    };
+
+    const slideTitles = [
+      { t: "O Efeito Gaiola de Faraday na Indústria", s: "Por que sistemas dependentes de nuvem travam em subsolos e câmaras frigoríficas." },
+      { t: "Banco Embarcado & Transações Atômicas Locais", s: "SQLite relacional no aparelho executando invariantes e fila com integridade total." },
+      { t: "Sincronização Resiliente & Resolução por CRDTs", s: "Despacho atômico ao recuperar sinal com reconciliação determinística sem conflito." },
+      { t: "Validação com Operadores Reais & A Vitória do IDD", s: "O teste da luva, redução de atrito e o ciclo de vida completo do software profissional." }
+    ];
+
+    window.updateFrameAtTime = function(timeSec) {
+      const curtain = document.getElementById('sync-curtain');
+      if (curtain && curtain.style.display !== 'none') curtain.style.display = 'none';
+
+      const m = Math.floor(timeSec / 60);
+      const s = Math.floor(timeSec % 60);
+      const timeStr = `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+      const timeEl = document.getElementById('timeReadout');
+      if (timeEl) timeEl.innerText = `${timeStr} / 02:22`;
+
+      if (!window.timelineItems || window.timelineItems.length === 0) return;
+
+      const currentSeg = window.timelineItems.find(it => timeSec >= it.startSec && timeSec <= it.endSec)
+        || window.timelineItems.filter(it => it.startSec <= timeSec).pop()
+        || window.timelineItems[0];
+
+      const speakingSeg = window.timelineItems.find(it => timeSec >= it.startSec && timeSec <= it.endSec);
+
+      document.querySelectorAll('.slide-view').forEach(sv => sv.classList.remove('active'));
+      const activeView = document.getElementById(`view-slide-${currentSeg.slide}`);
+      if (activeView) activeView.classList.add('active');
+
+      document.getElementById('slideIndicator').innerText = currentSeg.slide;
+      const tInfo = slideTitles[currentSeg.slide - 1];
+      if (tInfo) {
+        document.getElementById('mainSlideTitle').innerHTML = `<span>📶</span> ${tInfo.t}`;
+        document.getElementById('mainSlideSubtitle').innerText = tInfo.s;
+      }
+
+      document.getElementById('speechContent').innerText = `"${currentSeg.text}"`;
+      document.getElementById('speakerName').innerText = currentSeg.actor;
+      const pill = document.getElementById('speakerPill');
+      pill.className = `spk-pill ${currentSeg.who}`;
+
+      const cardEliezer = document.getElementById('card-eliezer');
+      const cardLeigo = document.getElementById('card-leigo');
+      const waveBars = document.getElementById('waveBars');
+
+      if (speakingSeg) {
+        cardEliezer.classList.toggle('talking', speakingSeg.who === 'eliezer');
+        cardLeigo.classList.toggle('talking', speakingSeg.who === 'leigo');
+        waveBars.classList.add('active');
+      } else {
+        cardEliezer.classList.remove('talking');
+        cardLeigo.classList.remove('talking');
+        waveBars.classList.remove('active');
+      }
+    };
+  </script>
+</body>
+</html>

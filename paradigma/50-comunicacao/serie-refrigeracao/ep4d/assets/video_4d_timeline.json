@@ -1,0 +1,110 @@
+{
+  "projectName": "IDD_Refrigeracao_Novo_Episodio_4D",
+  "totalDurationSec": 140.71,
+  "items": [
+    {
+      "index": 0,
+      "id": "seg_00_leigo",
+      "who": "leigo",
+      "actor": "Usuária Leiga",
+      "avatar": "leigo",
+      "slide": 1,
+      "text": "Eliézer, no episódio quatro C nós vimos o plano de migração de intenções. Mas imagine o seguinte dilema: a fiscalização ambiental agora exige o número da balança calibrada na recarga de gás. Como aplicar essa regra nova sem tornar inválidas as milhares de manutenções feitas no passado?",
+      "wav": "C:\\Antigravity - IDD Refrigeração\\motion_graphics_renderer\\idd_video_4d_assets\\audio\\seg_00_leigo.wav",
+      "startSec": 0.5,
+      "durSec": 18.504,
+      "endSec": 19.004
+    },
+    {
+      "index": 1,
+      "id": "seg_01_eliezer",
+      "who": "eliezer",
+      "actor": "Eliézer Rosa",
+      "avatar": "eliezer",
+      "slide": 1,
+      "text": "Esse é um dos conceitos mais elegantes do Paradigma IDD: Invariantes Temporizadas! Em vez de colocar uma trava rígida retroativa que quebraria o histórico da empresa, o compilador do IDD gera guardas temporais. O passado continua juridicamente perfeito sob as regras da sua época, e o presente cumpre a norma nova.",
+      "wav": "C:\\Antigravity - IDD Refrigeração\\motion_graphics_renderer\\idd_video_4d_assets\\audio\\seg_01_eliezer.wav",
+      "startSec": 19.654,
+      "durSec": 21.6,
+      "endSec": 41.254
+    },
+    {
+      "index": 2,
+      "id": "seg_02_leigo",
+      "who": "leigo",
+      "actor": "Usuária Leiga",
+      "avatar": "leigo",
+      "slide": 2,
+      "text": "Que sacada genial! Veja no Slide dois a fórmula condicional: se a data da ordem de serviço for anterior a dois mil e vinte e seis, a validação segue a regra clássica; se for posterior, a regra estrita da balança calibrada é obrigatória!",
+      "wav": "C:\\Antigravity - IDD Refrigeração\\motion_graphics_renderer\\idd_video_4d_assets\\audio\\seg_02_leigo.wav",
+      "startSec": 41.904,
+      "durSec": 15.192,
+      "endSec": 57.096
+    },
+    {
+      "index": 3,
+      "id": "seg_03_eliezer",
+      "who": "eliezer",
+      "actor": "Eliézer Rosa",
+      "avatar": "eliezer",
+      "slide": 2,
+      "text": "Exatamente! E quando a mudança envolve a estrutura das tabelas, o IDD aplica o padrão Expand and Contract. Ele nunca roda um comando de alteração destrutiva direto no banco. Ele expande com colunas novas, sincroniza os dados legados com backfill seguro e só depois contrai o modelo.",
+      "wav": "C:\\Antigravity - IDD Refrigeração\\motion_graphics_renderer\\idd_video_4d_assets\\audio\\seg_03_eliezer.wav",
+      "startSec": 57.746,
+      "durSec": 20.04,
+      "endSec": 77.786
+    },
+    {
+      "index": 4,
+      "id": "seg_04_leigo",
+      "who": "leigo",
+      "actor": "Usuária Leiga",
+      "avatar": "leigo",
+      "slide": 3,
+      "text": "E no Slide três nós temos a suíte de testes de não-regressão de invariantes. Antes de liberar para os mecânicos em campo, o sistema roda testes automáticos provando que nenhum relatório antigo sofreu corrupção!",
+      "wav": "C:\\Antigravity - IDD Refrigeração\\motion_graphics_renderer\\idd_video_4d_assets\\audio\\seg_04_leigo.wav",
+      "startSec": 78.436,
+      "durSec": 13.128,
+      "endSec": 91.564
+    },
+    {
+      "index": 5,
+      "id": "seg_05_eliezer",
+      "who": "eliezer",
+      "actor": "Eliézer Rosa",
+      "avatar": "eliezer",
+      "slide": 3,
+      "text": "Isso fecha com chave de ouro a governança da evolução contínua! A IA gera o código da migração, mas as invariantes matemáticas garantem que zero dados sejam corrompidos. É a blindagem total do patrimônio de dados do cliente.",
+      "wav": "C:\\Antigravity - IDD Refrigeração\\motion_graphics_renderer\\idd_video_4d_assets\\audio\\seg_05_eliezer.wav",
+      "startSec": 92.214,
+      "durSec": 16.632,
+      "endSec": 108.846
+    },
+    {
+      "index": 6,
+      "id": "seg_06_leigo",
+      "who": "leigo",
+      "actor": "Usuária Leiga",
+      "avatar": "leigo",
+      "slide": 4,
+      "text": "Incrível! Da especificação sem código até a evolução contínua em produção com invariantes temporizadas, a metodologia IDD entrega o ciclo de vida completo do software profissional com inteligência artificial!",
+      "wav": "C:\\Antigravity - IDD Refrigeração\\motion_graphics_renderer\\idd_video_4d_assets\\audio\\seg_06_leigo.wav",
+      "startSec": 109.496,
+      "durSec": 13.536,
+      "endSec": 123.032
+    },
+    {
+      "index": 7,
+      "id": "seg_07_eliezer",
+      "who": "eliezer",
+      "actor": "Eliézer Rosa",
+      "avatar": "eliezer",
+      "slide": 4,
+      "text": "Essa é a revolução da engenharia de software no Paradigma IDD. Menos sintaxe manual acidental, mais rigor arquitetural e foco absoluto na intenção do negócio. Parabéns a todos que acompanharam essa jornada!",
+      "wav": "C:\\Antigravity - IDD Refrigeração\\motion_graphics_renderer\\idd_video_4d_assets\\audio\\seg_07_eliezer.wav",
+      "startSec": 123.682,
+      "durSec": 14.88,
+      "endSec": 138.562
+    }
+  ]
+}

@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Diagrama Gráfico MER Canônico — Racha de Conta & Pix (IDD)</title>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, sans-serif; }
+    body {
+      background: #050811;
+      color: #f1f5f9;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 30px;
+    }
+    header {
+      text-align: center;
+      margin-bottom: 25px;
+    }
+    .badge {
+      display: inline-block;
+      background: linear-gradient(135deg, #0284c7, #38bdf8);
+      color: white;
+      font-weight: 800;
+      font-size: 13px;
+      padding: 5px 16px;
+      border-radius: 999px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+      box-shadow: 0 0 15px rgba(56, 189, 248, 0.4);
+    }
+    h1 {
+      font-size: 32px;
+      font-weight: 900;
+      color: #ffffff;
+      letter-spacing: -0.5px;
+    }
+    p {
+      color: #94a3b8;
+      font-size: 16px;
+      margin-top: 6px;
+    }
+    .container {
+      width: 100%;
+      max-width: 1400px;
+      background: rgba(15, 23, 42, 0.9);
+      border: 1.5px solid rgba(56, 189, 248, 0.3);
+      border-radius: 20px;
+      padding: 30px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .mermaid {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+    }
+
+    /* INVARIANTS GRID */
+    .invariants-box {
+      width: 100%;
+      margin-top: 30px;
+      border-top: 1px solid rgba(56, 189, 248, 0.2);
+      padding-top: 25px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+    .inv-card {
+      background: rgba(30, 41, 59, 0.6);
+      border: 1px solid rgba(56, 189, 248, 0.25);
+      border-radius: 14px;
+      padding: 18px;
+    }
+    .inv-title {
+      font-size: 14px;
+      font-weight: 800;
+      color: #38bdf8;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 6px;
+    }
+    .inv-desc {
+      font-size: 13px;
+      color: #cbd5e1;
+      line-height: 1.5;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="badge">Paradigma IDD • Fintech & Social Payments</div>
+    <h1>Modelo Entidade-Relacionamento (MER Canônico do Racha de Pix)</h1>
+    <p>Estrutura Lógica, Normalização 3FN e Invariante de Conservação Financeira da Mesa</p>
+  </header>
+
+  <div class="container">
+    <div class="mermaid">
+erDiagram
+    ESTABELECIMENTO ||--o{ MESA : "hospeda"
+    MESA ||--o{ PARTICIPANTE : "reune"
+    MESA ||--o{ ITEM_COMANDA : "registra"
+    
+    PARTICIPANTE ||--o{ CONSUMO_ITEM : "divide"
+    ITEM_COMANDA ||--o{ CONSUMO_ITEM : "fracionado_em"
+    
+    PARTICIPANTE ||--o{ COTA_RATEIO : "recebe"
+    MESA ||--o{ COTA_RATEIO : "consolida"
+    
+    COTA_RATEIO ||--o| PAYLOAD_PIX : "liquida_via"
+
+    ESTABELECIMENTO {
+        uuid id PK
+        string nome_fantasia "Bar ou Restaurante"
+        string cnpj_ou_cpf
+        string chave_pix_recebedor "Chave mestra do caixa"
+    }
+
+    MESA {
+        uuid id PK
+        uuid estabelecimento_id FK
+        string codigo_mesa "Mesa 14, Lounge 02"
+        string status "ABERTA, FECHADA, LIQUIDADA"
+        decimal total_bruto "Soma dos itens"
+        decimal taxa_servico_pct "Ex: 10.0%"
+        timestamp aberta_em
+        timestamp fechada_em
+    }
+
+    PARTICIPANTE {
+        uuid id PK
+        uuid mesa_id FK
+        string nome "Nome ou apelido do amigo"
+        string telefone_whatsapp "Identificador para envio Pix"
+        boolean organizador "Responsável pelo racha"
+        timestamp ingressou_em
+    }
+
+    ITEM_COMANDA {
+        uuid id PK
+        uuid mesa_id FK
+        string descricao "Ex: Balde Chope, Picanha"
+        int quantidade "Qtd total pedida"
+        decimal preco_unitario "Valor por unidade"
+        boolean compartilhado "Item individual ou coletivo"
+    }
+
+    CONSUMO_ITEM {
+        uuid id PK
+        uuid participante_id FK
+        uuid item_comanda_id FK
+        decimal fracao_consumo "Ex: 0.3333 para 3 amigos"
+        decimal valor_fracionado "fracao * total_item"
+    }
+
+    COTA_RATEIO {
+        uuid id PK
+        uuid participante_id FK
+        uuid mesa_id FK
+        decimal subtotal_itens "Soma dos consumos individuais"
+        decimal valor_taxa_servico "Proporcional a 10%"
+        decimal valor_total_cota "Valor final exato da cota"
+        string status_pagamento "PENDENTE, PAGO, CANCELADO"
+        string hash_auditoria "SHA-256 de snapshot imutavel"
+    }
+
+    PAYLOAD_PIX {
+        uuid id PK
+        uuid cota_rateio_id FK
+        string txid "Identificador único BACEN"
+        string qrcode_emv "Payload copia-e-cola"
+        string status_webhook "AGUARDANDO, LIQUIDADO"
+        timestamp pago_em
+    }
+    </div>
+
+    <!-- INVARIANTS MATRIX -->
+    <div class="invariants-box">
+      <div class="inv-card">
+        <div class="inv-title">1. Invariante da Soma Zero</div>
+        <div class="inv-desc">Em qualquer item compartilhado: $\sum \text{fracao\_consumo} = 1.000$. O banco rejeita divisões com sobras ou valores inflados.</div>
+      </div>
+      <div class="inv-card">
+        <div class="inv-title">2. Imutabilidade da Cota</div>
+        <div class="inv-desc">Ao emitir as cotas para o Pix, os valores tornam-se snapshots imutáveis. O histórico não pode sofrer alteração retroativa.</div>
+      </div>
+      <div class="inv-card">
+        <div class="inv-title">3. Idempotência do Webhook Pix</div>
+        <div class="inv-desc">Cada TxId bancário é único. Disparos duplicados do banco central são absorvidos atomicamente sem duplicar quitações.</div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      mermaid.initialize({
+        startOnLoad: true,
+        theme: 'dark',
+        themeVariables: {
+          darkMode: true,
+          background: '#050811',
+          primaryColor: '#0f172a',
+          primaryBorderColor: '#38bdf8',
+          primaryTextColor: '#f8fafc',
+          lineColor: '#38bdf8',
+          secondaryColor: '#1e293b',
+          tertiaryColor: '#0369a1'
+        }
+      });
+    });
+  </script>
+</body>
+</html>

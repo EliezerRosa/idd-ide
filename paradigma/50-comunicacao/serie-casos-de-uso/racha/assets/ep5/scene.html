@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>IDD Racha de Pix - Ep. 5 A Grande Síntese Final</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, sans-serif; }
+    body {
+      width: 1920px; height: 1080px; background: #030712; color: #f8fafc;
+      overflow: hidden; position: relative;
+    }
+    .grid-bg {
+      position: absolute; inset: 0;
+      background-image: linear-gradient(rgba(234, 179, 8, 0.05) 1px, transparent 1px),
+                        linear-gradient(90deg, rgba(234, 179, 8, 0.05) 1px, transparent 1px);
+      background-size: 60px 60px;
+    }
+    .glow-ambient {
+      position: absolute; width: 1100px; height: 1100px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(234, 179, 8, 0.28) 0%, rgba(249, 115, 22, 0.16) 45%, transparent 70%);
+      top: 50%; left: 50%; transform: translate(-50%, -50%); filter: blur(90px); pointer-events: none;
+    }
+
+    /* TOP BAR */
+    .top-bar {
+      position: absolute; top: 0; left: 0; right: 0; height: 80px;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 60px; background: rgba(15, 23, 42, 0.88);
+      border-bottom: 1px solid rgba(234, 179, 8, 0.35); backdrop-filter: blur(12px); z-index: 50;
+    }
+    .top-title { display: flex; align-items: center; gap: 18px; }
+    .badge-ep {
+      background: linear-gradient(135deg, #d97706, #b45309); color: white;
+      font-weight: 800; font-size: 16px; letter-spacing: 1.5px;
+      padding: 6px 18px; border-radius: 999px; text-transform: uppercase;
+      box-shadow: 0 0 20px rgba(234, 179, 8, 0.4);
+    }
+    .series-name { font-size: 20px; font-weight: 700; color: #cbd5e1; }
+    .series-name span { color: #fde047; font-weight: 800; }
+    .timer-box { font-size: 18px; font-family: monospace; color: #fde047; font-weight: 700; }
+
+    /* STAGE */
+    .stage {
+      position: absolute; top: 80px; bottom: 220px; left: 0; right: 0;
+      padding: 40px 60px; display: flex; flex-direction: column; z-index: 20;
+    }
+    .slide-view {
+      display: none; width: 100%; height: 100%; flex-direction: column;
+      animation: fadeIn 0.4s ease-out forwards;
+    }
+    .slide-view.active { display: flex; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+    .slide-header { margin-bottom: 25px; }
+    .slide-category { font-size: 16px; font-weight: 800; color: #fde047; text-transform: uppercase; letter-spacing: 2px; }
+    .slide-title { font-size: 40px; font-weight: 900; color: #ffffff; margin-top: 4px; }
+    .slide-subtitle { font-size: 20px; color: #94a3b8; margin-top: 6px; }
+
+    .cards-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; flex: 1; }
+    .feature-card {
+      background: rgba(15, 23, 42, 0.85); border: 1.5px solid rgba(234, 179, 8, 0.35);
+      border-radius: 18px; padding: 28px; display: flex; flex-direction: column;
+      backdrop-filter: blur(14px); box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+    }
+    .card-icon { font-size: 38px; margin-bottom: 16px; }
+    .card-title { font-size: 24px; font-weight: 800; color: #fde047; margin-bottom: 12px; }
+    .card-desc { font-size: 17px; color: #e2e8f0; line-height: 1.5; flex: 1; }
+    .card-tag {
+      margin-top: 15px; align-self: flex-start; background: rgba(234, 179, 8, 0.15);
+      border: 1px solid #eab308; color: #fef08a; padding: 4px 12px; border-radius: 8px;
+      font-size: 13px; font-weight: 700;
+    }
+
+    /* SLIDE 2: OS 4 PASSOS */
+    .edge-cases-container { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; flex: 1; }
+    .edge-card {
+      background: rgba(15, 23, 42, 0.9); border: 1.5px solid rgba(234, 179, 8, 0.35);
+      border-radius: 18px; padding: 26px; display: flex; flex-direction: column;
+    }
+    .edge-badge {
+      display: inline-block; padding: 4px 12px; border-radius: 6px; font-size: 12px; font-weight: 800;
+      text-transform: uppercase; margin-bottom: 14px; align-self: flex-start;
+    }
+    .b-gold { background: rgba(234, 179, 8, 0.2); border: 1px solid #eab308; color: #fde047; }
+    .b-blue { background: rgba(2, 132, 199, 0.2); border: 1px solid #0284c7; color: #38bdf8; }
+    .b-green { background: rgba(16, 185, 129, 0.2); border: 1px solid #10b981; color: #6ee7b7; }
+
+    /* SLIDE 3: TERMINAL & CHAT */
+    .terminal-container { display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 28px; flex: 1; }
+    .terminal-window {
+      background: #020617; border: 1.5px solid #1e293b; border-radius: 16px;
+      padding: 24px; font-family: 'Consolas', monospace; font-size: 14px;
+      color: #fde047; display: flex; flex-direction: column;
+    }
+    .terminal-header { display: flex; gap: 8px; margin-bottom: 16px; border-bottom: 1px solid #1e293b; padding-bottom: 12px; }
+    .t-dot { width: 12px; height: 12px; border-radius: 50%; }
+    .t-red { background: #ef4444; } .t-yellow { background: #f59e0b; } .t-green { background: #10b981; }
+    .terminal-body { flex: 1; line-height: 1.6; color: #e2e8f0; font-size: 13px; }
+
+    .chat-card {
+      background: rgba(15, 23, 42, 0.85); border: 1.5px solid rgba(234, 179, 8, 0.35);
+      border-radius: 16px; padding: 22px; display: flex; flex-direction: column;
+    }
+    .chat-bubble {
+      background: rgba(30, 41, 59, 0.85); border: 1px solid rgba(234, 179, 8, 0.25);
+      border-radius: 14px; padding: 16px; margin-bottom: 14px; line-height: 1.45; font-size: 15px;
+    }
+    .chat-author { font-size: 14px; font-weight: 800; margin-bottom: 6px; }
+    .author-ia { color: #fde047; }
+    .author-eliezer { color: #38bdf8; }
+
+    /* BOTTOM BAR */
+    .bottom-bar {
+      position: absolute; bottom: 0; left: 0; right: 0; height: 220px;
+      background: rgba(10, 15, 29, 0.96); border-top: 1px solid rgba(234, 179, 8, 0.35);
+      backdrop-filter: blur(16px); display: flex; align-items: center;
+      padding: 0 60px; gap: 40px; z-index: 50;
+    }
+    .avatars-container { display: flex; gap: 30px; align-items: center; }
+    .avatar-card {
+      display: flex; flex-direction: column; align-items: center;
+      transition: all 0.3s ease; opacity: 0.45; transform: scale(0.95);
+    }
+    .avatar-card.active { opacity: 1; transform: scale(1.05); }
+    .avatar-circle {
+      width: 90px; height: 90px; border-radius: 50%; overflow: hidden;
+      border: 3px solid #334155; position: relative; background: #0f172a;
+    }
+    .avatar-card.active .avatar-circle {
+      border-color: #eab308; box-shadow: 0 0 25px rgba(234, 179, 8, 0.7);
+    }
+    .avatar-circle img { width: 100%; height: 100%; object-fit: cover; }
+    .avatar-name { font-size: 15px; font-weight: 800; color: #f8fafc; margin-top: 8px; }
+    .avatar-role { font-size: 12px; color: #94a3b8; font-weight: 600; }
+
+    .subtitles-container {
+      flex: 1; height: 140px; background: rgba(15, 23, 42, 0.8);
+      border: 1.5px solid rgba(234, 179, 8, 0.35); border-radius: 16px;
+      padding: 20px 28px; display: flex; flex-direction: column; justify-content: center;
+    }
+    .sub-speaker {
+      font-size: 14px; font-weight: 800; text-transform: uppercase; letter-spacing: 1.5px;
+      margin-bottom: 8px;
+    }
+    .speaker-leigo { color: #f43f5e; }
+    .speaker-eliezer { color: #38bdf8; }
+    .speaker-ia { color: #fde047; }
+    .sub-text { font-size: 19px; line-height: 1.45; color: #f8fafc; font-weight: 500; }
+
+    #black-curtain {
+      position: absolute; inset: 0; background: #000000; z-index: 9999;
+      pointer-events: none; transition: opacity 0.08s linear;
+    }
+  </style>
+</head>
+<body>
+  <div id="black-curtain"></div>
+  <div class="glow-ambient"></div>
+  <div class="grid-bg"></div>
+
+  <!-- TOP BAR -->
+  <div class="top-bar">
+    <div class="top-title">
+      <div class="badge-ep">Episódio 5 • Síntese Final</div>
+      <div class="series-name">IDD NA PRÁTICA: <span>A GRANDE HOMOLOGAÇÃO METODOLÓGICA</span></div>
+    </div>
+    <div class="timer-box" id="clock-display">00:00.0</div>
+  </div>
+
+  <!-- STAGE -->
+  <div class="stage">
+    <!-- SLIDE 1: A REVOLUÇÃO DO PARADIGMA IDD -->
+    <div class="slide-view active" id="slide-1">
+      <div class="slide-header">
+        <div class="slide-category">Grande Síntese Final • Encerramento da Trilha</div>
+        <div class="slide-title">Invertendo a Ordem da Criação de Software</div>
+        <div class="slide-subtitle">Do Modelo Mental à Produção: Pessoas Leigas no Comando Arquitetural com IA</div>
+      </div>
+      <div class="cards-grid">
+        <div class="feature-card">
+          <div class="card-icon">🧠</div>
+          <div class="card-title">O Fim do Código às Cegas</div>
+          <div class="card-desc">Em vez de digitar código propenso a erros, o orquestrador define intenções e invariantes sagradas inquebráveis.</div>
+          <div class="card-tag">Modelo Mental</div>
+        </div>
+        <div class="feature-card">
+          <div class="card-icon">⚡</div>
+          <div class="card-title">Governança Ativa da IA</div>
+          <div class="card-desc">A IA atua como compiladora dirigida por intenções que submete dilemas e executa contratos matemáticos sem alucinar.</div>
+          <div class="card-tag">Orquestração Pura</div>
+        </div>
+        <div class="feature-card">
+          <div class="card-icon">🤝</div>
+          <div class="card-title">Simbiose Humano + IA</div>
+          <div class="card-desc">A criatividade humana direciona, a metodologia IDD governa e a IA compila sem sofrimento e sem retrabalho.</div>
+          <div class="card-tag">Engenharia do Futuro</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 2: OS 4 PASSOS SAGRADOS -->
+    <div class="slide-view" id="slide-2">
+      <div class="slide-header">
+        <div class="slide-category">Metodologia Consolidada • Os 4 Passos Sagrados</div>
+        <div class="slide-title">O Mapa Completo do Paradigma IDD</div>
+        <div class="slide-subtitle">Cada Passo Alimentando o Próximo com Rigor Cirúrgico</div>
+      </div>
+      <div class="edge-cases-container">
+        <div class="edge-card">
+          <div class="edge-badge b-gold">1B & 2B: Intenções & MER</div>
+          <div class="card-title">Fundação e Dados Puros</div>
+          <div class="card-desc">Intenções sem viés técnico, Invariante da Soma Zero e Modelo Entidade-Relacionamento conceitual sem SQL prematuro.</div>
+          <div class="card-tag">Conceito Blindado</div>
+        </div>
+        <div class="edge-card">
+          <div class="edge-badge b-blue">3B & 4B: UML & Código</div>
+          <div class="card-title">Estados e Execução</div>
+          <div class="card-desc">Máquina de estados finita, amarração do código às regras de negócio e suíte de 200 testes de estresse em 4 segundos.</div>
+          <div class="card-tag">Contratos Vivos</div>
+        </div>
+        <div class="edge-card">
+          <div class="edge-badge b-green">Resultado Concreto</div>
+          <div class="card-title">Software 100% Homologado</div>
+          <div class="card-desc">Três ecossistemas completos em produção: Barbearia & Salão, Cafeteria & Padaria e Racha de Conta & Pix.</div>
+          <div class="card-tag">Zero Defeito</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 3: TERMINAL FINAL & AUDITORIA CONSOLIDADA -->
+    <div class="slide-view" id="slide-3">
+      <div class="slide-header">
+        <div class="slide-category">Terminal de Homologação • Auditoria Global</div>
+        <div class="slide-title">IA Compilador Homologando o Ecossistema IDD</div>
+        <div class="slide-subtitle">Relatório Consolidado das 3 Playlists Oficiais no YouTube</div>
+      </div>
+      <div class="terminal-container">
+        <div class="terminal-window">
+          <div class="terminal-header">
+            <div class="t-dot t-red"></div>
+            <div class="t-dot t-yellow"></div>
+            <div class="t-dot t-green"></div>
+            <span style="margin-left: 10px; font-size: 12px; color: #64748b;">ai-compiler@global-governance:~/audit-summary</span>
+          </div>
+          <div class="terminal-body">
+            <p style="color: #fde047;">[RELATÓRIO GLOBAL] Auditoria Consolidada IDD:</p>
+            <p style="color: #4ade80; margin-top: 4px;">✓ Barbearia & Salão: 8 episódios homologados (Posições 0 a 7)</p>
+            <p style="color: #4ade80;">✓ Cafeteria & Padaria: 8 episódios homologados (Posições 0 a 7)</p>
+            <p style="color: #4ade80;">✓ Racha de Conta & Pix: 9 episódios homologados (Posições 0 a 8)</p>
+            <br>
+            <p style="color: #e2e8f0; font-weight: 700;">Conformidade de Invariantes: <span style="color: #4ade80;">100.0%</span></p>
+            <p style="color: #e2e8f0; font-weight: 700;">Dívida Técnica:               <span style="color: #4ade80;">0.00%</span></p>
+            <p style="color: #e2e8f0; font-weight: 700;">Regressões em Produção:      <span style="color: #4ade80;">0</span></p>
+            <br>
+            <p style="color: #38bdf8;">[ORQUESTRADOR ELIÉZER] Homologação concedida com excelência máxima!</p>
+            <p style="color: #fde047; margin-top: 4px;">✨ SISTEMA GLOBAL HOMOLOGADO PARA O FUTURO DA TECNOLOGIA.</p>
+          </div>
+        </div>
+        <div class="chat-card">
+          <div class="chat-bubble">
+            <div class="chat-author author-ia">🤖 IA Compilador</div>
+            Auditoria Final do Paradigma IDD concluída. Projetos homologados: Barbearia, Cafeteria e Racha de Pix. Conformidade: 100%. Status: Sistema Global Homologado para o Futuro!
+          </div>
+          <div class="chat-bubble">
+            <div class="chat-author author-eliezer">👨‍💻 Eliézer Rosa</div>
+            Homologação concedida com excelência máxima! Provamos que humanos e IA formam uma simbiose invencível de engenharia de software com a metodologia certa.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 4: O FUTURO DO DESENVOLVIMENTO -->
+    <div class="slide-view" id="slide-4">
+      <div class="slide-header">
+        <div class="slide-category">Visão de Futuro • Comunidade IDD</div>
+        <div class="slide-title">Bem-vindos à Nova Era da Criação de Software</div>
+        <div class="slide-subtitle">Obrigado a Todos que Acompanharam Nossa Trilha Oficial no YouTube!</div>
+      </div>
+      <div class="cards-grid">
+        <div class="feature-card">
+          <div class="card-icon">🌍</div>
+          <div class="card-title">Democratização Real</div>
+          <div class="card-desc">O Paradigma IDD coloca a inteligência artificial a serviço da clareza e da lógica, capacitando qualquer pessoa a criar software.</div>
+          <div class="card-tag">Acessível a Todos</div>
+        </div>
+        <div class="feature-card">
+          <div class="card-icon">📺</div>
+          <div class="card-title">Playlists Oficiais</div>
+          <div class="card-desc">Maratone e compartilhe as três séries completas: Barbearia & Salão, Cafeteria & Padaria e Racha de Conta & Pix.</div>
+          <div class="card-tag">YouTube Oficial</div>
+        </div>
+        <div class="feature-card">
+          <div class="card-icon">🚀</div>
+          <div class="card-title">Construa Conosco</div>
+          <div class="card-desc">Inscreva-se no canal, deixe seus comentários e venha aplicar o Intent-Driven Development em seus próprios projetos!</div>
+          <div class="card-tag">Inscreva-se</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BOTTOM BAR -->
+  <div class="bottom-bar">
+    <div class="avatars-container">
+      <div class="avatar-card" id="av-leigo">
+        <div class="avatar-circle">
+          <img src="../../avatares/avatar_usuaria_leiga.png" alt="Usuária Leiga">
+        </div>
+        <div class="avatar-name">Usuária Leiga</div>
+        <div class="avatar-role">Validadora de Domínio</div>
+      </div>
+      <div class="avatar-card" id="av-eliezer">
+        <div class="avatar-circle">
+          <img src="../../avatares/avatar_eliezer_oficial.png" alt="Eliézer Rosa">
+        </div>
+        <div class="avatar-name">Eliézer Rosa</div>
+        <div class="avatar-role">Orquestrador IDD</div>
+      </div>
+      <div class="avatar-card" id="av-ia">
+        <div class="avatar-circle">
+          <img src="../../avatares/avatar_ia_compilador.png" alt="IA Compilador">
+        </div>
+        <div class="avatar-name">IA Compilador</div>
+        <div class="avatar-role">Homologação Global</div>
+      </div>
+    </div>
+    <div class="subtitles-container">
+      <div class="sub-speaker" id="sub-speaker">USUÁRIA LEIGA</div>
+      <div class="sub-text" id="sub-text">Iniciando episódio 5: A Grande Síntese Final do Paradigma IDD...</div>
+    </div>
+  </div>
+
+  <script>
+    let timelineItems = [];
+    let isRunning = false;
+    let startTimeMs = 0;
+
+    window.setTimeline = function(items) { timelineItems = items; };
+    window.stopPresentation = function() {
+      isRunning = false;
+    };
+    window.startPresentation = function() {
+      const curtain = document.getElementById('black-curtain');
+      if (curtain) {
+        curtain.style.opacity = '0';
+        setTimeout(() => curtain.remove(), 80);
+      }
+      isRunning = true;
+      startTimeMs = performance.now();
+      requestAnimationFrame(renderLoop);
+    };
+
+    function renderLoop(now) {
+      if (!isRunning) return;
+      const elapsedSec = (now - startTimeMs) / 1000;
+      const minutes = Math.floor(elapsedSec / 60);
+      const seconds = (elapsedSec % 60).toFixed(1);
+      document.getElementById('clock-display').innerText =
+        String(minutes).padStart(2, '0') + ':' + String(seconds).padStart(4, '0');
+
+      const curSeg = timelineItems.find(item => elapsedSec >= item.startSec && elapsedSec < item.endSec);
+      if (curSeg) {
+        const targetSlideId = 'slide-' + curSeg.slide;
+        document.querySelectorAll('.slide-view').forEach(s => {
+          if (s.id === targetSlideId) {
+            if (!s.classList.contains('active')) s.classList.add('active');
+          } else {
+            s.classList.remove('active');
+          }
+        });
+
+        ['leigo', 'eliezer', 'ia'].forEach(who => {
+          const el = document.getElementById('av-' + who);
+          if (el) {
+            if (curSeg.who === who) el.classList.add('active');
+            else el.classList.remove('active');
+          }
+        });
+
+        const speakerEl = document.getElementById('sub-speaker');
+        const textEl = document.getElementById('sub-text');
+        speakerEl.className = 'sub-speaker speaker-' + curSeg.who;
+        speakerEl.innerText = curSeg.actor;
+        textEl.innerText = curSeg.text;
+      }
+      requestAnimationFrame(renderLoop);
+    }
+  </script>
+</body>
+</html>

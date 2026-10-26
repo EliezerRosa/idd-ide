@@ -1,0 +1,14 @@
+version: "2.0"
+module: "core/ubiquitous"
+intent: "Converter entrada em Linguagem Natural ambígua em termos estritamente pertencentes à Linguagem Ubíqua do projeto."
+
+constraints:
+  - id: C-L1-01
+    type: theory
+    severity: critical
+    description: "Calcular a Entropia Normalizada H(p_q) sobre as distribuições verbalizadas de interpretações."
+  
+  - id: C-L1-02
+    type: interaction
+    severity: high
+    description: "Se H(p_q) > 0.35, interromper o fluxo e disparar diálogo de convergência com o desenvolvedor."

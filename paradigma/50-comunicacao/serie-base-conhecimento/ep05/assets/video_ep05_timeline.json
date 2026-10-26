@@ -1,0 +1,110 @@
+{
+  "projectName": "IDD_Base_Conhecimento_Ep05",
+  "totalDurationSec": 158.06,
+  "items": [
+    {
+      "index": 0,
+      "id": "seg_00_leigo",
+      "who": "leigo",
+      "actor": "Usuária Leiga",
+      "avatar": "leigo",
+      "slide": 1,
+      "text": "Eliézer, no episódio anterior nós vimos que a inteligência artificial precisa de um motor simbólico para não alucinar. Mas no dia a dia, a maioria das pessoas ainda tenta controlar a IA escrevendo prompts gigantescos e torcendo para ela acertar. Por que o Prompt Engineering não é engenharia de software de verdade?",
+      "wav": "C:\\Antigravity - IDD Refrigeração\\motion_graphics_renderer\\idd_teoria_ep05_assets\\audio\\seg_00_leigo.wav",
+      "startSec": 0.5,
+      "durSec": 20.112,
+      "endSec": 20.612
+    },
+    {
+      "index": 1,
+      "id": "seg_01_eliezer",
+      "who": "eliezer",
+      "actor": "Eliézer Rosa",
+      "avatar": "eliezer",
+      "slide": 1,
+      "text": "Porque o chamado Prompt Engineering é uma ilusão empírica! Ficar trocando palavras em um texto solto para ver se o modelo responde melhor é tentativa e erro, não ciência. Pesquisadores de Stanford, como no projeto DSPy, e os maiores especialistas em compiladores já demonstraram: sistemas confiáveis não dependem de prompts manuais, mas de pipelines declarativos e compiladores formais!",
+      "wav": "C:\\Antigravity - IDD Refrigeração\\motion_graphics_renderer\\idd_teoria_ep05_assets\\audio\\seg_01_eliezer.wav",
+      "startSec": 21.262,
+      "durSec": 25.8,
+      "endSec": 47.062
+    },
+    {
+      "index": 2,
+      "id": "seg_02_leigo",
+      "who": "leigo",
+      "actor": "Usuária Leiga",
+      "avatar": "leigo",
+      "slide": 2,
+      "text": "E é aí que entra uma das invenções mais fascinantes do seu paradigma: a Intent IR, ou Representação Intermediária de Intenção! Veja no Slide dois a semelhança com os compiladores mais avançados do mundo como o LLVM!",
+      "wav": "C:\\Antigravity - IDD Refrigeração\\motion_graphics_renderer\\idd_teoria_ep05_assets\\audio\\seg_02_leigo.wav",
+      "startSec": 47.712,
+      "durSec": 14.544,
+      "endSec": 62.256
+    },
+    {
+      "index": 3,
+      "id": "seg_03_eliezer",
+      "who": "eliezer",
+      "actor": "Eliézer Rosa",
+      "avatar": "eliezer",
+      "slide": 2,
+      "text": "Exatamente! No compilador tradicional, o C++ ou Rust são traduzidos para uma representação intermediária antes de gerar binário para Intel ou ARM. No IDD, a intenção da usuária leiga é compilada para uma Intent IR: uma árvore sintática abstrata que descreve o negócio com atores, transições e regras matemáticas, totalmente independente de linguagens de programação!",
+      "wav": "C:\\Antigravity - IDD Refrigeração\\motion_graphics_renderer\\idd_teoria_ep05_assets\\audio\\seg_03_eliezer.wav",
+      "startSec": 62.906,
+      "durSec": 24.984,
+      "endSec": 87.89
+    },
+    {
+      "index": 4,
+      "id": "seg_04_leigo",
+      "who": "leigo",
+      "actor": "Usuária Leiga",
+      "avatar": "leigo",
+      "slide": 3,
+      "text": "Que visão libertadora! No Slide três nós vemos o pipeline determinístico: a Intent IR passa pelas provas de invariantes e só então o compilador emite o código final em TypeScript, Python, SQL ou qualquer outra linguagem que a empresa desejar!",
+      "wav": "C:\\Antigravity - IDD Refrigeração\\motion_graphics_renderer\\idd_teoria_ep05_assets\\audio\\seg_04_leigo.wav",
+      "startSec": 88.54,
+      "durSec": 16.584,
+      "endSec": 105.124
+    },
+    {
+      "index": 5,
+      "id": "seg_05_eliezer",
+      "who": "eliezer",
+      "actor": "Eliézer Rosa",
+      "avatar": "eliezer",
+      "slide": 3,
+      "text": "Com certeza! Se a moda de frameworks mudar daqui a três anos, a sua empresa não precisa reescrever o sistema do zero. A Intent IR é o verdadeiro patrimônio tecnológico perpétuo do cliente. O código-fonte gerado é apenas um artefato transitório e descartável de compilação!",
+      "wav": "C:\\Antigravity - IDD Refrigeração\\motion_graphics_renderer\\idd_teoria_ep05_assets\\audio\\seg_05_eliezer.wav",
+      "startSec": 105.774,
+      "durSec": 19.536,
+      "endSec": 125.31
+    },
+    {
+      "index": 6,
+      "id": "seg_06_leigo",
+      "who": "leigo",
+      "actor": "Usuária Leiga",
+      "avatar": "leigo",
+      "slide": 4,
+      "text": "Isso sepulta a ideia de ficar digitando sintaxe manual! E no próximo episódio, o zero seis, nós vamos mergulhar na matemática das Invariantes Formais e no Raciocínio Automatizado que gigantes como Amazon AWS e Microsoft utilizam em sistemas de missão crítica!",
+      "wav": "C:\\Antigravity - IDD Refrigeração\\motion_graphics_renderer\\idd_teoria_ep05_assets\\audio\\seg_06_leigo.wav",
+      "startSec": 125.96,
+      "durSec": 16.512,
+      "endSec": 142.472
+    },
+    {
+      "index": 7,
+      "id": "seg_07_eliezer",
+      "who": "eliezer",
+      "actor": "Eliézer Rosa",
+      "avatar": "eliezer",
+      "slide": 4,
+      "text": "Fantástico! O futuro do software pertence a quem domina a intenção formal. Continue acompanhando a nossa série e descubra como construir sistemas matematicamente inquebráveis!",
+      "wav": "C:\\Antigravity - IDD Refrigeração\\motion_graphics_renderer\\idd_teoria_ep05_assets\\audio\\seg_07_eliezer.wav",
+      "startSec": 143.122,
+      "durSec": 12.792,
+      "endSec": 155.914
+    }
+  ]
+}

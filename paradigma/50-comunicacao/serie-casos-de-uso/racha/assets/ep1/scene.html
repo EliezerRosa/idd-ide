@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>IDD Racha de Pix - Ep. 1 Domínio: O Caos da Conta & A Invariante da Soma Zero</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, sans-serif; }
+    body {
+      width: 1920px; height: 1080px; background: #030712; color: #f8fafc;
+      overflow: hidden; position: relative;
+    }
+    .grid-bg {
+      position: absolute; inset: 0;
+      background-image: linear-gradient(rgba(56, 189, 248, 0.05) 1px, transparent 1px),
+                        linear-gradient(90deg, rgba(56, 189, 248, 0.05) 1px, transparent 1px);
+      background-size: 60px 60px;
+    }
+    .glow-ambient {
+      position: absolute; width: 1100px; height: 1100px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(14, 165, 233, 0.28) 0%, rgba(6, 182, 212, 0.16) 45%, transparent 70%);
+      top: 50%; left: 50%; transform: translate(-50%, -50%); filter: blur(90px); pointer-events: none;
+    }
+
+    /* TOP BAR */
+    .top-bar {
+      position: absolute; top: 0; left: 0; right: 0; height: 80px;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 60px; background: rgba(15, 23, 42, 0.88);
+      border-bottom: 1px solid rgba(56, 189, 248, 0.35); backdrop-filter: blur(12px); z-index: 50;
+    }
+    .top-title { display: flex; align-items: center; gap: 18px; }
+    .badge-ep {
+      background: linear-gradient(135deg, #0284c7, #0369a1); color: white;
+      font-weight: 800; font-size: 16px; letter-spacing: 1.5px;
+      padding: 6px 18px; border-radius: 999px; text-transform: uppercase;
+      box-shadow: 0 0 20px rgba(56, 189, 248, 0.4);
+    }
+    .series-name { font-size: 20px; font-weight: 700; color: #cbd5e1; }
+    .series-name span { color: #38bdf8; font-weight: 800; }
+    .timer-box { font-size: 18px; font-family: monospace; color: #38bdf8; font-weight: 700; }
+
+    /* STAGE */
+    .stage {
+      position: absolute; top: 80px; bottom: 220px; left: 0; right: 0;
+      padding: 40px 60px; display: flex; flex-direction: column; z-index: 20;
+    }
+    .slide-view {
+      display: none; width: 100%; height: 100%; flex-direction: column;
+      animation: fadeIn 0.4s ease-out forwards;
+    }
+    .slide-view.active { display: flex; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+    .slide-header { margin-bottom: 25px; }
+    .slide-category { font-size: 16px; font-weight: 800; color: #38bdf8; text-transform: uppercase; letter-spacing: 2px; }
+    .slide-title { font-size: 40px; font-weight: 900; color: #ffffff; margin-top: 4px; }
+    .slide-subtitle { font-size: 20px; color: #94a3b8; margin-top: 6px; }
+
+    .cards-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; flex: 1; }
+    .feature-card {
+      background: rgba(15, 23, 42, 0.85); border: 1.5px solid rgba(56, 189, 248, 0.35);
+      border-radius: 18px; padding: 28px; display: flex; flex-direction: column;
+      backdrop-filter: blur(14px); box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+    }
+    .card-icon { font-size: 38px; margin-bottom: 16px; }
+    .card-title { font-size: 24px; font-weight: 800; color: #38bdf8; margin-bottom: 12px; }
+    .card-desc { font-size: 17px; color: #e2e8f0; line-height: 1.5; flex: 1; }
+    .card-tag {
+      margin-top: 15px; align-self: flex-start; background: rgba(56, 189, 248, 0.15);
+      border: 1px solid #38bdf8; color: #bae6fd; padding: 4px 12px; border-radius: 8px;
+      font-size: 13px; font-weight: 700;
+    }
+
+    /* TERMINAL SLIDE 3 */
+    .terminal-container { display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 28px; flex: 1; }
+    .terminal-window {
+      background: #020617; border: 1.5px solid #1e293b; border-radius: 16px;
+      padding: 24px; font-family: 'Consolas', monospace; font-size: 14px;
+      color: #38bdf8; display: flex; flex-direction: column;
+    }
+    .terminal-header { display: flex; gap: 8px; margin-bottom: 16px; border-bottom: 1px solid #1e293b; padding-bottom: 12px; }
+    .t-dot { width: 12px; height: 12px; border-radius: 50%; }
+    .t-red { background: #ef4444; } .t-yellow { background: #f59e0b; } .t-green { background: #10b981; }
+    .terminal-body { flex: 1; line-height: 1.6; color: #e2e8f0; }
+
+    .chat-card {
+      background: rgba(15, 23, 42, 0.85); border: 1.5px solid rgba(56, 189, 248, 0.35);
+      border-radius: 16px; padding: 22px; display: flex; flex-direction: column;
+    }
+    .chat-bubble {
+      background: rgba(30, 41, 59, 0.85); border: 1px solid rgba(56, 189, 248, 0.25);
+      border-radius: 14px; padding: 16px; margin-bottom: 14px; line-height: 1.45; font-size: 15px;
+    }
+    .chat-author { font-size: 14px; font-weight: 800; margin-bottom: 6px; }
+    .author-ia { color: #38bdf8; }
+    .author-eliezer { color: #38bdf8; }
+
+    /* BOTTOM BAR */
+    .bottom-bar {
+      position: absolute; bottom: 0; left: 0; right: 0; height: 220px;
+      background: rgba(10, 15, 30, 0.96); border-top: 1px solid rgba(56, 189, 248, 0.35);
+      backdrop-filter: blur(16px); display: flex; align-items: center;
+      padding: 0 60px; gap: 40px; z-index: 50;
+    }
+    .avatars-container { display: flex; gap: 30px; align-items: center; }
+    .avatar-card {
+      display: flex; flex-direction: column; align-items: center;
+      transition: all 0.3s ease; opacity: 0.45; transform: scale(0.95);
+    }
+    .avatar-card.active { opacity: 1; transform: scale(1.05); }
+    .avatar-circle {
+      width: 90px; height: 90px; border-radius: 50%; overflow: hidden;
+      border: 3px solid #334155; position: relative; background: #1e293b;
+    }
+    .avatar-card.active .avatar-circle {
+      border-color: #38bdf8; box-shadow: 0 0 25px rgba(56, 189, 248, 0.7);
+    }
+    .avatar-circle img { width: 100%; height: 100%; object-fit: cover; }
+    .avatar-name { font-size: 15px; font-weight: 800; color: #f8fafc; margin-top: 8px; }
+    .avatar-role { font-size: 12px; color: #94a3b8; font-weight: 600; }
+
+    .subtitles-container {
+      flex: 1; height: 140px; background: rgba(15, 23, 42, 0.8);
+      border: 1.5px solid rgba(56, 189, 248, 0.35); border-radius: 16px;
+      padding: 20px 28px; display: flex; flex-direction: column; justify-content: center;
+    }
+    .sub-speaker { font-size: 15px; font-weight: 800; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 6px; }
+    .speaker-leigo { color: #f472b6; }
+    .speaker-eliezer { color: #38bdf8; }
+    .speaker-ia { color: #34d399; }
+    .sub-text { font-size: 21px; font-weight: 600; color: #f8fafc; line-height: 1.45; }
+
+    #black-curtain { position: absolute; inset: 0; background: #000; z-index: 9999; pointer-events: none; }
+  </style>
+</head>
+<body>
+  <div id="black-curtain"></div>
+  <div class="glow-ambient"></div>
+  <div class="grid-bg"></div>
+
+  <div class="top-bar">
+    <div class="top-title">
+      <div class="badge-ep">EPISÓDIO 1 · RACHA DE CONTA &amp; PIX</div>
+      <div class="series-name">IDD NA PRÁTICA · <span>QUEM PAGA O QUÊ? NO CENTAVO!</span></div>
+    </div>
+    <div class="timer-box" id="clock-display">00:00.0</div>
+  </div>
+
+  <div class="stage">
+    <!-- SLIDE 1: O CAOS DA CONTA NA MESA -->
+    <div class="slide-view active" id="slide-1">
+      <div class="slide-header">
+        <div class="slide-category">A DOR DO CONVÍVIO SOCIAL</div>
+        <div class="slide-title">O Caos de Fechar a Conta com Amigos</div>
+        <div class="slide-subtitle">A calculadora do celular, quem não bebe pagando chope e desentendimentos desnecessários</div>
+      </div>
+      <div class="cards-grid">
+        <div class="feature-card">
+          <div class="card-icon">🧾</div>
+          <div class="card-title">1. A Notinha de Papel</div>
+          <div class="card-desc">Uma lista gigante de itens misturados, com garçom pressionando e amigos tentando adivinhar quem consumiu o quê.</div>
+          <div class="card-tag">DESORGANIZAÇÃO</div>
+        </div>
+        <div class="feature-card">
+          <div class="card-icon">💔</div>
+          <div class="card-title">2. A Divisão Injusta</div>
+          <div class="card-desc">Dividir igualmente penaliza quem só comeu uma salada e tomou água, enquanto outros consumiram picanha e chope.</div>
+          <div class="card-tag">INJUSTIÇA SOCIAL</div>
+        </div>
+        <div class="feature-card">
+          <div class="card-icon">💸</div>
+          <div class="card-title">3. O Prejuízo do Anfitrião</div>
+          <div class="card-desc">Quando as cotas não fecham, alguém sempre passa o próprio cartão e absorve a diferença de R$ 30 ou R$ 50.</div>
+          <div class="card-tag">FURO NO BOLSO</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 2: A INVARIANTE DA SOMA ZERO -->
+    <div class="slide-view" id="slide-2">
+      <div class="slide-header">
+        <div class="slide-category">O RIGOR DO PARADIGMA IDD</div>
+        <div class="slide-title">A Invariante Sagrada da Soma Zero</div>
+        <div class="slide-subtitle">Justiça matemática absoluta onde cada pessoa paga exatamente o que consumiu</div>
+      </div>
+      <div class="cards-grid">
+        <div class="feature-card">
+          <div class="card-icon">🍕</div>
+          <div class="card-title">1. Rateio por Item</div>
+          <div class="card-desc">Cada pizza, porção ou bebida é atribuída apenas aos seus reais consumidores. Zero cobrança indevida.</div>
+          <div class="card-tag">CONSUMO REAL</div>
+        </div>
+        <div class="feature-card">
+          <div class="card-icon">⚖️</div>
+          <div class="card-title">2. Serviço Proporcional</div>
+          <div class="card-desc">Os 10% da taxa de serviço incidem de forma proporcional ao consumo individual, e não por taxa fixa.</div>
+          <div class="card-tag">GORJETA JUSTA</div>
+        </div>
+        <div class="feature-card">
+          <div class="card-icon">🔒</div>
+          <div class="card-title">3. Tolerância Zero Centavos</div>
+          <div class="card-desc">A soma de todas as cotas DEVE bater exatamente com o total da nota fiscal. Zero centavos perdidos no limbo.</div>
+          <div class="card-tag">SOMA ZERO 100%</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 3: O TERMINAL DA IA & O DILEMA DOS CENTAVOS -->
+    <div class="slide-view" id="slide-3">
+      <div class="slide-header">
+        <div class="slide-category">MODELAGEM DE DOMÍNIO NO TERMINAL</div>
+        <div class="slide-title">A IA Compila o Dilema do Centavo Indivisível</div>
+        <div class="slide-subtitle">Como R$ 10,00 divididos por 3 geram R$ 3,33 periódicos e como o IDD resolve o centavo faltante</div>
+      </div>
+      <div class="terminal-container">
+        <div class="terminal-window">
+          <div class="terminal-header">
+            <div class="t-dot t-red"></div>
+            <div class="t-dot t-yellow"></div>
+            <div class="t-dot t-green"></div>
+            <span style="color:#94a3b8; margin-left:12px;">idd-compiler@racha-pix-domain: ~</span>
+          </div>
+          <div class="terminal-body">
+            <span style="color:#38bdf8;">$ idd-domain-check --entity=MesaRachaDominio</span><br>
+            [SCAN] Analisando regras de rateio de itens...<br>
+            <span style="color:#f59e0b;">[ALERT] Item 'Cesta de Pães' (R$ 10,00) dividido por 3 consumidores:</span><br>
+            &gt; Cota base: Math.floor(1000 / 3) = 333 centavos (R$ 3,33)<br>
+            &gt; Soma parcial: 3 x 333 = 999 centavos (R$ 9,99)<br>
+            <span style="color:#ef4444; font-weight:bold;">[ERROR] Violação potencial da Soma Zero: Faltou 1 centavo (R$ 0,01)!</span><br>
+            <br>
+            <span style="color:#10b981;">[GOVERNANCE RULE APPLIED] Eliézer Rosa: DISTRIBUTE_REMAINDER_SEQUENTIAL</span><br>
+            [ALGO] restoCentavos = 1000 % 3 = 1 centavo.<br>
+            &gt; Consumidor 1 (Eliézer): R$ 3,34 (333 + 1)<br>
+            &gt; Consumidor 2 (Mariana): R$ 3,33<br>
+            &gt; Consumidor 3 (Carlos):  R$ 3,33<br>
+            <span style="color:#10b981; font-weight:bold;">[VALIDATED] Soma final: R$ 10,00 = Total da Nota. Soma Zero garantida!</span>
+          </div>
+        </div>
+        <div class="chat-card">
+          <div class="chat-bubble">
+            <div class="chat-author author-ia">🤖 IA Compilador</div>
+            <div>
+              Quando dividimos R$ 10,00 entre três pessoas, a divisão fracionária resulta em R$ 3,33 periódicos, totalizando R$ 9,99. Como resolver o centavo indivisível sem violar a Invariante da Soma Zero?
+            </div>
+          </div>
+          <div class="chat-bubble">
+            <div class="chat-author author-eliezer">👤 Eliézer Rosa</div>
+            <div>
+              O resto da divisão em centavos inteiros é distribuído sequencialmente entre os consumidores participantes! Dois pagam R$ 3,33 e um paga R$ 3,34. A soma dá exatamente R$ 10,00 e a integridade financeira é preservada!
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 4: O QUE VAMOS CONSTRUIR & PRÓXIMO EPISÓDIO -->
+    <div class="slide-view" id="slide-4">
+      <div class="slide-header">
+        <div class="slide-category">A JORNADA DA PLAYLIST 3</div>
+        <div class="slide-title">O Aplicativo de Racha de Conta &amp; Pix</div>
+        <div class="slide-subtitle">Construído do zero ao deploy em nuvem através dos 4 Passos Sagrados do IDD</div>
+      </div>
+      <div class="cards-grid">
+        <div class="feature-card">
+          <div class="card-icon">📱</div>
+          <div class="card-title">1. App Intuitivo &amp; Leve</div>
+          <div class="card-desc">Interface mobile limpa onde cada amigo clica no que consumiu e recebe seu valor pronto.</div>
+          <div class="card-tag">MOBILE FIRST</div>
+        </div>
+        <div class="feature-card">
+          <div class="card-icon">⚡</div>
+          <div class="card-title">2. Pix Instantâneo</div>
+          <div class="card-desc">QR Code gerado na hora com a chave do pagador principal para liquidação imediata da mesa.</div>
+          <div class="card-tag">PAGAMENTO DIRETO</div>
+        </div>
+        <div class="feature-card">
+          <div class="card-icon">🎯</div>
+          <div class="card-title">3. Próximo: Ep. 1B Metodológico</div>
+          <div class="card-desc">No Episódio 1B, veremos como declarar formalmente essas intenções e invariantes com a IA!</div>
+          <div class="card-tag">CONTINUAÇÃO</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BOTTOM BAR -->
+  <div class="bottom-bar">
+    <div class="avatars-container">
+      <div class="avatar-card" id="av-leigo">
+        <div class="avatar-circle">
+          <img src="../../avatares/avatar_usuaria_leiga.png" alt="Usuária Leiga">
+        </div>
+        <div class="avatar-name">Usuária Leiga</div>
+        <div class="avatar-role">Validadora de Domínio</div>
+      </div>
+      <div class="avatar-card" id="av-eliezer">
+        <div class="avatar-circle">
+          <img src="../../avatares/avatar_eliezer_oficial.png" alt="Eliézer Rosa">
+        </div>
+        <div class="avatar-name">Eliézer Rosa</div>
+        <div class="avatar-role">Orquestrador IDD</div>
+      </div>
+      <div class="avatar-card" id="av-ia">
+        <div class="avatar-circle">
+          <img src="../../avatares/avatar_ia_compilador.png" alt="IA Compilador">
+        </div>
+        <div class="avatar-name">IA Compilador</div>
+        <div class="avatar-role">Agente de Execução</div>
+      </div>
+    </div>
+    <div class="subtitles-container">
+      <div class="sub-speaker" id="sub-speaker">USUÁRIA LEIGA</div>
+      <div class="sub-text" id="sub-text">Iniciando episódio 1: Quem Paga o Quê? - Racha de Conta & Pix...</div>
+    </div>
+  </div>
+
+  <script>
+    let timelineItems = [];
+    let isRunning = false;
+    let startTimeMs = 0;
+
+    window.setTimeline = function(items) { timelineItems = items; };
+    window.startPresentation = function() {
+      const curtain = document.getElementById('black-curtain');
+      if (curtain) {
+        curtain.style.opacity = '0';
+        setTimeout(() => curtain.remove(), 80);
+      }
+      isRunning = true;
+      startTimeMs = performance.now();
+      requestAnimationFrame(renderLoop);
+    };
+
+    function renderLoop(now) {
+      if (!isRunning) return;
+      const elapsedSec = (now - startTimeMs) / 1000;
+      const minutes = Math.floor(elapsedSec / 60);
+      const seconds = (elapsedSec % 60).toFixed(1);
+      document.getElementById('clock-display').innerText =
+        String(minutes).padStart(2, '0') + ':' + String(seconds).padStart(4, '0');
+
+      const curSeg = timelineItems.find(item => elapsedSec >= item.startSec && elapsedSec < item.endSec);
+      if (curSeg) {
+        const targetSlideId = 'slide-' + curSeg.slide;
+        document.querySelectorAll('.slide-view').forEach(s => {
+          if (s.id === targetSlideId) {
+            if (!s.classList.contains('active')) s.classList.add('active');
+          } else {
+            s.classList.remove('active');
+          }
+        });
+
+        ['leigo', 'eliezer', 'ia'].forEach(who => {
+          const el = document.getElementById('av-' + who);
+          if (el) {
+            if (curSeg.who === who) el.classList.add('active');
+            else el.classList.remove('active');
+          }
+        });
+
+        const speakerEl = document.getElementById('sub-speaker');
+        const textEl = document.getElementById('sub-text');
+        speakerEl.className = 'sub-speaker speaker-' + curSeg.who;
+        speakerEl.innerText = curSeg.actor;
+        textEl.innerText = curSeg.text;
+      }
+      requestAnimationFrame(renderLoop);
+    }
+  </script>
+</body>
+</html>

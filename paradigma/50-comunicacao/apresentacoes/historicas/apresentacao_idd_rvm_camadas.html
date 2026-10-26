@@ -1,0 +1,2567 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RVM Designa&ccedil;&otilde;es - Apresenta&ccedil;&atilde;o IDD em Camadas</title>
+  <style>
+    :root {
+      --bg: #f6efe4;
+      --ink: #182028;
+      --muted: #5d6570;
+      --card: rgba(255, 252, 247, 0.88);
+      --line: rgba(24, 32, 40, 0.12);
+      --brand: #9d3c2f;
+      --brand-2: #1d4f5f;
+      --accent: #d98f2b;
+      --green: #2b6a56;
+      --exec: #7a2f24;
+      --tech: #204f63;
+      --user: #3d6d48;
+      --shadow: 0 18px 50px rgba(48, 37, 25, 0.14);
+      --radius: 22px;
+      --max: 1280px;
+      --slide-safe-padding-y: 22px;
+      --slide-safe-padding-x: 18px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at top left, rgba(157, 60, 47, 0.12), transparent 25%),
+        radial-gradient(circle at top right, rgba(29, 79, 95, 0.1), transparent 20%),
+        linear-gradient(180deg, #f7f1e8 0%, #efe4d4 100%);
+    }
+
+    body[data-controls-side="left"] {
+      --dock-offset-left: 24px;
+      --dock-offset-right: auto;
+      --content-offset-left: 36px;
+      --content-offset-right: 36px;
+    }
+
+    body[data-controls-side="right"] {
+      --dock-offset-left: auto;
+      --dock-offset-right: 24px;
+      --content-offset-left: 36px;
+      --content-offset-right: 36px;
+    }
+
+    body.dock-collapsed,
+    body.presentation-mode-audience {
+      --content-offset-left: 36px;
+      --content-offset-right: 36px;
+    }
+
+    body.notes-hidden .speaker-notes {
+      display: none;
+    }
+
+    .control-dock {
+      position: fixed;
+      top: 22px;
+      left: var(--dock-offset-left);
+      right: var(--dock-offset-right);
+      z-index: 60;
+      width: min(264px, calc(100vw - 32px));
+      max-height: calc(100vh - 44px);
+      overflow: auto;
+      padding: 16px;
+      border: 1px solid rgba(24, 32, 40, 0.1);
+      border-radius: 24px;
+      background: rgba(247, 241, 232, 0.88);
+      backdrop-filter: blur(16px);
+      box-shadow: 0 22px 56px rgba(52, 41, 28, 0.18);
+      transition: transform 0.24s ease, opacity 0.24s ease;
+      overflow: hidden;
+    }
+
+    body.dock-collapsed .control-dock,
+    body.presentation-mode-audience .control-dock {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    body[data-controls-side="left"].dock-collapsed .control-dock,
+    body[data-controls-side="left"].presentation-mode-audience .control-dock {
+      transform: translateX(-110%);
+    }
+
+    body[data-controls-side="right"].dock-collapsed .control-dock,
+    body[data-controls-side="right"].presentation-mode-audience .control-dock {
+      transform: translateX(110%);
+    }
+
+    .control-dock-inner {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      align-items: stretch;
+      transform-origin: top center;
+    }
+
+    .brand {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .brand strong {
+      font-size: 0.92rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--brand);
+    }
+
+    .brand span {
+      color: var(--muted);
+      font-size: 0.76rem;
+      line-height: 1.35;
+    }
+
+    .toolbar {
+      display: flex;
+      gap: 8px;
+      align-items: stretch;
+      flex-direction: column;
+    }
+
+    .voice-panel {
+      width: 100%;
+      display: flex;
+      gap: 10px;
+      align-items: stretch;
+      justify-content: flex-start;
+      flex-direction: column;
+      padding-top: 10px;
+      border-top: 1px solid var(--line);
+    }
+
+    .voice-controls,
+    .voice-meta {
+      display: flex;
+      gap: 8px;
+      align-items: stretch;
+      flex-direction: column;
+    }
+
+    .voice-meta {
+      color: var(--muted);
+      font-size: 0.72rem;
+      line-height: 1.4;
+    }
+
+    .tech-tip-legend {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .dock-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+
+    .voice-field {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      padding: 7px 10px;
+      border-radius: 14px;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.56);
+      color: var(--ink);
+      font-size: 0.74rem;
+    }
+
+    .voice-field select,
+    .voice-field input {
+      font: inherit;
+      border: none;
+      outline: none;
+      background: transparent;
+      color: var(--ink);
+      min-width: 120px;
+    }
+
+    .voice-field input[type="checkbox"] {
+      min-width: auto;
+    }
+
+    .voice-field input[type="range"] {
+      min-width: 82px;
+    }
+
+    .voice-field select[multiple] {
+      min-width: 150px;
+    }
+
+    .voice-status {
+      padding: 7px 10px;
+      border-radius: 12px;
+      background: rgba(29, 79, 95, 0.08);
+      border: 1px solid rgba(29, 79, 95, 0.12);
+      color: var(--brand-2);
+      font-size: 0.74rem;
+      font-weight: 700;
+    }
+
+    button,
+    .pill,
+    .nav-link {
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.56);
+      color: var(--ink);
+      border-radius: 14px;
+      padding: 8px 10px;
+      font: inherit;
+      font-size: 0.8rem;
+      cursor: pointer;
+      text-decoration: none;
+      transition: transform 0.18s ease, background 0.18s ease, border-color 0.18s ease;
+      text-align: center;
+    }
+
+    button:hover,
+    .nav-link:hover,
+    .pill:hover {
+      transform: translateY(-1px);
+      border-color: rgba(24, 32, 40, 0.2);
+      background: rgba(255, 255, 255, 0.8);
+    }
+
+    .filter-group {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .filter-btn.active {
+      color: #fff;
+      border-color: transparent;
+      background: linear-gradient(135deg, var(--brand), #c45f44);
+    }
+
+    body[data-layer="exec"] [data-audience]:not([data-audience*="exec"]) {
+      opacity: 0.3;
+      filter: grayscale(0.3);
+    }
+
+    body[data-layer="tech"] [data-audience]:not([data-audience*="tech"]) {
+      opacity: 0.3;
+      filter: grayscale(0.3);
+    }
+
+    body[data-layer="user"] [data-audience]:not([data-audience*="user"]) {
+      opacity: 0.3;
+      filter: grayscale(0.3);
+    }
+
+    main {
+      width: 100%;
+      max-width: none;
+      margin: 0;
+      padding: 0 var(--content-offset-right) 0 var(--content-offset-left);
+    }
+
+    section.slide {
+      height: 100vh;
+      min-height: 100vh;
+      padding: var(--slide-safe-padding-y) 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-bottom: 1px dashed rgba(24, 32, 40, 0.1);
+      overflow: hidden;
+      scroll-snap-align: start;
+    }
+
+    html,
+    body {
+      scroll-snap-type: y mandatory;
+    }
+
+    .slide-grid {
+      width: 100%;
+      max-width: min(1380px, calc(100vw - var(--content-offset-left) - var(--content-offset-right)));
+      margin: 0 auto;
+      display: grid;
+      gap: 22px;
+      transform-origin: center center;
+      will-change: transform;
+    }
+
+    #slide-0 .panel,
+    #slide-2 .panel {
+      padding: 20px;
+    }
+
+    #slide-0 h1,
+    #slide-2 h2 {
+      font-size: clamp(1.7rem, 3vw, 2.5rem);
+    }
+
+    #slide-0 .lead,
+    #slide-2 .lead,
+    #slide-0 li,
+    #slide-2 li,
+    #slide-0 .stat span,
+    #slide-2 .stat span {
+      font-size: 0.85rem;
+      line-height: 1.36;
+    }
+
+    #slide-0 .tutorial-list {
+      gap: 10px;
+    }
+
+    #slide-0 .tutorial-list li {
+      padding: 10px 12px;
+    }
+
+    #slide-0 .chips {
+      margin-top: 14px;
+      gap: 8px;
+    }
+
+    #slide-0 .chip {
+      font-size: 0.76rem;
+      padding: 6px 10px;
+    }
+
+    .hero {
+      grid-template-columns: 1.25fr 0.95fr;
+      align-items: stretch;
+    }
+
+    .panel {
+      background: var(--card);
+      border: 1px solid rgba(255, 255, 255, 0.5);
+      box-shadow: var(--shadow);
+      border-radius: var(--radius);
+      padding: 28px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .panel::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.16), transparent 35%);
+      pointer-events: none;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      text-transform: uppercase;
+      font-size: 0.76rem;
+      letter-spacing: 0.09em;
+      border: 1px solid rgba(24, 32, 40, 0.1);
+      color: var(--muted);
+      background: rgba(255, 255, 255, 0.5);
+      margin-bottom: 18px;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4 {
+      margin: 0;
+      line-height: 1.1;
+    }
+
+    h1 {
+      font-size: clamp(2.6rem, 5vw, 4.5rem);
+      color: var(--ink);
+      margin-bottom: 18px;
+    }
+
+    h2 {
+      font-size: clamp(2rem, 3vw, 3rem);
+      margin-bottom: 14px;
+    }
+
+    h3 {
+      font-size: 1.35rem;
+      margin-bottom: 8px;
+    }
+
+    p,
+    li {
+      font-size: 1rem;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .lead {
+      font-size: 1.16rem;
+      color: #36404a;
+      max-width: 52rem;
+    }
+
+    .stat-grid,
+    .triple-grid,
+    .quad-grid,
+    .double-grid {
+      display: grid;
+      gap: 16px;
+    }
+
+    .stat-grid {
+      grid-template-columns: repeat(4, 1fr);
+      margin-top: 22px;
+    }
+
+    .double-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .triple-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .quad-grid {
+      grid-template-columns: repeat(4, 1fr);
+    }
+
+    .maturity-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      align-items: stretch;
+    }
+
+    .stat {
+      padding: 16px;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.55);
+      border: 1px solid rgba(24, 32, 40, 0.08);
+      min-width: 0;
+    }
+
+    .stat strong {
+      display: block;
+      font-size: 1.5rem;
+      color: var(--ink);
+      margin-bottom: 4px;
+    }
+
+    .stat span {
+      display: block;
+      font-size: 0.9rem;
+      line-height: 1.45;
+      color: var(--muted);
+    }
+
+    .chips {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 18px;
+    }
+
+    .chip {
+      padding: 7px 12px;
+      border-radius: 999px;
+      font-size: 0.86rem;
+      font-weight: 700;
+      letter-spacing: 0.01em;
+    }
+
+    .chip.exec { background: rgba(122, 47, 36, 0.12); color: var(--exec); }
+    .chip.tech { background: rgba(32, 79, 99, 0.12); color: var(--tech); }
+    .chip.user { background: rgba(61, 109, 72, 0.12); color: var(--user); }
+    .chip.warn { background: rgba(217, 143, 43, 0.16); color: #8b5713; }
+
+    ul.clean {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: grid;
+      gap: 10px;
+    }
+
+    ul.clean li {
+      padding-left: 16px;
+      position: relative;
+    }
+
+    ul.clean li::before {
+      content: "";
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--accent);
+      position: absolute;
+      left: 0;
+      top: 0.62em;
+    }
+
+    .timeline {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .time-card {
+      border-radius: 18px;
+      padding: 16px;
+      background: rgba(255, 255, 255, 0.58);
+      border: 1px solid rgba(24, 32, 40, 0.08);
+      min-height: 170px;
+    }
+
+    .time-card strong {
+      display: block;
+      color: var(--ink);
+      margin-bottom: 8px;
+      font-size: 1rem;
+    }
+
+    .time-card span {
+      display: inline-block;
+      margin-bottom: 12px;
+      color: var(--brand-2);
+      font-weight: 700;
+      font-size: 0.84rem;
+    }
+
+    .diagram-box {
+      background: rgba(255, 255, 255, 0.62);
+      border: 1px solid rgba(24, 32, 40, 0.08);
+      border-radius: 20px;
+      padding: 18px;
+      overflow: auto;
+    }
+
+    .controls-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+
+    .nav-stack {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+
+    .nav-link {
+      display: block;
+    }
+
+    .dock-launcher {
+      position: fixed;
+      z-index: 65;
+      top: 18px;
+      right: 18px;
+      display: none;
+      padding: 10px 12px;
+      border-radius: 999px;
+      background: rgba(247, 241, 232, 0.94);
+      box-shadow: 0 16px 36px rgba(52, 41, 28, 0.18);
+    }
+
+    body[data-controls-side="left"] .dock-launcher {
+      left: 18px;
+      right: auto;
+    }
+
+    body.dock-collapsed .dock-launcher,
+    body.presentation-mode-audience .dock-launcher {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .tech-term {
+      display: inline-flex;
+      align-items: baseline;
+      gap: 6px;
+      flex-wrap: nowrap;
+      margin-right: 2px;
+    }
+
+    .tech-tip {
+      width: 1.28rem;
+      height: 1.28rem;
+      min-width: 1.28rem;
+      padding: 0;
+      border-radius: 999px;
+      font-size: 0.66rem;
+      line-height: 1;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      vertical-align: middle;
+      position: relative;
+      top: -0.04em;
+      margin-left: 2px;
+      transform: none;
+    }
+
+    .tech-tip[aria-pressed="true"] {
+      background: linear-gradient(135deg, var(--brand-2), #4f8ca1);
+      color: #fff;
+      border-color: transparent;
+    }
+
+    .tech-tip:hover,
+    .tech-tip:focus-visible {
+      transform: none;
+      background: rgba(29, 79, 95, 0.12);
+      border-color: rgba(29, 79, 95, 0.28);
+    }
+
+    .tech-term-label {
+      border-bottom: 1px dotted rgba(29, 79, 95, 0.5);
+      text-decoration: none;
+    }
+
+    .tech-tip-bubble {
+      position: fixed;
+      z-index: 90;
+      max-width: 280px;
+      padding: 10px 12px;
+      border-radius: 14px;
+      background: rgba(24, 32, 40, 0.94);
+      color: #f8f4ee;
+      font-size: 0.78rem;
+      line-height: 1.45;
+      box-shadow: 0 16px 34px rgba(24, 32, 40, 0.24);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      opacity: 0;
+      transform: translateY(4px);
+      pointer-events: none;
+      transition: opacity 0.16s ease, transform 0.16s ease;
+    }
+
+    .tech-tip-bubble.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .tutorial-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: grid;
+      gap: 12px;
+    }
+
+    .tutorial-list li {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 10px;
+      align-items: start;
+      padding: 12px 14px;
+      background: rgba(255, 255, 255, 0.55);
+      border: 1px solid rgba(24, 32, 40, 0.08);
+      border-radius: 16px;
+    }
+
+    .tutorial-step {
+      width: 1.8rem;
+      height: 1.8rem;
+      border-radius: 999px;
+      background: linear-gradient(135deg, var(--brand), #c45f44);
+      color: #fff;
+      font-size: 0.8rem;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .slide-note-inline {
+      margin-top: 12px;
+      font-size: 0.82rem;
+      color: var(--muted);
+    }
+
+    svg {
+      max-width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .caption {
+      margin-top: 12px;
+      font-size: 0.93rem;
+      color: var(--muted);
+    }
+
+    .speaker-notes {
+      margin-top: 18px;
+      padding: 16px 18px;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.55);
+      border: 1px dashed rgba(29, 79, 95, 0.22);
+    }
+
+    .speaker-notes summary {
+      cursor: pointer;
+      font-weight: 700;
+      color: var(--brand-2);
+      margin-bottom: 10px;
+    }
+
+    .speaker-notes p {
+      margin: 0;
+    }
+
+    .legend {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 10px;
+    }
+
+    .legend .key {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.88rem;
+      color: var(--muted);
+    }
+
+    .legend .swatch {
+      width: 14px;
+      height: 14px;
+      border-radius: 4px;
+    }
+
+    .footer-note {
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.94rem;
+      padding-top: 18px;
+    }
+
+    #slide-1 {
+      min-height: 100svh;
+      padding-top: 10px;
+      padding-bottom: 10px;
+    }
+
+    #slide-1 .hero {
+      gap: 18px;
+      grid-template-columns: 1.12fr 0.88fr;
+      max-width: min(1240px, calc(100vw - var(--content-offset-left) - var(--content-offset-right) - 24px));
+    }
+
+    #slide-1 h1 {
+      font-size: clamp(1.9rem, 3.45vw, 3.05rem);
+      margin-bottom: 12px;
+    }
+
+    #slide-1 .lead,
+    #slide-1 li,
+    #slide-1 .footer-note,
+    #slide-1 .stat span {
+      font-size: 0.88rem;
+      line-height: 1.42;
+    }
+
+    #slide-1 .panel {
+      padding: 20px;
+    }
+
+    #slide-1 .chips {
+      gap: 8px;
+      margin-top: 14px;
+    }
+
+    #slide-1 .chip {
+      font-size: 0.77rem;
+      padding: 6px 10px;
+    }
+
+    #slide-1 .stat-grid {
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    #slide-1 .stat {
+      padding: 13px;
+    }
+
+    #slide-1 .stat strong {
+      font-size: 1.22rem;
+    }
+
+    #slide-1 .eyebrow {
+      margin-bottom: 12px;
+    }
+
+    @media (max-width: 1100px) {
+      .hero,
+      .double-grid,
+      .triple-grid,
+      .quad-grid,
+      .stat-grid,
+      .timeline {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (max-width: 760px) {
+      .hero,
+      .double-grid,
+      .triple-grid,
+      .quad-grid,
+      .stat-grid,
+      .timeline {
+        grid-template-columns: 1fr;
+      }
+
+      body[data-controls-side="left"],
+      body[data-controls-side="right"] {
+        --content-offset-left: 24px;
+        --content-offset-right: 24px;
+      }
+
+      .control-dock {
+        position: sticky;
+        top: 0;
+        left: auto;
+        right: auto;
+        width: 100%;
+        max-height: none;
+        border-radius: 0 0 20px 20px;
+      }
+
+      .control-dock-inner {
+        gap: 12px;
+      }
+
+      main {
+        padding-left: 14px;
+        padding-right: 14px;
+      }
+
+      section.slide {
+        padding-top: 14px;
+        padding-bottom: 14px;
+      }
+
+      .slide-grid {
+        max-width: none;
+      }
+
+      .panel {
+        padding: 22px;
+      }
+
+      .maturity-grid,
+      .controls-row,
+      .nav-stack,
+      .dock-actions {
+        grid-template-columns: 1fr;
+      }
+
+      #slide-1 .hero {
+        grid-template-columns: 1.02fr 0.98fr;
+        gap: 12px;
+        align-items: start;
+      }
+
+      #slide-1 .panel {
+        padding: 14px;
+      }
+
+      #slide-1 h1 {
+        font-size: clamp(1.38rem, 2.7vw, 1.9rem);
+        margin-bottom: 8px;
+      }
+
+      #slide-1 .lead,
+      #slide-1 li,
+      #slide-1 .footer-note,
+      #slide-1 .stat span {
+        font-size: 0.76rem;
+        line-height: 1.28;
+      }
+
+      #slide-1 .chips {
+        gap: 5px;
+        margin-top: 10px;
+      }
+
+      #slide-1 .chip {
+        font-size: 0.67rem;
+        padding: 5px 8px;
+      }
+
+      #slide-1 .stat-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+        margin-top: 10px;
+      }
+
+      #slide-1 .stat {
+        padding: 10px;
+      }
+
+      #slide-1 .stat strong {
+        font-size: 1.02rem;
+      }
+
+      #slide-1 .eyebrow {
+        margin-bottom: 10px;
+        font-size: 0.64rem;
+      }
+
+      .tutorial-list li {
+        padding: 10px 12px;
+      }
+
+      #slide-0 h1,
+      #slide-2 h2 {
+        font-size: clamp(1.3rem, 2.5vw, 1.7rem);
+      }
+
+      #slide-0 .lead,
+      #slide-2 .lead,
+      #slide-0 li,
+      #slide-2 li,
+      #slide-0 .stat span,
+      #slide-2 .stat span {
+        font-size: 0.74rem;
+        line-height: 1.24;
+      }
+    }
+  </style>
+</head>
+<body class="notes-hidden presentation-mode-presenter" data-layer="all" data-controls-side="right">
+<div id="idd-status-banner" role="note" style="position:fixed;bottom:6px;left:6px;z-index:2147483000;max-width:min(92vw,560px);padding:3px 8px;font:11px/1.35 system-ui,-apple-system,Segoe UI,sans-serif;color:#fde68a;background:rgba(17,17,17,.82);border:1px solid rgba(253,230,138,.35);border-radius:6px;pointer-events:none;">📜 Peça histórica (versão anterior ao Cânone v1.0-rc1). Afirmações podem não refletir o status atual — ver paradigma/00-canone/AFIRMACOES.md</div>
+  <aside class="control-dock">
+    <div class="control-dock-inner">
+      <div class="brand">
+        <strong>RVM Designa&ccedil;&otilde;es</strong>
+        <span>Apresenta&ccedil;&atilde;o IDD em camadas: executivo, t&eacute;cnico e usu&aacute;rio final</span>
+      </div>
+      <div class="toolbar">
+        <div class="filter-group">
+          <button class="filter-btn active" data-layer-target="all">Todas as camadas</button>
+          <button class="filter-btn" data-layer-target="exec">Executivo</button>
+          <button class="filter-btn" data-layer-target="tech">T&eacute;cnico</button>
+          <button class="filter-btn" data-layer-target="user">Usu&aacute;rio final</button>
+        </div>
+        <div class="controls-row">
+          <button id="toggleNotes">Mostrar narra&ccedil;&atilde;o</button>
+          <label class="voice-field">
+            Painel
+            <select id="controlsSide">
+              <option value="right" selected>Direita</option>
+              <option value="left">Esquerda</option>
+            </select>
+          </label>
+        </div>
+        <div class="nav-stack">
+          <a class="nav-link" href="#slide-0">In&iacute;cio</a>
+          <a class="nav-link" href="#slide-11">Fecho</a>
+        </div>
+        <div class="dock-actions">
+          <button id="toggleDock">Ocultar painel</button>
+          <label class="voice-field">
+            Modo
+            <select id="presentationMode">
+              <option value="presenter" selected>Apresentador</option>
+              <option value="audience">Plateia</option>
+            </select>
+          </label>
+        </div>
+      </div>
+      <div class="voice-panel">
+        <div class="voice-controls">
+          <label class="voice-field">
+            Roteiro
+            <select id="narrationMode">
+              <option value="full">Completo</option>
+              <option value="executive">Executivo</option>
+            </select>
+          </label>
+          <label class="voice-field">
+            Voz
+            <select id="voiceSelect"></select>
+          </label>
+          <label class="voice-field">
+            Velocidade
+            <input id="voiceRate" type="range" min="0.85" max="1.15" step="0.05" value="0.95" />
+            <span id="voiceRateValue">0.95x</span>
+          </label>
+          <label class="voice-field">
+            <input id="autoAdvance" type="checkbox" checked />
+            Autoavan&ccedil;o
+          </label>
+          <button id="playCurrentSlide">Ouvir slide</button>
+          <button id="playAllSlides">Ouvir apresenta&ccedil;&atilde;o</button>
+          <button id="pauseSpeech">Pausar</button>
+          <button id="stopSpeech">Parar</button>
+        </div>
+        <div class="voice-meta">
+          <span class="voice-status" id="voiceStatus">Voz pronta</span>
+          <span>Melhor resultado: Edge ou Chrome com vozes do sistema em portugu&ecirc;s.</span>
+          <span class="tech-tip-legend"><button type="button" class="tech-tip" aria-hidden="true" tabindex="-1">i</button> Passe o mouse no bot&atilde;o para ouvir o conceito.</span>
+        </div>
+      </div>
+    </div>
+  </aside>
+  <button id="dockLauncher" class="dock-launcher">Mostrar painel</button>
+  <div id="techTipBubble" class="tech-tip-bubble" role="status" aria-live="polite"></div>
+
+  <main>
+    <section id="slide-0" class="slide" data-audience="exec tech user">
+      <div class="slide-grid double-grid">
+        <article class="panel">
+          <div class="eyebrow">Tutorial guiado</div>
+          <h1>Como usar esta apresentação</h1>
+          <p class="lead">
+            Antes do conteúdo, aqui vai uma demonstração rápida dos recursos de navegação, narração e tips conceituais. A ideia é que qualquer pessoa consiga conduzir a apresentação sem precisar descobrir comandos no meio do uso.
+          </p>
+          <ul class="tutorial-list">
+            <li><span class="tutorial-step">1</span><span>Use as teclas de seta ou Page Up e Page Down para avançar e voltar sempre um slide completo, centralizado na tela.</span></li>
+            <li><span class="tutorial-step">2</span><span>Ative a narração pelo painel lateral com os botões Ouvir slide ou Ouvir apresentação.</span></li>
+            <li><span class="tutorial-step">3</span><span>Passe o mouse sobre o botão <strong>i</strong> ao lado de termos técnicos para ouvir uma explicação curta e também ler a micro-caixa textual.</span></li>
+            <li><span class="tutorial-step">4</span><span>Se um tip tocar durante a narração principal, a apresentação pausa automaticamente e retoma ao sair do tip.</span></li>
+            <li><span class="tutorial-step">5</span><span>Use o modo Plateia para ocultar o painel e manter apenas o slide limpo na tela.</span></li>
+          </ul>
+          <div class="slide-note-inline">Demonstração orientada: comece este slide ouvindo a narração completa e, em seguida, passe o mouse sobre um tip para testar o áudio-conceito.</div>
+        </article>
+
+        <article class="panel">
+          <div class="eyebrow">Recursos rápidos</div>
+          <div class="chips">
+            <span class="chip exec">Setas e Page Up/Page Down</span>
+            <span class="chip tech">Painel lateral recolhível</span>
+            <span class="chip user">Modo plateia</span>
+            <span class="chip warn">Tips com áudio e texto</span>
+          </div>
+          <div class="stat-grid" style="grid-template-columns: repeat(2, 1fr); margin-top: 18px;">
+            <div class="stat">
+              <strong>1x</strong>
+              <span>Um slide inteiro por avanço de teclado</span>
+            </div>
+            <div class="stat">
+              <strong>Hover</strong>
+              <span>Tip conceitual com leitura silenciosa e áudio</span>
+            </div>
+            <div class="stat">
+              <strong>Auto</strong>
+              <span>Pausa e retomada da narração principal</span>
+            </div>
+            <div class="stat">
+              <strong>Plateia</strong>
+              <span>Visual limpo para projeção ou tela cheia</span>
+            </div>
+          </div>
+        </article>
+      </div>
+      <details class="speaker-notes">
+        <summary>Notas de narração</summary>
+        <p>
+          Faça uma abertura prática. Explique que a apresentação não é apenas conteúdo, mas também uma pequena ferramenta demonstrativa. Oriente a audiência sobre teclado, painel, modo plateia e tips com áudio e texto.
+        </p>
+      </details>
+    </section>
+
+    <section id="slide-1" class="slide" data-audience="exec tech user">
+      <div class="slide-grid hero">
+        <article class="panel">
+          <div class="eyebrow">Vis&atilde;o geral do programa</div>
+          <h1>Do software de apoio ao sistema sem&acirc;ntico de coordena&ccedil;&atilde;o</h1>
+          <p class="lead">
+            Esta apresenta&ccedil;&atilde;o mostra o RVM Designa&ccedil;&otilde;es em camadas afinadas por p&uacute;blico: o valor executivo, a arquitetura t&eacute;cnica, a din&acirc;mica de desenvolvimento com IA aut&ocirc;noma e o roteiro operacional do usu&aacute;rio final.
+          </p>
+          <div class="chips">
+            <span class="chip exec">Camada executiva</span>
+            <span class="chip tech">Camada t&eacute;cnica</span>
+            <span class="chip user">Camada do usu&aacute;rio final</span>
+            <span class="chip warn">Com notas de narra&ccedil;&atilde;o</span>
+          </div>
+          <div class="stat-grid">
+            <div class="stat">
+              <strong>3</strong>
+              <span>P&uacute;blicos tratados explicitamente</span>
+            </div>
+            <div class="stat">
+              <strong>2</strong>
+              <span>Camadas arquiteturais do produto</span>
+            </div>
+            <div class="stat">
+              <strong>1</strong>
+              <span>Vis&atilde;o integrada de produto, engenharia e uso</span>
+            </div>
+            <div class="stat">
+              <strong>HTML</strong>
+              <span>Formato final execut&aacute;vel no navegador</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="panel">
+          <div class="eyebrow">Leitura r&aacute;pida da narrativa</div>
+          <h3>Estrutura sugerida para apresenta&ccedil;&atilde;o ao vivo</h3>
+          <ul class="clean">
+            <li>Come&ccedil;ar pela dor e pelo ganho organizacional.</li>
+            <li>Descer para a estrutura de dom&iacute;nio, permiss&otilde;es e boundaries.</li>
+            <li>Mostrar como a IA participa da engenharia sem dissolver rigor.</li>
+            <li>Mostrar como o usu&aacute;rio final interage por inten&ccedil;&atilde;o com seguran&ccedil;a.</li>
+            <li>Fechar com maturidade atual, roadmap e pr&oacute;ximo ciclo.</li>
+          </ul>
+          <div class="footer-note">Atalhos: setas do teclado ou rolagem natural do navegador.</div>
+        </article>
+      </div>
+    </section>
+
+    <section id="slide-2" class="slide" data-audience="exec">
+      <div class="slide-grid double-grid">
+        <article class="panel">
+          <div class="eyebrow">Camada executiva</div>
+          <h2>O que o projeto resolve para a lideran&ccedil;a</h2>
+          <p class="lead">
+            O RVM reduz a dist&acirc;ncia entre a inten&ccedil;&atilde;o ministerial e a execu&ccedil;&atilde;o operacional. A meta n&atilde;o &eacute; apenas automatizar tarefas, mas tornar a coordena&ccedil;&atilde;o mais previs&iacute;vel, audit&aacute;vel e menos dependente de navega&ccedil;&atilde;o t&eacute;cnica.
+          </p>
+          <div class="triple-grid">
+            <div class="stat">
+              <strong>Clareza</strong>
+              <span>Menos fric&ccedil;&atilde;o entre objetivo e a&ccedil;&atilde;o</span>
+            </div>
+            <div class="stat">
+              <strong>Controle</strong>
+              <span>Permiss&otilde;es, auditoria e fallback operacional</span>
+            </div>
+            <div class="stat">
+              <strong>Escala</strong>
+              <span>Mesma base para usu&aacute;rio comum, gest&atilde;o e engenharia</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="panel">
+          <div class="eyebrow">Proposta de valor</div>
+          <ul class="clean">
+            <li>Continuidade operacional: a camada convencional continua completa.</li>
+            <li>Redu&ccedil;&atilde;o de carga cognitiva: o sistema passa a compreender o contexto da tarefa.</li>
+            <li>Governan&ccedil;a: toda a&ccedil;&atilde;o relevante passa por regras, permiss&otilde;es e rastreabilidade.</li>
+            <li>Agilidade estrat&eacute;gica: a mesma arquitetura suporta evolu&ccedil;&atilde;o gradual para Zero UI progressiva.</li>
+          </ul>
+          <div class="chips">
+            <span class="chip exec">ROI cognitivo</span>
+            <span class="chip exec">Seguran&ccedil;a operacional</span>
+            <span class="chip exec">Escalabilidade sem&acirc;ntica</span>
+          </div>
+        </article>
+      </div>
+      <details class="speaker-notes">
+        <summary>Notas de narra&ccedil;&atilde;o</summary>
+        <p>
+          Aqui a fala deve ser de neg&oacute;cio, n&atilde;o de implementa&ccedil;&atilde;o. A mensagem principal &eacute;: o projeto n&atilde;o &eacute; um chat com IA; &eacute; um sistema que torna a opera&ccedil;&atilde;o mais confi&aacute;vel, com menos atrito e mais previsibilidade. Use termos como clareza, governan&ccedil;a, continuidade e rastreabilidade.
+        </p>
+      </details>
+    </section>
+
+    <section id="slide-3" class="slide" data-audience="exec tech">
+      <div class="slide-grid">
+        <article class="panel">
+          <div class="eyebrow">Embasa&shy;mento conceitual</div>
+          <h2>A tese conceitual: DDD + IDD + Zero UI progressiva</h2>
+          <div class="triple-grid">
+            <div class="stat">
+              <strong>DDD</strong>
+              <span>Linguagem ub&iacute;qua, fronteiras claras e invariantes do dom&iacute;nio</span>
+            </div>
+            <div class="stat">
+              <strong>IDD</strong>
+              <span>A inten&ccedil;&atilde;o deixa de ser coment&aacute;rio e passa a ser instru&ccedil;&atilde;o operacional</span>
+            </div>
+            <div class="stat">
+              <strong>Zero UI</strong>
+              <span>A interface fixa encolhe; a resposta visual contextual cresce</span>
+            </div>
+          </div>
+          <div class="diagram-box" style="margin-top:18px;">
+            <svg viewBox="0 0 980 300" aria-label="Diagrama conceitual">
+              <defs>
+                <linearGradient id="g1" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0%" stop-color="#9d3c2f" />
+                  <stop offset="100%" stop-color="#d98f2b" />
+                </linearGradient>
+                <linearGradient id="g2" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0%" stop-color="#1d4f5f" />
+                  <stop offset="100%" stop-color="#4f8ca1" />
+                </linearGradient>
+                <linearGradient id="g3" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0%" stop-color="#3d6d48" />
+                  <stop offset="100%" stop-color="#8caf6b" />
+                </linearGradient>
+              </defs>
+              <rect x="30" y="85" width="240" height="120" rx="24" fill="url(#g1)" opacity="0.92"></rect>
+              <rect x="370" y="85" width="240" height="120" rx="24" fill="url(#g2)" opacity="0.92"></rect>
+              <rect x="710" y="85" width="240" height="120" rx="24" fill="url(#g3)" opacity="0.92"></rect>
+              <text x="150" y="128" text-anchor="middle" font-size="26" fill="#fff" font-weight="700">Dom&iacute;nio</text>
+              <text x="150" y="158" text-anchor="middle" font-size="17" fill="#fff">regras, entidades,</text>
+              <text x="150" y="180" text-anchor="middle" font-size="17" fill="#fff">bounded contexts</text>
+              <text x="490" y="128" text-anchor="middle" font-size="26" fill="#fff" font-weight="700">Inten&ccedil;&atilde;o</text>
+              <text x="490" y="158" text-anchor="middle" font-size="17" fill="#fff">pedido humano</text>
+              <text x="490" y="180" text-anchor="middle" font-size="17" fill="#fff">como entrada</text>
+              <text x="830" y="128" text-anchor="middle" font-size="26" fill="#fff" font-weight="700">Resposta</text>
+              <text x="830" y="158" text-anchor="middle" font-size="17" fill="#fff">visualiza&ccedil;&atilde;o,</text>
+              <text x="830" y="180" text-anchor="middle" font-size="17" fill="#fff">execu&ccedil;&atilde;o, pr&oacute;ximo passo</text>
+              <path d="M270 145 C320 145, 320 145, 370 145" stroke="#b76d4c" stroke-width="6" fill="none"></path>
+              <polygon points="357,133 380,145 357,157" fill="#b76d4c"></polygon>
+              <path d="M610 145 C660 145, 660 145, 710 145" stroke="#5a8ca0" stroke-width="6" fill="none"></path>
+              <polygon points="697,133 720,145 697,157" fill="#5a8ca0"></polygon>
+            </svg>
+            <div class="caption">A ideia central &eacute; simples: a inten&ccedil;&atilde;o entra, o dom&iacute;nio restringe e explica, e o sistema devolve resposta operacional adequada.</div>
+          </div>
+        </article>
+      </div>
+      <details class="speaker-notes">
+        <summary>Notas de narra&ccedil;&atilde;o</summary>
+        <p>
+          Explique que o projeto n&atilde;o troca arquitetura por IA. Ao contr&aacute;rio: a IA s&oacute; funciona porque h&aacute; dom&iacute;nio, servi&ccedil;os, permiss&otilde;es e fronteiras. A palavra-chave aqui &eacute; media&ccedil;&atilde;o disciplinada.
+        </p>
+      </details>
+    </section>
+
+    <section id="slide-4" class="slide" data-audience="exec tech">
+      <div class="slide-grid">
+        <article class="panel">
+          <div class="eyebrow">Vis&atilde;o &aacute;gil dos sprints</div>
+          <h2>Evolu&ccedil;&atilde;o incremental da interface sem&acirc;ntica</h2>
+          <div class="timeline">
+            <div class="time-card">
+              <span>Sprint 0</span>
+              <strong>Base j&aacute; iniciada</strong>
+              <p>Contexto ativo inicial, integra&ccedil;&atilde;o de a&ccedil;&otilde;es determin&iacute;sticas e placeholder orientado &agrave; inten&ccedil;&atilde;o.</p>
+            </div>
+            <div class="time-card">
+              <span>Sprint 1</span>
+              <strong>Quick Action Chips</strong>
+              <p>Discoverability sem&acirc;ntica por contexto e perfil.</p>
+            </div>
+            <div class="time-card">
+              <span>Sprint 2</span>
+              <strong>Slash Commands</strong>
+              <p>Atalho de produtividade para usu&aacute;rios avan&ccedil;ados.</p>
+            </div>
+            <div class="time-card">
+              <span>Sprint 3</span>
+              <strong>Contexto de conversa</strong>
+              <p>Persist&ecirc;ncia de foco, retomada e mudan&ccedil;a de assunto.</p>
+            </div>
+            <div class="time-card">
+              <span>Sprint 4</span>
+              <strong>Micro-UIs por inten&ccedil;&atilde;o</strong>
+              <p>Aprova&ccedil;&atilde;o, rejei&ccedil;&atilde;o, disponibilidade, edi&ccedil;&atilde;o e conclus&atilde;o.</p>
+            </div>
+            <div class="time-card">
+              <span>Pr&oacute;ximo ciclo</span>
+              <strong>Intents tipadas</strong>
+              <p>Governan&ccedil;a mais formal de risco, preview e explainability.</p>
+            </div>
+          </div>
+        </article>
+      </div>
+      <details class="speaker-notes">
+        <summary>Notas de narra&ccedil;&atilde;o</summary>
+        <p>
+          Mostre que a evolu&ccedil;&atilde;o foi incremental e governada, n&atilde;o improvisada. Isso &eacute; importante para dar credibilidade tanto executiva quanto t&eacute;cnica: o projeto tem cad&ecirc;ncia, backlog e crit&eacute;rio de sa&iacute;da por fase.
+        </p>
+      </details>
+    </section>
+
+    <section id="slide-5" class="slide" data-audience="tech">
+      <div class="slide-grid double-grid">
+        <article class="panel">
+          <div class="eyebrow">Camada t&eacute;cnica</div>
+          <h2>Arquitetura atual do sistema</h2>
+          <ul class="clean">
+            <li>Frontend em React 19 + TypeScript + Vite.</li>
+            <li>Supabase como fonte da verdade para apostila, publicadores e suporte &agrave; auditoria.</li>
+            <li>Aba Agente como portal sem&acirc;ntico, n&atilde;o como chat lateral gen&eacute;rico.</li>
+            <li>Services especializados para query, lifecycle, assignment, import, mutation e management.</li>
+            <li>Permission gate e access level como fronteira de descoberta, visibilidade e execu&ccedil;&atilde;o.</li>
+          </ul>
+          <div class="legend">
+            <span class="key"><span class="swatch" style="background:#9d3c2f"></span>Dom&iacute;nio</span>
+            <span class="key"><span class="swatch" style="background:#1d4f5f"></span>Orquestra&ccedil;&atilde;o</span>
+            <span class="key"><span class="swatch" style="background:#3d6d48"></span>Visual / resposta</span>
+          </div>
+        </article>
+
+        <article class="panel">
+          <div class="eyebrow">Mapa simplificado</div>
+          <div class="diagram-box">
+            <svg viewBox="0 0 700 470" aria-label="Mapa arquitetural">
+              <rect x="30" y="30" width="200" height="92" rx="18" fill="#9d3c2f" opacity="0.92"></rect>
+              <rect x="250" y="30" width="200" height="92" rx="18" fill="#1d4f5f" opacity="0.92"></rect>
+              <rect x="470" y="30" width="200" height="92" rx="18" fill="#3d6d48" opacity="0.92"></rect>
+              <text x="130" y="70" text-anchor="middle" fill="#fff" font-size="22" font-weight="700">UI Convencional</text>
+              <text x="130" y="95" text-anchor="middle" fill="#fff" font-size="14">Apostila, Aprova&ccedil;&otilde;es, Publicadores</text>
+              <text x="350" y="70" text-anchor="middle" fill="#fff" font-size="22" font-weight="700">Aba Agente</text>
+              <text x="350" y="95" text-anchor="middle" fill="#fff" font-size="14">Chat, chips, slash, micro-UIs</text>
+              <text x="570" y="70" text-anchor="middle" fill="#fff" font-size="22" font-weight="700">Respostas Visuais</text>
+              <text x="570" y="95" text-anchor="middle" fill="#fff" font-size="14">S-140, cards, modais, previews</text>
+
+              <rect x="110" y="180" width="480" height="116" rx="20" fill="#f7ede2" stroke="#1d4f5f" stroke-width="2"></rect>
+              <text x="350" y="226" text-anchor="middle" fill="#1d4f5f" font-size="25" font-weight="700">Services e boundaries de dom&iacute;nio</text>
+              <text x="350" y="248" text-anchor="middle" fill="#45545f" font-size="13">
+                <tspan x="350" dy="0">agentActionService, workbookLifecycleService,</tspan>
+                <tspan x="350" dy="18">publisherMutationService, permissionService</tspan>
+              </text>
+
+              <rect x="110" y="350" width="480" height="76" rx="18" fill="#f7ede2" stroke="#9d3c2f" stroke-width="2"></rect>
+              <text x="350" y="390" text-anchor="middle" fill="#9d3c2f" font-size="24" font-weight="700">Supabase + auditoria + realtime</text>
+
+              <path d="M130 122 L200 190" stroke="#9d3c2f" stroke-width="5" fill="none"></path>
+              <path d="M350 122 L350 190" stroke="#1d4f5f" stroke-width="5" fill="none"></path>
+              <path d="M570 122 L500 190" stroke="#3d6d48" stroke-width="5" fill="none"></path>
+              <path d="M350 282 L350 350" stroke="#a55a4d" stroke-width="5" fill="none"></path>
+            </svg>
+          </div>
+        </article>
+      </div>
+      <details class="speaker-notes">
+        <summary>Notas de narra&ccedil;&atilde;o</summary>
+        <p>
+          Explique que a camada sem&acirc;ntica n&atilde;o substitui a camada convencional. Elas coexistem. O ponto t&eacute;cnico importante &eacute; que a orquestra&ccedil;&atilde;o por inten&ccedil;&atilde;o depende de servi&ccedil;os de dom&iacute;nio, n&atilde;o de muta&ccedil;&otilde;es disparadas diretamente da interface.
+        </p>
+      </details>
+    </section>
+
+    <section id="slide-6" class="slide" data-audience="tech">
+      <div class="slide-grid">
+        <article class="panel">
+          <div class="eyebrow">Din&acirc;mica visual de engenharia</div>
+          <h2>Desenvolvedores x IA aut&ocirc;noma: ciclo de intera&ccedil;&atilde;o no IDD</h2>
+          <div class="diagram-box">
+            <svg viewBox="0 0 1180 620" aria-label="Fluxo de desenvolvimento com IA autônoma">
+              <defs>
+                <marker id="arrowA" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto">
+                  <path d="M0,0 L10,5 L0,10 z" fill="#7c5a33"></path>
+                </marker>
+              </defs>
+              <rect x="60" y="70" width="230" height="84" rx="18" fill="#9d3c2f" opacity="0.92"></rect>
+              <rect x="360" y="70" width="230" height="84" rx="18" fill="#1d4f5f" opacity="0.92"></rect>
+              <rect x="660" y="70" width="230" height="84" rx="18" fill="#d98f2b" opacity="0.92"></rect>
+              <rect x="960" y="70" width="160" height="84" rx="18" fill="#3d6d48" opacity="0.92"></rect>
+
+              <text x="175" y="105" text-anchor="middle" fill="#fff" font-size="24" font-weight="700">Humano</text>
+              <text x="175" y="129" text-anchor="middle" fill="#fff" font-size="14">tese, crit&eacute;rio, dire&ccedil;&atilde;o</text>
+              <text x="475" y="105" text-anchor="middle" fill="#fff" font-size="24" font-weight="700">IA</text>
+              <text x="475" y="129" text-anchor="middle" fill="#fff" font-size="14">explora, estrutura, prop&otilde;e</text>
+              <text x="775" y="105" text-anchor="middle" fill="#fff" font-size="24" font-weight="700">C&oacute;digo</text>
+              <text x="775" y="129" text-anchor="middle" fill="#fff" font-size="14">arquivos, boundaries, testes</text>
+              <text x="1040" y="105" text-anchor="middle" fill="#fff" font-size="24" font-weight="700">Runtime</text>
+              <text x="1040" y="129" text-anchor="middle" fill="#fff" font-size="14">produto real</text>
+
+              <line x1="290" y1="112" x2="360" y2="112" stroke="#7c5a33" stroke-width="5" marker-end="url(#arrowA)"></line>
+              <line x1="590" y1="112" x2="660" y2="112" stroke="#7c5a33" stroke-width="5" marker-end="url(#arrowA)"></line>
+              <line x1="890" y1="112" x2="960" y2="112" stroke="#7c5a33" stroke-width="5" marker-end="url(#arrowA)"></line>
+
+              <rect x="90" y="250" width="980" height="280" rx="24" fill="#fff8f0" stroke="#d3c3ad"></rect>
+
+              <rect x="120" y="290" width="180" height="64" rx="16" fill="#f2ddd7" stroke="#9d3c2f"></rect>
+              <rect x="330" y="290" width="180" height="64" rx="16" fill="#dbeaf0" stroke="#1d4f5f"></rect>
+              <rect x="540" y="290" width="180" height="64" rx="16" fill="#f6e4c8" stroke="#d98f2b"></rect>
+              <rect x="750" y="290" width="180" height="64" rx="16" fill="#dde9d9" stroke="#3d6d48"></rect>
+              <rect x="960" y="290" width="80" height="64" rx="16" fill="#efe9df" stroke="#7d6f5f"></rect>
+
+              <text x="210" y="316" text-anchor="middle" fill="#7a2f24" font-size="16" font-weight="700">1. Inten&ccedil;&atilde;o</text>
+              <text x="210" y="338" text-anchor="middle" fill="#6a5d50" font-size="12">"quero este resultado"</text>
+              <text x="420" y="316" text-anchor="middle" fill="#204f63" font-size="16" font-weight="700">2. Explora&ccedil;&atilde;o</text>
+              <text x="420" y="338" text-anchor="middle" fill="#6a5d50" font-size="12">mapa do problema e op&ccedil;&otilde;es</text>
+              <text x="630" y="316" text-anchor="middle" fill="#8b5713" font-size="16" font-weight="700">3. S&iacute;ntese</text>
+              <text x="630" y="338" text-anchor="middle" fill="#6a5d50" font-size="12">artefato, estrutura, plano</text>
+              <text x="840" y="316" text-anchor="middle" fill="#3d6d48" font-size="16" font-weight="700">4. Implementa&ccedil;&atilde;o</text>
+              <text x="840" y="338" text-anchor="middle" fill="#6a5d50" font-size="12">edi&ccedil;&atilde;o, teste, valida&ccedil;&atilde;o</text>
+              <text x="1000" y="316" text-anchor="middle" fill="#685748" font-size="16" font-weight="700">5. Loop</text>
+              <text x="1000" y="338" text-anchor="middle" fill="#6a5d50" font-size="12">revis&atilde;o</text>
+
+              <line x1="300" y1="322" x2="330" y2="322" stroke="#7c5a33" stroke-width="4" marker-end="url(#arrowA)"></line>
+              <line x1="510" y1="322" x2="540" y2="322" stroke="#7c5a33" stroke-width="4" marker-end="url(#arrowA)"></line>
+              <line x1="720" y1="322" x2="750" y2="322" stroke="#7c5a33" stroke-width="4" marker-end="url(#arrowA)"></line>
+              <line x1="930" y1="322" x2="960" y2="322" stroke="#7c5a33" stroke-width="4" marker-end="url(#arrowA)"></line>
+              <path d="M1000 354 C1000 410, 860 450, 630 450 C380 450, 210 430, 210 354" stroke="#6f7f53" stroke-width="4" fill="none" marker-end="url(#arrowA)"></path>
+
+              <text x="580" y="500" text-anchor="middle" fill="#46515b" font-size="18" font-weight="700">O papel da IA n&atilde;o &eacute; substituir ju&iacute;zo; &eacute; acelerar s&iacute;ntese e execu&ccedil;&atilde;o disciplinada.</text>
+            </svg>
+            <div class="caption">Visual explicativo do ciclo de trabalho IDD: inten&ccedil;&atilde;o humana, explora&ccedil;&atilde;o assistida, s&iacute;ntese, implementa&ccedil;&atilde;o e itera&ccedil;&atilde;o.</div>
+          </div>
+        </article>
+      </div>
+      <details class="speaker-notes">
+        <summary>Notas de narra&ccedil;&atilde;o</summary>
+        <p>
+          Este &eacute; o slide para explicar como a engenharia do pr&oacute;prio sistema j&aacute; funciona em regime de IDD. Diga que o humano continua definindo tese, limite, crit&eacute;rio de qualidade e decis&atilde;o final; a IA entra como mecanismo de explora&ccedil;&atilde;o, organiza&ccedil;&atilde;o e acelera&ccedil;&atilde;o da implementa&ccedil;&atilde;o.
+        </p>
+      </details>
+    </section>
+
+    <section id="slide-7" class="slide" data-audience="tech">
+      <div class="slide-grid double-grid">
+        <article class="panel">
+          <div class="eyebrow">Seguran&ccedil;a sem&acirc;ntica</div>
+          <h2>Como o agente &eacute; restringido pelo dom&iacute;nio</h2>
+          <ul class="clean">
+            <li>Descoberta: o usu&aacute;rio s&oacute; v&ecirc; a&ccedil;&otilde;es compat&iacute;veis com o seu perfil.</li>
+            <li>Visibilidade: dados sens&iacute;veis seguem access level e permission gate.</li>
+            <li>Execu&ccedil;&atilde;o: o commit final revalida permiss&atilde;o e boundary.</li>
+            <li>Canal: comunica&ccedil;&atilde;o s&oacute; aparece quando o canal &eacute; permitido.</li>
+            <li>Auditoria: a&ccedil;&otilde;es relevantes deixam trilha operacional.</li>
+          </ul>
+        </article>
+
+        <article class="panel">
+          <div class="eyebrow">Maturidade atual</div>
+          <div class="quad-grid maturity-grid">
+            <div class="stat">
+              <strong>29/30</strong>
+              <span>Testes atuais passando no subprojeto principal</span>
+            </div>
+            <div class="stat">
+              <strong>Refactor</strong>
+              <span>Boundaries especializados em curso</span>
+            </div>
+            <div class="stat">
+              <strong>Wave 1</strong>
+              <span>Micro-UIs iniciais j&aacute; materializadas</span>
+            </div>
+            <div class="stat">
+              <strong>Pr&oacute;ximo</strong>
+              <span>Intent catalog e endurecimento de fluxos sens&iacute;veis</span>
+            </div>
+          </div>
+        </article>
+      </div>
+      <details class="speaker-notes">
+        <summary>Notas de narra&ccedil;&atilde;o</summary>
+        <p>
+          Este slide serve para evitar o risco de a audi&ecirc;ncia entender o projeto como "chatbot solto". O argumento aqui &eacute;: o agente &eacute; deliberadamente restringido por dom&iacute;nio, permiss&otilde;es, visibilidade e auditoria. Isso preserva confiabilidade.
+        </p>
+      </details>
+    </section>
+
+    <section id="slide-8" class="slide" data-audience="user exec">
+      <div class="slide-grid">
+        <article class="panel">
+          <div class="eyebrow">Camada do usu&aacute;rio final</div>
+          <h2>Tutorial visual: como o usu&aacute;rio interage com o sistema</h2>
+          <div class="diagram-box">
+            <svg viewBox="0 0 1160 520" aria-label="Fluxo do usuário final">
+              <defs>
+                <marker id="arrowB" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto">
+                  <path d="M0,0 L10,5 L0,10 z" fill="#48624b"></path>
+                </marker>
+              </defs>
+              <rect x="60" y="110" width="170" height="88" rx="18" fill="#3d6d48" opacity="0.92"></rect>
+              <rect x="280" y="110" width="190" height="88" rx="18" fill="#1d4f5f" opacity="0.92"></rect>
+              <rect x="520" y="110" width="200" height="88" rx="18" fill="#d98f2b" opacity="0.92"></rect>
+              <rect x="770" y="110" width="190" height="88" rx="18" fill="#9d3c2f" opacity="0.92"></rect>
+              <rect x="990" y="110" width="120" height="88" rx="18" fill="#6d5a46" opacity="0.92"></rect>
+
+              <text x="145" y="145" text-anchor="middle" fill="#fff" font-size="22" font-weight="700">Usu&aacute;rio</text>
+              <text x="145" y="169" text-anchor="middle" fill="#fff" font-size="13">expressa o objetivo</text>
+              <text x="375" y="145" text-anchor="middle" fill="#fff" font-size="22" font-weight="700">Agente</text>
+              <text x="375" y="169" text-anchor="middle" fill="#fff" font-size="13">entende o contexto</text>
+              <text x="620" y="145" text-anchor="middle" fill="#fff" font-size="22" font-weight="700">Dom&iacute;nio</text>
+              <text x="620" y="169" text-anchor="middle" fill="#fff" font-size="13">restringe e valida</text>
+              <text x="865" y="145" text-anchor="middle" fill="#fff" font-size="22" font-weight="700">Micro-UI</text>
+              <text x="865" y="169" text-anchor="middle" fill="#fff" font-size="13">pede s&oacute; o que falta</text>
+              <text x="1050" y="145" text-anchor="middle" fill="#fff" font-size="22" font-weight="700">Resultado</text>
+              <text x="1050" y="169" text-anchor="middle" fill="#fff" font-size="13">resposta visual</text>
+
+              <line x1="230" y1="154" x2="280" y2="154" stroke="#48624b" stroke-width="5" marker-end="url(#arrowB)"></line>
+              <line x1="470" y1="154" x2="520" y2="154" stroke="#48624b" stroke-width="5" marker-end="url(#arrowB)"></line>
+              <line x1="720" y1="154" x2="770" y2="154" stroke="#48624b" stroke-width="5" marker-end="url(#arrowB)"></line>
+              <line x1="960" y1="154" x2="990" y2="154" stroke="#48624b" stroke-width="5" marker-end="url(#arrowB)"></line>
+
+              <rect x="160" y="290" width="840" height="140" rx="24" fill="#fff8f0" stroke="#d8c3a7"></rect>
+              <text x="580" y="330" text-anchor="middle" fill="#38424b" font-size="24" font-weight="700">Exemplo real de intera&ccedil;&atilde;o</text>
+              <text x="580" y="365" text-anchor="middle" fill="#4f5964" font-size="18">"Prepare o S-140 desta semana e destaque conflitos"</text>
+              <text x="580" y="395" text-anchor="middle" fill="#4f5964" font-size="16">O sistema identifica a semana, consulta a apostila, aplica regras, mostra preview e oferece pr&oacute;ximos passos.</text>
+            </svg>
+            <div class="caption">Fluxo pedag&oacute;gico para explicar a experi&ecirc;ncia do usu&aacute;rio final sem entrar em detalhes internos desnecess&aacute;rios.</div>
+          </div>
+        </article>
+      </div>
+      <details class="speaker-notes">
+        <summary>Notas de narra&ccedil;&atilde;o</summary>
+        <p>
+          Fale como se fosse um tutorial. A chave aqui &eacute; mostrar que o usu&aacute;rio n&atilde;o precisa pensar em tabela, banco, JSON ou menu t&eacute;cnico. Ele formula o que quer; o sistema localiza contexto, pede apenas o que falta e devolve uma resposta visual &uacute;til.
+        </p>
+      </details>
+    </section>
+
+    <section id="slide-9" class="slide" data-audience="user">
+      <div class="slide-grid double-grid">
+        <article class="panel">
+          <div class="eyebrow">Tutorial guiado</div>
+          <h2>Roteiro de uso em 5 passos</h2>
+          <ol style="margin:0; padding-left:20px; color:var(--muted); display:grid; gap:12px;">
+            <li>Entrar no sistema e abrir a aba Agente.</li>
+            <li>Escrever o objetivo de forma natural: designar, ver S-140, revisar propostas, bloquear data.</li>
+            <li>Observar o contexto ativo e as a&ccedil;&otilde;es sugeridas pelo sistema.</li>
+            <li>Se necess&aacute;rio, completar uma micro-UI curta com os dados faltantes.</li>
+            <li>Confirmar o resultado visual, o status atualizado e o pr&oacute;ximo passo.</li>
+          </ol>
+        </article>
+
+        <article class="panel">
+          <div class="eyebrow">Exemplos de pedidos</div>
+          <div class="chips">
+            <span class="chip user">"Mostre quem est&aacute; pendente de confirma&ccedil;&atilde;o"</span>
+            <span class="chip user">"Prepare o S-140 desta semana"</span>
+            <span class="chip user">"Bloqueie o irm&atilde;o para a data X"</span>
+            <span class="chip user">"Aprove a primeira proposta pendente"</span>
+          </div>
+          <p class="lead" style="margin-top:18px;">
+            O sistema responde com visualiza&ccedil;&otilde;es, listas, pr&eacute;-vias, chips, a&ccedil;&otilde;es p&oacute;s-resposta e microformul&aacute;rios m&iacute;nimos. A experi&ecirc;ncia deixa de ser "procurar a tela certa" e passa a ser "explicar a tarefa correta".
+          </p>
+        </article>
+      </div>
+      <details class="speaker-notes">
+        <summary>Notas de narra&ccedil;&atilde;o</summary>
+        <p>
+          Este slide pode ser lido quase como um mini treinamento. Se a apresenta&ccedil;&atilde;o for para uma audi&ecirc;ncia mais ampla, desacelere e d&ecirc; dois exemplos concretos, um de consulta e outro de a&ccedil;&atilde;o com confirma&ccedil;&atilde;o.
+        </p>
+      </details>
+    </section>
+
+    <section id="slide-10" class="slide" data-audience="exec tech user">
+      <div class="slide-grid double-grid">
+        <article class="panel">
+          <div class="eyebrow">Leitura honesta do momento</div>
+          <h2>Onde estamos agora</h2>
+          <ul class="clean">
+            <li>A vis&atilde;o est&aacute; muito bem consolidada documentalmente.</li>
+            <li>A camada sem&acirc;ntica j&aacute; ultrapassou a prova de conceito.</li>
+            <li>Os primeiros elementos de UX sem&acirc;ntica j&aacute; est&atilde;o no runtime.</li>
+            <li>Os boundaries de dom&iacute;nio est&atilde;o em processo de amadurecimento.</li>
+            <li>O principal trabalho agora &eacute; consolidar ergonomia, governan&ccedil;a e estabilidade.</li>
+          </ul>
+        </article>
+
+        <article class="panel">
+          <div class="eyebrow">Pr&oacute;ximo ciclo</div>
+          <ul class="clean">
+            <li>Fechar o ajuste remanescente da su&iacute;te de testes.</li>
+            <li>Aprofundar o cat&aacute;logo de intents tipadas.</li>
+            <li>Endurecer fluxos de rename, reimport e preview comparativo.</li>
+            <li>Expandir o tutorial e a comunica&ccedil;&atilde;o visual do usu&aacute;rio final.</li>
+            <li>Transformar a camada sem&acirc;ntica em padr&atilde;o operacional dominante.</li>
+          </ul>
+        </article>
+      </div>
+      <details class="speaker-notes">
+        <summary>Notas de narra&ccedil;&atilde;o</summary>
+        <p>
+          Feche este slide com credibilidade: o projeto est&aacute; adiantado, mas ainda n&atilde;o deve ser vendido como perfeito. O discurso correto &eacute; maturidade real com evolu&ccedil;&atilde;o em andamento, n&atilde;o triunfalismo vazio.
+        </p>
+      </details>
+    </section>
+
+    <section id="slide-11" class="slide" data-audience="exec tech user">
+      <div class="slide-grid">
+        <article class="panel">
+          <div class="eyebrow">Fecho</div>
+          <h2>Mensagem final</h2>
+          <p class="lead">
+            O RVM Designa&ccedil;&otilde;es n&atilde;o est&aacute; apenas adicionando IA a um sistema existente. Ele est&aacute; reorganizando a rela&ccedil;&atilde;o entre linguagem, dom&iacute;nio, interface e execu&ccedil;&atilde;o. Esse &eacute; o n&uacute;cleo do Intent-Driven Development aplicado a um problema real, com rigor arquitetural e progress&atilde;o operacional concreta.
+          </p>
+          <div class="chips">
+            <span class="chip exec">Valor organizacional</span>
+            <span class="chip tech">Disciplina de engenharia</span>
+            <span class="chip user">Experi&ecirc;ncia orientada &agrave; tarefa</span>
+          </div>
+          <p class="footer-note">Arquivo HTML aut&ocirc;nomo. Pode ser aberto diretamente em qualquer navegador moderno.</p>
+        </article>
+      </div>
+      <details class="speaker-notes">
+        <summary>Notas de narra&ccedil;&atilde;o</summary>
+        <p>
+          O encerramento deve soar firme e sereno. O melhor tom &eacute;: n&atilde;o estamos fazendo uma experi&ecirc;ncia de moda; estamos construindo uma nova superf&iacute;cie operacional, em que a inten&ccedil;&atilde;o humana ganha tradu&ccedil;&atilde;o segura, audit&aacute;vel e visualmente adequada.
+        </p>
+      </details>
+    </section>
+  </main>
+
+  <script>
+    (function () {
+      var body = document.body;
+      var toggleNotes = document.getElementById('toggleNotes');
+      var filterButtons = Array.prototype.slice.call(document.querySelectorAll('.filter-btn'));
+      var toggleDock = document.getElementById('toggleDock');
+      var presentationMode = document.getElementById('presentationMode');
+      var dockLauncher = document.getElementById('dockLauncher');
+      var controlsSide = document.getElementById('controlsSide');
+      var narrationMode = document.getElementById('narrationMode');
+      var voiceSelect = document.getElementById('voiceSelect');
+      var voiceRate = document.getElementById('voiceRate');
+      var voiceRateValue = document.getElementById('voiceRateValue');
+      var autoAdvance = document.getElementById('autoAdvance');
+      var playCurrentSlide = document.getElementById('playCurrentSlide');
+      var playAllSlides = document.getElementById('playAllSlides');
+      var pauseSpeech = document.getElementById('pauseSpeech');
+      var stopSpeech = document.getElementById('stopSpeech');
+      var voiceStatus = document.getElementById('voiceStatus');
+      var controlDock = document.querySelector('.control-dock');
+      var controlDockInner = document.querySelector('.control-dock-inner');
+      var techTipBubble = document.getElementById('techTipBubble');
+      var synth = window.speechSynthesis;
+      var availableVoices = [];
+      var playingAll = false;
+      var queuedSlides = [];
+      var currentUtterance = null;
+      var narrationDelayMs = 700;
+      var currentSpeechKind = 'idle';
+      var currentSpeechText = '';
+      var currentSpeechOffset = 0;
+      var currentSpeechContinueQueue = false;
+      var pausedNarrationState = null;
+      var activeTipButton = null;
+      var ignoreNextSpeechError = false;
+      var storageKeys = {
+        side: 'rvm-apresentacao-controls-side',
+        mode: 'rvm-apresentacao-mode',
+        dock: 'rvm-apresentacao-dock-collapsed'
+      };
+      var dockCollapsed = false;
+
+      var technicalTermDefinitions = {
+        'Intent-Driven Development': 'Intent-Driven Development é o modelo em que a intenção do usuário vira entrada operacional explícita do sistema, e não apenas um comentário informal.',
+        'IDD': 'IDD significa Intent-Driven Development. É a abordagem em que o sistema interpreta a intenção humana como comando de alto nível, mas sempre sob regras de domínio.',
+        'DDD': 'DDD significa Domain-Driven Design. É uma disciplina de engenharia que organiza o software em torno do domínio real, da linguagem do negócio e de fronteiras claras.',
+        'Zero UI': 'Zero UI é a ideia de reduzir a dependência de telas fixas. A resposta visual passa a nascer do contexto e da intenção, em vez de menus rígidos.',
+        'bounded contexts': 'Bounded contexts são fronteiras claras dentro do domínio. Cada contexto tem linguagem, regras e responsabilidades próprias, evitando ambiguidade.',
+        'Quick Action Chips': 'Quick Action Chips são atalhos visuais contextuais. Eles mostram ações prováveis para acelerar o próximo passo sem navegação extensa.',
+        'Slash Commands': 'Slash Commands são comandos rápidos acionados por barra, pensados para usuários avançados que querem produtividade e menor fricção.',
+        'Micro-UIs': 'Micro-UIs são pequenas interfaces focadas numa única intenção, usadas apenas quando falta um dado para concluir a ação com segurança.',
+        'Intents tipadas': 'Intents tipadas são intenções formalizadas com estrutura, validação e risco conhecidos. Elas tornam o fluxo mais auditável e previsível.',
+        'Intent catalog': 'Intent catalog é o catálogo organizado das intenções que o sistema sabe compreender, validar e executar com segurança.',
+        'React 19': 'React 19 é a biblioteca de interface usada no frontend. Ela organiza componentes e interações na camada visual da aplicação.',
+        'TypeScript': 'TypeScript é uma extensão tipada do JavaScript. Ele ajuda a reduzir erros e tornar contratos de código mais explícitos.',
+        'Vite': 'Vite é a ferramenta de desenvolvimento e build do frontend. Ela acelera o ambiente local e a geração do pacote final.',
+        'Supabase': 'Supabase é a plataforma usada como base de dados e serviços de apoio, incluindo persistência, autenticação e recursos em tempo real.',
+        'Permission gate': 'Permission gate é a barreira que verifica se uma ação pode ser descoberta ou executada por determinado perfil de usuário.',
+        'access level': 'Access level é o nível de acesso atribuído a um perfil ou dado. Ele determina o que pode ser visto ou operado.',
+        'boundary': 'Boundary é uma fronteira de responsabilidade no sistema. Ela separa o que cada serviço ou contexto pode fazer.',
+        'boundaries': 'Boundaries são fronteiras de responsabilidade entre partes do sistema, usadas para evitar mistura de regras e reduzir ambiguidade.',
+        'realtime': 'Realtime significa atualização em tempo real. O sistema consegue refletir mudanças importantes sem depender apenas de recarregamentos manuais.',
+        'Runtime': 'Runtime é o sistema rodando de verdade, em execução. É onde a arquitetura deixa de ser teoria e vira comportamento observável.',
+        'S-140': 'S-140, neste contexto, é uma visualização operacional usada no fluxo de designações para resumir informação relevante de forma acionável.',
+        'preview': 'Preview é uma prévia do resultado antes da confirmação final. Ele reduz risco ao permitir validação antecipada.',
+        'explainability': 'Explainability é a capacidade de o sistema explicar por que sugeriu ou executou algo, aumentando confiança e auditabilidade.',
+        'UX semântica': 'UX semântica é a experiência de uso orientada ao significado da tarefa, e não apenas à navegação por telas e menus.',
+        'Aba Agente': 'A aba Agente é a entrada semântica da aplicação. Ela concentra pedidos por intenção, sugestões e respostas operacionais.'
+      };
+
+      var executiveNarration = {
+        'slide-0': 'Antes de entrar no conteúdo, este slide mostra como usar a apresentação. Avance e volte com o teclado, use a narração pelo painel lateral, experimente os botões de tip com a letra i e, se preferir, ative o modo plateia para esconder os controles.',
+        'slide-1': 'Esta abertura resume a proposta inteira. O RVM Designações está deixando de ser apenas um software de apoio e está se tornando um sistema semântico de coordenação, capaz de servir liderança, equipe técnica e usuário final numa mesma visão.',
+        'slide-2': 'Para a liderança, o ganho principal é reduzir a distância entre intenção e execução. Isso significa mais previsibilidade, mais controle e menos dependência de navegação técnica para fazer a operação andar.',
+        'slide-3': 'A base conceitual combina domínio forte, intenção tratada como entrada operacional e uma interface progressivamente mais enxuta. Em termos simples: a pessoa explica a tarefa, o domínio restringe com segurança e o sistema responde com a forma adequada de agir.',
+        'slide-4': 'A evolução foi incremental. Primeiro veio a base semântica, depois discoverability, atalhos, contexto de conversa e microinterfaces orientadas à tarefa. O próximo passo é formalizar ainda mais as intents tipadas e a governança do fluxo.',
+        'slide-5': 'Tecnicamente, a arquitetura já saiu da abstração. Há fronteiras de serviço mais claras, uma aba agente com papel semântico real e uma organização que separa domínio, orquestração e resposta visual.',
+        'slide-6': 'O ciclo entre desenvolvedores e IA autônoma é disciplinado. A intenção humana define direção e critério; a IA acelera exploração, síntese e implementação; e o runtime devolve validação concreta.',
+        'slide-7': 'O agente não age solto. Ele é limitado por permissões, visibilidade, canal permitido, revalidação de execução e trilha de auditoria. Esse ponto é central para transformar IA em capacidade operacional confiável.',
+        'slide-8': 'Para o usuário final, a mudança é simples de entender. Em vez de procurar a tela certa, ele descreve a necessidade e recebe resposta visual, ação sugerida e, quando necessário, uma microinterface curta para completar o contexto.',
+        'slide-9': 'Este roteiro mostra o uso prático. Entrar, dizer o objetivo com linguagem natural, observar o contexto sugerido, completar só o que faltar e confirmar o resultado. A experiência fica mais direta e mais orientada à tarefa.',
+        'slide-10': 'O projeto já tem maturidade real, mas ainda está em consolidação. A direção está correta, o runtime já materializa a tese e o foco agora é fechar ergonomia, governança e estabilidade com mais rigor.',
+        'slide-11': 'A mensagem final é esta: não estamos apenas adicionando IA a uma aplicação existente. Estamos reorganizando a relação entre linguagem, domínio, interface e execução para operar melhor um problema real.'
+      };
+
+      var fullNarration = {
+        'slide-0': 'Vamos começar com uma demonstração guiada dos recursos desta apresentação. Primeiro, as teclas de seta e Page Up ou Page Down mostram sempre um slide inteiro. Segundo, o painel lateral controla a narração, o modo apresentador e o modo plateia. Terceiro, os botões com a letra i ao lado dos termos técnicos tocam uma explicação curta e, ao mesmo tempo, mostram uma micro-caixa textual para leitura silenciosa. Se um tip tocar durante a narração principal, a fala do slide pausa automaticamente e retoma quando o tip termina ou quando o mouse sai do botão.',
+        'slide-1': 'Vamos começar pela visão geral. Esta apresentação mostra como o RVM Designações evolui de um software de apoio para um sistema semântico de coordenação. A ideia é falar com três públicos ao mesmo tempo: liderança, engenharia e usuário final. Ao longo dos próximos slides, a mesma história vai aparecer em camadas, sempre conectando valor, arquitetura e operação.',
+        'slide-2': 'Na camada executiva, o ponto principal é reduzir a distância entre intenção ministerial e execução operacional. Em vez de depender de muita navegação, memória de tela e conhecimento tácito, o sistema passa a apoiar a coordenação com mais previsibilidade, mais rastreabilidade e menos atrito cognitivo. Isso traz clareza para agir, controle para governar e base para escalar sem perder disciplina.',
+        'slide-3': 'A tese conceitual combina três ideias. Primeiro, domínio forte, com linguagem ubíqua e fronteiras claras. Segundo, Intent-Driven Development, em que a intenção do usuário deixa de ser apenas um comentário informal e passa a ser tratada como entrada operacional. Terceiro, Zero UI progressiva, em que a interface fixa encolhe e a resposta contextual ganha protagonismo. Em resumo: a intenção entra, o domínio filtra e explica, e o sistema devolve a melhor forma de visualizar e executar.',
+        'slide-4': 'Essa transformação não foi pensada como ruptura abrupta. Ela foi construída em sprints semânticos. A base começou com contexto ativo e ações determinísticas. Depois vieram os chips de ação rápida, os slash commands, a persistência de foco na conversa e as microinterfaces por intenção. O próximo ciclo aprofunda intents tipadas, explainability, preview e governança de risco. Ou seja, a evolução é gradual, mas com direção conceitual consistente.',
+        'slide-5': 'Na camada técnica, a arquitetura atual já materializa essa visão. O frontend está em React com TypeScript e Vite. O Supabase sustenta dados, auditoria e sincronismo operacional. A aba Agente não funciona como um chat periférico genérico; ela atua como portal semântico para consulta, decisão e execução. E os serviços vêm sendo separados em boundaries mais nítidos para query, lifecycle, assignment, importação, mutação e gestão. Isso reduz ambiguidade e prepara o terreno para escala com controle.',
+        'slide-6': 'Este slide explica bem a dinâmica entre desenvolvedores e IA autônoma. O humano continua responsável pela tese, pelo critério e pela direção. A IA acelera exploração do problema, organização de opções, síntese de artefatos e implementação disciplinada. Depois disso, o runtime do produto serve como prova concreta do que realmente funciona. O valor não está em substituir juízo técnico, mas em comprimir tempo de análise e execução sem dissolver rigor.',
+        'slide-7': 'Aqui está um dos pontos mais importantes para credibilidade do projeto. O agente não opera acima do domínio; ele opera dentro das restrições do domínio. Descoberta, visibilidade, execução, canal e auditoria funcionam como camadas de contenção. Em termos práticos, o usuário só vê o que pode ver, só recebe ações compatíveis com seu perfil, e toda execução relevante pode ser revalidada e rastreada. Esse desenho é o que transforma IA em superfície segura de operação.',
+        'slide-8': 'Quando olhamos para o usuário final, a mudança fica muito concreta. Em vez de procurar menu, aba e tela corretos, a pessoa começa pela necessidade. O sistema interpreta o pedido, ativa o contexto, devolve visualização útil e, se faltar informação, abre apenas uma microinterface curta e objetiva. A experiência se torna mais semântica e menos burocrática. É uma mudança forte de ergonomia, mas sem perder segurança.',
+        'slide-9': 'Este é o slide mais próximo de um mini treinamento. O uso ideal é direto: abrir a aba Agente, escrever o objetivo de forma natural, observar o contexto ativo e as sugestões do sistema, preencher só o que faltar e confirmar o resultado. Os exemplos mostram bem isso. A lógica deixa de ser procurar a tela certa para cada tarefa e passa a ser explicar corretamente o que se deseja fazer.',
+        'slide-10': 'A leitura honesta do momento é positiva, mas sóbria. A visão está muito bem consolidada nos documentos e já ultrapassou o estágio de prova de conceito no runtime. Os primeiros elementos de UX semântica já estão funcionando, e os boundaries de domínio seguem amadurecendo. O trabalho mais importante agora é fechar ergonomia, governança, testes remanescentes e consistência operacional para transformar essa camada semântica no padrão dominante.',
+        'slide-11': 'Para encerrar, vale reforçar a ideia central. O RVM Designações não está apenas colocando uma camada de IA sobre um sistema existente. Ele está reorganizando a relação entre linguagem, domínio, interface e execução. Isso é o núcleo do Intent-Driven Development aplicado com responsabilidade a um problema real. O resultado esperado é uma operação mais legível, mais segura e mais alinhada com a intenção humana.'
+      };
+
+      function setVoiceStatus(message) {
+        voiceStatus.textContent = message;
+      }
+
+      function persistPreference(key, value) {
+        try {
+          window.localStorage.setItem(key, value);
+        } catch (error) {
+          // Ignore storage failures in local file contexts.
+        }
+      }
+
+      function readPreference(key, fallbackValue) {
+        try {
+          var value = window.localStorage.getItem(key);
+          return value === null ? fallbackValue : value;
+        } catch (error) {
+          return fallbackValue;
+        }
+      }
+
+      function setNotesButtonLabel() {
+        toggleNotes.textContent = body.classList.contains('notes-hidden')
+          ? 'Mostrar narração'
+          : 'Ocultar narração';
+      }
+
+      function applyDockState() {
+        var isAudience = presentationMode.value === 'audience';
+        body.classList.toggle('presentation-mode-audience', isAudience);
+        body.classList.toggle('presentation-mode-presenter', !isAudience);
+        body.classList.toggle('dock-collapsed', dockCollapsed && !isAudience);
+
+        if (isAudience) {
+          body.classList.add('notes-hidden');
+        }
+
+        setNotesButtonLabel();
+        toggleDock.textContent = body.classList.contains('dock-collapsed') || isAudience
+          ? 'Mostrar painel'
+          : 'Ocultar painel';
+        dockLauncher.textContent = isAudience ? 'Modo apresentador' : 'Mostrar painel';
+        fitControlDock();
+      }
+
+      function showTipBubble(button, text) {
+        if (!text) {
+          return;
+        }
+
+        techTipBubble.textContent = text;
+        techTipBubble.classList.add('visible');
+
+        var rect = button.getBoundingClientRect();
+        var bubbleRect = techTipBubble.getBoundingClientRect();
+        var top = rect.top - bubbleRect.height - 12;
+        var left = rect.right + 14;
+
+        if (left + bubbleRect.width > window.innerWidth - 14) {
+          left = rect.left - bubbleRect.width - 14;
+        }
+
+        if (left < 14) {
+          left = Math.max(14, rect.left);
+        }
+
+        if (top < 14) {
+          top = rect.bottom + 12;
+        }
+
+        if (top + bubbleRect.height > window.innerHeight - 14) {
+          top = Math.max(14, window.innerHeight - bubbleRect.height - 14);
+        }
+
+        techTipBubble.style.left = left + 'px';
+        techTipBubble.style.top = top + 'px';
+      }
+
+      function hideTipBubble() {
+        techTipBubble.classList.remove('visible');
+      }
+
+      function fitControlDock() {
+        if (!controlDock || !controlDockInner) {
+          return;
+        }
+
+        controlDockInner.style.zoom = '1';
+
+        var maxHeight = window.innerHeight - 52;
+        var innerHeight = controlDockInner.scrollHeight;
+        var scale = Math.min(1, maxHeight / Math.max(innerHeight, 1));
+        controlDockInner.style.zoom = String(Math.max(0.78, scale));
+      }
+
+      function fitSlidesToViewport() {
+        var slides = getSlides();
+        var availableWidth = window.innerWidth - parseFloat(getComputedStyle(body).getPropertyValue('--content-offset-left')) - parseFloat(getComputedStyle(body).getPropertyValue('--content-offset-right')) - 20;
+        var availableHeight = window.innerHeight - 32;
+
+        slides.forEach(function (slide) {
+          var grid = slide.querySelector('.slide-grid');
+          if (!grid) {
+            return;
+          }
+
+          grid.style.transform = 'none';
+          grid.style.zoom = '1';
+
+          var naturalWidth = grid.scrollWidth;
+          var naturalHeight = grid.scrollHeight;
+          var scale = Math.min(1, availableWidth / Math.max(naturalWidth, 1), availableHeight / Math.max(naturalHeight, 1));
+          scale = Math.max(0.7, scale);
+
+          grid.style.zoom = String(scale);
+          if (grid.style.zoom === '') {
+            grid.style.transform = 'scale(' + scale + ')';
+          }
+        });
+      }
+
+      function getCenteredSlideIndex() {
+        var slides = getSlides();
+        var centerLine = window.innerHeight * 0.5;
+        var selectedIndex = 0;
+
+        slides.forEach(function (slide, index) {
+          var rect = slide.getBoundingClientRect();
+          if (rect.top <= centerLine && rect.bottom >= centerLine) {
+            selectedIndex = index;
+          }
+        });
+
+        return selectedIndex;
+      }
+
+      function scrollToSlide(slide) {
+        if (!slide) {
+          return;
+        }
+
+        slide.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        if (slide.id) {
+          history.replaceState(null, '', '#' + slide.id);
+        }
+      }
+
+      function findDefinitionKey(term) {
+        var normalized = term.toLowerCase();
+        var keys = Object.keys(technicalTermDefinitions);
+        for (var index = 0; index < keys.length; index += 1) {
+          if (keys[index].toLowerCase() === normalized) {
+            return keys[index];
+          }
+        }
+        return null;
+      }
+
+      function escapeRegExp(value) {
+        return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      }
+
+      function annotateTechnicalTerms() {
+        var terms = Object.keys(technicalTermDefinitions).sort(function (left, right) {
+          return right.length - left.length;
+        });
+        var pattern = new RegExp('(' + terms.map(escapeRegExp).join('|') + ')', 'gi');
+        var walker = document.createTreeWalker(document.querySelector('main'), NodeFilter.SHOW_TEXT, {
+          acceptNode: function (node) {
+            if (!node.nodeValue || !node.nodeValue.trim()) {
+              return NodeFilter.FILTER_REJECT;
+            }
+
+            var parent = node.parentElement;
+            if (!parent) {
+              return NodeFilter.FILTER_REJECT;
+            }
+
+            if (parent.closest('.tech-term, button, a, select, option, svg, text, .speaker-notes')) {
+              return NodeFilter.FILTER_REJECT;
+            }
+
+            if (!pattern.test(node.nodeValue)) {
+              pattern.lastIndex = 0;
+              return NodeFilter.FILTER_REJECT;
+            }
+
+            pattern.lastIndex = 0;
+            return NodeFilter.FILTER_ACCEPT;
+          }
+        });
+
+        var textNodes = [];
+        while (walker.nextNode()) {
+          textNodes.push(walker.currentNode);
+        }
+
+        textNodes.forEach(function (node) {
+          var source = node.nodeValue;
+          var match;
+          var lastIndex = 0;
+          var fragment = document.createDocumentFragment();
+          var localPattern = new RegExp(pattern.source, 'gi');
+
+          while ((match = localPattern.exec(source)) !== null) {
+            var matchedText = match[0];
+            var key = findDefinitionKey(matchedText);
+            if (!key) {
+              continue;
+            }
+
+            if (match.index > lastIndex) {
+              fragment.appendChild(document.createTextNode(source.slice(lastIndex, match.index)));
+            }
+
+            var wrapper = document.createElement('span');
+            wrapper.className = 'tech-term';
+
+            var label = document.createElement('span');
+            label.className = 'tech-term-label';
+            label.textContent = matchedText;
+            wrapper.appendChild(label);
+
+            var button = document.createElement('button');
+            button.type = 'button';
+            button.className = 'tech-tip';
+            button.textContent = 'i';
+            button.setAttribute('aria-label', 'Ouvir explicação de ' + matchedText);
+            button.setAttribute('data-term-key', key);
+            button.setAttribute('aria-pressed', 'false');
+            wrapper.appendChild(button);
+
+            fragment.appendChild(wrapper);
+            lastIndex = match.index + matchedText.length;
+          }
+
+          if (lastIndex === 0) {
+            return;
+          }
+
+          if (lastIndex < source.length) {
+            fragment.appendChild(document.createTextNode(source.slice(lastIndex)));
+          }
+
+          node.parentNode.replaceChild(fragment, node);
+        });
+      }
+
+      function bindTechnicalTipEvents() {
+        var tipButtons = Array.prototype.slice.call(document.querySelectorAll('.tech-tip[data-term-key]'));
+
+        tipButtons.forEach(function (button) {
+          button.addEventListener('mouseenter', function () {
+            handleTipEnter(button);
+          });
+
+          button.addEventListener('mouseleave', function () {
+            handleTipLeave(button);
+          });
+
+          button.addEventListener('focus', function () {
+            handleTipEnter(button);
+          });
+
+          button.addEventListener('blur', function () {
+            handleTipLeave(button);
+          });
+
+          button.addEventListener('click', function (event) {
+            event.preventDefault();
+            handleTipEnter(button);
+          });
+        });
+      }
+
+      function buildSpeechUtterance(text, rate) {
+        var utterance = new SpeechSynthesisUtterance(text);
+        var selectedVoice = availableVoices[Number(voiceSelect.value)] || getPreferredVoice(availableVoices);
+
+        if (selectedVoice) {
+          utterance.voice = selectedVoice;
+          utterance.lang = selectedVoice.lang;
+        } else {
+          utterance.lang = 'pt-BR';
+        }
+
+        utterance.rate = rate;
+        utterance.pitch = 1.0;
+        utterance.volume = 1;
+
+        return utterance;
+      }
+
+      function rememberNarrationPosition(event) {
+        if (currentSpeechKind !== 'slide') {
+          return;
+        }
+
+        currentSpeechOffset = typeof event.charIndex === 'number'
+          ? event.charIndex
+          : currentSpeechOffset;
+      }
+
+      function captureNarrationState() {
+        if (currentSpeechKind !== 'slide' || !currentSpeechText) {
+          return null;
+        }
+
+        return {
+          text: currentSpeechText,
+          offset: Math.max(0, currentSpeechOffset - 24),
+          continueQueue: currentSpeechContinueQueue,
+          slide: getCurrentSlide()
+        };
+      }
+
+      function resumeNarrationAfterTip() {
+        if (!pausedNarrationState || !synth) {
+          return;
+        }
+
+        var state = pausedNarrationState;
+        pausedNarrationState = null;
+
+        if (!state.text || state.offset >= state.text.length) {
+          if (state.continueQueue) {
+            speakNextSlide();
+          }
+          return;
+        }
+
+        currentSpeechKind = 'slide';
+        currentSpeechText = state.text;
+        currentSpeechOffset = state.offset;
+        currentSpeechContinueQueue = state.continueQueue;
+
+        currentUtterance = buildSpeechUtterance(state.text.slice(state.offset), Number(voiceRate.value || 0.95));
+        currentUtterance.onboundary = function (event) {
+          rememberNarrationPosition({ charIndex: state.offset + event.charIndex });
+        };
+        currentUtterance.onend = function () {
+          currentUtterance = null;
+          currentSpeechKind = 'idle';
+          currentSpeechOffset = 0;
+          if (state.continueQueue) {
+            speakNextSlide();
+          } else {
+            setVoiceStatus('Narração retomada e concluída');
+          }
+        };
+        currentUtterance.onerror = function () {
+          currentUtterance = null;
+          currentSpeechKind = 'idle';
+          setVoiceStatus('Falha ao retomar narração');
+        };
+
+        if (state.slide) {
+          prepareNextSlideForNarration(state.slide);
+        }
+
+        setVoiceStatus('Retomando narração');
+        synth.speak(currentUtterance);
+      }
+
+      function clearTipButtons(activeButton) {
+        var tipButtons = Array.prototype.slice.call(document.querySelectorAll('.tech-tip[data-term-key]'));
+        tipButtons.forEach(function (item) {
+          item.setAttribute('aria-pressed', item === activeButton ? 'true' : 'false');
+        });
+      }
+
+      function speakTechnicalTip(termKey, button) {
+        if (!synth || !technicalTermDefinitions[termKey]) {
+          return;
+        }
+
+        clearTipButtons(button);
+        activeTipButton = button;
+
+        if (currentSpeechKind === 'slide' && (synth.speaking || synth.paused)) {
+          pausedNarrationState = captureNarrationState();
+        }
+
+        ignoreNextSpeechError = true;
+        synth.cancel();
+        pauseSpeech.textContent = 'Pausar';
+        currentSpeechKind = 'tip';
+        currentSpeechText = technicalTermDefinitions[termKey];
+        currentSpeechOffset = 0;
+        currentSpeechContinueQueue = false;
+        currentUtterance = buildSpeechUtterance(technicalTermDefinitions[termKey], Math.max(0.88, Number(voiceRate.value || 0.95) - 0.05));
+
+        setVoiceStatus('Tip: ' + termKey);
+
+        currentUtterance.onend = function () {
+          currentUtterance = null;
+          currentSpeechKind = 'idle';
+          if (!button.matches(':hover') && document.activeElement !== button) {
+            button.setAttribute('aria-pressed', 'false');
+            activeTipButton = null;
+            resumeNarrationAfterTip();
+          } else {
+            setVoiceStatus('Tip concluído');
+          }
+        };
+
+        currentUtterance.onerror = function () {
+          if (ignoreNextSpeechError) {
+            ignoreNextSpeechError = false;
+            return;
+          }
+
+          currentUtterance = null;
+          currentSpeechKind = 'idle';
+          button.setAttribute('aria-pressed', 'false');
+          activeTipButton = null;
+          setVoiceStatus('Falha ao reproduzir tip');
+          resumeNarrationAfterTip();
+        };
+
+        synth.speak(currentUtterance);
+      }
+
+      function stopTechnicalTip(button, shouldResume) {
+        if (button) {
+          button.setAttribute('aria-pressed', 'false');
+        }
+
+        if (currentSpeechKind === 'tip' && synth) {
+          ignoreNextSpeechError = true;
+          synth.cancel();
+        }
+
+        currentSpeechKind = 'idle';
+        activeTipButton = null;
+
+        if (shouldResume) {
+          resumeNarrationAfterTip();
+        }
+      }
+
+      function handleTipEnter(button) {
+        var termKey = button.getAttribute('data-term-key');
+        if (!termKey) {
+          return;
+        }
+
+        showTipBubble(button, technicalTermDefinitions[termKey]);
+
+        if (activeTipButton && activeTipButton !== button) {
+          stopTechnicalTip(activeTipButton, false);
+        }
+
+        speakTechnicalTip(termKey, button);
+      }
+
+      function handleTipLeave(button) {
+        hideTipBubble();
+        if (activeTipButton !== button && currentSpeechKind !== 'tip') {
+          return;
+        }
+
+        stopTechnicalTip(button, true);
+      }
+
+      function getSlides() {
+        return Array.prototype.slice.call(document.querySelectorAll('section.slide'));
+      }
+
+      function getCurrentSlide() {
+        var slides = getSlides();
+        var selected = slides[0] || null;
+
+        slides.forEach(function (slide) {
+          var rect = slide.getBoundingClientRect();
+          if (rect.top <= window.innerHeight * 0.35 && rect.bottom >= window.innerHeight * 0.35) {
+            selected = slide;
+          }
+        });
+
+        return selected;
+      }
+
+      function getPreferredVoice(voices) {
+        var preferenceOrder = [
+          'portuguese (brazil)',
+          'google português do brasil',
+          'microsoft francisca',
+          'microsoft maria',
+          'microsoft antonio',
+          'microsoft helios',
+          'português brasil',
+          'pt-br',
+          'pt_br',
+          'português',
+          'pt-pt',
+          'pt_pt'
+        ];
+
+        var ranked = voices.slice().sort(function (left, right) {
+          function score(voice) {
+            var name = ((voice.name || '') + ' ' + (voice.lang || '')).toLowerCase();
+            var total = 0;
+
+            preferenceOrder.forEach(function (token, index) {
+              if (name.indexOf(token) !== -1) {
+                total += 100 - index;
+              }
+            });
+
+            if (name.indexOf('female') !== -1 || name.indexOf('natural') !== -1 || name.indexOf('neural') !== -1) {
+              total += 20;
+            }
+
+            if ((voice.lang || '').toLowerCase().indexOf('pt') === 0) {
+              total += 25;
+            }
+
+            if (voice.localService) {
+              total += 5;
+            }
+
+            return total;
+          }
+
+          return score(right) - score(left);
+        });
+
+        return ranked[0] || null;
+      }
+
+      function populateVoices() {
+        if (!synth) {
+          setVoiceStatus('Narração indisponível neste navegador');
+          voiceSelect.innerHTML = '<option>Sem suporte</option>';
+          return;
+        }
+
+        availableVoices = synth.getVoices();
+        voiceSelect.innerHTML = '';
+
+        availableVoices.forEach(function (voice, index) {
+          var option = document.createElement('option');
+          option.value = String(index);
+          option.textContent = voice.name + ' (' + voice.lang + ')';
+          voiceSelect.appendChild(option);
+        });
+
+        var preferred = getPreferredVoice(availableVoices);
+        if (preferred) {
+          var preferredIndex = availableVoices.indexOf(preferred);
+          voiceSelect.value = String(preferredIndex);
+          setVoiceStatus('Voz sugerida: ' + preferred.name);
+        } else if (availableVoices.length > 0) {
+          setVoiceStatus('Selecione uma voz');
+        }
+      }
+
+      function extractNotesText(slide) {
+        if (!slide) {
+          return '';
+        }
+
+        var noteParagraphs = Array.prototype.slice.call(slide.querySelectorAll('.speaker-notes p'));
+        var text = noteParagraphs.map(function (paragraph) {
+          return paragraph.textContent.trim();
+        }).join(' ');
+
+        if (text) {
+          return text;
+        }
+
+        var title = slide.querySelector('h1, h2, h3');
+        var lead = slide.querySelector('.lead, .caption, p');
+        return [title ? title.textContent.trim() : '', lead ? lead.textContent.trim() : ''].join('. ');
+      }
+
+      function getNarrationText(slide) {
+        if (!slide) {
+          return '';
+        }
+
+        var mode = narrationMode.value;
+        var slideId = slide.id;
+
+        if (mode === 'executive' && executiveNarration[slideId]) {
+          return executiveNarration[slideId];
+        }
+
+        if (fullNarration[slideId]) {
+          return fullNarration[slideId];
+        }
+
+        return extractNotesText(slide);
+      }
+
+      function queueFromCurrentSlide(includeCurrent) {
+        var slides = getSlides();
+        var currentSlide = getCurrentSlide();
+        var startIndex = Math.max(slides.indexOf(currentSlide), 0);
+        return slides.slice(includeCurrent ? startIndex : startIndex + 1);
+      }
+
+      function prepareNextSlideForNarration(slide) {
+        if (!slide) {
+          return;
+        }
+
+        scrollToSlide(slide);
+      }
+
+      function stopNarration() {
+        playingAll = false;
+        queuedSlides = [];
+        currentUtterance = null;
+        currentSpeechKind = 'idle';
+        currentSpeechText = '';
+        currentSpeechOffset = 0;
+        currentSpeechContinueQueue = false;
+        pausedNarrationState = null;
+        if (synth) {
+          ignoreNextSpeechError = true;
+          synth.cancel();
+        }
+        pauseSpeech.textContent = 'Pausar';
+        setVoiceStatus('Narração parada');
+      }
+
+      function speakSlide(slide, continueQueue) {
+        if (!synth || !slide) {
+          return;
+        }
+
+        var text = getNarrationText(slide);
+        if (!text) {
+          if (continueQueue) {
+            speakNextSlide();
+          }
+          return;
+        }
+
+        ignoreNextSpeechError = true;
+        synth.cancel();
+        prepareNextSlideForNarration(slide);
+
+        currentSpeechKind = 'slide';
+        currentSpeechText = text;
+        currentSpeechOffset = 0;
+        currentSpeechContinueQueue = continueQueue;
+        currentUtterance = buildSpeechUtterance(text, Number(voiceRate.value || 0.95));
+        currentUtterance.onboundary = rememberNarrationPosition;
+
+        var title = slide.querySelector('h1, h2, h3');
+        setVoiceStatus(
+          (narrationMode.value === 'executive' ? 'Resumo executivo: ' : 'Narrando: ') +
+          (title ? title.textContent.trim() : slide.id)
+        );
+
+        currentUtterance.onend = function () {
+          currentUtterance = null;
+          currentSpeechKind = 'idle';
+          currentSpeechOffset = 0;
+          if (continueQueue) {
+            speakNextSlide();
+          } else {
+            setVoiceStatus('Narração concluída');
+          }
+        };
+
+        currentUtterance.onerror = function () {
+          if (ignoreNextSpeechError) {
+            ignoreNextSpeechError = false;
+            return;
+          }
+
+          currentUtterance = null;
+          currentSpeechKind = 'idle';
+          setVoiceStatus('Falha ao narrar este slide');
+          if (continueQueue) {
+            speakNextSlide();
+          }
+        };
+
+        synth.speak(currentUtterance);
+      }
+
+      function speakNextSlide() {
+        if (!playingAll) {
+          return;
+        }
+
+        if (queuedSlides.length === 0) {
+          playingAll = false;
+          setVoiceStatus('Apresentação narrada até o fim');
+          return;
+        }
+
+        var nextSlide = queuedSlides.shift();
+        prepareNextSlideForNarration(nextSlide);
+        window.setTimeout(function () {
+          speakSlide(nextSlide, true);
+        }, autoAdvance.checked ? narrationDelayMs : 0);
+      }
+
+      toggleNotes.addEventListener('click', function () {
+        body.classList.toggle('notes-hidden');
+        setNotesButtonLabel();
+      });
+
+      filterButtons.forEach(function (button) {
+        button.addEventListener('click', function () {
+          var layer = button.getAttribute('data-layer-target');
+          body.setAttribute('data-layer', layer);
+          filterButtons.forEach(function (item) {
+            item.classList.toggle('active', item === button);
+          });
+        });
+      });
+
+      controlsSide.addEventListener('change', function () {
+        body.setAttribute('data-controls-side', controlsSide.value);
+        persistPreference(storageKeys.side, controlsSide.value);
+      });
+
+      toggleDock.addEventListener('click', function () {
+        if (presentationMode.value === 'audience') {
+          presentationMode.value = 'presenter';
+          persistPreference(storageKeys.mode, presentationMode.value);
+        } else {
+          dockCollapsed = !dockCollapsed;
+          persistPreference(storageKeys.dock, dockCollapsed ? '1' : '0');
+        }
+
+        applyDockState();
+      });
+
+      dockLauncher.addEventListener('click', function () {
+        if (presentationMode.value === 'audience') {
+          presentationMode.value = 'presenter';
+          persistPreference(storageKeys.mode, presentationMode.value);
+        }
+
+        dockCollapsed = false;
+        persistPreference(storageKeys.dock, '0');
+        applyDockState();
+      });
+
+      presentationMode.addEventListener('change', function () {
+        persistPreference(storageKeys.mode, presentationMode.value);
+        applyDockState();
+      });
+
+      voiceRate.addEventListener('input', function () {
+        voiceRateValue.textContent = Number(voiceRate.value).toFixed(2) + 'x';
+      });
+
+      narrationMode.addEventListener('change', function () {
+        var label = narrationMode.value === 'executive'
+          ? 'Modo executivo selecionado'
+          : 'Modo completo selecionado';
+        setVoiceStatus(label);
+      });
+
+      playCurrentSlide.addEventListener('click', function () {
+        playingAll = false;
+        queuedSlides = [];
+        speakSlide(getCurrentSlide(), false);
+      });
+
+      playAllSlides.addEventListener('click', function () {
+        var currentSlide = getCurrentSlide();
+        queuedSlides = queueFromCurrentSlide(false);
+        playingAll = true;
+        speakSlide(currentSlide, true);
+      });
+
+      pauseSpeech.addEventListener('click', function () {
+        if (!synth) {
+          return;
+        }
+
+        if (synth.speaking && !synth.paused) {
+          synth.pause();
+          setVoiceStatus('Narração pausada');
+          pauseSpeech.textContent = 'Retomar';
+          return;
+        }
+
+        if (synth.paused) {
+          synth.resume();
+          setVoiceStatus('Narração retomada');
+          pauseSpeech.textContent = 'Pausar';
+        }
+      });
+
+      stopSpeech.addEventListener('click', function () {
+        pauseSpeech.textContent = 'Pausar';
+        stopNarration();
+      });
+
+      document.addEventListener('keydown', function (event) {
+        var slides = getSlides();
+        var currentIndex = getCenteredSlideIndex();
+
+        if (event.key === 'ArrowDown' || event.key === 'PageDown') {
+          var next = slides[Math.min(currentIndex + 1, slides.length - 1)];
+          scrollToSlide(next);
+        }
+
+        if (event.key === 'ArrowUp' || event.key === 'PageUp') {
+          var previous = slides[Math.max(currentIndex - 1, 0)];
+          scrollToSlide(previous);
+        }
+
+        if (event.key === ' ') {
+          event.preventDefault();
+          playCurrentSlide.click();
+        }
+
+        if (event.key.toLowerCase() === 's') {
+          event.preventDefault();
+          stopSpeech.click();
+        }
+
+        if (event.key.toLowerCase() === 'd') {
+          event.preventDefault();
+          toggleDock.click();
+        }
+      });
+
+      controlsSide.value = readPreference(storageKeys.side, body.getAttribute('data-controls-side') || 'right');
+      body.setAttribute('data-controls-side', controlsSide.value);
+      presentationMode.value = readPreference(storageKeys.mode, 'presenter');
+      dockCollapsed = readPreference(storageKeys.dock, '0') === '1';
+      annotateTechnicalTerms();
+      bindTechnicalTipEvents();
+      applyDockState();
+      fitSlidesToViewport();
+      scrollToSlide(document.querySelector(location.hash || '#slide-0'));
+
+      window.addEventListener('resize', function () {
+        fitControlDock();
+        fitSlidesToViewport();
+        hideTipBubble();
+      });
+
+      if ('speechSynthesis' in window) {
+        populateVoices();
+        if (speechSynthesis.onvoiceschanged !== undefined) {
+          speechSynthesis.onvoiceschanged = populateVoices;
+        }
+      } else {
+        setVoiceStatus('Seu navegador não oferece síntese de voz');
+      }
+    }());
+  </script>
+</body>
+</html>

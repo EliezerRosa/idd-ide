@@ -1,0 +1,3127 @@
+[
+  {
+    "start": 1.14,
+    "end": 9.86,
+    "text": "Aqui vamos usar o GEM para dar um suporte nessa fase do projeto."
+  },
+  {
+    "start": 9.86,
+    "end": 22.44,
+    "text": "Na fase do projeto que estamos, nós já temos desenvolvido aqui o modelos de relacionamento"
+  },
+  {
+    "start": 22.44,
+    "end": 33.32,
+    "text": "do nosso aplicativo de gerência de manutenção de retaugeração usando os princípios do"
+  },
+  {
+    "start": 33.32,
+    "end": 42.32,
+    "text": "ADD, que é desenvolvimento dirigido à intenção. Vamos usar aqui nessa aba do nosso"
+  },
+  {
+    "start": 42.32,
+    "end": 52.68,
+    "text": "sorvínio, que é estando de manutenção e refrigeração. Vamos usar o Google GEM, o GEM para a gente"
+  },
+  {
+    "start": 52.68,
+    "end": 58.56,
+    "text": "elaborar aqui alguns critérios interessantes para que não é desenvolvedor, especialmente,"
+  },
+  {
+    "start": 58.56,
+    "end": 68.5,
+    "text": "até aqui o que nós fizemos, o IDFiniolid requisiz, você pode até pedir ele aqui. Vamos botar aqui assim."
+  },
+  {
+    "start": 68.5,
+    "end": 80.67,
+    "text": "Se atualize sobre um estado atual para o projeto, o IDFiniolid requisiz, você pode até pedir"
+  },
+  {
+    "start": 81.11,
+    "end": 99.1,
+    "text": "dentro do software, que é o IDE. O IDE lembra o editor de programas, ele geral é só falar muito do"
+  },
+  {
+    "start": 99.1,
+    "end": 108.34,
+    "text": "Visual Code, que é da Microsoft, o Visual Studio, também da Microsoft, o mais parrudo. E esse aqui"
+  },
+  {
+    "start": 108.34,
+    "end": 120.1,
+    "text": "é o visual point do Google, esse é o Instagramite, o Instagramite e o IDE. O IDE é a siga para um"
+  },
+  {
+    "start": 120.1,
+    "end": 134.29,
+    "text": "ambiente, é uma plataforma de envolvimento, né? Interfácie de envolvimento e programas, né? Aí eu"
+  },
+  {
+    "start": 134.29,
+    "end": 141.49,
+    "text": "pedi, pedi lá e tava fazendo levantamento. Esse guide aqui é o banco de das mãos dos códigos,"
+  },
+  {
+    "start": 141.53,
+    "end": 147.73,
+    "text": "nós podemos ver qualquer coisa aqui, qualquer documento que o projeto é guardado. Quer dizer,"
+  },
+  {
+    "start": 147.73,
+    "end": 155.49,
+    "text": "tudo que você faz aqui nesse desenvolvimento de um aplicativo, ele guarda localmente no arquivo"
+  },
+  {
+    "start": 155.49,
+    "end": 162.81,
+    "text": "tipo Git, né? Um banquinho de dados. E ele pode depois subir para o que a gente vai falar,"
+  },
+  {
+    "start": 162.81,
+    "end": 169.69,
+    "text": "que é o repositor, né? Online permite que você veja tudo que você fez em qualquer"
+  },
+  {
+    "start": 169.69,
+    "end": 182.3,
+    "text": "momento do celular, que você fez em desenvolvimento de um aplicativo. Aí ele tá buscando aqui, né?"
+  },
+  {
+    "start": 182.3,
+    "end": 204.28,
+    "text": "O que ele tá fazendo aqui? O metaleta. Ele tá buscando aqui, ele tá buscando aqui todas as"
+  },
+  {
+    "start": 204.28,
+    "end": 210.56,
+    "text": "informações relativas ao trabalho que nós fizemos. Ele tava fazendo levantamento para ele mesmo"
+  },
+  {
+    "start": 210.56,
+    "end": 222.33,
+    "text": "falar. Pra quem tá começando, é sempre bom depois que quando voltar, porque embora já tenha memória"
+  },
+  {
+    "start": 222.33,
+    "end": 232.42,
+    "text": "e a ideia é esse tipo de arquivo que ela guardou, é uma refeiração do MindSpecMD. Essa ideia aqui"
+  },
+  {
+    "start": 233.42,
+    "end": 241.94,
+    "text": "é a especificação do projeto. Aí ele, nós vamos conversando com ele, definindo, ele guardou"
+  },
+  {
+    "start": 241.94,
+    "end": 255.05,
+    "text": "esse tipo de arquivo aqui no de Market. É, esse aqui é, eu vou mostrar aqui pra você que eu já"
+  },
+  {
+    "start": 255.05,
+    "end": 264.37,
+    "text": "acho que esse tipo de arquivo, mas é Makeup Data, se ele me faz aqui. Pelo tamanho de arquivo,"
+  },
+  {
+    "start": 264.37,
+    "end": 271.81,
+    "text": "entendeu? Vou aprender aqui por ele, né? Vamos abrir um outro conversa no canal para ver."
+  },
+  {
+    "start": 272.81,
+    "end": 283.86,
+    "text": "A gente pensa que ele vai perguntar aí, se você tem muito isolado, né? Significado da extensão"
+  },
+  {
+    "start": 285.86,
+    "end": 301.73,
+    "text": "de arquivo. Dot mt. Ok? Então, é um arquivo que ele tem padrão pra forçar a organização do texto"
+  },
+  {
+    "start": 301.73,
+    "end": 308.69,
+    "text": "e ele tem um, vamos ensinar com modo que as IA gostam deste arquivo para deixar mais ou"
+  },
+  {
+    "start": 308.69,
+    "end": 317.21,
+    "text": "menos arrumada, em linguagens natural para ela, para que é? Market Down. Tá? Você que, tá?"
+  },
+  {
+    "start": 317.21,
+    "end": 323.41,
+    "text": "Seria um arquivo de texto puro, de texto estruturado, como citax, Market Down. Citax é um padrão"
+  },
+  {
+    "start": 323.41,
+    "end": 328.77,
+    "text": "que como escrever. Uma linguagem leve, de marcação, eles chamam de braço de marcação,"
+  },
+  {
+    "start": 328.77,
+    "end": 333.21,
+    "text": "porque tem código que como 200, ali, ele deve ficar mais pra direita, mais pra esquerda,"
+  },
+  {
+    "start": 333.21,
+    "end": 342.09,
+    "text": "ser negrito, né? De outro formado. Foi criado em 2004, pra eu ser o aqui, o John Gruber."
+  },
+  {
+    "start": 342.09,
+    "end": 353.45,
+    "text": "O John Gruber e o Aaron Swartz. O Swartz, né? O Swartz. De um artigo central dele,"
+  },
+  {
+    "start": 353.49,
+    "end": 363.17,
+    "text": "de leite TV. Aí, por isso que o IA gosta desse formado. E esse formado tem tão padrão que dá pra ela mesmo"
+  },
+  {
+    "start": 363.17,
+    "end": 368.85,
+    "text": "criar um, quando a gente escreve alguma coisa mais leve aqui, ele cria. O que é importante lembrar disso?"
+  },
+  {
+    "start": 368.85,
+    "end": 376.93,
+    "text": "É só pra você lembrar que toda a equipe MD é tipo uma documentação. Ok? Qual que é que ele"
+  },
+  {
+    "start": 376.93,
+    "end": 381.77,
+    "text": "fez? Ele fez um levantamento, né? Nós estamos totalmente atualizados sobre os status"
+  },
+  {
+    "start": 381.77,
+    "end": 388.09,
+    "text": "do projeto dd, refrigeração. Aqui está a cita executiva, zo geral do propósito. Aí ele vai descrever"
+  },
+  {
+    "start": 388.09,
+    "end": 393.65,
+    "text": "daqui, tá vendo? Viz a criação de resolução, de questão operacional, para uma tensão têctrica,"
+  },
+  {
+    "start": 393.65,
+    "end": 401.09,
+    "text": "para um tipo coetivo, IP-BOC, aqui na legislação, sobre refrigeração. E refrigeração comercial"
+  },
+  {
+    "start": 401.09,
+    "end": 405.93,
+    "text": "e do estilo de participação. Segundo paradigma dd. Aí ele até reconheceu que eu estou tentando usar"
+  },
+  {
+    "start": 405.93,
+    "end": 414.62,
+    "text": "o paradigma dd. Dividindo o domínio de intenções e negócios, variantes e modelacionais."
+  },
+  {
+    "start": 414.66,
+    "end": 422.42,
+    "text": "A embora tenha um termo meio estranho, não se preocupe com o termo, não se preocupe. Essas"
+  },
+  {
+    "start": 422.42,
+    "end": 431.52,
+    "text": "coisas, esses concepto vão se assimilando a mim como fazendo a coisa da prática. Ok? Então aqui ele"
+  },
+  {
+    "start": 431.52,
+    "end": 436.76,
+    "text": "revisou tudo que foi feito. É sempre bom quando você voltar para editar. É como se você"
+  },
+  {
+    "start": 436.76,
+    "end": 444.76,
+    "text": "fizesse ele a criar um contexto, colocar a cabeça dele para funcionar de uma única vez. Aí ele"
+  },
+  {
+    "start": 444.76,
+    "end": 453.32,
+    "text": "resolve o contexto, o quadro inteiro. O que ele mesmo está vendendo você a fazer. Então aqui vai nos"
+  },
+  {
+    "start": 453.32,
+    "end": 462.72,
+    "text": "ajudar até a nós mesmos. 8 em 2. Evolução do escopo. Quer dizer, o escopo é a fronteira,"
+  },
+  {
+    "start": 462.72,
+    "end": 469.52,
+    "text": "os limites do que a gente quer devolver no projeto, desde que podia ter como ele colocou aqui. Nós"
+  },
+  {
+    "start": 469.52,
+    "end": 482.72,
+    "text": "conseguimos avançar para um projeto muito avançado, como ele voltou aqui, comercial, industrial."
+  },
+  {
+    "start": 482.72,
+    "end": 495.87,
+    "text": "Uma pequena empresa ou grande empresa? Então aqui ele lembrou que nós paramos para discutir o escopo."
+  },
+  {
+    "start": 496.55,
+    "end": 502.95,
+    "text": "Era muito grande e tal. Aí ele foi reduzir. É sempre bom você pode usar IA para mesmo"
+  },
+  {
+    "start": 502.95,
+    "end": 511.23,
+    "text": "ajudar você a entender o pedido do cliente, organizar o escopo para ele. Claro que tem"
+  },
+  {
+    "start": 511.23,
+    "end": 520.07,
+    "text": "que estar usando essa diretriz no modo simplificado. Mas vamos inclusive adotar a formalização das"
+  },
+  {
+    "start": 520.07,
+    "end": 527.43,
+    "text": "metodologias existentes para que a gente deixe a IA também mais focada e dentro dos limites,"
+  },
+  {
+    "start": 527.43,
+    "end": 533.23,
+    "text": "tanto do tipo de negócio que ele quer. O aplicativo que no caso aqui é uma intenção de defrieração,"
+  },
+  {
+    "start": 534.23,
+    "end": 545.99,
+    "text": "quanto também nas tecnologias que nós queremos usar para implementação. Então ele falou aqui"
+  },
+  {
+    "start": 545.99,
+    "end": 554.95,
+    "text": "que o operativo formal foi apresentado como uma coisa da legislação, o cenário frágil,"
+  },
+  {
+    "start": 554.95,
+    "end": 561.95,
+    "text": "tipo restação, a nova proposta para o Renato. Ele já teve uma apresentação até a licoza"
+  },
+  {
+    "start": 561.95,
+    "end": 569.0,
+    "text": "da apresentação, que legal. A apresentação, ele fez uma revisão e trouxe os links na"
+  },
+  {
+    "start": 569.0,
+    "end": 573.84,
+    "text": "apresentação. Eu achei legal essa ideia sempre de você pedir para ir no certos estados e fazer"
+  },
+  {
+    "start": 573.84,
+    "end": 578.28,
+    "text": "um testemunho, você vai estar dependendo para o usuário. Aqui ao mesmo tempo você tem uma"
+  },
+  {
+    "start": 578.28,
+    "end": 585.0,
+    "text": "visão boa do que você mesmo está fazendo nos comentários dele. Isso também ajuda ele a manter a"
+  },
+  {
+    "start": 585.0,
+    "end": 592.1,
+    "text": "memória. É como se ele fosse um equipe de desenvolvimento para você, mas você que está no"
+  },
+  {
+    "start": 592.1,
+    "end": 596.58,
+    "text": "domínio. É um conceito de governança que a gente vai discutir até mais da frente. Mas"
+  },
+  {
+    "start": 596.58,
+    "end": 603.46,
+    "text": "basicamente você está no futuro. Se você assistire os vídeos do canal, que eu passei um link,"
+  },
+  {
+    "start": 604.46,
+    "end": 617.02,
+    "text": "vai ter um conceito muito pesado, muito cadeira, como eu diria assim, e o histórico e tal. Mas lembro"
+  },
+  {
+    "start": 617.02,
+    "end": 624.94,
+    "text": "que os conceitos tendem a ser mais simples do que a implementação deles. E eles são um padrão"
+  },
+  {
+    "start": 624.94,
+    "end": 631.3,
+    "text": "que você chama de fractal. Fractal é quando você olha a cor do nível tão alto que você"
+  },
+  {
+    "start": 631.3,
+    "end": 638.18,
+    "text": "vê todos os conceitos e todos os contornos da coisa, sempre sabendo os detalhes. Mas o suficiente"
+  },
+  {
+    "start": 638.18,
+    "end": 646.32,
+    "text": "para que você descer, você não vai ficar perdido. É um conceito de mestre, mas é interessante."
+  },
+  {
+    "start": 646.32,
+    "end": 655.4,
+    "text": "Vocês percebem por aí o intuito fractal, o nível de abstração. Esse é usado em várias"
+  },
+  {
+    "start": 655.4,
+    "end": 660.44,
+    "text": "áreas. Mas é um conceito técnico que é interessante que é ver como que nós estamos fazendo aqui."
+  },
+  {
+    "start": 661.2,
+    "end": 666.48,
+    "text": "Uma pessoa que é liga em desenvolvimento do sistema e não precisa descer no nível de beat-bats,"
+  },
+  {
+    "start": 666.48,
+    "end": 672.76,
+    "text": "ou de uma linguagem específica, se eles souber trabalhar nesse nível de abstração, é tipo um"
+  },
+  {
+    "start": 672.76,
+    "end": 681.16,
+    "text": "fractal, que você abstrai tanto, que você não perde o domínio, mas não se perde também o"
+  },
+  {
+    "start": 681.16,
+    "end": 688.7,
+    "text": "detalhe. O domínio do todo, mas não se perde em detalhes. Aí aqui a arquitetura modelagem"
+  },
+  {
+    "start": 688.7,
+    "end": 693.98,
+    "text": "de tal, aqui claro, me precipitei um tiquinho, porque no sistema normandico eu ia detalhar"
+  },
+  {
+    "start": 693.98,
+    "end": 700.98,
+    "text": "essa especificação até desgotar. Mas aqui eu já perdi para ele fazer o modelo da derrassamento,"
+  },
+  {
+    "start": 700.98,
+    "end": 707.38,
+    "text": "que isso aqui nada mais é. Olha, ele também. Se você fizer uma apresentação, não é,"
+  },
+  {
+    "start": 707.38,
+    "end": 716.22,
+    "text": "não fica isso mesmo. Eu posso pedir para ele aqui, aquele feito a proposta inicial,"
+  },
+  {
+    "start": 716.22,
+    "end": 722.94,
+    "text": "que eu vou pedir para ele já que ele está nesse ADM apresentação, aqui que eu vou fazer."
+  },
+  {
+    "start": 722.94,
+    "end": 731.7,
+    "text": "Aqui ele deu os seus pastas, vai lidar com o cliente depois de criar um repositório que ele vai"
+  },
+  {
+    "start": 731.7,
+    "end": 741.78,
+    "text": "falar sobre isso, e a planta de pação, que é fazer as telas iniciadas. A primeira forma"
+  },
+  {
+    "start": 741.9,
+    "end": 750.42,
+    "text": "de eu usar, a gente apresentar para poder colher mais filhos do cliente, do objeto, do usuário"
+  },
+  {
+    "start": 750.42,
+    "end": 756.66,
+    "text": "alvo, para a gente ir reformando a proposta da aplicação de acordo com a necessidade da pessoa"
+  },
+  {
+    "start": 756.66,
+    "end": 763.1,
+    "text": "para que estamos projetando o aplicativo. Bem simples assim, a ideia é essa mesmo,"
+  },
+  {
+    "start": 763.1,
+    "end": 771.1,
+    "text": "mas é bom. Então vou pedir para ele aqui, olha. Vou tentar criar uma apresentação."
+  },
+  {
+    "start": 771.1,
+    "end": 809.18,
+    "text": "Quer uma apresentação para que pediu o projeto? Uma tração de composta com dez envolvedores"
+  },
+  {
+    "start": 809.18,
+    "end": 843.4,
+    "text": "em dois pios usuários, usuários especialistas na área, a área, gerência, na área de manutenção,"
+  },
+  {
+    "start": 843.4,
+    "end": 854.81,
+    "text": "bastante, tá? Vou dar para ele um avareio pelo mesmo aqui, vou regrir aqui, falando"
+  },
+  {
+    "start": 854.81,
+    "end": 874.52,
+    "text": "de um avareio, olha, puse o mesmo padrão, da última apresentação. Aqui eu já ganhei um tempo,"
+  },
+  {
+    "start": 874.52,
+    "end": 881.32,
+    "text": "porque ele vai verar como padrão da outra em termos de, os critérios a gente tenta como ele"
+  },
+  {
+    "start": 881.32,
+    "end": 891.62,
+    "text": "fazer, usar voz, aí vai. E nós temos os botões, né? Vocês estão lembrados, né? Esse aqui mesmo,"
+  },
+  {
+    "start": 891.62,
+    "end": 905.3,
+    "text": "esse aqui eu posso, porque ele salvou, a gente baixou ele, esse que pode vir aqui, esse eu"
+  },
+  {
+    "start": 905.3,
+    "end": 910.98,
+    "text": "posso criar uma apresentação, que você pode vir aqui, ele fez um lá, em HTML. HTML, basicamente,"
+  },
+  {
+    "start": 910.98,
+    "end": 917.46,
+    "text": "é igual a que descreve as telas que você vê por aí na internet, né? Então três tipos de"
+  },
+  {
+    "start": 917.46,
+    "end": 926.96,
+    "text": "compostos aqui. É o próprio HTML que eu coloco, que descreve a estrutura da pare, CSS,"
+  },
+  {
+    "start": 926.96,
+    "end": 939.2,
+    "text": "cosmas, que aparecem e o script que são pequenos procedimentos, né? Procedimento ser executado"
+  },
+  {
+    "start": 939.2,
+    "end": 946.88,
+    "text": "no contexto da página aí, em relação ao próprio página. Em relação ao botão,"
+  },
+  {
+    "start": 946.96,
+    "end": 959.36,
+    "text": "o que ele faz, né? Quando a gente... Aí esse aqui, nós abrimos, colocamos isso aqui,"
+  },
+  {
+    "start": 959.36,
+    "end": 977.84,
+    "text": "e a gente usa o que é propósito para brincar. A parte do arquivo para vir que é mais fácil."
+  },
+  {
+    "start": 980.61,
+    "end": 986.37,
+    "text": "Eu não sei o que tem aqui. Olha aqui no próximo, esse aqui. Se ele permitiu abrir aqui,"
+  },
+  {
+    "start": 990.37,
+    "end": 996.77,
+    "text": "vai abrir com, né? Então esse HTML é um programa desse tipo de negócio, né? Que vai botar"
+  },
+  {
+    "start": 996.77,
+    "end": 1001.49,
+    "text": "na tela, mas ela é muito rica. Com esses três, é o mesmo que eu falei pra você, né?"
+  },
+  {
+    "start": 1001.49,
+    "end": 1008.33,
+    "text": "O próprio script, que é o HTML que foi tido com a CSS, que é a cosmética da"
+  },
+  {
+    "start": 1008.89,
+    "end": 1018.81,
+    "text": "página, e o script que é o microprocedimento da página. É bom, não abricou. Eu vou"
+  },
+  {
+    "start": 1018.81,
+    "end": 1032.44,
+    "text": "abricô e não me ajudou. Aqui ele é cada de todos os seus sandãos. Eu vou fazer o seguinte,"
+  },
+  {
+    "start": 1032.44,
+    "end": 1038.92,
+    "text": "eu vou direto aqui, então tentando me lembrar como é que faz aqui para poder executar ele,"
+  },
+  {
+    "start": 1038.92,
+    "end": 1045.91,
+    "text": "galera. Eu vou abrir aqui a parte que ele... Vou pra gente dita."
+  },
+  {
+    "start": 1049.11,
+    "end": 1062.2,
+    "text": "Eu vou ver que aqui tá andando gringo. Aqui ele deu a boca aqui. É a primeira ação."
+  },
+  {
+    "start": 1062.2,
+    "end": 1071.75,
+    "text": "Eu não sei o que é isso aqui. Nesteinho, tem aqui as aparentações lá dentro, né?"
+  },
+  {
+    "start": 1073.03,
+    "end": 1080.31,
+    "text": "Vamos pegar essa aqui, que foi a simplificada que dá vindo, né? Aqui vou atar a canjão,"
+  },
+  {
+    "start": 1080.31,
+    "end": 1086.71,
+    "text": "vou atar... Aqui é a simplificada. Aqui eu já tô no bendo o índio, se eu clicar aqui ele vai"
+  },
+  {
+    "start": 1086.71,
+    "end": 1092.55,
+    "text": "executar esse programa lá. E executa aqui. Vai ele aqui."
+  },
+  {
+    "start": 1092.55,
+    "end": 1098.55,
+    "text": "É aquele cara pra entrar como algum, ele vai seguir esse padrão aqui, tá vendo?"
+  },
+  {
+    "start": 1098.55,
+    "end": 1105.43,
+    "text": "Ele volta aqui com o voo, né? Tá, vai até eu entrar aqui só pra relembrar, né?"
+  },
+  {
+    "start": 1106.07,
+    "end": 1111.19,
+    "text": "E ele se obrigou a estar escondendo a área da tela que eu pedi, né?"
+  },
+  {
+    "start": 1112.71,
+    "end": 1120.95,
+    "text": "Olá, Renato. Esta é a nova proposta de gestão de refrigeração desenhada exatamente para a sua"
+  },
+  {
+    "start": 1120.95,
+    "end": 1129.67,
+    "text": "decisão estratégica. Nosso objetivo agora é focar naquilo que realmente importa no dia a dia,"
+  },
+  {
+    "start": 1129.67,
+    "end": 1138.23,
+    "text": "simplicidade, agilidade em campo, zero papel e entrega. Ok, é aí. Nós queremos então que ele"
+  },
+  {
+    "start": 1138.23,
+    "end": 1144.39,
+    "text": "crie uma apresentação desse padrão, sabe? Que é isso daqui. Aí ele vai ganhar tempo,"
+  },
+  {
+    "start": 1144.39,
+    "end": 1148.55,
+    "text": "porque aqui ele vai usar todas as persocações que está lá. Na verdade, esse é o porcento de"
+  },
+  {
+    "start": 1148.55,
+    "end": 1155.67,
+    "text": "em variante. São regras que você vai criando, que vai limitando naquele ano de vargem,"
+  },
+  {
+    "start": 1155.67,
+    "end": 1166.66,
+    "text": "tá vendo? Então, vamos deixar ele criar a apresentação. Eu falei aqui para equipar o projeto."
+  },
+  {
+    "start": 1166.66,
+    "end": 1186.46,
+    "text": "Vou especificar a apresentação de que, né? Do Mer, né? Do Mer, né, assim, sabe? Aí diga ele aqui,"
+  },
+  {
+    "start": 1186.46,
+    "end": 1205.59,
+    "text": "tem muito padrão, outra regra, ó. É, a relação dos, vou estar mais específico, das tabelas,"
+  },
+  {
+    "start": 1205.59,
+    "end": 1226.84,
+    "text": "que são tabelas, né? Nós só voltamos aqui para você ver. Estabelas, né? São como fosse planilhas,"
+  },
+  {
+    "start": 1226.84,
+    "end": 1235.93,
+    "text": "né? A verdade, no banco de dados, ele trabalha com tabela. Aí as tabelas têm os campos,"
+  },
+  {
+    "start": 1236.01,
+    "end": 1242.01,
+    "text": "a descrição, né? Aquela edificação de uma linha do registro, né? O edificação do cliente,"
+  },
+  {
+    "start": 1242.01,
+    "end": 1249.13,
+    "text": "a data de início do contrato com a empresa, data com o FII, né? Ah, esse aqui é a frequência,"
+  },
+  {
+    "start": 1249.13,
+    "end": 1254.89,
+    "text": "aí é aquela questão de legislação, nesse talto PMOC aqui. Enquanto o tempo tem que ser revisado, né?"
+  },
+  {
+    "start": 1254.89,
+    "end": 1260.17,
+    "text": "A legislação equipamento dentro da récorda, não, por exemplo, é equipamento de registro, eu creio."
+  },
+  {
+    "start": 1261.13,
+    "end": 1269.29,
+    "text": "E aqui o status do contrato da TIN. Aqui são os tipos de dados que o banco de dados vai colocar,"
+  },
+  {
+    "start": 1269.29,
+    "end": 1273.45,
+    "text": "né? Isso aqui tudo ele pode fazer para o talento, né? Você sabe o que é isso inteiro,"
+  },
+  {
+    "start": 1273.45,
+    "end": 1279.69,
+    "text": "aqui é data, esse aqui é boleano, assim ou não. Esse aqui é tipo uma identidade universal,"
+  },
+  {
+    "start": 1279.69,
+    "end": 1288.41,
+    "text": "né? PK, esse aqui é o normal de projeto também, mas é inglês, né? Chave primário,"
+  },
+  {
+    "start": 1288.41,
+    "end": 1294.25,
+    "text": "que o foreign, que o estrangeiro quer dizer. Esse aqui tem que ser registro, registro."
+  },
+  {
+    "start": 1294.25,
+    "end": 1302.73,
+    "text": "Em cada registro, esse aqui tem o ID, se apara, identidade, né? E o cliente de, porque esse"
+  },
+  {
+    "start": 1302.73,
+    "end": 1308.81,
+    "text": "contrato é quando é terminado o cliente. O cliente está aqui, é uma tabela, né? Que vai ter os"
+  },
+  {
+    "start": 1308.81,
+    "end": 1312.97,
+    "text": "dados dele, ele vai discutir e por ele. Mas ele já pegou o que ele tinha. Ele sabe que vai ter"
+  },
+  {
+    "start": 1313.05,
+    "end": 1320.04,
+    "text": "um detalhe, só que ele não detalhou os dados do cliente, né? E talvez ele apenas use a prova de"
+  },
+  {
+    "start": 1320.04,
+    "end": 1325.88,
+    "text": "tabela contrata para definir cliente, tipo assim. Porque ele está aqui, talvez isso aqui para ele"
+  },
+  {
+    "start": 1325.88,
+    "end": 1332.68,
+    "text": "seja o suficiente. Ou ele usou um tabela cliente. Enfim, esse modelo é um modelo que ele definiu"
+  },
+  {
+    "start": 1332.68,
+    "end": 1338.2,
+    "text": "para o nosso pesquisar sobre o feito. Então, que nós queríamos, tá vendo? A gente tem um técnico,"
+  },
+  {
+    "start": 1339.16,
+    "end": 1344.6,
+    "text": "tá vendo? Aí eu vou pedir para ele, qualquer relação das tabelas"
+  },
+  {
+    "start": 1346.44,
+    "end": 1359.54,
+    "text": "não é? Badados com os objetivos, olha lá, no projeto."
+  },
+  {
+    "start": 1359.54,
+    "end": 1405.4,
+    "text": "Tá vendo? Vamos ver o que é que sai aí. Diga ao tio, diga ao tio, tá vivendo aí?"
+  },
+  {
+    "start": 1405.4,
+    "end": 1412.39,
+    "text": "Tá só na foto."
+  },
+  {
+    "start": 1412.39,
+    "end": 1424.44,
+    "text": "Vê aí. Tudo bem? Eu vou aqui gravando ao vivo com o futuro desenvolvedor de aplicativos"
+  },
+  {
+    "start": 1425.16,
+    "end": 1437.27,
+    "text": "não técnicos. Eu estou aqui gravando. Eu vou compartilhar com você aqui."
+  },
+  {
+    "start": 1437.27,
+    "end": 1439.83,
+    "text": "Eu estou gravando aqui."
+  },
+  {
+    "start": 1439.83,
+    "end": 1449.35,
+    "text": "Eu vou mostrar para você aqui. Eu estou gravando aqui um vídeo"
+  },
+  {
+    "start": 1449.35,
+    "end": 1463.53,
+    "text": "conduzindo o projeto junto com o próprio Integrapt.dr, né?"
+  },
+  {
+    "start": 1463.53,
+    "end": 1465.53,
+    "text": "Produzindo um projeto."
+  },
+  {
+    "start": 1465.53,
+    "end": 1481.64,
+    "text": "E assim eu estou com tanto problema aqui na nossa máquina, o que eu não sei se ele vai"
+  },
+  {
+    "start": 1481.64,
+    "end": 1489.8,
+    "text": "aguentar, mas olha lá. Aqui nós paramos, né?"
+  },
+  {
+    "start": 1489.8,
+    "end": 1497.8,
+    "text": "Aí eu introduzi o aqui com ele, pedindo para ele se atualizar sobre o estado do"
+  },
+  {
+    "start": 1497.8,
+    "end": 1505.8,
+    "text": "Brasil. Aí ele fez o levantamento, que eu estava falando daqui a pouco, que é sempre bom"
+  },
+  {
+    "start": 1505.8,
+    "end": 1511.8,
+    "text": "e quando você voltar depois de um período de ausência, você pedir para ele se"
+  },
+  {
+    "start": 1511.8,
+    "end": 1515.8,
+    "text": "producionar, porque aí ele mesmo falta revisão e você também faz. Aí ele fez"
+  },
+  {
+    "start": 1515.8,
+    "end": 1521.8,
+    "text": "a revisão aqui do que já foi feito, a primeira proposta, a segunda, inclusive"
+  },
+  {
+    "start": 1521.8,
+    "end": 1525.8,
+    "text": "as apresentações que ele fez, eu estava comentando aqui e depois que eu"
+  },
+  {
+    "start": 1525.8,
+    "end": 1529.8,
+    "text": "falei, eu estava comentando que nada mais é que eu expliquei antes, nada mais é"
+  },
+  {
+    "start": 1529.8,
+    "end": 1535.8,
+    "text": "do que as tabelas que você construiu no mortidário desse aplicativo, que pode ser"
+  },
+  {
+    "start": 1535.8,
+    "end": 1539.8,
+    "text": "enquanto você vai discutir que tem a tecnologia que vamos usar, se é local, né?"
+  },
+  {
+    "start": 1539.8,
+    "end": 1543.8,
+    "text": "É tipo assim, um fone, um sistema que só de único usuário, que a gente"
+  },
+  {
+    "start": 1543.8,
+    "end": 1547.8,
+    "text": "tem tudo no celular dele, você vai ser da nuvem, vai ser compartilhado."
+  },
+  {
+    "start": 1547.8,
+    "end": 1553.8,
+    "text": "São tabelas. Tabela é muito parecida com a planilha. Tem linhas, colunas,"
+  },
+  {
+    "start": 1553.8,
+    "end": 1559.98,
+    "text": "né? Conceito o mesmo. Leandro?"
+  },
+  {
+    "start": 1559.98,
+    "end": 1565.98,
+    "text": "Então o que nós temos aqui nessa gravação aqui,"
+  },
+  {
+    "start": 1565.98,
+    "end": 1571.98,
+    "text": "nesse vídeo, eu pedi para ele aproveitar e"
+  },
+  {
+    "start": 1571.98,
+    "end": 1577.98,
+    "text": "fazer uma, ele fez, ele relebrou o que ele fez, né? E eu pedi para ele"
+  },
+  {
+    "start": 1577.98,
+    "end": 1581.98,
+    "text": "criar uma apresentação no mundo, ele é lançamento para a equipe do"
+  },
+  {
+    "start": 1581.98,
+    "end": 1585.98,
+    "text": "projeto, composta por desenvolvedores e usuários especialistas da área de"
+  },
+  {
+    "start": 1585.98,
+    "end": 1591.98,
+    "text": "mantemção, como se tivesse um equipa para resolver e os usuários, que é o Renato"
+  },
+  {
+    "start": 1591.98,
+    "end": 1597.98,
+    "text": "e outros, né? Aí eu dei duas em variante para ele, que é, use o mesmo padrão da"
+  },
+  {
+    "start": 1597.98,
+    "end": 1601.98,
+    "text": "uma apresentação, que aí eu comentei antes que a apresentação foi feita de certo"
+  },
+  {
+    "start": 1601.98,
+    "end": 1607.98,
+    "text": "modo, né? E no dois, eu pedi para ele focar a relação das tabelas"
+  },
+  {
+    "start": 1607.98,
+    "end": 1613.98,
+    "text": "de dados com os objetivos do projeto. Aí ele fez a apresentação, tá vendo?"
+  },
+  {
+    "start": 1613.98,
+    "end": 1619.98,
+    "text": "Show! Aí vamos dar aqui para ele terminar."
+  },
+  {
+    "start": 1619.98,
+    "end": 1623.98,
+    "text": "Vamos aproveitar e ver a apresentação desses dados aqui. Olha, lembra como está"
+  },
+  {
+    "start": 1623.98,
+    "end": 1629.98,
+    "text": "dito no início do vídeo? Que aqui são os campos, os dados, né?"
+  },
+  {
+    "start": 1629.98,
+    "end": 1633.98,
+    "text": "Na linha só que como fossem os colunas na minha planilha, né?"
+  },
+  {
+    "start": 1633.98,
+    "end": 1637.98,
+    "text": "E aqui são os tipos de dados, né?"
+  },
+  {
+    "start": 1637.98,
+    "end": 1641.98,
+    "text": "Tá vendo?"
+  },
+  {
+    "start": 1641.98,
+    "end": 1645.98,
+    "text": "Pronto aí. Ele já editou até esse arquivo aqui"
+  },
+  {
+    "start": 1645.98,
+    "end": 1649.98,
+    "text": "pelo pequeno início do vídeo, que ele tem um banco local chamado Git,"
+  },
+  {
+    "start": 1649.98,
+    "end": 1653.98,
+    "text": "onde ele guarda tudo o que você fizer em termos do código, né?"
+  },
+  {
+    "start": 1653.98,
+    "end": 1657.98,
+    "text": "Com documentação do projeto. Eu confio não que esses termos"
+  },
+  {
+    "start": 1657.98,
+    "end": 1661.98,
+    "text": "vão aparecer assim e vão usar ele mais de uma vez, você vai pegar um sentido"
+  },
+  {
+    "start": 1661.98,
+    "end": 1665.98,
+    "text": "e lá na frente, feito alguma coisa concreta,"
+  },
+  {
+    "start": 1665.98,
+    "end": 1669.98,
+    "text": "ele vai voltar para esses termos para ver a definição técnica dele"
+  },
+  {
+    "start": 1669.98,
+    "end": 1673.98,
+    "text": "e como você pode expandir, né? Prometendo a internet aí."
+  },
+  {
+    "start": 1673.98,
+    "end": 1677.98,
+    "text": "Aí, no seguinte, ele tem um arquivo rígido, que é o arquivo que descreve."
+  },
+  {
+    "start": 1677.98,
+    "end": 1683.98,
+    "text": "Olha, no TPMD, que eu falo no NICMD, né?"
+  },
+  {
+    "start": 1683.98,
+    "end": 1689.98,
+    "text": "É o Market. É o Market que ela não quer deu aqui na IA."
+  },
+  {
+    "start": 1689.98,
+    "end": 1693.98,
+    "text": "É o Market, não. Eu sempre esqueço. Esse Md aqui, tipo Md,"
+  },
+  {
+    "start": 1693.98,
+    "end": 1697.98,
+    "text": "tem ponto que vem a seguir, é um tipo de arquivo, né?"
+  },
+  {
+    "start": 1697.98,
+    "end": 1701.98,
+    "text": "Ele já deve ter visto aí, o Luindo do Astrolaura, né?"
+  },
+  {
+    "start": 1701.98,
+    "end": 1705.98,
+    "text": "Quando é JPEG, MP4, né?"
+  },
+  {
+    "start": 1705.98,
+    "end": 1709.98,
+    "text": "São tipos. Esse aqui, tipo Md, é um que é assim."
+  },
+  {
+    "start": 1709.98,
+    "end": 1713.98,
+    "text": "Esse tipo de linguagem que o cara inventou para definir"
+  },
+  {
+    "start": 1713.98,
+    "end": 1717.98,
+    "text": "desde documentação, ele gera série de recursos para estruturar"
+  },
+  {
+    "start": 1717.98,
+    "end": 1721.98,
+    "text": "esse jogo da velha, coloca um esquema assim,"
+  },
+  {
+    "start": 1721.98,
+    "end": 1725.98,
+    "text": "uma outra coisa, para ficar assim arrumadio, né? Com um pouco, com estáx."
+  },
+  {
+    "start": 1725.98,
+    "end": 1729.98,
+    "text": "Esse rígido é um padrão"
+  },
+  {
+    "start": 1729.98,
+    "end": 1733.98,
+    "text": "para quando você faz um projeto de envolvimento."
+  },
+  {
+    "start": 1733.98,
+    "end": 1737.98,
+    "text": "Queria ser um arquivo chamado Rhythmia, que é Leia Mi, né?"
+  },
+  {
+    "start": 1737.98,
+    "end": 1741.98,
+    "text": "Que dá o idêndo com a intenção do projeto, tá vendo?"
+  },
+  {
+    "start": 1741.98,
+    "end": 1745.98,
+    "text": "E o que compõe ele? Tem um diarais."
+  },
+  {
+    "start": 1745.98,
+    "end": 1749.98,
+    "text": "Ele analisou com essa apresentação e criou uma apresentação."
+  },
+  {
+    "start": 1749.98,
+    "end": 1753.98,
+    "text": "Vamos aproveitar, vamos ver a apresentação, deixa eu terminar aqui."
+  },
+  {
+    "start": 1753.98,
+    "end": 1756.98,
+    "text": "Aí ele está utilizando esses arquivos no"
+  },
+  {
+    "start": 1756.98,
+    "end": 1761.98,
+    "text": "GIST, quer dizer, o Banco da Local, que vai ter tudo que nós fizemos nesse projeto."
+  },
+  {
+    "start": 1761.98,
+    "end": 1765.98,
+    "text": "Aí depois você vai ver um vídeo,"
+  },
+  {
+    "start": 1765.98,
+    "end": 1769.98,
+    "text": "esse vídeo aqui, você vai ver um vídeo com a apresentação no meio, né?"
+  },
+  {
+    "start": 1769.98,
+    "end": 1773.98,
+    "text": "Certo?"
+  },
+  {
+    "start": 1773.98,
+    "end": 1777.98,
+    "text": "Você pode sempre rever todos os vídeos, no primeiro, segundo, terceiro,"
+  },
+  {
+    "start": 1777.98,
+    "end": 1781.98,
+    "text": "vai ver tudo. Aí os temas que achar, assim,"
+  },
+  {
+    "start": 1781.98,
+    "end": 1785.98,
+    "text": "esse tema aí, não entendi, você escreve, não se preocupe não."
+  },
+  {
+    "start": 1785.98,
+    "end": 1789.98,
+    "text": "É mais importante a gente entender abstratamente o que estamos fazendo,"
+  },
+  {
+    "start": 1789.98,
+    "end": 1793.98,
+    "text": "os conceitos e os princípios aqui, depois, aparecendo."
+  },
+  {
+    "start": 1793.98,
+    "end": 1797.98,
+    "text": "Mas se você quiser voltar a entrar na internet e ver o que que é GIST, o que que é isso?"
+  },
+  {
+    "start": 1797.98,
+    "end": 1801.98,
+    "text": "Às vezes é ruim porque é uma enxurrada de coisa, né?"
+  },
+  {
+    "start": 1801.98,
+    "end": 1805.98,
+    "text": "Eu estava falando antes do vídeo do conceito de fractal,"
+  },
+  {
+    "start": 1805.98,
+    "end": 1809.98,
+    "text": "que é você se abstrair, qualquer era de conhecimento, se você desce muito,"
+  },
+  {
+    "start": 1809.98,
+    "end": 1813.98,
+    "text": "ele fica perdido nos detalhes. Mas tem uma forma de você subir"
+  },
+  {
+    "start": 1813.98,
+    "end": 1817.98,
+    "text": "na abstração, você tem consciência do todo, mas sem se perder nos detalhes."
+  },
+  {
+    "start": 1817.98,
+    "end": 1821.98,
+    "text": "Aí os detalhes se descem quando correm, entendeu?"
+  },
+  {
+    "start": 1821.98,
+    "end": 1827.26,
+    "text": "O que nós estamos fazendo aqui é"
+  },
+  {
+    "start": 1827.26,
+    "end": 1831.26,
+    "text": "vivenciando uma prática como fazer um projeto sem mexer em código,"
+  },
+  {
+    "start": 1831.26,
+    "end": 1835.26,
+    "text": "mas vamos fazer a A, construir um código decente."
+  },
+  {
+    "start": 1835.26,
+    "end": 1838.26,
+    "text": "Não é pedaço de código, né?"
+  },
+  {
+    "start": 1838.26,
+    "end": 1841.26,
+    "text": "Da internet eles chamam de vibe code, né?"
+  },
+  {
+    "start": 1841.26,
+    "end": 1845.26,
+    "text": "Aí tem outras teclas também, mas aqui nós estamos seguindo um critério"
+  },
+  {
+    "start": 1845.26,
+    "end": 1848.26,
+    "text": "de desenvolvimento orientado à intenção, quer dizer."
+  },
+  {
+    "start": 1848.26,
+    "end": 1851.26,
+    "text": "A gente tem que dar um jeitinho,"
+  },
+  {
+    "start": 1851.26,
+    "end": 1856.26,
+    "text": "trabalhar, ser elevado a fazer o que nós queremos,"
+  },
+  {
+    "start": 1856.26,
+    "end": 1859.26,
+    "text": "sem fugir da regra."
+  },
+  {
+    "start": 1859.26,
+    "end": 1864.26,
+    "text": "Então eu não sou programador, mas eu não quero que ela faça um código bagunçado, né?"
+  },
+  {
+    "start": 1864.26,
+    "end": 1868.26,
+    "text": "Ou que a IA ela não funciona muito, vamos uma pessoa aí."
+  },
+  {
+    "start": 1868.26,
+    "end": 1871.26,
+    "text": "Mas é uma diferença se você tem um programador que você contrata,"
+  },
+  {
+    "start": 1871.26,
+    "end": 1874.26,
+    "text": "ou contrata um cara que veste no informatio,"
+  },
+  {
+    "start": 1874.26,
+    "end": 1877.26,
+    "text": "e você passa uma especificação para ele, ele não entende você,"
+  },
+  {
+    "start": 1877.26,
+    "end": 1879.26,
+    "text": "ele também mostra as ideias dele na cabeça e diz,"
+  },
+  {
+    "start": 1879.26,
+    "end": 1881.26,
+    "text": "não, nada isso que eu queria."
+  },
+  {
+    "start": 1881.26,
+    "end": 1884.26,
+    "text": "É a mesma coisa, a IA é mais precisa."
+  },
+  {
+    "start": 1884.26,
+    "end": 1888.26,
+    "text": "Então você consegue tirar mais da IA do que o profissional humano."
+  },
+  {
+    "start": 1889.26,
+    "end": 1894.26,
+    "text": "O profissional humano tem uma característica que o IA não tem,"
+  },
+  {
+    "start": 1894.26,
+    "end": 1898.26,
+    "text": "que é aquela coisa de relacional e relacionável."
+  },
+  {
+    "start": 1898.26,
+    "end": 1901.26,
+    "text": "Mas a terícia IA está evoluindo, não é?"
+  },
+  {
+    "start": 1901.26,
+    "end": 1908.26,
+    "text": "É tipo, ela, digamos assim, a alucinação que chamamos de alucinação"
+  },
+  {
+    "start": 1908.26,
+    "end": 1912.26,
+    "text": "é, na verdade, a nossa criatividade, sabe?"
+  },
+  {
+    "start": 1912.26,
+    "end": 1915.26,
+    "text": "Que a verdade que a pessoa não disse bem o que eu queria,"
+  },
+  {
+    "start": 1915.26,
+    "end": 1917.26,
+    "text": "você vai lá e anjoca a coisa que você conhece, o que você ouvi,"
+  },
+  {
+    "start": 1917.26,
+    "end": 1920.26,
+    "text": "o que você falou, aí sai uma coisa que de repente,"
+  },
+  {
+    "start": 1920.26,
+    "end": 1924.26,
+    "text": "até não há nem o que o cliente queria."
+  },
+  {
+    "start": 1924.26,
+    "end": 1929.26,
+    "text": "Mas ao meu tempo, abre a cabeça dele e gosta da ideia,"
+  },
+  {
+    "start": 1929.26,
+    "end": 1931.26,
+    "text": "uma ideia totalmente nova."
+  },
+  {
+    "start": 1931.26,
+    "end": 1933.26,
+    "text": "Isso é criatividade, né?"
+  },
+  {
+    "start": 1933.26,
+    "end": 1934.26,
+    "text": "Mas ela suja assim."
+  },
+  {
+    "start": 1934.26,
+    "end": 1936.26,
+    "text": "Quanto mais você desce, menos criativo você é."
+  },
+  {
+    "start": 1936.26,
+    "end": 1939.26,
+    "text": "Quanto mais você sobe, mais criativo você fica."
+  },
+  {
+    "start": 1940.26,
+    "end": 1942.26,
+    "text": "Depois de uma hora que você tiver essa chance,"
+  },
+  {
+    "start": 1942.26,
+    "end": 1946.26,
+    "text": "você sai fotocando em um conselho chamado Fractal."
+  },
+  {
+    "start": 1946.26,
+    "end": 1955.72,
+    "text": "É um conselho que o pessoal tem na área de psicologia, neurologia,"
+  },
+  {
+    "start": 1955.72,
+    "end": 1958.72,
+    "text": "olha, dessa aí, neurociência, né?"
+  },
+  {
+    "start": 1958.72,
+    "end": 1960.72,
+    "text": "É a maneira que o servo organiza as coisas,"
+  },
+  {
+    "start": 1960.72,
+    "end": 1962.72,
+    "text": "a gente trabalha em abstrações."
+  },
+  {
+    "start": 1962.72,
+    "end": 1964.72,
+    "text": "Ele que fosse cheio de detalhes,"
+  },
+  {
+    "start": 1964.72,
+    "end": 1966.72,
+    "text": "você não tinha nem servo pra caber,"
+  },
+  {
+    "start": 1966.72,
+    "end": 1967.72,
+    "text": "mas nem fica."
+  },
+  {
+    "start": 1967.72,
+    "end": 1969.72,
+    "text": "O que interessa aqui é,"
+  },
+  {
+    "start": 1969.72,
+    "end": 1970.72,
+    "text": "vamos ver a pretação junto,"
+  },
+  {
+    "start": 1970.72,
+    "end": 1972.72,
+    "text": "o que ele está fazendo aqui,"
+  },
+  {
+    "start": 1972.72,
+    "end": 1977.72,
+    "text": "ele bolou a apresentação dele,"
+  },
+  {
+    "start": 1977.72,
+    "end": 1981.72,
+    "text": "bolou aqui o código de gata emélica,"
+  },
+  {
+    "start": 1981.72,
+    "end": 1983.72,
+    "text": "até deu a explicação de antes,"
+  },
+  {
+    "start": 1983.72,
+    "end": 1985.72,
+    "text": "vai ele aqui, tá?"
+  },
+  {
+    "start": 1985.72,
+    "end": 1987.72,
+    "text": "A pretação do modelo, que legal."
+  },
+  {
+    "start": 1987.72,
+    "end": 1989.72,
+    "text": "O que eu estou fazendo aqui,"
+  },
+  {
+    "start": 1989.72,
+    "end": 1992.72,
+    "text": "se você em cada etapa do cliente pedir pra ele fazer uma pretação,"
+  },
+  {
+    "start": 1992.72,
+    "end": 1994.72,
+    "text": "isso é bom pra você,"
+  },
+  {
+    "start": 1994.72,
+    "end": 1996.72,
+    "text": "e é bom pra apropriar,"
+  },
+  {
+    "start": 1996.72,
+    "end": 2000.72,
+    "text": "que você vai dando ela maturidade nas suas intenções de projeto, entende?"
+  },
+  {
+    "start": 2000.72,
+    "end": 2003.72,
+    "text": "E dá a lembra que você está conversando com ela,"
+  },
+  {
+    "start": 2003.72,
+    "end": 2006.72,
+    "text": "você vai ver que ela entendeu como ela passa,"
+  },
+  {
+    "start": 2006.72,
+    "end": 2009.72,
+    "text": "e aqui ela vai dar um elemento muito interessante,"
+  },
+  {
+    "start": 2009.72,
+    "end": 2010.72,
+    "text": "se eu ouvir, né?"
+  },
+  {
+    "start": 2010.72,
+    "end": 2012.72,
+    "text": "Ou ouvir como ela seja uma IA,"
+  },
+  {
+    "start": 2012.72,
+    "end": 2014.72,
+    "text": "mas você vai ouvir uma raciocínica,"
+  },
+  {
+    "start": 2014.72,
+    "end": 2017.72,
+    "text": "e de repente você pode fazer toda a diferença,"
+  },
+  {
+    "start": 2017.72,
+    "end": 2018.72,
+    "text": "não é?"
+  },
+  {
+    "start": 2018.72,
+    "end": 2020.72,
+    "text": "Deixa eu entrar aqui."
+  },
+  {
+    "start": 2021.72,
+    "end": 2025.72,
+    "text": "Ó, vamos executar de novo?"
+  },
+  {
+    "start": 2025.72,
+    "end": 2027.72,
+    "text": "Ó,"
+  },
+  {
+    "start": 2027.72,
+    "end": 2029.72,
+    "text": "cadê?"
+  },
+  {
+    "start": 2029.72,
+    "end": 2033.61,
+    "text": "Onde é que ele botou esse meu pai?"
+  },
+  {
+    "start": 2033.61,
+    "end": 2034.61,
+    "text": "Cadê ele?"
+  },
+  {
+    "start": 2037.07,
+    "end": 2039.07,
+    "text": "Ah, ah, ah, ah."
+  },
+  {
+    "start": 2039.07,
+    "end": 2043.63,
+    "text": "Vai botar aqui por data."
+  },
+  {
+    "start": 2043.63,
+    "end": 2044.63,
+    "text": "Ele botou aqui pasta,"
+  },
+  {
+    "start": 2044.63,
+    "end": 2045.63,
+    "text": "apresentação, né?"
+  },
+  {
+    "start": 2045.63,
+    "end": 2046.63,
+    "text": "Fala."
+  },
+  {
+    "start": 2046.63,
+    "end": 2047.63,
+    "text": "Mer."
+  },
+  {
+    "start": 2049.63,
+    "end": 2050.63,
+    "text": "Enta,"
+  },
+  {
+    "start": 2050.63,
+    "end": 2052.63,
+    "text": "você deixa eu atualizar aqui,"
+  },
+  {
+    "start": 2052.63,
+    "end": 2058.02,
+    "text": "uma explora."
+  },
+  {
+    "start": 2058.02,
+    "end": 2059.02,
+    "text": "Aqui."
+  },
+  {
+    "start": 2059.02,
+    "end": 2061.02,
+    "text": "Ele só que ele botou lá embaixo, olha."
+  },
+  {
+    "start": 2061.02,
+    "end": 2063.02,
+    "text": "Ele botou aqui, sim."
+  },
+  {
+    "start": 2063.02,
+    "end": 2065.02,
+    "text": "Então, a gente vai invertir a transcação."
+  },
+  {
+    "start": 2065.02,
+    "end": 2067.02,
+    "text": "Então, tá beleza aqui, é?"
+  },
+  {
+    "start": 2067.02,
+    "end": 2070.02,
+    "text": "Ele fez a apresentação em HTML,"
+  },
+  {
+    "start": 2070.02,
+    "end": 2072.02,
+    "text": "que eu até explico no início."
+  },
+  {
+    "start": 2072.02,
+    "end": 2073.02,
+    "text": "Ó."
+  },
+  {
+    "start": 2074.02,
+    "end": 2078.02,
+    "text": "Ele já pode ter que é um probleminha dessa linguagem HTML, né?"
+  },
+  {
+    "start": 2079.02,
+    "end": 2081.02,
+    "text": "E agora ele fez uma apresentação"
+  },
+  {
+    "start": 2081.02,
+    "end": 2085.02,
+    "text": "para explicar o Mer,"
+  },
+  {
+    "start": 2085.02,
+    "end": 2089.34,
+    "text": "vamos ver se ele fala a coisa certa."
+  },
+  {
+    "start": 2089.34,
+    "end": 2091.34,
+    "text": "Aqui ele vai dizer que o Mer é um modelo de identidade"
+  },
+  {
+    "start": 2091.34,
+    "end": 2093.34,
+    "text": "na sua mídia, como se fosse assim."
+  },
+  {
+    "start": 2093.34,
+    "end": 2095.34,
+    "text": "Eu vou fazer um aplicativo,"
+  },
+  {
+    "start": 2095.34,
+    "end": 2096.34,
+    "text": "eu vou ter que guardar os dados."
+  },
+  {
+    "start": 2096.34,
+    "end": 2099.34,
+    "text": "Como organizar esses dados?"
+  },
+  {
+    "start": 2099.34,
+    "end": 2102.34,
+    "text": "Não importa se você é um CES,"
+  },
+  {
+    "start": 2102.34,
+    "end": 2104.34,
+    "text": "ou um VEDU, ou sabe de qual é a informação,"
+  },
+  {
+    "start": 2104.34,
+    "end": 2105.34,
+    "text": "ou não,"
+  },
+  {
+    "start": 2105.34,
+    "end": 2107.34,
+    "text": "menos se fosse trabalhar com planilha,"
+  },
+  {
+    "start": 2107.34,
+    "end": 2110.65,
+    "text": "você teria que saber como organizar as sabedas."
+  },
+  {
+    "start": 2110.65,
+    "end": 2112.65,
+    "text": "Então, vou ver aqui o que ele vai apresentar para a gente."
+  },
+  {
+    "start": 2112.65,
+    "end": 2115.65,
+    "text": "Olá, equipe de desenvolvimento"
+  },
+  {
+    "start": 2115.65,
+    "end": 2118.65,
+    "text": "e especialistas em manutenção."
+  },
+  {
+    "start": 2118.65,
+    "end": 2121.65,
+    "text": "Sejam bem-vindos à apresentação técnica"
+  },
+  {
+    "start": 2121.65,
+    "end": 2123.65,
+    "text": "do nosso modelo entidade"
+  },
+  {
+    "start": 2123.65,
+    "end": 2127.65,
+    "text": "e relacionamento do projeto de refrigeração IPMOK."
+  },
+  {
+    "start": 2127.65,
+    "end": 2131.65,
+    "text": "Nosso objetivo aqui é mostrar a ponte direta"
+  },
+  {
+    "start": 2131.65,
+    "end": 2133.65,
+    "text": "entre a arquitetura do banco de dados"
+  },
+  {
+    "start": 2133.65,
+    "end": 2136.65,
+    "text": "e as metas reais de campo,"
+  },
+  {
+    "start": 2136.65,
+    "end": 2138.65,
+    "text": "agilidade do mecânico,"
+  },
+  {
+    "start": 2138.65,
+    "end": 2143.38,
+    "text": "zero papel e conformidade legal."
+  },
+  {
+    "start": 2143.38,
+    "end": 2146.38,
+    "text": "Começando pela Fundação Territorial,"
+  },
+  {
+    "start": 2146.38,
+    "end": 2151.38,
+    "text": "as tabelas de Tenent, cliente e local de instalação."
+  },
+  {
+    "start": 2151.38,
+    "end": 2153.38,
+    "text": "No desenvolvimento,"
+  },
+  {
+    "start": 2153.38,
+    "end": 2159.38,
+    "text": "o Tenent garante isolamento total entre empresas via RLS."
+  },
+  {
+    "start": 2159.38,
+    "end": 2161.38,
+    "text": "Para a equipe de manutenção,"
+  },
+  {
+    "start": 2161.38,
+    "end": 2165.38,
+    "text": "o local de instalação garante que nenhuma máquina"
+  },
+  {
+    "start": 2165.38,
+    "end": 2169.38,
+    "text": "seja o ARFAM, o técnico sabe exatamente a filial,"
+  },
+  {
+    "start": 2169.38,
+    "end": 2172.38,
+    "text": "andar em sala onde deve atuar."
+  },
+  {
+    "start": 2172.38,
+    "end": 2176.98,
+    "text": "Aqui temos o coração do sistema,"
+  },
+  {
+    "start": 2176.98,
+    "end": 2178.98,
+    "text": "a tabela e equipamento."
+  },
+  {
+    "start": 2178.98,
+    "end": 2181.98,
+    "text": "Ela é a identidade digital da máquina"
+  },
+  {
+    "start": 2181.98,
+    "end": 2184.98,
+    "text": "através do QR codúnico."
+  },
+  {
+    "start": 2184.98,
+    "end": 2186.98,
+    "text": "Para os desenvolvedores,"
+  },
+  {
+    "start": 2186.98,
+    "end": 2191.98,
+    "text": "é uma chave indexada e leve para cache offline."
+  },
+  {
+    "start": 2191.98,
+    "end": 2193.98,
+    "text": "Para o mecânico,"
+  },
+  {
+    "start": 2193.98,
+    "end": 2196.98,
+    "text": "basta apontar a câmera na condensadora"
+  },
+  {
+    "start": 2196.98,
+    "end": 2199.98,
+    "text": "para ver na hora o histórico completo,"
+  },
+  {
+    "start": 2199.98,
+    "end": 2204.98,
+    "text": "capacidade térmica e o tipo de fluido refrigerante de fábrica."
+  },
+  {
+    "start": 2204.98,
+    "end": 2211.58,
+    "text": "A tabela ordem de serviço representa o motor de campo,"
+  },
+  {
+    "start": 2211.58,
+    "end": 2215.58,
+    "text": "projetada como uma máquina de estados flexível."
+  },
+  {
+    "start": 2215.58,
+    "end": 2219.58,
+    "text": "Ela permite tanto o agendamento os previos quanto a abertura"
+  },
+  {
+    "start": 2219.58,
+    "end": 2223.58,
+    "text": "e fechamento imediato no mesmo minuto."
+  },
+  {
+    "start": 2223.58,
+    "end": 2227.58,
+    "text": "O armazenamento das fotos de antes e depois"
+  },
+  {
+    "start": 2227.58,
+    "end": 2229.58,
+    "text": "e da assinatura digital"
+  },
+  {
+    "start": 2229.58,
+    "end": 2232.58,
+    "text": "traz proteção jurídica contra reclamações"
+  },
+  {
+    "start": 2232.58,
+    "end": 2236.58,
+    "text": "e alimenta o comprovante enviado pelo VINATZEP."
+  },
+  {
+    "start": 2236.58,
+    "end": 2242.18,
+    "text": "A medição técnica é onde a ciência do ciclo frigorífico"
+  },
+  {
+    "start": 2242.18,
+    "end": 2245.18,
+    "text": "ganha vida no banco de dados."
+  },
+  {
+    "start": 2245.18,
+    "end": 2250.18,
+    "text": "Separada da ordem de serviço em uma relação para muitos,"
+  },
+  {
+    "start": 2250.18,
+    "end": 2253.18,
+    "text": "ela registra pressões de alta e baixa,"
+  },
+  {
+    "start": 2253.18,
+    "end": 2257.18,
+    "text": "corrente do compressor e o diferencial térmico delta"
+  },
+  {
+    "start": 2257.18,
+    "end": 2260.18,
+    "text": "que campos não obrigatórios garantem que o mecânico"
+  },
+  {
+    "start": 2260.18,
+    "end": 2266.18,
+    "text": "não seja travado caso não esteja com o manifold na mão."
+  },
+  {
+    "start": 2266.18,
+    "end": 2271.18,
+    "text": "Para o Camplions Regulatório da Lei 13.500,"
+  },
+  {
+    "start": 2271.18,
+    "end": 2276.18,
+    "text": "1589 do PUNC, criamos a tabela Laudo PUNC."
+  },
+  {
+    "start": 2276.18,
+    "end": 2280.18,
+    "text": "Ela assala o checklist sanitário da Anvisa"
+  },
+  {
+    "start": 2280.18,
+    "end": 2286.18,
+    "text": "e o balanço ecológico de recarga e recolhimento de gás refrigerante."
+  },
+  {
+    "start": 2286.18,
+    "end": 2289.18,
+    "text": "Esta separação mantém o banco normalizado"
+  },
+  {
+    "start": 2289.18,
+    "end": 2293.18,
+    "text": "e garante que relatórios em PDF para fiscalização"
+  },
+  {
+    "start": 2293.18,
+    "end": 2298.18,
+    "text": "sejam emitidos com validade jurídica e refutável."
+  },
+  {
+    "start": 2299.18,
+    "end": 2304.18,
+    "text": "A tabela contrato viabiliza a previsibilidade financeira"
+  },
+  {
+    "start": 2304.18,
+    "end": 2307.18,
+    "text": "e a automação do negócio."
+  },
+  {
+    "start": 2307.18,
+    "end": 2311.18,
+    "text": "Em conjunto com tríguers ou crángios agendados,"
+  },
+  {
+    "start": 2311.18,
+    "end": 2316.18,
+    "text": "o sistema gera automaticamente as ordens de serviço preventivas"
+  },
+  {
+    "start": 2316.18,
+    "end": 2321.18,
+    "text": "no início de cada mês para todos os equipamentos cobertos,"
+  },
+  {
+    "start": 2321.18,
+    "end": 2326.18,
+    "text": "eliminando esquecimentos e aumentando a retenção dos clientes."
+  },
+  {
+    "start": 2326.18,
+    "end": 2331.84,
+    "text": "Para concluir, este mapa integrado demonstra"
+  },
+  {
+    "start": 2331.84,
+    "end": 2335.84,
+    "text": "como todas as tabelas atuam em perfeita harmonia."
+  },
+  {
+    "start": 2335.84,
+    "end": 2341.84,
+    "text": "No Supabazi, com suporte offline via sincronização local,"
+  },
+  {
+    "start": 2341.84,
+    "end": 2345.84,
+    "text": "entregamos uma ferramenta robusta para o desenvolvedor"
+  },
+  {
+    "start": 2345.84,
+    "end": 2348.84,
+    "text": "e, incrivelmente, rápida para o mecânico."
+  },
+  {
+    "start": 2348.84,
+    "end": 2352.84,
+    "text": "Agora, estamos prontos para subir as tabelas"
+  },
+  {
+    "start": 2352.84,
+    "end": 2356.84,
+    "text": "e protote para as quatro telas do aplicativo."
+  },
+  {
+    "start": 2356.84,
+    "end": 2363.46,
+    "text": "Isso foi o interesse de nutricionalismo."
+  },
+  {
+    "start": 2363.46,
+    "end": 2367.96,
+    "text": "A refutabilidade e o wetenamissinistro"
+  },
+  {
+    "start": 2367.96,
+    "end": 2371.96,
+    "text": "que atuam em pr shovels de biólogo comagerado"
+  },
+  {
+    "start": 2371.96,
+    "end": 2374.96,
+    "text": "muito bem para o aplicativo do aplicativo."
+  },
+  {
+    "start": 2374.96,
+    "end": 2377.96,
+    "text": "A faca integra um experimento de KI"
+  },
+  {
+    "start": 2377.96,
+    "end": 2381.96,
+    "text": "para o aplicativo do aplicativo de biólogo"
+  },
+  {
+    "start": 2381.96,
+    "end": 2385.96,
+    "text": "e a refutabilidade do aplicativo de biólogo."
+  },
+  {
+    "start": 2385.96,
+    "end": 2388.6,
+    "text": "rápida para o mecânico."
+  },
+  {
+    "start": 2388.6,
+    "end": 2395.72,
+    "text": "Agora, estamos prontos para subir as tabelas e prototipar as quatro telas do aplicativo."
+  },
+  {
+    "start": 2395.72,
+    "end": 2401.16,
+    "text": "Mas aí, a princípio eu vou sugerir a ele não fazer isso."
+  },
+  {
+    "start": 2401.16,
+    "end": 2402.16,
+    "text": "Ele terminou."
+  },
+  {
+    "start": 2402.16,
+    "end": 2413.44,
+    "text": "Terminou a apresentação, mas ele explicou que depois quem estiver vendo essa apresentação"
+  },
+  {
+    "start": 2413.44,
+    "end": 2420.92,
+    "text": "vai poder entender o processo que é o mais importante para a gente aqui, é o processo de desenvolvimento."
+  },
+  {
+    "start": 2420.92,
+    "end": 2428.28,
+    "text": "A certa memória do lei, você precisa seguir o processo que seja organizado para que a"
+  },
+  {
+    "start": 2428.28,
+    "end": 2433.8,
+    "text": "IA realmente não faça qualquer, você podia ir em um próprio gigante e dizer, eu quero"
+  },
+  {
+    "start": 2433.8,
+    "end": 2437.08,
+    "text": "um telhado assim, então ela vai lá e inventava um."
+  },
+  {
+    "start": 2437.08,
+    "end": 2442.28,
+    "text": "Mas você não vai compreender a estrutura do projeto."
+  },
+  {
+    "start": 2442.28,
+    "end": 2445.6,
+    "text": "Se você não lembre, você precisa ter essa lançou-barça."
+  },
+  {
+    "start": 2445.6,
+    "end": 2453.04,
+    "text": "Então, por exemplo, eu pergunto para você, se achou estranho ver aqui, o mais que nós"
+  },
+  {
+    "start": 2453.04,
+    "end": 2464.86,
+    "text": "possamos dizer que tem muita coisa para se aprender aqui, mas quando você vê o que"
+  },
+  {
+    "start": 2464.86,
+    "end": 2502.26,
+    "text": "ele falou aqui, o Mer dele, vou botar aqui, que é dele, deixar isso aqui, com isso."
+  },
+  {
+    "start": 2505.46,
+    "end": 2511.5,
+    "text": "A nossa ou de tabela você tem, está aqui com função de tabela, só que no conceito"
+  },
+  {
+    "start": 2511.5,
+    "end": 2516.7,
+    "text": "de banco de idade as tabelas têm relações umas com as outras, não é?"
+  },
+  {
+    "start": 2516.7,
+    "end": 2521.9,
+    "text": "Esse aqui, quem faz esse esquema aqui, é o software de banco de idade."
+  },
+  {
+    "start": 2521.9,
+    "end": 2526.62,
+    "text": "A gente não precisa saber escrever para esse banco de idade, como escrever as tabelas"
+  },
+  {
+    "start": 2526.62,
+    "end": 2532.18,
+    "text": "para ele, na linguagem dele, que agora com a IA eu posso fazer ela fazer isso."
+  },
+  {
+    "start": 2532.22,
+    "end": 2535.22,
+    "text": "Só que eu tenho que ter noção de como as coisas vão ficar, não é?"
+  },
+  {
+    "start": 2536.42,
+    "end": 2539.94,
+    "text": "Aqui, por exemplo, eu já sei as tabelas que vai ter, vai ter uma tabela contrata,"
+  },
+  {
+    "start": 2539.94,
+    "end": 2544.98,
+    "text": "ele já deu ideia na apresentação que essa tabela contrata é que vai determinar"
+  },
+  {
+    "start": 2544.98,
+    "end": 2551.38,
+    "text": "a abertura de ordem de serviço, automaticamente o aplicativo, porque tem frequência,"
+  },
+  {
+    "start": 2551.38,
+    "end": 2554.22,
+    "text": "ele fala, frequência desse polvo que ele está fazendo assim."
+  },
+  {
+    "start": 2554.74,
+    "end": 2558.18,
+    "text": "Eu faço contato com o cliente pela legislação, se eu estalei lá,"
+  },
+  {
+    "start": 2559.14,
+    "end": 2565.78,
+    "text": "por exemplo, uma marca está lá, um motor lá para me colgar, sei lá o quê,"
+  },
+  {
+    "start": 2565.78,
+    "end": 2570.42,
+    "text": "aí a legislação exige que eu faça uma revisão de X e de X tempo."
+  },
+  {
+    "start": 2571.42,
+    "end": 2575.62,
+    "text": "Aí ele deu ideia lá que isso até ia agregar a cliente, esse acumulativo,"
+  },
+  {
+    "start": 2575.62,
+    "end": 2580.94,
+    "text": "vou fazer o contato com uma pressão periódica, e eu não vou me bater com um monte de cliente,"
+  },
+  {
+    "start": 2581.42,
+    "end": 2587.42,
+    "text": "porque aqui ele vai ter o contrato e aí ele vai me avisar,"
+  },
+  {
+    "start": 2587.42,
+    "end": 2590.02,
+    "text": "tem que me estar fulando para fazer isso."
+  },
+  {
+    "start": 2591.94,
+    "end": 2596.22,
+    "text": "Aí ele falou que ele vai chegar para cada, se o Renato Flai instalou,"
+  },
+  {
+    "start": 2596.22,
+    "end": 2602.18,
+    "text": "trocou o motor da geladeira e motor motor no, aí ele vai colar lá uma etiqueta,"
+  },
+  {
+    "start": 2602.18,
+    "end": 2605.18,
+    "text": "ele vai imprimir no sistema dele uma etiquetinha com o que é hoje,"
+  },
+  {
+    "start": 2605.58,
+    "end": 2608.62,
+    "text": "que vai associar o histórico daquele equipamento, que ele vai esquecer."
+  },
+  {
+    "start": 2609.1,
+    "end": 2612.9,
+    "text": "Aí o cliente estava precisando sair lá, ele vai lá e captura o que é hoje,"
+  },
+  {
+    "start": 2612.9,
+    "end": 2617.5,
+    "text": "aí ele estava, não, você fez isso, botou isso, calibrou tantos de gás, por exemplo."
+  },
+  {
+    "start": 2618.5,
+    "end": 2621.9,
+    "text": "Deu para pegar, né? Você viu o que está a fazer, então, olha,"
+  },
+  {
+    "start": 2622.54,
+    "end": 2629.3,
+    "text": "a partir daqui, o que aconteceu foi que eu fosse ele a preparar uma apresentação"
+  },
+  {
+    "start": 2629.3,
+    "end": 2632.9,
+    "text": "em cada etapa, para dar uma geral aqui."
+  },
+  {
+    "start": 2632.9,
+    "end": 2637.7,
+    "text": "Aí eu vou fazer, vou até perguntar para ele aqui,"
+  },
+  {
+    "start": 2639.5,
+    "end": 2646.45,
+    "text": "perguntar para ele aqui, como, aqui já vou abusar ele,"
+  },
+  {
+    "start": 2647.77,
+    "end": 2650.37,
+    "text": "ah não, vou, não, vou fugir do projeto, vou tirar daqui,"
+  },
+  {
+    "start": 2651.37,
+    "end": 2656.25,
+    "text": "eu vou entrar no Gemin, pegar o Gemin, o que é,"
+  },
+  {
+    "start": 2658.01,
+    "end": 2663.63,
+    "text": "o nosso professorzinho aqui, aí eu vou pegar o Gemin aqui,"
+  },
+  {
+    "start": 2666.54,
+    "end": 2671.8,
+    "text": "e, calê, calê, calê, calê, vou voltar lá para o nosso projeto de,"
+  },
+  {
+    "start": 2672.68,
+    "end": 2676.08,
+    "text": "aqui ele já está com atenção, o nosso conversão é sobre o projeto."
+  },
+  {
+    "start": 2677.68,
+    "end": 2683.22,
+    "text": "Agora aqui, vou pedir para ele aqui, explique,"
+  },
+  {
+    "start": 2684.38,
+    "end": 2695.73,
+    "text": "vou, vou partilhar o projeto do, aí vira,"
+  },
+  {
+    "start": 2696.73,
+    "end": 2699.93,
+    "text": "a audiente está lá, né? Ante, Gravit,"
+  },
+  {
+    "start": 2701.97,
+    "end": 2703.01,
+    "text": "IDE,"
+  },
+  {
+    "start": 2704.01,
+    "end": 2709.92,
+    "text": "o A Equipe, o que está a ser, tá?"
+  },
+  {
+    "start": 2710.92,
+    "end": 2713.92,
+    "text": "O que? Com a Equipe Dev, Desenvolvedor,"
+  },
+  {
+    "start": 2714.92,
+    "end": 2717.92,
+    "text": "vamos ver o que é aquele, se ele vai me, como aqui é o Gemin,"
+  },
+  {
+    "start": 2717.92,
+    "end": 2721.92,
+    "text": "ele entende muito mais das coisas do Google do que os outros, viu?"
+  },
+  {
+    "start": 2722.92,
+    "end": 2725.92,
+    "text": "Mas hoje todo mundo entende que tem manuais da internet para tudo, né?"
+  },
+  {
+    "start": 2728.3,
+    "end": 2732.82,
+    "text": "Olá, ele vai me explicar,"
+  },
+  {
+    "start": 2735.36,
+    "end": 2738.36,
+    "text": "eu também não me preocupo em saber todos os detalhes das ferramentas,"
+  },
+  {
+    "start": 2739.36,
+    "end": 2742.36,
+    "text": "porque antigamente você, como você tem que estudar,"
+  },
+  {
+    "start": 2743.36,
+    "end": 2745.36,
+    "text": "vai estar um tempo para compreender uma coisa, agora não,"
+  },
+  {
+    "start": 2746.36,
+    "end": 2750.36,
+    "text": "pois que aquela ideia do fractal que ele falei, que você subiu, agora está mais melhor ainda,"
+  },
+  {
+    "start": 2751.36,
+    "end": 2754.36,
+    "text": "você domina tudo, 100%, 100%,"
+  },
+  {
+    "start": 2755.36,
+    "end": 2757.36,
+    "text": "você sabe de tudo, mas você perde um detalhe, então,"
+  },
+  {
+    "start": 2758.36,
+    "end": 2761.36,
+    "text": "a hora que você precisa de um detalhe, agora nós temos um assistente,"
+  },
+  {
+    "start": 2762.36,
+    "end": 2763.36,
+    "text": "Fago Lourdes, que é Iara,"
+  },
+  {
+    "start": 2764.36,
+    "end": 2766.36,
+    "text": "então você tem noção dos conceitos, princípios,"
+  },
+  {
+    "start": 2768.36,
+    "end": 2770.36,
+    "text": "vamos desenvolver o sistema usando o conceito de"
+  },
+  {
+    "start": 2771.36,
+    "end": 2772.36,
+    "text": "orientar a intenção,"
+  },
+  {
+    "start": 2773.36,
+    "end": 2776.36,
+    "text": "que aí depois você vai ver melhor, achando os vídeos do meu canal,"
+  },
+  {
+    "start": 2777.36,
+    "end": 2778.36,
+    "text": "mesmo que seja grego, eu falei lá no início,"
+  },
+  {
+    "start": 2779.36,
+    "end": 2782.36,
+    "text": "assiste só para você pegar a ideia, com a ideia, pense só na ideia do conceito,"
+  },
+  {
+    "start": 2783.36,
+    "end": 2786.36,
+    "text": "que é você ter um conceito de variante, de governança,"
+  },
+  {
+    "start": 2787.36,
+    "end": 2790.36,
+    "text": "para que você possa trabalhar com a IA,"
+  },
+  {
+    "start": 2791.36,
+    "end": 2794.36,
+    "text": "e ela, que mora, seja um fósforo aqui programador que você contratou,"
+  },
+  {
+    "start": 2795.36,
+    "end": 2796.36,
+    "text": "ela não fazer qualquer coisa,"
+  },
+  {
+    "start": 2796.36,
+    "end": 2799.36,
+    "text": "ela produzir qualquer coisa, você pode arrumar,"
+  },
+  {
+    "start": 2800.36,
+    "end": 2802.36,
+    "text": "já tem coisas aí e outras plataformas,"
+  },
+  {
+    "start": 2803.36,
+    "end": 2805.36,
+    "text": "no momento, da Microsoft mesmo,"
+  },
+  {
+    "start": 2806.36,
+    "end": 2810.36,
+    "text": "é outra plataforma, que é o VSCode, que eu até comentei,"
+  },
+  {
+    "start": 2812.36,
+    "end": 2814.36,
+    "text": "que ele tem já, um, explica esse tipo,"
+  },
+  {
+    "start": 2815.36,
+    "end": 2819.36,
+    "text": "uma proposta de dar ordem a o que você passa para a IA,"
+  },
+  {
+    "start": 2820.36,
+    "end": 2824.36,
+    "text": "que é o conceito de, no momento orientado, a especificação,"
+  },
+  {
+    "start": 2824.36,
+    "end": 2827.36,
+    "text": "aí tenta uma espécie, uma spec-git,"
+  },
+  {
+    "start": 2828.36,
+    "end": 2831.36,
+    "text": "mas isso é uma coisa muito formal,"
+  },
+  {
+    "start": 2832.36,
+    "end": 2834.36,
+    "text": "aqui nós estamos usando os mesmos conceitos,"
+  },
+  {
+    "start": 2835.36,
+    "end": 2838.36,
+    "text": "de mil pascas desciados, com metodologia,"
+  },
+  {
+    "start": 2839.36,
+    "end": 2843.36,
+    "text": "e os conceitos do NTD, os paradigms que eu estou investindo,"
+  },
+  {
+    "start": 2845.36,
+    "end": 2847.36,
+    "text": "de modo leve, modo natural,"
+  },
+  {
+    "start": 2848.36,
+    "end": 2850.36,
+    "text": "também que toda vez que eu passo orientação,"
+  },
+  {
+    "start": 2850.36,
+    "end": 2852.36,
+    "text": "a gente vai a alguma limparia assim,"
+  },
+  {
+    "start": 2853.36,
+    "end": 2855.36,
+    "text": "mas vamos dar uma arrumada assim,"
+  },
+  {
+    "start": 2856.36,
+    "end": 2858.36,
+    "text": "ele aqui falou, ah,"
+  },
+  {
+    "start": 2860.77,
+    "end": 2862.77,
+    "text": "veste o alcoólico especificação do git,"
+  },
+  {
+    "start": 2863.77,
+    "end": 2865.77,
+    "text": "garanta que todas as regras do negócio,"
+  },
+  {
+    "start": 2866.77,
+    "end": 2868.77,
+    "text": "aqui o de intenção, com uma afliaração,"
+  },
+  {
+    "start": 2869.77,
+    "end": 2871.77,
+    "text": "e aqui o de configuração, esteve rastreados pelo git,"
+  },
+  {
+    "start": 2872.77,
+    "end": 2873.77,
+    "text": "o git que eu falei,"
+  },
+  {
+    "start": 2874.77,
+    "end": 2875.77,
+    "text": "o git é um banco de dados,"
+  },
+  {
+    "start": 2876.77,
+    "end": 2877.77,
+    "text": "quando você bota,"
+  },
+  {
+    "start": 2878.77,
+    "end": 2879.77,
+    "text": "tudo que você escreveu ali,"
+  },
+  {
+    "start": 2879.77,
+    "end": 2881.77,
+    "text": "tudo o que ele gerou ali,"
+  },
+  {
+    "start": 2882.77,
+    "end": 2883.77,
+    "text": "os programas que ele fez,"
+  },
+  {
+    "start": 2884.77,
+    "end": 2885.77,
+    "text": "todo o pacote, desde a documentação,"
+  },
+  {
+    "start": 2886.77,
+    "end": 2887.77,
+    "text": "enfim,"
+  },
+  {
+    "start": 2888.77,
+    "end": 2889.77,
+    "text": "é o que fica de todo o projeto,"
+  },
+  {
+    "start": 2890.77,
+    "end": 2891.77,
+    "text": "é a programação do aplicativo,"
+  },
+  {
+    "start": 2892.77,
+    "end": 2893.77,
+    "text": "esse git ele fica local,"
+  },
+  {
+    "start": 2894.77,
+    "end": 2896.77,
+    "text": "mas quando você joga ele para a nuvem,"
+  },
+  {
+    "start": 2897.77,
+    "end": 2900.11,
+    "text": "ele vai para o tal do git-hub,"
+  },
+  {
+    "start": 2901.11,
+    "end": 2902.11,
+    "text": "com a diferença do local,"
+  },
+  {
+    "start": 2903.11,
+    "end": 2904.11,
+    "text": "só você trabalha,"
+  },
+  {
+    "start": 2905.11,
+    "end": 2906.11,
+    "text": "quando você joga por git-hub,"
+  },
+  {
+    "start": 2907.11,
+    "end": 2908.11,
+    "text": "aí eu posso passar por outras pessoas trabalhar,"
+  },
+  {
+    "start": 2911.32,
+    "end": 2912.32,
+    "text": "entrar no mesmo projeto,"
+  },
+  {
+    "start": 2913.32,
+    "end": 2914.32,
+    "text": "do"
+  },
+  {
+    "start": 2915.32,
+    "end": 2916.32,
+    "text": "do Microsoft,"
+  },
+  {
+    "start": 2917.32,
+    "end": 2918.32,
+    "text": "que tem um bitlap também,"
+  },
+  {
+    "start": 2919.32,
+    "end": 2920.32,
+    "text": "que é interessante,"
+  },
+  {
+    "start": 2921.32,
+    "end": 2922.32,
+    "text": "é o reportual da mandação,"
+  },
+  {
+    "start": 2923.32,
+    "end": 2924.32,
+    "text": "aqui é um comando,"
+  },
+  {
+    "start": 2925.32,
+    "end": 2926.32,
+    "text": "em linha de,"
+  },
+  {
+    "start": 2927.32,
+    "end": 2928.32,
+    "text": "aqui no,"
+  },
+  {
+    "start": 2929.32,
+    "end": 2930.32,
+    "text": "você tem comando,"
+  },
+  {
+    "start": 2931.32,
+    "end": 2932.32,
+    "text": "você tem comando,"
+  },
+  {
+    "start": 2933.32,
+    "end": 2934.32,
+    "text": "é permitido,"
+  },
+  {
+    "start": 2935.32,
+    "end": 2936.32,
+    "text": "de terminal aquele chão,"
+  },
+  {
+    "start": 2937.32,
+    "end": 2938.32,
+    "text": "mas isso aqui não precisa nem fazer,"
+  },
+  {
+    "start": 2939.32,
+    "end": 2940.32,
+    "text": "que ele pode para ir a fazer."
+  },
+  {
+    "start": 2941.32,
+    "end": 2942.32,
+    "text": "Aí que ele quer,"
+  },
+  {
+    "start": 2943.32,
+    "end": 2944.32,
+    "text": "fazer um comitinho,"
+  },
+  {
+    "start": 2945.32,
+    "end": 2946.32,
+    "text": "enviar para o reportual remoto da equipe,"
+  },
+  {
+    "start": 2947.32,
+    "end": 2948.32,
+    "text": "tá vendo?"
+  },
+  {
+    "start": 2949.32,
+    "end": 2950.32,
+    "text": "Repositório,"
+  },
+  {
+    "start": 2951.32,
+    "end": 2952.32,
+    "text": "nada mais é do que,"
+  },
+  {
+    "start": 2953.32,
+    "end": 2954.32,
+    "text": "um, um, um,"
+  },
+  {
+    "start": 2955.32,
+    "end": 2956.32,
+    "text": "o banco de dados,"
+  },
+  {
+    "start": 2957.32,
+    "end": 2958.32,
+    "text": "eu sei lá,"
+  },
+  {
+    "start": 2959.32,
+    "end": 2960.32,
+    "text": "dos metadados,"
+  },
+  {
+    "start": 2961.32,
+    "end": 2962.32,
+    "text": "não é do projeto que,"
+  },
+  {
+    "start": 2963.32,
+    "end": 2964.32,
+    "text": "não é o banco de dados que Renato"
+  },
+  {
+    "start": 2965.32,
+    "end": 2966.32,
+    "text": "vai trabalhar na refrigeração."
+  },
+  {
+    "start": 2967.32,
+    "end": 2968.32,
+    "text": "Não,"
+  },
+  {
+    "start": 2969.32,
+    "end": 2970.32,
+    "text": "é o banco de dados por todos,"
+  },
+  {
+    "start": 2971.32,
+    "end": 2972.32,
+    "text": "tudo que eu escrevi,"
+  },
+  {
+    "start": 2973.32,
+    "end": 2974.32,
+    "text": "não,"
+  },
+  {
+    "start": 2975.32,
+    "end": 2976.32,
+    "text": "até aquelas, aqueles aparentações,"
+  },
+  {
+    "start": 2977.32,
+    "end": 2978.32,
+    "text": "tudo que eu estou fazendo em tom do projeto,"
+  },
+  {
+    "start": 2979.32,
+    "end": 2980.32,
+    "text": "eu guardo de um repositório do projeto."
+  },
+  {
+    "start": 2982.32,
+    "end": 2983.32,
+    "text": "Renato não vai ver,"
+  },
+  {
+    "start": 2984.32,
+    "end": 2985.32,
+    "text": "Renato vai ver quando tiver ponto aplicativo,"
+  },
+  {
+    "start": 2986.32,
+    "end": 2987.32,
+    "text": "o programa dele,"
+  },
+  {
+    "start": 2988.32,
+    "end": 2989.32,
+    "text": "certinho?"
+  },
+  {
+    "start": 2990.32,
+    "end": 2991.32,
+    "text": "Aí, como é que eu vou compartilhar,"
+  },
+  {
+    "start": 2992.32,
+    "end": 2993.32,
+    "text": "eu tenho que jogar lá no repositório,"
+  },
+  {
+    "start": 2994.32,
+    "end": 2995.32,
+    "text": "aí depois conceder acesso"
+  },
+  {
+    "start": 2996.32,
+    "end": 2997.32,
+    "text": "ao Workspace,"
+  },
+  {
+    "start": 2998.32,
+    "end": 2999.32,
+    "text": "o Workspace A de trabalho,"
+  },
+  {
+    "start": 3000.32,
+    "end": 3001.32,
+    "text": "do espaço de trabalho."
+  },
+  {
+    "start": 3002.32,
+    "end": 3003.32,
+    "text": "Aí está fazendo aqui,"
+  },
+  {
+    "start": 3004.32,
+    "end": 3005.32,
+    "text": "que vai ter um botão Cherry,"
+  },
+  {
+    "start": 3006.32,
+    "end": 3007.32,
+    "text": "que aí todo mundo pode trabalhar lá"
+  },
+  {
+    "start": 3008.32,
+    "end": 3009.32,
+    "text": "no projeto do espaço de trabalho,"
+  },
+  {
+    "start": 3012.11,
+    "end": 3013.11,
+    "text": "compartilhar aqui, tá?"
+  },
+  {
+    "start": 3014.11,
+    "end": 3015.11,
+    "text": "Aí configurar também os arquivos"
+  },
+  {
+    "start": 3016.11,
+    "end": 3017.11,
+    "text": "variáveis de ambientes,"
+  },
+  {
+    "start": 3018.11,
+    "end": 3019.11,
+    "text": "aqui é a questão de segurança."
+  },
+  {
+    "start": 3020.11,
+    "end": 3021.11,
+    "text": "Esse arquivo, tipo,"
+  },
+  {
+    "start": 3022.11,
+    "end": 3023.11,
+    "text": "com Web,"
+  },
+  {
+    "start": 3024.11,
+    "end": 3025.11,
+    "text": "é para você guardar,"
+  },
+  {
+    "start": 3026.11,
+    "end": 3027.11,
+    "text": "e depois vai explorar,"
+  },
+  {
+    "start": 3028.11,
+    "end": 3029.11,
+    "text": "por hora, por hora,"
+  },
+  {
+    "start": 3030.11,
+    "end": 3031.11,
+    "text": "por hora, por hora,"
+  },
+  {
+    "start": 3031.11,
+    "end": 3032.11,
+    "text": "por hora, por hora."
+  },
+  {
+    "start": 3033.11,
+    "end": 3034.11,
+    "text": "Se você decidir,"
+  },
+  {
+    "start": 3035.11,
+    "end": 3036.11,
+    "text": "que você tem um botão,"
+  },
+  {
+    "start": 3037.11,
+    "end": 3038.11,
+    "text": "às vezes,"
+  },
+  {
+    "start": 3039.11,
+    "end": 3040.11,
+    "text": "e ele chama de to,"
+  },
+  {
+    "start": 3041.11,
+    "end": 3042.11,
+    "text": "querendo ir a acesso,"
+  },
+  {
+    "start": 3043.11,
+    "end": 3044.11,
+    "text": "então você pode ter acesso,"
+  },
+  {
+    "start": 3045.11,
+    "end": 3050.27,
+    "text": "se você precisa"
+  },
+  {
+    "start": 3051.27,
+    "end": 3052.27,
+    "text": "atender algumas especificações de segurança."
+  },
+  {
+    "start": 3053.27,
+    "end": 3054.27,
+    "text": "Tá?"
+  },
+  {
+    "start": 3056.27,
+    "end": 3057.27,
+    "text": "Deixa eu ver aqui, está."
+  },
+  {
+    "start": 3058.27,
+    "end": 3059.27,
+    "text": "Ó,"
+  },
+  {
+    "start": 3060.27,
+    "end": 3061.27,
+    "text": "você conseguiu baixar o multi gratitude"
+  },
+  {
+    "start": 3062.27,
+    "end": 3063.27,
+    "text": "na sua máquina?"
+  },
+  {
+    "start": 3063.27,
+    "end": 3071.07,
+    "text": "fazendo algumas, algumas ambiciões, eu ia tentar hoje, vou tentar depois aqui ver se eu consigo criar e"
+  },
+  {
+    "start": 3071.07,
+    "end": 3076.05,
+    "text": "forçar ele a aceitar. Foi fússia aí na internet os youtubers, aqueles orientas, entendeu?"
+  },
+  {
+    "start": 3076.05,
+    "end": 3084.79,
+    "text": "Mas na internet você vai botar no Google lá, vai, está lá, grape, aí ele vai dar, vai levar"
+  },
+  {
+    "start": 3084.79,
+    "end": 3096.26,
+    "text": "uma apimentação, dá uns passo a passo, deixa eu ver aqui então, então vou voltar para lá e vou"
+  },
+  {
+    "start": 3096.26,
+    "end": 3106.98,
+    "text": "fazer assim com ele, ó, crie um repo, vou até bebear, tem que tudo, não precisa fazer repo, vou"
+  },
+  {
+    "start": 3106.98,
+    "end": 3122.1,
+    "text": "botar um repo, visitório, um aconitório, no GitHub, tá certo? Aí vou botar a minha conta aqui,"
+  },
+  {
+    "start": 3123.1,
+    "end": 3140.04,
+    "text": "beleza, rosa, geral ele aceita, com o nome, aí vou botar o nome, idd,"
+  },
+  {
+    "start": 3141.36,
+    "end": 3151.56,
+    "text": "refrigeração, assim até que nem aceita, vamos botar lá. Beleza? Vou pedir para ele fazer isso,"
+  },
+  {
+    "start": 3151.56,
+    "end": 3162.04,
+    "text": "mas já vou aproveitar e vou criar, vou fazer isso para o cara aqui, forneça,"
+  },
+  {
+    "start": 3163.32,
+    "end": 3192.78,
+    "text": "não, o objetivo, compartilhar, com a equipe, forneça, com, parti, filhamento,"
+  },
+  {
+    "start": 3192.78,
+    "end": 3204.0,
+    "text": "o, o, o, isso aqui não se anda, na nova idade você vai ver que isso é meio que intuitivo,"
+  },
+  {
+    "start": 3204.0,
+    "end": 3207.6,
+    "text": "quando você entender o que é, pode fazer melhor, você vai lá e falar meio que eu vou"
+  },
+  {
+    "start": 3207.6,
+    "end": 3211.6,
+    "text": "já vir cá fora, mas é que eu estou abusando, eu estou vendo que ele mesmo faça isso,"
+  },
+  {
+    "start": 3211.6,
+    "end": 3219.6,
+    "text": "como ele tem acesso a minha conta do Git, tá? Vamos ver o que acontece, se ele xia, se ele"
+  },
+  {
+    "start": 3219.6,
+    "end": 3228.04,
+    "text": "pode, se ele não pode, mas eles agora ai arremais, em termos de, de ambiente, de internet,"
+  },
+  {
+    "start": 3228.04,
+    "end": 3241.08,
+    "text": "dessas plataformas, é quase difícil de dizer que ela não entende, olha lá, vamos ver, ele aqui"
+  },
+  {
+    "start": 3241.08,
+    "end": 3247.56,
+    "text": "está executando sozinho, é comando, o que você faria, se chama de terminal, você vê aqui, terminal,"
+  },
+  {
+    "start": 3248.48,
+    "end": 3259.31,
+    "text": "no terminal, aí barrabra aqui, terminal é uma parte do editor, você pode dar comandos,"
+  },
+  {
+    "start": 3259.31,
+    "end": 3266.39,
+    "text": "ó, dentro do, também a parte do idd federação, eu posso dar comando que ele chama de cd,"
+  },
+  {
+    "start": 3266.39,
+    "end": 3272.79,
+    "text": "mas agora é muito interessante, comandos assim, para ele fazer certas coisas, né, tipo ir lá no"
+  },
+  {
+    "start": 3272.79,
+    "end": 3278.79,
+    "text": "arquivo, compilar meu programa, levar pro repositório, mas já, imagina as coisas,"
+  },
+  {
+    "start": 3278.79,
+    "end": 3286.23,
+    "text": "ele pegue pra vez em alguma vez não, faz pra você, que a vez ele pegue por uma questão de regra"
+  },
+  {
+    "start": 3286.23,
+    "end": 3293.79,
+    "text": "do próprio ambiente aqui, do próprio anti-grave IDR, dos IDRs, que é tipo assim, não tomar"
+  },
+  {
+    "start": 3293.79,
+    "end": 3300.43,
+    "text": "liberdade, seu programa do autorizar, tá? Aqui, ele tá permitindo, perguntando, olha, ele vai"
+  },
+  {
+    "start": 3300.43,
+    "end": 3308.63,
+    "text": "executar esse comando, tá vendo? Ele vai criar um repository, vai carregar pra lá esse"
+  },
+  {
+    "start": 3308.63,
+    "end": 3317.6,
+    "text": "comando, né? Aí você quer aqui, você permite, ele tá perguntando, permite só dessa vez, sim,"
+  },
+  {
+    "start": 3317.6,
+    "end": 3329.86,
+    "text": "que ele faça aí solzinho, aí, tá carregando tudo pra lá, tá vendo? Tudo que a gente fez aqui,"
+  },
+  {
+    "start": 3329.86,
+    "end": 3338.78,
+    "text": "ele tá carregando pra lá, ó, o outro, o outro, aí, esses comandos todos aqui, o programador"
+  },
+  {
+    "start": 3338.78,
+    "end": 3342.82,
+    "text": "conversional, ele vai entrar no terminal, ele vai fazer um por um, tem que lembrar,"
+  },
+  {
+    "start": 3342.82,
+    "end": 3355.35,
+    "text": "vai coiar, a coisa muda, que a maioria das coisas ela vê que já sabe fazer, aqui eu soltou,"
+  },
+  {
+    "start": 3355.35,
+    "end": 3361.99,
+    "text": "mas ele harmoniza tudo, aí, você tá falando de conceito, tá vendo? Ah, tem um monte de comandos"
+  },
+  {
+    "start": 3361.99,
+    "end": 3368.31,
+    "text": "envolvidos no Instagram, eu tô nem aí, num momento não me interessa, ele não tá subindo,"
+  },
+  {
+    "start": 3368.31,
+    "end": 3379.06,
+    "text": "vou ficar por aqui, tá bom? E aí, beleza, o vídeo, qualquer modo demorou um pouquinho"
+  },
+  {
+    "start": 3379.06,
+    "end": 3383.82,
+    "text": "por causa dessas coisas, eu vou até ver se eu corto esse pedaço do vídeo, viu?"
+  },
+  {
+    "start": 3385.1,
+    "end": 3389.18,
+    "text": "Beleza. Não ficar com o vídeo tão gigante."
+  }
+]

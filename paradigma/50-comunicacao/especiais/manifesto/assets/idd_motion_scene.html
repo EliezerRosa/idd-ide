@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>IDD Motion Graphics - O Paradigma da Intenção</title>
+  <style>
+    * { box-sizing: border-box; }
+    body, html {
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      background: #070a13;
+      width: 1920px;
+      height: 1080px;
+      font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+    }
+    canvas {
+      display: block;
+      width: 1920px;
+      height: 1080px;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="canvas" width="1920" height="1080"></canvas>
+
+  <script>
+    const canvas = document.getElementById('canvas');
+    const ctx = canvas.getContext('2d');
+
+    // Inicialização determinística de partículas de fundo (120 partículas)
+    const PARTICLE_COUNT = 140;
+    const particles = [];
+    let pSeed = 42;
+    function rand() {
+      pSeed = (pSeed * 9301 + 49297) % 233280;
+      return pSeed / 233280;
+    }
+    for (let i = 0; i < PARTICLE_COUNT; i++) {
+      particles.push({
+        x: rand() * 1920,
+        y: rand() * 1080,
+        z: 0.2 + rand() * 0.8,
+        speedX: (rand() - 0.5) * 40,
+        speedY: (rand() - 0.5) * 30,
+        radius: 1.0 + rand() * 2.5,
+        alpha: 0.2 + rand() * 0.6,
+        color: rand() > 0.6 ? '#38bdf8' : (rand() > 0.5 ? '#818cf8' : '#34d399')
+      });
+    }
+
+    // Função utilitária para desenhar retângulos arredondados com glassmorphism
+    function drawGlassCard(x, y, w, h, radius, fillAlpha = 0.65, borderGlow = '#38bdf8') {
+      ctx.save();
+      ctx.beginPath();
+      ctx.roundRect(x, y, w, h, radius);
+      ctx.fillStyle = `rgba(15, 23, 42, ${fillAlpha})`;
+      ctx.shadowColor = borderGlow;
+      ctx.shadowBlur = 24;
+      ctx.fill();
+
+      ctx.lineWidth = 1.5;
+      ctx.strokeStyle = borderGlow;
+      ctx.shadowBlur = 0;
+      ctx.stroke();
+      ctx.restore();
+    }
+
+    // Função principal chamada pelo renderizador determinístico do Playwright
+    window.renderFrame = async function(timeMs) {
+      const t = timeMs / 1000.0; // Tempo em segundos
+
+      // 1. Limpeza e Fundo Espacial com Gradiente Profundo
+      const bgGrad = ctx.createRadialGradient(960, 540, 100, 960, 540, 1100);
+      bgGrad.addColorStop(0, '#0f172a');
+      bgGrad.addColorStop(0.5, '#090d16');
+      bgGrad.addColorStop(1, '#04060a');
+      ctx.fillStyle = bgGrad;
+      ctx.fillRect(0, 0, 1920, 1080);
+
+      // 2. Grade de Perspectiva Tecnológica Subtil no fundo
+      ctx.save();
+      ctx.lineWidth = 1;
+      ctx.strokeStyle = 'rgba(56, 189, 248, 0.04)';
+      const gridSpacing = 80;
+      for (let x = 0; x <= 1920; x += gridSpacing) {
+        ctx.beginPath();
+        ctx.moveTo(x, 0);
+        ctx.lineTo(x, 1080);
+        ctx.stroke();
+      }
+      for (let y = 0; y <= 1080; y += gridSpacing) {
+        ctx.beginPath();
+        ctx.moveTo(0, y);
+        ctx.lineTo(1920, y);
+        ctx.stroke();
+      }
+      ctx.restore();
+
+      // 3. Simulação de Partículas Estelares Voadoras
+      ctx.save();
+      for (let i = 0; i < particles.length; i++) {
+        const p = particles[i];
+        const px = (p.x + p.speedX * t * p.z) % 1920;
+        const py = (p.y + p.speedY * t * p.z) % 1080;
+        const finalX = px < 0 ? px + 1920 : px;
+        const finalY = py < 0 ? py + 1080 : py;
+        const pulse = 0.7 + 0.3 * Math.sin(t * 3 + i);
+
+        ctx.beginPath();
+        ctx.arc(finalX, finalY, p.radius * pulse, 0, Math.PI * 2);
+        ctx.fillStyle = p.color;
+        ctx.globalAlpha = p.alpha * pulse;
+        ctx.shadowColor = p.color;
+        ctx.shadowBlur = 8;
+        ctx.fill();
+      }
+      ctx.restore();
+
+      // 4. Cabeçalho / HUD de Topo Global Fixo e Elegante
+      ctx.save();
+      ctx.fillStyle = '#64748b';
+      ctx.font = '600 16px monospace';
+      ctx.textAlign = 'left';
+      ctx.fillText('IDD VIDEO STUDIO // ARCHITECTURE ENGINE', 80, 55);
+
+      ctx.textAlign = 'right';
+      const secStr = t.toFixed(2).padStart(5, '0');
+      ctx.fillText(`TIME: ${secStr}s | TIMELINE: 80.0s | 48kHz BROADCAST`, 1840, 55);
+
+      ctx.lineWidth = 1;
+      ctx.strokeStyle = 'rgba(100, 116, 139, 0.2)';
+      ctx.beginPath();
+      ctx.moveTo(80, 70);
+      ctx.lineTo(1840, 70);
+      ctx.stroke();
+      ctx.restore();
+
+      // =========================================================================
+      // ATO 1: O NÚCLEO DO PARADIGMA IDD (0.0s a 16.0s)
+      // =========================================================================
+      if (t < 16.5) {
+        const a1Progress = Math.min(1.0, t / 1.5);
+        const a1Fade = t > 15.0 ? Math.max(0, 1.0 - (t - 15.0) / 1.5) : a1Progress;
+        ctx.save();
+        ctx.globalAlpha = a1Fade;
+
+        // Anéis Holográficos Giratórios no Centro
+        const cx = 960, cy = 460;
+        const rot1 = t * 0.6;
+        const rot2 = -t * 0.9;
+
+        // Anel Externo Neon
+        ctx.save();
+        ctx.translate(cx, cy);
+        ctx.rotate(rot1);
+        ctx.lineWidth = 2.5;
+        ctx.strokeStyle = '#0284c7';
+        ctx.shadowColor = '#38bdf8';
+        ctx.shadowBlur = 20;
+        ctx.setLineDash([30, 20, 60, 20]);
+        ctx.beginPath();
+        ctx.arc(0, 0, 210, 0, Math.PI * 2);
+        ctx.stroke();
+        ctx.restore();
+
+        // Anel Médio Roxo IA
+        ctx.save();
+        ctx.translate(cx, cy);
+        ctx.rotate(rot2);
+        ctx.lineWidth = 2;
+        ctx.strokeStyle = '#8b5cf6';
+        ctx.shadowColor = '#c084fc';
+        ctx.shadowBlur = 25;
+        ctx.setLineDash([40, 25, 10, 25]);
+        ctx.beginPath();
+        ctx.arc(0, 0, 170, 0, Math.PI * 2);
+        ctx.stroke();
+        ctx.restore();
+
+        // Núcleo Radiante
+        const corePulse = 1.0 + 0.08 * Math.sin(t * 6);
+        const coreGrad = ctx.createRadialGradient(cx, cy, 20, cx, cy, 120 * corePulse);
+        coreGrad.addColorStop(0, '#ffffff');
+        coreGrad.addColorStop(0.3, '#38bdf8');
+        coreGrad.addColorStop(0.8, '#0369a1');
+        coreGrad.addColorStop(1, 'transparent');
+        ctx.fillStyle = coreGrad;
+        ctx.beginPath();
+        ctx.arc(cx, cy, 120 * corePulse, 0, Math.PI * 2);
+        ctx.fill();
+
+        // Badge Superior
+        drawGlassCard(740, 160, 440, 46, 23, 0.7, '#38bdf8');
+        ctx.fillStyle = '#38bdf8';
+        ctx.font = '700 16px sans-serif';
+        ctx.textAlign = 'center';
+        ctx.fillText('PARADIGMA DE MAIS ALTA ORDEM', 960, 190);
+
+        // Título Central
+        ctx.shadowColor = '#38bdf8';
+        ctx.shadowBlur = 28;
+        ctx.fillStyle = '#f8fafc';
+        ctx.font = '900 68px sans-serif';
+        ctx.fillText('PARADIGMA IDD', 960, 475);
+        ctx.shadowBlur = 0;
+
+        ctx.fillStyle = '#94a3b8';
+        ctx.font = '600 24px monospace';
+        ctx.fillText('INTENTION-DRIVEN DEVELOPMENT', 960, 520);
+
+        // Frase Máxima
+        drawGlassCard(240, 690, 1440, 110, 20, 0.75, '#0ea5e9');
+        ctx.fillStyle = '#38bdf8';
+        ctx.font = 'italic 700 30px sans-serif';
+        ctx.fillText('"A Intenção Humana expressa em Linguagem Natural', 960, 735);
+        ctx.fillStyle = '#f8fafc';
+        ctx.font = '700 32px sans-serif';
+        ctx.fillText('é o artefato de mais alta ordem do sistema."', 960, 775);
+
+        // Cards Comparativos Humano vs IA (Linha 2 Francisca aos 9.0s)
+        if (t > 8.0) {
+          const cardAlpha = Math.min(1.0, (t - 8.0) / 1.0);
+          ctx.save();
+          ctx.globalAlpha = cardAlpha * a1Fade;
+
+          // Card Humano
+          drawGlassCard(320, 830, 580, 80, 16, 0.8, '#f59e0b');
+          ctx.fillStyle = '#fbbf24';
+          ctx.font = '800 20px sans-serif';
+          ctx.textAlign = 'left';
+          ctx.fillText('HUMANO / DESENVOLVEDOR', 350, 862);
+          ctx.fillStyle = '#f8fafc';
+          ctx.font = '600 18px sans-serif';
+          ctx.fillText('Comando Epistêmico: Governa o QUÊ e o PORQUÊ', 350, 890);
+
+          // Card IA
+          drawGlassCard(1020, 830, 580, 80, 16, 0.8, '#8b5cf6');
+          ctx.fillStyle = '#c084fc';
+          ctx.font = '800 20px sans-serif';
+          ctx.textAlign = 'left';
+          ctx.fillText('INTELIGÊNCIA ARTIFICIAL', 1050, 862);
+          ctx.fillStyle = '#f8fafc';
+          ctx.font = '600 18px sans-serif';
+          ctx.fillText('Parceira de Execução: Materializa o COMO e o Código', 1050, 890);
+
+          ctx.restore();
+        }
+
+        ctx.restore();
+      }
+
+      // =========================================================================
+      // ATO 2: O CICLO TÉRMICO & LEI 13.589 DO PMOC (16.0s a 33.0s)
+      // =========================================================================
+      if (t >= 15.5 && t < 33.5) {
+        const a2Progress = Math.min(1.0, (t - 15.5) / 1.5);
+        const a2Fade = t > 32.0 ? Math.max(0, 1.0 - (t - 32.0) / 1.5) : a2Progress;
+        ctx.save();
+        ctx.globalAlpha = a2Fade;
+
+        // Cabeçalho do Ato 2
+        drawGlassCard(660, 120, 600, 48, 24, 0.75, '#f59e0b');
+        ctx.fillStyle = '#fbbf24';
+        ctx.font = '800 18px sans-serif';
+        ctx.textAlign = 'center';
+        ctx.fillText('ENGENHARIA DE REFRIGERAÇÃO // DOMÍNIO REAL', 960, 150);
+
+        ctx.fillStyle = '#f8fafc';
+        ctx.font = '900 44px sans-serif';
+        ctx.fillText('A FÍSICA QUE SOFTWARES GENÉRICOS IGNORAM', 960, 220);
+
+        // --- MANÔMETRO 1: BAIXA PRESSÃO / EVAPORAÇÃO (AZUL GELO) ---
+        const g1x = 520, g1y = 490, gr = 140;
+        drawGlassCard(320, 280, 400, 420, 24, 0.7, '#38bdf8');
+
+        // Borda e escala circular
+        ctx.save();
+        ctx.beginPath();
+        ctx.arc(g1x, g1y, gr, 0.75 * Math.PI, 2.25 * Math.PI);
+        ctx.lineWidth = 14;
+        ctx.strokeStyle = 'rgba(56, 189, 248, 0.2)';
+        ctx.stroke();
+
+        const press1 = 120 + Math.sin(t * 2) * 5;
+        const angle1 = 0.75 * Math.PI + (press1 / 200) * 1.5 * Math.PI;
+        ctx.beginPath();
+        ctx.arc(g1x, g1y, gr, 0.75 * Math.PI, angle1);
+        ctx.strokeStyle = '#38bdf8';
+        ctx.shadowColor = '#0ea5e9';
+        ctx.shadowBlur = 18;
+        ctx.stroke();
+
+        // Ponteiro
+        ctx.beginPath();
+        ctx.moveTo(g1x, g1y);
+        ctx.lineTo(g1x + Math.cos(angle1) * (gr - 25), g1y + Math.sin(angle1) * (gr - 25));
+        ctx.lineWidth = 4;
+        ctx.strokeStyle = '#ffffff';
+        ctx.stroke();
+        ctx.restore();
+
+        ctx.fillStyle = '#38bdf8';
+        ctx.font = '800 24px sans-serif';
+        ctx.textAlign = 'center';
+        ctx.fillText('BAIXA PRESSÃO (SUCÇÃO)', g1x, 330);
+        ctx.fillStyle = '#ffffff';
+        ctx.font = '900 48px monospace';
+        ctx.fillText(`${press1.toFixed(1)} PSI`, g1x, 500);
+        ctx.fillStyle = '#34d399';
+        ctx.font = '700 22px sans-serif';
+        ctx.fillText('Superaquecimento: +8.5 °C', g1x, 650);
+
+        // --- MANÔMETRO 2: ALTA PRESSÃO / CONDENSAÇÃO (VERMELHO/AMBAR TÉRMICO) ---
+        const g2x = 1040, g2y = 490;
+        drawGlassCard(840, 280, 400, 420, 24, 0.7, '#f43f5e');
+
+        ctx.save();
+        ctx.beginPath();
+        ctx.arc(g2x, g2y, gr, 0.75 * Math.PI, 2.25 * Math.PI);
+        ctx.lineWidth = 14;
+        ctx.strokeStyle = 'rgba(244, 63, 94, 0.2)';
+        ctx.stroke();
+
+        const press2 = 345 + Math.cos(t * 1.8) * 8;
+        const angle2 = 0.75 * Math.PI + (press2 / 500) * 1.5 * Math.PI;
+        ctx.beginPath();
+        ctx.arc(g2x, g2y, gr, 0.75 * Math.PI, angle2);
+        ctx.strokeStyle = '#f43f5e';
+        ctx.shadowColor = '#f43f5e';
+        ctx.shadowBlur = 18;
+        ctx.stroke();
+
+        // Ponteiro
+        ctx.beginPath();
+        ctx.moveTo(g2x, g2y);
+        ctx.lineTo(g2x + Math.cos(angle2) * (gr - 25), g2y + Math.sin(angle2) * (gr - 25));
+        ctx.lineWidth = 4;
+        ctx.strokeStyle = '#ffffff';
+        ctx.stroke();
+        ctx.restore();
+
+        ctx.fillStyle = '#fb7185';
+        ctx.font = '800 24px sans-serif';
+        ctx.textAlign = 'center';
+        ctx.fillText('ALTA PRESSÃO (DESCARGA)', g2x, 330);
+        ctx.fillStyle = '#ffffff';
+        ctx.font = '900 48px monospace';
+        ctx.fillText(`${press2.toFixed(1)} PSI`, g2x, 500);
+        ctx.fillStyle = '#fbbf24';
+        ctx.font = '700 22px sans-serif';
+        ctx.fillText('Sub-resfriamento: +6.2 °C', g2x, 650);
+
+        // --- PAINEL NORMATIVO PMOC (LEI 13.589) ---
+        drawGlassCard(1360, 280, 460, 420, 24, 0.8, '#10b981');
+        ctx.fillStyle = '#34d399';
+        ctx.font = '900 24px sans-serif';
+        ctx.textAlign = 'left';
+        ctx.fillText('LEI FEDERAL 13.589/2018', 1400, 335);
+
+        ctx.fillStyle = '#94a3b8';
+        ctx.font = '600 18px sans-serif';
+        ctx.fillText('Plano de Manutenção, Operação e Controle', 1400, 370);
+
+        // Badges de Conformidade
+        const tags = [
+          '✓ Rastreabilidade de Fluidos (R-410A)',
+          '✓ Recolhimento Obrigatório (Balanço > 0)',
+          '✓ ART e RRT emitidos via CREA e CFT',
+          '✓ Assinatura Digital do Responsável Técnico'
+        ];
+        tags.forEach((tag, idx) => {
+          ctx.fillStyle = idx === 1 ? '#38bdf8' : '#e2e8f0';
+          ctx.font = '600 18px monospace';
+          ctx.fillText(tag, 1400, 430 + idx * 45);
+        });
+
+        // Banner Inferior do Ato 2
+        drawGlassCard(240, 740, 1440, 100, 20, 0.8, '#f59e0b');
+        ctx.fillStyle = '#fbbf24';
+        ctx.font = '800 28px sans-serif';
+        ctx.textAlign = 'center';
+        ctx.fillText('CONFORMIDADE INDUSTRIAL AUTOMATIZADA EM IDD', 960, 780);
+        ctx.fillStyle = '#f8fafc';
+        ctx.font = '600 22px sans-serif';
+        ctx.fillText('O sistema protege a empresa contra multas da ANVISA e bloqueios por inconsistência térmica.', 960, 815);
+
+        ctx.restore();
+      }
+
+      // =========================================================================
+      // ATO 3: INVARIANTES & GOVERNANÇA PERSISTENTE (33.0s a 49.0s)
+      // =========================================================================
+      if (t >= 32.5 && t < 49.5) {
+        const a3Progress = Math.min(1.0, (t - 32.5) / 1.5);
+        const a3Fade = t > 48.0 ? Math.max(0, 1.0 - (t - 48.0) / 1.5) : a3Progress;
+        ctx.save();
+        ctx.globalAlpha = a3Fade;
+
+        // Cabeçalho
+        drawGlassCard(680, 120, 560, 48, 24, 0.75, '#8b5cf6');
+        ctx.fillStyle = '#c084fc';
+        ctx.font = '800 18px sans-serif';
+        ctx.textAlign = 'center';
+        ctx.fillText('ARQUITETURA DE GOVERNANÇA PERSISTENTE', 960, 150);
+
+        ctx.fillStyle = '#f8fafc';
+        ctx.font = '900 46px sans-serif';
+        ctx.fillText('INVARIANTES: AS LEIS INVIOLÁVEIS DO NEGÓCIO', 960, 225);
+
+        // Escudo Hexagonal Central Animado
+        const hx = 960, hy = 480;
+        const hRad = 170 + Math.sin(t * 4) * 8;
+
+        ctx.save();
+        ctx.beginPath();
+        for (let i = 0; i < 6; i++) {
+          const a = (i * Math.PI) / 3 + t * 0.2;
+          const x = hx + hRad * Math.cos(a);
+          const y = hy + hRad * Math.sin(a);
+          if (i === 0) ctx.moveTo(x, y);
+          else ctx.lineTo(x, y);
+        }
+        ctx.closePath();
+        ctx.fillStyle = 'rgba(139, 92, 246, 0.15)';
+        ctx.shadowColor = '#a855f7';
+        ctx.shadowBlur = 35;
+        ctx.fill();
+        ctx.lineWidth = 3;
+        ctx.strokeStyle = '#c084fc';
+        ctx.stroke();
+        ctx.restore();
+
+        ctx.fillStyle = '#ffffff';
+        ctx.font = '900 32px sans-serif';
+        ctx.textAlign = 'center';
+        ctx.fillText('ESCUDO DE', hx, hy - 15);
+        ctx.fillStyle = '#38bdf8';
+        ctx.fillText('INVARIANTES', hx, hy + 25);
+        ctx.fillStyle = '#a855f7';
+        ctx.font = '700 16px monospace';
+        ctx.fillText('ZERO-VIOLATION GATE', hx, hy + 60);
+
+        // 3 Nós Orbitais de Bounded Contexts
+        const nodes = [
+          { name: 'BOUNDED CONTEXT\nORDEM DE SERVIÇO', x: 420, y: 380, col: '#38bdf8' },
+          { name: 'BOUNDED CONTEXT\nRASTREABILIDADE FLUIDO', x: 420, y: 580, col: '#10b981' },
+          { name: 'BOUNDED CONTEXT\nVALIDAÇÃO NO GIT', x: 1500, y: 480, col: '#f59e0b' }
+        ];
+
+        nodes.forEach((n) => {
+          drawGlassCard(n.x - 170, n.y - 60, 340, 120, 20, 0.8, n.col);
+
+          // Linha de conexão laser ao escudo
+          ctx.save();
+          ctx.beginPath();
+          ctx.moveTo(n.x, n.y);
+          ctx.lineTo(hx, hy);
+          ctx.lineWidth = 2;
+          ctx.strokeStyle = n.col;
+          ctx.setLineDash([12, 12]);
+          ctx.stroke();
+          ctx.restore();
+
+          ctx.fillStyle = n.col;
+          ctx.font = '800 20px sans-serif';
+          ctx.textAlign = 'center';
+          const lines = n.name.split('\n');
+          ctx.fillText(lines[0], n.x, n.y - 10);
+          ctx.fillStyle = '#ffffff';
+          ctx.font = '700 22px sans-serif';
+          ctx.fillText(lines[1], n.x, n.y + 24);
+        });
+
+        // Banner Inferior
+        drawGlassCard(240, 730, 1440, 110, 20, 0.8, '#a855f7');
+        ctx.fillStyle = '#c084fc';
+        ctx.font = '800 26px sans-serif';
+        ctx.textAlign = 'center';
+        ctx.fillText('O CÓDIGO DA IA É VALIDADO EM TEMPO REAL ANTES DE QUALQUER DEPLOY', 960, 775);
+        ctx.fillStyle = '#f8fafc';
+        ctx.font = '600 20px sans-serif';
+        ctx.fillText('Se a IA tentar criar código que desrespeite a física ou a lei, o sistema de governança bloqueia instantaneamente.', 960, 810);
+
+        ctx.restore();
+      }
+
+      // =========================================================================
+      // ATO 4: OPERAÇÃO DE CAMPO & SMARTPHONE (49.0s a 65.0s)
+      // =========================================================================
+      if (t >= 48.5 && t < 65.5) {
+        const a4Progress = Math.min(1.0, (t - 48.5) / 1.5);
+        const a4Fade = t > 64.0 ? Math.max(0, 1.0 - (t - 64.0) / 1.5) : a4Progress;
+        ctx.save();
+        ctx.globalAlpha = a4Fade;
+
+        // Cabeçalho
+        drawGlassCard(680, 110, 560, 48, 24, 0.75, '#10b981');
+        ctx.fillStyle = '#34d399';
+        ctx.font = '800 18px sans-serif';
+        ctx.textAlign = 'center';
+        ctx.fillText('CONEXÃO COM O CAMPO // OPERAÇÃO REAL', 960, 140);
+
+        ctx.fillStyle = '#f8fafc';
+        ctx.font = '900 44px sans-serif';
+        ctx.fillText('DO MECÂNICO COM CELULAR AO DASHBOARD DO GESTOR', 960, 215);
+
+        // Smartphone Futurista na Esquerda (Isometric Mockup)
+        const phoneX = 520, phoneY = 300, phoneW = 320, phoneH = 500;
+        drawGlassCard(phoneX, phoneY, phoneW, phoneH, 36, 0.9, '#38bdf8');
+
+        // Tela do Smartphone
+        ctx.save();
+        ctx.beginPath();
+        ctx.roundRect(phoneX + 16, phoneY + 20, phoneW - 32, phoneH - 40, 24);
+        ctx.fillStyle = '#0f172a';
+        ctx.fill();
+
+        // Conteúdo da App Mobile
+        ctx.fillStyle = '#38bdf8';
+        ctx.font = '700 16px sans-serif';
+        ctx.textAlign = 'center';
+        ctx.fillText('ORDEM DE SERVIÇO #1042', phoneX + phoneW / 2, phoneY + 65);
+
+        // QR Code Box com Laser animado
+        const qrSize = 130;
+        const qrx = phoneX + (phoneW - qrSize) / 2;
+        const qry = phoneY + 95;
+        ctx.fillStyle = '#1e293b';
+        ctx.fillRect(qrx, qry, qrSize, qrSize);
+
+        // Padrão vetorial estilizado de QR Code
+        ctx.fillStyle = '#38bdf8';
+        ctx.fillRect(qrx + 15, qry + 15, 30, 30);
+        ctx.fillRect(qrx + qrSize - 45, qry + 15, 30, 30);
+        ctx.fillRect(qrx + 15, qry + qrSize - 45, 30, 30);
+        ctx.fillRect(qrx + 55, qry + 55, 20, 20);
+
+        // Laser scan verde
+        const laserY = qry + ((t * 120) % qrSize);
+        ctx.lineWidth = 3;
+        ctx.strokeStyle = '#34d399';
+        ctx.shadowColor = '#34d399';
+        ctx.shadowBlur = 12;
+        ctx.beginPath();
+        ctx.moveTo(qrx, laserY);
+        ctx.lineTo(qrx + qrSize, laserY);
+        ctx.stroke();
+        ctx.shadowBlur = 0;
+
+        ctx.fillStyle = '#f8fafc';
+        ctx.font = '700 16px sans-serif';
+        ctx.fillText('Chiller Parafuso 120 TR', phoneX + phoneW / 2, phoneY + 270);
+        ctx.fillStyle = '#10b981';
+        ctx.fillText('✓ Leitura de Parâmetros OK', phoneX + phoneW / 2, phoneY + 310);
+        ctx.fillText('✓ Recolhido 12 kg R-410A', phoneX + phoneW / 2, phoneY + 345);
+
+        // Botão Assinatura
+        drawGlassCard(phoneX + 35, phoneY + 380, phoneW - 70, 48, 24, 0.8, '#34d399');
+        ctx.fillStyle = '#ffffff';
+        ctx.font = '800 16px sans-serif';
+        ctx.fillText('ASSINADO DIGITALMENTE', phoneX + phoneW / 2, phoneY + 410);
+        ctx.restore();
+
+        // 3 Grandes Métricas de Impacto na Direita
+        const metrics = [
+          { title: 'REDUÇÃO DE PRAZO', val: '85% MAIS ÁGIL', desc: 'De 6 meses tradicionais para 3 a 4 semanas de entrega.', col: '#38bdf8' },
+          { title: 'DIGITAÇÃO MANUAL DE CÓDIGO', val: 'ZERO LINHAS', desc: 'A IA escreve todo o código sob intenções humanas expressas.', col: '#f59e0b' },
+          { title: 'CONFORMIDADE JURÍDICA & PMOC', val: '100% BLINDADO', desc: 'Histórico auditável perante CREA, CFT, ANVISA e clientes.', col: '#10b981' }
+        ];
+
+        metrics.forEach((m, idx) => {
+          const my = 310 + idx * 135;
+          drawGlassCard(920, my, 860, 115, 20, 0.8, m.col);
+
+          ctx.fillStyle = m.col;
+          ctx.font = '800 16px monospace';
+          ctx.textAlign = 'left';
+          ctx.fillText(m.title, 955, my + 35);
+
+          ctx.fillStyle = '#ffffff';
+          ctx.font = '900 36px sans-serif';
+          ctx.fillText(m.val, 955, my + 75);
+
+          ctx.fillStyle = '#94a3b8';
+          ctx.font = '600 18px sans-serif';
+          ctx.fillText(m.desc, 955, my + 102);
+        });
+
+        ctx.restore();
+      }
+
+      // =========================================================================
+      // ATO 5: O CLÍMAX & O FUTURO DO DESENVOLVIMENTO (65.0s a 80.0s)
+      // =========================================================================
+      if (t >= 64.5) {
+        const a5Progress = Math.min(1.0, (t - 64.5) / 1.5);
+        const a5Fade = t > 78.5 ? Math.max(0, 1.0 - (t - 78.5) / 1.5) : a5Progress;
+        ctx.save();
+        ctx.globalAlpha = a5Fade;
+
+        // Efeito de Explosão e Convergência de Raios Cósmicos
+        const fx = 960, fy = 430;
+        ctx.save();
+        ctx.translate(fx, fy);
+        ctx.rotate(t * 0.4);
+        for (let i = 0; i < 12; i++) {
+          const ang = (i * Math.PI * 2) / 12;
+          ctx.beginPath();
+          ctx.moveTo(0, 0);
+          ctx.lineTo(Math.cos(ang) * 600, Math.sin(ang) * 600);
+          ctx.lineWidth = 1.5;
+          ctx.strokeStyle = i % 2 === 0 ? 'rgba(56, 189, 248, 0.15)' : 'rgba(245, 158, 11, 0.15)';
+          ctx.stroke();
+        }
+        ctx.restore();
+
+        // Grande Emblema Dourado Central
+        const pSize = 1.0 + 0.04 * Math.sin(t * 5);
+        ctx.save();
+        ctx.translate(fx, fy);
+        ctx.scale(pSize, pSize);
+
+        // Anel de Ouro Radiante
+        ctx.beginPath();
+        ctx.arc(0, 0, 190, 0, Math.PI * 2);
+        ctx.lineWidth = 6;
+        ctx.strokeStyle = '#f59e0b';
+        ctx.shadowColor = '#fbbf24';
+        ctx.shadowBlur = 40;
+        ctx.stroke();
+
+        ctx.beginPath();
+        ctx.arc(0, 0, 175, 0, Math.PI * 2);
+        ctx.lineWidth = 2;
+        ctx.strokeStyle = '#38bdf8';
+        ctx.shadowColor = '#0ea5e9';
+        ctx.shadowBlur = 20;
+        ctx.stroke();
+        ctx.shadowBlur = 0;
+
+        ctx.fillStyle = '#ffffff';
+        ctx.font = '900 48px sans-serif';
+        ctx.textAlign = 'center';
+        ctx.fillText('IDD VÍDEO', 0, -20);
+        ctx.fillStyle = '#38bdf8';
+        ctx.fillText('STUDIO', 0, 35);
+        ctx.fillStyle = '#fbbf24';
+        ctx.font = '800 16px monospace';
+        ctx.fillText('INTENTION-DRIVEN PARADIGM', 0, 80);
+
+        ctx.restore();
+
+        // 4 Badges Unificadas da Masterclass
+        const badges = [
+          'EP 1: O PARADIGMA',
+          'EP 2: OS INVARIANTES',
+          'EP 3: OPERAÇÃO DE CAMPO',
+          'EP 4: A MASTERCLASS'
+        ];
+        badges.forEach((bText, idx) => {
+          const bx = 320 + idx * 340;
+          drawGlassCard(bx - 140, 680, 280, 54, 27, 0.8, '#38bdf8');
+          ctx.fillStyle = '#38bdf8';
+          ctx.font = '800 15px sans-serif';
+          ctx.textAlign = 'center';
+          ctx.fillText(bText, bx, 713);
+        });
+
+        // Frase de Encerramento Inspiradora
+        drawGlassCard(280, 780, 1360, 95, 20, 0.85, '#f59e0b');
+        ctx.fillStyle = '#f8fafc';
+        ctx.font = '700 28px sans-serif';
+        ctx.textAlign = 'center';
+        ctx.fillText('"Não é sobre automatizar o desenvolvedor para fora do processo.', 960, 822);
+        ctx.fillStyle = '#fbbf24';
+        ctx.font = '800 30px sans-serif';
+        ctx.fillText('É sobre amplificar a mente de quem domina a intenção."', 960, 858);
+
+        // Rodapé de Direitos e Identidade
+        ctx.fillStyle = '#64748b';
+        ctx.font = '600 16px monospace';
+        ctx.fillText('PRODUZIDO VIA IDD MOTION GRAPHICS RENDERER // CANAL ELIEZER J P ROSA & ZICO JOSIAS', 960, 930);
+
+        ctx.restore();
+      }
+    };
+
+    // Loop contínuo com requestAnimationFrame para reprodução fluida em tempo real
+    let startTime = null;
+    let isSeeking = false;
+
+    window.seek = function(sec) {
+      isSeeking = true;
+      window.renderFrame(sec * 1000);
+    };
+
+    function animLoop(timestamp) {
+      if (!isSeeking) {
+        if (!startTime) startTime = timestamp;
+        const elapsed = timestamp - startTime;
+        window.renderFrame(elapsed);
+      }
+      requestAnimationFrame(animLoop);
+    }
+    requestAnimationFrame(animLoop);
+  </script>
+</body>
+</html>

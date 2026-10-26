@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Revolução da Intenção</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            text-align: center;
+        }
+        #slide-container {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            max-width: 800px;
+            width: 90%;
+            backdrop-filter: blur(10px);
+        }
+        h1 { font-size: 2.5em; margin-bottom: 20px; color: #ffdd57; }
+        p { font-size: 1.5em; line-height: 1.6; }
+        .controls { margin-top: 40px; }
+        button {
+            background-color: #ffdd57;
+            color: #1e3c72;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.2em;
+            font-weight: bold;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin: 0 10px;
+        }
+        button:hover {
+            background-color: #ffea99;
+            transform: scale(1.05);
+        }
+        button:disabled {
+            background-color: #cccccc;
+            color: #666666;
+            cursor: not-allowed;
+            transform: scale(1);
+        }
+    </style>
+</head>
+<body>
+<div id="idd-status-banner" role="note" style="position:fixed;bottom:6px;left:6px;z-index:2147483000;max-width:min(92vw,560px);padding:3px 8px;font:11px/1.35 system-ui,-apple-system,Segoe UI,sans-serif;color:#fde68a;background:rgba(17,17,17,.82);border:1px solid rgba(253,230,138,.35);border-radius:6px;pointer-events:none;">📜 Peça histórica (versão anterior ao Cânone v1.0-rc1). Afirmações podem não refletir o status atual — ver paradigma/00-canone/AFIRMACOES.md</div>
+
+    <div id="slide-container">
+        <h1 id="slide-title">Bem-vindo à Nova Engenharia</h1>
+        <p id="slide-text">Clique em "Iniciar Apresentação" para ouvir.</p>
+    </div>
+
+    <div class="controls">
+        <button id="btn-prev" onclick="prevSlide()" disabled>Anterior</button>
+        <button id="btn-play" onclick="playCurrentSlide()">Iniciar Apresentação</button>
+        <button id="btn-next" onclick="nextSlide()" disabled>Próximo</button>
+    </div>
+
+    <script>
+        const slides = [
+            {
+                title: "A Revolução da Intenção",
+                text: "Olá! Bem-vindos. Esqueçam tudo o que vocês sabem sobre ter que digitar códigos complexos para criar tecnologia. O jogo mudou."
+            },
+            {
+                title: "O Fim do Paradigma do Comando",
+                text: "Segundo Jakob Nielsen, do renomado NN Group, passamos 60 anos dizendo aos computadores COMO fazer as coisas, clicando em botões e escrevendo códigos rígidos. Isso acabou."
+            },
+            {
+                title: "O Paradigma da Intenção",
+                text: "Agora vivemos o Paradigma da Intenção. Você não diz mais COMO o sistema deve ser construído, você apenas diz O QUE você quer. A Inteligência Artificial faz a ponte entre a sua ideia e a máquina."
+            },
+            {
+                title: "A Sua Vantagem (O Salto)",
+                text: "Para vocês que não são da área técnica, isso é um atalho formidável. Vocês não precisam aprender a sintaxe de programação. Vocês só precisam aprender a estruturar regras de negócio e falar com os agentes de IA com clareza."
+            },
+            {
+                title: "O Novo Papel: Orquestrador",
+                text: "Você não será mais um digitador de código. Você será um Orquestrador. Bem-vindos ao Desenvolvimento Orientado a Intenção."
+            }
+        ];
+
+        let currentSlide = 0;
+        let synth = window.speechSynthesis;
+
+        function updateUI() {
+            document.getElementById('slide-title').innerText = slides[currentSlide].title;
+            document.getElementById('slide-text').innerText = slides[currentSlide].text;
+            
+            document.getElementById('btn-prev').disabled = currentSlide === 0;
+            document.getElementById('btn-next').disabled = currentSlide === slides.length - 1;
+            document.getElementById('btn-play').innerText = "Ouvir Slide Novamente";
+        }
+
+        function speak(text) {
+            synth.cancel(); // Para qualquer fala anterior
+            let utterThis = new SpeechSynthesisUtterance(text);
+            utterThis.lang = 'pt-BR'; // Define idioma para Português do Brasil
+            utterThis.rate = 1.1; // Velocidade da voz
+            synth.speak(utterThis);
+        }
+
+        function playCurrentSlide() {
+            // Se for o clique inicial na tela de boas vindas, muda para o slide 0
+            if (document.getElementById('btn-play').innerText === "Iniciar Apresentação") {
+                updateUI();
+            }
+            speak(slides[currentSlide].text);
+        }
+
+        function nextSlide() {
+            if (currentSlide < slides.length - 1) {
+                currentSlide++;
+                updateUI();
+                speak(slides[currentSlide].text);
+            }
+        }
+
+        function prevSlide() {
+            if (currentSlide > 0) {
+                currentSlide--;
+                updateUI();
+                speak(slides[currentSlide].text);
+            }
+        }
+    </script>
+
+</body>
+</html>

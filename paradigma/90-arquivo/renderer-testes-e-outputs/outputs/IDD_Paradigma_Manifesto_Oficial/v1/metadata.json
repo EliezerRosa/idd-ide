@@ -1,0 +1,42 @@
+{
+  "projectName": "IDD_Paradigma_Manifesto_Oficial",
+  "version": "v1",
+  "createdAt": "2026-10-20T18:48:56.438Z",
+  "resolution": "1920x1080",
+  "fps": 30,
+  "durationSec": 80,
+  "audioProfile": "pt-BR-AntonioNeural (Dev) + pt-BR-FranciscaNeural (IA)",
+  "loudness": "-14 LUFS (EBU R128)",
+  "narrativeActs": [
+    {
+      "act": 1,
+      "title": "O Despertar do Paradigma IDD",
+      "time": "0s - 16s"
+    },
+    {
+      "act": 2,
+      "title": "A Física Térmica e a Lei 13.589 do PMOC",
+      "time": "16s - 33s"
+    },
+    {
+      "act": 3,
+      "title": "Escudo de Invariantes & Governança Persistente",
+      "time": "33s - 49s"
+    },
+    {
+      "act": 4,
+      "title": "Conexão com o Campo: O Mecânico e o Smartphone",
+      "time": "49s - 65s"
+    },
+    {
+      "act": 5,
+      "title": "O Clímax & O Futuro do Software",
+      "time": "65s - 80s"
+    }
+  ],
+  "fileSizeMB": "20.4",
+  "deliverables": {
+    "versionedPath": "C:\\Antigravity - IDD Refrigeração\\motion_graphics_renderer\\outputs\\IDD_Paradigma_Manifesto_Oficial\\v1\\IDD_Paradigma_Manifesto_Oficial_v1.mp4",
+    "producaoPath": "C:\\Antigravity - IDD Refrigeração\\producao_yt\\IDD_Novo_Video_Manifesto_Oficial.mp4"
+  }
+}

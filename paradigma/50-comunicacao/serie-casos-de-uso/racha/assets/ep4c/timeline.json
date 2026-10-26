@@ -1,0 +1,115 @@
+{
+  "episode": "4C",
+  "title": "Implementação Completa: Funções Puras & Métodos Amarrados às Invariantes",
+  "totalDurationSec": 145.66,
+  "items": [
+    {
+      "id": "seg_01_leigo",
+      "who": "leigo",
+      "actor": "Usuária Leiga",
+      "slide": 1,
+      "chat": false,
+      "startSec": 0.5,
+      "endSec": 14.47,
+      "durationSec": 13.97,
+      "text": "Eliézer, chegamos ao ponto culminante da arquitetura! Depois de definir as Intenções no 1B, o MER Canônico no 2C e o UML padrão oficial no 3C: como esse modelo se transforma em código vivo sem risco de bugs?",
+      "file": "audio/seg_01_leigo.mp3"
+    },
+    {
+      "id": "seg_02_eliezer",
+      "who": "eliezer",
+      "actor": "Eliézer Rosa",
+      "slide": 1,
+      "chat": false,
+      "startSec": 15.12,
+      "endSec": 35.45,
+      "durationSec": 20.33,
+      "text": "No Paradigma IDD, a geração de código não é um ato de adivinhação. O código é puramente determinístico, composto por funções puras e métodos amarrados às invariantes de negócio! Vejam no editor: nenhuma dependência mágica, nenhum estado global mutável, tudo previsível e auditável.",
+      "file": "audio/seg_02_eliezer.mp3"
+    },
+    {
+      "id": "seg_03_leigo",
+      "who": "leigo",
+      "actor": "Usuária Leiga",
+      "slide": 2,
+      "chat": false,
+      "startSec": 36.1,
+      "endSec": 47.0,
+      "durationSec": 10.9,
+      "text": "Vejam que impressionante esse decorador arroba invariant em cima da função calcularRateio! IA Compilador, como ele garante que nenhum centavo se perca na execução?",
+      "file": "audio/seg_03_leigo.mp3"
+    },
+    {
+      "id": "seg_04_ia",
+      "who": "ia",
+      "actor": "IA Compilador",
+      "slide": 2,
+      "chat": false,
+      "startSec": 47.65,
+      "endSec": 75.11,
+      "durationSec": 27.46,
+      "text": "O decorador de invariante atua como um fiscal em tempo real de execução. Antes de rodar, ele valida pré-condições: mesa ativa e participantes válidos. Ao término, ele executa a asserção matemática da Invariante Universal: o somatório rigoroso de cada cota individual gerada tem que ser estritamente igual ao valor total da comanda. Se houver desvio de um único centavo, o sistema lança InvariantViolationException e aborta a operação!",
+      "file": "audio/seg_04_ia.mp3"
+    },
+    {
+      "id": "seg_05_leigo",
+      "who": "leigo",
+      "actor": "Usuária Leiga",
+      "slide": 3,
+      "chat": false,
+      "startSec": 75.76,
+      "endSec": 83.15,
+      "durationSec": 7.39,
+      "text": "E como o código se comporta em cenários difíceis, como dízimas periódicas onde cem reais são divididos entre três pessoas?",
+      "file": "audio/seg_05_leigo.mp3"
+    },
+    {
+      "id": "seg_06_ia",
+      "who": "ia",
+      "actor": "IA Compilador",
+      "slide": 3,
+      "chat": true,
+      "startSec": 83.8,
+      "endSec": 104.22,
+      "durationSec": 20.42,
+      "text": "Disparando suíte de testes de estresse com duzentos cenários de fuzzing no terminal! Nosso algoritmo de partição de centavos distribui os restos de forma determinística por ordem de prioridade. Duzentos testes executados: duzentos aprovados com sucesso absoluto, zero centavos perdidos e hash de integridade validado!",
+      "file": "audio/seg_06_ia.mp3"
+    },
+    {
+      "id": "seg_07_eliezer",
+      "who": "eliezer",
+      "actor": "Eliézer Rosa",
+      "slide": 3,
+      "chat": true,
+      "startSec": 104.87,
+      "endSec": 117.85,
+      "durationSec": 12.98,
+      "text": "Código e suíte de testes formalmente homologados! É assim que eliminamos o medo de deploy: a matemática valida o modelo, o compilador amarra os contratos e o código nasce blindado para produção.",
+      "file": "audio/seg_07_eliezer.mp3"
+    },
+    {
+      "id": "seg_08_leigo",
+      "who": "leigo",
+      "actor": "Usuária Leiga",
+      "slide": 4,
+      "chat": false,
+      "startSec": 118.5,
+      "endSec": 127.28,
+      "durationSec": 8.78,
+      "text": "Com Intenções, MER, UML e Código Vivo com duzentos testes, a trilha do Racha de Pix atinge a perfeição do Paradigma IDD!",
+      "file": "audio/seg_08_leigo.mp3"
+    },
+    {
+      "id": "seg_09_eliezer",
+      "who": "eliezer",
+      "actor": "Eliézer Rosa",
+      "slide": 4,
+      "chat": false,
+      "startSec": 127.93,
+      "endSec": 143.51,
+      "durationSec": 15.58,
+      "text": "Exatamente! E aplicaremos essa mesma maestria nos episódios de aprofundamento das trilhas de Barbearia e Cafeteria. Acompanhem cada vídeo das nossas playlists oficiais e dominem o futuro do desenvolvimento guiado por intenção!",
+      "file": "audio/seg_09_eliezer.mp3"
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "schemaVersion": "1.0.0",
+  "createdAt": "2026-10-19T23:22:34.028Z",
+  "project": {
+    "name": "paradigma_idd_aula_01",
+    "width": 1920,
+    "height": 1080,
+    "frameRate": 30,
+    "totalFrames": 900,
+    "durationSec": 30,
+    "htmlPath": "C:\\Antigravity - IDD Refrigeração\\motion_graphics_renderer\\studio\\temp\\scene_job_prompt_1792452044703.html"
+  },
+  "deliverables": {
+    "videoFile": "final_video.mp4",
+    "videoSizeBytes": 912209,
+    "videoSizeMB": "0.87",
+    "audioFile": null
+  },
+  "renderStats": {
+    "pipelineDurationSec": "109.30",
+    "totalFrames": 900,
+    "fpsAchieved": "8.23",
+    "completedAt": "2026-10-19T23:22:34.032Z"
+  }
+}

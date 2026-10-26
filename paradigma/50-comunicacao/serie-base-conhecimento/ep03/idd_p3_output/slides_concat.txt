@@ -1,0 +1,210 @@
+file 'C:/Antigravity - RVM Designações/IDD Paradigma/04 - Acervo de Episódios/Ep03 - A Genealogia/idd_p3_output/slides/slide_0001.png'
+duration 30.791
+file 'C:/Antigravity - RVM Designações/IDD Paradigma/04 - Acervo de Episódios/Ep03 - A Genealogia/idd_p3_output/slides/slide_0002.png'
+duration 25.351
+file 'C:/Antigravity - RVM Designações/IDD Paradigma/04 - Acervo de Episódios/Ep03 - A Genealogia/idd_p3_output/slides/slide_0003.png'
+duration 15.071
+file 'C:/Antigravity - RVM Designações/IDD Paradigma/04 - Acervo de Episódios/Ep03 - A Genealogia/idd_p3_output/slides/slide_0004.png'
+duration 15.831
+file 'C:/Antigravity - RVM Designações/IDD Paradigma/04 - Acervo de Episódios/Ep03 - A Genealogia/idd_p3_output/slides/slide_0005.png'
+duration 23.711
+file 'C:/Antigravity - RVM Designações/IDD Paradigma/04 - Acervo de Episódios/Ep03 - A Genealogia/idd_p3_output/slides/slide_0006.png'
+duration 12.951
+file 'C:/Antigravity - RVM Designações/IDD Paradigma/04 - Acervo de Episódios/Ep03 - A Genealogia/idd_p3_output/slides/slide_0007.png'
+duration 23.591
+file 'C:/Antigravity - RVM Designações/IDD Paradigma/04 - Acervo de Episódios/Ep03 - A Genealogia/idd_p3_output/slides/slide_0008.png'
+duration 21.231
+file 'C:/Antigravity - RVM Designações/IDD Paradigma/04 - Acervo de Episódios/Ep03 - A Genealogia/idd_p3_output/slides/slide_0009.png'
+duration 17.471
+file 'C:/Antigravity - RVM Designações/IDD Paradigma/04 - Acervo de Episódios/Ep03 - A Genealogia/idd_p3_output/slides/slide_0010.png'
+duration 18.471
+file 'C:/Antigravity - RVM Designações/IDD Paradigma/04 - Acervo de Episódios/Ep03 - A Genealogia/idd_p3_output/slides/slide_0011.png'
+duration 19.751
+file 'C:/Antigravity - RVM Designações/IDD Paradigma/04 - Acervo de Episódios/Ep03 - A Genealogia/idd_p3_output/slides/slide_0012.png'
+duration 18.711
+file 'C:/Antigravity - RVM Designações/IDD Paradigma/04 - Acervo de Episódios/Ep03 - A Genealogia/idd_p3_output/slides/slide_0013.png'
+duration 22.191
+file 'C:/Antigravity - RVM Designações/IDD Paradigma/04 - Acervo de Episódios/Ep03 - A Genealogia/idd_p3_output/slides/slide_0014.png'
+duration 22.911
+file 'C:/Antigravity - RVM Designações/IDD Paradigma/04 - Acervo de Episódios/Ep03 - A Genealogia/idd_p3_output/slides/slide_0015.png'
+duration 17.271
+file 'C:/Antigravity - RVM Designações/IDD Paradigma/04 - Acervo de Episódios/Ep03 - A Genealogia/idd_p3_output/slides/slide_0016.png'
+duration 25.551
+file 'C:/Antigravity - RVM Designações/IDD Paradigma/04 - Acervo de Episódios/Ep03 - A Genealogia/idd_p3_output/slides/slide_0017.png'
+duration 21.431
+file 'C:/Antigravity - RVM Designações/IDD Paradigma/04 - Acervo de Episódios/Ep03 - A Genealogia/idd_p3_output/slides/slide_0018.png'
+duration 18.591
+file 'C:/Antigravity - RVM Designações/IDD Paradigma/04 - Acervo de Episódios/Ep03 - A Genealogia/idd_p3_output/slides/slide_0019.png'
+duration 19.356
+file 'C:/Antigravity - RVM Designações/IDD Paradigma/04 - Acervo de Episódios/Ep03 - A Genealogia/idd_p3_output/slides/slide_0020.png'
+duration 23.100
+file 'C:/Antigravity - RVM Designações/IDD Paradigma/04 - Acervo de Episódios/Ep03 - A Genealogia/idd_p3_output/slides/slide_0021.png'
+duration 14.724
+file 'C:/Antigravity - RVM Designações/IDD Paradigma/04 - Acervo de Episódios/Ep03 - A Genealogia/idd_p3_output/slides/slide_0022.png'
+duration 19.404
+file 'C:/Antigravity - RVM Designações/IDD Paradigma/04 - Acervo de Episódios/Ep03 - A Genealogia/idd_p3_output/slides/slide_0023.png'
+duration 21.612
+file 'C:/Antigravity - RVM Designações/IDD Paradigma/04 - Acervo de Episódios/Ep03 - A Genealogia/idd_p3_output/slides/slide_0024.png'
+duration 14.604
+file 'C:/Antigravity - RVM Designações/IDD Paradigma/04 - Acervo de Episódios/Ep03 - A Genealogia/idd_p3_output/slides/slide_0025.png'
+duration 18.756
+file 'C:/Antigravity - RVM Designações/IDD Paradigma/04 - Acervo de Episódios/Ep03 - A Genealogia/idd_p3_output/slides/slide_0026.png'
+duration 23.388
+file 'C:/Antigravity - RVM Designações/IDD Paradigma/04 - Acervo de Episódios/Ep03 - A Genealogia/idd_p3_output/slides/slide_0027.png'
+duration 14.484
+file 'C:/Antigravity - RVM Designações/IDD Paradigma/04 - Acervo de Episódios/Ep03 - A Genealogia/idd_p3_output/slides/slide_0028.png'
+duration 16.452
+file 'C:/Antigravity - RVM Designações/IDD Paradigma/04 - Acervo de Episódios/Ep03 - A Genealogia/idd_p3_output/slides/slide_0029.png'
+duration 20.028
+file 'C:/Antigravity - RVM Designações/IDD Paradigma/04 - Acervo de Episódios/Ep03 - A Genealogia/idd_p3_output/slides/slide_0030.png'
+duration 12.588
+file 'C:/Antigravity - RVM Designações/IDD Paradigma/04 - Acervo de Episódios/Ep03 - A Genealogia/idd_p3_output/slides/slide_0031.png'
+duration 20.412
+file 'C:/Antigravity - RVM Designações/IDD Paradigma/04 - Acervo de Episódios/Ep03 - A Genealogia/idd_p3_output/slides/slide_0032.png'
+duration 21.420
+file 'C:/Antigravity - RVM Designações/IDD Paradigma/04 - Acervo de Episódios/Ep03 - A Genealogia/idd_p3_output/slides/slide_0033.png'
+duration 11.388
+file 'C:/Antigravity - RVM Designações/IDD Paradigma/04 - Acervo de Episódios/Ep03 - A Genealogia/idd_p3_output/slides/slide_0034.png'
+duration 20.268
+file 'C:/Antigravity - RVM Designações/IDD Paradigma/04 - Acervo de Episódios/Ep03 - A Genealogia/idd_p3_output/slides/slide_0035.png'
+duration 23.724
+file 'C:/Antigravity - RVM Designações/IDD Paradigma/04 - Acervo de Episódios/Ep03 - A Genealogia/idd_p3_output/slides/slide_0036.png'
+duration 16.692
+file 'C:/Antigravity - RVM Designações/IDD Paradigma/04 - Acervo de Episódios/Ep03 - A Genealogia/idd_p3_output/slides/slide_0037.png'
+duration 15.924
+file 'C:/Antigravity - RVM Designações/IDD Paradigma/04 - Acervo de Episódios/Ep03 - A Genealogia/idd_p3_output/slides/slide_0038.png'
+duration 21.180
+file 'C:/Antigravity - RVM Designações/IDD Paradigma/04 - Acervo de Episódios/Ep03 - A Genealogia/idd_p3_output/slides/slide_0039.png'
+duration 11.388
+file 'C:/Antigravity - RVM Designações/IDD Paradigma/04 - Acervo de Episódios/Ep03 - A Genealogia/idd_p3_output/slides/slide_0040.png'
+duration 18.132
+file 'C:/Antigravity - RVM Designações/IDD Paradigma/04 - Acervo de Episódios/Ep03 - A Genealogia/idd_p3_output/slides/slide_0041.png'
+duration 23.268
+file 'C:/Antigravity - RVM Designações/IDD Paradigma/04 - Acervo de Episódios/Ep03 - A Genealogia/idd_p3_output/slides/slide_0042.png'
+duration 8.460
+file 'C:/Antigravity - RVM Designações/IDD Paradigma/04 - Acervo de Episódios/Ep03 - A Genealogia/idd_p3_output/slides/slide_0043.png'
+duration 18.156
+file 'C:/Antigravity - RVM Designações/IDD Paradigma/04 - Acervo de Episódios/Ep03 - A Genealogia/idd_p3_output/slides/slide_0044.png'
+duration 21.996
+file 'C:/Antigravity - RVM Designações/IDD Paradigma/04 - Acervo de Episódios/Ep03 - A Genealogia/idd_p3_output/slides/slide_0045.png'
+duration 10.116
+file 'C:/Antigravity - RVM Designações/IDD Paradigma/04 - Acervo de Episódios/Ep03 - A Genealogia/idd_p3_output/slides/slide_0046.png'
+duration 19.956
+file 'C:/Antigravity - RVM Designações/IDD Paradigma/04 - Acervo de Episódios/Ep03 - A Genealogia/idd_p3_output/slides/slide_0047.png'
+duration 23.748
+file 'C:/Antigravity - RVM Designações/IDD Paradigma/04 - Acervo de Episódios/Ep03 - A Genealogia/idd_p3_output/slides/slide_0048.png'
+duration 10.476
+file 'C:/Antigravity - RVM Designações/IDD Paradigma/04 - Acervo de Episódios/Ep03 - A Genealogia/idd_p3_output/slides/slide_0049.png'
+duration 17.820
+file 'C:/Antigravity - RVM Designações/IDD Paradigma/04 - Acervo de Episódios/Ep03 - A Genealogia/idd_p3_output/slides/slide_0050.png'
+duration 18.948
+file 'C:/Antigravity - RVM Designações/IDD Paradigma/04 - Acervo de Episódios/Ep03 - A Genealogia/idd_p3_output/slides/slide_0051.png'
+duration 11.532
+file 'C:/Antigravity - RVM Designações/IDD Paradigma/04 - Acervo de Episódios/Ep03 - A Genealogia/idd_p3_output/slides/slide_0052.png'
+duration 17.964
+file 'C:/Antigravity - RVM Designações/IDD Paradigma/04 - Acervo de Episódios/Ep03 - A Genealogia/idd_p3_output/slides/slide_0053.png'
+duration 23.100
+file 'C:/Antigravity - RVM Designações/IDD Paradigma/04 - Acervo de Episódios/Ep03 - A Genealogia/idd_p3_output/slides/slide_0054.png'
+duration 13.692
+file 'C:/Antigravity - RVM Designações/IDD Paradigma/04 - Acervo de Episódios/Ep03 - A Genealogia/idd_p3_output/slides/slide_0055.png'
+duration 21.660
+file 'C:/Antigravity - RVM Designações/IDD Paradigma/04 - Acervo de Episódios/Ep03 - A Genealogia/idd_p3_output/slides/slide_0056.png'
+duration 21.924
+file 'C:/Antigravity - RVM Designações/IDD Paradigma/04 - Acervo de Episódios/Ep03 - A Genealogia/idd_p3_output/slides/slide_0057.png'
+duration 9.708
+file 'C:/Antigravity - RVM Designações/IDD Paradigma/04 - Acervo de Episódios/Ep03 - A Genealogia/idd_p3_output/slides/slide_0058.png'
+duration 18.252
+file 'C:/Antigravity - RVM Designações/IDD Paradigma/04 - Acervo de Episódios/Ep03 - A Genealogia/idd_p3_output/slides/slide_0059.png'
+duration 23.964
+file 'C:/Antigravity - RVM Designações/IDD Paradigma/04 - Acervo de Episódios/Ep03 - A Genealogia/idd_p3_output/slides/slide_0060.png'
+duration 12.396
+file 'C:/Antigravity - RVM Designações/IDD Paradigma/04 - Acervo de Episódios/Ep03 - A Genealogia/idd_p3_output/slides/slide_0061.png'
+duration 17.604
+file 'C:/Antigravity - RVM Designações/IDD Paradigma/04 - Acervo de Episódios/Ep03 - A Genealogia/idd_p3_output/slides/slide_0062.png'
+duration 22.068
+file 'C:/Antigravity - RVM Designações/IDD Paradigma/04 - Acervo de Episódios/Ep03 - A Genealogia/idd_p3_output/slides/slide_0063.png'
+duration 13.836
+file 'C:/Antigravity - RVM Designações/IDD Paradigma/04 - Acervo de Episódios/Ep03 - A Genealogia/idd_p3_output/slides/slide_0064.png'
+duration 18.060
+file 'C:/Antigravity - RVM Designações/IDD Paradigma/04 - Acervo de Episódios/Ep03 - A Genealogia/idd_p3_output/slides/slide_0065.png'
+duration 21.132
+file 'C:/Antigravity - RVM Designações/IDD Paradigma/04 - Acervo de Episódios/Ep03 - A Genealogia/idd_p3_output/slides/slide_0066.png'
+duration 10.476
+file 'C:/Antigravity - RVM Designações/IDD Paradigma/04 - Acervo de Episódios/Ep03 - A Genealogia/idd_p3_output/slides/slide_0067.png'
+duration 19.476
+file 'C:/Antigravity - RVM Designações/IDD Paradigma/04 - Acervo de Episódios/Ep03 - A Genealogia/idd_p3_output/slides/slide_0068.png'
+duration 20.724
+file 'C:/Antigravity - RVM Designações/IDD Paradigma/04 - Acervo de Episódios/Ep03 - A Genealogia/idd_p3_output/slides/slide_0069.png'
+duration 11.724
+file 'C:/Antigravity - RVM Designações/IDD Paradigma/04 - Acervo de Episódios/Ep03 - A Genealogia/idd_p3_output/slides/slide_0070.png'
+duration 15.612
+file 'C:/Antigravity - RVM Designações/IDD Paradigma/04 - Acervo de Episódios/Ep03 - A Genealogia/idd_p3_output/slides/slide_0071.png'
+duration 19.740
+file 'C:/Antigravity - RVM Designações/IDD Paradigma/04 - Acervo de Episódios/Ep03 - A Genealogia/idd_p3_output/slides/slide_0072.png'
+duration 10.236
+file 'C:/Antigravity - RVM Designações/IDD Paradigma/04 - Acervo de Episódios/Ep03 - A Genealogia/idd_p3_output/slides/slide_0073.png'
+duration 20.916
+file 'C:/Antigravity - RVM Designações/IDD Paradigma/04 - Acervo de Episódios/Ep03 - A Genealogia/idd_p3_output/slides/slide_0074.png'
+duration 21.300
+file 'C:/Antigravity - RVM Designações/IDD Paradigma/04 - Acervo de Episódios/Ep03 - A Genealogia/idd_p3_output/slides/slide_0075.png'
+duration 9.852
+file 'C:/Antigravity - RVM Designações/IDD Paradigma/04 - Acervo de Episódios/Ep03 - A Genealogia/idd_p3_output/slides/slide_0076.png'
+duration 21.636
+file 'C:/Antigravity - RVM Designações/IDD Paradigma/04 - Acervo de Episódios/Ep03 - A Genealogia/idd_p3_output/slides/slide_0077.png'
+duration 23.004
+file 'C:/Antigravity - RVM Designações/IDD Paradigma/04 - Acervo de Episódios/Ep03 - A Genealogia/idd_p3_output/slides/slide_0078.png'
+duration 12.708
+file 'C:/Antigravity - RVM Designações/IDD Paradigma/04 - Acervo de Episódios/Ep03 - A Genealogia/idd_p3_output/slides/slide_0079.png'
+duration 19.380
+file 'C:/Antigravity - RVM Designações/IDD Paradigma/04 - Acervo de Episódios/Ep03 - A Genealogia/idd_p3_output/slides/slide_0080.png'
+duration 18.876
+file 'C:/Antigravity - RVM Designações/IDD Paradigma/04 - Acervo de Episódios/Ep03 - A Genealogia/idd_p3_output/slides/slide_0081.png'
+duration 12.204
+file 'C:/Antigravity - RVM Designações/IDD Paradigma/04 - Acervo de Episódios/Ep03 - A Genealogia/idd_p3_output/slides/slide_0082.png'
+duration 18.324
+file 'C:/Antigravity - RVM Designações/IDD Paradigma/04 - Acervo de Episódios/Ep03 - A Genealogia/idd_p3_output/slides/slide_0083.png'
+duration 21.396
+file 'C:/Antigravity - RVM Designações/IDD Paradigma/04 - Acervo de Episódios/Ep03 - A Genealogia/idd_p3_output/slides/slide_0084.png'
+duration 14.268
+file 'C:/Antigravity - RVM Designações/IDD Paradigma/04 - Acervo de Episódios/Ep03 - A Genealogia/idd_p3_output/slides/slide_0085.png'
+duration 22.812
+file 'C:/Antigravity - RVM Designações/IDD Paradigma/04 - Acervo de Episódios/Ep03 - A Genealogia/idd_p3_output/slides/slide_0086.png'
+duration 19.572
+file 'C:/Antigravity - RVM Designações/IDD Paradigma/04 - Acervo de Episódios/Ep03 - A Genealogia/idd_p3_output/slides/slide_0087.png'
+duration 13.524
+file 'C:/Antigravity - RVM Designações/IDD Paradigma/04 - Acervo de Episódios/Ep03 - A Genealogia/idd_p3_output/slides/slide_0088.png'
+duration 20.124
+file 'C:/Antigravity - RVM Designações/IDD Paradigma/04 - Acervo de Episódios/Ep03 - A Genealogia/idd_p3_output/slides/slide_0089.png'
+duration 23.892
+file 'C:/Antigravity - RVM Designações/IDD Paradigma/04 - Acervo de Episódios/Ep03 - A Genealogia/idd_p3_output/slides/slide_0090.png'
+duration 11.628
+file 'C:/Antigravity - RVM Designações/IDD Paradigma/04 - Acervo de Episódios/Ep03 - A Genealogia/idd_p3_output/slides/slide_0091.png'
+duration 17.124
+file 'C:/Antigravity - RVM Designações/IDD Paradigma/04 - Acervo de Episódios/Ep03 - A Genealogia/idd_p3_output/slides/slide_0092.png'
+duration 21.300
+file 'C:/Antigravity - RVM Designações/IDD Paradigma/04 - Acervo de Episódios/Ep03 - A Genealogia/idd_p3_output/slides/slide_0093.png'
+duration 14.700
+file 'C:/Antigravity - RVM Designações/IDD Paradigma/04 - Acervo de Episódios/Ep03 - A Genealogia/idd_p3_output/slides/slide_0094.png'
+duration 18.540
+file 'C:/Antigravity - RVM Designações/IDD Paradigma/04 - Acervo de Episódios/Ep03 - A Genealogia/idd_p3_output/slides/slide_0095.png'
+duration 20.076
+file 'C:/Antigravity - RVM Designações/IDD Paradigma/04 - Acervo de Episódios/Ep03 - A Genealogia/idd_p3_output/slides/slide_0096.png'
+duration 12.036
+file 'C:/Antigravity - RVM Designações/IDD Paradigma/04 - Acervo de Episódios/Ep03 - A Genealogia/idd_p3_output/slides/slide_0097.png'
+duration 17.580
+file 'C:/Antigravity - RVM Designações/IDD Paradigma/04 - Acervo de Episódios/Ep03 - A Genealogia/idd_p3_output/slides/slide_0098.png'
+duration 20.556
+file 'C:/Antigravity - RVM Designações/IDD Paradigma/04 - Acervo de Episódios/Ep03 - A Genealogia/idd_p3_output/slides/slide_0099.png'
+duration 9.324
+file 'C:/Antigravity - RVM Designações/IDD Paradigma/04 - Acervo de Episódios/Ep03 - A Genealogia/idd_p3_output/slides/slide_0100.png'
+duration 17.580
+file 'C:/Antigravity - RVM Designações/IDD Paradigma/04 - Acervo de Episódios/Ep03 - A Genealogia/idd_p3_output/slides/slide_0101.png'
+duration 23.148
+file 'C:/Antigravity - RVM Designações/IDD Paradigma/04 - Acervo de Episódios/Ep03 - A Genealogia/idd_p3_output/slides/slide_0102.png'
+duration 11.940
+file 'C:/Antigravity - RVM Designações/IDD Paradigma/04 - Acervo de Episódios/Ep03 - A Genealogia/idd_p3_output/slides/slide_0103.png'
+duration 23.604
+file 'C:/Antigravity - RVM Designações/IDD Paradigma/04 - Acervo de Episódios/Ep03 - A Genealogia/idd_p3_output/slides/slide_0104.png'
+duration 19.116
+file 'C:/Antigravity - RVM Designações/IDD Paradigma/04 - Acervo de Episódios/Ep03 - A Genealogia/idd_p3_output/slides/slide_0105.png'
+duration 18.108

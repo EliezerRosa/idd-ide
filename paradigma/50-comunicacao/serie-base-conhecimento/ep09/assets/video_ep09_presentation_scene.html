@@ -1,0 +1,878 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=1920, height=1080, initial-scale=1.0">
+  <title>Episódio 09 — IDD Base de Conhecimento: IDD vs MCP & Antigravity</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-dark: #050811;
+      --bg-card: rgba(11, 20, 38, 0.90);
+      --cyan-mcp: #06b6d4;
+      --cyan-glow: rgba(6, 182, 212, 0.45);
+      --purple-anti: #a855f7;
+      --purple-glow: rgba(168, 85, 247, 0.45);
+      --amber-warn: #f59e0b;
+      --rose-danger: #f43f5e;
+      --emerald-idd: #10b981;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      width: 1920px;
+      height: 1080px;
+      overflow: hidden;
+      background: #050811;
+      color: var(--text-main);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      position: relative;
+    }
+
+    #bg-canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 1920px;
+      height: 1080px;
+      z-index: 1;
+    }
+
+    .app-container {
+      position: relative;
+      z-index: 10;
+      width: 1920px;
+      height: 1080px;
+      display: flex;
+      flex-direction: column;
+      padding: 30px 45px;
+      justify-content: space-between;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 18px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .brand-wrap {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .brand-logo {
+      width: 50px;
+      height: 50px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #06b6d4, #a855f7);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 26px;
+      box-shadow: 0 0 20px rgba(6, 182, 212, 0.5);
+    }
+    .brand-text h1 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 22px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      color: #fff;
+    }
+    .brand-text span {
+      font-size: 13px;
+      color: #38bdf8;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+    }
+
+    .header-badges {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .h-badge {
+      padding: 8px 18px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: rgba(15, 23, 42, 0.7);
+    }
+    .h-badge.ep-tag {
+      background: linear-gradient(135deg, rgba(6, 182, 212, 0.25), rgba(168, 85, 247, 0.25));
+      border-color: rgba(6, 182, 212, 0.5);
+      color: #bae6fd;
+    }
+    .h-badge.live-indicator {
+      border-color: rgba(56, 189, 248, 0.4);
+      color: #38bdf8;
+    }
+    .pulse-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #38bdf8;
+      box-shadow: 0 0 8px #38bdf8;
+    }
+
+    main {
+      flex: 1;
+      display: grid;
+      grid-template-columns: 1420px 380px;
+      gap: 30px;
+      margin: 20px 0;
+      min-height: 0;
+    }
+
+    .slide-panel {
+      background: var(--bg-card);
+      border: 1px solid rgba(6, 182, 212, 0.25);
+      border-radius: 24px;
+      padding: 32px 38px;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(16px);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .slide-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 24px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      padding-bottom: 16px;
+    }
+    .slide-title-area h2 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 32px;
+      font-weight: 800;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .slide-title-area h2 span {
+      color: #38bdf8;
+    }
+    .slide-title-area p {
+      color: var(--text-muted);
+      font-size: 15px;
+      margin-top: 6px;
+    }
+    .slide-num-tag {
+      background: rgba(6, 182, 212, 0.15);
+      border: 1px solid #06b6d4;
+      color: #38bdf8;
+      padding: 6px 16px;
+      border-radius: 12px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .slide-content-viewport {
+      flex: 1;
+      position: relative;
+      min-height: 0;
+    }
+    .slide-view {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.4s ease, transform 0.4s ease;
+      transform: translateY(10px);
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .slide-view.active {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0);
+    }
+
+    /* SLIDE 1: A ANALOGIA DA ESCAVADEIRA */
+    .compare-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      flex: 1;
+    }
+    .cmp-card {
+      background: rgba(15, 23, 42, 0.7);
+      border-radius: 16px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .cmp-card.pipe {
+      border-color: rgba(6, 182, 212, 0.4);
+      background: radial-gradient(circle at top right, rgba(6, 182, 212, 0.12), transparent 70%), rgba(15, 23, 42, 0.8);
+    }
+    .cmp-card.eng {
+      border-color: rgba(16, 185, 129, 0.4);
+      background: radial-gradient(circle at top right, rgba(16, 185, 129, 0.15), transparent 70%), rgba(15, 23, 42, 0.8);
+    }
+    .cmp-head {
+      font-family: 'Outfit', sans-serif;
+      font-size: 20px;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .cmp-head.pipe { color: #38bdf8; }
+    .cmp-head.eng { color: #34d399; }
+    .cmp-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      font-size: 15px;
+      line-height: 1.5;
+      color: #cbd5e1;
+    }
+    .cmp-item strong { color: #fff; }
+
+    .humor-quote {
+      background: rgba(245, 158, 11, 0.1);
+      border-left: 4px solid #f59e0b;
+      padding: 14px 18px;
+      border-radius: 0 12px 12px 0;
+      font-size: 15px;
+      font-style: italic;
+      color: #fef08a;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    /* SLIDE 2: PERGUNTA PROVOCATIVA */
+    .provocative-box {
+      background: linear-gradient(135deg, rgba(244, 63, 94, 0.15), rgba(15, 23, 42, 0.85));
+      border: 1.5px solid rgba(244, 63, 94, 0.4);
+      border-radius: 16px;
+      padding: 22px 26px;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+    .prov-icon { font-size: 40px; }
+    .prov-text h3 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 20px;
+      font-weight: 800;
+      color: #fca5a5;
+    }
+    .prov-text p {
+      font-size: 15px;
+      color: #cbd5e1;
+      margin-top: 4px;
+    }
+
+    .diff-compare-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      flex: 1;
+    }
+    .code-box {
+      background: #030712;
+      border-radius: 12px;
+      padding: 18px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      line-height: 1.6;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    /* SLIDE 3: O PESADELO DA 3ª CHAMADA */
+    .sagas-fail-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      flex: 1;
+    }
+    .flow-step {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 14px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .flow-step.ok { background: rgba(16, 185, 129, 0.15); border: 1px solid rgba(16, 185, 129, 0.4); color: #34d399; }
+    .flow-step.fail { background: rgba(244, 63, 94, 0.2); border: 1px solid #f43f5e; color: #fb7185; }
+    .flow-step.rollback { background: rgba(245, 158, 11, 0.2); border: 1px solid #f59e0b; color: #fbbf24; }
+
+    /* SLIDE 4: SÍNTESE HARMÔNICA */
+    .harmony-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 24px;
+      flex: 1;
+    }
+    .role-card {
+      background: rgba(15, 23, 42, 0.7);
+      border-radius: 16px;
+      padding: 22px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .role-card.master {
+      border-color: rgba(16, 185, 129, 0.4);
+      background: radial-gradient(circle at top, rgba(16, 185, 129, 0.15), transparent 80%), rgba(15, 23, 42, 0.85);
+    }
+    .next-teaser {
+      background: linear-gradient(135deg, rgba(6, 182, 212, 0.2), rgba(168, 85, 247, 0.2));
+      border: 1.5px solid rgba(6, 182, 212, 0.5);
+      border-radius: 16px;
+      padding: 26px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      box-shadow: 0 10px 30px rgba(6, 182, 212, 0.2);
+    }
+
+    /* BARRA LATERAL */
+    .sidebar {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+    .host-card {
+      background: var(--bg-card);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 20px;
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    .host-card.talking {
+      border-color: #06b6d4;
+      background: linear-gradient(135deg, rgba(6, 182, 212, 0.2), rgba(15, 23, 42, 0.9));
+      box-shadow: 0 0 30px rgba(6, 182, 212, 0.35);
+      transform: scale(1.02);
+    }
+    .host-card.talking.leigo-active {
+      border-color: #38bdf8;
+      background: linear-gradient(135deg, rgba(56, 189, 248, 0.2), rgba(15, 23, 42, 0.9));
+      box-shadow: 0 0 30px rgba(56, 189, 248, 0.35);
+    }
+    .avatar-wrap {
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      border: 2px solid rgba(255, 255, 255, 0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 32px;
+      background: #0b1426;
+      flex-shrink: 0;
+    }
+    .host-info h4 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 17px;
+      font-weight: 700;
+      color: #fff;
+    }
+    .host-info p {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 3px;
+    }
+    .talk-badge {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      font-size: 10px;
+      text-transform: uppercase;
+      font-weight: 800;
+      letter-spacing: 1px;
+      padding: 3px 8px;
+      border-radius: 999px;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .host-card.talking .talk-badge {
+      opacity: 1;
+      background: #06b6d4;
+      color: #050811;
+    }
+    .host-card.talking.leigo-active .talk-badge {
+      background: #38bdf8;
+      color: #0b1426;
+    }
+
+    .telemetry-card {
+      background: var(--bg-card);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 20px;
+      padding: 20px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .tele-title {
+      font-size: 12px;
+      font-weight: 800;
+      color: var(--text-muted);
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .tele-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 13px;
+      padding: 8px 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+    .tele-val {
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 700;
+      color: #38bdf8;
+    }
+
+    footer {
+      background: rgba(11, 20, 38, 0.95);
+      border: 1px solid rgba(6, 182, 212, 0.25);
+      border-radius: 18px;
+      padding: 16px 26px;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+    .spk-pill {
+      padding: 6px 14px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-shrink: 0;
+    }
+    .spk-pill.eliezer {
+      background: rgba(6, 182, 212, 0.2);
+      border: 1px solid #06b6d4;
+      color: #38bdf8;
+    }
+    .spk-pill.leigo {
+      background: rgba(56, 189, 248, 0.2);
+      border: 1px solid #38bdf8;
+      color: #38bdf8;
+    }
+    .speech-box {
+      flex: 1;
+      font-size: 16px;
+      color: #e2e8f0;
+      font-weight: 500;
+      line-height: 1.4;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .wave-bars {
+      display: flex;
+      gap: 4px;
+      align-items: center;
+      height: 24px;
+      opacity: 0.3;
+    }
+    .wave-bars.active { opacity: 1; }
+    .w-bar {
+      width: 3px;
+      background: #38bdf8;
+      border-radius: 999px;
+      animation: wavePulse 0.8s infinite ease-in-out;
+    }
+    .w-bar:nth-child(2) { animation-delay: 0.15s; height: 18px; }
+    .w-bar:nth-child(3) { animation-delay: 0.3s; height: 24px; }
+    .w-bar:nth-child(4) { animation-delay: 0.45s; height: 14px; }
+    .w-bar:nth-child(5) { animation-delay: 0.2s; height: 20px; }
+    @keyframes wavePulse {
+      0%, 100% { height: 6px; }
+      50% { height: 22px; }
+    }
+  </style>
+</head>
+<body>
+  <canvas id="bg-canvas"></canvas>
+
+  <div class="app-container">
+    <header>
+      <div class="brand-wrap">
+        <div class="brand-logo">⚡</div>
+        <div class="brand-text">
+          <h1>PARADIGMA IDD — BASE DE CONHECIMENTO</h1>
+          <span>O CONFRONTO TÉCNICO: IDD vs. O MERCADO DE IA</span>
+        </div>
+      </div>
+      <div class="header-badges">
+        <div class="h-badge ep-tag">
+          <span>EPISÓDIO 09</span>
+          <strong>IDD vs. MCP &amp; ANTIGRAVITY</strong>
+        </div>
+        <div class="h-badge live-indicator">
+          <div class="pulse-dot"></div>
+          <span id="timeReadout">00:00 / 02:30</span>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section class="slide-panel">
+        <div class="slide-header">
+          <div class="slide-title-area">
+            <h2 id="mainSlideTitle"><span>🚜</span> A Analogia da Escavadeira: Encanamento vs Engenharia</h2>
+            <p id="mainSlideSubtitle">Por que ter ferramentas rápidas não substitui o cálculo estrutural de um sistema.</p>
+          </div>
+          <div class="slide-num-tag">SLIDE <span id="slideIndicator">1</span>/4</div>
+        </div>
+
+        <div class="slide-content-viewport">
+          <!-- SLIDE 1: A ANALOGIA DA ESCAVADEIRA -->
+          <div class="slide-view active" id="view-slide-1">
+            <div class="compare-grid">
+              <div class="cmp-card pipe">
+                <div class="cmp-head pipe">🚜 MCP &amp; Antigravity: A Escavadeira Potente</div>
+                <div class="cmp-item">
+                  <span>⚡</span>
+                  <div><strong>Músculos &amp; Encanamento:</strong> Tool calling, execução de comandos, navegação e transporte JSON-RPC de alto desempenho.</div>
+                </div>
+                <div class="cmp-item">
+                  <span>🙈</span>
+                  <div><strong>Operação Vendada:</strong> O protocolo executa fielmente qualquer comando, sem saber se a fundação vai desmoronar.</div>
+                </div>
+                <div class="cmp-item">
+                  <span>⚠️</span>
+                  <div><strong>Agnóstico ao Negócio:</strong> Trata linhas de texto e comandos de banco sem noção de integridade de domínio.</div>
+                </div>
+              </div>
+
+              <div class="cmp-card eng">
+                <div class="cmp-head eng">🏛️ IDD: O Cálculo Estrutural e a Planta Civil</div>
+                <div class="cmp-item">
+                  <span>📐</span>
+                  <div><strong>Cérebro &amp; Ontologia:</strong> Grafo de intenções, limites de contexto (Bounded Contexts) e regras invioláveis.</div>
+                </div>
+                <div class="cmp-item">
+                  <span>🛡️</span>
+                  <div><strong>Guarda Ativa:</strong> Impede que a escavadeira cave sobre tubulações de gás ou rompa colunas de sustentação.</div>
+                </div>
+                <div class="cmp-item">
+                  <span>🎯</span>
+                  <div><strong>Governança de IA:</strong> O modelo só recebe permissão para acionar o MCP após o aval do compilador formal.</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="humor-quote">
+              <span>💡</span>
+              <div>
+                <strong>A Regra de Ouro:</strong> "O MCP é a mangueira de combustível mais rápida da indústria. Mas quem decide para onde o foguete voa é a engenharia do IDD."
+              </div>
+            </div>
+          </div>
+
+          <!-- SLIDE 2: PERGUNTA PROVOCATIVA -->
+          <div class="slide-view" id="view-slide-2">
+            <div class="provocative-box">
+              <div class="prov-icon">🚨</div>
+              <div class="prov-text">
+                <h3>Pergunta Provocativa para o Desenvolvedor:</h3>
+                <p>Quantas vezes a IA gerou um patch que compilou sem erros, passou no linter, e ainda assim corrompeu silenciosamente as regras de faturamento do seu cliente em produção?</p>
+              </div>
+            </div>
+
+            <div class="diff-compare-grid">
+              <div class="code-box">
+                <div style="color: #f43f5e; font-weight: 800; font-size: 14px;">❌ O que o MCP faz (Execução Cega):</div>
+                <span style="color: #94a3b8;">// O agente de IA envia via MCP Tool Call:</span>
+                <span style="color: #fb7185;">call_tool("execute_sql", {</span>
+                <span style="color: #fb7185; padding-left: 20px;">query: "DELETE FROM pedidos WHERE status = 'pendente'"</span>
+                <span style="color: #fb7185;">})</span>
+                <br>
+                <span style="color: #f43f5e; background: rgba(244,63,94,0.1); padding: 4px; border-radius: 4px;">
+                  ⚠️ O MCP executa imediatamente! Pedidos históricos excluídos!
+                </span>
+              </div>
+
+              <div class="code-box">
+                <div style="color: #10b981; font-weight: 800; font-size: 14px;">✅ O que o IDD faz (Tribunal de Invariantes):</div>
+                <span style="color: #94a3b8;">// A Intenção é submetida ao Compilador IDD:</span>
+                <span style="color: #38bdf8;">Intent: CancelarPedidosInativos()</span>
+                <span style="color: #f59e0b;">Invariant: HistoricalAuditingLocked(pedidos)</span>
+                <span style="color: #34d399;">Result: REJEIÇÃO FORMAL Z3 — Mutação Destrutiva Não Autorizada!</span>
+                <br>
+                <span style="color: #10b981; background: rgba(16,185,129,0.1); padding: 4px; border-radius: 4px;">
+                  🛡️ Proteção matemática: Nenhuma ferramenta destrutiva é chamada!
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <!-- SLIDE 3: O PESADELO DA 3ª CHAMADA -->
+          <div class="slide-view" id="view-slide-3">
+            <div class="sagas-fail-grid">
+              <div class="cmp-card" style="border-color: rgba(244, 63, 94, 0.4);">
+                <div class="cmp-head" style="color: #fb7185;">💥 O Desastre em Ferramentas Sem Sagas</div>
+                <div class="flow-step ok">1. MCP: Cria Cliente no Banco [OK]</div>
+                <div class="flow-step ok">2. MCP: Debita Saldo da Conta [OK]</div>
+                <div class="flow-step fail">3. MCP: Emite Nota Fiscal [FALHOU / TIMEOUT]</div>
+                <div style="font-size: 13px; color: #fca5a5; margin-top: 10px; line-height: 1.4;">
+                  🚨 <strong>Resultado Catastrófico:</strong> O dinheiro sumiu, o cliente foi criado, mas a nota não existe. O banco ficou em estado órfão e corrompido!
+                </div>
+              </div>
+
+              <div class="cmp-card" style="border-color: rgba(16, 185, 129, 0.4);">
+                <div class="cmp-head" style="color: #34d399;">⚛️ O Protocolo Atômico do IDD</div>
+                <div class="flow-step ok">Fase 1: Guarda — Invariantes Verificadas [OK]</div>
+                <div class="flow-step ok">Fase 2: Mutação Isolada Idempotente [OK]</div>
+                <div class="flow-step rollback">Fase 4: Gatilho de Compensação Automática [ROLLBACK]</div>
+                <div style="font-size: 13px; color: #86efac; margin-top: 10px; line-height: 1.4;">
+                  ✨ <strong>Consistência Total:</strong> O saldo é estornado e o cliente órfão é saneado. Zero dados corrompidos!
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- SLIDE 4: SÍNTESE HARMÔNICA -->
+          <div class="slide-view" id="view-slide-4">
+            <div class="harmony-grid">
+              <div class="role-card master">
+                <div style="font-size: 13px; font-weight: 800; color: #34d399; text-transform: uppercase; letter-spacing: 1px;">
+                  A VISÃO ARQUITETURAL COMPLETA
+                </div>
+                <h3 style="font-family: 'Outfit', sans-serif; font-size: 24px; font-weight: 800; color: #fff;">
+                  O IDD não compete com o MCP: Ele governa!
+                </h3>
+                <div class="cmp-item">
+                  <span>🧠</span>
+                  <div><strong>Cérebro Ontológico (IDD):</strong> Modela as regras, valida invariantes, analisa diffs e orquestra sagas.</div>
+                </div>
+                <div class="cmp-item">
+                  <span>💪</span>
+                  <div><strong>Músculos Operacionais (Antigravity &amp; MCP):</strong> Executam as ferramentas sob estrito comando epistêmico.</div>
+                </div>
+              </div>
+
+              <div class="next-teaser">
+                <div>
+                  <div style="font-size: 12px; font-weight: 800; color: #38bdf8; text-transform: uppercase; letter-spacing: 1px;">
+                    A SEGUIR NO EPISÓDIO 10
+                  </div>
+                  <h3 style="font-family: 'Outfit', sans-serif; font-size: 24px; font-weight: 900; color: #fff; margin-top: 8px; line-height: 1.2;">
+                    IDD vs. COPILOT WORKSPACE &amp; AIDER
+                  </h3>
+                  <p style="font-size: 14px; color: #cbd5e1; margin-top: 10px; line-height: 1.4;">
+                    Por que especificações em Markdown continuam sendo texto solto, e o fim definitivo do "Patch-and-Pray".
+                  </p>
+                </div>
+                <div style="background: rgba(15, 23, 42, 0.85); border-radius: 10px; padding: 12px; font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #38bdf8;">
+                  Ep. 10: O Confronto com o Spec-Driven do Mercado
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <aside class="sidebar">
+        <div class="host-card" id="card-eliezer">
+          <div class="avatar-wrap">👨‍💼</div>
+          <div class="host-info">
+            <h4>Eliézer Rosa</h4>
+            <p>Criador do Paradigma IDD</p>
+          </div>
+          <div class="talk-badge">FALANDO</div>
+        </div>
+
+        <div class="host-card" id="card-leigo">
+          <div class="avatar-wrap">👩‍💻</div>
+          <div class="host-info">
+            <h4>Usuária Leiga</h4>
+            <p>Voz da Ergonomia de Campo</p>
+          </div>
+          <div class="talk-badge">FALANDO</div>
+        </div>
+
+        <div class="telemetry-card">
+          <div class="tele-title">
+            <span>⚙️</span> CONFRONTO ARQUITETURAL
+          </div>
+          <div class="tele-item">
+            <span style="color: var(--text-muted);">Camada MCP</span>
+            <span class="tele-val">TRANSPORTE JSON-RPC</span>
+          </div>
+          <div class="tele-item">
+            <span style="color: var(--text-muted);">Camada Antigravity</span>
+            <span class="tele-val">RUNTIME OPERACIONAL</span>
+          </div>
+          <div class="tele-item">
+            <span style="color: var(--text-muted);">Camada IDD</span>
+            <span class="tele-val" style="color: #34d399;">ONTOLOGIA &amp; INVARIANTES</span>
+          </div>
+          <div class="tele-item">
+            <span style="color: var(--text-muted);">Segurança</span>
+            <span class="tele-val" style="color: #34d399;">TRIBUNAL FORMAL Z3</span>
+          </div>
+        </div>
+      </aside>
+    </main>
+
+    <footer>
+      <div class="spk-pill leigo" id="speakerPill">
+        <span>🎙️</span> <span id="speakerName">Usuária Leiga</span>
+      </div>
+      <div class="speech-box" id="speechContent">
+        "Eliézer, se você abrir o Twitter ou o LinkedIn hoje..."
+      </div>
+      <div class="wave-bars active" id="waveBars">
+        <div class="w-bar"></div>
+        <div class="w-bar"></div>
+        <div class="w-bar"></div>
+        <div class="w-bar"></div>
+        <div class="w-bar"></div>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    const canvas = document.getElementById('bg-canvas');
+    const ctx = canvas.getContext('2d');
+    canvas.width = 1920;
+    canvas.height = 1080;
+
+    const particles = [];
+    for (let i = 0; i < 70; i++) {
+      particles.push({
+        x: Math.random() * 1920,
+        y: Math.random() * 1080,
+        radius: Math.random() * 2 + 0.5,
+        speedX: (Math.random() - 0.5) * 0.3,
+        speedY: (Math.random() - 0.5) * 0.3,
+        color: Math.random() > 0.5 ? '#06b6d4' : '#a855f7',
+        alpha: Math.random() * 0.4 + 0.1
+      });
+    }
+
+    function animateBg() {
+      ctx.fillStyle = '#050811';
+      ctx.fillRect(0, 0, 1920, 1080);
+      particles.forEach(p => {
+        p.x += p.speedX; p.y += p.speedY;
+        if (p.y < 0) p.y = 1080;
+        if (p.x < 0) p.x = 1920;
+        if (p.x > 1920) p.x = 0;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+        ctx.fillStyle = p.color;
+        ctx.globalAlpha = p.alpha;
+        ctx.fill();
+      });
+      requestAnimationFrame(animateBg);
+    }
+    requestAnimationFrame(animateBg);
+
+    window.timelineItems = [];
+
+    window.setTimeline = function(items) {
+      if (items && items.length > 0) window.timelineItems = items;
+    };
+
+    const slideTitles = [
+      { t: "A Analogia da Escavadeira: Encanamento vs Engenharia", s: "Por que ter ferramentas rápidas não substitui o cálculo estrutural de um sistema." },
+      { t: "A Pergunta Provocativa: Por que Ferramentas Não Sabem Dizer Não?", s: "O perigo do transporte cego via JSON-RPC sem tribunal de invariantes." },
+      { t: "O Pesadelo da 3ª Chamada de Ferramenta Sem Sagas", s: "O que acontece quando o webhook falha e o estado do banco fica corrompido e órfão." },
+      { t: "A Síntese Harmônica: O IDD como a Mente Arquitetural", s: "Como o IDD governa o Antigravity e o MCP para uma engenharia de software 3.0 segura." }
+    ];
+
+    window.updateFrameAtTime = function(timeSec) {
+      const curtain = document.getElementById('sync-curtain');
+      if (curtain && curtain.style.display !== 'none') curtain.style.display = 'none';
+
+      const m = Math.floor(timeSec / 60);
+      const s = Math.floor(timeSec % 60);
+      const timeStr = `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+      const timeEl = document.getElementById('timeReadout');
+      if (timeEl) timeEl.innerText = `${timeStr} / 02:30`;
+
+      if (!window.timelineItems || window.timelineItems.length === 0) return;
+
+      const currentSeg = window.timelineItems.find(it => timeSec >= it.startSec && timeSec <= it.endSec)
+        || window.timelineItems.filter(it => it.startSec <= timeSec).pop()
+        || window.timelineItems[0];
+
+      const speakingSeg = window.timelineItems.find(it => timeSec >= it.startSec && timeSec <= it.endSec);
+
+      document.querySelectorAll('.slide-view').forEach(sv => sv.classList.remove('active'));
+      const activeView = document.getElementById(`view-slide-${currentSeg.slide}`);
+      if (activeView) activeView.classList.add('active');
+
+      document.getElementById('slideIndicator').innerText = currentSeg.slide;
+      const tInfo = slideTitles[currentSeg.slide - 1];
+      if (tInfo) {
+        document.getElementById('mainSlideTitle').innerHTML = `<span>⚡</span> ${tInfo.t}`;
+        document.getElementById('mainSlideSubtitle').innerText = tInfo.s;
+      }
+
+      document.getElementById('speechContent').innerText = `"${currentSeg.text}"`;
+      document.getElementById('speakerName').innerText = currentSeg.actor;
+      const pill = document.getElementById('speakerPill');
+      pill.className = `spk-pill ${currentSeg.who}`;
+
+      const cardEliezer = document.getElementById('card-eliezer');
+      const cardLeigo = document.getElementById('card-leigo');
+      const waveBars = document.getElementById('waveBars');
+
+      if (speakingSeg) {
+        cardEliezer.classList.toggle('talking', speakingSeg.who === 'eliezer');
+        cardLeigo.classList.toggle('talking', speakingSeg.who === 'leigo');
+        cardLeigo.classList.toggle('leigo-active', speakingSeg.who === 'leigo');
+        waveBars.classList.add('active');
+      } else {
+        cardEliezer.classList.remove('talking');
+        cardLeigo.classList.remove('talking');
+        cardLeigo.classList.remove('leigo-active');
+        waveBars.classList.remove('active');
+      }
+    };
+  </script>
+</body>
+</html>

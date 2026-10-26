@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IDD Video Studio & Motion Pipeline | Decomposição e Renderização</title>
+  <meta name="description" content="Estúdio completo de decomposição de vídeo, eliminação de ruído acústico de cooler e pipeline programático de motion graphics.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Background Glows -->
+  <div class="bg-glow bg-glow-1"></div>
+  <div class="bg-glow bg-glow-2"></div>
+
+  <!-- Header -->
+  <header class="app-header">
+    <div class="header-brand">
+      <div class="brand-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polygon points="5 3 19 12 5 21 5 3"></polygon>
+        </svg>
+      </div>
+      <div>
+        <h1 class="brand-title">IDD VIDEO STUDIO</h1>
+        <p class="brand-subtitle">Pipeline Programático de Motion Graphics & Tratamento Acústico</p>
+      </div>
+    </div>
+    <div class="header-status">
+      <div class="status-indicator">
+        <span class="status-dot"></span>
+        <span class="status-text" id="serverStatusText">Motor Ativo & Conectado</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Notice if page opened via file:// -->
+  <div id="fileProtocolNotice" class="file-notice hidden">
+    <span>💡 <strong>Dica de Acesso:</strong> Você abriu o arquivo local diretamente. Para a melhor experiência de streaming e uso completo da interface, acesse no navegador: <a href="http://localhost:3030" target="_blank" style="color: #38bdf8; text-decoration: underline; font-weight: bold;">http://localhost:3030</a></span>
+  </div>
+
+  <!-- Main Container -->
+  <main class="main-container">
+    <!-- Mode Tabs -->
+    <nav class="mode-tabs" aria-label="Modos de Produção">
+      <button class="tab-btn active" id="tabRefazerBtn" onclick="switchTab('refazer')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/>
+        </svg>
+        <span>Refazer Vídeo & Tratar Ruído</span>
+      </button>
+
+      <button class="tab-btn" id="tabPromptBtn" onclick="switchTab('prompt')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+        </svg>
+        <span>Criar Cena por Prompt</span>
+      </button>
+
+      <button class="tab-btn" id="tabGaleriaBtn" onclick="switchTab('galeria')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"/>
+          <line x1="7" y1="2" x2="7" y2="22"/>
+          <line x1="17" y1="2" x2="17" y2="22"/>
+          <line x1="2" y1="12" x2="22" y2="12"/>
+        </svg>
+        <span>Galeria de Entregáveis</span>
+      </button>
+    </nav>
+
+    <!-- CONTENT 1: REFAZER VÍDEO (DECOMPOSIÇÃO + DENOISE + REMUX) -->
+    <section class="tab-content active" id="contentRefazer">
+      <div class="card glass-panel">
+        <div class="card-header">
+          <div class="card-badge">Decomposição & Restauração</div>
+          <h2>Refazer Vídeo com Eliminação de Ruído do Cooler</h2>
+          <p class="card-desc">
+            Decompõe os fluxos de vídeo e áudio, aplica filtros espectrais calibrados para remover o zumbido e chiado da ventoinha do notebook nos trechos originais e entrega o vídeo final pelo pipeline.
+          </p>
+        </div>
+
+        <form id="refazerForm" onsubmit="handleRefazerSubmit(event)">
+          <!-- Video Path Input -->
+          <div class="form-group">
+            <label for="videoPathInput">Caminho Absoluto do Vídeo Fonte:</label>
+            <div class="input-with-button">
+              <input 
+                type="text" 
+                id="videoPathInput" 
+                name="videoPath"
+                value="C:\Antigravity - IDD Refrigeração\producao_yt\Refrigeracao_IDD_Video_1_Narrador.mp4" 
+                required 
+                placeholder="Ex: C:\caminho\do\video.mp4"
+              />
+              <button type="button" class="btn secondary-btn" id="btnInspectVideo" onclick="inspectVideo()">
+                🔍 Inspecionar Vídeo
+              </button>
+            </div>
+            <span class="field-help">Arquivo atualmente configurado para refazer a faixa de áudio e remover ruído de cooler.</span>
+          </div>
+
+          <!-- Video Metadata Banner (Populated via Inspect) -->
+          <div class="metadata-banner hidden" id="videoMetaBanner">
+            <div class="meta-item">
+              <span class="meta-label">Resolução:</span>
+              <span class="meta-val" id="metaRes">--</span>
+            </div>
+            <div class="meta-item">
+              <span class="meta-label">Taxa de Quadros:</span>
+              <span class="meta-val" id="metaFps">--</span>
+            </div>
+            <div class="meta-item">
+              <span class="meta-label">Duração:</span>
+              <span class="meta-val" id="metaDur">--</span>
+            </div>
+            <div class="meta-item">
+              <span class="meta-label">Tamanho em Disco:</span>
+              <span class="meta-val" id="metaSize">--</span>
+            </div>
+            <div class="meta-item">
+              <span class="meta-label">Codec de Áudio:</span>
+              <span class="meta-val" id="metaAudio">--</span>
+            </div>
+          </div>
+
+          <!-- Denoise Controls Grid -->
+          <div class="settings-grid">
+            <div class="setting-card">
+              <div class="setting-title">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/>
+                  <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+                  <line x1="12" y1="19" x2="12" y2="23"/>
+                  <line x1="8" y1="23" x2="16" y2="23"/>
+                </svg>
+                <span>Filtro de Ruído da Ventoinha (AFFTDN)</span>
+              </div>
+              <p class="setting-desc">Atenua o ruído contínuo do cooler do notebook através de FFT espectral adaptativa.</p>
+              <div class="slider-container">
+                <div class="slider-header">
+                  <span>Intensidade:</span>
+                  <span class="slider-val" id="valNoiseReduction">20 dB</span>
+                </div>
+                <input type="range" id="sliderNoiseReduction" min="10" max="35" value="20" oninput="updateSliderVal('sliderNoiseReduction', 'valNoiseReduction', ' dB')">
+              </div>
+            </div>
+
+            <div class="setting-card">
+              <div class="setting-title">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+                </svg>
+                <span>Corte de Subgraves do Cooler (HighPass)</span>
+              </div>
+              <p class="setting-desc">Elimina a ressonância mecânica e vibração grave do motor da ventoinha (abaixo de 85Hz).</p>
+              <div class="slider-container">
+                <div class="slider-header">
+                  <span>Frequência de Corte:</span>
+                  <span class="slider-val" id="valHighpass">85 Hz</span>
+                </div>
+                <input type="range" id="sliderHighpass" min="60" max="140" value="85" oninput="updateSliderVal('sliderHighpass', 'valHighpass', ' Hz')">
+              </div>
+            </div>
+          </div>
+
+          <!-- Actions -->
+          <div class="form-actions">
+            <button type="submit" class="btn primary-btn pulse-on-hover" id="btnDispararRefazer">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polygon points="5 3 19 12 5 21 5 3"></polygon>
+              </svg>
+              <span>Disparar Decomposição, Limpeza Acústica & Pipeline</span>
+            </button>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <!-- CONTENT 2: CRIAR POR PROMPT -->
+    <section class="tab-content" id="contentPrompt">
+      <div class="card glass-panel">
+        <div class="card-header">
+          <div class="card-badge">Criação Programática</div>
+          <h2>Criar Nova Cena de Motion Graphics via Prompt</h2>
+          <p class="card-desc">
+            Descreva os elementos conceituais da cena gráfica. O estúdio gerará dinamicamente o código Canvas/GSAP e renderizará no pipeline a 1080p.
+          </p>
+        </div>
+
+        <form id="promptForm" onsubmit="handlePromptSubmit(event)">
+          <div class="form-group">
+            <label for="promptTitleInput">Nome do Projeto:</label>
+            <input type="text" id="promptTitleInput" value="paradigma_idd_conceito_visual" required placeholder="Ex: paradigma_idd_aula_1">
+          </div>
+
+          <div class="form-group">
+            <label for="promptTextInput">Prompt da Cena Animada:</label>
+            <textarea id="promptTextInput" rows="4" required placeholder="Descreva os elementos da cena (Ex: Fluxo conceitual com nós luminosos do Paradigma IDD, conexões dinâmicas de energia, partículas em movimento e títulos elegantes)...">Fluxo conceitual com três nós do Paradigma IDD (Identificação, Diagnóstico e Definição) com conexões pulsantes, brilho neon azul e transições fluidas de títulos.</textarea>
+          </div>
+
+          <div class="form-row-three">
+            <div class="form-group">
+              <label for="promptDurationInput">Duração (segundos):</label>
+              <input type="number" id="promptDurationInput" min="1" max="3600" value="1800">
+            </div>
+            <div class="form-group">
+              <label for="promptFpsSelect">Taxa de Quadros (FPS):</label>
+              <select id="promptFpsSelect">
+                <option value="30" selected>30 FPS (Padrão Fluido)</option>
+                <option value="60">60 FPS (Ultra Suave)</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="promptResSelect">Resolução:</label>
+              <select id="promptResSelect">
+                <option value="1920x1080" selected>1920x1080 (Full HD)</option>
+                <option value="1280x720">1280x720 (HD)</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-actions">
+            <button type="submit" class="btn primary-btn" id="btnDispararPrompt">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+              </svg>
+              <span>Gerar Cena & Renderizar no Pipeline</span>
+            </button>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <!-- CONTENT 3: GALERIA DE VÍDEOS -->
+    <section class="tab-content" id="contentGaleria">
+      <div class="card glass-panel">
+        <div class="card-header">
+          <div class="card-badge">Repositório de Mídias</div>
+          <h2>Histórico de Vídeos Gerados</h2>
+          <p class="card-desc">Vídeos produzidos pelo pipeline com armazenamento versionado (v1, v2) e metadados técnicos.</p>
+        </div>
+        <div class="gallery-grid" id="galleryList">
+          <p class="empty-state">Carregando lista de vídeos gerados...</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROCESSING STATUS & PIPELINE MONITOR (ACTIVE DURING RUNS) -->
+    <section class="monitor-section hidden" id="monitorSection">
+      <div class="card monitor-card">
+        <div class="monitor-header">
+          <div class="monitor-title-box">
+            <span class="spinner-icon"></span>
+            <div>
+              <h3 id="monitorPhaseText">Processando Pipeline...</h3>
+              <p id="monitorSubText">Decomposição e filtragem acústica em andamento</p>
+            </div>
+          </div>
+          <div class="monitor-percent" id="monitorPercentText">0%</div>
+        </div>
+
+        <!-- Stepper Visualizer -->
+        <div class="stepper-bar">
+          <div class="step-node active" id="step1">
+            <div class="step-circle">1</div>
+            <div class="step-label">Decomposição</div>
+          </div>
+          <div class="step-connector" id="conn1"></div>
+          <div class="step-node" id="step2">
+            <div class="step-circle">2</div>
+            <div class="step-label">Filtro de Ruído</div>
+          </div>
+          <div class="step-connector" id="conn2"></div>
+          <div class="step-node" id="step3">
+            <div class="step-circle">3</div>
+            <div class="step-label">Renderização</div>
+          </div>
+          <div class="step-connector" id="conn3"></div>
+          <div class="step-node" id="step4">
+            <div class="step-circle">4</div>
+            <div class="step-label">Entrega MP4</div>
+          </div>
+        </div>
+
+        <!-- Progress Bar -->
+        <div class="progress-bar-bg">
+          <div class="progress-bar-fill" id="progressBarFill" style="width: 5%"></div>
+        </div>
+
+        <!-- Live Terminal Logs -->
+        <div class="terminal-box">
+          <div class="terminal-header">
+            <span>TERMINAL DE TELEMETRIA AO VIVO</span>
+            <span class="live-tag">LIVE STREAM</span>
+          </div>
+          <pre class="terminal-logs" id="terminalLogs">Aguardando início do processo...</pre>
+        </div>
+      </div>
+    </section>
+
+    <!-- EMBEDDED VIDEO PLAYER SECTION (APPEARS ON SUCCESS) -->
+    <section class="player-section hidden" id="playerSection">
+      <div class="card player-card">
+        <div class="player-header">
+          <div class="card-badge success-badge">Entrega Concluída com Sucesso</div>
+          <h2 id="playerVideoTitle">Vídeo Final Renderizado</h2>
+          <p id="playerVideoPath" class="path-display"></p>
+        </div>
+
+        <div class="player-layout">
+          <!-- Video Screen Container -->
+          <div class="video-wrapper">
+            <video id="studioPlayer" controls playsinline preload="metadata">
+              Seu navegador não suporta a tag de vídeo HTML5.
+            </video>
+          </div>
+
+          <!-- Video Specs Panel -->
+          <div class="video-specs-card">
+            <h3>Especificações Técnicas</h3>
+            <ul class="specs-list" id="specsList">
+              <li><span>Status:</span> <strong class="badge-tag">Aprovado</strong></li>
+              <li><span>Resolução:</span> <strong id="specRes">--</strong></li>
+              <li><span>Duração:</span> <strong id="specDur">--</strong></li>
+              <li><span>Tamanho:</span> <strong id="specSize">--</strong></li>
+              <li><span>Filtro de Ruído:</span> <strong id="specNoise">Ativo (Cooler suprimido)</strong></li>
+              <li><span>Codec:</span> <strong>H.264 / AAC 192k</strong></li>
+            </ul>
+
+            <div class="player-actions">
+              <a href="#" id="btnDownloadVideo" download class="btn primary-btn download-btn">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                  <polyline points="7 10 12 15 17 10"/>
+                  <line x1="12" y1="15" x2="12" y2="3"/>
+                </svg>
+                <span>Baixar Vídeo MP4</span>
+              </a>
+              <button class="btn secondary-btn" onclick="switchTab('galeria')">
+                <span>Ver Todos na Galeria</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>

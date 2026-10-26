@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>IDD Barbearia - Ep. 5 (Grand Finale Barbearia &amp; Salão)</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, sans-serif; }
+    body {
+      width: 1920px; height: 1080px; background: #0c0f18; color: #f8fafc;
+      overflow: hidden; position: relative;
+    }
+    .grid-bg {
+      position: absolute; inset: 0;
+      background-image: linear-gradient(rgba(245, 158, 11, 0.05) 1px, transparent 1px),
+                        linear-gradient(90deg, rgba(245, 158, 11, 0.05) 1px, transparent 1px);
+      background-size: 60px 60px;
+    }
+    .glow-ambient {
+      position: absolute; width: 1100px; height: 1100px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(245, 158, 11, 0.28) 0%, rgba(217, 119, 6, 0.2) 45%, transparent 70%);
+      top: 50%; left: 50%; transform: translate(-50%, -50%); filter: blur(90px); pointer-events: none;
+    }
+
+    .top-bar {
+      position: absolute; top: 0; left: 0; right: 0; height: 80px;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 60px; background: rgba(15, 23, 42, 0.85);
+      border-bottom: 1px solid rgba(245, 158, 11, 0.35); backdrop-filter: blur(12px); z-index: 50;
+    }
+    .top-title { display: flex; align-items: center; gap: 18px; }
+    .badge-ep {
+      background: linear-gradient(135deg, #d97706, #b45309); color: white;
+      font-weight: 800; font-size: 16px; letter-spacing: 1.5px;
+      padding: 6px 18px; border-radius: 999px; text-transform: uppercase;
+      box-shadow: 0 0 20px rgba(245, 158, 11, 0.5);
+    }
+    .series-name { font-size: 20px; font-weight: 700; color: #94a3b8; }
+    .series-name span { color: #f8fafc; font-weight: 800; }
+    .timer-box { font-size: 18px; font-family: monospace; color: #fbbf24; font-weight: 700; }
+
+    .stage {
+      position: absolute; top: 80px; bottom: 220px; left: 0; right: 0;
+      padding: 40px 60px; display: flex; flex-direction: column; z-index: 20;
+    }
+    .slide-view {
+      display: none; width: 100%; height: 100%; flex-direction: column;
+      animation: fadeIn 0.4s ease-out forwards;
+    }
+    .slide-view.active { display: flex; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+    .slide-header { margin-bottom: 25px; }
+    .slide-category { font-size: 16px; font-weight: 800; color: #fbbf24; text-transform: uppercase; letter-spacing: 2px; }
+    .slide-title { font-size: 40px; font-weight: 900; color: #ffffff; margin-top: 4px; }
+    .slide-subtitle { font-size: 20px; color: #94a3b8; margin-top: 6px; }
+
+    .cards-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; flex: 1; }
+    .feature-card {
+      background: rgba(15, 23, 42, 0.85); border: 1.5px solid rgba(245, 158, 11, 0.35);
+      border-radius: 18px; padding: 24px; display: flex; flex-direction: column;
+      backdrop-filter: blur(14px); box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+    }
+    .card-icon { font-size: 34px; margin-bottom: 14px; }
+    .card-title { font-size: 21px; font-weight: 800; color: #fbbf24; margin-bottom: 10px; }
+    .card-desc { font-size: 15.5px; color: #cbd5e1; line-height: 1.5; flex: 1; }
+    .card-tag {
+      margin-top: 15px; align-self: flex-start; background: rgba(245, 158, 11, 0.15);
+      border: 1px solid #f59e0b; color: #fde68a; padding: 4px 12px; border-radius: 8px;
+      font-size: 12px; font-weight: 700;
+    }
+
+    /* Telemetry KPI Grid */
+    .kpi-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; flex: 1; align-items: center; }
+    .kpi-card {
+      background: rgba(15, 23, 42, 0.9); border: 2px solid #d97706;
+      border-radius: 18px; padding: 28px 24px; text-align: center;
+      display: flex; flex-direction: column; gap: 8px; box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+    }
+    .kpi-value { font-size: 46px; font-weight: 900; color: #fbbf24; line-height: 1; }
+    .kpi-label { font-size: 17px; font-weight: 800; color: #f8fafc; }
+    .kpi-sub { font-size: 14px; color: #94a3b8; }
+
+    .bottom-bar {
+      position: absolute; bottom: 0; left: 0; right: 0; height: 220px;
+      background: rgba(6, 12, 24, 0.95); border-top: 1px solid rgba(245, 158, 11, 0.3);
+      backdrop-filter: blur(16px); display: flex; align-items: center;
+      padding: 0 60px; gap: 40px; z-index: 50;
+    }
+    .avatars-row { display: flex; gap: 30px; align-items: center; }
+    .avatar-wrapper {
+      display: flex; flex-direction: column; align-items: center; gap: 8px;
+      opacity: 0.45; transform: scale(0.92); transition: all 0.3s ease;
+    }
+    .avatar-wrapper.active {
+      opacity: 1; transform: scale(1.05);
+    }
+    .avatar-circle {
+      width: 90px; height: 90px; border-radius: 50%;
+      border: 3px solid transparent; overflow: hidden; position: relative;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.6);
+    }
+    .avatar-wrapper.active .avatar-circle {
+      border-color: #fbbf24;
+      box-shadow: 0 0 25px rgba(245, 158, 11, 0.6);
+    }
+    .avatar-img { width: 100%; height: 100%; object-fit: cover; }
+    .avatar-name { font-size: 14px; font-weight: 700; color: #94a3b8; }
+    .avatar-wrapper.active .avatar-name { color: #fbbf24; }
+
+    .speech-box {
+      flex: 1; background: rgba(15, 23, 42, 0.85); border: 1.5px solid rgba(245, 158, 11, 0.35);
+      border-radius: 16px; padding: 20px 28px; display: flex; flex-direction: column;
+      justify-content: center; min-height: 140px;
+    }
+    .speech-speaker { font-size: 15px; font-weight: 800; color: #fbbf24; margin-bottom: 6px; }
+    .speech-text { font-size: 21px; font-weight: 600; color: #f8fafc; line-height: 1.45; }
+
+    #blackCurtain {
+      position: absolute; inset: 0; background: #000000; z-index: 9999;
+      pointer-events: none; transition: opacity 0.05s linear;
+    }
+  </style>
+</head>
+<body>
+  <div id="blackCurtain"></div>
+  <div class="grid-bg"></div>
+  <div class="glow-ambient"></div>
+
+  <div class="top-bar">
+    <div class="top-title">
+      <div class="badge-ep">Ep. 5 · Grand Finale</div>
+      <div class="series-name">IDD na Prática: <span>O Futuro do Software Sem Código</span></div>
+    </div>
+    <div class="timer-box" id="timer">00:00</div>
+  </div>
+
+  <div class="stage">
+    <!-- SLIDE 1 -->
+    <div class="slide-view active" id="slide1">
+      <div class="slide-header">
+        <div class="slide-category">A Vitória da Engenharia por Intenção</div>
+        <div class="slide-title">Do Caderno de Papel ao Ecossistema Digital Perfeito</div>
+        <div class="slide-subtitle">A consagração do Paradigma IDD transformando uma barbearia real</div>
+      </div>
+      <div style="display:grid; grid-template-columns: 1fr 1fr; gap:30px; flex:1; align-items:center;">
+        <div style="background: rgba(15, 23, 42, 0.85); border: 1.5px solid rgba(245, 158, 11, 0.35); border-radius:18px; padding:30px;">
+          <h3 style="color:#fbbf24; font-size:26px; margin-bottom:14px;">💈 A Revolução no Salão</h3>
+          <p style="color:#cbd5e1; font-size:17.5px; line-height:1.6; margin-bottom:18px;">
+            A Barbearia Imperial eliminou 100% dos atrasos e conflitos no sábado de pico. O cliente agenda sozinho pelo smartphone em 40 segundos, a comissão dos barbeiros é calculada no centavo e o caixa fecha em perfeita harmonia.
+          </p>
+          <div style="display:flex; gap:12px;">
+            <span style="background:rgba(245,158,11,0.2); color:#fbbf24; padding:8px 16px; border-radius:8px; font-weight:700;">Zero Caderno Rasurado</span>
+            <span style="background:rgba(16,185,129,0.2); color:#6ee7b7; padding:8px 16px; border-radius:8px; font-weight:700;">Zero Atrito Financeiro</span>
+          </div>
+        </div>
+
+        <div style="background: #020617; border: 1.5px solid #1e293b; border-radius:18px; padding:30px;">
+          <h4 style="color:#38bdf8; font-size:20px; margin-bottom:14px;">🌟 A Conquista Leiga:</h4>
+          <p style="color:#cbd5e1; font-size:17px; line-height:1.7;">
+            Nenhum programador caro contratado.<br>
+            Nenhuma linha de código manual digitada pelo empresário.<br>
+            <strong>Apenas a intenção humana clara governando a inteligência artificial.</strong>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 2 -->
+    <div class="slide-view" id="slide2">
+      <div class="slide-header">
+        <div class="slide-category">Os 4 Pilares da Metodologia IDD</div>
+        <div class="slide-title">A Trilha Metodológica Percorrida com Sucesso</div>
+        <div class="slide-subtitle">A esteira autônoma que pode ser replicada para qualquer comércio ou empresa</div>
+      </div>
+      <div class="cards-grid">
+        <div class="feature-card">
+          <div class="card-icon">1️⃣</div>
+          <div class="card-title">Intenções &amp; Invariantes</div>
+          <div class="card-desc">Especificação pura sem código. Mapeamento da dor do negócio e criação das regras sagradas invioláveis.</div>
+          <div class="card-tag">PASSO 1</div>
+        </div>
+        <div class="feature-card">
+          <div class="card-icon">2️⃣</div>
+          <div class="card-title">Telas &amp; MER do Negócio</div>
+          <div class="card-desc">Conexão visual de dados sem SQL. Relacionamento 1:N entre clientes, profissionais e histórico de comandas.</div>
+          <div class="card-tag">PASSO 2</div>
+        </div>
+        <div class="feature-card">
+          <div class="card-icon">3️⃣</div>
+          <div class="card-title">Código Vivo &amp; UML</div>
+          <div class="card-desc">Triggers no PostgreSQL, máquina de estados em TypeScript e amarração semântica 100% rastreável.</div>
+          <div class="card-tag">PASSO 3</div>
+        </div>
+        <div class="feature-card">
+          <div class="card-icon">4️⃣</div>
+          <div class="card-title">Testes &amp; Confirm-Once</div>
+          <div class="card-desc">240 testes automatizados em 820ms e deploy em nuvem em 4.2 segundos com governança humana soberana.</div>
+          <div class="card-tag">PASSO 4</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 3 -->
+    <div class="slide-view" id="slide3">
+      <div class="slide-header">
+        <div class="slide-category">Resultados Comprovados em Produção</div>
+        <div class="slide-title">Telemetria Real da Barbearia Imperial no Sábado</div>
+        <div class="slide-subtitle">Métricas auditadas pelo compilador IA no primeiro fim de semana de operação</div>
+      </div>
+      <div class="kpi-grid">
+        <div class="kpi-card">
+          <div class="kpi-value">142</div>
+          <div class="kpi-label">Atendimentos Concluídos</div>
+          <div class="kpi-sub">Recorde histórico do salão</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-value">0%</div>
+          <div class="kpi-label">Marcação Dupla</div>
+          <div class="kpi-sub">Invariante Cadeira Única 100% eficaz</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-value">R$ 0,00</div>
+          <div class="kpi-label">Divergência Contábil</div>
+          <div class="kpi-sub">Comissões pagas no centavo exato</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-value">85%</div>
+          <div class="kpi-label">Menos Ociosidade</div>
+          <div class="kpi-sub">Fila presencial aproveitando encaixes</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 4 -->
+    <div class="slide-view" id="slide4">
+      <div class="slide-header">
+        <div class="slide-category">O Futuro Começa Agora</div>
+        <div class="slide-title">Próxima Playlist: App de Cafeteria &amp; Padaria</div>
+        <div class="slide-subtitle">Um novo domínio familiar: Estoque Crítico, Comanda de Mesa e Cozinha em Tempo Real</div>
+      </div>
+      <div style="display:grid; grid-template-columns: 1fr 1fr; gap:30px; flex:1; align-items:center;">
+        <div style="background: rgba(15, 23, 42, 0.85); border: 1.5px solid rgba(245, 158, 11, 0.35); border-radius:18px; padding:30px;">
+          <h3 style="color:#fbbf24; font-size:24px; margin-bottom:14px;">☕ Próximo Desafio: Cafeteria &amp; Padaria</h3>
+          <p style="color:#cbd5e1; font-size:17px; line-height:1.6; margin-bottom:16px;">
+            Na Playlist 2, aplicaremos o IDD ao universo do café: croissants saindo do forno, pão quentinho, comanda de mesa e a invariante de nunca vender o que já esgotou no balcão!
+          </p>
+          <div style="background:rgba(245,158,11,0.2); color:#fde68a; padding:10px 18px; border-radius:10px; font-weight:700;">
+            Playlist Oficial: PLLfynRT3_DJs
+          </div>
+        </div>
+
+        <div style="background: #020617; border: 1.5px solid #1e293b; border-radius:18px; padding:30px; text-align:center;">
+          <h3 style="color:#ffffff; font-size:28px; margin-bottom:16px;">Inscreva-se no Canal!</h3>
+          <p style="color:#94a3b8; font-size:18px; line-height:1.6; margin-bottom:20px;">
+            Acompanhe a revolução do software sem código com Eliézer Rosa.<br>
+            <strong>Canal @EliézerJPRosa</strong>
+          </p>
+          <div style="display:inline-block; background:linear-gradient(135deg, #d97706, #b45309); color:white; font-size:18px; font-weight:800; padding:12px 28px; border-radius:999px;">
+            PARADIGMA IDD NA PRÁTICA
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="bottom-bar">
+    <div class="avatars-row">
+      <div class="avatar-wrapper" id="av_eliezer">
+        <div class="avatar-circle">
+          <img class="avatar-img" src="../../../motion_graphics_renderer/assets/avatars/eliezer.png" alt="Eliézer">
+        </div>
+        <div class="avatar-name">Eliézer Rosa</div>
+      </div>
+      <div class="avatar-wrapper" id="av_leigo">
+        <div class="avatar-circle">
+          <img class="avatar-img" src="../../../motion_graphics_renderer/assets/avatars/leigo.png" alt="Usuária Leiga">
+        </div>
+        <div class="avatar-name">Usuária Leiga</div>
+      </div>
+      <div class="avatar-wrapper" id="av_ia">
+        <div class="avatar-circle">
+          <img class="avatar-img" src="../../../motion_graphics_renderer/assets/avatars/ia.png" alt="IA Compilador">
+        </div>
+        <div class="avatar-name">IA Compilador</div>
+      </div>
+    </div>
+
+    <div class="speech-box">
+      <div class="speech-speaker" id="speakerName">Aguardando início...</div>
+      <div class="speech-text" id="speechText">O episódio começará em instantes.</div>
+    </div>
+  </div>
+
+  <script>
+    let timelineItems = [];
+    let currentIndex = -1;
+    let animInterval = null;
+
+    window.setTimeline = function(items) {
+      timelineItems = items;
+      console.log('Timeline configurada com ' + items.length + ' segmentos.');
+    };
+
+    window.startPresentation = function() {
+      const curtain = document.getElementById('blackCurtain');
+      if (curtain) curtain.style.display = 'none';
+
+      let currentSec = 0;
+      animInterval = setInterval(() => {
+        currentSec += 0.1;
+        const mins = Math.floor(currentSec / 60).toString().padStart(2, '0');
+        const secs = Math.floor(currentSec % 60).toString().padStart(2, '0');
+        document.getElementById('timer').innerText = `${mins}:${secs}`;
+
+        const activeItem = timelineItems.find(it => currentSec >= it.startSec && currentSec < it.endSec);
+        if (activeItem) {
+          updateDisplay(activeItem);
+        }
+      }, 100);
+    };
+
+    function updateDisplay(item) {
+      if (currentIndex === item.index) return;
+      currentIndex = item.index;
+
+      ['av_eliezer', 'av_leigo', 'av_ia'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.classList.remove('active');
+      });
+      const currentAv = document.getElementById('av_' + item.who);
+      if (currentAv) currentAv.classList.add('active');
+
+      document.getElementById('speakerName').innerText = item.actor;
+      document.getElementById('speechText').innerText = item.text;
+
+      for (let i = 1; i <= 4; i++) {
+        const s = document.getElementById('slide' + i);
+        if (s) s.classList.remove('active');
+      }
+      const targetSlide = document.getElementById('slide' + item.slide);
+      if (targetSlide) targetSlide.classList.add('active');
+    }
+  </script>
+</body>
+</html>

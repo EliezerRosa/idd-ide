@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>IDD Cafeteria - Ep. 2C MER Canônico: Crow's Foot e Invariantes</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, sans-serif; }
+    body {
+      width: 1920px; height: 1080px; background: #030712; color: #f8fafc;
+      overflow: hidden; position: relative;
+    }
+    .grid-bg {
+      position: absolute; inset: 0;
+      background-image: linear-gradient(rgba(245, 158, 11, 0.05) 1px, transparent 1px),
+                        linear-gradient(90deg, rgba(245, 158, 11, 0.05) 1px, transparent 1px);
+      background-size: 60px 60px;
+    }
+    .glow-ambient {
+      position: absolute; width: 1150px; height: 1150px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(217, 119, 6, 0.25) 0%, rgba(245, 158, 11, 0.12) 45%, transparent 70%);
+      top: 50%; left: 50%; transform: translate(-50%, -50%); filter: blur(95px); pointer-events: none;
+    }
+
+    /* TOP BAR */
+    .top-bar {
+      position: absolute; top: 0; left: 0; right: 0; height: 80px;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 60px; background: rgba(15, 23, 42, 0.88);
+      border-bottom: 1px solid rgba(245, 158, 11, 0.35); backdrop-filter: blur(12px); z-index: 50;
+    }
+    .top-title { display: flex; align-items: center; gap: 18px; }
+    .badge-ep {
+      background: linear-gradient(135deg, #b45309, #d97706); color: white;
+      font-weight: 800; font-size: 16px; letter-spacing: 1.5px;
+      padding: 6px 18px; border-radius: 999px; text-transform: uppercase;
+      box-shadow: 0 0 20px rgba(245, 158, 11, 0.4);
+    }
+    .series-name { font-size: 20px; font-weight: 700; color: #cbd5e1; }
+    .series-name span { color: #fbbf24; font-weight: 800; }
+    .timer-box { font-size: 18px; font-family: monospace; color: #fbbf24; font-weight: 700; }
+
+    /* STAGE */
+    .stage {
+      position: absolute; top: 80px; bottom: 220px; left: 0; right: 0;
+      padding: 30px 60px; display: flex; flex-direction: column; z-index: 20;
+    }
+    .slide-view {
+      display: none; width: 100%; height: 100%; flex-direction: column;
+      animation: fadeIn 0.4s ease-out forwards;
+    }
+    .slide-view.active { display: flex; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+    .slide-header { margin-bottom: 18px; }
+    .slide-category { font-size: 15px; font-weight: 800; color: #fbbf24; text-transform: uppercase; letter-spacing: 2px; }
+    .slide-title { font-size: 36px; font-weight: 900; color: #ffffff; margin-top: 4px; }
+    .slide-subtitle { font-size: 18px; color: #94a3b8; margin-top: 4px; }
+
+    /* SLIDE 1: MODELO CANÔNICO CROW'S FOOT */
+    .mer-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; flex: 1;
+    }
+    .mer-entity-card {
+      background: rgba(15, 23, 42, 0.95); border: 2px solid #f59e0b;
+      border-radius: 12px; overflow: hidden; display: flex; flex-direction: column;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.6);
+    }
+    .entity-header {
+      background: linear-gradient(135deg, #b45309, #d97706); color: white;
+      padding: 10px 16px; font-weight: 900; font-size: 16px; letter-spacing: 1px;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .entity-tag { font-size: 11px; font-weight: 700; background: rgba(0,0,0,0.3); padding: 2px 8px; border-radius: 4px; }
+    .entity-body {
+      padding: 14px 16px; font-family: 'Consolas', monospace; font-size: 13px;
+      line-height: 1.6; color: #cbd5e1; flex: 1;
+    }
+    .pk { color: #f59e0b; font-weight: 800; }
+    .fk { color: #38bdf8; font-weight: 800; }
+    .cardinality-box {
+      background: rgba(2, 6, 23, 0.6); border-top: 1px solid #1e293b;
+      padding: 8px 16px; font-size: 12px; color: #94a3b8; font-family: monospace;
+      display: flex; justify-content: space-between;
+    }
+
+    /* SLIDE 2: ENTIDADES DERIVADAS & FICHA TÉCNICA */
+    .derived-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; flex: 1;
+    }
+
+    /* SLIDE 3: NORMALIZAÇÃO & TERMINAL */
+    .norm-container {
+      display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 24px; flex: 1;
+    }
+    .norm-cards-col {
+      display: flex; flex-direction: column; gap: 14px; justify-content: space-between;
+    }
+    .norm-badge-card {
+      background: rgba(15, 23, 42, 0.9); border: 1.5px solid rgba(245, 158, 11, 0.35);
+      border-radius: 12px; padding: 16px 20px; display: flex; align-items: center; gap: 18px;
+    }
+    .norm-pill {
+      font-size: 15px; font-weight: 900; color: #78350f; background: #fbbf24;
+      padding: 6px 14px; border-radius: 8px; min-width: 70px; text-align: center;
+    }
+    .norm-desc { flex: 1; font-size: 14px; color: #e2e8f0; line-height: 1.45; }
+
+    .terminal-window {
+      background: #020617; border: 1.5px solid #1e293b; border-radius: 16px;
+      padding: 22px; font-family: 'Consolas', monospace; font-size: 13px;
+      color: #fbbf24; display: flex; flex-direction: column;
+    }
+    .terminal-header { display: flex; gap: 8px; margin-bottom: 12px; border-bottom: 1px solid #1e293b; padding-bottom: 10px; }
+    .t-dot { width: 12px; height: 12px; border-radius: 50%; }
+    .t-red { background: #ef4444; } .t-yellow { background: #f59e0b; } .t-green { background: #10b981; }
+    .terminal-body { flex: 1; line-height: 1.55; color: #e2e8f0; font-size: 12px; }
+
+    /* SLIDE 4: SÍNTESE & RUMO AO UML */
+    .cards-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; flex: 1; }
+    .feature-card {
+      background: rgba(15, 23, 42, 0.85); border: 1.5px solid rgba(245, 158, 11, 0.35);
+      border-radius: 18px; padding: 28px; display: flex; flex-direction: column;
+      box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+    }
+    .card-icon { font-size: 38px; margin-bottom: 16px; }
+    .card-title { font-size: 24px; font-weight: 800; color: #fbbf24; margin-bottom: 12px; }
+    .card-desc { font-size: 17px; color: #e2e8f0; line-height: 1.5; flex: 1; }
+    .card-tag {
+      margin-top: 15px; align-self: flex-start; background: rgba(245, 158, 11, 0.15);
+      border: 1px solid #f59e0b; color: #fde68a; padding: 4px 12px; border-radius: 8px;
+      font-size: 13px; font-weight: 700;
+    }
+
+    /* BOTTOM BAR */
+    .bottom-bar {
+      position: absolute; bottom: 0; left: 0; right: 0; height: 220px;
+      background: rgba(10, 15, 29, 0.96); border-top: 1px solid rgba(245, 158, 11, 0.35);
+      backdrop-filter: blur(16px); display: flex; align-items: center;
+      padding: 0 60px; gap: 40px; z-index: 50;
+    }
+    .avatars-container { display: flex; gap: 30px; align-items: center; }
+    .avatar-card {
+      display: flex; flex-direction: column; align-items: center;
+      transition: all 0.3s ease; opacity: 0.45; transform: scale(0.95);
+    }
+    .avatar-card.active { opacity: 1; transform: scale(1.05); }
+    .avatar-circle {
+      width: 90px; height: 90px; border-radius: 50%; overflow: hidden;
+      border: 3px solid #334155; position: relative; background: #0f172a;
+    }
+    .avatar-card.active .avatar-circle {
+      border-color: #f59e0b; box-shadow: 0 0 25px rgba(245, 158, 11, 0.7);
+    }
+    .avatar-circle img { width: 100%; height: 100%; object-fit: cover; }
+    .avatar-name { font-size: 15px; font-weight: 800; color: #f8fafc; margin-top: 8px; }
+    .avatar-role { font-size: 12px; color: #94a3b8; font-weight: 600; }
+
+    .subtitles-container {
+      flex: 1; height: 140px; background: rgba(15, 23, 42, 0.8);
+      border: 1.5px solid rgba(245, 158, 11, 0.35); border-radius: 16px;
+      padding: 20px 28px; display: flex; flex-direction: column; justify-content: center;
+    }
+    .sub-speaker {
+      font-size: 14px; font-weight: 800; text-transform: uppercase; letter-spacing: 1.5px;
+      margin-bottom: 8px;
+    }
+    .speaker-leigo { color: #f43f5e; }
+    .speaker-eliezer { color: #38bdf8; }
+    .speaker-ia { color: #fbbf24; }
+    .sub-text { font-size: 19px; line-height: 1.45; color: #f8fafc; font-weight: 500; }
+
+    #black-curtain {
+      position: absolute; inset: 0; background: #000000; z-index: 9999;
+      pointer-events: none; transition: opacity 0.08s linear;
+    }
+  </style>
+</head>
+<body>
+  <div id="black-curtain"></div>
+  <div class="glow-ambient"></div>
+  <div class="grid-bg"></div>
+
+  <!-- TOP BAR -->
+  <div class="top-bar">
+    <div class="top-title">
+      <div class="badge-ep">Episódio 2C • MER Canônico</div>
+      <div class="series-name">IDD NA PRÁTICA: <span>CAFETERIA & MODELAGEM CROW'S FOOT</span></div>
+    </div>
+    <div class="timer-box" id="clock-display">00:00.0</div>
+  </div>
+
+  <!-- STAGE -->
+  <div class="stage">
+    <!-- SLIDE 1: MODELO CANÔNICO CROW'S FOOT -->
+    <div class="slide-view active" id="slide-1">
+      <div class="slide-header">
+        <div class="slide-category">Modelagem Relacional Canônica • Notação Crow's Foot</div>
+        <div class="slide-title">Diagrama Entidade-Relacionamento Completo</div>
+        <div class="slide-subtitle">Entidades Mestres, Chaves Primárias Tipadas e Cardinalidades Rigorosas</div>
+      </div>
+      <div class="mer-grid">
+        <!-- CLIENTE -->
+        <div class="mer-entity-card">
+          <div class="entity-header">
+            <span>CLIENTE</span>
+            <span class="entity-tag">FORTE</span>
+          </div>
+          <div class="entity-body">
+            <div><span class="pk">PK</span> id: UUID</div>
+            <div>nome: VARCHAR(100)</div>
+            <div>celular: VARCHAR(20)</div>
+            <div>cpf: VARCHAR(14) [OPTIONAL]</div>
+          </div>
+          <div class="cardinality-box">
+            <span>Realiza Pedidos</span>
+            <span style="color: #f59e0b;">||-----&lt;</span>
+          </div>
+        </div>
+
+        <!-- ITEM_CARDAPIO -->
+        <div class="mer-entity-card">
+          <div class="entity-header">
+            <span>ITEM_CARDAPIO</span>
+            <span class="entity-tag">PRODUTO</span>
+          </div>
+          <div class="entity-body">
+            <div><span class="pk">PK</span> id: UUID</div>
+            <div>nome: VARCHAR(80)</div>
+            <div>categoria: VARCHAR(30)</div>
+            <div>precoBaseCentavos: BIGINT</div>
+          </div>
+          <div class="cardinality-box">
+            <span>Possui Ficha Técnica</span>
+            <span style="color: #f59e0b;">||-----&lt;</span>
+          </div>
+        </div>
+
+        <!-- INSUMO -->
+        <div class="mer-entity-card">
+          <div class="entity-header">
+            <span>INSUMO</span>
+            <span class="entity-tag">ESTOQUE</span>
+          </div>
+          <div class="entity-body">
+            <div><span class="pk">PK</span> id: UUID</div>
+            <div>nome: VARCHAR(80)</div>
+            <div>unidadeMedida: VARCHAR(10)</div>
+            <div>estoqueAtual: DECIMAL(10,3)</div>
+          </div>
+          <div class="cardinality-box">
+            <span>Composto em Receitas</span>
+            <span style="color: #f59e0b;">||-----&lt;</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 2: ENTIDADES DERIVADAS & FICHA TÉCNICA -->
+    <div class="slide-view" id="slide-2">
+      <div class="slide-header">
+        <div class="slide-category">Entidades Associativas e Derivadas • 3FN</div>
+        <div class="slide-title">Ficha Técnica N:N, Pedidos e Lotes de Estoque</div>
+        <div class="slide-subtitle">Baixa Atômica de Ingredientes e Snapshot Contábil de Custo</div>
+      </div>
+      <div class="derived-grid">
+        <!-- FICHA_TECNICA -->
+        <div class="mer-entity-card" style="border-color: #38bdf8;">
+          <div class="entity-header" style="background: linear-gradient(135deg, #0284c7, #0369a1);">
+            <span>FICHA_TECNICA</span>
+            <span class="entity-tag">MATRIZ N:N</span>
+          </div>
+          <div class="entity-body">
+            <div><span class="pk">PK</span><span class="fk">FK</span> itemCardapioId: UUID</div>
+            <div><span class="pk">PK</span><span class="fk">FK</span> insumoId: UUID</div>
+            <div>quantidadeDose: DECIMAL(10,3)</div>
+            <div>obrigatorio: BOOLEAN</div>
+          </div>
+          <div class="cardinality-box">
+            <span>Receita Normalizada 2FN</span>
+            <span style="color: #38bdf8;">&gt;-----||</span>
+          </div>
+        </div>
+
+        <!-- PEDIDO_BALCAO -->
+        <div class="mer-entity-card">
+          <div class="entity-header">
+            <span>PEDIDO_BALCAO</span>
+            <span class="entity-tag">COMANDA</span>
+          </div>
+          <div class="entity-body">
+            <div><span class="pk">PK</span> id: UUID</div>
+            <div><span class="fk">FK</span> clienteId: UUID</div>
+            <div>totalBrutoCentavos: BIGINT</div>
+            <div><span style="color: #fde047;">★</span> snapshotCustoCentavos: BIGINT</div>
+            <div>status: VARCHAR(20)</div>
+          </div>
+          <div class="cardinality-box">
+            <span>Venda Auditada 3FN</span>
+            <span style="color: #f59e0b;">||-----&lt;</span>
+          </div>
+        </div>
+
+        <!-- LOTE_ESTOQUE -->
+        <div class="mer-entity-card" style="border-color: #10b981;">
+          <div class="entity-header" style="background: linear-gradient(135deg, #059669, #047857);">
+            <span>LOTE_ESTOQUE</span>
+            <span class="entity-tag">FIFO / LOTE</span>
+          </div>
+          <div class="entity-body">
+            <div><span class="pk">PK</span> id: UUID</div>
+            <div><span class="fk">FK</span> insumoId: UUID</div>
+            <div>quantidadeDisponivel: DECIMAL</div>
+            <div>dataValidade: DATE</div>
+          </div>
+          <div class="cardinality-box">
+            <span>Baixa Atômica FIFO</span>
+            <span style="color: #10b981;">||-----||</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 3: NORMALIZAÇÃO & TERMINAL DE GOVERNANÇA -->
+    <div class="slide-view" id="slide-3">
+      <div class="slide-header">
+        <div class="slide-category">Homologação Canônica • Paradigma IDD</div>
+        <div class="slide-title">Normalização Completa & Matriz de Invariantes</div>
+        <div class="slide-subtitle">1FN, 2FN, 3FN e Restrição Matemática de Estoque Positivo</div>
+      </div>
+      <div class="norm-container">
+        <div class="norm-cards-col">
+          <div class="norm-badge-card">
+            <div class="norm-pill">1FN</div>
+            <div class="norm-desc"><b>Atomicidade de Insumos:</b> Receitas normalizadas em linhas exclusivas, sem campos de texto agregados.</div>
+          </div>
+          <div class="norm-badge-card">
+            <div class="norm-pill">2FN</div>
+            <div class="norm-desc"><b>Dependência Plena na Receita:</b> Ficha técnica indexada estritamente pelo par (itemCardapioId, insumoId).</div>
+          </div>
+          <div class="norm-badge-card">
+            <div class="norm-pill">3FN</div>
+            <div class="norm-desc"><b>Custo Congelado em Snapshot:</b> A variação de preço dos insumos não afeta a margem das vendas já fechadas.</div>
+          </div>
+          <div class="norm-badge-card" style="border-color: #10b981;">
+            <div class="norm-pill" style="background: #10b981; color: #064e3b;">ESTOQUE</div>
+            <div class="norm-desc"><b>Não-Negatividade Estrita:</b> Nenhuma venda é autorizada se o somatório das doses ultrapassar o lote disponível.</div>
+          </div>
+        </div>
+
+        <div class="terminal-window">
+          <div class="terminal-header">
+            <div class="t-dot t-red"></div>
+            <div class="t-dot t-yellow"></div>
+            <div class="t-dot t-green"></div>
+            <span style="margin-left: 10px; font-size: 12px; color: #64748b;">ai-compiler@bakery-db:~/mer-governor</span>
+          </div>
+          <div class="terminal-body">
+            <p style="color: #fbbf24;">[MATRIZ DE INVARIANTES DE DADOS - CAFETERIA &amp; PADARIA]</p>
+            <br>
+            <p style="color: #4ade80;">✓ INVARIANTE_01 (1FN &amp; 2FN Ficha Técnica):</p>
+            <p style="color: #94a3b8;">  PK_Ficha = (itemCardapioId, insumoId) UNIQUE</p>
+            <br>
+            <p style="color: #4ade80;">✓ INVARIANTE_02 (3FN Snapshot Contábil):</p>
+            <p style="color: #94a3b8;">  pedido.custoCentavos === SUM(ficha.dose * lote.custoUnitario)</p>
+            <br>
+            <p style="color: #4ade80;">✓ INVARIANTE_03 (Bloqueio de Estoque Negativo):</p>
+            <p style="color: #94a3b8;">  canOrder(item) = ALL(insumo.estoque &gt;= item.receita.dose)</p>
+            <br>
+            <p style="color: #fde047;">[STATUS] Aguardando homologação do Orquestrador Eliézer Rosa...</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 4: SÍNTESE & RUMO AO UML -->
+    <div class="slide-view" id="slide-4">
+      <div class="slide-header">
+        <div class="slide-category">Consolidação Arquitetural • Paradigma IDD</div>
+        <div class="slide-title">Do MER Canônico ao UML Completo</div>
+        <div class="slide-subtitle">A Base de Dados Blindada para a Linha de Produção da Padaria</div>
+      </div>
+      <div class="cards-grid">
+        <div class="feature-card">
+          <div class="card-icon">🗄️</div>
+          <div class="card-title">MER Canônico</div>
+          <div class="card-desc">Notação Crow's Foot com Ficha Técnica em matriz N:N e lotes de estoque FIFO.</div>
+          <div class="card-tag">Crow's Foot</div>
+        </div>
+        <div class="feature-card">
+          <div class="card-icon">📐</div>
+          <div class="card-title">Próximo Passo: Ep. 3C</div>
+          <div class="card-desc">No Episódio 3C, vamos apresentar o UML Completo da Cafeteria: Casos de Uso, Classes nos 3 compartimentos e Statecharts!</div>
+          <div class="card-tag">OMG Standard</div>
+        </div>
+        <div class="feature-card">
+          <div class="card-icon">🎯</div>
+          <div class="card-title">Blindagem IDD</div>
+          <div class="card-desc">As invariantes de projeto impedem furos de estoque e protegem a margem de lucro de cada receita!</div>
+          <div class="card-tag">Paradigma IDD</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BOTTOM BAR -->
+  <div class="bottom-bar">
+    <div class="avatars-container">
+      <div class="avatar-card" id="av-leigo">
+        <div class="avatar-circle">
+          <img src="../../avatares/avatar_usuaria_leiga.png" alt="Usuária Leiga">
+        </div>
+        <div class="avatar-name">Usuária Leiga</div>
+        <div class="avatar-role">Validadora de Domínio</div>
+      </div>
+      <div class="avatar-card" id="av-eliezer">
+        <div class="avatar-circle">
+          <img src="../../avatares/avatar_eliezer_oficial.png" alt="Eliézer Rosa">
+        </div>
+        <div class="avatar-name">Eliézer Rosa</div>
+        <div class="avatar-role">Orquestrador IDD</div>
+      </div>
+      <div class="avatar-card" id="av-ia">
+        <div class="avatar-circle">
+          <img src="../../avatares/avatar_ia_compilador.png" alt="IA Compilador">
+        </div>
+        <div class="avatar-name">IA Compilador</div>
+        <div class="avatar-role">Modelagem de Dados</div>
+      </div>
+    </div>
+    <div class="subtitles-container">
+      <div class="sub-speaker" id="sub-speaker">USUÁRIA LEIGA</div>
+      <div class="sub-text" id="sub-text">Iniciando episódio 2C: MER Canônico Crow's Foot da Cafeteria...</div>
+    </div>
+  </div>
+
+  <script>
+    let timelineItems = [];
+    let isRunning = false;
+    let startTimeMs = 0;
+
+    window.setTimeline = function(items) { timelineItems = items; };
+    window.stopPresentation = function() {
+      isRunning = false;
+    };
+    window.startPresentation = function() {
+      const curtain = document.getElementById('black-curtain');
+      if (curtain) {
+        curtain.style.opacity = '0';
+        setTimeout(() => curtain.remove(), 80);
+      }
+      isRunning = true;
+      startTimeMs = performance.now();
+      requestAnimationFrame(renderLoop);
+    };
+
+    function renderLoop(now) {
+      if (!isRunning) return;
+      const elapsedSec = (now - startTimeMs) / 1000;
+      const minutes = Math.floor(elapsedSec / 60);
+      const seconds = (elapsedSec % 60).toFixed(1);
+      document.getElementById('clock-display').innerText =
+        String(minutes).padStart(2, '0') + ':' + String(seconds).padStart(4, '0');
+
+      const curSeg = timelineItems.find(item => elapsedSec >= item.startSec && elapsedSec < item.endSec);
+      if (curSeg) {
+        const targetSlideId = 'slide-' + curSeg.slide;
+        document.querySelectorAll('.slide-view').forEach(s => {
+          if (s.id === targetSlideId) {
+            if (!s.classList.contains('active')) s.classList.add('active');
+          } else {
+            s.classList.remove('active');
+          }
+        });
+
+        ['leigo', 'eliezer', 'ia'].forEach(who => {
+          const el = document.getElementById('av-' + who);
+          if (el) {
+            if (curSeg.who === who) el.classList.add('active');
+            else el.classList.remove('active');
+          }
+        });
+
+        const speakerEl = document.getElementById('sub-speaker');
+        const textEl = document.getElementById('sub-text');
+        speakerEl.className = 'sub-speaker speaker-' + curSeg.who;
+        speakerEl.innerText = curSeg.actor;
+        textEl.innerText = curSeg.text;
+      }
+      requestAnimationFrame(renderLoop);
+    }
+  </script>
+</body>
+</html>
