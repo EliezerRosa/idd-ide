@@ -25,5 +25,5 @@ mudar de status.
 | A17 | Sagas / Ação Atômica em 4 fases (Guarda, Mutação, Selagem, Compensação) | 🔭 (método) | Especificado em `40-evidencias/refrigeracao-hvacr/docs/bounded_contexts…`. Sem implementação de referência |
 | A18 | "99% de redução de ambiguidade", "99,99% de eficiência" | ❌ remover | Números sem método |
 | A19 | "O código-fonte morreu" / "fim da sintaxe manual" | 🔭 (visão) | Formular como tese de direção, não como fato |
-| A20 | "Criador do paradigma IDD" | ❌ reformular | O nome tem uso anterior e paralelo (Stockley, intent-driven.dev). Usar "IDD na formulação de Eliézer Rosa" |
+| A20 | "Criador do paradigma IDD" | ❌ reformular | A **sigla** circulava antes (ebook de Stockley em 13/04/2026; intent-driven.dev), como metodologia documental. A **formulação como paradigma** (Comando Epistêmico, DAV, Confirm-Once, IDE) é independente e própria. Usar "IDD na formulação de Eliézer Rosa". Linha do tempo em [IDD-CANONE.md §8](IDD-CANONE.md) |
 | A21 | 2PC (Ep3D) vs. "2PC não escala, use Sagas" (Ep08) | ⚠️ conciliar | Posição canônica: Sagas entre contextos; transação ACID local dentro de um contexto |

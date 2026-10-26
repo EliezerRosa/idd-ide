@@ -81,15 +81,33 @@ export class MesaRachaDominio {
       }
     }
 
-    // 3. Aplicar taxa de serviço proporcional
-    const multiplicador = 1 + (this.taxaServicoPercentual / 100);
-    for (const part of this.participantes.values()) {
-      part.valorAPagarCentavos = Math.round(part.valorAPagarCentavos * multiplicador);
+    // 3. Aplicar taxa de serviço proporcional sem quebrar a soma zero:
+    //    arredonda o TOTAL uma única vez e reparte os centavos pelo maior resto
+    //    (arredondar pessoa a pessoa fazia a soma divergir do total — ex.: R$ 10,00 / 3 com 10%).
+    const partes = Array.from(this.participantes.values());
+    const subtotal = partes.reduce((acc, p) => acc + p.valorAPagarCentavos, 0);
+    if (subtotal === 0) return;
+    const totalComTaxa = this.totalComTaxaCentavos();
+    const cotas = partes.map(p => {
+      const exata = (p.valorAPagarCentavos * totalComTaxa) / subtotal;
+      return { p, base: Math.floor(exata), resto: exata - Math.floor(exata) };
+    });
+    let sobra = totalComTaxa - cotas.reduce((acc, c) => acc + c.base, 0);
+    cotas.sort((a, b) => b.resto - a.resto || a.p.id.localeCompare(b.p.id));
+    for (const c of cotas) {
+      c.p.valorAPagarCentavos = c.base + (sobra > 0 ? 1 : 0);
+      if (sobra > 0) sobra--;
     }
   }
 
+  /** Total da mesa com taxa de serviço, arredondado uma única vez. */
+  public totalComTaxaCentavos(): number {
+    const subtotal = this.itens.reduce((acc, i) => acc + i.precoCentavos, 0);
+    return Math.round((subtotal * (100 + this.taxaServicoPercentual)) / 100);
+  }
+
   /**
-   * VERIFICAÇÃO FORMAL DA INVARIANTE DA SOMA ZERO
+   * CHECAGEM EM TEMPO DE EXECUÇÃO DA INVARIANTE DA SOMA ZERO
    */
   public validarInvarianteSomaZero(totalEsperadoCentavos: number): boolean {
     const somaCalculada = Array.from(this.participantes.values())

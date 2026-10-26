@@ -73,7 +73,7 @@ A tabela diz o que o IDD toma de cada fonte e onde diverge.
 | Evans, DDD (2003) | Linguagem Ubíqua, Bounded Contexts | Dicionário ubíquo como gate verificável |
 | North, BDD (2006) | Given/When/Then como especificação executável | Usado para critérios de aceite, não como único formato |
 | Spec-Driven Development (GitHub Spec Kit, AWS Kiro, 2025) | Especificação antes do código, com agentes | O IDD acrescenta o Comando Epistêmico explícito, o DAV no runtime e invariantes como gate permanente, não só na geração |
-| Stockley, *Intent-Driven Development* (ebook v0.2, 2026) | Mesmo nome; seis elementos da intenção; risk dials | Formulação independente. Contribuições próprias de E. Rosa: Comando Epistêmico como critério operacional, DAV, Confirm-Once, simetria produto/processo |
+| Stockley, *Intent-Driven Development* (ebook v0.2, 13/04/2026) e intent-driven.dev | Mesma sigla (ver §8) | São **metodologias documentais/de processo**: especificar a intenção antes de gerar código (seis elementos, risk dials; ou guarda-chuva de spec-driven e context engineering). Não propõem paradigma, arquitetura de runtime nem IDE. Contribuições próprias de E. Rosa: Comando Epistêmico como critério operacional, DAV no runtime, Confirm-Once, simetria produto/processo, IDD-IDE |
 | Karpathy, "vibe coding" (2025) | LN como interface | Contraponto: o IDD preserva o entendimento e a verificação |
 
 ## 5. Agenda de pesquisa (🔭 PROPOSTA — não implementado)
@@ -109,3 +109,18 @@ A matriz de cada afirmação está em [AFIRMACOES.md](AFIRMACOES.md) e o vocabul
   "paradigma cunhado por": o nome tem uso anterior e paralelo.
 - **Datas biográficas:** a fixar pelo autor e usar de forma idêntica em todas as peças
   (pendência: início da carreira em 1976 vs. 1982; 2PC nos anos 80 vs. 90).
+
+## 8. Procedência da sigla
+
+| Data | Fato | Evidência |
+| --- | --- | --- |
+| 13/04/2026 | Ebook *Intent-Driven Development* v0.2, de Richard Stockley (metodologia documental) | Capa e metadados do PDF ([60-referencias-externas](../60-referencias-externas/)) |
+| 18/04/2026 | Primeiro uso de "Intent-Driven" no repositório do RVM Designações | `git log` do RVM |
+| 30/04/2026 | Primeiro vídeo público de E. Rosa com "IDD" no título (`DkFakgz1m2Y`) | API do YouTube |
+| 29/06/2026 | Página "Intent-Driven Development" do intent-driven.dev (guarda-chuva de práticas) | Snapshot salvo em 11/07/2026 |
+| 22/07/2026 | E. Rosa toma conhecimento do ebook e do site, depois da série publicada | Datas dos arquivos locais |
+
+E. Rosa adotou a **sigla** IDD do uso que circulava na rede e desenvolveu a **formulação como
+paradigma** de forma independente. Ela inclui Comando Epistêmico, DAV, Confirm-Once, Cânone e
+IDD-IDE. Por isso a fórmula correta é "IDD na formulação de Eliézer Rosa". Ela não reivindica a
+sigla, e reivindica com precisão a formulação.

@@ -46,8 +46,8 @@ pede credulidade.
 | Offline-first (IndexedDB/CRDT) | Ep4F | Zero ocorrências nos apps |
 | "99% de redução de ambiguidade", "99,99% de eficiência" | apresentações jun/26 | Números sem método |
 
-Também há **erros conceituais** que um público acadêmico (exatamente o público-alvo das hashtags
-#PLDI #POPL) percebe na hora:
+Também há **erros conceituais** que um público acadêmico (exatamente o público-alvo das
+hashtags `#PLDI` e `#POPL`) percebe na hora:
 
 - "provado **satisfatível** e inviolável": para provar uma invariante, mostra-se que a *negação*
   é **UNSAT**.
@@ -104,11 +104,14 @@ O corpus não aborda isso.
     (round-trip, drift entre modelo e código) é a lição mais importante para a "Sombra".
   - **Spec-Driven Development** (GitHub Spec Kit, AWS Kiro, 2025): é o concorrente direto e
     atual. O Ep10 toca nisso, mas a knowledge base não.
-- **O nome não é exclusivo.** O acervo contém o ebook *Intent-Driven Development* v0.2 (atribuído
-  a Richard Stockley no parecer de set/26) e uma cópia do site intent-driven.dev. Afirmar
-  "paradigma cunhado por Eliezer Rosa" é contestável. Mais forte e defensável: **"IDD na
-  formulação de Eliézer Rosa"**, reivindicando explicitamente o que é seu: Comando Epistêmico
-  como critério operacional, DAV, Confirm-Once e simetria produto/processo.
+- **A sigla não é exclusiva, mas a formulação é própria.** O ebook *Intent-Driven Development*
+  v0.2 (Richard Stockley, 13/04/2026) e o intent-driven.dev usam a mesma sigla para uma
+  **metodologia documental** de especificação, não para um paradigma nem para uma ferramenta.
+  As datas dos arquivos locais confirmam que E. Rosa só conheceu os dois em jul/2026, depois da
+  série publicada; ele adotou a sigla do uso que circulava na rede. "Paradigma cunhado por" é
+  contestável quanto à sigla. **"IDD na formulação de Eliézer Rosa"** é exato e reivindica o
+  que é seu: Comando Epistêmico como critério operacional, DAV, Confirm-Once, simetria
+  produto/processo e IDD-IDE (linha do tempo no Cânone §8).
 - A autoinserção na linha do tempo ao lado de Bush, Engelbart e Kay e o *name-dropping*
   (DeepMind, Stanford DSPy, LLVM, Pat Helland) sem integração mostrada soam como **apelo à
   autoridade**. A linhagem convence mais quando diz o que o IDD *toma* de cada um e *onde
