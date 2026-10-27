@@ -1,0 +1,74 @@
+{
+  "perguntas": [
+    {
+      "id": "P01",
+      "texto": "Se dois participantes da mesma mesa tiverem o mesmo nome, como fica a ordem alfabética do rodízio do centavo?",
+      "porque": "A D-022 fixou a ordem alfabética dos nomes, mas dois nomes iguais (dois 'João') empatam, e o rodízio deixa de ser determinístico. A resposta decide se o nome é único na mesa (chave candidata {mesa_id, nome}) ou se é preciso um critério de desempate guardado no modelo.",
+      "opcoes": [
+        "O nome é único na mesa: o aplicativo não aceita dois participantes com o mesmo nome.",
+        "Nomes podem se repetir; o desempate é a ordem de entrada na mesa."
+      ],
+      "bloqueante": true
+    },
+    {
+      "id": "P02",
+      "texto": "Um participante pode enviar mais de um comprovante para a mesma cota?",
+      "porque": "A D-024 diz que o participante anexa o comprovante e o responsável confirma, mas não diz o que acontece se o responsável não aceitar o comprovante, nem se a cota pode ser paga em partes. Isso decide se o Pagamento tem um registro por participante (participante_id é chave) ou vários.",
+      "opcoes": [
+        "Não: um único pagamento por participante; um comprovante novo substitui o anterior até a confirmação.",
+        "Sim: cada envio é um pagamento separado, e o responsável confirma ou recusa cada um.",
+        "Sim: a cota pode ser paga em partes, cada parte com o próprio comprovante."
+      ],
+      "bloqueante": true
+    },
+    {
+      "id": "P03",
+      "texto": "O pagamento deve guardar o valor pago ou vale sempre a cota calculada no momento da confirmação?",
+      "porque": "A cota não é armazenada (é calculada). Se um item for incluído depois de um pagamento confirmado, a cota muda e o registro não mostra mais quanto foi pago. Guardar o valor resolve isso, mas cria uma regra nova (o que fazer com a diferença) que ainda não foi decidida.",
+      "opcoes": [
+        "Guardar o valor pago em centavos no pagamento.",
+        "Não guardar: a mesa não aceita mudanças nos itens depois do primeiro pagamento (a detalhar na etapa de estados)."
+      ],
+      "bloqueante": false
+    }
+  ],
+  "modelo": "classDiagram\n  class Mesa {\n    +uuid id PK\n    +uuid responsavel_id FK(Participante.id)\n    +string chave_pix\n    +decimal taxa_servico_percentual\n  }\n  class Participante {\n    +uuid id PK\n    +uuid mesa_id FK(Mesa.id)\n    +string nome\n  }\n  class ItemConsumido {\n    +uuid id PK\n    +uuid mesa_id FK(Mesa.id)\n    +integer ordem\n    +string descricao\n    +integer preco_centavos\n  }\n  class Consumo {\n    +uuid item_id PK FK(ItemConsumido.id)\n    +uuid participante_id PK FK(Participante.id)\n  }\n  class Pagamento {\n    +uuid id PK\n    +uuid participante_id FK(Participante.id)\n    +string comprovante_url\n    +timestamp enviado_em\n    +timestamp confirmado_em ?\n  }\n  Mesa \"1\" --> \"N\" Participante : reúne\n  Mesa \"1\" --> \"N\" ItemConsumido : contém\n  ItemConsumido \"1\" --> \"N\" Consumo : é consumido em\n  Participante \"1\" --> \"N\" Consumo : consome em\n  Participante \"1\" --> \"1\" Pagamento : paga a cota com\n  %% DF Participante: mesa_id, nome -> id\n  %% DF ItemConsumido: mesa_id, ordem -> id\n  %% DF Pagamento: participante_id -> id\n",
+  "rastreio": [
+    {
+      "classe": "Mesa",
+      "termo": "Mesa",
+      "justificativa": "Termo aggregate. chave_pix obrigatória desde a criação (D-003, INT-005); taxa_servico_percentual ajustável por mesa, padrão 10 (D-023); responsavel_id realiza o papel ResponsavelMesa."
+    },
+    {
+      "classe": "Participante",
+      "termo": "Participante",
+      "justificativa": "Termo entity. O atributo ordem saiu: a D-022 fixou a ordem alfabética dos nomes. A DF {mesa_id, nome} → id supõe nome único na mesa (ver P01)."
+    },
+    {
+      "classe": "ItemConsumido",
+      "termo": "ItemConsumido",
+      "justificativa": "Termo entity. ordem guarda a ordem de registro dos itens, que a D-022 usa no rodízio."
+    },
+    {
+      "classe": "Consumo",
+      "termo": "",
+      "justificativa": "Classe associativa N:M entre ItemConsumido e Participante; ainda sem termo no dicionário."
+    },
+    {
+      "classe": "Pagamento",
+      "termo": "",
+      "justificativa": "Realiza a D-024: comprovante anexado pelo participante (comprovante_url, enviado_em) e confirmação do responsável (confirmado_em, vazio até confirmar). Ainda sem termo no dicionário; a DF participante_id → id supõe um pagamento por participante (ver P02)."
+    }
+  ],
+  "suposicoes": [
+    "Nome único na mesa (recomendação da P01): {mesa_id, nome} é chave candidata de Participante.",
+    "Um pagamento por participante (recomendação da P02): participante_id é chave candidata de Pagamento.",
+    "Só o responsável da mesa confirma pagamentos (D-024), então Pagamento não precisa guardar quem confirmou.",
+    "O valor pago não é guardado até a resposta da P03.",
+    "Cota e total da nota continuam não armazenados (D-001)."
+  ],
+  "contradicoes": [
+    "O legado guarda pago e comprovante_pix_url no próprio participante; pela D-024 o pagamento tem envio e confirmação em momentos diferentes, o que pede datas próprias e, se a P02 admitir reenvios, uma classe separada."
+  ],
+  "observacoes": "Rodada gerada pelo provedor manual: a resposta foi produzida pelo Claude Opus 5.5 na sessão do Claude Code em 2026-10-27, seguindo este pedido sem alterações. Mudanças em relação à MER-01 (rejeitada em D-025): Participante perdeu o atributo ordem e ganhou a chave candidata {mesa_id, nome}; entrou a classe Pagamento. Consumo e Pagamento ainda não têm termo no dicionário; convém propô-los ao autor (o Gate 2 só avisa). A INV-004 continua para as transações da etapa de casos de uso."
+}

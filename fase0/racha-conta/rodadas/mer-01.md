@@ -16,7 +16,7 @@ Por quê: A decisão D-002 fixou o rodízio ao longo de toda a mesa (o centavo e
 2. Ordem alfabética dos nomes dos participantes e ordem de registro dos itens.
 3. Ordem definida pelo responsável da mesa para os participantes e ordem de registro dos itens.
 
-**Resposta:**
+**Resposta:** 2
 
 ### P02 · não-bloqueante
 
@@ -27,7 +27,7 @@ Por quê: As fontes citam 10%, e o legado guarda taxa_servico_percentual por mes
 1. Ajustável por mesa, com 10% como padrão (atributo da Mesa).
 2. Fixa em 10% para todas as mesas (constante, fora do modelo).
 
-**Resposta:**
+**Resposta:** 1
 
 ### P03 · não-bloqueante
 
@@ -39,7 +39,7 @@ Por quê: A INT-004 permite pagar por Pix, mas nenhuma intenção diz se o aplic
 2. Sim: o responsável da mesa marca a cota como paga.
 3. Sim: o participante anexa o comprovante e o responsável confirma.
 
-**Resposta:**
+**Resposta:** 3
 
 ## Modelo proposto
 
@@ -101,9 +101,9 @@ classDiagram
 
 ## Decisão
 
-**Modelo:** [ ] aprovar  [ ] rejeitar
+**Modelo:** [ ] aprovar  [x] rejeitar
 
-**Comentário (opcional):**
+**Comentário (opcional):** refazer incorporando as respostas: rodízio em ordem alfabética dos participantes (P01) e pagamento com comprovante anexado pelo participante e confirmado pelo responsável (P03)
 
 ## Contradições
 

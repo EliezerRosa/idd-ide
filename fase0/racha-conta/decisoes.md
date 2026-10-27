@@ -26,3 +26,7 @@
 - [x] D-019 · R01/PR16 · proposta aceita: INV-003 — [integridade] Todo [[ItemConsumido]] deve ter no mínimo um [[Participante]] entre os consumidores. (2026-10-27)
 - [x] D-020 · R01/PR17 · proposta aceita: INV-004 — [integridade] Todo [[Participante]] associado a um [[ItemConsumido]] deve pertencer à mesma [[Mesa]] do [[ItemConsumido]]. (2026-10-27)
 - [x] D-021 · R01/PR18 · proposta aceita: INV-005 — [cálculo] Toda [[Cota]] deve ser um número inteiro de centavos, com valor ≥ 0. (2026-10-27)
+- [x] D-022 · L2/MER01/P01 · bloqueante · Em que ordem o rodízio do centavo indivisível percorre os participantes e os itens da mesa? → Ordem alfabética dos nomes dos participantes e ordem de registro dos itens. (2026-10-27)
+- [x] D-023 · L2/MER01/P02 · não-bloqueante · A taxa de serviço é sempre 10% ou pode ser ajustada em cada mesa? → Ajustável por mesa, com 10% como padrão (atributo da Mesa). (2026-10-27)
+- [x] D-024 · L2/MER01/P03 · não-bloqueante · O aplicativo deve registrar que um participante pagou a própria cota? → Sim: o participante anexa o comprovante e o responsável confirma. (2026-10-27)
+- [x] D-025 · L2/MER01/modelo · modelo rejeitado — refazer incorporando as respostas: rodízio em ordem alfabética dos participantes (P01) e pagamento com comprovante anexado pelo participante e confirmado pelo responsável (P03) (2026-10-27)
