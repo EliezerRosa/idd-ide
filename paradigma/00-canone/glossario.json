@@ -80,10 +80,17 @@
     },
     {
       "term": "ShalaMetric",
-      "definition": "PROPOSTA: medida de ambiguidade da LN por entropia sobre interpretações verbalizadas (Compilador L1)",
+      "definition": "PROPOSTA: medida de ambiguidade da LN por entropia sobre interpretações verbalizadas (Compilador L1). Não confundir com SHADA, o agente",
       "kind": "concept",
       "aliases": ["SHALA"],
-      "forbidden": ["SHADA"]
+      "forbidden": []
+    },
+    {
+      "term": "ShadaAgent",
+      "definition": "Agente socrático da Fase 0 (Socratic Heuristic Ambiguity Disambiguation Agent): pergunta, propõe e aponta contradições; não decide — cada decisão é humana e registrada",
+      "kind": "concept",
+      "aliases": ["SHADA", "Agente Socrático"],
+      "forbidden": []
     },
     {
       "term": "AtomicAction",

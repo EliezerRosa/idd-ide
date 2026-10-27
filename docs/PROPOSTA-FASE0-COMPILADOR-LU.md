@@ -1,6 +1,6 @@
 # Proposta — Fase 0: compilador de linguagem ubíqua (estudo de requisitos)
 
-**Status:** 🔭 PROPOSTA, aguardando aprovação (Confirm-Once) de Eliézer Rosa
+**Status:** ✅ APROVADA por Eliézer Rosa em 2026-10-27 (Confirm-Once). Entregas 0–2 implementadas; a implementação continua 🧪 até o Gate 1 do primeiro caso
 **Data:** 2026-10-27 · **Cânone:** v1.0-rc1
 **Fontes:**
 - [Ciclo de Vida — Nova proposta](../paradigma/20-metodo/ciclo-de-vida/IDD%20Paradigma%20Ciclo%20de%20Vida%20-%20Nova%20proposta.txt);
@@ -131,7 +131,11 @@ fase0/<caso>/
 
   Não encontrei ferramenta que faça essa cadeia (pesquisa de out/2026, não exaustiva).
 
-## 8. Decisões que retornam ao comando epistêmico
+## 8. Decisões do comando epistêmico (2026-10-27)
+
+Decididas: **SHADA** = agente e **SHALA** = medida (glossário atualizado); primeiro caso: **Racha de Conta**; linguagem controlada: **EARS adaptado ao português**. Termos de domínio marcados no texto como `[[Termo]]`; rodadas em arquivo (`fase0/<caso>/rodadas/`). Em aberto: forma normal alvo e stack da UIX.
+
+Tabela original das opções:
 
 | Decisão | Opções | Recomendação |
 | --- | --- | --- |

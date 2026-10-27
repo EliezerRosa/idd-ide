@@ -24,6 +24,8 @@ import { cmdPlaybook }  from './commands/playbook.ts';
 import { cmdRegistry }  from './commands/registry.ts';
 import { cmdMigrate }   from './commands/migrate.ts';
 import { cmdDictionary } from './commands/dictionary.ts';
+import { cmdFase0 }      from './commands/fase0.ts';
+import { cmdLintLn }     from './commands/lintLn.ts';
 import { BOLD, RESET, PURPLE, GRAY, CYAN, GREEN } from './lib/ui.ts';
 
 const args    = process.argv.slice(2);
@@ -60,6 +62,8 @@ async function main(): Promise<void> {
     case 'migrate':  return cmdMigrate(rest);
     case 'dictionary':
     case 'dict':     return cmdDictionary(rest);
+    case 'fase0':    return cmdFase0(rest);
+    case 'lint-ln':  return cmdLintLn(rest);
     case 'version':
     case '--version':
     case '-v':       return printVersion();
@@ -113,6 +117,13 @@ function printHelp(): void {
       Dicionário Ubíquo em .intent/ubiquitous-dictionary.json (offline, sem LLM).
       ${GRAY}add <Termo> "definição" --kind=entity --alias=a,b --forbid=x,y${RESET}
       ${GRAY}check [--strict]${RESET}    termos fora do dicionário nas intenções
+
+    ${CYAN}idd lint-ln <arquivos...> [--dicionario=<path>] [--strict]${RESET}
+      Lint de ambiguidade em linguagem natural (EARS-PT, termos vagos, e/ou, passiva...).
+
+    ${CYAN}idd fase0 [init|loop1|gate1|status] <caso>${RESET}
+      Fase 0: estudo de requisitos com o agente SHADA, por rodadas em arquivo.
+      ${GRAY}loop1 <caso> [--sem-nova-rodada]${RESET}  aplica respostas, roda lint + Gate 1, gera a próxima rodada
 
     ${CYAN}idd diff [modulo/sub] [flags]${RESET}
       Mostra diff lado a lado: intenção vs código atual.
