@@ -42,7 +42,23 @@ Fonte: `50-comunicacao/canal/metadados/upload_manifest.json` e
 | 4F Offline First | [oM-VEojObi4](https://youtu.be/oM-VEojObi4) |
 | 5 Futuro do Software | [ZDduoIZdZ6I](https://youtu.be/ZDduoIZdZ6I) |
 
-**Especial Perspectiva Técnica** (`PLW-P0rMNaKDs`): [sIN3nMc7Nhw](https://youtu.be/sIN3nMc7Nhw)
+**Base de Conhecimento — Teoria Ep04–10** (`PLkbRMhsplHjaLEi9O7SsJN3pH8TvsS6k7`)
+
+Versões revisadas em 2026-10-26, com o selo 🔭 PROPOSTA na tela e a narração corrigida. Cada
+versão anterior continua no ar como **não listada**, com um aviso que aponta para a nova.
+
+| Episódio | Vídeo atual | Versão anterior (não listada) |
+| --- | --- | --- |
+| Ep04 Neuro-Simbólico | [9TKLZglHF2A](https://youtu.be/9TKLZglHF2A) | `cRx5yKG8n1k` |
+| Ep05 Compilador de Intenções & Intent IR | [KYmztrWq9Fk](https://youtu.be/KYmztrWq9Fk) | `TluPKmbwKmg` |
+| Ep06 Invariantes & SMT | [jvGQFbVEcXU](https://youtu.be/jvGQFbVEcXU) | `BZeVG2CffjU` |
+| Ep07 Engenharia Constitucional & Diff | [TNvwCn5lq1k](https://youtu.be/TNvwCn5lq1k) | `hQrqyx0uZk8` |
+| Ep08 Ação Atômica & Sagas | [uhYWXB3Qu6k](https://youtu.be/uhYWXB3Qu6k) | `cDeFecLHP9A` |
+| Ep09 IDD vs MCP & Antigravity | [iXo1fq9DOfA](https://youtu.be/iXo1fq9DOfA) | `HAneRk6kqlE` |
+| Ep10 IDD vs Copilot Workspace & Aider | [-se6FqA_97Y](https://youtu.be/-se6FqA_97Y) | `6pvk9PbkuoE` |
+
+**Especial Perspectiva Técnica** (`PLW-P0rMNaKDs`): [s7tN0QDrncE](https://youtu.be/s7tN0QDrncE)
+(revisado em 2026-10-26; a versão anterior, `sIN3nMc7Nhw`, ficou não listada)
 
 **IDD na Prática — Casos de Uso** (`PLAyb9-CLqwPA`)
 
