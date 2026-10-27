@@ -15,7 +15,10 @@ microfone quando o navegador pedir.
 
 1. Escolha o **Roteiro**. Ele vem de
    [roteiros-shorts-x-vs-idd.md](../../../paradigma/50-comunicacao/canal/roteiros-shorts-x-vs-idd.md).
-   Para outro texto, use **Texto próprio…**.
+   - **✎ Editar:** abre o texto do roteiro no centro para você ajustar. A edição fica salva no
+     navegador, marcada com ✎ na lista. **↺ Restaurar original** desfaz.
+   - **＋ Novo:** cria um texto seu do zero ("Meu texto 1", "Meu texto 2"…), também salvo no
+     navegador.
 2. Escolha o **Modo**: "Câmera + voz", ou "Só voz" (fundo escuro com o título).
 3. Ajuste a **Velocidade** (palavras por minuto; 150 é um ritmo natural) e a **Fonte**.
 4. Aperte **R**. Há uma contagem de 3 segundos, e o roteiro começa a rolar. Ao fim do último
@@ -28,6 +31,10 @@ microfone quando o navegador pedir.
 | Espaço | Pausar ou retomar a rolagem |
 | ← → | Parágrafo anterior ou seguinte (também por clique no parágrafo) |
 | ↑ ↓ | Velocidade ±10 palavras por minuto |
+
+A tela tem três colunas: os controles à esquerda, o teleprompter no centro e a prévia do vídeo
+(o seu rosto) à direita. As laterais ficam fixas; só o texto do centro rola, e no modo de
+edição rola o editor.
 
 Dicas:
 
