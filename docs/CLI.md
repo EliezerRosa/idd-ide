@@ -17,7 +17,7 @@ npm link
 | Variável | Obrigatória | Descrição |
 |---|---|---|
 | `ANTHROPIC_API_KEY` | Para `generate`, `verify --semantic`, `capture`, `review --semantic`, `migrate infer` | Chave de API Anthropic |
-| `IDD_MODEL` | Não | Modelo Claude (padrão: `claude-sonnet-4-20250514`) |
+| `IDD_MODEL` | Não | Modelo Claude (padrão: `claude-sonnet-5`) |
 | `IDD_SERVER_TOKEN` | Não | Bearer token para autenticação no IDD Server |
 
 ## Índice de Comandos
@@ -261,7 +261,7 @@ idd store reset [--force]             # apaga o store (cria backup)
 ```
   v1.2.0   ← atual
   ├─ data:    20/05/2026 14:32
-  ├─ modelo:  claude-sonnet-4-20250514
+  ├─ modelo:  claude-sonnet-5
   ├─ hash:    a3f9b2c1d4e5...
   └─ commit:  abc12345
 

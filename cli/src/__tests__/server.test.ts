@@ -102,6 +102,20 @@ describe('GET /health', () => {
   });
 });
 
+describe('Exposição de rede', () => {
+  it('recusa host fora do loopback sem token', async () => {
+    const s = new IddServer({ port: PORT + 1, host: '0.0.0.0', store });
+    await expect(s.listen()).rejects.toThrow(/IDD_SERVER_TOKEN/);
+  });
+
+  it('não envia CORS sem origem configurada', async () => {
+    const res = await new Promise<http.IncomingMessage>((resolve, reject) => {
+      http.get({ hostname: '127.0.0.1', port: PORT, path: '/health' }, r => { r.resume(); resolve(r); }).on('error', reject);
+    });
+    expect(res.headers['access-control-allow-origin']).toBeUndefined();
+  });
+});
+
 // ════════════════════════════════════════════════════════════════
 // GET /intents
 // ════════════════════════════════════════════════════════════════

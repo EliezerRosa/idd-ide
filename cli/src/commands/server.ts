@@ -62,6 +62,8 @@ async function serverStart(args: string[]): Promise<void> {
   const root   = findProjectRoot() ?? process.cwd();
   const cfg    = loadConfig(root);
   const port   = parseInt(args.find(a => a.startsWith('--port='))?.split('=')[1] ?? '4999');
+  const host   = args.find(a => a.startsWith('--host='))?.split('=')[1] ?? '127.0.0.1';
+  const corsOrigin = args.find(a => a.startsWith('--cors='))?.slice('--cors='.length);
   const token  = process.env.IDD_SERVER_TOKEN ?? undefined;
   const daemon = args.includes('--daemon') || args.includes('-d');
 
@@ -78,8 +80,13 @@ async function serverStart(args: string[]): Promise<void> {
   const store = new Store(root);
   store.open();
 
-  const server = new IddServer({ port, token, store });
-  await server.listen();
+  const server = new IddServer({ port, host, token, corsOrigin, store });
+  try {
+    await server.listen();
+  } catch (e) {
+    store.close?.();
+    throw e;
+  }
 
   // Salva PID e porta
   fs.mkdirSync(path.join(root, '.idd'), { recursive: true });
@@ -89,7 +96,8 @@ async function serverStart(args: string[]): Promise<void> {
   console.log('');
   success(`IDD Server iniciado na porta ${port}`);
   row('PID',   `${process.pid}`);
-  row('token', token ? `${token.slice(0, 8)}...` : `${GRAY}nenhum (acesso livre)${RESET}`);
+  row('host',  host);
+  row('token', token ? `${token.slice(0, 8)}...` : `${GRAY}nenhum (só esta máquina)${RESET}`);
   row('store', path.join(root, '.idd', 'store.db'));
   console.log('');
   console.log(`  ${GRAY}Endpoints disponíveis:${RESET}`);

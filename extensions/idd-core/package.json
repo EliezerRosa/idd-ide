@@ -83,7 +83,7 @@
         },
         "idd.model": {
           "type": "string",
-          "default": "claude-sonnet-4-20250514",
+          "default": "claude-sonnet-5",
           "description": "Modelo Claude a usar no Intent Engine"
         },
         "idd.autoVerify": {

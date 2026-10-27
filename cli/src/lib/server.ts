@@ -4,12 +4,22 @@
 
 import * as http  from 'node:http';
 import * as url   from 'node:url';
+import { timingSafeEqual } from 'node:crypto';
 import { Store }  from './store.ts';
 
 export interface ServerConfig {
   port:    number;
-  token?:  string;   // Bearer token simples para autenticação
+  host?:   string;   // padrão 127.0.0.1 (só esta máquina)
+  token?:  string;   // Bearer token; obrigatório se host não for loopback
+  corsOrigin?: string; // sem CORS por padrão
   store:   Store;
+}
+
+const LOOPBACK = new Set(['127.0.0.1', '::1', 'localhost']);
+
+function tokenMatches(header: string, token: string): boolean {
+  const a = Buffer.from(header), b = Buffer.from(`Bearer ${token}`);
+  return a.length === b.length && timingSafeEqual(a, b);
 }
 
 type Handler = (
@@ -50,16 +60,18 @@ export class IddServer {
   }
 
   private async handle(req: http.IncomingMessage, res: http.ServerResponse): Promise<void> {
-    // CORS
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+    // CORS (só com origem explícita)
+    if (this.cfg.corsOrigin) {
+      res.setHeader('Access-Control-Allow-Origin', this.cfg.corsOrigin);
+      res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+      res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+    }
     if (req.method === 'OPTIONS') { res.writeHead(204); res.end(); return; }
 
     // Auth
     if (this.cfg.token) {
       const auth = req.headers.authorization ?? '';
-      if (auth !== `Bearer ${this.cfg.token}`) {
+      if (!tokenMatches(auth, this.cfg.token)) {
         this.json(res, 401, { error: 'Unauthorized' }); return;
       }
     }
@@ -215,8 +227,14 @@ export class IddServer {
   }
 
   listen(): Promise<void> {
-    return new Promise(resolve => {
-      this.server.listen(this.cfg.port, () => resolve());
+    const host = this.cfg.host ?? '127.0.0.1';
+    if (!LOOPBACK.has(host) && !this.cfg.token) {
+      return Promise.reject(new Error(
+        `Recusado: expor o servidor em ${host} exige IDD_SERVER_TOKEN (sem token, só 127.0.0.1).`));
+    }
+    return new Promise((resolve, reject) => {
+      this.server.once('error', reject);
+      this.server.listen(this.cfg.port, host, () => resolve());
     });
   }
 

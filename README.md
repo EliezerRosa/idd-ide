@@ -1,25 +1,68 @@
-# ⬡ IDD IDE
+# ⬡ IDD — Intent-Driven Development
 
-> **Intent Driven Development** — uma IDE onde você declara *o que* o código deve fazer, não *como* implementá-lo.
+> Protótipo de pesquisa do **Paradigma IDD, na formulação de Eliézer Rosa**: a intenção humana,
+> escrita em linguagem natural, é a fonte de autoridade do sistema. Ela é compilada em contratos
+> estruturados que uma verificação determinística confere continuamente.
 
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.3-blue?logo=typescript)](https://www.typescriptlang.org/)
-[![VS Code Extension](https://img.shields.io/badge/VS%20Code-Extension-007ACC?logo=visualstudiocode)](https://code.visualstudio.com/)
-[![Claude API](https://img.shields.io/badge/Claude-Sonnet%204-8B5CF6?logo=anthropic)](https://www.anthropic.com/)
 [![License](https://img.shields.io/badge/License-MIT-green)](./LICENSE)
-[![Status](https://img.shields.io/badge/Status-Em%20desenvolvimento-orange)](./docs/ROADMAP.md)
+[![Status](https://img.shields.io/badge/Status-protótipo%20de%20pesquisa-orange)](./docs/ROADMAP.md)
+[![Cânone](https://img.shields.io/badge/Cânone-v1.0--rc1-8B5CF6)](./paradigma/00-canone/IDD-CANONE.md)
+
+**O IDD é uma tese de paradigma, não um produto acabado.** Este repositório reúne:
+
+- o **acervo do paradigma**, com cânone, método, evidências e comunicação, em [`paradigma/`](./paradigma/README.md);
+- as **ferramentas experimentais**: CLI `idd`, núcleo `@idd/core`, servidor LSP e extensão para VS Code.
+
+Selos usados neste README (ver [Cânone §6](./paradigma/00-canone/IDD-CANONE.md)):
+✅ **implementado** (código + testes) · 🧪 **demonstração** (protótipo didático) ·
+🔭 **proposta** (projeto ou pesquisa, ainda não implementado).
 
 ---
 
-## O que é IDD?
+## Direção atual: começar pelo começo
 
-**Intent Driven Development** é um paradigma onde o desenvolvedor expressa intenções, e o sistema cuida da implementação. Em vez de escrever código linha a linha, você declara:
+A próxima etapa é a **Fase 0 investigativa** 🔭: um desambiguador e compilador de linguagem
+ubíqua no nível de **estudo de requisitos**, antes de qualquer código.
 
-- **O quê** o módulo deve fazer
-- **Quais regras** ele deve respeitar (constraints)
-- **Como saber** que funcionou (critérios de aceite)
-- **De quem depende** (dependências declaradas)
+1. **Loop 1, intenção.** A IA participa livremente, num diálogo socrático, até produzir, em
+   linguagem natural mais assertiva e objetiva, as **intenções** e as **invariantes do negócio**,
+   com cada termo fixado no dicionário ubíquo.
+2. **Loop 2, modelo.** A partir do loop 1:
+   - o **MER normalizado**;
+   - o **UML** de contexto e atores;
+   - os **casos de uso** decompostos até as transações do negócio;
+   - as **atividades** e os **estados**;
+   - os **métodos**, circunscritos às classes que os casos de uso transacionais usam.
 
-O IDE traduz tudo isso em código, testes e documentação — e monitora continuamente se o código gerado ainda respeita a intenção original.
+Horizonte: CLI e extensão primeiro; uma **IDE dedicada** é longo prazo, se a proposta for adotada.
+Detalhes em [`docs/PROPOSTA-FASE0-COMPILADOR-LU.md`](./docs/PROPOSTA-FASE0-COMPILADOR-LU.md) e na
+avaliação técnica [`docs/PARECER-IDD-IDE-2026-10-27.md`](./docs/PARECER-IDD-IDE-2026-10-27.md).
+
+---
+
+## O que existe hoje
+
+| Peça | Status | Observação |
+| --- | --- | --- |
+| Contrato `.intent.yaml` (v1 e v2) e parser único `@idd/core` | ✅ | `packages/core` |
+| **Dicionário ubíquo** (`idd dictionary`), offline e determinístico, usado como gate de CI | ✅ | Base da Fase 0 |
+| **Fronteiras entre bounded contexts** (`idd verify --project`), gate de CI | ✅ | Lê imports por regex (só TS/JS) |
+| Intent Store versionado (SQLite) | ✅ | Testado com uma simulação do banco; depende do módulo nativo `better-sqlite3` |
+| Modelagem de domínio: UML (Mermaid/PlantUML) → YAML, JSON Schema e SQL (`idd domain`) | ✅ | Base do loop 2 |
+| Checagem de normalização 1NF→DKNF | 🧪 | Heurística sobre dependências declaradas; não calcula fecho nem chaves candidatas |
+| Verificação estática de drift (`idd verify`) | 🧪 | Regras por regex e palavras-chave; acerto ainda não medido |
+| Verificação semântica (`idd verify --semantic`) | 🧪 | Uma única resposta de LLM (Anthropic); não trata o não-determinismo ([#30](https://github.com/EliezerRosa/idd-ide/issues/30)) |
+| `generate`, `capture`, `migrate`, `suggest`, `review` | 🧪 | Chamadas ao LLM sem saída estruturada nem nova tentativa |
+| LSP (`.intent.yaml` + `state_mutation` via AST TypeScript) | 🧪 | Só TypeScript e só o decorator `@Intent` |
+| Extensão VS Code (árvore, captura, grafo) | 🧪 | Não publicada; o grafo carrega o Cytoscape de CDN |
+| Servidor HTTP de sincronização (`idd server`) | 🧪 | Só `127.0.0.1` por padrão; outro host exige `IDD_SERVER_TOKEN` |
+| `.intent.md` (Track Cognitivo), Sombra, waivers, Risk Dials | 🔭 | [ROADMAP](./docs/ROADMAP.md), Fase 9 |
+| Anotações de drift inline no editor | 🔭 | Não implementado |
+| **IDE dedicada (fork do Code-OSS)** | 🔭 | Longo prazo; hoje existe só o `product.json` de marca |
+
+---
+
+## Exemplo de contrato
 
 ```yaml
 # auth/login.intent.yaml
@@ -29,347 +72,89 @@ module: auth/login
 constraints:
   - "Senha deve ter mínimo 8 caracteres"
   - "Bloquear conta após 5 tentativas falhas por 15 minutos"
-  - "Token JWT deve expirar em exatamente 24h"
   - "Nunca registrar a senha em logs"
 
 acceptance:
   - "Login válido retorna status 200 e token JWT"
   - "Senha incorreta retorna 401 sem vazar informações"
-  - "Quinta tentativa falha bloqueia a conta"
-  - "Token decodificado contém userId e campo exp válido"
 
 depends_on:
   - users/crud
 
 language: typescript
-framework: express
-```
-
-Rodando `idd generate auth/login`, o sistema chama a Claude API com o contexto completo e produz:
-
-- `auth/login.ts` — implementação funcional
-- `auth/login.test.ts` — 4 testes (um por critério de aceite)
-- `auth/login.md` — documentação gerada
-
----
-
-## Arquitetura
-
-```
-┌──────────────────────────────────────────────────────┐
-│                    IDD IDE (Code-OSS)                 │
-│                                                      │
-│  ┌──────────────┐  ┌─────────────┐  ┌─────────────┐ │
-│  │ Intent       │  │ Intent      │  │ Intent      │ │
-│  │ Capture UI   │→ │ Engine      │→ │ Graph       │ │
-│  │ (4 passos)   │  │ (LLM Core)  │  │ (Cytoscape) │ │
-│  └──────────────┘  └─────────────┘  └─────────────┘ │
-│         ↓                 ↓                ↓         │
-│  ┌──────────────────────────────────────────────┐    │
-│  │          Code Workspace (editor)              │    │
-│  └──────────────────────────────────────────────┘    │
-│         ↓                                            │
-│  ┌──────────────┐  ┌─────────────────────────────┐  │
-│  │ Intent       │→ │ Intent Store (.idd/store.db) │  │
-│  │ Verifier     │  │ SQLite + Git hooks           │  │
-│  └──────────────┘  └─────────────────────────────┘  │
-└──────────────────────────────────────────────────────┘
-```
-
-### 5 Componentes Principais
-
-| Componente | Responsabilidade |
-|---|---|
-| **Intent Capture UI** | Painel de 4 passos para declarar intenção, constraints, critérios e dependências |
-| **Intent Engine** | Parser → Context Manager → Claude API → Output Formatter |
-| **Code Workspace** | Editor Code-OSS com anotações de drift inline por linha |
-| **Intent Graph** | Grafo visual (Cytoscape.js) de todas as intenções e dependências |
-| **Intent Verifier + Store** | Detecção contínua de drift + SQLite versionado + Git hooks |
-
----
-
-## Estrutura do Repositório
-
-```
-idd-ide/
-├── extensions/
-│   └── idd-core/               # Extensão principal do VS Code
-│       ├── src/
-│       │   ├── extension.ts    # Ponto de entrada, wiring de todos os componentes
-│       │   ├── capture/
-│       │   │   ├── IntentCapturePanel.ts   # Webview dos 4 passos
-│       │   │   ├── IntentGraphPanel.ts     # Grafo com Cytoscape.js
-│       │   │   └── IntentTreeProvider.ts  # Sidebar com status das intenções
-│       │   ├── engine/
-│       │   │   └── IntentEngine.ts        # Parser + Claude API + Formatter
-│       │   ├── store/
-│       │   │   └── IntentStore.ts         # SQLite, versões, drift events
-│       │   ├── verifier/
-│       │   │   └── IntentVerifier.ts      # Análise estática + diagnósticos inline
-│       │   └── cli/
-│       │       └── gitHooks.ts            # Instala pre-commit, post-merge, post-tag
-│       ├── package.json
-│       └── tsconfig.json
-│
-├── cli/                        # CLI standalone — comando `idd`
-│   ├── src/
-│   │   ├── index.ts            # Router + help screen
-│   │   ├── commands/
-│   │   │   ├── init.ts         # idd init
-│   │   │   ├── new.ts          # idd new <modulo/sub>
-│   │   │   ├── generate.ts     # idd generate [modulo/sub]
-│   │   │   ├── verify.ts       # idd verify [flags]
-│   │   │   ├── diff.ts         # idd diff [modulo/sub]
-│   │   │   ├── graph.ts        # idd graph [flags]
-│   │   │   └── store.ts        # idd store <subcomando>
-│   │   └── lib/
-│   │       ├── store.ts        # Acesso ao SQLite sem VS Code
-│   │       ├── lang.ts         # Suporte multi-linguagem (TS, Python, Go, JS, Rust, Java)
-│   │       └── ui.ts           # Output colorido, tabelas, spinner, badges
-│   └── src/__tests__/          # Suite de testes com Vitest
-│       ├── engine.test.ts
-│       ├── verifier.test.ts
-│       ├── store.test.ts
-│       ├── lang.test.ts
-│       ├── parser.test.ts
-│       └── integration.test.ts
-│
-├── schemas/
-│   └── intent.schema.json      # JSON Schema do .intent.yaml
-│
-├── paradigma/                  # Acervo consolidado do Paradigma IDD (docs, casos, canal YT, mídias)
-│
-└── docs/
-    ├── ARCHITECTURE.md         # Arquitetura detalhada dos 5 componentes
-    ├── ROADMAP.md              # Fases de implementação
-    ├── INTENT_FORMAT.md        # Especificação do .intent.yaml
-    ├── CLI.md                  # Referência completa do CLI
-    └── CONTRIBUTING.md         # Guia de contribuição
 ```
 
 ---
 
-## Início Rápido
+## Início rápido (CLI)
 
-### Pré-requisitos
-
-- Node.js 22+
-- Git 2.40+
-- Chave de API Anthropic
-
-### Instalação do CLI
+Pré-requisitos: Node.js 22.12+ e Git. Uma chave da API Anthropic só é necessária para os
+comandos que usam LLM.
 
 ```bash
 git clone https://github.com/EliezerRosa/idd-ide.git
 cd idd-ide/cli
 npm install
-npx esbuild src/index.ts --bundle --platform=node --target=node22 \
-  --format=esm --outfile=dist/index.js --external:better-sqlite3
-sed -i '2{/^#!/d}' dist/index.js  # remove shebang duplicado (macOS: sed -i '' em vez de sed -i)
-chmod +x dist/index.js
-npm link   # disponibiliza o comando `idd` globalmente
+npm run build
+npm link            # disponibiliza o comando `idd`
 ```
 
-> **Nota:** `better-sqlite3` requer compilação nativa (node-gyp). Se `npm install`
-> falhar por falta de toolchain de build, instale `build-essential` (Linux),
-> Xcode Command Line Tools (macOS), ou `windows-build-tools` (Windows).
-
-### Primeiro uso
+> `better-sqlite3` é um módulo nativo. Se a instalação falhar, instale as ferramentas de build
+> da sua plataforma.
 
 ```bash
-# 1. Configurar API key
-export ANTHROPIC_API_KEY=sk-ant-...
-
-# 2. Inicializar IDD num projeto existente
 cd meu-projeto
-idd init
-
-# 3. Criar uma nova intenção interativamente
-idd new auth/login
-
-# 4. Gerar código a partir da intenção
-idd generate auth/login
-
-# 5. Verificar alinhamento
-idd verify
-
-# 6. Ver o grafo de intenções
-idd graph
+idd init                      # cria .idd/, hooks e exemplo
+idd dictionary list           # vocabulário ubíquo do projeto
+idd dictionary check --strict # termos fora do dicionário (offline)
+idd verify --project          # fronteiras entre contextos
+idd domain parse domain.mmd   # modelo de domínio a partir do UML
+idd verify                    # drift estático (heurístico)
 ```
 
-### Desenvolvimento do IDE (extensão VS Code)
+A lista completa dos 25 comandos está em `idd --help` e em [docs/CLI.md](./docs/CLI.md).
 
-```bash
-cd idd-ide/extensions/idd-core
-npm install
-npm run compile
+---
 
-# Abrir no VS Code
-code .
-# Pressionar F5 para abrir Extension Development Host
+## Estrutura
+
+```
+idd-ide/
+├── paradigma/        # acervo do paradigma: cânone, método, evidências, comunicação
+├── packages/core/    # @idd/core: contrato, projeto, dicionário (parser único)
+├── cli/              # CLI `idd` (25 comandos, 900+ testes)
+├── extensions/idd-core/   # extensão VS Code + servidor LSP (experimental)
+├── packages/vscode-extension/  # protótipo alternativo de UI (experimental)
+├── packages/idd-ui-pwa/        # maquete de UI (dados fixos)
+├── schemas/          # JSON Schema do .intent.yaml
+└── docs/             # arquitetura, roadmap, pareceres
 ```
 
 ---
 
-## CLI — Referência Rápida
+## Variáveis de ambiente
 
-| Comando | Descrição |
-|---|---|
-| `idd init` | Inicializa IDD no projeto (`.idd/`, Git hooks, exemplo) |
-| `idd new <mod/sub>` | Cria `.intent.yaml` interativamente |
-| `idd generate [mod/sub]` | Gera código, testes e docs via Claude API |
-| `idd verify [flags]` | Verifica drift entre código e intenções |
-| `idd diff [mod/sub]` | Vista lado a lado: intenção vs código atual |
-| `idd graph [flags]` | Grafo de intenções no terminal |
-| `idd store list` | Lista todas as intenções registradas |
-| `idd store history <mod/sub>` | Histórico de versões de uma intenção |
-| `idd store snapshot --tag=v1.0` | Congela estado para release |
-
-**Flags de `idd verify`:**
-
-```bash
-idd verify --fail-on=critical   # exit 1 se houver drift crítico (usado no CI)
-idd verify --semantic           # inclui análise via LLM (mais lenta, mais precisa)
-idd verify --staged             # verifica apenas arquivos staged (git)
-```
-
-**Flags de `idd graph`:**
-
-```bash
-idd graph --detailed               # tabela com todas as relações
-idd graph --impact=users/crud      # quais intenções mudam se eu alterar este módulo?
-idd graph --json                   # exporta como JSON para ferramentas externas
-```
-
----
-
-## Suporte a Linguagens
-
-| Linguagem | Extensão | Testes | Verificações específicas |
-|---|---|---|---|
-| TypeScript | `.ts` | Vitest | Proíbe `any`, `require()` em ESM |
-| Python | `.py` | pytest | `except Exception`, `eval()`, `pickle` |
-| Go | `.go` | `go test` | `panic()` como erro, `interface{}` vago |
-| JavaScript | `.js` | Vitest | `var`, `==` sem `===` |
-| Rust | `.rs` | `cargo test` | `unwrap()` em produção, `unsafe` sem doc |
-| Java | `.java` | JUnit 5 | `printStackTrace`, `System.out` |
-
----
-
-## Intent Store — Schema
-
-```sql
--- Intenções ativas
-CREATE TABLE intents (
-  id TEXT PRIMARY KEY, module TEXT, sub TEXT,
-  statement TEXT, status TEXT,  -- ok|drift|warn|orphan|deprecated
-  created_at TEXT, updated_at TEXT
-);
-
--- Histórico versionado (semver automático)
-CREATE TABLE intent_versions (
-  id TEXT PRIMARY KEY, intent_id TEXT,
-  version TEXT,           -- 0.0.1, 0.0.2, ...
-  yaml_snapshot TEXT,     -- .intent.yaml completo no momento
-  intent_hash TEXT,       -- sha256 do yaml
-  model_used TEXT,        -- claude-sonnet-4-20250514
-  git_commit TEXT,        -- sha do commit correspondente
-  created_at TEXT
-);
-
--- Eventos de drift detectados e resolvidos
-CREATE TABLE drift_events (
-  id TEXT PRIMARY KEY, intent_id TEXT,
-  type TEXT,              -- semantic|static|cascade
-  detected_at TEXT, resolved_at TEXT,
-  resolution TEXT         -- fixed|updated_intent|ignored
-);
-```
-
----
-
-## Git Hooks (instalados automaticamente por `idd init`)
-
-```bash
-# pre-commit — bloqueia se houver drift crítico
-idd verify --fail-on=critical
-
-# post-merge — sincroniza o Intent Store após merge
-idd store sync
-
-# post-tag — congela snapshot a cada release
-idd store snapshot --tag=$TAG_NAME
-```
+| Variável | Descrição | Padrão |
+| --- | --- | --- |
+| `ANTHROPIC_API_KEY` | Chave da API Anthropic (comandos com LLM) | — |
+| `IDD_MODEL` | Modelo Claude | `claude-sonnet-5` |
+| `IDD_SERVER_TOKEN` | Token Bearer do `idd server` (obrigatório fora de `127.0.0.1`) | — |
 
 ---
 
 ## Testes
 
 ```bash
-cd cli
-npm test                    # roda todos os testes
-npm run test -- --coverage  # com cobertura
-
-# Arquivos de teste
-src/__tests__/
-  engine.test.ts    # Intent Parser e Output Formatter
-  verifier.test.ts  # Análise estática de drift
-  store.test.ts     # Intent Store (36 testes)
-  lang.test.ts      # Suporte multi-linguagem (45 testes)
-  parser.test.ts    # buildPrompt e parseOutput
-  integration.test.ts  # Pipeline completo end-to-end
+cd cli && npm test
 ```
 
----
-
-## Variáveis de Ambiente
-
-| Variável | Descrição | Padrão |
-|---|---|---|
-| `ANTHROPIC_API_KEY` | Chave de API Anthropic (obrigatória para `generate` e `verify --semantic`) | — |
-| `IDD_MODEL` | Modelo Claude a usar | `claude-sonnet-4-20250514` |
+Os testes do CLI são unitários e de pipeline, com o SQLite substituído por uma simulação. Ainda não
+há testes de ponta a ponta com banco real, LLM ou o protocolo LSP.
 
 ---
 
-## Roadmap
+## Contribuindo e licença
 
-### ✅ Fase 1 — MVP (concluída)
-- Fork do Code-OSS e estrutura base
-- Formato `.intent.yaml` com JSON Schema
-- Intent Capture UI (painel de 4 passos)
-- Intent Engine com Claude API
-- Intent Store com SQLite
-- CLI com 8 comandos
+Veja [CONTRIBUTING.md](./docs/CONTRIBUTING.md). Licença MIT, veja [LICENSE](./LICENSE).
 
-### 🔄 Fase 2 — Core IDD (em andamento)
-- Context Manager completo
-- Intent Verifier com análise semântica
-- Intent Graph interativo
-- Git hooks automáticos
-
-### 📋 Fase 3 — Produto
-- `idd diff` com vista split
-- Suporte completo multi-linguagem
-- CI/CD integration
-- Marketplace de intent templates
-- Colaboração multi-dev em intenções
-
-Veja o [ROADMAP completo](./docs/ROADMAP.md).
-
----
-
-## Contribuindo
-
-Veja [CONTRIBUTING.md](./docs/CONTRIBUTING.md) para guidelines de desenvolvimento.
-
----
-
-## Licença
-
-MIT — veja [LICENSE](./LICENSE).
-
----
-
-<div align="center">
-  <sub>Construído com ⬡ Intent Driven Development · Claude API · TypeScript · VS Code</sub>
-</div>
+IDD — Intent-Driven Development, na formulação de Eliézer Rosa · Cânone v1.0-rc1

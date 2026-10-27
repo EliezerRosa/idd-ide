@@ -3,6 +3,7 @@
 import * as fs   from 'node:fs';
 import * as path from 'node:path';
 import * as http from 'node:http';
+import * as https from 'node:https';
 import * as yaml from 'js-yaml';
 import { findProjectRoot } from '../lib/store.ts';
 import { listTemplates, getTemplate, saveTemplate, type IntentTemplate } from '../lib/templates/index.ts';
@@ -50,7 +51,7 @@ async function registryRequest(
     if (cfg.token) hdrs['Authorization'] = `Bearer ${cfg.token}`;
     if (bs) hdrs['Content-Length'] = Buffer.byteLength(bs).toString();
 
-    const proto = url.protocol === 'https:' ? require('node:https') : http;
+    const proto = url.protocol === 'https:' ? https : http;
     const req   = proto.request({ hostname: url.hostname, port: url.port || (url.protocol === 'https:' ? 443 : 80), path: url.pathname + url.search, method, headers: hdrs },
       (res: any) => {
         let data = '';

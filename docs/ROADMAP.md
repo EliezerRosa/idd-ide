@@ -145,7 +145,21 @@ retroativos para módulos centrais do CLI.
 
 ---
 
-## 🔄 Fase 9 — Paradigma IDD-IDE: núcleo único e governança (em andamento)
+## 🧭 Direção a partir de 2026-10-27 — Fase 0 primeiro
+
+Decisão do comando epistêmico ([PARECER-IDD-IDE-2026-10-27](PARECER-IDD-IDE-2026-10-27.md) §1):
+o IDD é uma **tese de paradigma**, e o repositório é um protótipo de pesquisa. A prioridade passa
+a ser a **Fase 0 investigativa**: um compilador de linguagem ubíqua no estudo de requisitos, em
+dois loops (intenção e invariantes → MER, UML, casos de uso até a transação, atividades,
+estados e métodos circunscritos). Detalhes e entregas em
+[PROPOSTA-FASE0-COMPILADOR-LU](PROPOSTA-FASE0-COMPILADOR-LU.md), 🔭 aguardando aprovação.
+
+Os itens 3 a 9 da Fase 9 abaixo ficam em espera até o MVP da Fase 0. A IDE dedicada (item 8) é
+longo prazo, condicionada à adoção da proposta.
+
+---
+
+## ⏸ Fase 9 — Paradigma IDD-IDE: núcleo único e governança (itens 1–2 concluídos; demais em espera)
 
 Sequência ratificada em [`VEREDITO-CONTRAPROPOSTAS-2026-09-04.md`](VEREDITO-CONTRAPROPOSTAS-2026-09-04.md) §2,
 derivada do [`PARECER-E-PROPOSTA-2026-09-04.md`](PARECER-E-PROPOSTA-2026-09-04.md). Cada item tem

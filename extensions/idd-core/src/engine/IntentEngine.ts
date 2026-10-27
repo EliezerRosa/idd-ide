@@ -58,7 +58,7 @@ export class IntentEngine {
 
   private getModel(): string {
     return vscode.workspace.getConfiguration('idd')
-      .get<string>('model', 'claude-sonnet-4-20250514');
+      .get<string>('model', 'claude-sonnet-5');
   }
 
   // ── 1. Intent Parser ──────────────────────────────────────────

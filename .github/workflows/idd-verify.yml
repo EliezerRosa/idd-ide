@@ -49,7 +49,7 @@ jobs:
       - name: Verificar alinhamento (análise estática)
         run: |
           cd cli
-          node dist/index.js verify --fail-on=critical || true
+          node dist/index.js verify --fail-on=critical
 
       - name: Verificar alinhamento (semântico — se API key presente)
         if: ${{ env.HAS_ANTHROPIC_API_KEY == 'true' }}
