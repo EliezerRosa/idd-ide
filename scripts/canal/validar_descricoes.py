@@ -37,7 +37,9 @@ def main() -> int:
         for campo in (t, d, " ".join(v.get("tags", []))):
             if m := PROIBIDAS.search(campo):
                 errs.append(f"{i}: frase proibida '{m.group(0)}'")
-        if not d.lstrip().startswith(("✅", "🧪", "🔭")):
+        # vídeos re-renderizados (yt_substituir_video.py) abrem com a nota "🔁 Versão revisada…"
+        corpo = d.split("\n\n", 1)[-1] if d.startswith("🔁") else d
+        if not corpo.lstrip().startswith(("✅", "🧪", "🔭")):
             errs.append(f"{i}: primeira linha sem selo")
         if "Cânone v1.0-rc1" not in d:
             errs.append(f"{i}: sem rodapé padrão")
