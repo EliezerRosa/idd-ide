@@ -16,7 +16,8 @@ Por quê: A Soma Zero precisa de um único total de referência. O legado-schema
 2. O total calculado pelo aplicativo (soma dos itens registrados mais a taxa de serviço); a nota impressa é só conferência.
 3. Os dois: o fechamento exige que o total calculado seja igual ao valor da nota informada.
 
-**Resposta:**
+**Resposta:** 2
+
 
 ### P02 · bloqueante
 
@@ -28,7 +29,8 @@ Por quê: As fontes divergem: o Ep. 1 diz que o resto é distribuído 'sequencia
 2. Em rodízio ao longo de toda a mesa: o centavo extra vai para o próximo participante que ainda não recebeu nenhum centavo extra.
 3. Por item, para o consumidor com menor valor acumulado na mesa até aquele momento.
 
-**Resposta:**
+**Resposta:** 2
+
 
 ### P03 · bloqueante
 
@@ -39,7 +41,8 @@ Por quê: O Ep. 1B exige a chave Pix 'antes de qualquer fechamento'; o legado-sc
 1. Obrigatória já na criação da mesa.
 2. Obrigatória somente antes do fechamento da mesa.
 
-**Resposta:**
+**Resposta:** 1
+
 
 ## Propostas
 
@@ -52,7 +55,7 @@ Por quê: O Ep. 1B exige a chave Pix 'antes de qualquer fechamento'; o legado-sc
 
 Justificativa: Termo central das duas transcrições ('itens consumidos na mesa', 'responsável da mesa') e do legado (MesaRachaDominio, tabela mesas).
 
-**Decisão:** [ ] aceitar  [ ] rejeitar
+**Decisão:** [x ] aceitar  [ ] rejeitar
 
 **Texto final (opcional):**
 
@@ -65,7 +68,7 @@ Justificativa: Termo central das duas transcrições ('itens consumidos na mesa'
 
 Justificativa: Usado nas fontes ('cada participante vê a sua cota') e no legado (Participante, tabela participantes). 'Consumidor' aparece como o participante associado a um item.
 
-**Decisão:** [ ] aceitar  [ ] rejeitar
+**Decisão:** [x] aceitar  [ ] rejeitar
 
 **Texto final (opcional):**
 
@@ -78,7 +81,7 @@ Justificativa: Usado nas fontes ('cada participante vê a sua cota') e no legado
 
 Justificativa: Ep. 1 ('cada item consumido na mesa'), Ep. 1B ('cada item possui conjunto estrito de consumidores') e legado (ItemConsumido, tabela itens_conta).
 
-**Decisão:** [ ] aceitar  [ ] rejeitar
+**Decisão:** [x ] aceitar  [ ] rejeitar
 
 **Texto final (opcional):**
 
@@ -91,7 +94,7 @@ Justificativa: Ep. 1 ('cada item consumido na mesa'), Ep. 1B ('cada item possui 
 
 Justificativa: Ep. 1 ('taxa de serviço de dez por cento'), Ep. 1B e legado (taxaServicoPercentual).
 
-**Decisão:** [ ] aceitar  [ ] rejeitar
+**Decisão:** [ x] aceitar  [ ] rejeitar
 
 **Texto final (opcional):**
 
@@ -104,7 +107,7 @@ Justificativa: Ep. 1 ('taxa de serviço de dez por cento'), Ep. 1B e legado (tax
 
 Justificativa: Ep. 1 ('a sua cota justa'), Ep. 1B ('o total das cotas') e legado (valorAPagarCentavos).
 
-**Decisão:** [ ] aceitar  [ ] rejeitar
+**Decisão:** [x ] aceitar  [ ] rejeitar
 
 **Texto final (opcional):**
 
@@ -117,7 +120,7 @@ Justificativa: Ep. 1 ('a sua cota justa'), Ep. 1B ('o total das cotas') e legado
 
 Justificativa: Ep. 1: 'paga na hora via Pix ... direto para o responsável da mesa'. Quem assume esse papel ainda não está definido nas fontes (ver observações).
 
-**Decisão:** [ ] aceitar  [ ] rejeitar
+**Decisão:** [ x] aceitar  [ ] rejeitar
 
 **Texto final (opcional):**
 
@@ -130,7 +133,7 @@ Justificativa: Ep. 1: 'paga na hora via Pix ... direto para o responsável da me
 
 Justificativa: Ep. 1B ('toda mesa possui chave Pix vinculada') e legado-schema.sql (chave_pix_destinatario).
 
-**Decisão:** [ ] aceitar  [ ] rejeitar
+**Decisão:** [x] aceitar  [ ] rejeitar
 
 **Texto final (opcional):**
 
@@ -143,7 +146,7 @@ Justificativa: Ep. 1B ('toda mesa possui chave Pix vinculada') e legado-schema.s
 
 Justificativa: Ep. 1 ('aquela notinha de papel', 'bater no centavo exato com a nota do restaurante') e legado-schema.sql (valor_total_nota). O papel da nota na Soma Zero depende da pergunta P01.
 
-**Decisão:** [ ] aceitar  [ ] rejeitar
+**Decisão:** [x ] aceitar  [ ] rejeitar
 
 **Texto final (opcional):**
 
@@ -153,7 +156,7 @@ Justificativa: Ep. 1 ('aquela notinha de papel', 'bater no centavo exato com a n
 
 Justificativa: Ep. 1 ('atribuído com precisão a quem realmente consumiu') e Ep. 1B ('ninguém paga por item que não consumiu').
 
-**Decisão:** [ ] aceitar  [ ] rejeitar
+**Decisão:** [x ] aceitar  [ ] rejeitar
 
 **Texto final (opcional):**
 
@@ -173,7 +176,7 @@ Justificativa: Ep. 1 ('rateada de forma estritamente proporcional ao consumo de 
 
 Justificativa: Ep. 1: 'cada participante vê exatamente a sua cota justa na tela do celular'.
 
-**Decisão:** [ ] aceitar  [ ] rejeitar
+**Decisão:** [x ] aceitar  [ ] rejeitar
 
 **Texto final (opcional):**
 
@@ -183,7 +186,7 @@ Justificativa: Ep. 1: 'cada participante vê exatamente a sua cota justa na tela
 
 Justificativa: Ep. 1: 'paga na hora via Pix Copia e Cola ou QR Code direto para o responsável da mesa'.
 
-**Decisão:** [ ] aceitar  [ ] rejeitar
+**Decisão:** [x ] aceitar  [ ] rejeitar
 
 **Texto final (opcional):**
 
@@ -193,9 +196,9 @@ Justificativa: Ep. 1: 'paga na hora via Pix Copia e Cola ou QR Code direto para 
 
 Justificativa: Ep. 1B: 'toda mesa possui chave Pix vinculada antes de qualquer fechamento'. Se P03 for respondida com 'na criação', esta intenção deve ser reescrita.
 
-**Decisão:** [ ] aceitar  [ ] rejeitar
+**Decisão:** [x ] aceitar  [ ] rejeitar
 
-**Texto final (opcional):**
+**Texto final (opcional):** Quando o [[ResponsavelMesa]] cria a [[Mesa]], o aplicativo deve exigir a [[ChavePix]] do [[ResponsavelMesa]].
 
 ### PR14 · invariante · INV-001
 
@@ -203,9 +206,9 @@ Justificativa: Ep. 1B: 'toda mesa possui chave Pix vinculada antes de qualquer f
 
 Justificativa: Soma Zero: Ep. 1 ('tem que bater no centavo exato com a nota do restaurante') e Ep. 1B ('o total das cotas é igual ao total da nota'). A referência exata depende de P01.
 
-**Decisão:** [ ] aceitar  [ ] rejeitar
+**Decisão:** [x ] aceitar  [ ] rejeitar
 
-**Texto final (opcional):**
+**Texto final (opcional):** [cálculo] A soma das cotas de todos os participantes de uma [[Mesa]] deve ser exatamente igual à soma dos preços dos [[ItemConsumido]] mais a [[TaxaServico]], com diferença de zero centavos.
 
 ### PR15 · invariante · INV-002
 
@@ -223,7 +226,7 @@ Justificativa: Não-Cobrança Indevida, citada no Ep. 1B.
 
 Justificativa: Ep. 1B ('cada item possui conjunto estrito de consumidores') e legado-domain_rules.ts ('Todo item deve ter ao menos 1 consumidor').
 
-**Decisão:** [ ] aceitar  [ ] rejeitar
+**Decisão:** [ x] aceitar  [ ] rejeitar
 
 **Texto final (opcional):**
 
@@ -233,7 +236,7 @@ Justificativa: Ep. 1B ('cada item possui conjunto estrito de consumidores') e le
 
 Justificativa: Legado-domain_rules.ts ('Consumidor não pertence a esta mesa') e legado-schema.sql (item_consumidores ligado a participantes e itens da mesa).
 
-**Decisão:** [ ] aceitar  [ ] rejeitar
+**Decisão:** [x ] aceitar  [ ] rejeitar
 
 **Texto final (opcional):**
 
@@ -243,7 +246,7 @@ Justificativa: Legado-domain_rules.ts ('Consumidor não pertence a esta mesa') e
 
 Justificativa: Ep. 1 ('o resto da divisão em centavos inteiros') e legado-schema.sql (CHECK valor_a_pagar >= 0).
 
-**Decisão:** [ ] aceitar  [ ] rejeitar
+**Decisão:** [x ] aceitar  [ ] rejeitar
 
 **Texto final (opcional):**
 

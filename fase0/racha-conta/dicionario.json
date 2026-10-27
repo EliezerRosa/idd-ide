@@ -1,4 +1,80 @@
 {
   "version": "1.0",
-  "terms": []
+  "terms": [
+    {
+      "term": "ChavePix",
+      "definition": "Chave Pix do responsável da mesa, para a qual os participantes pagam as próprias cotas.",
+      "kind": "value-object",
+      "aliases": [
+        "Chave Pix"
+      ],
+      "forbidden": []
+    },
+    {
+      "term": "Cota",
+      "definition": "Valor em centavos inteiros que um participante deve pagar: a parte dos itens que consumiu mais a parte proporcional da taxa de serviço.",
+      "kind": "value-object",
+      "aliases": [
+        "Cota justa"
+      ],
+      "forbidden": []
+    },
+    {
+      "term": "ItemConsumido",
+      "definition": "Produto ou serviço da nota (pizza, porção, bebida) com descrição, preço em centavos e o conjunto de participantes que o consumiram.",
+      "kind": "entity",
+      "aliases": [
+        "Item"
+      ],
+      "forbidden": []
+    },
+    {
+      "term": "Mesa",
+      "definition": "Encontro de consumo (restaurante, bar, churrasco) que reúne os participantes, os itens consumidos e a taxa de serviço, e cuja nota é dividida entre os participantes.",
+      "kind": "aggregate",
+      "aliases": [
+        "Evento de rateio"
+      ],
+      "forbidden": []
+    },
+    {
+      "term": "Nota",
+      "definition": "Documento de cobrança emitido pelo estabelecimento, com o valor total a pagar pela mesa.",
+      "kind": "value-object",
+      "aliases": [
+        "Nota do estabelecimento"
+      ],
+      "forbidden": [
+        "Notinha"
+      ]
+    },
+    {
+      "term": "Participante",
+      "definition": "Pessoa que integra uma mesa, pode consumir itens e deve pagar a própria cota.",
+      "kind": "entity",
+      "aliases": [
+        "Consumidor"
+      ],
+      "forbidden": []
+    },
+    {
+      "term": "ResponsavelMesa",
+      "definition": "Participante que recebe, na própria chave Pix, os pagamentos das cotas dos demais participantes da mesa.",
+      "kind": "role",
+      "aliases": [
+        "Responsável da mesa"
+      ],
+      "forbidden": []
+    },
+    {
+      "term": "TaxaServico",
+      "definition": "Percentual cobrado pelo estabelecimento sobre o consumo (10% nas fontes), rateado entre os participantes em proporção ao que cada um consumiu.",
+      "kind": "value-object",
+      "aliases": [
+        "Taxa de serviço",
+        "Gorjeta"
+      ],
+      "forbidden": []
+    }
+  ]
 }
