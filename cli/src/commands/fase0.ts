@@ -1,4 +1,4 @@
-// src/commands/fase0.ts — Fase 0: estudo de requisitos em linguagem ubíqua (Loop 1 por rodadas)
+// src/commands/fase0.ts — Fase 0: estudo de requisitos em linguagem ubíqua (Loop 1 e Loop 2 por rodadas)
 import * as path from 'node:path';
 import { header, success, error, info, warn, row, subHeader, BOLD, RESET, GRAY, GREEN, RED, YELLOW, CYAN } from '../lib/ui.ts';
 import { findProjectRoot } from '../lib/store.ts';
@@ -6,6 +6,8 @@ import { caminhosCaso, inicializarCaso, lerDecisoes, lerTexto, listarRodadas, ro
 import { avaliarGate1, lintCaso, type Gate1Resultado } from '../lib/fase0/gate1.ts';
 import { extrairItens } from '../lib/fase0/lintLn.ts';
 import { executarLoop1 } from '../lib/fase0/loop1.ts';
+import { avaliarGate2, type Gate2Resultado } from '../lib/fase0/gate2.ts';
+import { executarLoop2 } from '../lib/fase0/loop2.ts';
 import { LlmRefusalError, LlmTruncatedError } from '../lib/llm/index.ts';
 
 function ajuda(): void {
@@ -13,6 +15,8 @@ function ajuda(): void {
   ${CYAN}idd fase0 init <caso>${RESET}                       cria fase0/<caso>/ (fontes, rodadas, decisões, intenções, invariantes, dicionário)
   ${CYAN}idd fase0 loop1 <caso> [--sem-nova-rodada]${RESET}  aplica a rodada respondida, roda lint + Gate 1 e, se preciso, gera a próxima rodada
   ${CYAN}idd fase0 gate1 <caso>${RESET}                      checklist do Gate 1 (exit 1 se não estiver verde)
+  ${CYAN}idd fase0 loop2 <caso> [--sem-nova-rodada]${RESET}  loop 2, etapa MER: aplica a rodada respondida, roda o Gate 2 e, se preciso, gera a próxima
+  ${CYAN}idd fase0 gate2 <caso>${RESET}                      checklist do Gate 2 (exit 1 se não estiver verde)
   ${CYAN}idd fase0 status <caso>${RESET}                     rodadas, decisões abertas, contagens e Gate 1
 
   ${GRAY}Rodadas são arquivos (rodadas/rodada-NN.md): responda no editor e rode loop1 de novo.${RESET}
@@ -28,6 +32,17 @@ function imprimirGate(g: Gate1Resultado): void {
   }
   console.log('');
   console.log(g.verde ? `  ${GREEN}${BOLD}Gate 1 verde${RESET}` : `  ${RED}${BOLD}Gate 1 vermelho${RESET}`);
+}
+
+function imprimirGate2(g: Gate2Resultado): void {
+  subHeader('Gate 2 · MER');
+  for (const c of g.criterios) {
+    const marca = c.ok ? `${GREEN}✓${RESET}` : `${RED}✗${RESET}`;
+    console.log(`  ${marca}  (${c.id}) ${c.descricao}  ${GRAY}— ${c.detalhe}${RESET}`);
+  }
+  for (const a of g.avisos) console.log(`  ${YELLOW}⚠${RESET}  ${a}`);
+  console.log('');
+  console.log(g.verde ? `  ${GREEN}${BOLD}Gate 2 (MER) verde${RESET}` : `  ${RED}${BOLD}Gate 2 (MER) vermelho${RESET}`);
 }
 
 function nomeCaso(args: string[], sub: string): string {
@@ -89,6 +104,56 @@ async function faseLoop1(root: string, args: string[]): Promise<void> {
   }
 }
 
+async function faseLoop2(root: string, args: string[]): Promise<void> {
+  const caso = nomeCaso(args, 'loop2');
+  const r = await executarLoop2({ root, caso, semNovaRodada: args.includes('--sem-nova-rodada') });
+  const rel = (f: string): string => path.relative(process.cwd(), f) || f;
+
+  if (r.estado === 'gate1-vermelho') {
+    error(`O loop 2 exige o Gate 1 verde. Rode: idd fase0 gate1 ${caso}`);
+    process.exit(1);
+  }
+  if (r.estado === 'aguardando-respostas') {
+    warn(`Aguardando respostas em ${rel(r.arquivo!)}`);
+    info(`Responda as perguntas, aprove ou rejeite o modelo e rode de novo: idd fase0 loop2 ${caso}`);
+    return;
+  }
+  if (r.aplicacao) {
+    const a = r.aplicacao;
+    success(`Rodada MER ${String(r.rodadaAplicada).padStart(2, '0')} aplicada: ${a.respondidas} respondida(s), ${a.abertas} em aberto, modelo ${a.modelo}`);
+  }
+  imprimirGate2(r.gate!);
+
+  switch (r.estado) {
+    case 'gate-verde':
+      console.log('');
+      success('Etapa MER concluída — próxima etapa do loop 2: contexto e casos de uso');
+      return;
+    case 'sem-nova-rodada':
+      info('--sem-nova-rodada: nenhuma rodada nova foi gerada.');
+      return;
+    case 'aguardando-manual':
+      console.log('');
+      warn('Provedor manual: falta a resposta da IA.');
+      info(`Pedido gravado em: ${rel(r.pedidoPath!)}`);
+      info(`Cole o pedido em qualquer assistente de IA e salve a resposta JSON em: ${rel(r.respostaPath!)}`);
+      info(`Depois rode de novo: idd fase0 loop2 ${caso}`);
+      return;
+    case 'nova-rodada':
+      console.log('');
+      success(`Nova rodada gerada: ${rel(r.arquivo!)}`);
+      info(`Revise o modelo no arquivo e rode: idd fase0 loop2 ${caso}`);
+      return;
+  }
+}
+
+async function faseGate2(root: string, args: string[]): Promise<void> {
+  const caso = nomeCaso(args, 'gate2');
+  const g = avaliarGate2(caminhosCaso(root, caso));
+  imprimirGate2(g);
+  if (!g.verde) process.exit(1);
+}
+
 async function faseGate1(root: string, args: string[]): Promise<void> {
   const caso = nomeCaso(args, 'gate1');
   const p = caminhosCaso(root, caso);
@@ -114,7 +179,9 @@ async function faseStatus(root: string, args: string[]): Promise<void> {
   const d = lintCaso(p);
   const todos = [...d.intencoes, ...d.invariantes];
   row('lint', `${todos.filter(x => x.severidade === 'erro').length} erro(s), ${todos.filter(x => x.severidade === 'aviso').length} aviso(s)`);
-  imprimirGate(avaliarGate1(p, d));
+  const g1 = avaliarGate1(p, d);
+  imprimirGate(g1);
+  if (g1.verde) imprimirGate2(avaliarGate2(p));
 }
 
 export async function cmdFase0(args: string[]): Promise<void> {
@@ -128,6 +195,8 @@ export async function cmdFase0(args: string[]): Promise<void> {
       case 'init':   return await faseInit(root, rest);
       case 'loop1':  return await faseLoop1(root, rest);
       case 'gate1':  return await faseGate1(root, rest);
+      case 'loop2':  return await faseLoop2(root, rest);
+      case 'gate2':  return await faseGate2(root, rest);
       case 'status': return await faseStatus(root, rest);
       default:
         error(`Subcomando desconhecido: "${sub}"`);

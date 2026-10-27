@@ -1,6 +1,6 @@
 # Proposta — Fase 0: compilador de linguagem ubíqua (estudo de requisitos)
 
-**Status:** ✅ APROVADA por Eliézer Rosa em 2026-10-27 (Confirm-Once). Entregas 0–3 implementadas; Gate 1 verde no Racha de Conta (2026-10-27); próxima: entrega 4 (loop 2)
+**Status:** ✅ APROVADA por Eliézer Rosa em 2026-10-27 (Confirm-Once). Entregas 0–3 implementadas; Gate 1 verde no Racha de Conta (2026-10-27); entrega 4 em andamento: `idd fase0 loop2|gate2`, etapa MER (forma normal alvo decidida: BCNF, ou 3NF quando a BCNF perderia dependência)
 **Data:** 2026-10-27 · **Cânone:** v1.0-rc1
 **Fontes:**
 - [Ciclo de Vida — Nova proposta](../paradigma/20-metodo/ciclo-de-vida/IDD%20Paradigma%20Ciclo%20de%20Vida%20-%20Nova%20proposta.txt);
@@ -133,7 +133,7 @@ fase0/<caso>/
 
 ## 8. Decisões do comando epistêmico (2026-10-27)
 
-Decididas: **SHADA** = agente e **SHALA** = medida (glossário atualizado); primeiro caso: **Racha de Conta**; linguagem controlada: **EARS adaptado ao português**. Termos de domínio marcados no texto como `[[Termo]]`; rodadas em arquivo (`fase0/<caso>/rodadas/`). Em aberto: forma normal alvo e stack da UIX.
+Decididas: **SHADA** = agente e **SHALA** = medida (glossário atualizado); primeiro caso: **Racha de Conta**; linguagem controlada: **EARS adaptado ao português**. Termos de domínio marcados no texto como `[[Termo]]`; rodadas em arquivo (`fase0/<caso>/rodadas/`). Forma normal alvo (2026-10-27): **BCNF por padrão, 3NF aceita quando a decomposição BCNF perderia dependência**. Em aberto: stack da UIX.
 
 Tabela original das opções:
 

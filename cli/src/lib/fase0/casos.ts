@@ -11,6 +11,9 @@ export interface CasoPaths {
   intencoes: string;
   invariantes: string;
   dicionario: string;
+  /** loop 2 */
+  modelo: string;
+  dominio: string;
 }
 
 export function nomeCasoValido(caso: string): boolean {
@@ -28,6 +31,8 @@ export function caminhosCaso(root: string, caso: string): CasoPaths {
     intencoes: path.join(dir, 'intencoes.md'),
     invariantes: path.join(dir, 'invariantes.md'),
     dicionario: path.join(dir, 'dicionario.json'),
+    modelo: path.join(dir, 'modelo'),
+    dominio: path.join(dir, 'modelo', 'dominio.mmd'),
   };
 }
 
