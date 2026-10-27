@@ -1,0 +1,39 @@
+classDiagram
+  class Mesa {
+    +uuid id PK
+    +uuid responsavel_id FK(Participante.id)
+    +string chave_pix
+    +decimal taxa_servico_percentual
+  }
+  class Participante {
+    +uuid id PK
+    +uuid mesa_id FK(Mesa.id)
+    +string nome
+  }
+  class ItemConsumido {
+    +uuid id PK
+    +uuid mesa_id FK(Mesa.id)
+    +integer ordem
+    +string descricao
+    +integer preco_centavos
+  }
+  class Consumo {
+    +uuid item_id PK FK(ItemConsumido.id)
+    +uuid participante_id PK FK(Participante.id)
+  }
+  class Pagamento {
+    +uuid id PK
+    +uuid participante_id FK(Participante.id)
+    +string comprovante_url
+    +integer valor_centavos
+    +timestamp enviado_em
+    +timestamp confirmado_em ?
+  }
+  Mesa "1" --> "N" Participante : reúne
+  Mesa "1" --> "N" ItemConsumido : contém
+  ItemConsumido "1" --> "N" Consumo : é consumido em
+  Participante "1" --> "N" Consumo : consome em
+  Participante "1" --> "1" Pagamento : paga a cota com
+  %% DF Participante: mesa_id, nome -> id
+  %% DF ItemConsumido: mesa_id, ordem -> id
+  %% DF Pagamento: participante_id -> id

@@ -30,3 +30,7 @@
 - [x] D-023 · L2/MER01/P02 · não-bloqueante · A taxa de serviço é sempre 10% ou pode ser ajustada em cada mesa? → Ajustável por mesa, com 10% como padrão (atributo da Mesa). (2026-10-27)
 - [x] D-024 · L2/MER01/P03 · não-bloqueante · O aplicativo deve registrar que um participante pagou a própria cota? → Sim: o participante anexa o comprovante e o responsável confirma. (2026-10-27)
 - [x] D-025 · L2/MER01/modelo · modelo rejeitado — refazer incorporando as respostas: rodízio em ordem alfabética dos participantes (P01) e pagamento com comprovante anexado pelo participante e confirmado pelo responsável (P03) (2026-10-27)
+- [x] D-026 · L2/MER02/P01 · bloqueante · Se dois participantes da mesma mesa tiverem o mesmo nome, como fica a ordem alfabética do rodízio do centavo? → O nome é único na mesa: o aplicativo não aceita dois participantes com o mesmo nome. (2026-10-27)
+- [x] D-027 · L2/MER02/P02 · bloqueante · Um participante pode enviar mais de um comprovante para a mesma cota? → Não: um único pagamento por participante; um comprovante novo substitui o anterior até a confirmação. (2026-10-27)
+- [x] D-028 · L2/MER02/P03 · não-bloqueante · O pagamento deve guardar o valor pago ou vale sempre a cota calculada no momento da confirmação? → Guardar o valor pago em centavos no pagamento. (2026-10-27)
+- [x] D-029 · L2/MER02/modelo · modelo aprovado (editado pelo autor): modelo/dominio.mmd — acrescentado valor_centavos ao Pagamento conforme a P03 (2026-10-27)

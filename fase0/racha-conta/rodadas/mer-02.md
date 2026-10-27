@@ -15,7 +15,7 @@ Por quê: A D-022 fixou a ordem alfabética dos nomes, mas dois nomes iguais (do
 1. O nome é único na mesa: o aplicativo não aceita dois participantes com o mesmo nome.
 2. Nomes podem se repetir; o desempate é a ordem de entrada na mesa.
 
-**Resposta:**
+**Resposta:** 1
 
 ### P02 · bloqueante
 
@@ -27,7 +27,7 @@ Por quê: A D-024 diz que o participante anexa o comprovante e o responsável co
 2. Sim: cada envio é um pagamento separado, e o responsável confirma ou recusa cada um.
 3. Sim: a cota pode ser paga em partes, cada parte com o próprio comprovante.
 
-**Resposta:**
+**Resposta:** 1
 
 ### P03 · não-bloqueante
 
@@ -38,7 +38,7 @@ Por quê: A cota não é armazenada (é calculada). Se um item for incluído dep
 1. Guardar o valor pago em centavos no pagamento.
 2. Não guardar: a mesa não aceita mudanças nos itens depois do primeiro pagamento (a detalhar na etapa de estados).
 
-**Resposta:**
+**Resposta:** 1
 
 ## Modelo proposto
 
@@ -70,6 +70,7 @@ classDiagram
     +uuid id PK
     +uuid participante_id FK(Participante.id)
     +string comprovante_url
+    +integer valor_centavos
     +timestamp enviado_em
     +timestamp confirmado_em ?
   }
@@ -110,9 +111,9 @@ classDiagram
 
 ## Decisão
 
-**Modelo:** [ ] aprovar  [ ] rejeitar
+**Modelo:** [x] aprovar  [ ] rejeitar
 
-**Comentário (opcional):**
+**Comentário (opcional):** acrescentado valor_centavos ao Pagamento conforme a P03
 
 ## Contradições
 
