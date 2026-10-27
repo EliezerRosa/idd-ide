@@ -64,7 +64,8 @@ describe('Gate 2 · MER', () => {
     fs.mkdirSync(p.modelo, { recursive: true });
     fs.writeFileSync(p.dominio, MODELO_OK);
     const g = avaliarGate2(p);
-    expect(g.criterios.map(c => c.ok)).toEqual([true, true, true, true]);
+    expect(g.criterios.filter(c => c.etapa !== 'uc').map(c => c.ok)).toEqual([true, true, true, true]);
+    expect(g.etapa).toBe('uc');
   });
 
   it('(b) termo entity sem classe e (c) classe fora da forma normal reprovam; classe fora do dicionário é só aviso', () => {
@@ -143,9 +144,10 @@ describe('loop 2 · MER', () => {
     marcar(md2, '    +string cep\n    +string cidade\n', '');
     marcar(md2, '  %% DF Participante: cep -> cidade\n', '');
     marcar(md2, '**Modelo:** [ ] aprovar', '**Modelo:** [x] aprovar');
-    const r3 = await executarLoop2({ root, caso: 'c', provedor: prov, hoje: '2026-10-27' });
+    const r3 = await executarLoop2({ root, caso: 'c', provedor: prov, hoje: '2026-10-27', semNovaRodada: true });
     expect(r3.aplicacao!.modelo).toBe('aprovado');
-    expect(r3.estado).toBe('gate-verde');
+    expect(r3.gate!.criterios.filter(c => c.etapa === 'mer').every(c => c.ok)).toBe(true);
+    expect(r3.etapa).toBe('uc');
     expect(lerTexto(p.dominio)).not.toMatch(/cep/);
     expect(lerTexto(p.decisoes)).toMatch(/modelo aprovado \(editado pelo autor\): modelo\/dominio\.mmd/);
   });
@@ -165,5 +167,112 @@ describe('loop 2 · MER', () => {
     const r = lerRodadaMer('**Modelo:** [x] aprovar  [x] rejeitar\n', s);
     expect(r.decisao).toBeNull();
     expect(r.modelo).toBe(s.modelo);
+  });
+});
+
+// ── Etapa UC ────────────────────────────────────────────────────────
+
+const CASOS_OK = [
+  'atores:',
+  '  - nome: Participante',
+  '    tipo: humano',
+  '    descricao: Quem consome e paga a própria cota.',
+  'casos_de_uso:',
+  '  - id: UC-01',
+  '    nome: Consultar a própria cota',
+  '    ator: Participante',
+  '    intencoes: [INT-001]',
+  '    transacoes:',
+  '      - id: TN-01',
+  '        nome: Entrar na mesa',
+  '        pre: ["A [[Mesa]] existe."]',
+  '        pos: ["O [[Participante]] pertence a exatamente uma [[Mesa]]."]',
+  '        invariantes: [INV-001]',
+  '        altera: [Participante]',
+  '        le: [Mesa.chave_pix]',
+].join('\n');
+
+const respostaUc = (artefato: string) => ({ perguntas: [], artefato, suposicoes: [], contradicoes: [], observacoes: '' });
+
+function casoComMer() {
+  const p = caso();
+  fs.mkdirSync(p.modelo, { recursive: true });
+  fs.writeFileSync(p.dominio, MODELO_OK);
+  return p;
+}
+
+describe('Gate 2 · casos de uso', () => {
+  const uc = (g: ReturnType<typeof avaliarGate2>, id: string) => g.criterios.find(c => c.id === id)!;
+
+  it('verde com casos de uso completos; gera etapa concluída', () => {
+    const p = casoComMer();
+    fs.writeFileSync(p.casos, CASOS_OK);
+    const g = avaliarGate2(p);
+    expect(g.criterios.map(c => [c.id, c.ok])).toEqual([
+      ['a', true], ['b', true], ['c', true], ['e', true], ['f', true], ['g', true], ['h', true], ['i', true], ['d', true],
+    ]);
+    expect(g.verde).toBe(true);
+    expect(g.etapa).toBe('concluido');
+  });
+
+  it('reprova transação sem pós, intenção descoberta, invariante órfã e referências inexistentes', () => {
+    const p = casoComMer();
+    fs.writeFileSync(p.casos, CASOS_OK
+      .replace('    intencoes: [INT-001]', '    intencoes: [INT-009]')
+      .replace('        pos: ["O [[Participante]] pertence a exatamente uma [[Mesa]]."]', '        pos: []')
+      .replace('        invariantes: [INV-001]', '        invariantes: []')
+      .replace('        le: [Mesa.chave_pix]', '        le: [Mesa.titulo, Conta]')
+      .replace('    ator: Participante', '    ator: Garcom'));
+    const g = avaliarGate2(p);
+    expect(uc(g, 'f').detalhe).toMatch(/TN-01/);
+    expect(uc(g, 'g').detalhe).toMatch(/INT-001/);
+    expect(uc(g, 'h').detalhe).toMatch(/INV-001/);
+    expect(uc(g, 'i').detalhe).toMatch(/Garcom/);
+    expect(uc(g, 'i').detalhe).toMatch(/INT-009/);
+    expect(uc(g, 'i').detalhe).toMatch(/Mesa\.titulo/);
+    expect(uc(g, 'i').detalhe).toMatch(/classe "Conta"/);
+  });
+
+  it('(e) acusa YAML inválido, ids repetidos e fora do padrão', () => {
+    const p = casoComMer();
+    fs.writeFileSync(p.casos, 'casos_de_uso: [\n');
+    expect(uc(avaliarGate2(p), 'e').detalhe).toMatch(/YAML inválido/);
+    fs.writeFileSync(p.casos, CASOS_OK.replace('id: TN-01', 'id: UC-01'));
+    expect(uc(avaliarGate2(p), 'e').detalhe).toMatch(/ids repetidos: UC-01/);
+  });
+});
+
+describe('loop 2 · casos de uso', () => {
+  it('depois do MER, gera a rodada UC; aprovar grava casos-de-uso.yaml e contexto.puml', async () => {
+    const p = casoComMer();
+    const prov = new RecordedProvider([respostaUc(CASOS_OK)]);
+    const r1 = await executarLoop2({ root, caso: 'c', provedor: prov, hoje: '2026-10-27' });
+    expect(r1.estado).toBe('nova-rodada');
+    expect(r1.etapa).toBe('uc');
+    expect(prov.pedidos[0].schemaName).toBe('rodada_casos_de_uso');
+    expect(prov.pedidos[0].user).toMatch(/MER aprovado/);
+    const md = arquivoEtapa(p, 'uc', 1, 'md');
+    expect(lerTexto(md)).toMatch(/```yaml\natores:/);
+    expect(lerTexto(md)).toMatch(/✓ \(h\) nenhuma invariante órfã/);
+
+    marcar(md, '**Casos de uso:** [ ] aprovar', '**Casos de uso:** [x] aprovar');
+    const r2 = await executarLoop2({ root, caso: 'c', provedor: prov, hoje: '2026-10-27' });
+    expect(r2.aplicacao!.modelo).toBe('aprovado');
+    expect(r2.estado).toBe('gate-verde');
+    expect(lerTexto(p.casos)).toBe(CASOS_OK + '\n');
+    const puml = lerTexto(p.contexto);
+    expect(puml).toMatch(/actor "Participante" as Participante/);
+    expect(puml).toMatch(/usecase "UC-01 Consultar a própria cota" as UC_01/);
+    expect(puml).toMatch(/Participante --> UC_01/);
+    expect(lerTexto(p.decisoes)).toMatch(/L2\/UC01\/artefato · casos de uso aprovado: modelo\/casos-de-uso\.yaml/);
+  });
+
+  it('não aprova YAML inválido', async () => {
+    const p = casoComMer();
+    await executarLoop2({ root, caso: 'c', provedor: new RecordedProvider([respostaUc(CASOS_OK)]) });
+    const md = arquivoEtapa(p, 'uc', 1, 'md');
+    marcar(md, 'casos_de_uso:', 'casos_de_uso: [');
+    marcar(md, '**Casos de uso:** [ ] aprovar', '**Casos de uso:** [x] aprovar');
+    await expect(executarLoop2({ root, caso: 'c', provedor: new RecordedProvider([]) })).rejects.toThrow(/YAML inválido/);
   });
 });

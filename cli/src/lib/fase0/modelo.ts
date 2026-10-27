@@ -1,8 +1,9 @@
-// src/lib/fase0/modelo.ts — SHADA no Loop 2, etapa MER: propõe o modelo de domínio a partir do loop 1
+// src/lib/fase0/modelo.ts — SHADA no Loop 2: etapa MER (modelo de domínio) e etapa UC (casos de uso até a transação)
 import type { LlmProvider } from '../llm/types.ts';
 import { lerDicionarioCaso, lerTexto, type CasoPaths } from './casos.ts';
 import type { Gate2Resultado } from './gate2.ts';
 import type { FontesLidas, PerguntaShada } from './shada.ts';
+import { EXEMPLO_CASOS } from './casosDeUso.ts';
 
 export interface RastreioClasse { classe: string; termo: string; justificativa: string }
 
@@ -139,4 +140,99 @@ export async function consultarShadaMer(provedor: LlmProvider, contexto: string)
     effort: 'high',
   });
   return normalizarSaidaMer(bruto);
+}
+
+// ════════════════════════════════════════════════════════════════
+// Etapa UC: contexto e casos de uso até a transação de negócio
+// ════════════════════════════════════════════════════════════════
+
+export interface SaidaUc {
+  perguntas: PerguntaShada[];
+  /** YAML completo de modelo/casos-de-uso.yaml */
+  artefato: string;
+  suposicoes: string[];
+  contradicoes: string[];
+  observacoes: string;
+}
+
+export const SHADA_UC_SYSTEM = `Você é o SHADA, o agente socrático do Paradigma IDD (Intent-Driven Development), no Loop 2 (Modelo) da Fase 0, etapa de contexto e casos de uso.
+
+Entrada: a especificação aprovada no Loop 1 (intenções, invariantes, dicionário, decisões) e o MER aprovado (modelo/dominio.mmd).
+Saída: modelo/casos-de-uso.yaml com os atores e os casos de uso decompostos até a transação de negócio. O humano aprova ou rejeita o arquivo inteiro; o IDD gera dele o diagrama de contexto.
+
+Regras:
+- Ator é quem interage com o sistema, de fora dele. Atores humanos usam o nome de um termo do dicionário (role ou entity, ex.: ResponsavelMesa, Participante); sistemas externos (ex.: um provedor de pagamento) têm tipo "sistema" e só entram se uma intenção ou decisão exigir integração.
+- Todo caso de uso (id UC-NN) tem um ator principal e lista as intenções (INT-NNN) que realiza. Toda intenção deve ser coberta por pelo menos um caso de uso.
+- Transação de negócio (id TN-NN, numeração única no arquivo) é a unidade atômica de trabalho: leva o modelo de um estado consistente a outro, ou falha sem efeito. Decomponha cada caso de uso até esse nível.
+- Toda transação tem pré-condições e pós-condições assertivas e testáveis, com os termos de domínio marcados como [[Termo]]. Escreva cada pré e pós-condição entre aspas duplas (sem aspas, o YAML lê "[[" como lista).
+- Toda transação lista as invariantes (INV-NNN) que preserva ou verifica. Nenhuma invariante pode ficar órfã: se nenhuma transação a toca, falta transação ou a invariante está errada; pergunte.
+- "altera" lista o que a transação escreve: "Classe" quando cria ou remove instâncias, "Classe.atributo" quando muda um valor. "le" lista o que ela só lê. Use somente classes e atributos que existem no MER aprovado.
+- Invariantes que o MER não garante por chave (ex.: participante e item da mesma mesa) devem ser verificadas nas transações que as tocam; diga isso na pré ou pós-condição.
+- NÃO invente regra de negócio. Ciclo de vida (quando a mesa fecha, se itens podem mudar depois de um pagamento) é decidido pelo humano: se uma transação depende disso, escreva a opção recomendada em "suposicoes" e pergunte (no máximo 3 perguntas; bloqueante só o que impede transações corretas).
+- Não repita perguntas já respondidas ou em aberto em decisoes.md. Se houver versão anterior rejeitada, leia o comentário do humano em decisoes.md e corrija.
+
+Formato do YAML (siga exatamente; "artefato" é o texto YAML, sem cerca):
+\`\`\`yaml
+${EXEMPLO_CASOS}\`\`\`
+- Responda sempre em português do Brasil, somente com o JSON pedido.`;
+
+export const SHADA_UC_SCHEMA: Record<string, unknown> = {
+  type: 'object',
+  additionalProperties: false,
+  required: ['perguntas', 'artefato', 'suposicoes', 'contradicoes', 'observacoes'],
+  properties: {
+    perguntas: (SHADA_MER_SCHEMA.properties as Record<string, unknown>).perguntas,
+    artefato: STR,
+    suposicoes: { type: 'array', items: STR },
+    contradicoes: { type: 'array', items: STR },
+    observacoes: STR,
+  },
+};
+
+function perguntasDe(v: unknown): PerguntaShada[] {
+  const pad = (n: number): string => String(n).padStart(2, '0');
+  return (Array.isArray(v) ? v : []).map((q: any, i: number): PerguntaShada => ({
+    id: `P${pad(i + 1)}`, texto: texto(q?.texto), porque: texto(q?.porque), opcoes: lista(q?.opcoes), bloqueante: q?.bloqueante === true,
+  }));
+}
+
+export function normalizarSaidaUc(raw: unknown): SaidaUc {
+  if (typeof raw !== 'object' || raw === null || Array.isArray(raw)) throw new Error('Saída do SHADA (casos de uso) inválida: esperado um objeto JSON.');
+  const o = raw as Record<string, unknown>;
+  const artefato = limparMermaid(texto(o.artefato));
+  if (!/casos_de_uso\s*:/.test(artefato)) throw new Error('Saída do SHADA (casos de uso) inválida: "artefato" não tem casos_de_uso.');
+  return {
+    perguntas: perguntasDe(o.perguntas), artefato,
+    suposicoes: lista(o.suposicoes), contradicoes: lista(o.contradicoes), observacoes: texto(o.observacoes),
+  };
+}
+
+export function montarContextoUc(p: CasoPaths, caso: string, rodada: number, gate: Gate2Resultado, fontes: FontesLidas): string {
+  const secoes: string[] = [`# Caso: ${caso} — loop 2, etapa de casos de uso, rodada ${String(rodada).padStart(2, '0')}`];
+  secoes.push('## intencoes.md (aprovado no loop 1)\n\n' + lerTexto(p.intencoes));
+  secoes.push('## invariantes.md (aprovado no loop 1)\n\n' + lerTexto(p.invariantes));
+  secoes.push('## dicionario.json\n\n' + JSON.stringify(lerDicionarioCaso(p.dicionario), null, 2));
+  secoes.push('## modelo/dominio.mmd (MER aprovado)\n\n```mermaid\n' + lerTexto(p.dominio).trim() + '\n```');
+  secoes.push('## decisoes.md\n\n' + (lerTexto(p.decisoes) || '(vazio)'));
+  const atual = lerTexto(p.casos);
+  secoes.push('## modelo/casos-de-uso.yaml (atual)\n\n' + (atual ? '```yaml\n' + atual.trim() + '\n```' : '(ainda não existe)'));
+  secoes.push('## Estado do Gate 2\n\n' + (gate.verde ? 'verde' : 'vermelho') + '\n'
+    + gate.criterios.map(c => `- (${c.id}) ${c.descricao}: ${c.ok ? 'ok' : 'FALHA'} — ${c.detalhe}`).join('\n')
+    + (gate.avisos.length ? '\n' + gate.avisos.map(a => `- aviso: ${a}`).join('\n') : ''));
+  secoes.push('## Fontes\n\n' + (fontes.arquivos.length
+    ? fontes.arquivos.map(f => `### fontes/${f.nome}\n\n${f.conteudo}`).join('\n\n')
+    : '(nenhuma)'));
+  secoes.push('Produza a próxima rodada da etapa de casos de uso: o YAML completo em "artefato", as suposições, até 3 perguntas e as contradições, no JSON do schema.');
+  return secoes.join('\n\n');
+}
+
+export async function consultarShadaUc(provedor: LlmProvider, contexto: string): Promise<SaidaUc> {
+  const bruto = await provedor.completeJson({
+    system: SHADA_UC_SYSTEM,
+    user: contexto,
+    schemaName: 'rodada_casos_de_uso',
+    schema: SHADA_UC_SCHEMA,
+    effort: 'high',
+  });
+  return normalizarSaidaUc(bruto);
 }

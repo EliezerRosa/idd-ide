@@ -1,14 +1,21 @@
 // src/lib/fase0/gate2.ts — Gate 2 (fim do loop 2): critérios determinísticos, a IA não aprova a própria saída.
-// Por ora, só a etapa MER; as etapas seguintes (UCs, estados, métodos) acrescentam critérios aqui.
+// Etapas: MER → casos de uso (com contexto). As seguintes (atividades, estados, métodos) acrescentam critérios aqui.
 import * as fs from 'node:fs';
 import { decomposeBCNF, lostDependencies } from '../domain/fds.ts';
 import { analyzeEntity, entityRelation } from '../domain/normalizer.ts';
 import { parseMermaid } from '../domain/parser.ts';
 import type { DomainEntity, DomainModel } from '../domain/types.ts';
 import { lerDecisoes, lerDicionarioCaso, lerTexto, type CasoPaths } from './casos.ts';
+import { avaliarCasos, lerCasos } from './casosDeUso.ts';
+import { extrairItens } from './lintLn.ts';
+
+export type EtapaLoop2 = 'mer' | 'uc';
+export const ETAPAS: EtapaLoop2[] = ['mer', 'uc'];
 
 export interface CriterioGate2 {
   id: string;
+  /** etapa a que o critério pertence; 'geral' vale para todas */
+  etapa: EtapaLoop2 | 'geral';
   descricao: string;
   ok: boolean;
   detalhe: string;
@@ -19,6 +26,8 @@ export interface Gate2Resultado {
   criterios: CriterioGate2[];
   /** não reprovam: classes fora do dicionário etc. */
   avisos: string[];
+  /** primeira etapa com critério reprovado (a geral conta na última etapa iniciada) */
+  etapa: EtapaLoop2 | 'concluido';
 }
 
 /** Kinds do dicionário que precisam virar classe no MER. */
@@ -62,7 +71,7 @@ export function avaliarGate2(p: CasoPaths): Gate2Resultado {
   const classes = (modelo?.entities ?? []).filter(e => !e.abstract);
 
   const a: CriterioGate2 = {
-    id: 'a', descricao: 'modelo/dominio.mmd aprovado e com ao menos 1 classe',
+    id: 'a', etapa: 'mer', descricao: 'modelo/dominio.mmd aprovado e com ao menos 1 classe',
     ok: classes.length > 0,
     detalhe: !texto ? 'arquivo ausente' : `${classes.length} classe(s)`,
   };
@@ -71,7 +80,7 @@ export function avaliarGate2(p: CasoPaths): Gate2Resultado {
   const nomes = new Set(classes.map(e => e.name.toLowerCase()));
   const faltando = dic.terms.filter(t => KINDS_COM_CLASSE.has(t.kind) && !nomes.has(t.term.toLowerCase())).map(t => t.term);
   const b: CriterioGate2 = {
-    id: 'b', descricao: 'todo termo entity/aggregate do dicionário tem classe homônima',
+    id: 'b', etapa: 'mer', descricao: 'todo termo entity/aggregate do dicionário tem classe homônima',
     ok: classes.length > 0 && faltando.length === 0,
     detalhe: faltando.length ? `sem classe: ${faltando.join(', ')}` : 'todos presentes',
   };
@@ -82,18 +91,29 @@ export function avaliarGate2(p: CasoPaths): Gate2Resultado {
   const diags = classes.map(diagnosticarEntidade);
   const ruins = diags.filter(d => !d.ok);
   const c: CriterioGate2 = {
-    id: 'c', descricao: 'toda classe em BCNF (ou 3NF quando a BCNF perderia dependência)',
+    id: 'c', etapa: 'mer', descricao: 'toda classe em BCNF (ou 3NF quando a BCNF perderia dependência)',
     ok: classes.length > 0 && ruins.length === 0,
     detalhe: ruins.length ? ruins.map(d => `${d.entidade}: ${d.motivo}`).join('; ') : `${diags.length} classe(s) conforme(s)`,
   };
 
   const abertas = lerDecisoes(lerTexto(p.decisoes)).filter(d => !d.marcada && d.bloqueante);
   const d: CriterioGate2 = {
-    id: 'd', descricao: 'nenhuma decisão bloqueante em aberto em decisoes.md',
+    id: 'd', etapa: 'geral', descricao: 'nenhuma decisão bloqueante em aberto em decisoes.md',
     ok: abertas.length === 0,
     detalhe: abertas.length === 0 ? 'nenhuma' : `${abertas.length} em aberto: ${abertas.map(x => x.id).join(', ')}`,
   };
 
-  const criterios = [a, b, c, d];
-  return { verde: criterios.every(x => x.ok), criterios, avisos };
+  // etapa UC (casos de uso até a transação de negócio)
+  const casos = avaliarCasos(fs.existsSync(p.casos) ? lerCasos(lerTexto(p.casos)) : undefined, {
+    intencoes: extrairItens(lerTexto(p.intencoes), 'INT').map(x => x.id),
+    invariantes: extrairItens(lerTexto(p.invariantes), 'INV').map(x => x.id),
+    modelo,
+    termos: dic.terms.flatMap(t => [t.term, ...t.aliases]),
+  });
+  avisos.push(...casos.avisos);
+
+  const criterios: CriterioGate2[] = [a, b, c, ...casos.criterios.map(x => ({ ...x, etapa: 'uc' as const })), d];
+  const reprovada = ETAPAS.find(e => criterios.some(x => x.etapa === e && !x.ok));
+  const etapa = reprovada ?? (d.ok ? 'concluido' : ETAPAS[ETAPAS.length - 1]);
+  return { verde: criterios.every(x => x.ok), criterios, avisos, etapa };
 }

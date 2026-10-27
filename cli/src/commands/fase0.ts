@@ -15,7 +15,7 @@ function ajuda(): void {
   ${CYAN}idd fase0 init <caso>${RESET}                       cria fase0/<caso>/ (fontes, rodadas, decisões, intenções, invariantes, dicionário)
   ${CYAN}idd fase0 loop1 <caso> [--sem-nova-rodada]${RESET}  aplica a rodada respondida, roda lint + Gate 1 e, se preciso, gera a próxima rodada
   ${CYAN}idd fase0 gate1 <caso>${RESET}                      checklist do Gate 1 (exit 1 se não estiver verde)
-  ${CYAN}idd fase0 loop2 <caso> [--sem-nova-rodada]${RESET}  loop 2, etapa MER: aplica a rodada respondida, roda o Gate 2 e, se preciso, gera a próxima
+  ${CYAN}idd fase0 loop2 <caso> [--sem-nova-rodada]${RESET}  loop 2 (MER → casos de uso): aplica a rodada respondida, roda o Gate 2 e, se preciso, gera a próxima
   ${CYAN}idd fase0 gate2 <caso>${RESET}                      checklist do Gate 2 (exit 1 se não estiver verde)
   ${CYAN}idd fase0 status <caso>${RESET}                     rodadas, decisões abertas, contagens e Gate 1
 
@@ -35,14 +35,16 @@ function imprimirGate(g: Gate1Resultado): void {
 }
 
 function imprimirGate2(g: Gate2Resultado): void {
-  subHeader('Gate 2 · MER');
+  subHeader('Gate 2');
+  const nomes = { mer: 'MER', uc: 'casos de uso', geral: 'geral' } as const;
   for (const c of g.criterios) {
     const marca = c.ok ? `${GREEN}✓${RESET}` : `${RED}✗${RESET}`;
-    console.log(`  ${marca}  (${c.id}) ${c.descricao}  ${GRAY}— ${c.detalhe}${RESET}`);
+    console.log(`  ${marca}  (${c.id}) ${GRAY}[${nomes[c.etapa]}]${RESET} ${c.descricao}  ${GRAY}— ${c.detalhe}${RESET}`);
   }
   for (const a of g.avisos) console.log(`  ${YELLOW}⚠${RESET}  ${a}`);
   console.log('');
-  console.log(g.verde ? `  ${GREEN}${BOLD}Gate 2 (MER) verde${RESET}` : `  ${RED}${BOLD}Gate 2 (MER) vermelho${RESET}`);
+  console.log(g.verde ? `  ${GREEN}${BOLD}Gate 2 verde${RESET}`
+    : `  ${RED}${BOLD}Gate 2 vermelho${RESET}  ${GRAY}— etapa atual: ${g.etapa === 'concluido' ? 'decisões em aberto' : nomes[g.etapa]}${RESET}`);
 }
 
 function nomeCaso(args: string[], sub: string): string {
@@ -115,19 +117,19 @@ async function faseLoop2(root: string, args: string[]): Promise<void> {
   }
   if (r.estado === 'aguardando-respostas') {
     warn(`Aguardando respostas em ${rel(r.arquivo!)}`);
-    info(`Responda as perguntas, aprove ou rejeite o modelo e rode de novo: idd fase0 loop2 ${caso}`);
+    info(`Responda as perguntas, aprove ou rejeite a proposta e rode de novo: idd fase0 loop2 ${caso}`);
     return;
   }
   if (r.aplicacao) {
     const a = r.aplicacao;
-    success(`Rodada MER ${String(r.rodadaAplicada).padStart(2, '0')} aplicada: ${a.respondidas} respondida(s), ${a.abertas} em aberto, modelo ${a.modelo}`);
+    success(`Rodada ${r.etapaAplicada!.toUpperCase()} ${String(r.rodadaAplicada).padStart(2, '0')} aplicada: ${a.respondidas} respondida(s), ${a.abertas} em aberto, artefato ${a.modelo}`);
   }
   imprimirGate2(r.gate!);
 
   switch (r.estado) {
     case 'gate-verde':
       console.log('');
-      success('Etapa MER concluída — próxima etapa do loop 2: contexto e casos de uso');
+      success('Gate 2 verde nas etapas implementadas (MER, casos de uso) — próximas: atividades, estados, métodos');
       return;
     case 'sem-nova-rodada':
       info('--sem-nova-rodada: nenhuma rodada nova foi gerada.');
@@ -142,7 +144,7 @@ async function faseLoop2(root: string, args: string[]): Promise<void> {
     case 'nova-rodada':
       console.log('');
       success(`Nova rodada gerada: ${rel(r.arquivo!)}`);
-      info(`Revise o modelo no arquivo e rode: idd fase0 loop2 ${caso}`);
+      info(`Revise a proposta no arquivo e rode: idd fase0 loop2 ${caso}`);
       return;
   }
 }

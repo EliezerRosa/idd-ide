@@ -14,6 +14,8 @@ export interface CasoPaths {
   /** loop 2 */
   modelo: string;
   dominio: string;
+  casos: string;
+  contexto: string;
 }
 
 export function nomeCasoValido(caso: string): boolean {
@@ -33,6 +35,8 @@ export function caminhosCaso(root: string, caso: string): CasoPaths {
     dicionario: path.join(dir, 'dicionario.json'),
     modelo: path.join(dir, 'modelo'),
     dominio: path.join(dir, 'modelo', 'dominio.mmd'),
+    casos: path.join(dir, 'modelo', 'casos-de-uso.yaml'),
+    contexto: path.join(dir, 'modelo', 'contexto.puml'),
   };
 }
 
