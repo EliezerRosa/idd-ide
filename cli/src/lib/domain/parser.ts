@@ -67,6 +67,26 @@ export function inferFunctionalDeps(entity: DomainEntity): FunctionalDependency[
   return fds;
 }
 
+// ── DFs declaradas pelo autor ───────────────────────────────────
+// "a, b -> c, d" (ou "a b → c d"). Em Mermaid: "%% DF Entidade: a, b -> c";
+// em PlantUML: "' DF Entidade: a, b -> c"; em YAML: functional_dependencies: ["a, b -> c"].
+
+export function parseFdSpec(spec: string): FunctionalDependency | null {
+  const m = spec.match(/^\s*(.+?)\s*(?:->|→)\s*(.+?)\s*$/);
+  if (!m) return null;
+  const lado = (s: string): string[] => s.split(/[\s,]+/).filter(Boolean);
+  const fd = { determinant: lado(m[1]), dependent: lado(m[2]) };
+  return fd.determinant.length && fd.dependent.length ? fd : null;
+}
+
+function applyDeclaredFds(entities: Record<string, DomainEntity>, content: string, comment: string): void {
+  const re = new RegExp(String.raw`^\s*${comment}\s*(?:DF|FD)\s+(\w+)\s*:\s*(.+)$`, 'gim');
+  for (const m of content.matchAll(re)) {
+    const fd = parseFdSpec(m[2]);
+    if (fd && entities[m[1]]) entities[m[1]].functionalDeps.push(fd);
+  }
+}
+
 // ════════════════════════════════════════════════════════════════
 // Parser Mermaid classDiagram
 // ════════════════════════════════════════════════════════════════
@@ -196,6 +216,7 @@ export function parseMermaid(content: string): DomainModel {
   // Infer FDs for each entity
   const entityList = Object.values(entities);
   entityList.forEach(e => { e.functionalDeps = inferFunctionalDeps(e); });
+  applyDeclaredFds(entities, content, '%%');
 
   return {
     name, description: `Domain model parsed from Mermaid classDiagram`,
@@ -279,6 +300,7 @@ export function parsePlantUML(content: string): DomainModel {
 
   const entityList = Object.values(entities);
   entityList.forEach(e => { e.functionalDeps = inferFunctionalDeps(e); });
+  applyDeclaredFds(entities, content, "'");
 
   return {
     name, description: `Domain model parsed from PlantUML`,
@@ -349,6 +371,10 @@ export function parseYamlDomain(content: string): DomainModel {
       functionalDeps: [],
     };
     entity.functionalDeps = inferFunctionalDeps(entity);
+    for (const spec of eDef.functional_dependencies ?? []) {
+      const fd = parseFdSpec(String(spec));
+      if (fd) entity.functionalDeps.push(fd);
+    }
     entities.push(entity);
   }
 

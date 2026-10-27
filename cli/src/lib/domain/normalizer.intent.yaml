@@ -7,6 +7,8 @@ constraints:
   - "Nomes de atributos pluralizados (exceto terminados em 'status') sugerem lista embutida e violam 1NF"
   - "Formas normais devem ser avaliadas na ordem 1NF→2NF→3NF→BCNF→4NF→5NF→DKNF"
   - "Cada violação deve conter forma normal, entidade, atributo, mensagem e sugestão de correção"
+  - "2NF, 3NF e BCNF são decididas por fecho de atributos sobre as DFs declaradas mais PK, chaves candidatas e UNIQUE NOT NULL; DFs que citam atributos de outras entidades são ignoradas"
+  - "Cada violação de DF é reportada só na forma mais baixa que viola, e reprova também as formas acima dela na cadeia 2NF→3NF→BCNF"
 
 acceptance:
   - "Atributo tipo array gera violação 1NF com sugestão de tabela separada"
@@ -14,6 +16,8 @@ acceptance:
   - "Atributo string com nome terminado em 's' (não 'status') gera violação 1NF"
   - "Atributo string terminado em 'status' não gera violação de pluralização"
   - "JSONB com schema documentado ou constraints não gera violação"
+  - "Chave candidata não declarada é encontrada pelo fecho e aparece em keys do relatório"
+  - "Violação BCNF sugere decomposição sem perda e avisa quando ela não preserva dependências"
 
 language: typescript
 version: "0.0.0"

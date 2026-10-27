@@ -102,9 +102,10 @@ async function domainNormalize(args: string[]): Promise<void> {
 
   console.log('');
   table(
-    ['entidade', 'maior NF', 'ok', 'violações'],
+    ['entidade', 'chaves candidatas', 'maior NF', 'ok', 'violações'],
     result.reports.map((r: NormalizationReport) => [
       r.entity,
+      r.keys.map(k => `{${k.join(', ')}}`).join(' '),
       r.highestNF,
       r.passed.join(', ') || '—',
       r.violations.length > 0

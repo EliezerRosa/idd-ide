@@ -3,10 +3,12 @@ import {
   DomainEntity, DomainModel, NormalizationViolation,
   NormalFormLevel, FunctionalDependency,
 } from './types.ts';
+import { analyzeRelation, decomposeBCNF, fmtFd, lostDependencies, type RelationAnalysis } from './fds.ts';
 
 // ── Ordem das formas normais ─────────────────────────────────────
 
 const NF_ORDER: NormalFormLevel[] = ['1NF','2NF','3NF','BCNF','4NF','5NF','DKNF'];
+const NF_CHAIN: NormalFormLevel[] = ['2NF','3NF','BCNF'];
 
 // ════════════════════════════════════════════════════════════════
 // 1NF — Atributos atômicos, sem grupos repetitivos
@@ -54,111 +56,81 @@ function check1NF(entity: DomainEntity): NormalizationViolation[] {
 }
 
 // ════════════════════════════════════════════════════════════════
-// 2NF — Sem dependências parciais em chaves compostas
+// 2NF · 3NF · BCNF — fecho de atributos e chaves candidatas (Armstrong; ver fds.ts)
 // ════════════════════════════════════════════════════════════════
+
+/** Esquema relacional da entidade: atributos e DFs (declaradas + PK, chaves candidatas e UNIQUE NOT NULL). */
+export function entityRelation(entity: DomainEntity): { attributes: string[]; fds: FunctionalDependency[] } {
+  const R  = entity.attributes.map(a => a.name);
+  const Rs = new Set(R);
+  const fds: FunctionalDependency[] = [];
+  const chave = (k: string[]): void => {
+    if (k.length && k.every(a => Rs.has(a))) fds.push({ determinant: k, dependent: R.filter(a => !k.includes(a)) });
+  };
+  chave(entity.primaryKey);
+  entity.candidateKeys.forEach(chave);
+  // UNIQUE NOT NULL fora da PK (os parsers marcam unique em cada coluna da PK, mesmo composta)
+  entity.attributes.filter(a => a.unique && !a.nullable && !a.primaryKey).forEach(a => chave([a.name]));
+  for (const fd of entity.functionalDeps) {
+    // DFs que citam atributos de outras entidades (ex.: "Order.*") ficam fora do esquema
+    if (!fd.determinant.length || !fd.determinant.every(a => Rs.has(a))) continue;
+    const dependent = fd.dependent.filter(a => Rs.has(a));
+    if (dependent.length) fds.push({ determinant: fd.determinant, dependent });
+  }
+  return { attributes: R, fds };
+}
+
+const analises = new WeakMap<DomainEntity, RelationAnalysis>();
+
+export function analyzeEntity(entity: DomainEntity): RelationAnalysis {
+  let a = analises.get(entity);
+  if (!a) {
+    const { attributes, fds } = entityRelation(entity);
+    a = analyzeRelation(attributes, fds);
+    analises.set(entity, a);
+  }
+  return a;
+}
+
+const conj = (xs: string[]): string => `{${xs.join(', ')}}`;
 
 function check2NF(entity: DomainEntity): NormalizationViolation[] {
-  const violations: NormalizationViolation[] = [];
-  const pk = entity.primaryKey;
-
-  // 2NF só é relevante com PK composta
-  if (pk.length <= 1) return violations;
-
-  const nonKeyAttrs = entity.attributes
-    .filter(a => !pk.includes(a.name))
-    .map(a => a.name);
-
-  // Verifica cada FD declarada
-  for (const fd of entity.functionalDeps) {
-    // Uma FD parcial tem determinante ⊂ PK (próprio subconjunto)
-    const isSubsetOfPK = fd.determinant.length < pk.length &&
-      fd.determinant.every(d => pk.includes(d));
-
-    if (isSubsetOfPK) {
-      const partialDeps = fd.dependent.filter(d => nonKeyAttrs.includes(d));
-      if (partialDeps.length > 0) {
-        violations.push({
-          form:       '2NF',
-          entity:     entity.name,
-          dependency: fd,
-          message:    `Dependência parcial: {${fd.determinant.join(', ')}} → {${partialDeps.join(', ')}} — subconjunto da PK {${pk.join(', ')}} determina atributos não-chave.`,
-          suggestion: `Extraia os atributos {${partialDeps.join(', ')}} para uma tabela separada com PK {${fd.determinant.join(', ')}}.`,
-        });
-      }
-    }
-  }
-
-  return violations;
+  return analyzeEntity(entity).violations.filter(v => v.form === '2NF').map(v => ({
+    form:       '2NF',
+    entity:     entity.name,
+    dependency: { ...v.fd, isPartial: true },
+    message:    `Dependência parcial: ${conj(v.fd.determinant)} → ${conj(v.fd.dependent)} — subconjunto próprio da chave candidata ${conj(v.key!)} determina atributos não primos.`,
+    suggestion: `Extraia ${conj(v.fd.dependent)} para uma tabela separada com PK ${conj(v.fd.determinant)}.`,
+  }));
 }
-
-// ════════════════════════════════════════════════════════════════
-// 3NF — Sem dependências transitivas
-// ════════════════════════════════════════════════════════════════
 
 function check3NF(entity: DomainEntity): NormalizationViolation[] {
-  const violations: NormalizationViolation[] = [];
-  const pk  = new Set(entity.primaryKey);
-  const cks = entity.candidateKeys.map(ck => new Set(ck));
-
-  const isSuperkey = (cols: string[]): boolean =>
-    cks.some(ck => [...ck].every(k => cols.includes(k)));
-
-  const nonKeyAttrs = entity.attributes
-    .filter(a => !pk.has(a.name))
-    .map(a => a.name);
-
-  // A → B → C onde B não é superchave → violação 3NF
-  for (let i = 0; i < entity.functionalDeps.length; i++) {
-    const fd1 = entity.functionalDeps[i];
-    if (isSuperkey(fd1.determinant)) continue; // determinante é chave → ok
-
-    // fd1: X → Y onde X ⊄ qualquer superchave
-    const nonKeyDets = fd1.determinant.filter(d => !pk.has(d));
-    if (nonKeyDets.length === 0) continue;
-
-    const transitiveDeps = fd1.dependent.filter(d => nonKeyAttrs.includes(d));
-    if (transitiveDeps.length > 0) {
-      violations.push({
-        form:       '3NF',
-        entity:     entity.name,
-        dependency: fd1,
-        message:    `Dependência transitiva: {${fd1.determinant.join(', ')}} → {${transitiveDeps.join(', ')}} — determinante não é superchave.`,
-        suggestion: `Crie tabela "${entity.name}_${fd1.determinant[0]}" com PK {${fd1.determinant.join(', ')}} e mova {${transitiveDeps.join(', ')}} para ela. Mantenha apenas a FK no "${entity.tableName}".`,
-      });
-    }
-  }
-
-  return violations;
+  return analyzeEntity(entity).violations.filter(v => v.form === '3NF').map(v => ({
+    form:       '3NF',
+    entity:     entity.name,
+    dependency: { ...v.fd, isTransitive: true },
+    message:    `Dependência transitiva: ${conj(v.fd.determinant)} → ${conj(v.fd.dependent)} — determinante não é superchave e os dependentes não são primos.`,
+    suggestion: `Crie tabela "${entity.name}_${v.fd.determinant[0]}" com PK ${conj(v.fd.determinant)} e mova ${conj(v.fd.dependent)} para ela. Mantenha apenas a FK em "${entity.tableName}".`,
+  }));
 }
 
-// ════════════════════════════════════════════════════════════════
-// BCNF — Todo determinante é superchave
-// ════════════════════════════════════════════════════════════════
-
 function checkBCNF(entity: DomainEntity): NormalizationViolation[] {
-  const violations: NormalizationViolation[] = [];
-  const cks = entity.candidateKeys.map(ck => new Set(ck));
-
-  const isSuperkey = (cols: string[]): boolean =>
-    cks.some(ck => [...ck].every(k => cols.includes(k)));
-
-  for (const fd of entity.functionalDeps) {
-    // FDs triviais (Y ⊆ X) são sempre ok
-    const trivial = fd.dependent.every(d => fd.determinant.includes(d));
-    if (trivial) continue;
-
-    if (!isSuperkey(fd.determinant)) {
-      violations.push({
-        form:       'BCNF',
-        entity:     entity.name,
-        dependency: fd,
-        message:    `BCNF violada: {${fd.determinant.join(', ')}} → {${fd.dependent.join(', ')}} — determinante não é superchave.`,
-        suggestion: `Decompor em: R1({${fd.determinant.join(', ')}, ${fd.dependent.join(', ')}}) e R2({${entity.primaryKey.join(', ')}, ${fd.determinant[0]}}).`,
-      });
-    }
-  }
-
-  return violations;
+  const vs = analyzeEntity(entity).violations.filter(v => v.form === 'BCNF');
+  if (vs.length === 0) return [];
+  const { attributes, fds } = entityRelation(entity);
+  const partes = decomposeBCNF(attributes, fds);
+  const perdidas = lostDependencies(analyzeEntity(entity).cover, partes.map(p => p.attributes));
+  const decomposicao = partes.map((p, i) => `R${i + 1}${conj(p.attributes)}`).join(', ');
+  const aviso = perdidas.length
+    ? ` Atenção: não preserva ${perdidas.map(fmtFd).join('; ')} — se isso importar, fique na 3NF (síntese de Bernstein).`
+    : '';
+  return vs.map(v => ({
+    form:       'BCNF',
+    entity:     entity.name,
+    dependency: v.fd,
+    message:    `BCNF violada: ${conj(v.fd.determinant)} → ${conj(v.fd.dependent)} — determinante não é superchave (dependentes primos: a relação está em 3NF).`,
+    suggestion: `Decomposição sem perda na junção: ${decomposicao}.${aviso}`,
+  }));
 }
 
 // ════════════════════════════════════════════════════════════════
@@ -268,6 +240,8 @@ function checkDKNF(entity: DomainEntity): NormalizationViolation[] {
 export interface NormalizationReport {
   entity:      string;
   highestNF:   NormalFormLevel;
+  /** chaves candidatas calculadas pelo fecho de atributos */
+  keys:        string[][];
   violations:  NormalizationViolation[];
   passed:      NormalFormLevel[];
   failed:      NormalFormLevel[];
@@ -313,7 +287,10 @@ export function normalizeModel(
       if (nfIdx > targetIdx) break; // don't check beyond target
 
       const vs = checkFn(entity);
-      if (vs.length === 0) {
+      // 2NF ⊂ 3NF ⊂ BCNF: cada violação é reportada só na forma mais baixa, mas reprova as acima
+      const herdada = NF_CHAIN.includes(nf) &&
+        failed.some(f => NF_CHAIN.includes(f) && NF_ORDER.indexOf(f) < nfIdx);
+      if (vs.length === 0 && !herdada) {
         passed.push(nf);
       } else {
         failed.push(nf);
@@ -329,7 +306,7 @@ export function normalizeModel(
     }
 
     entityViolations.forEach(v => allViolations.push(v));
-    reports.push({ entity: entity.name, highestNF, violations: entityViolations, passed, failed });
+    reports.push({ entity: entity.name, highestNF, keys: analyzeEntity(entity).keys, violations: entityViolations, passed, failed });
   }
 
   const conforming = allViolations.filter(v =>

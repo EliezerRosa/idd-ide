@@ -1,0 +1,19 @@
+intent: "Teoria de dependências funcionais pelos axiomas de Armstrong: fecho, chaves candidatas, formas normais e decomposição"
+module: domain/fds
+
+constraints:
+  - "Fecho X⁺ é o menor conjunto que contém X e é fechado sob F"
+  - "Cobertura mínima é equivalente a F, com lado direito unitário, sem atributo estranho à esquerda e sem DF redundante"
+  - "Chaves candidatas são todas as superchaves mínimas de R sob F"
+  - "Algoritmos exponenciais (chaves, projeção) recusam mais de 20 atributos em vez de travar"
+  - "Decomposição BCNF é sempre sem perda na junção"
+  - "Síntese 3NF é sem perda e preserva dependências"
+  - "Resultados são determinísticos e seguem a ordem dos atributos de R"
+
+acceptance:
+  - "Exemplos de Silberschatz, Elmasri/Navathe e Ullman/Widom reproduzem fecho, chaves e forma normal do livro"
+  - "R(street, city, zip) com {street city → zip, zip → city} está em 3NF, não em BCNF, e a decomposição BCNF perde street city → zip"
+  - "Chase reconhece {AB, AC} sob A → B como sem perda e {AB, BC} sem DFs como com perda"
+
+language: typescript
+version: "0.0.0"

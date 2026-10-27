@@ -1,6 +1,6 @@
 # Proposta — Fase 0: compilador de linguagem ubíqua (estudo de requisitos)
 
-**Status:** ✅ APROVADA por Eliézer Rosa em 2026-10-27 (Confirm-Once). Entregas 0–2 implementadas; a implementação continua 🧪 até o Gate 1 do primeiro caso
+**Status:** ✅ APROVADA por Eliézer Rosa em 2026-10-27 (Confirm-Once). Entregas 0–3 implementadas; Gate 1 verde no Racha de Conta (2026-10-27); próxima: entrega 4 (loop 2)
 **Data:** 2026-10-27 · **Cânone:** v1.0-rc1
 **Fontes:**
 - [Ciclo de Vida — Nova proposta](../paradigma/20-metodo/ciclo-de-vida/IDD%20Paradigma%20Ciclo%20de%20Vida%20-%20Nova%20proposta.txt);
@@ -87,7 +87,7 @@ fase0/<caso>/
 
 | Critério | Verificação |
 | --- | --- |
-| MER na forma normal alvo (BCNF por padrão) | `idd domain normalize`, **evoluído para fecho de atributos e chaves candidatas** (Armstrong); hoje é heurístico |
+| MER na forma normal alvo (BCNF por padrão) | `idd domain normalize`: 2NF/3NF/BCNF por **fecho de atributos e chaves candidatas** (Armstrong, `cli/src/lib/domain/fds.ts`); DFs declaradas com `%% DF Entidade: a, b -> c` |
 | Toda transação de negócio pertence a um UC e tem pré e pós-condições | Esquema do UC |
 | Toda transação mapeia para ≥ 1 método de uma classe do modelo | Matriz de rastreabilidade |
 | Todo atributo alterado por uma transação está em `allowed_fields` do método | Coerência contrato × modelo |
