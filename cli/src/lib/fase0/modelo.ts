@@ -1,8 +1,9 @@
-// src/lib/fase0/modelo.ts — SHADA no Loop 2: etapa MER (modelo de domínio), etapa UC (casos de uso) e etapa atividades (fluxos por UC)
+// src/lib/fase0/modelo.ts — SHADA no Loop 2: MER, casos de uso, atividades e estados
 import type { LlmProvider } from '../llm/types.ts';
 import { EXEMPLO_ATIVIDADES } from './atividades.ts';
 import { lerDicionarioCaso, lerTexto, type CasoPaths } from './casos.ts';
 import { EXEMPLO_CASOS } from './casosDeUso.ts';
+import { EXEMPLO_ESTADOS } from './estados.ts';
 import type { Gate2Resultado } from './gate2.ts';
 import type { FontesLidas, PerguntaShada } from './shada.ts';
 
@@ -313,4 +314,82 @@ export async function consultarShadaAtividades(provedor: LlmProvider, contexto: 
     effort: 'high',
   });
   return normalizarSaidaAtividades(bruto);
+}
+
+// ════════════════════════════════════════════════════════════════
+// Etapa estados: máquinas de estado das entidades com ciclo de vida
+// ════════════════════════════════════════════════════════════════
+
+export interface SaidaEstados {
+  perguntas: PerguntaShada[];
+  /** YAML completo de modelo/estados.yaml */
+  artefato: string;
+  suposicoes: string[];
+  contradicoes: string[];
+  observacoes: string;
+}
+
+export const SHADA_ESTADOS_SYSTEM = `Você é o SHADA, o agente socrático do Paradigma IDD (Intent-Driven Development), no Loop 2 (Modelo) da Fase 0, etapa de estados.
+
+Entrada: a especificação aprovada no Loop 1 (intenções, invariantes, dicionário, decisões), o MER aprovado (modelo/dominio.mmd), os casos de uso aprovados (modelo/casos-de-uso.yaml) e os fluxos de atividades aprovados (modelo/atividades.yaml).
+Saída: modelo/estados.yaml com as máquinas de estado das entidades do MER que possuem ciclo de vida. O humano aprova ou rejeita o arquivo inteiro; ao aprovar, o IDD gera os diagramas PlantUML em modelo/estados/<Classe>.puml.
+
+Regras:
+- Toda classe do MER cujo estado muda após a criação (alguma transação em casos-de-uso.yaml tem "Classe.atributo" em "altera") DEVE ter uma máquina de estado em "maquinas" com pelo menos 2 estados.
+- Classes sem mutação posterior só entram se houver pelo menos uma máquina no arquivo; cada máquina referencia uma classe existente em modelo/dominio.mmd.
+- Cada estado tem "nome" (PascalCase, ex.: Aberta, Fechada, Pendente, Confirmado) e "descricao" (condição dos atributos da classe naquele estado, com termos [[Termo]] entre aspas duplas).
+- Toda máquina deve ter ao menos uma transição inicial partindo de "[*]" (criação da instância) e todos os estados declarados devem ser alcançáveis a partir de "[*]".
+- Toda transição tem "de", "para", "transacao" (id TN-NN de modelo/casos-de-uso.yaml que dispara a transição) e, opcionalmente, "guarda" e "efeito".
+- Coerência estados × UCs: toda transição de uma classe deve ser disparada por uma transação TN-NN que escreve nessa classe ("altera" contém "Classe" ou "Classe.atributo"), e toda transação que escreve numa classe de "maquinas" deve disparar ao menos uma transição nela (use auto-transição de: X, para: X quando uma transação atualiza a instância sem mudar de estado, ex.: reenvio de comprovante enquanto Pendente).
+- NÃO invente regra de negócio. Se uma transição reversa (ex.: reabertura, estorno, cancelamento) ou estado adicional não estiver decidido, siga as decisões já tomadas em decisoes.md, registre suposições em "suposicoes" e faça até 3 perguntas se restar dúvida.
+- Não repita perguntas já respondidas ou em aberto em decisoes.md.
+
+Formato do YAML (siga exatamente; "artefato" é o texto YAML, sem cerca):
+\`\`\`yaml
+${EXEMPLO_ESTADOS}\`\`\`
+- Responda sempre em português do Brasil, somente com o JSON pedido.`;
+
+export const SHADA_ESTADOS_SCHEMA: Record<string, unknown> = SHADA_UC_SCHEMA;
+
+export function normalizarSaidaEstados(raw: unknown): SaidaEstados {
+  if (typeof raw !== 'object' || raw === null || Array.isArray(raw)) throw new Error('Saída do SHADA (estados) inválida: esperado um objeto JSON.');
+  const o = raw as Record<string, unknown>;
+  const artefato = limparMermaid(texto(o.artefato));
+  if (!/maquinas\s*:/.test(artefato)) throw new Error('Saída do SHADA (estados) inválida: "artefato" não tem maquinas.');
+  return {
+    perguntas: perguntasDe(o.perguntas), artefato,
+    suposicoes: lista(o.suposicoes), contradicoes: lista(o.contradicoes), observacoes: texto(o.observacoes),
+  };
+}
+
+export function montarContextoEstados(p: CasoPaths, caso: string, rodada: number, gate: Gate2Resultado, fontes: FontesLidas): string {
+  const secoes: string[] = [`# Caso: ${caso} — loop 2, etapa de estados, rodada ${String(rodada).padStart(2, '0')}`];
+  secoes.push('## intencoes.md (aprovado no loop 1)\n\n' + lerTexto(p.intencoes));
+  secoes.push('## invariantes.md (aprovado no loop 1)\n\n' + lerTexto(p.invariantes));
+  secoes.push('## dicionario.json\n\n' + JSON.stringify(lerDicionarioCaso(p.dicionario), null, 2));
+  secoes.push('## modelo/dominio.mmd (MER aprovado)\n\n```mermaid\n' + lerTexto(p.dominio).trim() + '\n```');
+  secoes.push('## modelo/casos-de-uso.yaml (casos de uso aprovados)\n\n```yaml\n' + lerTexto(p.casos).trim() + '\n```');
+  secoes.push('## modelo/atividades.yaml (atividades aprovadas)\n\n```yaml\n' + lerTexto(p.atividades).trim() + '\n```');
+  secoes.push('## decisoes.md\n\n' + (lerTexto(p.decisoes) || '(vazio)'));
+  const atual = lerTexto(p.estados);
+  secoes.push('## modelo/estados.yaml (atual)\n\n' + (atual ? '```yaml\n' + atual.trim() + '\n```' : '(ainda não existe)'));
+  secoes.push('## Estado do Gate 2\n\n' + (gate.verde ? 'verde' : 'vermelho') + '\n'
+    + gate.criterios.map(c => `- (${c.id}) ${c.descricao}: ${c.ok ? 'ok' : 'FALHA'} — ${c.detalhe}`).join('\n')
+    + (gate.avisos.length ? '\n' + gate.avisos.map(a => `- aviso: ${a}`).join('\n') : ''));
+  secoes.push('## Fontes\n\n' + (fontes.arquivos.length
+    ? fontes.arquivos.map(f => `### fontes/${f.nome}\n\n${f.conteudo}`).join('\n\n')
+    : '(nenhuma)'));
+  secoes.push('Produza a próxima rodada da etapa de estados: o YAML completo em "artefato", as suposições, até 3 perguntas e as contradições, no JSON do schema.');
+  return secoes.join('\n\n');
+}
+
+export async function consultarShadaEstados(provedor: LlmProvider, contexto: string): Promise<SaidaEstados> {
+  const bruto = await provedor.completeJson({
+    system: SHADA_ESTADOS_SYSTEM,
+    user: contexto,
+    schemaName: 'rodada_estados',
+    schema: SHADA_ESTADOS_SCHEMA,
+    effort: 'high',
+  });
+  return normalizarSaidaEstados(bruto);
 }

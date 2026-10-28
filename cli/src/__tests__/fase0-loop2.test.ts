@@ -208,7 +208,7 @@ describe('Gate 2 · casos de uso', () => {
     const p = casoComMer();
     fs.writeFileSync(p.casos, CASOS_OK);
     const g = avaliarGate2(p);
-    expect(g.criterios.filter(c => c.etapa !== 'atividades').map(c => [c.id, c.ok])).toEqual([
+    expect(g.criterios.filter(c => c.etapa === 'mer' || c.etapa === 'uc' || c.etapa === 'geral').map(c => [c.id, c.ok])).toEqual([
       ['a', true], ['b', true], ['c', true], ['e', true], ['f', true], ['g', true], ['h', true], ['i', true], ['d', true],
     ]);
     expect(g.etapa).toBe('atividades');
@@ -306,18 +306,17 @@ function casoComUc() {
 describe('Gate 2 · atividades', () => {
   const ativ = (g: ReturnType<typeof avaliarGate2>, id: string) => g.criterios.find(c => c.id === id)!;
 
-  it('verde com atividades completas; gera etapa concluída', () => {
+  it('verde na etapa atividades com fluxos completos; avança para estados', () => {
     const p = casoComUc();
     fs.writeFileSync(p.atividades, ATIVIDADES_OK);
     const g = avaliarGate2(p);
-    expect(g.criterios.map(c => [c.id, c.ok])).toEqual([
+    expect(g.criterios.filter(c => c.etapa !== 'estados').map(c => [c.id, c.ok])).toEqual([
       ['a', true], ['b', true], ['c', true],
       ['e', true], ['f', true], ['g', true], ['h', true], ['i', true],
       ['j', true], ['k', true], ['l', true], ['m', true],
       ['d', true],
     ]);
-    expect(g.verde).toBe(true);
-    expect(g.etapa).toBe('concluido');
+    expect(g.etapa).toBe('estados');
   });
 
   it('reprova UC sem fluxo, transação fora da raia Sistema, transação sem guarda/senao e referências inválidas', () => {
@@ -370,9 +369,10 @@ describe('loop 2 · atividades', () => {
     expect(lerTexto(md)).toMatch(/✓ \(k\) toda transação de negócio é executada pelo Sistema/);
 
     marcar(md, '**Atividades:** [ ] aprovar', '**Atividades:** [x] aprovar');
-    const r2 = await executarLoop2({ root, caso: 'c', provedor: prov, hoje: '2026-10-28' });
+    const r2 = await executarLoop2({ root, caso: 'c', provedor: prov, hoje: '2026-10-28', semNovaRodada: true });
     expect(r2.aplicacao!.modelo).toBe('aprovado');
-    expect(r2.estado).toBe('gate-verde');
+    expect(r2.gate!.criterios.filter(c => c.etapa === 'atividades').every(c => c.ok)).toBe(true);
+    expect(r2.etapa).toBe('estados');
     expect(lerTexto(p.atividades)).toBe(ATIVIDADES_OK + '\n');
     const puml = lerTexto(path.join(p.atividadesDir, 'UC-01.puml'));
     expect(puml).toMatch(/title UC-01 Consultar a própria cota — c/);
@@ -381,5 +381,107 @@ describe('loop 2 · atividades', () => {
     expect(puml).toMatch(/if \(A \[\[Mesa\]\] existe\.\?\) then \(sim\)/);
     expect(puml).toMatch(/:P-02 \[TN-01\] Registra o \[\[Participante\]\] na \[\[Mesa\]\]\.;/);
     expect(lerTexto(p.decisoes)).toMatch(/L2\/ATIVIDADES01\/artefato · atividades aprovado: modelo\/atividades\.yaml/);
+  });
+});
+
+// ── Etapa Estados ───────────────────────────────────────────────────
+
+const ESTADOS_OK = [
+  'maquinas:',
+  '  - classe: Participante',
+  '    estados:',
+  '      - nome: Ativo',
+  '        descricao: "[[Participante]] integrado à [[Mesa]]."',
+  '    transicoes:',
+  '      - de: "[*]"',
+  '        para: Ativo',
+  '        transacao: TN-01',
+  '        efeito: "Inclui o [[Participante]] na [[Mesa]]."',
+].join('\n');
+
+const respostaEst = (artefato: string) => ({ perguntas: [], artefato, suposicoes: [], contradicoes: [], observacoes: '' });
+
+function casoComAtiv() {
+  const p = casoComUc();
+  fs.writeFileSync(p.atividades, ATIVIDADES_OK);
+  return p;
+}
+
+describe('Gate 2 · estados', () => {
+  const est = (g: ReturnType<typeof avaliarGate2>, id: string) => g.criterios.find(c => c.id === id)!;
+
+  it('verde com máquinas de estado completas; gera etapa concluída', () => {
+    const p = casoComAtiv();
+    fs.writeFileSync(p.estados, ESTADOS_OK);
+    const g = avaliarGate2(p);
+    expect(g.criterios.map(c => [c.id, c.ok])).toEqual([
+      ['a', true], ['b', true], ['c', true],
+      ['e', true], ['f', true], ['g', true], ['h', true], ['i', true],
+      ['j', true], ['k', true], ['l', true], ['m', true],
+      ['n', true], ['o', true], ['p', true], ['q', true],
+      ['d', true],
+    ]);
+    expect(g.verde).toBe(true);
+    expect(g.etapa).toBe('concluido');
+  });
+
+  it('reprova classe com atributo alterado sem máquina, estado inalcançável, TN que não altera a classe e referências inválidas', () => {
+    const p = casoComAtiv();
+    // TN-01 altera Mesa.chave_pix, logo Mesa precisa de máquina com >= 2 estados
+    fs.writeFileSync(p.casos, CASOS_OK.replace('        altera: [Participante]', '        altera: [Mesa.chave_pix]'));
+    fs.writeFileSync(p.estados, [
+      'maquinas:',
+      '  - classe: Participante',
+      '    estados:',
+      '      - nome: Ativo',
+      '        descricao: "Ativo"',
+      '      - nome: Isolado',
+      '        descricao: "Nunca alcançado"',
+      '    transicoes:',
+      '      - de: "[*]"',
+      '        para: Ativo',
+      '        transacao: TN-01',
+      '  - classe: Conta',
+      '    estados:',
+      '      - nome: Aberta',
+      '        descricao: "Aberta"',
+      '    transicoes:',
+      '      - de: Aberta',
+      '        para: Aberta',
+      '        transacao: TN-99',
+    ].join('\n'));
+    const g = avaliarGate2(p);
+    expect(est(g, 'n').detalhe).toMatch(/classes com atributo alterado sem máquina de estado: Mesa/);
+    expect(est(g, 'o').detalhe).toMatch(/Participante: TN-01 não altera Participante/);
+    expect(est(g, 'p').detalhe).toMatch(/Participante: estados inalcançáveis a partir de \[\*\]: Isolado/);
+    expect(est(g, 'p').detalhe).toMatch(/Conta: sem transição inicial a partir de \[\*\]/);
+    expect(est(g, 'q').detalhe).toMatch(/classe "Conta" não está no MER/);
+    expect(est(g, 'q').detalhe).toMatch(/transação "TN-99" não existe/);
+  });
+});
+
+describe('loop 2 · estados', () => {
+  it('depois das atividades, gera a rodada de estados; aprovar grava estados.yaml e estados/Participante.puml', async () => {
+    const p = casoComAtiv();
+    const prov = new RecordedProvider([respostaEst(ESTADOS_OK)]);
+    const r1 = await executarLoop2({ root, caso: 'c', provedor: prov, hoje: '2026-10-28' });
+    expect(r1.estado).toBe('nova-rodada');
+    expect(r1.etapa).toBe('estados');
+    expect(prov.pedidos[0].schemaName).toBe('rodada_estados');
+    expect(prov.pedidos[0].user).toMatch(/atividades aprovadas/);
+    const md = arquivoEtapa(p, 'estados', 1, 'md');
+    expect(lerTexto(md)).toMatch(/```yaml\nmaquinas:/);
+    expect(lerTexto(md)).toMatch(/✓ \(p\) toda máquina parte de \[\*\]/);
+
+    marcar(md, '**Estados:** [ ] aprovar', '**Estados:** [x] aprovar');
+    const r2 = await executarLoop2({ root, caso: 'c', provedor: prov, hoje: '2026-10-28' });
+    expect(r2.aplicacao!.modelo).toBe('aprovado');
+    expect(r2.estado).toBe('gate-verde');
+    expect(lerTexto(p.estados)).toBe(ESTADOS_OK + '\n');
+    const puml = lerTexto(path.join(p.estadosDir, 'Participante.puml'));
+    expect(puml).toMatch(/title Estados de Participante — c/);
+    expect(puml).toMatch(/state "Ativo" as Ativo/);
+    expect(puml).toMatch(/\[\*\] --> Ativo : TN-01 Entrar na mesa/);
+    expect(lerTexto(p.decisoes)).toMatch(/L2\/ESTADOS01\/artefato · estados aprovado: modelo\/estados\.yaml/);
   });
 });

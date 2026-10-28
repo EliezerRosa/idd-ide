@@ -1,4 +1,4 @@
-// src/lib/fase0/loop2.ts — Loop 2 (Modelo) por rodadas em arquivo, em etapas: MER → casos de uso → atividades.
+// src/lib/fase0/loop2.ts — Loop 2 (Modelo) por rodadas em arquivo, em etapas: MER → casos de uso → atividades → estados.
 // Em cada etapa o SHADA propõe o artefato inteiro; o humano aprova ou rejeita (Confirm-Once da etapa),
 // podendo editar o artefato no próprio arquivo da rodada antes de aprovar.
 import * as fs from 'node:fs';
@@ -9,13 +9,14 @@ import {
   caminhosCaso, fmtDecisaoId, hoje, lerDicionarioCaso, lerTexto, proximoIdDecisao, rotuloRodada, type CasoPaths,
 } from './casos.ts';
 import { avaliarCasos, lerCasos, renderContexto } from './casosDeUso.ts';
+import { avaliarEstados, gravarEstadosPuml, lerEstados } from './estados.ts';
 import { avaliarGate1 } from './gate1.ts';
 import { avaliarGate2, diagnosticarEntidade, ETAPAS, lerModelo, type EtapaLoop2, type Gate2Resultado } from './gate2.ts';
 import { extrairItens } from './lintLn.ts';
 import {
-  consultarShadaAtividades, consultarShadaMer, consultarShadaUc,
-  montarContextoAtividades, montarContextoMer, montarContextoUc,
-  type SaidaAtividades, type SaidaMer, type SaidaUc,
+  consultarShadaAtividades, consultarShadaEstados, consultarShadaMer, consultarShadaUc,
+  montarContextoAtividades, montarContextoEstados, montarContextoMer, montarContextoUc,
+  type SaidaAtividades, type SaidaEstados, type SaidaMer, type SaidaUc,
 } from './modelo.ts';
 import { lerRodadaRespondida } from './rodada.ts';
 import { lerFontes, type FontesLidas, type PerguntaShada, type SaidaShada } from './shada.ts';
@@ -118,6 +119,19 @@ export function previaAtividades(p: CasoPaths, texto: string): string[] {
   ];
 }
 
+/** Critérios da etapa de estados aplicados às máquinas de estado propostas. */
+export function previaEstados(p: CasoPaths, texto: string): string[] {
+  const ucs = fs.existsSync(p.casos) ? lerCasos(lerTexto(p.casos)) : undefined;
+  const r = avaliarEstados(lerEstados(texto), {
+    modelo: fs.existsSync(p.dominio) ? lerModelo(lerTexto(p.dominio)) : undefined,
+    casos: ucs && ucs.ok ? ucs.casos : undefined,
+  });
+  return [
+    ...r.criterios.map(c => `- ${c.ok ? '✓' : '✗'} (${c.id}) ${c.descricao} — ${c.detalhe}`),
+    ...r.avisos.map(a => `- ⚠ ${a}`),
+  ];
+}
+
 const MER: Etapa<SaidaMer> = {
   id: 'mer', titulo: 'MER', rotulo: 'Modelo', secao: 'Modelo proposto', linguagem: 'mermaid',
   destino: p => p.dominio,
@@ -167,7 +181,26 @@ const ATIVIDADES: Etapa<SaidaAtividades> = {
   },
 };
 
-const DESCRITORES: Record<EtapaLoop2, Etapa<any>> = { mer: MER, uc: UC, atividades: ATIVIDADES };
+const ESTADOS: Etapa<SaidaEstados> = {
+  id: 'estados', titulo: 'Estados', rotulo: 'Estados', secao: 'Estados propostos', linguagem: 'yaml',
+  destino: p => p.estados,
+  artefato: s => s.artefato,
+  consultar: (prov, p, caso, n, gate, fontes) => consultarShadaEstados(prov, montarContextoEstados(p, caso, n, gate, fontes)),
+  previa: previaEstados,
+  extras: () => [],
+  validar: a => {
+    const r = lerEstados(a);
+    if (!r.ok) return `${r.erro}; corrija o bloco yaml`;
+    return r.estados.maquinas.length ? undefined : 'não tem máquinas de estado; corrija o bloco yaml';
+  },
+  aoAprovar: (p, caso, a) => {
+    const r = lerEstados(a);
+    const ucs = fs.existsSync(p.casos) ? lerCasos(lerTexto(p.casos)) : undefined;
+    if (r.ok) gravarEstadosPuml(p.estadosDir, caso, r.estados, ucs && ucs.ok ? ucs.casos : undefined);
+  },
+};
+
+const DESCRITORES: Record<EtapaLoop2, Etapa<any>> = { mer: MER, uc: UC, atividades: ATIVIDADES, estados: ESTADOS };
 
 // ── Rodada em Markdown ─────────────────────────────────────────────
 
