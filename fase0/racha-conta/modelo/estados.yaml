@@ -1,0 +1,40 @@
+maquinas:
+  - classe: Mesa
+    estados:
+      - nome: Aberta
+        descricao: "[[Mesa]] criada com [[ChavePix]] e [[TaxaServico]] (fechada_em vazio); aceita inclusão de [[Participante]]s e registro de [[ItemConsumido]]s."
+      - nome: Fechada
+        descricao: "[[Mesa]] encerrada definitivamente para lançamentos (fechada_em preenchido); habilita a cobrança Pix e o envio de comprovantes das [[Cota]]s."
+    transicoes:
+      - de: "[*]"
+        para: Aberta
+        transacao: TN-01
+        guarda: "O [[ResponsavelMesa]] informou a própria [[ChavePix]] e o próprio nome."
+        efeito: "Cria a [[Mesa]] aberta (fechada_em vazio) e registra o [[ResponsavelMesa]] como [[Participante]]."
+      - de: Aberta
+        para: Fechada
+        transacao: TN-05
+        guarda: "A [[Mesa]] não está fechada."
+        efeito: "Preenche Mesa.fechada_em e encerra definitivamente os lançamentos de consumo."
+  - classe: Pagamento
+    estados:
+      - nome: Pendente
+        descricao: "Comprovante enviado pelo [[Participante]] com o valor da [[Cota]] em centavos (confirmado_em vazio), aguardando conferência do [[ResponsavelMesa]]."
+      - nome: Confirmado
+        descricao: "Pagamento conferido e confirmado pelo [[ResponsavelMesa]] (confirmado_em preenchido)."
+    transicoes:
+      - de: "[*]"
+        para: Pendente
+        transacao: TN-07
+        guarda: "A [[Mesa]] está fechada, o [[Participante]] não é o [[ResponsavelMesa]], a [[Cota]] do [[Participante]] é maior que zero e ainda não existe pagamento para o [[Participante]]."
+        efeito: "Cria o Pagamento com comprovante_url, valor_centavos e enviado_em (confirmado_em vazio)."
+      - de: Pendente
+        para: Pendente
+        transacao: TN-07
+        guarda: "A [[Mesa]] está fechada, o [[Participante]] não é o [[ResponsavelMesa]], a [[Cota]] do [[Participante]] é maior que zero e o pagamento ainda não foi confirmado."
+        efeito: "Substitui comprovante_url e enviado_em do pagamento pendente (D-027)."
+      - de: Pendente
+        para: Confirmado
+        transacao: TN-08
+        guarda: "O pagamento tem comprovante e ainda não foi confirmado."
+        efeito: "Preenche Pagamento.confirmado_em."

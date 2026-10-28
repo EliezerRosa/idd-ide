@@ -1,0 +1,12 @@
+@startuml
+title Estados de Pagamento — racha-conta
+
+state "Pendente" as Pendente
+Pendente : Comprovante enviado pelo [[Participante]] com o valor da [[Cota]] em centavos (confirmado_em vazio), aguardando conferência do [[ResponsavelMesa]].
+state "Confirmado" as Confirmado
+Confirmado : Pagamento conferido e confirmado pelo [[ResponsavelMesa]] (confirmado_em preenchido).
+
+[*] --> Pendente : TN-07 Enviar comprovante [A [[Mesa]] está fechada, o [[Participante]] não é o [[ResponsavelMesa]], a [[Cota]] do [[Participante]] é maior que zero e ainda não existe pagamento para o [[Participante]].] / Cria o Pagamento com comprovante_url, valor_centavos e enviado_em (confirmado_em vazio).
+Pendente --> Pendente : TN-07 Enviar comprovante [A [[Mesa]] está fechada, o [[Participante]] não é o [[ResponsavelMesa]], a [[Cota]] do [[Participante]] é maior que zero e o pagamento ainda não foi confirmado.] / Substitui comprovante_url e enviado_em do pagamento pendente (D-027).
+Pendente --> Confirmado : TN-08 Confirmar o pagamento de um participante [O pagamento tem comprovante e ainda não foi confirmado.] / Preenche Pagamento.confirmado_em.
+@enduml

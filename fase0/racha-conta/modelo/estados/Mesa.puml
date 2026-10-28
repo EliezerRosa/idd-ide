@@ -1,0 +1,11 @@
+@startuml
+title Estados de Mesa — racha-conta
+
+state "Aberta" as Aberta
+Aberta : [[Mesa]] criada com [[ChavePix]] e [[TaxaServico]] (fechada_em vazio); aceita inclusão de [[Participante]]s e registro de [[ItemConsumido]]s.
+state "Fechada" as Fechada
+Fechada : [[Mesa]] encerrada definitivamente para lançamentos (fechada_em preenchido); habilita a cobrança Pix e o envio de comprovantes das [[Cota]]s.
+
+[*] --> Aberta : TN-01 Criar mesa com chave Pix [O [[ResponsavelMesa]] informou a própria [[ChavePix]] e o próprio nome.] / Cria a [[Mesa]] aberta (fechada_em vazio) e registra o [[ResponsavelMesa]] como [[Participante]].
+Aberta --> Fechada : TN-05 Fechar a mesa para pagamento [A [[Mesa]] não está fechada.] / Preenche Mesa.fechada_em e encerra definitivamente os lançamentos de consumo.
+@enduml

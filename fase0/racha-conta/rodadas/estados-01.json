@@ -1,0 +1,31 @@
+{
+  "perguntas": [
+    {
+      "id": "P01",
+      "texto": "No código legado (legado-domain_rules.ts e legado-schema.sql), Mesa tinha o status LIQUIDADA quando todos pagavam. Deseja manter apenas Aberta e Fechada em Mesa (com a quitação total derivada dos pagamentos confirmados)?",
+      "porque": "Define se a quitação completa da mesa exige um terceiro estado persistido em Mesa ou se é uma propriedade derivada das cotas e pagamentos confirmados.",
+      "opcoes": [
+        "Manter apenas Aberta e Fechada (quitação total derivada dos pagamentos confirmados)",
+        "Incluir um terceiro estado Liquidada em Mesa quando todas as cotas maiores que zero forem confirmadas"
+      ],
+      "bloqueante": false
+    },
+    {
+      "id": "P02",
+      "texto": "Depois que o responsável confirma o pagamento de um participante (TN-08, estado Confirmado), a confirmação é definitiva ou pode ser desfeita?",
+      "porque": "Define se Confirmado é estado terminal na máquina de estados de Pagamento ou se existe transição de retorno para Pendente.",
+      "opcoes": [
+        "A confirmação do pagamento é definitiva (Confirmado é estado terminal)",
+        "O responsável pode desfazer a confirmação, retornando o pagamento para Pendente"
+      ],
+      "bloqueante": false
+    }
+  ],
+  "artefato": "maquinas:\n  - classe: Mesa\n    estados:\n      - nome: Aberta\n        descricao: \"[[Mesa]] criada com [[ChavePix]] e [[TaxaServico]] (fechada_em vazio); aceita inclusão de [[Participante]]s e registro de [[ItemConsumido]]s.\"\n      - nome: Fechada\n        descricao: \"[[Mesa]] encerrada definitivamente para lançamentos (fechada_em preenchido); habilita a cobrança Pix e o envio de comprovantes das [[Cota]]s.\"\n    transicoes:\n      - de: \"[*]\"\n        para: Aberta\n        transacao: TN-01\n        guarda: \"O [[ResponsavelMesa]] informou a própria [[ChavePix]] e o próprio nome.\"\n        efeito: \"Cria a [[Mesa]] aberta (fechada_em vazio) e registra o [[ResponsavelMesa]] como [[Participante]].\"\n      - de: Aberta\n        para: Fechada\n        transacao: TN-05\n        guarda: \"A [[Mesa]] não está fechada.\"\n        efeito: \"Preenche Mesa.fechada_em e encerra definitivamente os lançamentos de consumo.\"\n  - classe: Pagamento\n    estados:\n      - nome: Pendente\n        descricao: \"Comprovante enviado pelo [[Participante]] com o valor da [[Cota]] em centavos (confirmado_em vazio), aguardando conferência do [[ResponsavelMesa]].\"\n      - nome: Confirmado\n        descricao: \"Pagamento conferido e confirmado pelo [[ResponsavelMesa]] (confirmado_em preenchido).\"\n    transicoes:\n      - de: \"[*]\"\n        para: Pendente\n        transacao: TN-07\n        guarda: \"A [[Mesa]] está fechada, o [[Participante]] não é o [[ResponsavelMesa]], a [[Cota]] do [[Participante]] é maior que zero e ainda não existe pagamento para o [[Participante]].\"\n        efeito: \"Cria o Pagamento com comprovante_url, valor_centavos e enviado_em (confirmado_em vazio).\"\n      - de: Pendente\n        para: Pendente\n        transacao: TN-07\n        guarda: \"A [[Mesa]] está fechada, o [[Participante]] não é o [[ResponsavelMesa]], a [[Cota]] do [[Participante]] é maior que zero e o pagamento ainda não foi confirmado.\"\n        efeito: \"Substitui comprovante_url e enviado_em do pagamento pendente (D-027).\"\n      - de: Pendente\n        para: Confirmado\n        transacao: TN-08\n        guarda: \"O pagamento tem comprovante e ainda não foi confirmado.\"\n        efeito: \"Preenche Pagamento.confirmado_em.\"\n",
+  "suposicoes": [
+    "A quitação total da Mesa é uma consulta derivada (todos os participantes exceto o responsável com cota > 0 possuem Pagamento em estado Confirmado), não exigindo novo atributo nem nova transação em Mesa.",
+    "O estado Confirmado de Pagamento é terminal, simétrico ao fechamento definitivo da Mesa (D-037)."
+  ],
+  "contradicoes": [],
+  "observacoes": "Mesa e Pagamento são as únicas classes de modelo/dominio.mmd com atributos alterados após a criação (Mesa.fechada_em em TN-05 e Pagamento.confirmado_em em TN-08)."
+}
