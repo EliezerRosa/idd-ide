@@ -1,0 +1,23 @@
+@startuml
+left to right direction
+title Contexto — racha-conta
+
+actor "ResponsavelMesa" as ResponsavelMesa
+actor "Participante" as Participante
+
+rectangle "racha-conta" {
+  usecase "UC-01 Criar mesa" as UC_01
+  usecase "UC-02 Registrar participantes e consumo" as UC_02
+  usecase "UC-03 Consultar a própria cota" as UC_03
+  usecase "UC-04 Fechar mesa" as UC_04
+  usecase "UC-05 Pagar a própria cota" as UC_05
+  usecase "UC-06 Confirmar pagamento" as UC_06
+}
+
+ResponsavelMesa --> UC_01
+ResponsavelMesa --> UC_02
+Participante --> UC_03
+ResponsavelMesa --> UC_04
+Participante --> UC_05
+ResponsavelMesa --> UC_06
+@enduml
