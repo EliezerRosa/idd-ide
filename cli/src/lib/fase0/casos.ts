@@ -20,6 +20,9 @@ export interface CasoPaths {
   atividadesDir: string;
   estados: string;
   estadosDir: string;
+  metodos: string;
+  contratosDir: string;
+  rastreabilidade: string;
 }
 
 export function nomeCasoValido(caso: string): boolean {
@@ -45,6 +48,9 @@ export function caminhosCaso(root: string, caso: string): CasoPaths {
     atividadesDir: path.join(dir, 'modelo', 'atividades'),
     estados: path.join(dir, 'modelo', 'estados.yaml'),
     estadosDir: path.join(dir, 'modelo', 'estados'),
+    metodos: path.join(dir, 'modelo', 'metodos.yaml'),
+    contratosDir: path.join(dir, 'contratos'),
+    rastreabilidade: path.join(dir, 'rastreabilidade.md'),
   };
 }
 

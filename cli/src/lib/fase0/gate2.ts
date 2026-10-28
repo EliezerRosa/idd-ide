@@ -1,6 +1,7 @@
 // src/lib/fase0/gate2.ts — Gate 2 (fim do loop 2): critérios determinísticos, a IA não aprova a própria saída.
 // Etapas: MER → casos de uso (com contexto) → atividades → estados. A seguinte (métodos) acrescenta critérios aqui.
 import * as fs from 'node:fs';
+import * as path from 'node:path';
 import { decomposeBCNF, lostDependencies } from '../domain/fds.ts';
 import { analyzeEntity, entityRelation } from '../domain/normalizer.ts';
 import { parseMermaid } from '../domain/parser.ts';
@@ -10,9 +11,10 @@ import { lerDecisoes, lerDicionarioCaso, lerTexto, type CasoPaths } from './caso
 import { avaliarCasos, lerCasos } from './casosDeUso.ts';
 import { avaliarEstados, lerEstados } from './estados.ts';
 import { extrairItens } from './lintLn.ts';
+import { avaliarMetodos, lerMetodos } from './metodos.ts';
 
-export type EtapaLoop2 = 'mer' | 'uc' | 'atividades' | 'estados';
-export const ETAPAS: EtapaLoop2[] = ['mer', 'uc', 'atividades', 'estados'];
+export type EtapaLoop2 = 'mer' | 'uc' | 'atividades' | 'estados' | 'metodos';
+export const ETAPAS: EtapaLoop2[] = ['mer', 'uc', 'atividades', 'estados', 'metodos'];
 
 export interface CriterioGate2 {
   id: string;
@@ -130,11 +132,22 @@ export function avaliarGate2(p: CasoPaths): Gate2Resultado {
   });
   avisos.push(...estados.avisos);
 
+  // etapa metodos (métodos circunscritos às classes e contratos .intent.yaml v2)
+  const leituraMet = fs.existsSync(p.metodos) ? lerMetodos(lerTexto(p.metodos)) : undefined;
+  const metodos = avaliarMetodos(leituraMet, {
+    caso: path.basename(p.dir),
+    modelo,
+    casos: leituraUc && leituraUc.ok ? leituraUc.casos : undefined,
+    invariantesTexto: lerTexto(p.invariantes),
+  });
+  avisos.push(...metodos.avisos);
+
   const criterios: CriterioGate2[] = [
     a, b, c,
     ...casos.criterios.map(x => ({ ...x, etapa: 'uc' as const })),
     ...atividades.criterios.map(x => ({ ...x, etapa: 'atividades' as const })),
     ...estados.criterios.map(x => ({ ...x, etapa: 'estados' as const })),
+    ...metodos.criterios.map(x => ({ ...x, etapa: 'metodos' as const })),
     d,
   ];
   const reprovada = ETAPAS.find(e => criterios.some(x => x.etapa === e && !x.ok));

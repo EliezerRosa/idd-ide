@@ -310,7 +310,7 @@ describe('Gate 2 · atividades', () => {
     const p = casoComUc();
     fs.writeFileSync(p.atividades, ATIVIDADES_OK);
     const g = avaliarGate2(p);
-    expect(g.criterios.filter(c => c.etapa !== 'estados').map(c => [c.id, c.ok])).toEqual([
+    expect(g.criterios.filter(c => c.etapa !== 'estados' && c.etapa !== 'metodos').map(c => [c.id, c.ok])).toEqual([
       ['a', true], ['b', true], ['c', true],
       ['e', true], ['f', true], ['g', true], ['h', true], ['i', true],
       ['j', true], ['k', true], ['l', true], ['m', true],
@@ -410,19 +410,19 @@ function casoComAtiv() {
 describe('Gate 2 · estados', () => {
   const est = (g: ReturnType<typeof avaliarGate2>, id: string) => g.criterios.find(c => c.id === id)!;
 
-  it('verde com máquinas de estado completas; gera etapa concluída', () => {
+  it('verde na etapa estados com máquinas completas; avança para métodos', () => {
     const p = casoComAtiv();
     fs.writeFileSync(p.estados, ESTADOS_OK);
     const g = avaliarGate2(p);
-    expect(g.criterios.map(c => [c.id, c.ok])).toEqual([
+    expect(g.criterios.filter(c => c.etapa !== 'metodos').map(c => [c.id, c.ok])).toEqual([
       ['a', true], ['b', true], ['c', true],
       ['e', true], ['f', true], ['g', true], ['h', true], ['i', true],
       ['j', true], ['k', true], ['l', true], ['m', true],
       ['n', true], ['o', true], ['p', true], ['q', true],
       ['d', true],
     ]);
-    expect(g.verde).toBe(true);
-    expect(g.etapa).toBe('concluido');
+    expect(g.verde).toBe(false);
+    expect(g.etapa).toBe('metodos');
   });
 
   it('reprova classe com atributo alterado sem máquina, estado inalcançável, TN que não altera a classe e referências inválidas', () => {
@@ -474,14 +474,120 @@ describe('loop 2 · estados', () => {
     expect(lerTexto(md)).toMatch(/✓ \(p\) toda máquina parte de \[\*\]/);
 
     marcar(md, '**Estados:** [ ] aprovar', '**Estados:** [x] aprovar');
-    const r2 = await executarLoop2({ root, caso: 'c', provedor: prov, hoje: '2026-10-28' });
+    const r2 = await executarLoop2({ root, caso: 'c', provedor: prov, hoje: '2026-10-28', semNovaRodada: true });
     expect(r2.aplicacao!.modelo).toBe('aprovado');
-    expect(r2.estado).toBe('gate-verde');
+    expect(r2.gate!.criterios.filter(c => c.etapa === 'estados').every(c => c.ok)).toBe(true);
+    expect(r2.etapa).toBe('metodos');
     expect(lerTexto(p.estados)).toBe(ESTADOS_OK + '\n');
     const puml = lerTexto(path.join(p.estadosDir, 'Participante.puml'));
     expect(puml).toMatch(/title Estados de Participante — c/);
     expect(puml).toMatch(/state "Ativo" as Ativo/);
     expect(puml).toMatch(/\[\*\] --> Ativo : TN-01 Entrar na mesa/);
     expect(lerTexto(p.decisoes)).toMatch(/L2\/ESTADOS01\/artefato · estados aprovado: modelo\/estados\.yaml/);
+  });
+});
+
+// ── Etapa Métodos ───────────────────────────────────────────────────
+
+const METODOS_OK = [
+  'metodos:',
+  '  - classe: Mesa',
+  '    metodo: entrarNaMesa',
+  '    visibilidade: public',
+  '    intencao: "Incluir um [[Participante]] na [[Mesa]] e exibir a sua [[Cota]]."',
+  '    transacoes: [TN-01]',
+  '    invariantes: [INV-001]',
+  '    allowed_fields: [Participante]',
+  '    read_only_fields: [Mesa.chave_pix]',
+  '    restricoes:',
+  '      - "A [[Mesa]] deve existir antes da inclusão do [[Participante]]."',
+  '    aceitacao:',
+  '      - dado: "A [[Mesa]] existe com [[ChavePix]] válida."',
+  '        quando: "Mesa.entrarNaMesa é executado pelo [[Participante]]."',
+  '        entao: "O [[Participante]] passa a pertencer à [[Mesa]] com [[Cota]] >= 0."',
+].join('\n');
+
+const respostaMet = (artefato: string) => ({ perguntas: [], artefato, suposicoes: [], contradicoes: [], observacoes: '' });
+
+function casoComEst() {
+  const p = casoComAtiv();
+  fs.writeFileSync(p.estados, ESTADOS_OK);
+  return p;
+}
+
+describe('Gate 2 · métodos', () => {
+  const met = (g: ReturnType<typeof avaliarGate2>, id: string) => g.criterios.find(c => c.id === id)!;
+
+  it('verde com métodos circunscritos completos; fecha o Gate 2', () => {
+    const p = casoComEst();
+    fs.writeFileSync(p.metodos, METODOS_OK);
+    const g = avaliarGate2(p);
+    expect(g.criterios.map(c => [c.id, c.ok])).toEqual([
+      ['a', true], ['b', true], ['c', true],
+      ['e', true], ['f', true], ['g', true], ['h', true], ['i', true],
+      ['j', true], ['k', true], ['l', true], ['m', true],
+      ['n', true], ['o', true], ['p', true], ['q', true],
+      ['r', true], ['s', true], ['t', true], ['u', true],
+      ['d', true],
+    ]);
+    expect(g.verde).toBe(true);
+    expect(g.etapa).toBe('concluido');
+  });
+
+  it('reprova TN sem método, invariante ausente, sobreposição allowed/read_only e referências inválidas', () => {
+    const p = casoComEst();
+    fs.writeFileSync(p.metodos, [
+      'metodos:',
+      '  - classe: Conta',
+      '    metodo: executar',
+      '    visibilidade: public',
+      '    intencao: "Método com referências inválidas para teste."',
+      '    transacoes: [TN-99]',
+      '    invariantes: [INV-999]',
+      '    allowed_fields: [Mesa.chave_pix]',
+      '    read_only_fields: [Mesa.chave_pix, Mesa.inexistente]',
+      '    restricoes: []',
+      '    aceitacao:',
+      '      - dado: "Dado"',
+      '        quando: "Quando"',
+      '        entao: "Então executa"',
+    ].join('\n'));
+    const g = avaliarGate2(p);
+    expect(met(g, 's').detalhe).toMatch(/TN-01 sem método/);
+    expect(met(g, 't').detalhe).toMatch(/sobreposição allowed\/read_only \(Mesa\.chave_pix\)/);
+    expect(met(g, 'u').detalhe).toMatch(/classe "Conta" fora do MER/);
+    expect(met(g, 'u').detalhe).toMatch(/transação "TN-99" inexistente/);
+    expect(met(g, 'u').detalhe).toMatch(/invariante "INV-999" inexistente/);
+    expect(met(g, 'u').detalhe).toMatch(/atributo inexistente no MER "Mesa\.inexistente"/);
+  });
+});
+
+describe('loop 2 · métodos', () => {
+  it('depois dos estados, gera a rodada de métodos; aprovar grava metodos.yaml, contratos v2 e rastreabilidade.md e fecha o Gate 2', async () => {
+    const p = casoComEst();
+    const prov = new RecordedProvider([respostaMet(METODOS_OK)]);
+    const r1 = await executarLoop2({ root, caso: 'c', provedor: prov, hoje: '2026-10-28' });
+    expect(r1.estado).toBe('nova-rodada');
+    expect(r1.etapa).toBe('metodos');
+    expect(prov.pedidos[0].schemaName).toBe('rodada_metodos');
+    expect(prov.pedidos[0].user).toMatch(/estados aprovados/);
+    const md = arquivoEtapa(p, 'metodos', 1, 'md');
+    expect(lerTexto(md)).toMatch(/```yaml\nmetodos:/);
+    expect(lerTexto(md)).toMatch(/✓ \(u\) classes, atributos, transações e invariantes citados existem/);
+
+    marcar(md, '**Métodos:** [ ] aprovar', '**Métodos:** [x] aprovar');
+    const r2 = await executarLoop2({ root, caso: 'c', provedor: prov, hoje: '2026-10-28' });
+    expect(r2.aplicacao!.modelo).toBe('aprovado');
+    expect(r2.estado).toBe('gate-verde');
+    expect(lerTexto(p.metodos)).toBe(METODOS_OK + '\n');
+    const contrato = lerTexto(path.join(p.contratosDir, 'Mesa.entrarNaMesa.intent.yaml'));
+    expect(contrato).toMatch(/version: '2\.0'/);
+    expect(contrato).toMatch(/target_class: Mesa/);
+    expect(contrato).toMatch(/target_method: entrarNaMesa/);
+    const rastreio = lerTexto(p.rastreabilidade);
+    expect(rastreio).toMatch(/# Matriz de Rastreabilidade — c/);
+    expect(rastreio).toMatch(/\| \*\*INT-001\*\* \| UC-01 \(Consultar a própria cota\) \| TN-01 \| `Mesa\.entrarNaMesa` \| `contratos\/Mesa\.entrarNaMesa\.intent\.yaml` \|/);
+    expect(rastreio).toMatch(/\| \*\*INV-001\*\* \| TN-01 \| `Mesa\.entrarNaMesa` \| `contratos\/Mesa\.entrarNaMesa\.intent\.yaml` \|/);
+    expect(lerTexto(p.decisoes)).toMatch(/L2\/METODOS01\/artefato · métodos aprovado: modelo\/metodos\.yaml/);
   });
 });

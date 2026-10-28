@@ -144,6 +144,22 @@ function dictRemove(root: string, args: string[]): void {
   success(`"${name}" removido.`);
 }
 
+function dictionaryForFile(root: string, file: string, fallback: UbiquitousDictionary): UbiquitousDictionary {
+  let dir = path.dirname(path.resolve(file));
+  const stop = path.resolve(root);
+  while (dir.startsWith(stop) && dir !== stop) {
+    const local = path.join(dir, 'dicionario.json');
+    if (fs.existsSync(local)) {
+      const parsed = parseDictionary(JSON.parse(fs.readFileSync(local, 'utf8')));
+      if (parsed.ok) return parsed.dictionary;
+    }
+    const parent = path.dirname(dir);
+    if (parent === dir) break;
+    dir = parent;
+  }
+  return fallback;
+}
+
 function dictCheck(root: string, args: string[]): void {
   const strict = args.includes('--strict');
   const target = args.find(a => !a.startsWith('--'));
@@ -161,7 +177,8 @@ function dictCheck(root: string, args: string[]): void {
       const raw = yaml.load(fs.readFileSync(file, 'utf8'));
       const parsed = parseContract(raw);
       if (!parsed.ok) { rows.push([path.relative(root, file), `${GRAY}contrato inválido${RESET}`]); continue; }
-      warnings = checkContractTerms(dict, parsed.contract);
+      const fileDict = dictionaryForFile(root, file, dict);
+      warnings = checkContractTerms(fileDict, parsed.contract);
     } catch (e) {
       rows.push([path.relative(root, file), `${GRAY}YAML inválido${RESET}`]);
       continue;

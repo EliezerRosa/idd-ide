@@ -36,7 +36,7 @@ function imprimirGate(g: Gate1Resultado): void {
 
 function imprimirGate2(g: Gate2Resultado): void {
   subHeader('Gate 2');
-  const nomes = { mer: 'MER', uc: 'casos de uso', atividades: 'atividades', estados: 'estados', geral: 'geral' } as const;
+  const nomes = { mer: 'MER', uc: 'casos de uso', atividades: 'atividades', estados: 'estados', metodos: 'métodos', geral: 'geral' } as const;
   for (const c of g.criterios) {
     const marca = c.ok ? `${GREEN}✓${RESET}` : `${RED}✗${RESET}`;
     console.log(`  ${marca}  (${c.id}) ${GRAY}[${nomes[c.etapa]}]${RESET} ${c.descricao}  ${GRAY}— ${c.detalhe}${RESET}`);
@@ -129,7 +129,7 @@ async function faseLoop2(root: string, args: string[]): Promise<void> {
   switch (r.estado) {
     case 'gate-verde':
       console.log('');
-      success('Gate 2 verde nas etapas implementadas (MER, casos de uso, atividades, estados) — próxima: métodos');
+      success('Gate 2 verde — o loop 2 convergiu (MER, casos de uso, atividades, estados, métodos, contratos v2 e rastreabilidade)');
       return;
     case 'sem-nova-rodada':
       info('--sem-nova-rodada: nenhuma rodada nova foi gerada.');

@@ -13,10 +13,11 @@ import { avaliarEstados, gravarEstadosPuml, lerEstados } from './estados.ts';
 import { avaliarGate1 } from './gate1.ts';
 import { avaliarGate2, diagnosticarEntidade, ETAPAS, lerModelo, type EtapaLoop2, type Gate2Resultado } from './gate2.ts';
 import { extrairItens } from './lintLn.ts';
+import { avaliarMetodos, gravarContratosERastreabilidade, lerMetodos } from './metodos.ts';
 import {
-  consultarShadaAtividades, consultarShadaEstados, consultarShadaMer, consultarShadaUc,
-  montarContextoAtividades, montarContextoEstados, montarContextoMer, montarContextoUc,
-  type SaidaAtividades, type SaidaEstados, type SaidaMer, type SaidaUc,
+  consultarShadaAtividades, consultarShadaEstados, consultarShadaMer, consultarShadaMetodos, consultarShadaUc,
+  montarContextoAtividades, montarContextoEstados, montarContextoMer, montarContextoMetodos, montarContextoUc,
+  type SaidaAtividades, type SaidaEstados, type SaidaMer, type SaidaMetodos, type SaidaUc,
 } from './modelo.ts';
 import { lerRodadaRespondida } from './rodada.ts';
 import { lerFontes, type FontesLidas, type PerguntaShada, type SaidaShada } from './shada.ts';
@@ -132,6 +133,21 @@ export function previaEstados(p: CasoPaths, texto: string): string[] {
   ];
 }
 
+/** Critérios da etapa de métodos aplicados aos métodos circunscritos propostos. */
+export function previaMetodos(p: CasoPaths, texto: string): string[] {
+  const ucs = fs.existsSync(p.casos) ? lerCasos(lerTexto(p.casos)) : undefined;
+  const r = avaliarMetodos(lerMetodos(texto), {
+    caso: path.basename(p.dir),
+    modelo: fs.existsSync(p.dominio) ? lerModelo(lerTexto(p.dominio)) : undefined,
+    casos: ucs && ucs.ok ? ucs.casos : undefined,
+    invariantesTexto: lerTexto(p.invariantes),
+  });
+  return [
+    ...r.criterios.map(c => `- ${c.ok ? '✓' : '✗'} (${c.id}) ${c.descricao} — ${c.detalhe}`),
+    ...r.avisos.map(a => `- ⚠ ${a}`),
+  ];
+}
+
 const MER: Etapa<SaidaMer> = {
   id: 'mer', titulo: 'MER', rotulo: 'Modelo', secao: 'Modelo proposto', linguagem: 'mermaid',
   destino: p => p.dominio,
@@ -200,7 +216,28 @@ const ESTADOS: Etapa<SaidaEstados> = {
   },
 };
 
-const DESCRITORES: Record<EtapaLoop2, Etapa<any>> = { mer: MER, uc: UC, atividades: ATIVIDADES, estados: ESTADOS };
+const METODOS: Etapa<SaidaMetodos> = {
+  id: 'metodos', titulo: 'Métodos', rotulo: 'Métodos', secao: 'Métodos propostos', linguagem: 'yaml',
+  destino: p => p.metodos,
+  artefato: s => s.artefato,
+  consultar: (prov, p, caso, n, gate, fontes) => consultarShadaMetodos(prov, montarContextoMetodos(p, caso, n, gate, fontes)),
+  previa: previaMetodos,
+  extras: () => [],
+  validar: a => {
+    const r = lerMetodos(a);
+    if (!r.ok) return `${r.erro}; corrija o bloco yaml`;
+    return r.metodos.metodos.length ? undefined : 'não tem métodos circunscritos; corrija o bloco yaml';
+  },
+  aoAprovar: (p, caso, a) => {
+    const r = lerMetodos(a);
+    const ucs = fs.existsSync(p.casos) ? lerCasos(lerTexto(p.casos)) : undefined;
+    if (r.ok) gravarContratosERastreabilidade(p, caso, r.metodos, ucs && ucs.ok ? ucs.casos : undefined);
+  },
+};
+
+const DESCRITORES: Record<EtapaLoop2, Etapa<any>> = {
+  mer: MER, uc: UC, atividades: ATIVIDADES, estados: ESTADOS, metodos: METODOS,
+};
 
 // ── Rodada em Markdown ─────────────────────────────────────────────
 

@@ -5,6 +5,7 @@ import { lerDicionarioCaso, lerTexto, type CasoPaths } from './casos.ts';
 import { EXEMPLO_CASOS } from './casosDeUso.ts';
 import { EXEMPLO_ESTADOS } from './estados.ts';
 import type { Gate2Resultado } from './gate2.ts';
+import { EXEMPLO_METODOS } from './metodos.ts';
 import type { FontesLidas, PerguntaShada } from './shada.ts';
 
 export interface RastreioClasse { classe: string; termo: string; justificativa: string }
@@ -392,4 +393,80 @@ export async function consultarShadaEstados(provedor: LlmProvider, contexto: str
     effort: 'high',
   });
   return normalizarSaidaEstados(bruto);
+}
+
+// ════════════════════════════════════════════════════════════════
+// Etapa metodos: métodos circunscritos às classes e contratos v2
+// ════════════════════════════════════════════════════════════════
+
+export interface SaidaMetodos {
+  perguntas: PerguntaShada[];
+  /** YAML completo de modelo/metodos.yaml */
+  artefato: string;
+  suposicoes: string[];
+  contradicoes: string[];
+  observacoes: string;
+}
+
+export const SHADA_METODOS_SYSTEM = `Você é o SHADA, o agente socrático do Paradigma IDD (Intent-Driven Development), no Loop 2 (Modelo) da Fase 0, etapa de métodos circunscritos.
+
+Entrada: a especificação aprovada no Loop 1 (intenções, invariantes, dicionário, decisões), o MER aprovado (modelo/dominio.mmd), os casos de uso aprovados (modelo/casos-de-uso.yaml), as atividades aprovadas (modelo/atividades.yaml) e os estados aprovados (modelo/estados.yaml).
+Saída: modelo/metodos.yaml com os métodos circunscritos às classes do MER que implementam as transações de negócio. O humano aprova ou rejeita o arquivo inteiro; ao aprovar, o IDD gera os contratos individuais em contratos/<Classe>.<metodo>.intent.yaml (schema v2 de @idd/core) e a matriz de rastreabilidade em rastreabilidade.md.
+
+Regras:
+- Cada método tem "classe" (PascalCase existente em modelo/dominio.mmd), "metodo" (identificador camelCase ou snake_case, único por classe), "visibilidade" (public, protected, private ou internal), "intencao" (frase com >= 10 caracteres, usando [[Termo]] entre aspas duplas), "transacoes" (lista não vazia de TN-NN implementadas pelo método), "invariantes" (lista de INV-NNN preservadas ou verificadas pelo método), "allowed_fields" (campos/classes alterados pelo método), "read_only_fields" (campos/classes apenas lidos pelo método, sem sobreposição com allowed_fields), "restricoes" (regras de negócio e pré-condições adicionais; invariantes + restricoes deve ter ao menos 1 item) e "aceitacao" (ao menos 1 critério com "dado", "quando" e "entao").
+- Coerência métodos × transações: toda transação TN-NN de modelo/casos-de-uso.yaml deve ser implementada por ao menos 1 método, e toda invariante listada na transação deve constar em "invariantes" de ao menos 1 método daquela transação.
+- Coerência contrato × modelo: todo item em "altera" de uma transação deve estar coberto por "allowed_fields" dos seus métodos, e todo item em "le" deve estar coberto por "read_only_fields" (ou "allowed_fields") dos seus métodos. Nunca coloque o mesmo campo simultaneamente em "allowed_fields" e "read_only_fields" do mesmo método.
+- NÃO invente regra de negócio. Se a assinatura, responsabilidade de classe ou comportamento de borda depender de algo não decidido, siga decisoes.md, registre suposições em "suposicoes" e faça até 3 perguntas se restar dúvida.
+- Não repita perguntas já respondidas ou em aberto em decisoes.md.
+
+Formato do YAML (siga exatamente; "artefato" é o texto YAML, sem cerca):
+\`\`\`yaml
+${EXEMPLO_METODOS}\`\`\`
+- Responda sempre em português do Brasil, somente com o JSON pedido.`;
+
+export const SHADA_METODOS_SCHEMA: Record<string, unknown> = SHADA_UC_SCHEMA;
+
+export function normalizarSaidaMetodos(raw: unknown): SaidaMetodos {
+  if (typeof raw !== 'object' || raw === null || Array.isArray(raw)) throw new Error('Saída do SHADA (métodos) inválida: esperado um objeto JSON.');
+  const o = raw as Record<string, unknown>;
+  const artefato = limparMermaid(texto(o.artefato));
+  if (!/metodos\s*:/.test(artefato)) throw new Error('Saída do SHADA (métodos) inválida: "artefato" não tem metodos.');
+  return {
+    perguntas: perguntasDe(o.perguntas), artefato,
+    suposicoes: lista(o.suposicoes), contradicoes: lista(o.contradicoes), observacoes: texto(o.observacoes),
+  };
+}
+
+export function montarContextoMetodos(p: CasoPaths, caso: string, rodada: number, gate: Gate2Resultado, fontes: FontesLidas): string {
+  const secoes: string[] = [`# Caso: ${caso} — loop 2, etapa de métodos, rodada ${String(rodada).padStart(2, '0')}`];
+  secoes.push('## intencoes.md (aprovado no loop 1)\n\n' + lerTexto(p.intencoes));
+  secoes.push('## invariantes.md (aprovado no loop 1)\n\n' + lerTexto(p.invariantes));
+  secoes.push('## dicionario.json\n\n' + JSON.stringify(lerDicionarioCaso(p.dicionario), null, 2));
+  secoes.push('## modelo/dominio.mmd (MER aprovado)\n\n```mermaid\n' + lerTexto(p.dominio).trim() + '\n```');
+  secoes.push('## modelo/casos-de-uso.yaml (casos de uso aprovados)\n\n```yaml\n' + lerTexto(p.casos).trim() + '\n```');
+  secoes.push('## modelo/atividades.yaml (atividades aprovadas)\n\n```yaml\n' + lerTexto(p.atividades).trim() + '\n```');
+  secoes.push('## modelo/estados.yaml (estados aprovados)\n\n```yaml\n' + lerTexto(p.estados).trim() + '\n```');
+  secoes.push('## decisoes.md\n\n' + (lerTexto(p.decisoes) || '(vazio)'));
+  const atual = lerTexto(p.metodos);
+  secoes.push('## modelo/metodos.yaml (atual)\n\n' + (atual ? '```yaml\n' + atual.trim() + '\n```' : '(ainda não existe)'));
+  secoes.push('## Estado do Gate 2\n\n' + (gate.verde ? 'verde' : 'vermelho') + '\n'
+    + gate.criterios.map(c => `- (${c.id}) ${c.descricao}: ${c.ok ? 'ok' : 'FALHA'} — ${c.detalhe}`).join('\n')
+    + (gate.avisos.length ? '\n' + gate.avisos.map(a => `- aviso: ${a}`).join('\n') : ''));
+  secoes.push('## Fontes\n\n' + (fontes.arquivos.length
+    ? fontes.arquivos.map(f => `### fontes/${f.nome}\n\n${f.conteudo}`).join('\n\n')
+    : '(nenhuma)'));
+  secoes.push('Produza a próxima rodada da etapa de métodos: o YAML completo em "artefato", as suposições, até 3 perguntas e as contradições, no JSON do schema.');
+  return secoes.join('\n\n');
+}
+
+export async function consultarShadaMetodos(provedor: LlmProvider, contexto: string): Promise<SaidaMetodos> {
+  const bruto = await provedor.completeJson({
+    system: SHADA_METODOS_SYSTEM,
+    user: contexto,
+    schemaName: 'rodada_metodos',
+    schema: SHADA_METODOS_SCHEMA,
+    effort: 'high',
+  });
+  return normalizarSaidaMetodos(bruto);
 }
