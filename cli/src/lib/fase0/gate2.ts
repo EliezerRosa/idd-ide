@@ -1,16 +1,17 @@
 // src/lib/fase0/gate2.ts — Gate 2 (fim do loop 2): critérios determinísticos, a IA não aprova a própria saída.
-// Etapas: MER → casos de uso (com contexto). As seguintes (atividades, estados, métodos) acrescentam critérios aqui.
+// Etapas: MER → casos de uso (com contexto) → atividades. As seguintes (estados, métodos) acrescentam critérios aqui.
 import * as fs from 'node:fs';
 import { decomposeBCNF, lostDependencies } from '../domain/fds.ts';
 import { analyzeEntity, entityRelation } from '../domain/normalizer.ts';
 import { parseMermaid } from '../domain/parser.ts';
 import type { DomainEntity, DomainModel } from '../domain/types.ts';
+import { avaliarAtividades, lerAtividades } from './atividades.ts';
 import { lerDecisoes, lerDicionarioCaso, lerTexto, type CasoPaths } from './casos.ts';
 import { avaliarCasos, lerCasos } from './casosDeUso.ts';
 import { extrairItens } from './lintLn.ts';
 
-export type EtapaLoop2 = 'mer' | 'uc';
-export const ETAPAS: EtapaLoop2[] = ['mer', 'uc'];
+export type EtapaLoop2 = 'mer' | 'uc' | 'atividades';
+export const ETAPAS: EtapaLoop2[] = ['mer', 'uc', 'atividades'];
 
 export interface CriterioGate2 {
   id: string;
@@ -104,7 +105,8 @@ export function avaliarGate2(p: CasoPaths): Gate2Resultado {
   };
 
   // etapa UC (casos de uso até a transação de negócio)
-  const casos = avaliarCasos(fs.existsSync(p.casos) ? lerCasos(lerTexto(p.casos)) : undefined, {
+  const leituraUc = fs.existsSync(p.casos) ? lerCasos(lerTexto(p.casos)) : undefined;
+  const casos = avaliarCasos(leituraUc, {
     intencoes: extrairItens(lerTexto(p.intencoes), 'INT').map(x => x.id),
     invariantes: extrairItens(lerTexto(p.invariantes), 'INV').map(x => x.id),
     modelo,
@@ -112,7 +114,19 @@ export function avaliarGate2(p: CasoPaths): Gate2Resultado {
   });
   avisos.push(...casos.avisos);
 
-  const criterios: CriterioGate2[] = [a, b, c, ...casos.criterios.map(x => ({ ...x, etapa: 'uc' as const })), d];
+  // etapa atividades (fluxos por caso de uso)
+  const leituraAtiv = fs.existsSync(p.atividades) ? lerAtividades(lerTexto(p.atividades)) : undefined;
+  const atividades = avaliarAtividades(leituraAtiv, {
+    casos: leituraUc && leituraUc.ok ? leituraUc.casos : undefined,
+  });
+  avisos.push(...atividades.avisos);
+
+  const criterios: CriterioGate2[] = [
+    a, b, c,
+    ...casos.criterios.map(x => ({ ...x, etapa: 'uc' as const })),
+    ...atividades.criterios.map(x => ({ ...x, etapa: 'atividades' as const })),
+    d,
+  ];
   const reprovada = ETAPAS.find(e => criterios.some(x => x.etapa === e && !x.ok));
   const etapa = reprovada ?? (d.ok ? 'concluido' : ETAPAS[ETAPAS.length - 1]);
   return { verde: criterios.every(x => x.ok), criterios, avisos, etapa };

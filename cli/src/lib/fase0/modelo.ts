@@ -1,9 +1,10 @@
-// src/lib/fase0/modelo.ts — SHADA no Loop 2: etapa MER (modelo de domínio) e etapa UC (casos de uso até a transação)
+// src/lib/fase0/modelo.ts — SHADA no Loop 2: etapa MER (modelo de domínio), etapa UC (casos de uso) e etapa atividades (fluxos por UC)
 import type { LlmProvider } from '../llm/types.ts';
+import { EXEMPLO_ATIVIDADES } from './atividades.ts';
 import { lerDicionarioCaso, lerTexto, type CasoPaths } from './casos.ts';
+import { EXEMPLO_CASOS } from './casosDeUso.ts';
 import type { Gate2Resultado } from './gate2.ts';
 import type { FontesLidas, PerguntaShada } from './shada.ts';
-import { EXEMPLO_CASOS } from './casosDeUso.ts';
 
 export interface RastreioClasse { classe: string; termo: string; justificativa: string }
 
@@ -235,4 +236,81 @@ export async function consultarShadaUc(provedor: LlmProvider, contexto: string):
     effort: 'high',
   });
   return normalizarSaidaUc(bruto);
+}
+
+// ════════════════════════════════════════════════════════════════
+// Etapa atividades: fluxos por caso de uso (raias, transações, guardas)
+// ════════════════════════════════════════════════════════════════
+
+export interface SaidaAtividades {
+  perguntas: PerguntaShada[];
+  /** YAML completo de modelo/atividades.yaml */
+  artefato: string;
+  suposicoes: string[];
+  contradicoes: string[];
+  observacoes: string;
+}
+
+export const SHADA_ATIVIDADES_SYSTEM = `Você é o SHADA, o agente socrático do Paradigma IDD (Intent-Driven Development), no Loop 2 (Modelo) da Fase 0, etapa de atividades.
+
+Entrada: a especificação aprovada no Loop 1 (intenções, invariantes, dicionário, decisões), o MER aprovado (modelo/dominio.mmd) e os casos de uso aprovados (modelo/casos-de-uso.yaml).
+Saída: modelo/atividades.yaml com o fluxo de atividades de cada caso de uso (UC-NN). O humano aprova ou rejeita o arquivo inteiro; ao aprovar, o IDD gera os diagramas PlantUML em modelo/atividades/UC-NN.puml.
+
+Regras:
+- Todo caso de uso (UC-NN) de modelo/casos-de-uso.yaml deve ter exatamente um fluxo em "atividades".
+- Cada fluxo tem um "resumo" curto e uma lista ordenada de "passos" (id P-01, P-02, ... único dentro do UC).
+- "raia" é quem executa o passo: o nome de um ator declarado em modelo/casos-de-uso.yaml (ex.: ResponsavelMesa, Participante) ou "Sistema". Todo fluxo deve começar ou passar pela raia do ator principal do caso de uso.
+- Toda transação de negócio (TN-NN) do caso de uso deve ser executada em ao menos um passo daquele UC com raia "Sistema" e campo "transacao: TN-NN".
+- Se a transação TN-NN possui pré-condições em modelo/casos-de-uso.yaml, o passo que a executa DEVE declarar "guarda" (síntese assertiva das pré-condições verificadas) e "senao" (ação de recusa que encerra o fluxo sem efeito, preservando a atomicidade da transação).
+- Escreva "acao", "guarda" e "senao" entre aspas duplas sempre que contiverem "[[Termo]]".
+- NÃO invente regra de negócio. Se a ordem entre transações de um mesmo UC, uma condição de bloqueio ou o comportamento diante de erro depender de decisão ainda não tomada, modele a opção recomendada, registre-a em "suposicoes" e pergunte (no máximo 3 perguntas; bloqueante só o que altera o fluxo).
+- Não repita perguntas já respondidas ou em aberto em decisoes.md. Se houver versão anterior rejeitada, leia o comentário do humano em decisoes.md e corrija.
+
+Formato do YAML (siga exatamente; "artefato" é o texto YAML, sem cerca):
+\`\`\`yaml
+${EXEMPLO_ATIVIDADES}\`\`\`
+- Responda sempre em português do Brasil, somente com o JSON pedido.`;
+
+export const SHADA_ATIVIDADES_SCHEMA: Record<string, unknown> = SHADA_UC_SCHEMA;
+
+export function normalizarSaidaAtividades(raw: unknown): SaidaAtividades {
+  if (typeof raw !== 'object' || raw === null || Array.isArray(raw)) throw new Error('Saída do SHADA (atividades) inválida: esperado um objeto JSON.');
+  const o = raw as Record<string, unknown>;
+  const artefato = limparMermaid(texto(o.artefato));
+  if (!/atividades\s*:/.test(artefato)) throw new Error('Saída do SHADA (atividades) inválida: "artefato" não tem atividades.');
+  return {
+    perguntas: perguntasDe(o.perguntas), artefato,
+    suposicoes: lista(o.suposicoes), contradicoes: lista(o.contradicoes), observacoes: texto(o.observacoes),
+  };
+}
+
+export function montarContextoAtividades(p: CasoPaths, caso: string, rodada: number, gate: Gate2Resultado, fontes: FontesLidas): string {
+  const secoes: string[] = [`# Caso: ${caso} — loop 2, etapa de atividades, rodada ${String(rodada).padStart(2, '0')}`];
+  secoes.push('## intencoes.md (aprovado no loop 1)\n\n' + lerTexto(p.intencoes));
+  secoes.push('## invariantes.md (aprovado no loop 1)\n\n' + lerTexto(p.invariantes));
+  secoes.push('## dicionario.json\n\n' + JSON.stringify(lerDicionarioCaso(p.dicionario), null, 2));
+  secoes.push('## modelo/dominio.mmd (MER aprovado)\n\n```mermaid\n' + lerTexto(p.dominio).trim() + '\n```');
+  secoes.push('## modelo/casos-de-uso.yaml (casos de uso aprovados)\n\n```yaml\n' + lerTexto(p.casos).trim() + '\n```');
+  secoes.push('## decisoes.md\n\n' + (lerTexto(p.decisoes) || '(vazio)'));
+  const atual = lerTexto(p.atividades);
+  secoes.push('## modelo/atividades.yaml (atual)\n\n' + (atual ? '```yaml\n' + atual.trim() + '\n```' : '(ainda não existe)'));
+  secoes.push('## Estado do Gate 2\n\n' + (gate.verde ? 'verde' : 'vermelho') + '\n'
+    + gate.criterios.map(c => `- (${c.id}) ${c.descricao}: ${c.ok ? 'ok' : 'FALHA'} — ${c.detalhe}`).join('\n')
+    + (gate.avisos.length ? '\n' + gate.avisos.map(a => `- aviso: ${a}`).join('\n') : ''));
+  secoes.push('## Fontes\n\n' + (fontes.arquivos.length
+    ? fontes.arquivos.map(f => `### fontes/${f.nome}\n\n${f.conteudo}`).join('\n\n')
+    : '(nenhuma)'));
+  secoes.push('Produza a próxima rodada da etapa de atividades: o YAML completo em "artefato", as suposições, até 3 perguntas e as contradições, no JSON do schema.');
+  return secoes.join('\n\n');
+}
+
+export async function consultarShadaAtividades(provedor: LlmProvider, contexto: string): Promise<SaidaAtividades> {
+  const bruto = await provedor.completeJson({
+    system: SHADA_ATIVIDADES_SYSTEM,
+    user: contexto,
+    schemaName: 'rodada_atividades',
+    schema: SHADA_ATIVIDADES_SCHEMA,
+    effort: 'high',
+  });
+  return normalizarSaidaAtividades(bruto);
 }

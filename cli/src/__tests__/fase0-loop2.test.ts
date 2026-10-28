@@ -64,7 +64,7 @@ describe('Gate 2 · MER', () => {
     fs.mkdirSync(p.modelo, { recursive: true });
     fs.writeFileSync(p.dominio, MODELO_OK);
     const g = avaliarGate2(p);
-    expect(g.criterios.filter(c => c.etapa !== 'uc').map(c => c.ok)).toEqual([true, true, true, true]);
+    expect(g.criterios.filter(c => c.etapa === 'mer' || c.etapa === 'geral').map(c => c.ok)).toEqual([true, true, true, true]);
     expect(g.etapa).toBe('uc');
   });
 
@@ -204,15 +204,14 @@ function casoComMer() {
 describe('Gate 2 · casos de uso', () => {
   const uc = (g: ReturnType<typeof avaliarGate2>, id: string) => g.criterios.find(c => c.id === id)!;
 
-  it('verde com casos de uso completos; gera etapa concluída', () => {
+  it('verde na etapa UC com casos de uso completos; avança para atividades', () => {
     const p = casoComMer();
     fs.writeFileSync(p.casos, CASOS_OK);
     const g = avaliarGate2(p);
-    expect(g.criterios.map(c => [c.id, c.ok])).toEqual([
+    expect(g.criterios.filter(c => c.etapa !== 'atividades').map(c => [c.id, c.ok])).toEqual([
       ['a', true], ['b', true], ['c', true], ['e', true], ['f', true], ['g', true], ['h', true], ['i', true], ['d', true],
     ]);
-    expect(g.verde).toBe(true);
-    expect(g.etapa).toBe('concluido');
+    expect(g.etapa).toBe('atividades');
   });
 
   it('reprova transação sem pós, intenção descoberta, invariante órfã e referências inexistentes', () => {
@@ -256,9 +255,10 @@ describe('loop 2 · casos de uso', () => {
     expect(lerTexto(md)).toMatch(/✓ \(h\) nenhuma invariante órfã/);
 
     marcar(md, '**Casos de uso:** [ ] aprovar', '**Casos de uso:** [x] aprovar');
-    const r2 = await executarLoop2({ root, caso: 'c', provedor: prov, hoje: '2026-10-27' });
+    const r2 = await executarLoop2({ root, caso: 'c', provedor: prov, hoje: '2026-10-27', semNovaRodada: true });
     expect(r2.aplicacao!.modelo).toBe('aprovado');
-    expect(r2.estado).toBe('gate-verde');
+    expect(r2.gate!.criterios.filter(c => c.etapa === 'uc').every(c => c.ok)).toBe(true);
+    expect(r2.etapa).toBe('atividades');
     expect(lerTexto(p.casos)).toBe(CASOS_OK + '\n');
     const puml = lerTexto(p.contexto);
     expect(puml).toMatch(/actor "Participante" as Participante/);
@@ -274,5 +274,112 @@ describe('loop 2 · casos de uso', () => {
     marcar(md, 'casos_de_uso:', 'casos_de_uso: [');
     marcar(md, '**Casos de uso:** [ ] aprovar', '**Casos de uso:** [x] aprovar');
     await expect(executarLoop2({ root, caso: 'c', provedor: new RecordedProvider([]) })).rejects.toThrow(/YAML inválido/);
+  });
+});
+
+// ── Etapa Atividades ────────────────────────────────────────────────
+
+const ATIVIDADES_OK = [
+  'atividades:',
+  '  - uc: UC-01',
+  '    resumo: Participante entra na mesa e consulta a própria cota.',
+  '    passos:',
+  '      - id: P-01',
+  '        raia: Participante',
+  '        acao: "Solicita entrada na [[Mesa]]."',
+  '      - id: P-02',
+  '        raia: Sistema',
+  '        acao: "Registra o [[Participante]] na [[Mesa]]."',
+  '        transacao: TN-01',
+  '        guarda: "A [[Mesa]] existe."',
+  '        senao: "Informa que a [[Mesa]] não foi encontrada."',
+].join('\n');
+
+const respostaAtiv = (artefato: string) => ({ perguntas: [], artefato, suposicoes: [], contradicoes: [], observacoes: '' });
+
+function casoComUc() {
+  const p = casoComMer();
+  fs.writeFileSync(p.casos, CASOS_OK);
+  return p;
+}
+
+describe('Gate 2 · atividades', () => {
+  const ativ = (g: ReturnType<typeof avaliarGate2>, id: string) => g.criterios.find(c => c.id === id)!;
+
+  it('verde com atividades completas; gera etapa concluída', () => {
+    const p = casoComUc();
+    fs.writeFileSync(p.atividades, ATIVIDADES_OK);
+    const g = avaliarGate2(p);
+    expect(g.criterios.map(c => [c.id, c.ok])).toEqual([
+      ['a', true], ['b', true], ['c', true],
+      ['e', true], ['f', true], ['g', true], ['h', true], ['i', true],
+      ['j', true], ['k', true], ['l', true], ['m', true],
+      ['d', true],
+    ]);
+    expect(g.verde).toBe(true);
+    expect(g.etapa).toBe('concluido');
+  });
+
+  it('reprova UC sem fluxo, transação fora da raia Sistema, transação sem guarda/senao e referências inválidas', () => {
+    const p = casoComUc();
+    fs.writeFileSync(p.atividades, [
+      'atividades:',
+      '  - uc: UC-99',
+      '    resumo: Fluxo órfão.',
+      '    passos:',
+      '      - id: P-01',
+      '        raia: Garcom',
+      '        acao: "Tenta executar transação."',
+      '        transacao: TN-99',
+    ].join('\n'));
+    const g = avaliarGate2(p);
+    expect(ativ(g, 'j').detalhe).toMatch(/casos de uso sem fluxo: UC-01/);
+    expect(ativ(g, 'k').detalhe).toMatch(/TN-01 \(UC-01\) não é executada/);
+    expect(ativ(g, 'm').detalhe).toMatch(/caso de uso "UC-99" não existe/);
+    expect(ativ(g, 'm').detalhe).toMatch(/raia "Garcom"/);
+    expect(ativ(g, 'm').detalhe).toMatch(/transação "TN-99" não existe/);
+
+    // TN-01 na raia do ator e sem guarda/senao
+    fs.writeFileSync(p.atividades, [
+      'atividades:',
+      '  - uc: UC-01',
+      '    resumo: Fluxo sem guarda.',
+      '    passos:',
+      '      - id: P-01',
+      '        raia: Participante',
+      '        acao: "Executa direto."',
+      '        transacao: TN-01',
+    ].join('\n'));
+    const g2 = avaliarGate2(p);
+    expect(ativ(g2, 'k').detalhe).toMatch(/deve ter raia Sistema/);
+    expect(ativ(g2, 'l').detalhe).toMatch(/exige guarda e senao/);
+  });
+});
+
+describe('loop 2 · atividades', () => {
+  it('depois dos casos de uso, gera a rodada de atividades; aprovar grava atividades.yaml e atividades/UC-01.puml', async () => {
+    const p = casoComUc();
+    const prov = new RecordedProvider([respostaAtiv(ATIVIDADES_OK)]);
+    const r1 = await executarLoop2({ root, caso: 'c', provedor: prov, hoje: '2026-10-28' });
+    expect(r1.estado).toBe('nova-rodada');
+    expect(r1.etapa).toBe('atividades');
+    expect(prov.pedidos[0].schemaName).toBe('rodada_atividades');
+    expect(prov.pedidos[0].user).toMatch(/casos de uso aprovados/);
+    const md = arquivoEtapa(p, 'atividades', 1, 'md');
+    expect(lerTexto(md)).toMatch(/```yaml\natividades:/);
+    expect(lerTexto(md)).toMatch(/✓ \(k\) toda transação de negócio é executada pelo Sistema/);
+
+    marcar(md, '**Atividades:** [ ] aprovar', '**Atividades:** [x] aprovar');
+    const r2 = await executarLoop2({ root, caso: 'c', provedor: prov, hoje: '2026-10-28' });
+    expect(r2.aplicacao!.modelo).toBe('aprovado');
+    expect(r2.estado).toBe('gate-verde');
+    expect(lerTexto(p.atividades)).toBe(ATIVIDADES_OK + '\n');
+    const puml = lerTexto(path.join(p.atividadesDir, 'UC-01.puml'));
+    expect(puml).toMatch(/title UC-01 Consultar a própria cota — c/);
+    expect(puml).toMatch(/\|Participante\|/);
+    expect(puml).toMatch(/\|Sistema\|/);
+    expect(puml).toMatch(/if \(A \[\[Mesa\]\] existe\.\?\) then \(sim\)/);
+    expect(puml).toMatch(/:P-02 \[TN-01\] Registra o \[\[Participante\]\] na \[\[Mesa\]\]\.;/);
+    expect(lerTexto(p.decisoes)).toMatch(/L2\/ATIVIDADES01\/artefato · atividades aprovado: modelo\/atividades\.yaml/);
   });
 });

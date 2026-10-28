@@ -1,9 +1,10 @@
-// src/lib/fase0/loop2.ts — Loop 2 (Modelo) por rodadas em arquivo, em etapas: MER → casos de uso.
+// src/lib/fase0/loop2.ts — Loop 2 (Modelo) por rodadas em arquivo, em etapas: MER → casos de uso → atividades.
 // Em cada etapa o SHADA propõe o artefato inteiro; o humano aprova ou rejeita (Confirm-Once da etapa),
 // podendo editar o artefato no próprio arquivo da rodada antes de aprovar.
 import * as fs from 'node:fs';
 import * as path from 'node:path';
 import { AguardandoRespostaManual, escolherProvedor, type LlmProvider } from '../llm/index.ts';
+import { avaliarAtividades, gravarAtividadesPuml, lerAtividades } from './atividades.ts';
 import {
   caminhosCaso, fmtDecisaoId, hoje, lerDicionarioCaso, lerTexto, proximoIdDecisao, rotuloRodada, type CasoPaths,
 } from './casos.ts';
@@ -12,7 +13,9 @@ import { avaliarGate1 } from './gate1.ts';
 import { avaliarGate2, diagnosticarEntidade, ETAPAS, lerModelo, type EtapaLoop2, type Gate2Resultado } from './gate2.ts';
 import { extrairItens } from './lintLn.ts';
 import {
-  consultarShadaMer, consultarShadaUc, montarContextoMer, montarContextoUc, type SaidaMer, type SaidaUc,
+  consultarShadaAtividades, consultarShadaMer, consultarShadaUc,
+  montarContextoAtividades, montarContextoMer, montarContextoUc,
+  type SaidaAtividades, type SaidaMer, type SaidaUc,
 } from './modelo.ts';
 import { lerRodadaRespondida } from './rodada.ts';
 import { lerFontes, type FontesLidas, type PerguntaShada, type SaidaShada } from './shada.ts';
@@ -103,6 +106,18 @@ export function previaCasos(p: CasoPaths, texto: string): string[] {
   ];
 }
 
+/** Critérios da etapa de atividades aplicados aos fluxos propostos. */
+export function previaAtividades(p: CasoPaths, texto: string): string[] {
+  const ucs = fs.existsSync(p.casos) ? lerCasos(lerTexto(p.casos)) : undefined;
+  const r = avaliarAtividades(lerAtividades(texto), {
+    casos: ucs && ucs.ok ? ucs.casos : undefined,
+  });
+  return [
+    ...r.criterios.map(c => `- ${c.ok ? '✓' : '✗'} (${c.id}) ${c.descricao} — ${c.detalhe}`),
+    ...r.avisos.map(a => `- ⚠ ${a}`),
+  ];
+}
+
 const MER: Etapa<SaidaMer> = {
   id: 'mer', titulo: 'MER', rotulo: 'Modelo', secao: 'Modelo proposto', linguagem: 'mermaid',
   destino: p => p.dominio,
@@ -133,7 +148,26 @@ const UC: Etapa<SaidaUc> = {
   },
 };
 
-const DESCRITORES: Record<EtapaLoop2, Etapa<any>> = { mer: MER, uc: UC };
+const ATIVIDADES: Etapa<SaidaAtividades> = {
+  id: 'atividades', titulo: 'Atividades', rotulo: 'Atividades', secao: 'Atividades propostas', linguagem: 'yaml',
+  destino: p => p.atividades,
+  artefato: s => s.artefato,
+  consultar: (prov, p, caso, n, gate, fontes) => consultarShadaAtividades(prov, montarContextoAtividades(p, caso, n, gate, fontes)),
+  previa: previaAtividades,
+  extras: () => [],
+  validar: a => {
+    const r = lerAtividades(a);
+    if (!r.ok) return `${r.erro}; corrija o bloco yaml`;
+    return r.atividades.atividades.length ? undefined : 'não tem fluxos de atividade; corrija o bloco yaml';
+  },
+  aoAprovar: (p, caso, a) => {
+    const r = lerAtividades(a);
+    const ucs = fs.existsSync(p.casos) ? lerCasos(lerTexto(p.casos)) : undefined;
+    if (r.ok) gravarAtividadesPuml(p.atividadesDir, caso, r.atividades, ucs && ucs.ok ? ucs.casos : undefined);
+  },
+};
+
+const DESCRITORES: Record<EtapaLoop2, Etapa<any>> = { mer: MER, uc: UC, atividades: ATIVIDADES };
 
 // ── Rodada em Markdown ─────────────────────────────────────────────
 
