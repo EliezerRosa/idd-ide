@@ -1,0 +1,15 @@
+@startuml
+title UC-06 Confirmar pagamento — racha-conta
+
+|ResponsavelMesa|
+start
+:P-01 Seleciona o pagamento pendente de um [[Participante]] e confirma o recebimento.;
+|Sistema|
+if (O pagamento tem comprovante e ainda não foi confirmado.?) then (sim)
+  :P-02 [TN-08] Registra a data de confirmação no pagamento do [[Participante]].;
+else (não)
+  :Recusa a confirmação e informa que não há pagamento pendente com comprovante.;
+  stop
+endif
+stop
+@enduml

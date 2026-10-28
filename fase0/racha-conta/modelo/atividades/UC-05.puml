@@ -1,0 +1,24 @@
+@startuml
+title UC-05 Pagar a própria cota — racha-conta
+
+|Participante|
+start
+:P-01 Solicita a cobrança Pix para pagamento da própria [[Cota]].;
+|Sistema|
+if (A [[Mesa]] está fechada, o [[Participante]] não é o [[ResponsavelMesa]] e a [[Cota]] do [[Participante]] é maior que zero.?) then (sim)
+  :P-02 [TN-06] Exibe o código Pix Copia e Cola e o QR Code para a [[ChavePix]] da [[Mesa]] com o valor da [[Cota]] do [[Participante]].;
+else (não)
+  :Recusa a geração da cobrança Pix e informa o motivo.;
+  stop
+endif
+|Participante|
+:P-03 Envia o comprovante de pagamento da própria [[Cota]].;
+|Sistema|
+if (A [[Mesa]] está fechada, o [[Participante]] não é o [[ResponsavelMesa]], a [[Cota]] do [[Participante]] é maior que zero e nenhum pagamento do [[Participante]] está confirmado.?) then (sim)
+  :P-04 [TN-07] Registra o pagamento do [[Participante]] com o comprovante e o valor da [[Cota]] em centavos, substituindo comprovante anterior não confirmado.;
+else (não)
+  :Recusa o envio do comprovante e informa o motivo.;
+  stop
+endif
+stop
+@enduml

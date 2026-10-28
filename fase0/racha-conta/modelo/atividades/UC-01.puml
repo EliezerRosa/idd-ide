@@ -1,0 +1,15 @@
+@startuml
+title UC-01 Criar mesa — racha-conta
+
+|ResponsavelMesa|
+start
+:P-01 Informa o próprio nome, a [[ChavePix]] e, opcionalmente, o percentual da [[TaxaServico]].;
+|Sistema|
+if (O [[ResponsavelMesa]] informou a própria [[ChavePix]] e o próprio nome.?) then (sim)
+  :P-02 [TN-01] Cria a [[Mesa]] aberta com a [[ChavePix]] e a [[TaxaServico]] (ou 10% por padrão) e registra o [[ResponsavelMesa]] como [[Participante]].;
+else (não)
+  :Recusa a criação da [[Mesa]] e solicita o dado obrigatório ausente.;
+  stop
+endif
+stop
+@enduml

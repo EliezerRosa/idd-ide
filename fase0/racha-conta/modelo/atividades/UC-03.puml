@@ -1,0 +1,15 @@
+@startuml
+title UC-03 Consultar a própria cota — racha-conta
+
+|Participante|
+start
+:P-01 Solicita a consulta da própria [[Cota]] na [[Mesa]].;
+|Sistema|
+if (A [[Mesa]] tem ao menos um [[ItemConsumido]].?) then (sim)
+  :P-02 [TN-04] Calcula as [[Cota]]s da [[Mesa]] (itens e [[TaxaServico]] com arredondamento comercial e rodízio alfabético contínuo) e exibe o valor exato da [[Cota]] ao [[Participante]].;
+else (não)
+  :Informa que a [[Mesa]] ainda não possui [[ItemConsumido]] registrado para cálculo.;
+  stop
+endif
+stop
+@enduml

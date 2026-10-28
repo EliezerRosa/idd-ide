@@ -92,6 +92,7 @@ casos_de_uso:
         pre:
           - "A [[Mesa]] está fechada."
           - "O [[Participante]] não é o [[ResponsavelMesa]]."
+          - "A [[Cota]] do [[Participante]] é maior que zero."
         pos:
           - "O aplicativo exibe o Pix Copia e Cola e o QR Code para a [[ChavePix]] da [[Mesa]], com o valor da [[Cota]] do [[Participante]]."
         invariantes: [INV-005]
@@ -102,6 +103,7 @@ casos_de_uso:
         pre:
           - "A [[Mesa]] está fechada."
           - "O [[Participante]] não é o [[ResponsavelMesa]]."
+          - "A [[Cota]] do [[Participante]] é maior que zero."
           - "Nenhum pagamento do [[Participante]] está confirmado."
         pos:
           - "Existe exatamente um pagamento do [[Participante]], com o comprovante e o valor da [[Cota]] em centavos no momento do envio; um comprovante anterior não confirmado é substituído."

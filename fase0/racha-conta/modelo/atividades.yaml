@@ -1,0 +1,91 @@
+atividades:
+  - uc: UC-01
+    resumo: O responsável informa o próprio nome, a chave Pix e a taxa de serviço opcional, e o sistema cria a mesa aberta.
+    passos:
+      - id: P-01
+        raia: ResponsavelMesa
+        acao: "Informa o próprio nome, a [[ChavePix]] e, opcionalmente, o percentual da [[TaxaServico]]."
+      - id: P-02
+        raia: Sistema
+        acao: "Cria a [[Mesa]] aberta com a [[ChavePix]] e a [[TaxaServico]] (ou 10% por padrão) e registra o [[ResponsavelMesa]] como [[Participante]]."
+        transacao: TN-01
+        guarda: "O [[ResponsavelMesa]] informou a própria [[ChavePix]] e o próprio nome."
+        senao: "Recusa a criação da [[Mesa]] e solicita o dado obrigatório ausente."
+  - uc: UC-02
+    resumo: Enquanto a mesa está aberta, o responsável inclui participantes com nomes únicos e registra os itens consumidos.
+    passos:
+      - id: P-01
+        raia: ResponsavelMesa
+        acao: "Informa o nome do novo [[Participante]] da [[Mesa]]."
+      - id: P-02
+        raia: Sistema
+        acao: "Inclui o [[Participante]] na [[Mesa]]."
+        transacao: TN-02
+        guarda: "A [[Mesa]] não está fechada e nenhum [[Participante]] da [[Mesa]] tem o mesmo nome."
+        senao: "Recusa a inclusão do [[Participante]] e informa o motivo."
+      - id: P-03
+        raia: ResponsavelMesa
+        acao: "Informa a descrição, o preço inteiro em centavos e os [[Participante]]s consumidores do [[ItemConsumido]]."
+      - id: P-04
+        raia: Sistema
+        acao: "Registra o [[ItemConsumido]] na próxima ordem da [[Mesa]] e associa cada [[Participante]] consumidor."
+        transacao: TN-03
+        guarda: "A [[Mesa]] não está fechada, o [[ItemConsumido]] tem ao menos um consumidor da mesma [[Mesa]] e o preço é um número inteiro de centavos."
+        senao: "Recusa o registro do [[ItemConsumido]] e informa a regra violada."
+  - uc: UC-03
+    resumo: O participante solicita a consulta e o sistema calcula e exibe as cotas da mesa com centavos indivisíveis em rodízio alfabético.
+    passos:
+      - id: P-01
+        raia: Participante
+        acao: "Solicita a consulta da própria [[Cota]] na [[Mesa]]."
+      - id: P-02
+        raia: Sistema
+        acao: "Calcula as [[Cota]]s da [[Mesa]] (itens e [[TaxaServico]] com arredondamento comercial e rodízio alfabético contínuo) e exibe o valor exato da [[Cota]] ao [[Participante]]."
+        transacao: TN-04
+        guarda: "A [[Mesa]] tem ao menos um [[ItemConsumido]]."
+        senao: "Informa que a [[Mesa]] ainda não possui [[ItemConsumido]] registrado para cálculo."
+  - uc: UC-04
+    resumo: O responsável encerra os lançamentos e fecha definitivamente a mesa para pagamento.
+    passos:
+      - id: P-01
+        raia: ResponsavelMesa
+        acao: "Solicita o fechamento da [[Mesa]] para pagamento."
+      - id: P-02
+        raia: Sistema
+        acao: "Registra a data de fechamento da [[Mesa]] e bloqueia novas inclusões ou alterações de consumo."
+        transacao: TN-05
+        guarda: "A [[Mesa]] não está fechada."
+        senao: "Informa que a [[Mesa]] já se encontra fechada."
+  - uc: UC-05
+    resumo: Com a mesa fechada, o participante gera a cobrança Pix da própria cota e envia o comprovante de pagamento.
+    passos:
+      - id: P-01
+        raia: Participante
+        acao: "Solicita a cobrança Pix para pagamento da própria [[Cota]]."
+      - id: P-02
+        raia: Sistema
+        acao: "Exibe o código Pix Copia e Cola e o QR Code para a [[ChavePix]] da [[Mesa]] com o valor da [[Cota]] do [[Participante]]."
+        transacao: TN-06
+        guarda: "A [[Mesa]] está fechada, o [[Participante]] não é o [[ResponsavelMesa]] e a [[Cota]] do [[Participante]] é maior que zero."
+        senao: "Recusa a geração da cobrança Pix e informa o motivo."
+      - id: P-03
+        raia: Participante
+        acao: "Envia o comprovante de pagamento da própria [[Cota]]."
+      - id: P-04
+        raia: Sistema
+        acao: "Registra o pagamento do [[Participante]] com o comprovante e o valor da [[Cota]] em centavos, substituindo comprovante anterior não confirmado."
+        transacao: TN-07
+        guarda: "A [[Mesa]] está fechada, o [[Participante]] não é o [[ResponsavelMesa]], a [[Cota]] do [[Participante]] é maior que zero e nenhum pagamento do [[Participante]] está confirmado."
+        senao: "Recusa o envio do comprovante e informa o motivo."
+  - uc: UC-06
+    resumo: O responsável confere o comprovante enviado pelo participante e confirma o pagamento da cota.
+    passos:
+      - id: P-01
+        raia: ResponsavelMesa
+        acao: "Seleciona o pagamento pendente de um [[Participante]] e confirma o recebimento."
+      - id: P-02
+        raia: Sistema
+        acao: "Registra a data de confirmação no pagamento do [[Participante]]."
+        transacao: TN-08
+        guarda: "O pagamento tem comprovante e ainda não foi confirmado."
+        senao: "Recusa a confirmação e informa que não há pagamento pendente com comprovante."

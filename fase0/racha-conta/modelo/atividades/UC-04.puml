@@ -1,0 +1,15 @@
+@startuml
+title UC-04 Fechar mesa — racha-conta
+
+|ResponsavelMesa|
+start
+:P-01 Solicita o fechamento da [[Mesa]] para pagamento.;
+|Sistema|
+if (A [[Mesa]] não está fechada.?) then (sim)
+  :P-02 [TN-05] Registra a data de fechamento da [[Mesa]] e bloqueia novas inclusões ou alterações de consumo.;
+else (não)
+  :Informa que a [[Mesa]] já se encontra fechada.;
+  stop
+endif
+stop
+@enduml
