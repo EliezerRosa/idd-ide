@@ -1,0 +1,47 @@
+{
+  "perguntas": [
+    {
+      "id": "P01",
+      "texto": "Como se arredonda o valor total da taxa de serviço quando o percentual não dá um número inteiro de centavos?",
+      "porque": "A D-032 fixou como a taxa é repartida entre os participantes, mas não o valor total dela: 10% de R$ 10,05 são 100,5 centavos. A INV-001 exige que a soma das cotas seja exatamente igual aos itens mais a taxa; sem um arredondamento fixado, esse total não é definido e a pós-condição de TN-04 não é testável.",
+      "opcoes": [
+        "Arredondamento comercial: meio centavo ou mais sobe (100,5 → 101).",
+        "Sempre para baixo, a favor dos participantes (100,5 → 100).",
+        "Sempre para cima, a favor do estabelecimento (100,5 → 101)."
+      ],
+      "bloqueante": true
+    },
+    {
+      "id": "P02",
+      "texto": "O rodízio do centavo da taxa continua de onde o rodízio dos itens parou ou recomeça do primeiro participante em ordem alfabética?",
+      "porque": "A D-032 diz que o centavo da taxa 'segue o mesmo rodízio alfabético dos itens', o que admite duas leituras com resultados diferentes. Exemplo: se o último centavo dos itens foi para Bia, a próxima é Caio (continua) ou Ana (recomeça).",
+      "opcoes": [
+        "Continua: o primeiro centavo da taxa vai para o participante seguinte ao último que recebeu centavo dos itens.",
+        "Recomeça: a taxa tem rodízio próprio, a partir do primeiro participante em ordem alfabética."
+      ],
+      "bloqueante": true
+    },
+    {
+      "id": "P03",
+      "texto": "O responsável pode reabrir uma mesa fechada?",
+      "porque": "A D-031 diz que a mesa fechada não aceita mudanças, mas não diz se o fechamento é definitivo. Se houver reabertura, é preciso decidir o que acontece com comprovantes já enviados. Não bloqueia os casos de uso atuais; volta na etapa de estados.",
+      "opcoes": [
+        "Não: o fechamento é definitivo.",
+        "Sim, enquanto nenhum comprovante foi enviado.",
+        "Sim, a qualquer momento; comprovantes não confirmados são descartados."
+      ],
+      "bloqueante": false
+    }
+  ],
+  "artefato": "atores:\n  - nome: ResponsavelMesa\n    tipo: humano\n    descricao: Participante que cria e opera a mesa (inclui participantes, registra itens, fecha a mesa) e confirma os pagamentos dos demais.\n  - nome: Participante\n    tipo: humano\n    descricao: Pessoa da mesa que consulta e paga a própria cota.\ncasos_de_uso:\n  - id: UC-01\n    nome: Criar mesa\n    ator: ResponsavelMesa\n    intencoes: [INT-005]\n    transacoes:\n      - id: TN-01\n        nome: Criar mesa com chave Pix\n        pre:\n          - \"O [[ResponsavelMesa]] informou a própria [[ChavePix]] e o próprio nome.\"\n        pos:\n          - \"A [[Mesa]] existe, aberta, com a [[ChavePix]] do [[ResponsavelMesa]] e a [[TaxaServico]] informada, ou 10% se nenhuma foi informada.\"\n          - \"O [[ResponsavelMesa]] é um [[Participante]] da [[Mesa]].\"\n        invariantes: []\n        altera: [Mesa, Participante]\n        le: []\n  - id: UC-02\n    nome: Registrar participantes e consumo\n    ator: ResponsavelMesa\n    intencoes: [INT-001]\n    transacoes:\n      - id: TN-02\n        nome: Incluir participante\n        pre:\n          - \"A [[Mesa]] não está fechada.\"\n          - \"Nenhum [[Participante]] da [[Mesa]] tem o mesmo nome.\"\n        pos:\n          - \"O novo [[Participante]] pertence a exatamente uma [[Mesa]].\"\n        invariantes: []\n        altera: [Participante]\n        le: [Mesa.fechada_em, Participante.nome]\n      - id: TN-03\n        nome: Registrar item com os consumidores\n        pre:\n          - \"A [[Mesa]] não está fechada.\"\n          - \"O [[ItemConsumido]] tem ao menos um consumidor.\"\n          - \"Todo consumidor informado é [[Participante]] da mesma [[Mesa]] do [[ItemConsumido]].\"\n          - \"O preço do [[ItemConsumido]] é um número inteiro de centavos.\"\n        pos:\n          - \"O [[ItemConsumido]] recebe a próxima ordem de registro da [[Mesa]].\"\n          - \"Existe exatamente um Consumo para cada consumidor informado.\"\n        invariantes: [INV-003, INV-004]\n        altera: [ItemConsumido, Consumo]\n        le: [Mesa.fechada_em, Participante.mesa_id, ItemConsumido.ordem]\n  - id: UC-03\n    nome: Consultar a própria cota\n    ator: Participante\n    intencoes: [INT-001, INT-003]\n    transacoes:\n      - id: TN-04\n        nome: Calcular as cotas da mesa\n        pre:\n          - \"A [[Mesa]] tem ao menos um [[ItemConsumido]].\"\n        pos:\n          - \"O preço de cada [[ItemConsumido]] é dividido somente entre os [[Participante]]s que o consumiram.\"\n          - \"O centavo indivisível de cada [[ItemConsumido]] vai, em rodízio, para o próximo [[Participante]] em ordem alfabética que ainda não recebeu nenhum, percorrendo os itens na ordem de registro.\"\n          - \"A parte da [[TaxaServico]] de cada [[Participante]] é proporcional ao valor dos itens que ele consumiu, e o centavo indivisível da taxa segue o rodízio alfabético dos itens.\"\n          - \"A soma das [[Cota]]s é exatamente igual à soma dos preços dos [[ItemConsumido]] mais a [[TaxaServico]].\"\n          - \"Toda [[Cota]] é um número inteiro de centavos ≥ 0.\"\n        invariantes: [INV-001, INV-005]\n        altera: []\n        le: [ItemConsumido.preco_centavos, ItemConsumido.ordem, Consumo, Participante.nome, Mesa.taxa_servico_percentual]\n  - id: UC-04\n    nome: Fechar mesa\n    ator: ResponsavelMesa\n    intencoes: []\n    transacoes:\n      - id: TN-05\n        nome: Fechar a mesa para pagamento\n        pre:\n          - \"A [[Mesa]] não está fechada.\"\n        pos:\n          - \"A [[Mesa]] tem a data de fechamento e não aceita novos [[Participante]]s, novos [[ItemConsumido]]s nem mudanças nos consumos.\"\n        invariantes: []\n        altera: [Mesa.fechada_em]\n        le: []\n  - id: UC-05\n    nome: Pagar a própria cota\n    ator: Participante\n    intencoes: [INT-004]\n    transacoes:\n      - id: TN-06\n        nome: Gerar a cobrança Pix da cota\n        pre:\n          - \"A [[Mesa]] está fechada.\"\n          - \"O [[Participante]] não é o [[ResponsavelMesa]].\"\n        pos:\n          - \"O aplicativo exibe o Pix Copia e Cola e o QR Code para a [[ChavePix]] da [[Mesa]], com o valor da [[Cota]] do [[Participante]].\"\n        invariantes: [INV-005]\n        altera: []\n        le: [Mesa.fechada_em, Mesa.chave_pix]\n      - id: TN-07\n        nome: Enviar comprovante\n        pre:\n          - \"A [[Mesa]] está fechada.\"\n          - \"O [[Participante]] não é o [[ResponsavelMesa]].\"\n          - \"Nenhum pagamento do [[Participante]] está confirmado.\"\n        pos:\n          - \"Existe exatamente um pagamento do [[Participante]], com o comprovante e o valor da [[Cota]] em centavos no momento do envio; um comprovante anterior não confirmado é substituído.\"\n        invariantes: []\n        altera: [Pagamento]\n        le: [Mesa.fechada_em, Pagamento.confirmado_em]\n  - id: UC-06\n    nome: Confirmar pagamento\n    ator: ResponsavelMesa\n    intencoes: []\n    transacoes:\n      - id: TN-08\n        nome: Confirmar o pagamento de um participante\n        pre:\n          - \"O pagamento tem comprovante e ainda não foi confirmado.\"\n        pos:\n          - \"O pagamento tem a data de confirmação.\"\n        invariantes: []\n        altera: [Pagamento.confirmado_em]\n        le: [Pagamento.comprovante_url]\n",
+  "suposicoes": [
+    "Fechar a mesa não exige nenhuma condição além de ela estar aberta: as decisões não dizem que a mesa precisa ter itens ou participantes para fechar.",
+    "Como a mesa fechada não aceita mudanças (D-031) e os pagamentos só ocorrem com a mesa fechada, a cota não muda depois do primeiro comprovante, e o valor guardado no pagamento (D-028) continua igual à cota.",
+    "O cálculo das cotas (TN-04) e a cobrança Pix (TN-06) não gravam nada; o Gate 2 os lista como consultas, o que é esperado."
+  ],
+  "contradicoes": [
+    "A D-032 decide na prática a INT-002 (taxa proporcional ao consumo), que continua pendente no loop 1 (D-013). Convém aceitá-la em intencoes.md para a especificação refletir a decisão.",
+    "UC-04 (fechar mesa, D-031) e UC-06 (confirmar pagamento, D-024) vêm de decisões do loop 2 sem intenção correspondente em intencoes.md."
+  ],
+  "observacoes": "Rodada gerada pelo provedor manual: a resposta foi produzida pelo Claude Opus 5.5 na sessão do Claude Code em 2026-10-27, seguindo este pedido sem alterações. Mudanças em relação à UC-01 (rejeitada em D-033): novo caso de uso Fechar mesa (TN-05), usando Mesa.fechada_em acrescentado ao MER pela D-034; TN-02 e TN-03 exigem mesa aberta, e a cobrança e o envio de comprovante exigem mesa fechada (D-031); TN-04 incorpora a regra da taxa (D-032); o ator de UC-02 confirmado pela D-030."
+}

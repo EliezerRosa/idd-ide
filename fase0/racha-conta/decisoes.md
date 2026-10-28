@@ -34,3 +34,8 @@
 - [x] D-027 · L2/MER02/P02 · bloqueante · Um participante pode enviar mais de um comprovante para a mesma cota? → Não: um único pagamento por participante; um comprovante novo substitui o anterior até a confirmação. (2026-10-27)
 - [x] D-028 · L2/MER02/P03 · não-bloqueante · O pagamento deve guardar o valor pago ou vale sempre a cota calculada no momento da confirmação? → Guardar o valor pago em centavos no pagamento. (2026-10-27)
 - [x] D-029 · L2/MER02/modelo · modelo aprovado (editado pelo autor): modelo/dominio.mmd — acrescentado valor_centavos ao Pagamento conforme a P03 (2026-10-27)
+- [x] D-030 · L2/UC01/P01 · bloqueante · Quem inclui os participantes e registra os itens consumidos na mesa? → Só o responsável da mesa inclui participantes e registra itens. (2026-10-27)
+- [x] D-031 · L2/UC01/P02 · bloqueante · Depois que um participante envia o comprovante de pagamento, a mesa ainda aceita itens novos ou alterações nos consumos? → Não: o responsável fecha a mesa antes dos pagamentos, e a mesa fechada não aceita mudanças. (2026-10-27)
+- [x] D-032 · L2/UC01/P03 · bloqueante · Como a taxa de serviço é dividida entre os participantes, e quem recebe o centavo quando a divisão não é exata? → Proporcional ao consumo de cada um; o centavo da taxa segue o mesmo rodízio alfabético dos itens. (2026-10-27)
+- [x] D-033 · L2/UC01/artefato · casos de uso rejeitado — refazer incorporando as respostas: fechamento da mesa pelo responsável antes dos pagamentos (P02) e regra da taxa proporcional com centavo em rodízio nas pós-condições do cálculo (P03) (2026-10-27)
+- [x] D-034 · L2/MER/modelo · modelo alterado em consequência da D-031: Mesa.fechada_em (timestamp opcional, vazio enquanto a mesa está aberta) acrescentado a modelo/dominio.mmd (2026-10-27)
