@@ -1,0 +1,43 @@
+version: '2.0'
+module: racha-conta/mesa-registrar-item-consumido
+target_class: Mesa
+target_method: registrarItemConsumido
+intent: Registrar um [[ItemConsumido]] na próxima ordem da [[Mesa]] aberta e associar os [[Participante]]s que o consumiram.
+behavioral_contract:
+  visibility: public
+  state_mutation:
+    allowed_fields:
+      - ItemConsumido
+      - Consumo
+    read_only_fields:
+      - Mesa.fechada_em
+      - Participante.mesa_id
+      - ItemConsumido.ordem
+constraints:
+  - id: INV-003
+    type: invariant
+    severity: critical
+    description: '[integridade] Todo [[ItemConsumido]] deve ter no mínimo um [[Participante]] entre os consumidores.'
+  - id: INV-004
+    type: invariant
+    severity: critical
+    description: >-
+      [integridade] Todo [[Participante]] associado a um [[ItemConsumido]] deve pertencer à mesma [[Mesa]] do
+      [[ItemConsumido]].
+  - id: C-01
+    type: business
+    severity: critical
+    description: A [[Mesa]] não está fechada.
+  - id: C-02
+    type: business
+    severity: critical
+    description: O preço do [[ItemConsumido]] é um número inteiro de centavos.
+acceptance:
+  - id: A-01
+    given: A [[Mesa]] está aberta e há ao menos um [[Participante]] da mesma [[Mesa]] entre os consumidores informados.
+    when: Mesa.registrarItemConsumido é executado pelo [[ResponsavelMesa]].
+    then: O [[ItemConsumido]] recebe a próxima ordem da [[Mesa]] e é criado um registro em Consumo para cada consumidor.
+tags:
+  - TN-03
+  - INV-003
+  - INV-004

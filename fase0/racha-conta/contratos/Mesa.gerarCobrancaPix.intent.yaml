@@ -1,0 +1,41 @@
+version: '2.0'
+module: racha-conta/mesa-gerar-cobranca-pix
+target_class: Mesa
+target_method: gerarCobrancaPix
+intent: >-
+  Gerar o código Pix Copia e Cola e o QR Code da [[Cota]] de um [[Participante]] para a [[ChavePix]] da [[Mesa]]
+  fechada.
+behavioral_contract:
+  visibility: public
+  state_mutation:
+    allowed_fields: []
+    read_only_fields:
+      - Mesa.fechada_em
+      - Mesa.chave_pix
+constraints:
+  - id: INV-005
+    type: invariant
+    severity: critical
+    description: '[cálculo] Toda [[Cota]] deve ser um número inteiro de centavos, com valor ≥ 0.'
+  - id: C-01
+    type: business
+    severity: critical
+    description: A [[Mesa]] está fechada.
+  - id: C-02
+    type: business
+    severity: critical
+    description: O [[Participante]] não é o [[ResponsavelMesa]].
+  - id: C-03
+    type: business
+    severity: critical
+    description: A [[Cota]] do [[Participante]] é maior que zero (D-041).
+acceptance:
+  - id: A-01
+    given: A [[Mesa]] está fechada e o [[Participante]] (distinto do [[ResponsavelMesa]]) possui [[Cota]] maior que zero.
+    when: Mesa.gerarCobrancaPix é executado.
+    then: >-
+      Retorna o Pix Copia e Cola e o QR Code para a [[ChavePix]] da [[Mesa]] com o valor da [[Cota]] do
+      [[Participante]].
+tags:
+  - TN-06
+  - INV-005

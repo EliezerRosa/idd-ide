@@ -1,0 +1,26 @@
+version: '2.0'
+module: racha-conta/pagamento-confirmar
+target_class: Pagamento
+target_method: confirmar
+intent: >-
+  Confirmar definitivamente o recebimento do pagamento da [[Cota]] de um [[Participante]] a partir do comprovante
+  enviado.
+behavioral_contract:
+  visibility: public
+  state_mutation:
+    allowed_fields:
+      - Pagamento.confirmado_em
+    read_only_fields:
+      - Pagamento.comprovante_url
+constraints:
+  - id: C-01
+    type: business
+    severity: critical
+    description: O pagamento tem comprovante e ainda não foi confirmado.
+acceptance:
+  - id: A-01
+    given: O Pagamento está em estado Pendente com comprovante_url preenchido.
+    when: Pagamento.confirmar é executado pelo [[ResponsavelMesa]].
+    then: Pagamento.confirmado_em é preenchido e o Pagamento passa definitivamente para o estado Confirmado.
+tags:
+  - TN-08

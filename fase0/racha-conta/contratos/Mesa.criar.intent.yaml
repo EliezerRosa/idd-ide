@@ -1,0 +1,28 @@
+version: '2.0'
+module: racha-conta/mesa-criar
+target_class: Mesa
+target_method: criar
+intent: >-
+  Criar uma [[Mesa]] aberta com a [[ChavePix]] e a [[TaxaServico]] do [[ResponsavelMesa]], registrando-o como
+  [[Participante]].
+behavioral_contract:
+  visibility: public
+  state_mutation:
+    allowed_fields:
+      - Mesa
+      - Participante
+    read_only_fields: []
+constraints:
+  - id: C-01
+    type: business
+    severity: critical
+    description: O [[ResponsavelMesa]] informou a própria [[ChavePix]] e o próprio nome.
+acceptance:
+  - id: A-01
+    given: O [[ResponsavelMesa]] informou o próprio nome e a [[ChavePix]].
+    when: Mesa.criar é executado.
+    then: >-
+      A [[Mesa]] aberta é criada com a [[TaxaServico]] informada (ou 10% por padrão) e o [[ResponsavelMesa]] é
+      registrado como [[Participante]].
+tags:
+  - TN-01

@@ -1,0 +1,30 @@
+version: '2.0'
+module: racha-conta/pagamento-enviar-comprovante
+target_class: Pagamento
+target_method: enviarComprovante
+intent: >-
+  Registrar ou substituir o comprovante de pagamento da [[Cota]] de um [[Participante]] antes da confirmação pelo
+  [[ResponsavelMesa]].
+behavioral_contract:
+  visibility: public
+  state_mutation:
+    allowed_fields:
+      - Pagamento
+    read_only_fields:
+      - Mesa.fechada_em
+constraints:
+  - id: C-01
+    type: business
+    severity: critical
+    description: >-
+      A [[Mesa]] está fechada, o [[Participante]] não é o [[ResponsavelMesa]], a [[Cota]] é maior que zero e nenhum
+      pagamento do [[Participante]] está confirmado (D-027, D-041).
+acceptance:
+  - id: A-01
+    given: A [[Mesa]] está fechada, o [[Participante]] possui [[Cota]] > 0 e não tem pagamento confirmado.
+    when: Pagamento.enviarComprovante é executado pelo [[Participante]].
+    then: >-
+      O Pagamento do [[Participante]] fica em estado Pendente com comprovante_url, valor_centavos e enviado_em
+      registrados.
+tags:
+  - TN-07

@@ -1,0 +1,29 @@
+version: '2.0'
+module: racha-conta/mesa-incluir-participante
+target_class: Mesa
+target_method: incluirParticipante
+intent: Incluir um novo [[Participante]] com nome único em uma [[Mesa]] aberta.
+behavioral_contract:
+  visibility: public
+  state_mutation:
+    allowed_fields:
+      - Participante
+    read_only_fields:
+      - Mesa.fechada_em
+      - Participante.nome
+constraints:
+  - id: C-01
+    type: business
+    severity: critical
+    description: A [[Mesa]] não está fechada.
+  - id: C-02
+    type: business
+    severity: critical
+    description: Nenhum [[Participante]] da [[Mesa]] tem o mesmo nome (D-026).
+acceptance:
+  - id: A-01
+    given: A [[Mesa]] está aberta e o nome informado ainda não pertence a outro [[Participante]] da [[Mesa]].
+    when: Mesa.incluirParticipante é executado pelo [[ResponsavelMesa]].
+    then: O novo [[Participante]] passa a pertencer exatamente à [[Mesa]].
+tags:
+  - TN-02

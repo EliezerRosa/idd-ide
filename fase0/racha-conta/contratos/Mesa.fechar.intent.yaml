@@ -1,0 +1,25 @@
+version: '2.0'
+module: racha-conta/mesa-fechar
+target_class: Mesa
+target_method: fechar
+intent: >-
+  Encerrar definitivamente os lançamentos da [[Mesa]], registrando a data de fechamento e habilitando o pagamento das
+  [[Cota]]s.
+behavioral_contract:
+  visibility: public
+  state_mutation:
+    allowed_fields:
+      - Mesa.fechada_em
+    read_only_fields: []
+constraints:
+  - id: C-01
+    type: business
+    severity: critical
+    description: A [[Mesa]] não está fechada (o fechamento é definitivo conforme D-037).
+acceptance:
+  - id: A-01
+    given: A [[Mesa]] está aberta (fechada_em vazio).
+    when: Mesa.fechar é executado pelo [[ResponsavelMesa]].
+    then: Mesa.fechada_em é preenchido e a [[Mesa]] passa definitivamente para o estado Fechada.
+tags:
+  - TN-05

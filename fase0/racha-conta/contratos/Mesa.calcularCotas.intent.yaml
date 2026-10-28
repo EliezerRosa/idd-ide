@@ -1,0 +1,49 @@
+version: '2.0'
+module: racha-conta/mesa-calcular-cotas
+target_class: Mesa
+target_method: calcularCotas
+intent: >-
+  Calcular a [[Cota]] em centavos inteiros de cada [[Participante]] da [[Mesa]] com rateio proporcional da
+  [[TaxaServico]] e rodízio alfabético contínuo dos centavos indivisíveis.
+behavioral_contract:
+  visibility: public
+  state_mutation:
+    allowed_fields: []
+    read_only_fields:
+      - ItemConsumido.preco_centavos
+      - ItemConsumido.ordem
+      - Consumo
+      - Participante.nome
+      - Mesa.taxa_servico_percentual
+constraints:
+  - id: INV-001
+    type: invariant
+    severity: critical
+    description: >-
+      [cálculo] A soma das cotas de todos os participantes de uma [[Mesa]] deve ser exatamente igual à soma dos preços
+      dos [[ItemConsumido]] mais a [[TaxaServico]], com diferença de zero centavos.
+  - id: INV-005
+    type: invariant
+    severity: critical
+    description: '[cálculo] Toda [[Cota]] deve ser um número inteiro de centavos, com valor ≥ 0.'
+  - id: C-01
+    type: business
+    severity: critical
+    description: A [[Mesa]] tem ao menos um [[ItemConsumido]].
+  - id: C-02
+    type: business
+    severity: critical
+    description: >-
+      O total da [[TaxaServico]] usa arredondamento comercial e o rodízio alfabético da taxa continua de onde o rodízio
+      dos itens parou (D-035, D-036).
+acceptance:
+  - id: A-01
+    given: A [[Mesa]] possui [[ItemConsumido]]s registrados e [[Participante]]s associados.
+    when: Mesa.calcularCotas é executado.
+    then: >-
+      Retorna a [[Cota]] inteira >= 0 de cada [[Participante]] cuja soma iguala exatamente a soma dos [[ItemConsumido]]s
+      mais a [[TaxaServico]].
+tags:
+  - TN-04
+  - INV-001
+  - INV-005
