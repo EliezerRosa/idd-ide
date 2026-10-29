@@ -7,7 +7,10 @@ import { header, success, error, info, warn, row, table, footer, spinner,
 import { Store, findProjectRoot } from '../lib/store.ts';
 import { loadConfig } from '../lib/config.ts';
 import { runStaticChecks, detectLanguage, autoDetectLanguage, Language } from '../lib/lang.ts';
-import { parseProject, checkFileImports, normalizeRel, type ImportViolation, type ProjectIntent } from '@idd/core';
+import {
+  parseContract, parseProject, checkFileImports, normalizeRel,
+  type Acceptance, type ContractVersion, type ImportViolation, type ProjectIntent,
+} from '@idd/core';
 import { checkIntentAgainstDictionary } from './dictionary.ts';
 
 interface IntentYaml {
@@ -88,17 +91,60 @@ function analyzeStatic(code: string, intent: IntentYaml): {
 
 // ── Verificação de testes ────────────────────────────────────────
 
-function checkTests(testFilePath: string, acceptance: string[]): string[] {
-  if (!fs.existsSync(testFilePath)) return acceptance;
+export function resolveTestFiles(yamlPath: string, sub: string, testSfx: string, root: string): string[] {
+  const dir = path.dirname(yamlPath);
+  const found = new Set<string>();
+  const sibling = path.join(dir, `${sub}${testSfx}`);
+  if (fs.existsSync(sibling)) found.add(sibling);
 
-  const testCode = fs.readFileSync(testFilePath, 'utf8').toLowerCase();
-  return acceptance.filter(criterion => {
-    const keywords = criterion
-      .split(/\s+/)
-      .filter(w => w.length > 4)
-      .slice(0, 4);
-    return !keywords.some(kw => testCode.includes(kw.toLowerCase()));
-  });
+  const stop = path.resolve(root);
+  let cur = path.resolve(dir);
+  while (true) {
+    for (const candidate of [
+      path.join(cur, '__tests__', `${sub}${testSfx}`),
+      path.join(cur, 'src', '__tests__', `${sub}${testSfx}`),
+    ]) {
+      if (fs.existsSync(candidate)) found.add(candidate);
+    }
+    if (cur === stop) break;
+    const parent = path.dirname(cur);
+    if (parent === cur) break;
+    cur = parent;
+  }
+  return [...found];
+}
+
+export function hasAcceptanceIdInTest(testCode: string, id: string): boolean {
+  const escaped = id.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  return new RegExp(`(?:^|[^A-Za-z0-9_-])${escaped}(?=$|[^A-Za-z0-9_-])`).test(testCode);
+}
+
+export function checkAcceptanceTests(
+  testFiles: string[],
+  acceptance: Acceptance[],
+  version: ContractVersion = '1.0',
+  strictIds = false,
+): string[] {
+  const formatLabel = (a: Acceptance) =>
+    version === '2.0' || strictIds ? `[${a.id}] ${a.then}` : a.then;
+
+  const existing = testFiles.filter(f => fs.existsSync(f));
+  if (existing.length === 0) return acceptance.map(formatLabel);
+
+  const testCode = existing.map(f => fs.readFileSync(f, 'utf8')).join('\n');
+  const testCodeLower = testCode.toLowerCase();
+
+  return acceptance
+    .filter(a => {
+      if (hasAcceptanceIdInTest(testCode, a.id)) return false;
+      if (version === '2.0' || strictIds) return true;
+      const keywords = a.then
+        .split(/\s+/)
+        .filter(w => w.length > 4)
+        .slice(0, 4);
+      return !keywords.some(kw => testCodeLower.includes(kw.toLowerCase()));
+    })
+    .map(formatLabel);
 }
 
 // ── Verificação semântica via LLM (opcional) ─────────────────────
@@ -160,6 +206,7 @@ export async function cmdVerify(args: string[]): Promise<void> {
 
   const cfg            = loadConfig();
   const failOnCritical = args.includes('--fail-on=critical') || cfg.fail_on === 'critical';
+  const strictTests    = args.includes('--strict-tests');
   const threshold      = Number(args.find(a => a.startsWith('--threshold='))?.split('=')[1] ?? cfg.drift_threshold);
   const semantic       = args.includes('--semantic');
   const semanticRequired = args.includes('--semantic-required');
@@ -190,21 +237,47 @@ export async function cmdVerify(args: string[]): Promise<void> {
 
   for (const yamlPath of yamlFiles) {
     const intentRaw = fs.readFileSync(yamlPath, 'utf8');
-    const intent    = yaml.load(intentRaw) as IntentYaml;
+    const rawDoc    = yaml.load(intentRaw);
+    const parsed    = parseContract(rawDoc);
+    const contractVersion: ContractVersion = parsed.ok ? parsed.contract.version : '1.0';
+    const acceptanceStruct: Acceptance[] = parsed.ok
+      ? parsed.contract.acceptance
+      : Array.isArray((rawDoc as any)?.acceptance)
+        ? (rawDoc as any).acceptance.map((t: unknown, idx: number) => ({
+            id: typeof t === 'object' && t && typeof (t as any).id === 'string' ? (t as any).id : `A-${String(idx + 1).padStart(2, '0')}`,
+            given: typeof t === 'object' && t && typeof (t as any).given === 'string' ? (t as any).given : '',
+            when: typeof t === 'object' && t && typeof (t as any).when === 'string' ? (t as any).when : '',
+            then: typeof t === 'string' ? t : typeof t === 'object' && t && typeof (t as any).then === 'string' ? (t as any).then : String(t ?? ''),
+          }))
+        : [];
+    const constraintStrings: string[] = parsed.ok
+      ? parsed.contract.constraints.map(c => c.description)
+      : Array.isArray((rawDoc as any)?.constraints)
+        ? (rawDoc as any).constraints.map((c: unknown) => typeof c === 'string' ? c : String((c as any)?.description ?? ''))
+        : [];
+    const intent: IntentYaml = {
+      intent: parsed.ok ? parsed.contract.intent : String((rawDoc as any)?.intent ?? ''),
+      module: parsed.ok ? parsed.contract.module : String((rawDoc as any)?.module ?? ''),
+      constraints: constraintStrings,
+      acceptance: acceptanceStruct.map(a => a.then),
+      depends_on: parsed.ok ? parsed.contract.dependsOn : (rawDoc as any)?.depends_on,
+      language: parsed.ok ? parsed.contract.language : (rawDoc as any)?.language,
+    };
 
     const [mod, sub] = intent.module.split('/');
     const ext        = intent.language === 'python' ? 'py' : 'ts';
     const testSfx    = intent.language === 'python' ? '_test.py' : '.test.ts';
     const dir        = path.dirname(yamlPath);
     const codeFile   = path.join(dir, `${sub}.${ext}`);
-    const testFile   = path.join(dir, `${sub}${testSfx}`);
+    const testFiles  = resolveTestFiles(yamlPath, sub, testSfx, root);
 
     if (!fs.existsSync(codeFile)) {
       warn(`${intent.module} — código não gerado ainda (execute "idd generate ${intent.module}")`);
       results.push({
         module: intent.module, status: 'warn', score: 0,
         violations: ['Código ainda não gerado'],
-        missingTests: intent.acceptance, filePath: codeFile
+        missingTests: acceptanceStruct.map(a => contractVersion === '2.0' || strictTests ? `[${a.id}] ${a.then}` : a.then),
+        filePath: codeFile
       });
       continue;
     }
@@ -212,16 +285,18 @@ export async function cmdVerify(args: string[]): Promise<void> {
     const code = fs.readFileSync(codeFile, 'utf8');
 
     // Análise estática
-    const { violations: staticViol, critical } = analyzeStatic(code, intent);
+    const { violations: staticViol, critical: staticCritical } = analyzeStatic(code, intent);
 
     // Dicionário Ubíquo (warn, nunca drift): linguagem fora do dicionário é ambiguidade latente
     let termViol: string[] = [];
     try {
-      termViol = checkIntentAgainstDictionary(root, intent).map(w => `Dicionário: ${w.message}`);
+      termViol = checkIntentAgainstDictionary(root, rawDoc).map(w => `Dicionário: ${w.message}`);
     } catch { /* dicionário inválido é reportado por idd dictionary check */ }
 
-    // Verificação de testes
-    const missingTests = checkTests(testFile, intent.acceptance);
+    // Verificação de testes (em contratos v2 ou --strict-tests, exige referência formal ao ID do critério)
+    const missingTests = checkAcceptanceTests(testFiles, acceptanceStruct, contractVersion, strictTests);
+    const criticalTests = (contractVersion === '2.0' || strictTests) && missingTests.length > 0;
+    const critical = staticCritical || criticalTests;
 
     // Análise semântica (opcional, mais lenta)
     let semanticScore  = 100;
@@ -284,7 +359,8 @@ export async function cmdVerify(args: string[]): Promise<void> {
         console.log(`    ${isCrit ? `${RED}✗` : `${YELLOW}⚠`}  ${v}${RESET}`);
       }
       for (const t of r.missingTests) {
-        console.log(`    ${YELLOW}⚠  Teste faltando: "${t}"${RESET}`);
+        const icon = r.status === 'drift' && t.startsWith('[') ? `${RED}✗` : `${YELLOW}⚠`;
+        console.log(`    ${icon}  Teste faltando: "${t}"${RESET}`);
       }
     }
   }

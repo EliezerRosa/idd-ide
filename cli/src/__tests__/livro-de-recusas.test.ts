@@ -165,6 +165,49 @@ describe('Livro de Recusas — gates determinísticos (sem LLM, exit code != 0)'
     expect(res.status).toBe(1);
     expect(res.stdout + res.stderr).toMatch(/2NF|3NF|BCNF|Participante/);
   });
+
+  it('Recusa #5: idd verify --fail-on=critical recusa contrato v2 cujo critério A-02 não tem referência formal no teste (exit 1)', () => {
+    fs.mkdirSync(path.join(tmp, 'src', 'billing'), { recursive: true });
+    fs.mkdirSync(path.join(tmp, 'src', '__tests__'), { recursive: true });
+    fs.writeFileSync(
+      path.join(tmp, 'src', 'billing', 'calc.intent.yaml'),
+      [
+        'version: "2.0"',
+        'module: billing/calc',
+        'target_class: Mesa',
+        'target_method: calcularCota',
+        'intent: "Calcular a cota de cada participante em centavos inteiros sem sobra"',
+        'constraints:',
+        '  - id: INV-001',
+        '    type: invariant',
+        '    severity: critical',
+        '    description: "A soma das cotas deve ser igual ao total da mesa"',
+        'acceptance:',
+        '  - id: A-01',
+        '    given: "Mesa com 3 participantes"',
+        '    when: "calcularCota é executado"',
+        '    then: "soma das cotas bate no centavo"',
+        '  - id: A-02',
+        '    given: "Divisão com dízima"',
+        '    when: "calcularCota distribui o resto"',
+        '    then: "retorna cota em centavos inteiros"',
+      ].join('\n'),
+    );
+    fs.writeFileSync(
+      path.join(tmp, 'src', 'billing', 'calc.ts'),
+      'export function calcularCota(): number { return 100; }\n',
+    );
+    // O teste referencia [A-01] e até contém as palavras de A-02 ("retorna cota em centavos inteiros"),
+    // mas omite o identificador formal A-02 — a cerca v2 não aceita coincidência lexical.
+    fs.writeFileSync(
+      path.join(tmp, 'src', '__tests__', 'calc.test.ts'),
+      'it("[A-01] soma das cotas bate no centavo e retorna cota em centavos inteiros", () => {});\n',
+    );
+
+    const res = runCli(tmp, ['verify', '--fail-on=critical']);
+    expect(res.status).toBe(1);
+    expect(res.stdout + res.stderr).toMatch(/\[A-02\]/);
+  });
 });
 
 /** PRNG determinístico (mulberry32) — sem relógio, sem rede. */
