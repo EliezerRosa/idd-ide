@@ -34,7 +34,7 @@ ubíqua no nível de **estudo de requisitos**, antes de qualquer código.
    - as **atividades** e os **estados**;
    - os **métodos**, circunscritos às classes que os casos de uso transacionais usam.
 
-Horizonte: CLI e extensão primeiro; uma **IDE dedicada** é longo prazo, se a proposta for adotada.
+Horizonte: CLI e extensão primeiro; o desenvolvimento de uma **IDE dedicada** é um **projeto futuro** de longo prazo.
 Detalhes em [`docs/PROPOSTA-FASE0-COMPILADOR-LU.md`](./docs/PROPOSTA-FASE0-COMPILADOR-LU.md) e na
 avaliação técnica [`docs/PARECER-IDD-IDE-2026-10-27.md`](./docs/PARECER-IDD-IDE-2026-10-27.md).
 
@@ -59,7 +59,7 @@ avaliação técnica [`docs/PARECER-IDD-IDE-2026-10-27.md`](./docs/PARECER-IDD-I
 | Servidor HTTP de sincronização (`idd server`) | 🧪 | Só `127.0.0.1` por padrão; outro host exige `IDD_SERVER_TOKEN` |
 | `.intent.md` (Track Cognitivo), Sombra, waivers, Risk Dials | 🔭 | [ROADMAP](./docs/ROADMAP.md), Fase 9 |
 | Anotações de drift inline no editor | 🔭 | Não implementado |
-| **IDE dedicada (fork do Code-OSS)** | 🔭 | Longo prazo; hoje existe só o `product.json` de marca |
+| **IDE dedicada (fork do Code-OSS)** | 🔭 | **Projeto futuro** (longo prazo); hoje existe só o `product.json` de marca |
 
 ---
 
