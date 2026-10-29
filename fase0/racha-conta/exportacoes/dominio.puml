@@ -1,0 +1,56 @@
+@startuml
+title Modelo de Domínio e Métodos Circunscritos — racha-conta
+hide empty members
+
+class Mesa {
+  +id : uuid <<PK>>
+  +responsavel_id : uuid <<FK Participante.id>>
+  +chave_pix : string
+  +taxa_servico_percentual : decimal
+  +fechada_em : timestamp?
+  --
+  +criar() : [TN-01]
+  +incluirParticipante() : [TN-02]
+  +registrarItemConsumido() : [TN-03]
+  +calcularCotas() : [TN-04]
+  +fechar() : [TN-05]
+  +gerarCobrancaPix() : [TN-06]
+}
+
+class Participante {
+  +id : uuid <<PK>>
+  +mesa_id : uuid <<FK Mesa.id>>
+  +nome : string
+}
+
+class ItemConsumido {
+  +id : uuid <<PK>>
+  +mesa_id : uuid <<FK Mesa.id>>
+  +ordem : integer
+  +descricao : string
+  +preco_centavos : integer
+}
+
+class Consumo {
+  +item_id : uuid <<PK, FK ItemConsumido.id>>
+  +participante_id : uuid <<PK, FK Participante.id>>
+}
+
+class Pagamento {
+  +id : uuid <<PK>>
+  +participante_id : uuid <<FK Participante.id>>
+  +comprovante_url : string
+  +valor_centavos : integer
+  +enviado_em : timestamp
+  +confirmado_em : timestamp?
+  --
+  +enviarComprovante() : [TN-07]
+  +confirmar() : [TN-08]
+}
+
+Mesa "1" --> "N" Participante : reúne
+Mesa "1" --> "N" ItemConsumido : contém
+ItemConsumido "1" --> "N" Consumo : é consumido em
+Participante "1" --> "N" Consumo : consome em
+Participante "1" --> "N" Pagamento : paga a cota com
+@enduml

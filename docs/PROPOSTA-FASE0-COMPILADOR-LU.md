@@ -1,6 +1,6 @@
 # Proposta — Fase 0: compilador de linguagem ubíqua (estudo de requisitos)
 
-**Status:** ✅ APROVADA por Eliézer Rosa em 2026-10-27 (Confirm-Once). Entregas 0–4 implementadas; Gate 1 verde (2026-10-27) e Gate 2 verde (2026-10-28) no Racha de Conta (`MER → casos de uso → atividades → estados → métodos → contratos v2 + rastreabilidade.md`)
+**Status:** ✅ APROVADA por Eliézer Rosa em 2026-10-27 (Confirm-Once). Entregas 0–5 implementadas; Gate 1 verde (2026-10-27), Gate 2 verde e exportações DBML/PlantUML/SQL/`spec.md` geradas (2026-10-28) no Racha de Conta (`idd fase0 loop1|gate1|loop2|gate2|export`)
 **Data:** 2026-10-27 · **Cânone:** v1.0-rc1
 **Fontes:**
 - [Ciclo de Vida — Nova proposta](../paradigma/20-metodo/ciclo-de-vida/IDD%20Paradigma%20Ciclo%20de%20Vida%20-%20Nova%20proposta.txt);

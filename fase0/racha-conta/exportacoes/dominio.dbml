@@ -1,0 +1,57 @@
+// DBML gerado pelo IDD (Fase 0) — caso: racha-conta
+Project "racha-conta" {
+  database_type: 'PostgreSQL'
+  Note: 'Modelo normalizado (BCNF/3NF) aprovado no Gate 2 do IDD'
+}
+
+Table Mesa {
+  id uuid [pk, not null]
+  responsavel_id uuid [not null, ref: > Participante.id]
+  chave_pix varchar(255) [not null]
+  taxa_servico_percentual decimal(15,4) [not null]
+  fechada_em timestamptz [null]
+}
+
+Table Participante {
+  id uuid [pk, not null]
+  mesa_id uuid [not null, ref: > Mesa.id]
+  nome varchar(255) [not null]
+
+  indexes {
+    (mesa_id, nome) [unique]
+  }
+}
+
+Table ItemConsumido {
+  id uuid [pk, not null]
+  mesa_id uuid [not null, ref: > Mesa.id]
+  ordem integer [not null]
+  descricao varchar(255) [not null]
+  preco_centavos integer [not null]
+
+  indexes {
+    (mesa_id, ordem) [unique]
+  }
+}
+
+Table Consumo {
+  item_id uuid [not null, ref: > ItemConsumido.id]
+  participante_id uuid [not null, ref: > Participante.id]
+
+  indexes {
+    (item_id, participante_id) [pk]
+  }
+}
+
+Table Pagamento {
+  id uuid [pk, not null]
+  participante_id uuid [not null, ref: > Participante.id]
+  comprovante_url varchar(255) [not null]
+  valor_centavos integer [not null]
+  enviado_em timestamptz [not null]
+  confirmado_em timestamptz [null]
+
+  indexes {
+    (participante_id) [unique]
+  }
+}
