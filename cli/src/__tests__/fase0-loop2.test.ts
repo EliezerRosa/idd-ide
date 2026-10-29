@@ -4,6 +4,7 @@ import * as os from 'node:os';
 import * as path from 'node:path';
 import { caminhosCaso, inicializarCaso, lerDecisoes, lerTexto } from '../lib/fase0/casos.ts';
 import { avaliarGate2 } from '../lib/fase0/gate2.ts';
+import { exportarCaso } from '../lib/fase0/exportacao.ts';
 import { arquivoEtapa, executarLoop2, lerRodadaMer } from '../lib/fase0/loop2.ts';
 import { normalizarSaidaMer } from '../lib/fase0/modelo.ts';
 import { RecordedProvider } from '../lib/llm/index.ts';
@@ -589,5 +590,24 @@ describe('loop 2 · métodos', () => {
     expect(rastreio).toMatch(/\| \*\*INT-001\*\* \| UC-01 \(Consultar a própria cota\) \| TN-01 \| `Mesa\.entrarNaMesa` \| `contratos\/Mesa\.entrarNaMesa\.intent\.yaml` \|/);
     expect(rastreio).toMatch(/\| \*\*INV-001\*\* \| TN-01 \| `Mesa\.entrarNaMesa` \| `contratos\/Mesa\.entrarNaMesa\.intent\.yaml` \|/);
     expect(lerTexto(p.decisoes)).toMatch(/L2\/METODOS01\/artefato · métodos aprovado: modelo\/metodos\.yaml/);
+  });
+});
+
+// ── Entrega 5 · Exportações ──────────────────────────────────────────
+
+describe('fase0 · export', () => {
+  it('exige Gate 2 verde sem --forcar e gera DBML, PlantUML, SQL e spec.md quando verde', () => {
+    const p = casoComEst();
+    expect(() => exportarCaso(root, 'c', p)).toThrow(/Gate 2 de "c" não está verde/);
+
+    fs.writeFileSync(p.metodos, METODOS_OK);
+    const r = exportarCaso(root, 'c', p);
+    expect(r.arquivos.length).toBe(5);
+    expect(lerTexto(p.dbml)).toMatch(/Table Mesa \{/);
+    expect(lerTexto(p.dbml)).toMatch(/ref: > Mesa\.id/);
+    expect(lerTexto(p.dominioPuml)).toMatch(/\+entrarNaMesa\(\) : \[TN-01\]/);
+    expect(lerTexto(p.schemaSql)).toMatch(/CREATE TABLE IF NOT EXISTS/);
+    expect(lerTexto(p.specMd)).toMatch(/# Especificação Compilada \(IDD Fase 0\) — c/);
+    expect(lerTexto(p.specMd)).toMatch(/## 8\. Métodos Circunscritos e Contratos Comportamentais \(v2\)/);
   });
 });

@@ -8,6 +8,7 @@ import { extrairItens } from '../lib/fase0/lintLn.ts';
 import { executarLoop1 } from '../lib/fase0/loop1.ts';
 import { avaliarGate2, type Gate2Resultado } from '../lib/fase0/gate2.ts';
 import { executarLoop2 } from '../lib/fase0/loop2.ts';
+import { exportarCaso } from '../lib/fase0/exportacao.ts';
 import { LlmRefusalError, LlmTruncatedError } from '../lib/llm/index.ts';
 
 function ajuda(): void {
@@ -17,6 +18,7 @@ function ajuda(): void {
   ${CYAN}idd fase0 gate1 <caso>${RESET}                      checklist do Gate 1 (exit 1 se não estiver verde)
   ${CYAN}idd fase0 loop2 <caso> [--sem-nova-rodada]${RESET}  loop 2 (MER → casos de uso → atividades → estados): aplica a rodada respondida, roda o Gate 2 e, se preciso, gera a próxima
   ${CYAN}idd fase0 gate2 <caso>${RESET}                      checklist do Gate 2 (exit 1 se não estiver verde)
+  ${CYAN}idd fase0 export <caso> [--forcar]${RESET}          exporta DBML, PlantUML, SQL e spec.md (Visual Paradigm / Aider / Spec Kit)
   ${CYAN}idd fase0 status <caso>${RESET}                     rodadas, decisões abertas, contagens e Gate 1
 
   ${GRAY}Rodadas são arquivos (rodadas/rodada-NN.md): responda no editor e rode loop1 de novo.${RESET}
@@ -149,6 +151,13 @@ async function faseLoop2(root: string, args: string[]): Promise<void> {
   }
 }
 
+async function faseExport(root: string, args: string[]): Promise<void> {
+  const caso = nomeCaso(args, 'export');
+  const p = caminhosCaso(root, caso);
+  const r = exportarCaso(root, caso, p, { forcar: args.includes('--forcar') });
+  for (const f of r.arquivos) success(`exportado ${f}`);
+}
+
 async function faseGate2(root: string, args: string[]): Promise<void> {
   const caso = nomeCaso(args, 'gate2');
   const g = avaliarGate2(caminhosCaso(root, caso));
@@ -199,6 +208,7 @@ export async function cmdFase0(args: string[]): Promise<void> {
       case 'gate1':  return await faseGate1(root, rest);
       case 'loop2':  return await faseLoop2(root, rest);
       case 'gate2':  return await faseGate2(root, rest);
+      case 'export': return await faseExport(root, rest);
       case 'status': return await faseStatus(root, rest);
       default:
         error(`Subcomando desconhecido: "${sub}"`);
