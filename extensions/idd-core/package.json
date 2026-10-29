@@ -164,7 +164,7 @@
     "@idd/core": "file:../../packages/core",
     "@types/better-sqlite3": "^7.6.8",
     "@types/js-yaml": "^4.0.9",
-    "@types/node": "^20.19.41",
+    "@types/node": "^26.4.1",
     "@types/uuid": "^9.0.7",
     "@types/vscode": "1.85.0",
     "esbuild": "^0.25.9",
