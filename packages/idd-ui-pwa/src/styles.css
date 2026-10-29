@@ -17,3 +17,14 @@ button { font: inherit; }
 .intent-statement { display: grid; grid-template-columns: 58px minmax(0, 1fr) minmax(220px, .8fr); gap: 18px; margin: 0 24px 17px; padding: 16px 0; border-top: 2px solid #275d4b; border-bottom: 1px solid #d4d0c4; }.intent-order span { color: #d29d21; font: 22px 'DM Mono', monospace; }.intent-order p, .invariants > p { margin: 4px 0 0; color: #607069; font: 9px 'DM Mono', monospace; text-transform: uppercase; letter-spacing: .08em; }.intent-content h2 { max-width: 690px; margin: 0; color: #1c352d; font-size: 16px; line-height: 1.45; letter-spacing: 0; }.intent-content p { max-width: 700px; margin: 8px 0 0; color: #596860; font-size: 12px; line-height: 1.55; }.invariants { padding-left: 17px; border-left: 1px solid #d4d0c4; }.invariants ul { margin: 8px 0 0; padding: 0; list-style: none; }.invariants li { display: flex; align-items: flex-start; gap: 6px; margin-top: 6px; color: #365147; font: 10px/1.35 'DM Mono', monospace; }.invariants li svg { flex: 0 0 auto; margin-top: 1px; color: #27765b; }
 @media (max-width: 980px) { .intent-statement { grid-template-columns: 50px 1fr; }.invariants { grid-column: 2; padding: 12px 0 0; border-top: 1px solid #d4d0c4; border-left: 0; } }
 @media (max-width: 680px) { .intent-statement { grid-template-columns: 1fr; gap: 9px; margin: 0 14px 14px; }.intent-order { display: flex; align-items: center; gap: 8px; }.intent-order p { margin: 0; }.invariants { grid-column: auto; }.intent-content h2 { font-size: 15px; } }
+
+.command input { flex: 1; background: transparent; border: 0; color: #e8e7df; font: 12px 'DM Mono', monospace; outline: none; }
+.command input::placeholder { color: #8da59c; }
+.tree { max-height: calc(100vh - 144px); overflow-y: auto; }
+.tag-list { margin-left: auto; display: flex; gap: 5px; }
+.tag-badge { padding: 2px 6px; border-radius: 3px; background: #dfe8e2; border: 1px solid #b3c9bd; color: #1f4e3d; font: 10px 'DM Mono', monospace; }
+.readonly-chip { color: #8a3a34 !important; background: #f7e4e1 !important; border-color: #dfb0a9 !important; }
+.code-editor-input { width: 100%; min-height: 145px; padding: 10px 12px; border: 0; border-bottom: 1px dashed #cfcdc1; background: #f4f2ea; color: #1d2925; font: 12px/1.6 'DM Mono', monospace; resize: vertical; outline: none; }
+.code-editor-input:focus { background: #eef6f2; }
+.code-preview { min-height: 120px !important; }
+.reset-btn { display: inline-flex; align-items: center; gap: 4px; padding: 2px 6px; border: 1px solid #b5b3a7; border-radius: 3px; background: #eceae0; color: #2d3e37; font: 9px 'DM Mono', monospace; cursor: pointer; }

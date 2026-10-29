@@ -159,19 +159,30 @@ export class IntentWorkspacePanel {
           document.getElementById('new').onclick = () => vscode.postMessage({ command: 'newIntent' });
           return;
         }
+        const mutationBlock = (intent.allowedFields?.length || intent.readOnlyFields?.length)
+          ? '<div class="panels">' +
+              '<div class="panel"><h3>Escrita autorizada (allowed_fields)</h3>' +
+                (intent.allowedFields?.length ? '<ul>' + listItems(intent.allowedFields) + '</ul>' : '<p>Nenhuma mutação de estado autorizada (somente leitura).</p>') +
+              '</div>' +
+              '<div class="panel"><h3>Somente leitura (read_only_fields)</h3>' +
+                (intent.readOnlyFields?.length ? '<ul>' + listItems(intent.readOnlyFields) + '</ul>' : '<p>Nenhum campo somente leitura declarado.</p>') +
+              '</div>' +
+            '</div>'
+          : '';
         content.innerHTML =
-          '<div class="status">' + esc(intent.boundedContext) + ' · ' + esc(intent.status) + '</div>' +
+          '<div class="status">' + esc(intent.boundedContext) + ' · ' + esc(intent.name) + ' · ' + esc(intent.status) + '</div>' +
           '<p class="eyebrow">Intenção de negócio</p>' +
           '<h2 class="statement">' + esc(intent.statement) + '</h2>' +
           '<p class="explain">Este é o contrato de primeira ordem. YAML, implementação, testes e verificações são projeções verificáveis desta declaração.</p>' +
           '<div class="panels">' +
-            '<div class="panel"><h3>Invariantes declaradas</h3>' +
+            '<div class="panel"><h3>Invariantes e restrições</h3>' +
               (intent.constraints.length ? '<ul>' + listItems(intent.constraints) + '</ul>' : '<p>Nenhuma restrição declarada.</p>') +
             '</div>' +
             '<div class="panel"><h3>Critérios de aceite</h3>' +
               (intent.acceptance.length ? '<ul>' + listItems(intent.acceptance) + '</ul>' : '<p>Nenhum critério declarado.</p>') +
             '</div>' +
           '</div>' +
+          mutationBlock +
           '<div class="impact"><h3>Impacto</h3><button id="impact-contract">' + esc(intent.module) + ' · contrato YAML</button>' +
           (intent.implementationPath ? '<button id="impact-implementation">' + esc(intent.name) + ' · implementação</button>' : '') + '</div>' +
           '<p class="meta">' + esc(intent.module) + ' · ' + esc(intent.language) + '</p>' +

@@ -2,6 +2,7 @@ import * as path from 'path';
 import * as vscode from 'vscode';
 import * as yaml from 'js-yaml';
 import * as fs from 'fs';
+import { parseContract, circumscriptionId } from '@idd/core';
 
 export type IntentStatus = 'aligned' | 'advisory' | 'critical';
 
@@ -10,9 +11,14 @@ export interface WorkspaceIntent {
   boundedContext: string;
   module: string;
   name: string;
+  targetClass?: string;
+  targetMethod?: string;
   statement: string;
   constraints: string[];
   acceptance: string[];
+  allowedFields: string[];
+  readOnlyFields: string[];
+  tags: string[];
   language: string;
   status: IntentStatus;
   fsPath: string;
@@ -71,22 +77,55 @@ async function readContract(
   uri: vscode.Uri,
   declaredStatus: Map<string, IntentStatus>
 ): Promise<WorkspaceIntent | undefined> {
-  const contract = await parseYaml<ContractDocument>(uri);
-  if (!contract) return undefined;
+  const raw = await parseYaml<ContractDocument>(uri);
+  if (!raw) return undefined;
 
-  const module = asString(contract.module) ?? deriveModule(uri);
+  const parsed = parseContract(raw);
+  if (parsed.ok) {
+    const c = parsed.contract;
+    const displayName = c.targetClass && c.targetMethod ? circumscriptionId(c) : c.name;
+    const implementationPath = findImplementation(uri.fsPath, c.name, c.language);
+    return {
+      id: uri.fsPath,
+      boundedContext: c.boundedContext,
+      module: c.module,
+      name: displayName,
+      targetClass: c.targetClass,
+      targetMethod: c.targetMethod,
+      statement: c.intent,
+      constraints: c.constraints.map(x => `[${x.id}] ${x.description}`),
+      acceptance: c.acceptance.map(a =>
+        a.given || a.when
+          ? `[${a.id}] Dado: ${a.given} · Quando: ${a.when} · Então: ${a.then}`
+          : `[${a.id}] ${a.then}`,
+      ),
+      allowedFields: c.behavioralContract.stateMutation.allowedFields,
+      readOnlyFields: c.behavioralContract.stateMutation.readOnlyFields,
+      tags: c.tags,
+      language: c.language ?? 'typescript',
+      status: declaredStatus.get(c.boundedContext.toLowerCase()) ?? 'aligned',
+      fsPath: uri.fsPath,
+      implementationPath,
+      implementationLine: implementationPath ? findIntentLine(implementationPath, c.name) : undefined,
+    };
+  }
+
+  const module = asString(raw.module) ?? deriveModule(uri);
   const [boundedContext, name] = splitModule(module);
-  const implementationPath = findImplementation(uri.fsPath, name, contract.language);
+  const implementationPath = findImplementation(uri.fsPath, name, raw.language);
 
   return {
     id: uri.fsPath,
     boundedContext,
     module,
     name,
-    statement: asString(contract.intent) ?? 'Intenção não declarada neste contrato.',
-    constraints: asStringArray(contract.constraints),
-    acceptance: asStringArray(contract.acceptance),
-    language: asString(contract.language) ?? 'typescript',
+    statement: asString(raw.intent) ?? 'Intenção não declarada neste contrato.',
+    constraints: asStringArray(raw.constraints),
+    acceptance: asStringArray(raw.acceptance),
+    allowedFields: [],
+    readOnlyFields: [],
+    tags: [],
+    language: asString(raw.language) ?? 'typescript',
     status: declaredStatus.get(boundedContext.toLowerCase()) ?? 'aligned',
     fsPath: uri.fsPath,
     implementationPath,
