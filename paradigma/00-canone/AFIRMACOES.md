@@ -2,13 +2,13 @@
 
 Referência para revisar vídeos, apresentações e textos. Levantada em 2026-10-26 cruzando o
 acervo com o código (`cli/`, `packages/`, `40-evidencias/`). Atualize esta matriz quando algo
-mudar de status.
+mudar de status. Para o registro empírico de cercas determinísticas, veja [LIVRO-DE-RECUSAS.md](LIVRO-DE-RECUSAS.md).
 
 | # | Afirmação pública | Status | Evidência / observação |
 | --- | --- | --- | --- |
 | A1 | Comando Epistêmico vs. Operacional orienta o trabalho com agentes | ✅ | Prática documentada (RVM, idd-ide, runbooks `.intent.md`) |
 | A2 | DAV: LLM só produz `{ação, parâmetros}`; dados nunca passam pelo LLM; fast-path regex | ✅ | RVM Designações (9 handlers `QUERY_*`, 7 famílias de regex PT-BR, mai/2026). O código está no repo do RVM, não no acervo |
-| A3 | Confirm-Once: aprovar o plano uma vez e o agente executa até o fim | ✅ | Prática de trabalho com agentes; registrado nas memórias e no veredito de set/2026 |
+| A3 | Confirm-Once: aprovar o plano uma vez e o agente executa até o fim | parcial | Prática de trabalho e rótulo em runbook; protocolo em arquivo implementado apenas em `idd fase0` (`rodadas/*.md` → `.aplicada` → `decisoes.md`), sem estado `CONFIRMED` global nos contratos do CLI |
 | A4 | Dicionário ubíquo verificável (termo fora do dicionário gera alerta) | ✅ | `idd dictionary check --strict`, LSP `idd.dictionary.*`, hard gate no CI do idd-ide |
 | A5 | Contrato de intenção versionado com verificação de drift | ✅ (parcial) | `.intent.yaml` + Intent Store + `idd verify`; LSP detecta mutação fora de `state_mutation`. Sem circunscrição completa por método |
 | A6 | Leiga criou um CRM com IA (Melissa / NexusLog) | ✅ | Código React/Supabase em `40-evidencias/nexuslog-crm-melissa` |

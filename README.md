@@ -21,7 +21,7 @@ Selos usados neste README (ver [Cânone §6](./paradigma/00-canone/IDD-CANONE.md
 
 ## Direção atual: começar pelo começo
 
-A próxima etapa é a **Fase 0 investigativa** 🔭: um desambiguador e compilador de linguagem
+A **Fase 0 investigativa** ✅ (`idd fase0` + `idd lint-ln`) é um desambiguador e compilador de linguagem
 ubíqua no nível de **estudo de requisitos**, antes de qualquer código.
 
 1. **Loop 1, intenção.** A IA participa livremente, num diálogo socrático, até produzir, em
@@ -49,7 +49,8 @@ avaliação técnica [`docs/PARECER-IDD-IDE-2026-10-27.md`](./docs/PARECER-IDD-I
 | **Fronteiras entre bounded contexts** (`idd verify --project`), gate de CI | ✅ | Lê imports por regex (só TS/JS) |
 | Intent Store versionado (SQLite) | ✅ | Testado com uma simulação do banco; depende do módulo nativo `better-sqlite3` |
 | Modelagem de domínio: UML (Mermaid/PlantUML) → YAML, JSON Schema e SQL (`idd domain`) | ✅ | Base do loop 2 |
-| Checagem de normalização 1NF→DKNF | 🧪 | Heurística sobre dependências declaradas; não calcula fecho nem chaves candidatas |
+| Checagem de normalização 1NF→BCNF (`idd domain`) | ✅ | Fecho de Armstrong, chaves candidatas, 3NF/BCNF e chase sobre DFs declaradas |
+| **Fase 0 — Compilador de Linguagem Ubíqua** (`idd fase0`, `idd lint-ln`) | ✅ | Loop 1 (intenção/invariantes/dicionário), Loop 2 (MER/UCs/atividades/estados/métodos) e exportações |
 | Verificação estática de drift (`idd verify`) | 🧪 | Regras por regex e palavras-chave; acerto ainda não medido |
 | Verificação semântica (`idd verify --semantic`) | 🧪 | Uma única resposta de LLM (Anthropic); não trata o não-determinismo ([#30](https://github.com/EliezerRosa/idd-ide/issues/30)) |
 | `generate`, `capture`, `migrate`, `suggest`, `review` | 🧪 | Chamadas ao LLM sem saída estruturada nem nova tentativa |
@@ -112,7 +113,7 @@ idd domain parse domain.mmd   # modelo de domínio a partir do UML
 idd verify                    # drift estático (heurístico)
 ```
 
-A lista completa dos 25 comandos está em `idd --help` e em [docs/CLI.md](./docs/CLI.md).
+A lista completa dos 27 comandos está em `idd --help` e em [docs/CLI.md](./docs/CLI.md).
 
 ---
 
@@ -122,7 +123,7 @@ A lista completa dos 25 comandos está em `idd --help` e em [docs/CLI.md](./docs
 idd-ide/
 ├── paradigma/        # acervo do paradigma: cânone, método, evidências, comunicação
 ├── packages/core/    # @idd/core: contrato, projeto, dicionário (parser único)
-├── cli/              # CLI `idd` (25 comandos, 900+ testes)
+├── cli/              # CLI `idd` (27 comandos, 1000+ testes)
 ├── extensions/idd-core/   # extensão VS Code + servidor LSP (experimental)
 ├── packages/vscode-extension/  # protótipo alternativo de UI (experimental)
 ├── packages/idd-ui-pwa/        # maquete de UI (dados fixos)
