@@ -63,6 +63,7 @@ Para cada item, responda **CONFIRMADA** ou **REFUTADA**, com a evidência que vo
 | I8 | O Cânone define que a intenção é compilada em "vocabulário de ações" (DAV), mas a Fase 0 não produz esse artefato. "Fé Bayesiana" (princípio 5) não tem nenhuma linha de código | `IDD-CANONE.md:13`, `:57`; busque no repositório |
 | I9 | O CI não roda os gates da Fase 0 (`fase0 gate1/gate2`) nem lint do plugin sobre código de produto | `.github/workflows/*.yml` |
 | I10 | A procedência das decisões é fraca: qualquer edição em `decisoes.md` conta como decisão humana. Algumas aprovações registradas como "editado pelo autor" foram aplicadas por um assistente seguindo respostas do autor no chat (D-029, D-034, D-038) | `fase0/racha-conta/decisoes.md`; `git log` |
+| I11 | O módulo `graphify` do IDD **não é** o projeto open source graphify. É uma implementação própria sobre a TypeScript Compiler API, e o nome igual induz a erro. Ele já foi apresentado como "Graphify/Tree-sitter" com "96% de economia" fixa no código, corrigido no PR #75. O graphify open source não é usado em lugar nenhum do repositório | `cli/src/lib/fase0/graphify.ts:1-3`; busque `graphifyy` e `tree-sitter` em `package.json` e `requirements` |
 
 Acrescente as incongruências que você encontrar e esta lista não tem.
 
@@ -78,6 +79,7 @@ O objetivo mínimo é o Racha de Conta implementado **conforme as 53 decisões**
 - o ESLint (`@idd/eslint-plugin`) fiscaliza as mutações por método;
 - o `idd verify` acha o método certo;
 - cada invariante tem um teste executável, citado pelo id, que passa;
+- o grafo do graphify open source confirma que cada contrato tem o seu método no código, e o contrário também (item 8b abaixo);
 - tudo roda no CI.
 
 ### Ferramentas matemáticas: use as que de fato decidem algo
@@ -105,7 +107,28 @@ Para cada uma, diga onde entra no fluxo, o que ela decide, quanto custa e como s
    Fica consultiva, como a proposta manda. Diga o custo em chamadas e como validá-la contra o julgamento humano.
 6. **Concordância entre avaliadores (kappa de Cohen ou de Fleiss)** para medir se a SHALA e o lint concordam com especialistas humanos sobre o que é ambíguo.
 7. **Fé Bayesiana como mecanismo real.** Um modelo Beta-Binomial por tipo de ação do agente: cada sucesso ou falha verificada pelo gate atualiza a posterior, e a autonomia (Confirm-Once sem revisão) só aumenta quando o limite inferior do intervalo de credibilidade passa de um limiar declarado. Se não valer a pena implementar, recomende rebaixar o princípio a ✅ CONCEITO no Cânone.
-8. **O que já existe e deve ser mantido:** o fecho de atributos de Armstrong, a BCNF ou 3NF com preservação de dependências (`cli/src/lib/domain/fds.ts`) e a cerca de mutação por análise de AST. Confira se estão corretos.
+8. **Graphify open source, com uso efetivo e não decorativo.** O autor quer o projeto open source no fluxo.
+
+   **Primeiro, verifique você mesmo no repositório oficial.** O que temos vem de um resumo de busca, não confirmado:
+   - pacote Python `graphifyy`, comando `graphify`;
+   - extração de código com tree-sitter, sem LLM;
+   - passo semântico com LLM para documentos, PDFs e imagens;
+   - saída em JSON e HTML, comandos `query`, `path` e `explain`;
+   - arestas marcadas como EXTRACTED ou INFERRED;
+   - repositório citado como `safishamsi/graphify` ou `Graphify-Labs/graphify`, com forks de mesmo nome;
+   - licença divergente entre as fontes (MIT ou Apache 2.0).
+
+   Confirme o repositório certo, a licença, o suporte a TypeScript, o formato exato do JSON e a versão.
+
+   Depois, integre-o só onde ele **decide** algo. Cada uso precisa de teste e de métrica medida por você:
+   - **a. Ingestão L0 da Fase 0.** Usar o grafo de `fase0/<caso>/fontes/` (código legado, SQL e documentos) como contexto do SHADA, no lugar do texto bruto. Meça os tokens reais dos dois contextos com a API de contagem de tokens da Anthropic e compare a qualidade das rodadas. Não publique economia que você não mediu.
+   - **b. Gate de rastreabilidade sobre o código implementado.** Todo `target_class.target_method` dos contratos precisa existir como nó no grafo. As chamadas entre métodos (arestas) precisam ser compatíveis com os fluxos de `modelo/atividades/`. Método sem contrato e contrato sem método reprovam.
+   - **c. Análise de impacto para drift.** Dado um diff, use `path` e `query` no grafo para listar os contratos e as invariantes afetados e rodar só as verificações deles. Esse é o "verificar drift continuamente" que o Cânone promete com base na lição do MDA.
+   - **d. Comparação com o extrator próprio.** Rode o graphify open source e o `cli/src/lib/fase0/graphify.ts` sobre o mesmo código. Meça a precisão e a cobertura de classes, métodos, chamadas e mutações de campos de `this`. A cerca de mutação depende do campo exato alterado em cada método, o que um grafo genérico provavelmente não dá; confirme. Recomende o que fica com cada um.
+   - **e. Resolver o conflito de nome.** Proponha renomear o módulo próprio (por exemplo, para "extrator AST do IDD") e o comando `idd fase0 graphify`, para que "graphify" passe a significar só o projeto open source.
+
+   Diga também o que o graphify open source **não** resolve aqui, para ele não virar um novo enfeite.
+9. **O que já existe e deve ser mantido:** o fecho de atributos de Armstrong, a BCNF ou 3NF com preservação de dependências (`cli/src/lib/domain/fds.ts`) e a cerca de mutação por análise de AST. Confira se estão corretos.
 
 Para a **Entrega 6** da proposta (avaliação em casos reais), desenhe o experimento:
 - hipóteses;
@@ -124,7 +147,13 @@ Com base no que o código sustenta hoje e no que o plano da Parte 2 entrega, pro
 2. **Público e problema que paga.** Seja específico: equipes que usam agentes de IA em TypeScript, setores regulados que precisam de rastreabilidade, consultoria de requisitos. Diga o que cada um compra e por quê.
 3. **Concorrência real**, conferida por você, com data: GitHub Spec Kit, AWS Kiro, Tessl, ferramentas de design by contract, linters de imutabilidade. Diga o que o IDD faz que eles não fazem, só com base no código.
 4. **Roteiro de 90 dias**, com entregas, critérios de aceite e a evidência que cada etapa produz.
-5. **Riscos:** mantenedor único, lint só em português, dependência de LLM, custo por rodada e limites da análise estática (já documentados em `packages/eslint-plugin-idd/README.md`).
+5. **Riscos:** mantenedor único, lint só em português, dependência de LLM, custo por rodada e limites da análise estática (já documentados em `packages/eslint-plugin-idd/README.md`). Inclua os riscos de depender do graphify open source:
+   - é um pacote Python numa cadeia Node;
+   - a licença precisa ser confirmada;
+   - há forks com o mesmo nome;
+   - a API pode mudar.
+
+   Se for o caso, proponha usá-lo como integração opcional, não como dependência obrigatória.
 
 ## Parte 4 — Parecer final
 
