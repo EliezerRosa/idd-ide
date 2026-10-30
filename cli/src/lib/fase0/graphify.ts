@@ -119,6 +119,33 @@ export function extrairCaminhoThis(node: ts.Expression, apelidos: ReadonlySet<st
   return null;
 }
 
+const COLECOES = new Set(['Array', 'Map', 'Set', 'WeakMap', 'WeakSet']);
+
+/**
+ * Campos da classe declarados com tipo que NÃO é coleção (ex.: repositório injetado). Chamar delete/set/add
+ * neles é falar com um colaborador, não mutar estado próprio. Campos sem tipo conhecido ficam de fora (cautela).
+ */
+export function camposNaoColecao(cls: ts.ClassDeclaration): Set<string> {
+  const out = new Set<string>();
+  const ehColecao = (t: ts.TypeNode): boolean => {
+    if (ts.isArrayTypeNode(t)) return true;
+    if (ts.isTypeReferenceNode(t) && ts.isIdentifier(t.typeName)) return COLECOES.has(t.typeName.text);
+    if (ts.isUnionTypeNode(t)) return t.types.some(ehColecao);
+    return false;
+  };
+  for (const m of cls.members) {
+    if (ts.isPropertyDeclaration(m) && ts.isIdentifier(m.name) && m.type && !ehColecao(m.type)) out.add(m.name.text);
+    if (ts.isConstructorDeclaration(m)) {
+      for (const prm of m.parameters) {
+        const ehPropriedade = prm.modifiers?.some(md =>
+          [ts.SyntaxKind.PrivateKeyword, ts.SyntaxKind.PublicKeyword, ts.SyntaxKind.ProtectedKeyword, ts.SyntaxKind.ReadonlyKeyword].includes(md.kind));
+        if (ehPropriedade && ts.isIdentifier(prm.name) && prm.type && !ehColecao(prm.type)) out.add(prm.name.text);
+      }
+    }
+  }
+  return out;
+}
+
 const ESCRITORES_REFLEXIVOS: Record<string, Set<string>> = {
   Object: new Set(['assign', 'defineProperty', 'defineProperties', 'setPrototypeOf']),
   Reflect: new Set(['set', 'defineProperty', 'deleteProperty', 'setPrototypeOf']),
@@ -144,6 +171,8 @@ export function extrairAstTypeScript(codigoFonte: string, nomeArquivo = 'fonte.t
   const ARRAY_MUTATORS = new Set(['push', 'pop', 'shift', 'unshift', 'splice', 'sort', 'reverse', 'fill', 'copyWithin', 'set', 'add', 'delete', 'clear']);
   /** apelidos de this no método em inspeção */
   let apelidos = new Set<string>();
+  /** campos da classe atual que são colaboradores (não coleções) */
+  let colaboradores = new Set<string>();
 
   function registrarMutacao(
     fullPath: string,
@@ -276,7 +305,10 @@ export function extrairAstTypeScript(codigoFonte: string, nomeArquivo = 'fonte.t
         if (caminho) registrarMutacao(caminho, exprNode.expression.getText(sourceFile), exprNode, className, methodName);
       } else if (ts.isPropertyAccessExpression(exprNode.expression)) {
         const metodoNome = exprNode.expression.name.text;
-        if (ARRAY_MUTATORS.has(metodoNome)) {
+        const receptor = exprNode.expression.expression;
+        const ehColaborador = ts.isPropertyAccessExpression(receptor) && ehThis(receptor.expression, apelidos)
+          && colaboradores.has(receptor.name.text);
+        if (ARRAY_MUTATORS.has(metodoNome) && !ehColaborador) {
           const caminho = extrairCaminhoThis(exprNode.expression.expression, apelidos);
           if (caminho) {
             registrarMutacao(`${caminho}.${metodoNome}()`, `.${metodoNome}()`, exprNode, className, methodName);
@@ -330,6 +362,7 @@ export function extrairAstTypeScript(codigoFonte: string, nomeArquivo = 'fonte.t
       }
 
       // Visita membros da classe
+      colaboradores = camposNaoColecao(node);
       for (const member of node.members) {
         if (ts.isMethodDeclaration(member) || ts.isConstructorDeclaration(member)) {
           const methodName = ts.isConstructorDeclaration(member) ? 'constructor' : member.name.getText(sourceFile);

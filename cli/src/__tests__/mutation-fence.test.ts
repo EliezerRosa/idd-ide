@@ -37,6 +37,17 @@ describe('cerca de mutação', () => {
     expect(r).toEqual(['INV-ENCAP-01:fechar:itens', 'INV-UI-05:fechar:[dinâmico]']);
   });
 
+  it('chamada a colaborador declarado (this.repo.delete) não é mutação; coleção própria continua sendo', () => {
+    const servico = `
+    class Servico {
+      constructor(private repo: Repositorio) {}
+      pendentes: Map<string, number> = new Map();
+      remover(id: string) { this.repo.delete(id); this.pendentes.delete(id); }
+    }`;
+    expect(codigos(servico, { targetClass: 'Servico', targetMethod: 'remover', allowedFields: [], readOnlyFields: [] }))
+      .toEqual(['INV-UI-04:remover:pendentes']);
+  });
+
   it('contrato legado sem método-alvo e sem listas não fiscaliza nada', () => {
     expect(codigos(MESA, { allowedFields: [], readOnlyFields: [] })).toEqual([]);
   });

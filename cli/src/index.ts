@@ -25,6 +25,7 @@ import { cmdRegistry }  from './commands/registry.ts';
 import { cmdMigrate }   from './commands/migrate.ts';
 import { cmdDictionary } from './commands/dictionary.ts';
 import { cmdFase0 }      from './commands/fase0.ts';
+import { cmdInspect }    from './commands/inspect.ts';
 import { cmdLintLn }     from './commands/lintLn.ts';
 import { BOLD, RESET, PURPLE, GRAY, CYAN, GREEN } from './lib/ui.ts';
 
@@ -63,6 +64,7 @@ async function main(): Promise<void> {
     case 'dictionary':
     case 'dict':     return cmdDictionary(rest);
     case 'fase0':    return cmdFase0(rest);
+    case 'inspect':  return cmdInspect(rest);
     case 'lint-ln':  return cmdLintLn(rest);
     case 'version':
     case '--version':
@@ -105,6 +107,9 @@ function printHelp(): void {
     ${CYAN}idd generate [modulo/sub]${RESET}
       Gera código, testes e docs a partir do .intent.yaml.
       Sem argumento: processa todos os .intent.yaml do diretório.
+
+    ${CYAN}idd inspect <arquivo.ts|diretório>${RESET}
+      Sugere contratos TSDoc (@intent, @mutates) a partir das mutações que o código já faz.
 
     ${CYAN}idd verify [modulo/sub] [flags]${RESET}
       Verifica alinhamento entre código e intenções.

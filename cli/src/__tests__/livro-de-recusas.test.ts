@@ -16,7 +16,8 @@ function runCli(cwd: string, args: string[]) {
   });
 }
 
-describe('Livro de Recusas — gates determinísticos (sem LLM, exit code != 0)', () => {
+// cada recusa sobe um processo do CLI: o limite padrão de 5 s estoura com a suíte inteira rodando em paralelo
+describe('Livro de Recusas — gates determinísticos (sem LLM, exit code != 0)', { timeout: 30_000 }, () => {
   let tmp: string;
   beforeEach(() => {
     tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'idd-recusa-'));

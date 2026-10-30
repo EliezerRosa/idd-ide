@@ -12,6 +12,7 @@ import { executarLoop2 } from '../lib/fase0/loop2.ts';
 import { exportarCaso } from '../lib/fase0/exportacao.ts';
 import { avaliarAmbiguidadeCaso, type RelatorioAmbiguidade } from '../lib/fase0/shala.ts';
 import { graphificarCodigo } from '../lib/fase0/graphify.ts';
+import { tsdocDoCaso } from '../lib/fase0/tsdoc.ts';
 import { LlmRefusalError, LlmTruncatedError } from '../lib/llm/index.ts';
 
 function ajuda(): void {
@@ -21,6 +22,7 @@ function ajuda(): void {
   ${CYAN}idd fase0 gate1 <caso>${RESET}                      checklist do Gate 1 (exit 1 se não estiver verde)
   ${CYAN}idd fase0 loop2 <caso> [--sem-nova-rodada]${RESET}  loop 2 (MER → casos de uso → atividades → estados): aplica a rodada respondida, roda o Gate 2 e, se preciso, gera a próxima
   ${CYAN}idd fase0 gate2 <caso>${RESET}                      checklist do Gate 2 (exit 1 se não estiver verde)
+  ${CYAN}idd fase0 tsdoc <caso>${RESET}                      gera as anotações TSDoc dos contratos (para o @idd/eslint-plugin fiscalizar)
   ${CYAN}idd fase0 export <caso> [--forcar]${RESET}          exporta DBML, PlantUML, SQL e spec.md (Visual Paradigm / Aider / Spec Kit)
   ${CYAN}idd fase0 status <caso>${RESET}                     rodadas, decisões abertas, contagens e Gate 1
   ${CYAN}idd fase0 shala <caso>${RESET}                      indicador heurístico de ambiguidade (SHALA; consultivo)
@@ -279,6 +281,27 @@ function imprimirRelatorioShala(rel: RelatorioAmbiguidade): void {
   }
 }
 
+async function faseTsdoc(root: string, args: string[]): Promise<void> {
+  const caso = nomeCaso(args, 'tsdoc');
+  const p = caminhosCaso(root, caso);
+  const { blocos, invalidos } = tsdocDoCaso(path.join(p.dir, 'contratos'));
+  if (!blocos.length) {
+    error(`Nenhum contrato v2 com target_class/target_method em fase0/${caso}/contratos/. Rode antes: idd fase0 loop2 ${caso}`);
+    process.exit(1);
+  }
+  for (const b of blocos) {
+    console.log(`  ${GRAY}// ${b.classe}.${b.metodo} — contratos/${b.arquivo}${RESET}`);
+    console.log(b.texto.split('\n').map(l => `  ${l}`).join('\n'));
+    console.log('');
+  }
+  const comPendencia = blocos.filter(b => b.pendencias.length);
+  if (comPendencia.length) {
+    warn(`${comPendencia.length} método(s) alteram outras entidades (TODO acima): o autor decide quais campos do agregado as guardam.`);
+  }
+  if (invalidos.length) warn(`Contratos inválidos ignorados: ${invalidos.join(', ')}`);
+  info('Cole cada bloco acima do método correspondente e ative o @idd/eslint-plugin (packages/eslint-plugin-idd).');
+}
+
 async function faseShala(root: string, args: string[]): Promise<void> {
   const caso = nomeCaso(args, 'shala');
   const p = caminhosCaso(root, caso);
@@ -347,6 +370,7 @@ export async function cmdFase0(args: string[]): Promise<void> {
       case 'loop2':    return await faseLoop2(root, rest);
       case 'gate2':    return await faseGate2(root, rest);
       case 'export':   return await faseExport(root, rest);
+      case 'tsdoc':    return await faseTsdoc(root, rest);
       case 'status':   return await faseStatus(root, rest);
       case 'shala':    return await faseShala(root, rest);
       case 'graphify': return await faseGraphify(root, rest);
