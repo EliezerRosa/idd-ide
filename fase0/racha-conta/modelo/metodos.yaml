@@ -48,7 +48,7 @@ metodos:
     visibilidade: public
     intencao: "Calcular a [[Cota]] em centavos inteiros de cada [[Participante]] da [[Mesa]] com rateio proporcional da [[TaxaServico]] e rodízio alfabético contínuo dos centavos indivisíveis."
     transacoes: [TN-04]
-    invariantes: [INV-001, INV-005]
+    invariantes: [INV-001, INV-002, INV-005]
     allowed_fields: []
     read_only_fields: [ItemConsumido.preco_centavos, ItemConsumido.ordem, Consumo, Participante.nome, Mesa.taxa_servico_percentual]
     restricoes:

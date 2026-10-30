@@ -17,12 +17,12 @@
 - [x] D-010 · R01/PR07 · proposta aceita: termo ChavePix — Chave Pix do responsável da mesa, para a qual os participantes pagam as próprias cotas. (2026-10-27)
 - [x] D-011 · R01/PR08 · proposta aceita: termo Nota — Documento de cobrança emitido pelo estabelecimento, com o valor total a pagar pela mesa. (2026-10-27)
 - [x] D-012 · R01/PR09 · proposta aceita: INT-001 — O aplicativo deve dividir o preço de cada [[ItemConsumido]] somente entre os participantes que consumiram esse [[ItemConsumido]]. (2026-10-27)
-- [ ] D-013 · R01/PR10 · não-bloqueante · proposta pendente: INT-002
+- [x] D-013 · R01/PR10 · proposta aceita: INT-002 — taxa rateada em proporção ao consumo, como já decidido na D-032 (2026-10-30)
 - [x] D-014 · R01/PR11 · proposta aceita: INT-003 — O aplicativo deve exibir a cada [[Participante]] o valor exato da própria [[Cota]]. (2026-10-27)
 - [x] D-015 · R01/PR12 · proposta aceita: INT-004 — O aplicativo deve permitir que cada [[Participante]] pague a própria [[Cota]] por Pix Copia e Cola ou QR Code para a [[ChavePix]] do [[ResponsavelMesa]]. (2026-10-27)
 - [x] D-016 · R01/PR13 · proposta aceita: INT-005 — Quando o [[ResponsavelMesa]] cria a [[Mesa]], o aplicativo deve exigir a [[ChavePix]] do [[ResponsavelMesa]]. (2026-10-27)
 - [x] D-017 · R01/PR14 · proposta aceita: INV-001 — [cálculo] A soma das cotas de todos os participantes de uma [[Mesa]] deve ser exatamente igual à soma dos preços dos [[ItemConsumido]] mais a [[TaxaServico]], com diferença de zero centavos. (2026-10-27)
-- [ ] D-018 · R01/PR15 · não-bloqueante · proposta pendente: INV-002
+- [x] D-018 · R01/PR15 · proposta aceita: INV-002 — a cota nunca inclui item não consumido pelo participante (2026-10-30)
 - [x] D-019 · R01/PR16 · proposta aceita: INV-003 — [integridade] Todo [[ItemConsumido]] deve ter no mínimo um [[Participante]] entre os consumidores. (2026-10-27)
 - [x] D-020 · R01/PR17 · proposta aceita: INV-004 — [integridade] Todo [[Participante]] associado a um [[ItemConsumido]] deve pertencer à mesma [[Mesa]] do [[ItemConsumido]]. (2026-10-27)
 - [x] D-021 · R01/PR18 · proposta aceita: INV-005 — [cálculo] Toda [[Cota]] deve ser um número inteiro de centavos, com valor ≥ 0. (2026-10-27)
@@ -54,3 +54,7 @@
 - [x] D-047 · L2/METODOS01/P01 · não-bloqueante · As transações TN-02 (incluir participante) e TN-03 (registrar item consumido) foram circunscritas ao agregado Mesa (Mesa.incluirParticipante e Mesa.registrarItemConsumido), pois exigem verificar Mesa.fechada_em, a unicidade de nome na mesa e a próxima ordem de item. Deseja manter esses métodos circunscritos a Mesa? → Manter em Mesa (agregado raiz garante as invariantes e pré-condições da mesa) (2026-10-28)
 - [x] D-048 · L2/METODOS01/P02 · não-bloqueante · As transações TN-07 (enviar comprovante) e TN-08 (confirmar pagamento) foram circunscritas à classe Pagamento (Pagamento.enviarComprovante e Pagamento.confirmar), acompanhando a máquina de estados de Pagamento. Deseja manter esses dois métodos em Pagamento? → Manter em Pagamento (Pagamento.enviarComprovante e Pagamento.confirmar) (2026-10-28)
 - [x] D-049 · L2/METODOS01/artefato · métodos aprovado: modelo/metodos.yaml (2026-10-28)
+- [x] D-050 · L1/alinhamento · termos aceitos: Consumo e Pagamento (entity), que já eram classes do MER aprovado (2026-10-30)
+- [x] D-051 · L1/alinhamento · intenção criada: INT-006 — fechamento da mesa, formalizando a D-031 no loop 1 (2026-10-30)
+- [x] D-052 · L1/alinhamento · intenção criada: INT-007 — confirmação do pagamento, formalizando a D-024 no loop 1 (2026-10-30)
+- [x] D-053 · L1/alinhamento · casos de uso atualizados em consequência: UC-03 cobre INT-002, TN-04 toca INV-002, UC-04 cobre INT-006 e UC-06 cobre INT-007 (2026-10-30)
