@@ -33,7 +33,7 @@ jobs:
         run: |
           cd cli
           npx esbuild src/index.ts --bundle --platform=node --target=node22 \
-            --format=esm --outfile=dist/index.js --external:better-sqlite3
+            --format=esm --outfile=dist/index.js --external:better-sqlite3 --external:typescript
           sed -i '2{/^#!/d}' dist/index.js
           chmod +x dist/index.js
 

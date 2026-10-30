@@ -79,7 +79,7 @@ jobs:
           npm ci
           npx esbuild src/index.ts --bundle --platform=node \
             --target=node22 --format=esm --outfile=dist/index.js \
-            --external:better-sqlite3
+            --external:better-sqlite3 --external:typescript
           sed -i '2{/^#!/d}' dist/index.js 2>/dev/null || true
           npm link
 
