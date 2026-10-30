@@ -1,0 +1,47 @@
+1
+00:00:01,000 --> 00:00:24,256
+[Tech Lead / Host] Olá engenheiros e desenvolvedores. Hoje vamos direto ao ponto técnico: a maioria dos incidentes críticos em produção não decorre de erros de sintaxe ou de quebras de compilação, mas de efeitos colaterais de estado não circunscritos e lacunas semânticas de negócio. Eliézer, qual é o ponto cego da engenharia de software moderna que as suítes de testes convencionais deixam passar?
+
+2
+00:00:24,706 --> 00:01:01,114
+[Eliézer Rosa] O ponto cego fundamental é que testes unitários tradicionais apenas verificam o caminho feliz que o programador lembrou de testar com mocks. Eles não fiscalizam o que o método não deveria ter tocado. Se um desenvolvedor sob pressão ou um agente de inteligência artificial alterar um saldo contábil ou mutar o status de outro agregado dentro de uma operação de leitura, os testes unitários continuam verdes. O IDD — Intention-Driven Development — foi ajustado para atuar como uma cerca determinística de estado em tempo de compilação, sem sobrecarga de tokens e sem burocracia desnecessária.
+
+3
+00:01:01,564 --> 00:01:15,604
+[Tech Lead / Host] No passado, muitas abordagens formais pecaram pelo excesso de cerimônia, obrigando os times a manter arquivos YAML paralelos que rapidamente ficavam desatualizados. Como o IDD resolveu esse problema de sincronização?
+
+4
+00:01:16,054 --> 00:01:50,638
+[Eliézer Rosa] Eliminamos qualquer arquivo de especificação externo. Não existem arquivos YAML ou questionários manuais em markdown para manter. O contrato operacional vive colado diretamente no código TypeScript via anotações TSDoc padronizadas. Você declara no próprio método a tag mutates para os campos que a operação pode alterar, a tag readonly para os campos protegidos e a tag invariant para a regra de conservação. O Language Server Protocol da sua IDE exibe o contrato no hover do mouse em qualquer editor, sem atrito e sem duplicidade de manutenção.
+
+5
+00:01:51,088 --> 00:02:02,080
+[Tech Lead / Host] E como essa cerca de mutação é fiscalizada na prática? Não há o risco de linters caseiros gerarem falsos positivos ou serem burlados por ponteiros e referências indiretas?
+
+6
+00:02:02,530 --> 00:02:42,778
+[Eliézer Rosa] Exatamente por isso descartamos linters rudimentares de regex e empacotamos a fiscalização como um plugin oficial de ESLint, utilizando o scope-manager oficial do TypeScript ESLint. O plugin faz análise de fluxo e resolução de escopo de ponteiros. Se alguém fizer uma atribuição indireta através de uma variável local, tentar operadores de atribuição composta, métodos mutadores de coleções como push e splice, ou alterar um campo de leitura, o editor sublinha a linha em vermelho em menos de trinta milissegundos. Zero chamadas a modelos de linguagem, zero custo de tokens e execução automática no pipeline de CI com exit code um.
+
+7
+00:02:43,228 --> 00:02:53,716
+[Tech Lead / Host] O segundo pilar é a resolução de ambiguidade com o motor SHALA. Em vez de teorias abstratas de teoria da informação, o que o engenheiro realmente recebe no terminal?
+
+8
+00:02:54,166 --> 00:03:30,214
+[Eliézer Rosa] O desenvolvedor recebe testes automatizados de propriedade que quebram na cara dele provando a falha com contraexemplos reais. Quando os analisadores de frames semânticos ou a álgebra de intervalos do SHALA detectam que um rateio financeiro não definiu uma política determinística para centavos indivisíveis, o IDD gera um teste com a biblioteca fast-check. Ao rodar o Vitest, o teste falha provando que cem reais divididos por três participantes perdem um centavo no arredondamento. O time não precisa discutir opiniões: a falha matemática é demonstrada no código antes de subir para homologação.
+
+9
+00:03:30,664 --> 00:03:39,280
+[Tech Lead / Host] Como uma equipe com milhares de linhas de código em produção consegue adotar essa infraestrutura sem precisar reescrever a arquitetura existente?
+
+10
+00:03:39,730 --> 00:04:18,178
+[Eliézer Rosa] Através do modelo Reverse First. Com o comando npx idd inspect no diretório do seu domínio, a árvore sintática mapeia classes, métodos e campos mutados automaticamente em segundos, sugerindo as anotações TSDoc de partida. A equipe pode adotar a fiscalização de forma incremental, aplicando os contratos apenas nos agregados críticos de cobrança, conciliação e faturamento. No GitHub Actions, a ferramenta emite anotações diretamente na linha do Pull Request onde a infração ocorreu, servindo como uma barreira de segurança sólida contra regressões de humanos e de agentes de inteligência artificial.
+
+11
+00:04:18,628 --> 00:04:26,980
+[Tech Lead / Host] Para encerrar com total sobriedade e honestidade técnica: quais são os limites reais do IDD e o que ele expressamente não resolve?
+
+12
+00:04:27,430 --> 00:05:00,238
+[Eliézer Rosa] O IDD não é bala de prata. Ele não substitui testes de carga, não resolve problemas de concorrência distribuída em bancos de dados como deadlocks e não substitui arquitetura de rede. O escopo do IDD é estrito e especializado: contenção determinística de efeitos colaterais de estado e transformação de lacunas de domínio em testes executáveis. Menos burocracia, zero arquivos paralelos, regras no ESLint e testes de propriedade reprodutíveis. Essa é a engenharia real por trás do IDD.

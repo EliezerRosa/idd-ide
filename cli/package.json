@@ -7,7 +7,7 @@
   },
   "main": "./dist/index.js",
   "scripts": {
-    "build": "esbuild src/index.ts --bundle --platform=node --target=node22 --format=esm --outfile=dist/index.js --external:better-sqlite3",
+    "build": "esbuild src/index.ts --bundle --platform=node --target=node22 --format=esm --outfile=dist/index.js --external:better-sqlite3 --external:typescript",
     "watch": "tsc -w -p tsconfig.json",
     "start": "node dist/index.js",
     "test": "vitest run",

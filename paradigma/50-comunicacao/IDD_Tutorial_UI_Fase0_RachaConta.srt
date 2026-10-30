@@ -1,0 +1,63 @@
+1
+00:00:01,000 --> 00:00:22,048
+[Interlocutora Técnica] Olá pessoal! Neste vídeo vamos fazer um tutorial prático da interface gráfica do IDD, mostrar exatamente o que já foi implementado no repositório idd-ide e percorrer o estudo de caso real do aplicativo Racha-Conta. Eliézer, para começar com total transparência epistêmica: o que já é código real funcionando hoje e o que é projeto futuro?
+
+2
+00:00:22,498 --> 00:00:52,690
+[Eliézer Rosa] Excelente ponto de partida! No Paradigma IDD, na minha formulação, separamos tudo com três selos canônicos. O que já está implementado hoje inclui a CLI com vinte e sete comandos, o pacote idd-core, o compilador completo da Fase Zero, os portões determinísticos e a interface visual IDD Studio UI. Já a criação de uma IDE dedicada própria, baseada num fork do Code-OSS, está expressamente documentada como um projeto futuro de longo prazo.
+
+3
+00:00:53,140 --> 00:01:06,676
+[Interlocutora Técnica] No slide dois vemos a espinha dorsal técnica que já roda hoje no repositório. Como o compilador da Fase Zero e o Livro de Recusas impedem que um agente de inteligência artificial invente regras ou corrompa o domínio?
+
+4
+00:01:07,126 --> 00:01:40,942
+[Eliézer Rosa] A Fase Zero divide a engenharia em dois loops antes que qualquer linha de código de aplicação exista. O Loop Um transforma linguagem natural em intenções, invariantes e dicionário ubíquo validados pelo Gate Um. O Loop Dois gera o modelo entidade-relacionamento em forma normal de Boyce-Codd, casos de uso, diagramas de atividades, máquinas de estados e contratos intent ponto yaml versão dois circunscritos por método. E o Livro de Recusas prova, com testes automatizados, cinco recusas mecânicas contra desvios de contrato.
+
+5
+00:01:41,392 --> 00:01:56,608
+[Interlocutora Técnica] Vamos então ao caso real do Racha-Conta no slide três! Todo mundo já passou pelo problema de dividir uma conta de restaurante com amigos via Pix e sobrar ou faltar um centavo na dízima periódica. Como o Loop Um do Racha-Conta resolve isso?
+
+6
+00:01:57,058 --> 00:02:33,298
+[Eliézer Rosa] No Racha-Conta, proibimos ponto flutuante e exigimos valores inteiros em centavos. Declaramos seis invariantes formais: a INV-001 exige Soma Zero exata, onde a soma das cotas é idêntica ao total da mesa; a INV-002 torna a mesa fechada imutável; e a INV-005 define o determinismo do resto, distribuindo um centavo extra apenas para os primeiros participantes ordenados por identificador. Testamos essa regra com cinquenta mesas geradas sob a semente fixa zero xis vinte vinte e seis dez vinte e nove, com erro zero.
+
+7
+00:02:33,748 --> 00:02:47,332
+[Interlocutora Técnica] E no slide quatro vemos o resultado do Loop Dois para o Racha-Conta: seis entidades normalizadas até BCNF, oito transações de negócio e oito contratos compilados. O que cada contrato define?
+
+8
+00:02:47,782 --> 00:03:18,262
+[Eliézer Rosa] Cada método das classes Mesa e Pagamento recebe seu próprio contrato intent ponto yaml versão dois. Por exemplo, registrarItemConsumido só pode criar registros em Item e ConsumoItem; calcularCotas tem lista de mutação vazia para Mesa; e Pagamento ponto confirmar exige comprovante válido antes de quitar a cota. Além disso, o comando idd fase0 export gera automaticamente o banco em SQL DDL, DBML, PlantUML e a especificação consolidada.
+
+9
+00:03:18,712 --> 00:03:33,256
+[Interlocutora Técnica] Agora vamos ao tutorial passo a passo da interface gráfica no slide cinco! Estamos vendo uma captura real da IDD Studio UI rodando ao vivo no navegador. Como o desenvolvedor navega pelos dezesseis contratos do workspace?
+
+10
+00:03:33,706 --> 00:04:06,418
+[Eliézer Rosa] A interface é dividida em três colunas. Na coluna da esquerda temos o Intent Navigator, que agrupa os contratos reais por contexto delimitado: os oito contratos da Fase Zero do Racha-Conta, os seis contratos da própria CLI do IDD e dois contratos de demonstração. Aqui selecionamos Mesa ponto calcularCotas: repare no painel central que o campo allowed_fields está vazio e os campos total_centavos, status e preço aparecem trancados como somente leitura, com o selo verde de Contrato Íntegro.
+
+11
+00:04:06,868 --> 00:04:20,620
+[Interlocutora Técnica] No slide seis clicamos no contrato Mesa ponto fechar, que corresponde à transação TN-05. O que o engenheiro ou o agente de IA enxergam na coluna central ao inspecionar esse contrato?
+
+12
+00:04:21,070 --> 00:04:55,534
+[Eliézer Rosa] Na coluna central do contrato compilado, o engenheiro vê exatamente a cerca de mutação de estado: Mesa ponto fechar tem permissão exclusiva para escrever no atributo Mesa ponto fechada_em. Já os campos Mesa ponto status, total_centavos, preço do item e valor da cota estão listados em read_only_fields. Logo abaixo, aparecem as invariantes INV-001 a INV-003 e os critérios de aceitação estruturados em Given, When e Then com os identificadores formais A-01 e A-02.
+
+13
+00:04:55,984 --> 00:05:07,336
+[Interlocutora Técnica] E o que acontece no slide sete quando usamos o Simulador de Código Implementado, na coluna da direita, para testar uma mutação não autorizada dentro do método Mesa ponto fechar?
+
+14
+00:05:07,786 --> 00:05:40,306
+[Eliézer Rosa] Esse é o coração do tutorial! Quando digitamos this ponto total_centavos igual a zero no editor à direita, o motor de verificação compara a atribuição com a lista allowed_fields do contrato. Como total_centavos não pertence aos campos permitidos de Mesa ponto fechar, a interface muda imediatamente para vermelho, exibe o selo de Violação de Escopo INV-UI-04 e aponta a falha INV-ENCAP-01. O erro é capturado na hora, antes mesmo de um commit.
+
+15
+00:05:40,756 --> 00:05:52,468
+[Interlocutora Técnica] Por fim, no slide oito vemos o uso da barra de busca superior filtrando por Pagamento e inspecionando Pagamento ponto confirmar, além da integração com o comando idd verify no terminal!
+
+16
+00:05:52,918 --> 00:06:18,862
+[Eliézer Rosa] Na barra superior você pode filtrar instantaneamente por classe, método, código de transação como TN-08 ou invariante como INV-006. E tudo o que você vê na interface reflete os arquivos reais do repositório validados por idd verify e idd diff no terminal. Assim fechamos o ciclo entre especificação da Fase Zero, inspeção visual na UI e verificação determinística no código!
