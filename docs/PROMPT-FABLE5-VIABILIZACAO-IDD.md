@@ -87,7 +87,23 @@ Levantados em 2026-10-31 pela API do GitHub, pelo README, pelo `pyproject.toml` 
 - **Benchmarks:** o README reporta recall@10 de 0,497 no LOCOMO e cobertura de fatos-chave de 82% contra 70,8% do grep, com juiz validado por kappa de Cohen 0,81. A reprodução está em `BENCHMARKS.md`. **São números do fornecedor**: só os use se você reproduzir.
 - **Produto pago:** o README anuncia o "Graphify Cloud" com "80% menos gasto de tokens" e "verificação formal". **São alegações comerciais não verificadas.** O Graphify Cloud é concorrente ou parceiro potencial do IDD; trate como tal na Parte 6.
 
-**Não foi possível rodar o graphify neste ambiente**, porque a política da sessão anterior bloqueou instalar pacotes externos. A primeira execução real fica com você.
+**Execução real em 2026-10-31 (graphify 0.9.99, venv isolado, Windows).** Alvo: cópia de `cli/src/lib` mais o `Mesa.ts` de exemplo do plugin, 43 arquivos TypeScript, 422 KB. Reproduza e confira.
+
+- **Comando:** o grafo só de código, sem LLM, sai com `graphify update <pasta>`. O `extract` citado no README não aparece no `--help` desta versão.
+- **Tamanho e tempo:** 631 nós e 1410 arestas em cerca de 9 s.
+  - relações: `contains` 524, `calls` 405, `imports` 227, `imports_from` 146, `method` 45, `references` 39, `indirect_call` 15, `re_exports` 6, `implements` 3;
+  - confiança: em TypeScript, 1374 `EXTRACTED` e 36 `INFERRED` (97% explícitas, contra 53% no exemplo Python oficial).
+- **Comparação com o extrator próprio:** os 41 métodos de classe que o extrator do IDD acha, o graphify também acha. Ele acha mais 4:
+  - três *getters* (`pedidoPath`, `respostaPath`, `port`), uma **lacuna real do extrator próprio**, que ignora acessores `get`;
+  - uma assinatura de interface (`LlmProvider.completeJson`), que não é implementação e precisa ser filtrada no gate.
+
+  As 19 mutações de campo de `this` só o extrator próprio extrai.
+- **Gate de rastreabilidade, demonstrado:** cruzando os 8 contratos do Racha com o grafo do `Mesa.ts` de exemplo, o cruzamento acusou 6 contratos sem método e 1 método sem contrato (`adicionarItem`). É a incongruência I1 virando verificação automática.
+- **Tamanho medido, não economia presumida:**
+  - o `graph.json` completo (502 KB) é **19% maior** que o código-fonte (422 KB);
+  - o `GRAPH_REPORT.md` tem 6,7 KB;
+  - uma consulta recortada (`graphify query "como verificarCercaMutacao usa extrairAstTypeScript"`) devolveu 15,1 KB (cerca de 4.800 tokens, pela estimativa do próprio graphify), contra 24,8 KB dos dois arquivos relevantes: cerca de 39% menos caracteres. Mas trouxe nós sem relação com a pergunta (`LlmRefusalError`, `anthropic.ts`), porque a busca inicial é por palavra-chave.
+  - **Os tokens não foram medidos pela API de contagem**, porque não há chave nesta máquina. Meça antes de afirmar qualquer economia.
 
 ## 4. Parte 1 — Confirme ou refute cada incongruência
 
@@ -153,7 +169,7 @@ Para cada uma, diga onde entra no fluxo, o que decide, quanto custa e como se te
    - **a. Ingestão L0 da Fase 0.** O grafo de `fase0/<caso>/fontes/` (código legado, SQL e documentos) vira contexto do SHADA no lugar do texto bruto. Meça os tokens reais dos dois contextos com a API de contagem de tokens da Anthropic e compare a qualidade das rodadas. Não publique economia que você não mediu.
    - **b. Gate de rastreabilidade sobre o código implementado.** Todo `target_class.target_method` dos contratos precisa existir como nó (relação `method`). Método público sem contrato e contrato sem método reprovam. As arestas `calls` precisam ser compatíveis com os fluxos de `modelo/atividades/`. Use só arestas `EXTRACTED` no gate e trate `INFERRED` como aviso, porque no exemplo oficial quase metade é inferida.
    - **c. Análise de impacto para drift.** Dado um diff, use `graphify path` e `graphify query`, ou o `graph.json` direto, para listar os contratos e as invariantes afetados e rodar só as verificações deles. É o "verificar drift continuamente" que o Cânone promete com base na lição do MDA.
-   - **d. Divisão de papéis com o extrator próprio.** O graphify não tem relação de mutação de campo, então a cerca de mutação (`mutationFence.ts` e o plugin ESLint) continua com o extrator AST próprio. Rode os dois sobre o mesmo código, compare classes, métodos e chamadas, e recomende quem fica com cada função.
+   - **d. Divisão de papéis com o extrator próprio.** O graphify não tem relação de mutação de campo, então a cerca de mutação (`mutationFence.ts` e o plugin ESLint) continua com o extrator AST próprio. A comparação da seção 3 já mostra a divisão natural: o graphify cuida da estrutura (classes, métodos, chamadas e imports, entre arquivos), e o extrator próprio cuida das mutações. Corrija também a lacuna de *getters* do extrator próprio.
    - **e. Fim do conflito de nome.** Renomeie o módulo próprio, por exemplo para "extrator AST do IDD", e o comando `idd fase0 graphify`, para que "graphify" signifique só o projeto open source.
    - **f. Integração opcional.** Ele é um pacote Python numa cadeia Node. Proponha a integração por leitura do `graph.json` (sem acoplar código), com o graphify como passo opcional do CI. Diga o que acontece quando ele não está instalado.
 9. **O que já existe e deve ser conferido e mantido:** o fecho de atributos de Armstrong e a BCNF ou 3NF com preservação de dependências (`cli/src/lib/domain/fds.ts`), e a cerca de mutação por AST.
