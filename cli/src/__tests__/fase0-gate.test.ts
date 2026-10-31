@@ -32,7 +32,17 @@ const crit = (g: ReturnType<typeof avaliarGate1>, id: string) => g.criterios.fin
 describe('Gate 1', () => {
   it('verde quando tudo está em ordem', () => {
     const g = avaliarGate1(caso());
-    expect(g.criterios.map(c => c.ok)).toEqual([true, true, true, true]);
+    expect(g.criterios.map(c => c.ok)).toEqual([true, true, true, true, true]);
+    expect(g.verde).toBe(true);
+    expect(crit(g, 'e').ok).toBe(true);
+    expect(crit(g, 'e').detalhe).toContain('nenhuma detectada');
+  });
+
+  it('(e) consultivo: interpretações concorrentes viram pergunta, sem reprovar o gate', () => {
+    const g = avaliarGate1(caso({ int: '- **INT-001** O [[Sistema]] deve dividir a conta entre os participantes.\n' }));
+    expect(crit(g, 'e').ok).toBe(false);
+    expect(crit(g, 'e').consultivo).toBe(true);
+    expect(crit(g, 'e').detalhe).toMatch(/interpretações estimadas.*pergunta sugerida/);
     expect(g.verde).toBe(true);
   });
 

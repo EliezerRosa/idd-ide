@@ -8,10 +8,12 @@
 | Termo | Tipo | Definição | Aliases | Proibidos |
 | --- | --- | --- | --- | --- |
 | **ChavePix** | `value-object` | Chave Pix do responsável da mesa, para a qual os participantes pagam as próprias cotas. | Chave Pix | — |
+| **Consumo** | `entity` | Associação entre um ItemConsumido e um Participante que o consumiu; define entre quem o preço do item é dividido. | — | — |
 | **Cota** | `value-object` | Valor em centavos inteiros que um participante deve pagar: a parte dos itens que consumiu mais a parte proporcional da taxa de serviço. | Cota justa | — |
 | **ItemConsumido** | `entity` | Produto ou serviço da nota (pizza, porção, bebida) com descrição, preço em centavos e o conjunto de participantes que o consumiram. | Item | — |
 | **Mesa** | `aggregate` | Encontro de consumo (restaurante, bar, churrasco) que reúne os participantes, os itens consumidos e a taxa de serviço, e cuja nota é dividida entre os participantes. | Evento de rateio | — |
 | **Nota** | `value-object` | Documento de cobrança emitido pelo estabelecimento, com o valor total a pagar pela mesa. | Nota do estabelecimento | Notinha |
+| **Pagamento** | `entity` | Comprovante enviado por um Participante para a própria Cota, com o valor em centavos e a confirmação do ResponsavelMesa. | — | — |
 | **Participante** | `entity` | Pessoa que integra uma mesa, pode consumir itens e deve pagar a própria cota. | Consumidor | — |
 | **ResponsavelMesa** | `role` | Participante que recebe, na própria chave Pix, os pagamentos das cotas dos demais participantes da mesa. | Responsável da mesa | — |
 | **TaxaServico** | `value-object` | Percentual cobrado pelo estabelecimento sobre o consumo (10% nas fontes), rateado entre os participantes em proporção ao que cada um consumiu. | Taxa de serviço, Gorjeta | — |
@@ -27,9 +29,12 @@
 > Exemplo: `- **INT-001** Quando o cliente confirma o pedido, o [[Sistema]] deve registrar a venda.`
 > Nada entra aqui sem decisão humana registrada em decisoes.md.
 - **INT-001** O aplicativo deve dividir o preço de cada [[ItemConsumido]] somente entre os participantes que consumiram esse [[ItemConsumido]].
+- **INT-002** O aplicativo deve ratear a [[TaxaServico]] entre os participantes em proporção ao valor dos itens que cada [[Participante]] consumiu.
 - **INT-003** O aplicativo deve exibir a cada [[Participante]] o valor exato da própria [[Cota]].
 - **INT-004** O aplicativo deve permitir que cada [[Participante]] pague a própria [[Cota]] por Pix Copia e Cola ou QR Code para a [[ChavePix]] do [[ResponsavelMesa]].
 - **INT-005** Quando o [[ResponsavelMesa]] cria a [[Mesa]], o aplicativo deve exigir a [[ChavePix]] do [[ResponsavelMesa]].
+- **INT-006** Quando o [[ResponsavelMesa]] fecha a [[Mesa]], o aplicativo deve impedir novos [[Participante]]s, novos [[ItemConsumido]]s e mudanças nos consumos.
+- **INT-007** Quando o [[ResponsavelMesa]] confirma o comprovante de um [[Participante]], o aplicativo deve registrar o [[Pagamento]] como confirmado.
 
 ## 3. Invariantes de Domínio
 
@@ -40,6 +45,7 @@
 > O enunciado precisa de um marcador testável (sempre, nunca, deve, não pode, no máximo, no mínimo, exatamente, igual a, =, ≤, ≥, <, >).
 > Exemplo: `- **INV-001** [integridade] Todo [[Pagamento]] sempre pertence a exatamente uma [[Conta]].`
 - **INV-001** [cálculo] A soma das cotas de todos os participantes de uma [[Mesa]] deve ser exatamente igual à soma dos preços dos [[ItemConsumido]] mais a [[TaxaServico]], com diferença de zero centavos.
+- **INV-002** [integridade] A [[Cota]] de um [[Participante]] nunca inclui valor de um [[ItemConsumido]] que esse [[Participante]] não consumiu.
 - **INV-003** [integridade] Todo [[ItemConsumido]] deve ter no mínimo um [[Participante]] entre os consumidores.
 - **INV-004** [integridade] Todo [[Participante]] associado a um [[ItemConsumido]] deve pertencer à mesma [[Mesa]] do [[ItemConsumido]].
 - **INV-005** [cálculo] Toda [[Cota]] deve ser um número inteiro de centavos, com valor ≥ 0.
@@ -120,15 +126,15 @@ classDiagram
   - **Altera:** `ItemConsumido`, `Consumo`
   - **Lê:** `Mesa.fechada_em`, `Participante.mesa_id`, `ItemConsumido.ordem`
 
-### UC-03 — Consultar a própria cota (Ator: `Participante` · Intenções: INT-001, INT-003)
+### UC-03 — Consultar a própria cota (Ator: `Participante` · Intenções: INT-001, INT-002, INT-003)
 
 - **TN-04 — Calcular as cotas da mesa**
   - **Pré-condições:** A [[Mesa]] tem ao menos um [[ItemConsumido]].
   - **Pós-condições:** O preço de cada [[ItemConsumido]] é dividido somente entre os [[Participante]]s que o consumiram. · O centavo indivisível de cada [[ItemConsumido]] vai, em rodízio, para o próximo [[Participante]] em ordem alfabética que ainda não recebeu nenhum, percorrendo os itens na ordem de registro. · O total da [[TaxaServico]] é o percentual da [[Mesa]] sobre a soma dos preços dos [[ItemConsumido]], com arredondamento comercial para centavos inteiros (meio centavo ou mais sobe). · A parte da [[TaxaServico]] de cada [[Participante]] é proporcional ao valor dos itens que ele consumiu; o centavo indivisível da taxa continua o rodízio alfabético a partir do [[Participante]] seguinte ao último que recebeu centavo dos itens. · A soma das [[Cota]]s é exatamente igual à soma dos preços dos [[ItemConsumido]] mais a [[TaxaServico]]. · Toda [[Cota]] é um número inteiro de centavos ≥ 0.
-  - **Invariantes:** INV-001, INV-005
+  - **Invariantes:** INV-001, INV-002, INV-005
   - **Lê:** `ItemConsumido.preco_centavos`, `ItemConsumido.ordem`, `Consumo`, `Participante.nome`, `Mesa.taxa_servico_percentual`
 
-### UC-04 — Fechar mesa (Ator: `ResponsavelMesa`)
+### UC-04 — Fechar mesa (Ator: `ResponsavelMesa` · Intenções: INT-006)
 
 - **TN-05 — Fechar a mesa para pagamento**
   - **Pré-condições:** A [[Mesa]] não está fechada.
@@ -148,7 +154,7 @@ classDiagram
   - **Altera:** `Pagamento`
   - **Lê:** `Mesa.fechada_em`, `Pagamento.confirmado_em`
 
-### UC-06 — Confirmar pagamento (Ator: `ResponsavelMesa`)
+### UC-06 — Confirmar pagamento (Ator: `ResponsavelMesa` · Intenções: INT-007)
 
 - **TN-08 — Confirmar o pagamento de um participante**
   - **Pré-condições:** O pagamento tem comprovante e ainda não foi confirmado.
@@ -258,7 +264,7 @@ classDiagram
 
 - **Intenção:** Calcular a [[Cota]] em centavos inteiros de cada [[Participante]] da [[Mesa]] com rateio proporcional da [[TaxaServico]] e rodízio alfabético contínuo dos centavos indivisíveis.
 - **Transações:** TN-04
-- **Invariantes:** INV-001, INV-005
+- **Invariantes:** INV-001, INV-002, INV-005
 - **Mutação permitida (`allowed_fields`):** *(nenhuma — consulta)*
 - **Leitura (`read_only_fields`):** `ItemConsumido.preco_centavos`, `ItemConsumido.ordem`, `Consumo`, `Participante.nome`, `Mesa.taxa_servico_percentual`
 - **Contrato v2:** `contratos/Mesa.calcularCotas.intent.yaml`
@@ -305,15 +311,19 @@ classDiagram
 | Intenção | Caso(s) de Uso | Transação(ões) | Método(s) Circunscrito(s) | Contrato(s) v2 |
 | --- | --- | --- | --- | --- |
 | **INT-001** | UC-02 (Registrar participantes e consumo), UC-03 (Consultar a própria cota) | TN-02, TN-03, TN-04 | `Mesa.incluirParticipante`, `Mesa.registrarItemConsumido`, `Mesa.calcularCotas` | `contratos/Mesa.incluirParticipante.intent.yaml`, `contratos/Mesa.registrarItemConsumido.intent.yaml`, `contratos/Mesa.calcularCotas.intent.yaml` |
+| **INT-002** | UC-03 (Consultar a própria cota) | TN-04 | `Mesa.calcularCotas` | `contratos/Mesa.calcularCotas.intent.yaml` |
 | **INT-003** | UC-03 (Consultar a própria cota) | TN-04 | `Mesa.calcularCotas` | `contratos/Mesa.calcularCotas.intent.yaml` |
 | **INT-004** | UC-05 (Pagar a própria cota) | TN-06, TN-07 | `Mesa.gerarCobrancaPix`, `Pagamento.enviarComprovante` | `contratos/Mesa.gerarCobrancaPix.intent.yaml`, `contratos/Pagamento.enviarComprovante.intent.yaml` |
 | **INT-005** | UC-01 (Criar mesa) | TN-01 | `Mesa.criar` | `contratos/Mesa.criar.intent.yaml` |
+| **INT-006** | UC-04 (Fechar mesa) | TN-05 | `Mesa.fechar` | `contratos/Mesa.fechar.intent.yaml` |
+| **INT-007** | UC-06 (Confirmar pagamento) | TN-08 | `Pagamento.confirmar` | `contratos/Pagamento.confirmar.intent.yaml` |
 
 ## 2. Invariantes → Transações → Métodos → Contratos
 
 | Invariante | Transação(ões) | Método(s) Circunscrito(s) | Contrato(s) v2 |
 | --- | --- | --- | --- |
 | **INV-001** | TN-04 | `Mesa.calcularCotas` | `contratos/Mesa.calcularCotas.intent.yaml` |
+| **INV-002** | TN-04 | `Mesa.calcularCotas` | `contratos/Mesa.calcularCotas.intent.yaml` |
 | **INV-003** | TN-03 | `Mesa.registrarItemConsumido` | `contratos/Mesa.registrarItemConsumido.intent.yaml` |
 | **INV-004** | TN-03 | `Mesa.registrarItemConsumido` | `contratos/Mesa.registrarItemConsumido.intent.yaml` |
 | **INV-005** | TN-04, TN-06 | `Mesa.calcularCotas`, `Mesa.gerarCobrancaPix` | `contratos/Mesa.calcularCotas.intent.yaml`, `contratos/Mesa.gerarCobrancaPix.intent.yaml` |

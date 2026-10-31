@@ -1,0 +1,37 @@
+{
+  "name": "@idd/eslint-plugin",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Regras ESLint do IDD: cada método só altera os campos que o seu contrato TSDoc (@intent, @mutates, @readonly) autoriza",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "test": "vitest run",
+    "lint:example": "npm run build && eslint example"
+  },
+  "keywords": [
+    "eslint",
+    "eslintplugin",
+    "idd",
+    "ddd",
+    "state-mutation",
+    "ai-guardrail"
+  ],
+  "author": "Eliézer Rosa",
+  "license": "MIT",
+  "peerDependencies": {
+    "eslint": ">=9.0.0"
+  },
+  "devDependencies": {
+    "@typescript-eslint/parser": "^8.72.1",
+    "eslint": "^9.39.5",
+    "fast-check": "^3.18.0",
+    "typescript": "^5.4.0",
+    "vitest": "^5.0.5"
+  }
+}

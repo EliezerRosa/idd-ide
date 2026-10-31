@@ -1,0 +1,5 @@
+- Só afirme o que verificou no código, nos testes ou numa execução sua; cite `arquivo:linha` ou o comando e a saída. Se não souber, escreva "não verificado".
+- Não use nome de algoritmo, teorema ou métrica que o código não implementa.
+- Selos: ✅ implementado e verificado · 🧪 demonstração · 🔭 proposta.
+- Não altere `paradigma/00-canone/`, os contratos nem as decisões de `fase0/` sem confirmação explícita do autor.
+- Responda em português do Brasil.
