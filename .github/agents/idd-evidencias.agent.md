@@ -1,6 +1,6 @@
 ---
 description: "IDD Fase 0 — roda testes, gates e graphify e grava as saídas, sem interpretar"
-model: "TROQUE-PELO-MODELO-BARATO-DO-SEU-SELETOR"
+model: "gpt-4o-mini"
 tools: ['runCommands', 'editFiles', 'search']
 handoffs:
   - label: "Passar para o Revisor (Fase 1)"

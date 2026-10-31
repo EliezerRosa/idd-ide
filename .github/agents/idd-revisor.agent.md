@@ -1,6 +1,6 @@
 ---
 description: "IDD Fases 1, 2a, 2c e 4 — julgamento técnico, plano, revisão e parecer (Fable)"
-model: "TROQUE-PELO-NOME-DA-FABLE-NO-SEU-SELETOR"
+model: "claude-3.5-sonnet"
 tools: ['search', 'editFiles']
 handoffs:
   - label: "Passar para o Executor (Fase 2b)"

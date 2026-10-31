@@ -1,6 +1,6 @@
 ---
 description: "IDD Fase 2b — implementa uma entrega do plano por vez, com testes"
-model: "TROQUE-PELO-MODELO-INTERMEDIARIO-DO-SEU-SELETOR"
+model: "claude-3.5-sonnet"
 tools: ['runCommands', 'editFiles', 'search']
 handoffs:
   - label: "Pedir revisão (Fase 2c)"
