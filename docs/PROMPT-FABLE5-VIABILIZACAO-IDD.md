@@ -1,8 +1,16 @@
 # Prompt para a Fable 5 — viabilizar o Paradigma IDD de verdade
 
-> Cole tudo abaixo da linha numa sessão da Fable 5 com acesso de leitura e execução ao repositório
-> `EliezerRosa/idd-ide`. Preparado em 2026-10-31 a partir da branch `feat/fusao-v2-e-honestidade`
-> (PR #75), que junta a v1 (`idd-ide`) e a v2 (`idd-v2`). Se o PR já tiver sido mergeado, use o `main`.
+> **Como usar no VS Code com o GitHub Copilot**
+>
+> 1. Abra a pasta `C:\IDE IDD Claude-VS Code\idd-ide` no VS Code e faça checkout da branch
+>    `feat/fusao-v2-e-honestidade` (PR #75). Se o PR já tiver sido mergeado, use o `main`.
+> 2. No Copilot Chat, escolha o modo **Agent** e selecione o modelo Fable no seletor de modelos.
+> 3. Cole tudo abaixo da linha. Aprove os comandos de terminal um a um, lendo cada um antes. O
+>    prompt manda a Fable parar e pedir sua confirmação antes de alterar código.
+> 4. Se a conversa ficar longa e o Copilot perder o contexto, anexe este arquivo de novo com
+>    `#file:docs/PROMPT-FABLE5-VIABILIZACAO-IDD.md` e diga em qual parte ela parou.
+>
+> Preparado em 2026-10-31. A v1 (`idd-ide`) e a v2 (`idd-v2`) já estão juntas nesta branch.
 
 ---
 
@@ -53,7 +61,7 @@ Rotule tudo com os selos do Cânone: ✅ implementado e verificado · 🧪 demon
    | `packages/eslint-plugin-idd/` | plugin ESLint |
    | `packages/core/src/contract.ts` | modelo de contrato |
 
-Rode antes de concluir qualquer coisa:
+Você está no modo Agent do Copilot, dentro do workspace `idd-ide`: leia os arquivos direto, e rode no terminal integrado (PowerShell ou Git Bash). Antes de concluir qualquer coisa, rode:
 
 ```bash
 cd cli && npm ci && npm run build && npx vitest run          # esperado: 1059 testes
@@ -86,6 +94,9 @@ Levantados em 2026-10-31 pela API do GitHub, pelo README, pelo `pyproject.toml` 
 - **Consultas:** `graphify query "<pergunta>"`, `graphify path A B` e `graphify explain X`. Há servidor MCP opcional (`graphifyy[mcp]`), hooks de git (`graphify hook install`) e `graphify watch`.
 - **Benchmarks:** o README reporta recall@10 de 0,497 no LOCOMO e cobertura de fatos-chave de 82% contra 70,8% do grep, com juiz validado por kappa de Cohen 0,81. A reprodução está em `BENCHMARKS.md`. **São números do fornecedor**: só os use se você reproduzir.
 - **Produto pago:** o README anuncia o "Graphify Cloud" com "80% menos gasto de tokens" e "verificação formal". **São alegações comerciais não verificadas.** O Graphify Cloud é concorrente ou parceiro potencial do IDD; trate como tal na Parte 6.
+
+**O graphify já está instalado nesta máquina**, num ambiente isolado:
+`C:/Users/Eliez/AppData/Local/Temp/gfy-venv/Scripts/graphify`. Use esse executável e não instale outros pacotes sem pedir. Rode-o sempre sobre uma **cópia** do código fora do repositório (por exemplo em `%TEMP%`), para a pasta `graphify-out/` não cair no git.
 
 **Execução real em 2026-10-31 (graphify 0.9.99, venv isolado, Windows).** Alvo: cópia de `cli/src/lib` mais o `Mesa.ts` de exemplo do plugin, 43 arquivos TypeScript, 422 KB. Reproduza e confira.
 
