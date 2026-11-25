@@ -114,17 +114,17 @@ idd domain normalize domain.mmd --target=BCNF
 idd domain normalize domain.mmd --target=DKNF
 ```
 
-**Formas normais verificadas:**
+**Formas normais verificadas (`cli/src/lib/domain/normalizer.ts` e `fds.ts`):**
 
-| Forma | O que verifica |
-|---|---|
-| 1NF | Atributos atômicos, sem arrays embutidos, sem grupos repetitivos |
-| 2NF | Nenhum atributo não-chave depende apenas de parte da PK composta |
-| 3NF | Nenhuma dependência transitiva através de não-chaves |
-| BCNF | Todo determinante de FD é superchave |
-| 4NF | Nenhuma dependência multivalorada não-trivial |
-| 5NF | Nenhuma join dependency não-trivial (relações ternárias) |
-| DKNF | Toda constraint é consequência de domain constraints e key constraints |
+| Forma | Tipo de verificação | O que verifica |
+|---|---|---|
+| 1NF | 🧪 Heurística | Atributos `array`, `json`/`jsonb` sem `schema` ou constraints, e nomes plurais em `string` |
+| 2NF | ✅ Formal (Armstrong) | Nenhum atributo não-primo depende apenas de subconjunto próprio de chave candidata (`fds.ts`) |
+| 3NF | ✅ Formal (Armstrong) | Nenhuma dependência transitiva de atributos não-primos sobre determinante não-superchave (`fds.ts`) |
+| BCNF | ✅ Formal (Armstrong) | Todo determinante de FD declarada é superchave, com sugestão de decomposição sem perda e aviso de perda de dependências |
+| 4NF | 🧪 Heurística | Sinais estruturais de possível MVD (tabela com ≥ 2 FKs + ≥ 2 atributos extras ou múltiplos relacionamentos N:M) |
+| 5NF | 🧪 Heurística | Alerta em tabelas com ≥ 3 FKs (candidata a *join dependency* ternária) |
+| DKNF | 🧪 Heurística | Regex sobre `business_rules` e atributos marcados como calculados/derivados; **não** constitui prova formal de DKNF |
 
 ### `idd domain compile`
 

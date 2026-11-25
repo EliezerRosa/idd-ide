@@ -2,7 +2,7 @@
 
 ## Visão Geral
 
-O IDD IDE é construído sobre o **Code - OSS** (base open source do VS Code) e estendido por cinco componentes interligados que implementam o paradigma Intent Driven Development.
+O protótipo funcional atual do IDD opera como um ecossistema modular composto pelo núcleo `@idd/core`, pela CLI `idd`, pelo plugin ESLint `@idd/eslint-plugin` e pela extensão VS Code + servidor LSP experimental (`extensions/idd-core/`). A **IDE dedicada sobre fork do Code - OSS** é um projeto futuro de longo prazo (🔭 — hoje existe apenas `product.json` de marca; ver [README](../README.md) e [ROADMAP](ROADMAP.md)).
 
 ```
 Desenvolvedor
@@ -80,7 +80,7 @@ user prompt   → intenção + constraints numeradas + critérios + linguagem
 Antes da chamada ao LLM, consulta o Intent Store para todas as intenções em `depends_on` e injeta seus contratos como contexto adicional. Isso garante que o código gerado seja **consistente com o restante do projeto**.
 
 ### Estágio 3 — LLM Adapter
-Chama a Claude API (`claude-sonnet-4-20250514`) com os prompts montados. A resposta é solicitada como JSON estruturado com campos `code`, `tests`, `docs`.
+Chama a Claude API (`claude-sonnet-5` por padrão, configurável via `IDD_MODEL`) com os prompts montados. A resposta é solicitada como JSON estruturado com campos `code`, `tests`, `docs` (🧪 protótipo sem *structured outputs* nativos nem retry automático).
 
 ### Estágio 4 — Output Formatter
 - Parseia o JSON retornado pelo LLM
@@ -91,7 +91,7 @@ Chama a Claude API (`claude-sonnet-4-20250514`) com os prompts montados. A respo
 {
   "intent_hash":      "sha256 do .intent.yaml",
   "generated_at":     "2026-05-20T...",
-  "model_used":       "claude-sonnet-4-20250514",
+  "model_used":       "claude-sonnet-5",
   "criteria_covered": 4,
   "criteria_total":   4
 }
@@ -101,15 +101,15 @@ Esta assinatura é a **baseline** que o Intent Verifier usa para detectar drift.
 
 ---
 
-## Componente 3 — Code Workspace
+## Componente 3 — Code Workspace (Extensão VS Code — 🧪 experimental)
 
 **Localização:** `extensions/idd-core/src/extension.ts`
 
-O editor Code-OSS aumentado com:
+A extensão para VS Code (não publicada no Open VSX) fornece:
 
-- **Anotações inline:** cada linha de código tem indicação visual da intenção que a gerou
-- **Diagnósticos LSP:** o Verifier emite `vscode.Diagnostic` com severidade `Error` (drift crítico) ou `Warning` (aviso)
-- **Auto-verificação:** `onDidSaveTextDocument` dispara verificação estática ao salvar qualquer `.ts` ou `.py`
+- **Anotações de drift inline no editor (🔭 proposta não implementada):** planejada para exibir a intenção vinculada por trecho de código; ainda não existe no código atual.
+- **Diagnósticos LSP (🧪 experimental):** o servidor em `extensions/idd-core/src/lsp/server.ts` valida `.intent.yaml`, dicionário ubíquo e `state_mutation` via AST apenas em TypeScript com decorator `@Intent`.
+- **Auto-verificação:** `onDidSaveTextDocument` dispara `verifier.verifyFile` ao salvar `.ts` ou `.py` quando `idd.autoVerify` está ativo.
 - **Comandos contribuídos:**
   - `IDD: Nova Intenção`
   - `IDD: Gerar Código`
@@ -145,12 +145,18 @@ O grafo permite responder: "se eu mudar `users/crud`, o que pode quebrar?" — a
 
 ## Componente 5 — Intent Verifier
 
-**Localização:** `extensions/idd-core/src/verifier/IntentVerifier.ts` / `cli/src/commands/verify.ts`
+**Localização:** `cli/src/commands/verify.ts` · `cli/src/lib/mutationFence.ts` · `cli/src/lib/fase0/astGraph.ts` · `extensions/idd-core/src/verifier/IntentVerifier.ts`
 
-Três análises executadas em paralelo a cada modificação:
+Quatro camadas de verificação com níveis distintos de maturidade:
 
-### Análise 1 — Estática determinística
-Padrões proibidos verificados imediatamente sem chamada ao LLM:
+### Camada 1 — Cerca de Mutação AST (✅ TypeScript-only, análise local)
+Usa a TypeScript Compiler API (`ts.createSourceFile`) em `mutationFence.ts` + `astGraph.ts` para verificar mutações de `this`, acessores `get`/`set`, campos `allowed_fields` (`INV-UI-04`), `read_only_fields` (`INV-ENCAP-01`) e mutações dinâmicas em `this[expr]` (`INV-UI-05`), além das regras do `@idd/eslint-plugin`. **Limite conhecido:** análise intraprocedural em arquivo único; não bloqueia contornos via aliasing passado a funções externas, `Object.assign`/`Reflect.set` indiretos ou `any`.
+
+### Camada 2 — Dicionário Ubíquo e Fronteiras de Contexto (✅ offline / CI)
+Valida termos do contrato contra `.intent/ubiquitous-dictionary.json` e checa importações ilegais entre bounded contexts (`idd verify --project`, por regex em arquivos TS/JS).
+
+### Camada 3 — Regras Estáticas Heurísticas (🧪 experimental)
+Padrões proibidos (`FORBIDDEN`) e palavras-chave (`CONSTRAINT_CHECKS`) em `cli/src/commands/verify.ts`, sem medição empírica de *precision*/*recall*:
 
 ```typescript
 const FORBIDDEN = [
@@ -169,19 +175,19 @@ Constraints mapeadas para funções esperadas no código:
 { keyword: /bloquear|lockout/i, codePattern: /getAttempts|lockout/i }
 ```
 
-### Análise 2 — Semântica via LLM (opcional, `--semantic`)
-O trecho modificado e a `intent_signature` são enviados à Claude API. O modelo retorna `score` (0–100) e lista de constraints violadas. Detecta desvios semânticos invisíveis à análise estática.
+### Camada 4 — Semântica via LLM (🧪 opcional, `--semantic`)
+Envia intenção, constraints, aceite e até `16.000` caracteres do código à Claude API numa chamada única, retornando `score` (0–100) e lista de violações. Não trata o não-determinismo do LLM e possui limite documentado de profundidade de raciocínio (Issue [#30](https://github.com/EliezerRosa/idd-ide/issues/30)); atua apenas como segunda opinião, nunca como barreira única.
 
-### Análise 3 — Propagação em cascata
-Consulta o Intent Graph para todas as intenções em `used_by`. Se o contrato do módulo atual foi violado, emite alertas secundários nas dependentes.
+### Propagação em cascata (Intent Graph)
+Consulta o Intent Graph para intenções dependentes (`used_by`) para sinalizar impacto em cascata.
 
 ### Níveis de alerta
 
 | Nível | Condição | Ação |
 |---|---|---|
-| `drift` | Constraint crítica violada | Bloqueia commit via pre-commit hook |
-| `warn` | Desvio não crítico | Alerta inline, ação sugerida |
-| `ok` | Alinhamento ≥ 90% | Indicador verde |
+| `drift` | Violação crítica (cerca AST, padrão proibido, critério ausente em v2/`--strict-tests` ou score semântico abaixo da metade do limiar) | Falha no CI e bloqueia commit local se hook ativo |
+| `warn` | Desvio não crítico / termo fora do dicionário | Alerta no terminal/editor |
+| `ok` | Sem violações críticas e dentro do limiar configurado | Indicador verde |
 
 ---
 
@@ -245,9 +251,9 @@ CREATE TABLE drift_events (
 
 ---
 
-## Git Hooks
+## Git Hooks e Fronteira de Confiança (Local vs. Servidor)
 
-Instalados automaticamente por `idd init` ou pela extensão VS Code:
+Instalados por `idd init` ou pela extensão VS Code como **feedback rápido local**:
 
 ```bash
 # .git/hooks/pre-commit
@@ -260,17 +266,21 @@ idd store sync --strategy=latest
 idd store snapshot --tag=$TAG_NAME
 ```
 
+> **Modelo de ameaça agêntico:** hooks locais **não são barreira de segurança** contra agentes autônomos com acesso a shell, que podem contorná-los com `git commit --no-verify` ou editar `.intent.yaml` junto com o código. A garantia efetiva exige execução obrigatória no servidor (GitHub Actions CI), *branch protection* e `CODEOWNERS` exigindo revisão humana para alterações em `*.intent.yaml`, dicionário ubíquo e `decisoes.md`.
+
 ---
 
 ## Stack Tecnológica
 
-| Camada | Tecnologia |
-|---|---|
-| Base do IDE | Code - OSS (microsoft/vscode) |
-| Linguagem | TypeScript 5.3 (strict) |
-| Intent Engine (LLM) | Claude API — `claude-sonnet-4-20250514` |
-| Formato de intenção | YAML + JSON Schema |
-| Persistência | SQLite (`better-sqlite3`) |
-| Intent Graph | Cytoscape.js (webview) |
-| Testes | Vitest |
-| Multi-linguagem | TS, Python, Go, JavaScript, Rust, Java |
+| Camada | Tecnologia | Status |
+|---|---|---|
+| CLI e núcleo | Node.js 22+ · TypeScript 5.x · `@idd/core` | ✅ |
+| Análise estática AST | TypeScript Compiler API (`astGraph.ts`, `mutationFence.ts`) + `@idd/eslint-plugin` | ✅ (TS-only, análise local) |
+| Extensão e LSP | VS Code API + `vscode-languageserver` (`extensions/idd-core/`) | 🧪 experimental |
+| IDE dedicada | Fork do Code - OSS (`product.json` de marca apenas) | 🔭 projeto futuro |
+| Intent Engine (LLM) | Claude API — `claude-sonnet-5` (via `IDD_MODEL`) | 🧪 opcional |
+| Formato de intenção | YAML + JSON Schema | ✅ |
+| Persistência | SQLite (`better-sqlite3`, simulado nos testes unitários do CLI) | ✅ |
+| Intent Graph | Cytoscape.js (webview, CDN) | 🧪 |
+| Testes | Vitest | ✅ unitários / 🧪 sem E2E real |
+| Multi-linguagem | TS/JS (AST, LSP e fronteiras); Python, Go, Rust, Java (templates/hints/regex em `lang.ts`) | 🧪 assimétrico |

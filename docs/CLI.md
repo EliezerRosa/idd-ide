@@ -7,8 +7,7 @@ O `idd` é a interface de linha de comando do IDD IDE. Funciona de forma indepen
 ```bash
 cd idd-ide/cli
 npm install
-npx esbuild src/index.ts --bundle --platform=node --target=node22 \
-  --format=esm --outfile=dist/index.js --external:better-sqlite3
+npm run build
 npm link
 ```
 
@@ -31,6 +30,8 @@ npm link
 **Observabilidade:** [`drift watch`](#idd-drift-watch-flags) · [`analytics`](#idd-analytics-flags) · [`suggest`](#idd-suggest-flags)
 
 **Modelo de negócio:** [`domain`](#idd-domain-subcomando) · [`api`](#idd-api-subcomando)
+
+**Fase 0 & Governança de Linguagem:** `fase0` · `lint-ln` · `dictionary` (`dict`) · `inspect`
 
 **Organização:** [`playbook`](#idd-playbook-subcomando) · [`registry`](#idd-registry-subcomando) · [`migrate`](#idd-migrate-subcomando)
 
@@ -412,7 +413,7 @@ Camada de intenções do modelo de negócio — UML de domínio verificável at�
 ```bash
 idd domain init                             # cria domain.mmd de exemplo + CI workflow
 idd domain parse domain.mmd                 # UML → Domain Model AST
-idd domain normalize --target=3NF           # verifica formas normais (1NF→DKNF)
+idd domain normalize --target=3NF           # verifica formas normais (2NF–BCNF formais via Armstrong; 1NF e 4NF–DKNF heurísticas)
 idd domain compile                          # gera YAML + JSONB Schema + SQL + erDiagram
 idd domain verify                           # compara migrations reais vs domain model
 idd domain evolve v1.mmd v2.mmd             # gera SQL de migração entre versões do model

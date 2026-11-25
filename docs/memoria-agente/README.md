@@ -4,13 +4,12 @@ Cópia dos arquivos de memória persistente do agente (GitHub Copilot Chat) rele
 A origem vive no perfil do VS Code, fora do Git, e por isso é frágil (depende do hash do workspace
 e da máquina). Este espelho garante que o estado de retomada viaje com o repositório.
 
-**Fonte de verdade:** os arquivos no perfil do VS Code. Este diretório é um *snapshot* — refazer a cópia
-ao fim de cada bloco significativo (ou quando pedido). Última sincronização: **2026-09-06**, HEAD `a4c3bad`.
+**Fonte de verdade:** sincronizada bidirecionalmente entre o repositório (`docs/memoria-agente/`) e o perfil do VS Code (para permitir retomada imediata entre VS Code, Copilot, Cursor, Claude Code e Antigravity). Última sincronização: **2026-11-25**, branch `feat/fusao-v2-e-honestidade`.
 
 | Pasta | Origem no disco | Conteúdo |
 |---|---|---|
-| `repo/` | `%APPDATA%\Code\User\workspaceStorage\<hash>\GitHub.copilot-chat\memory-tool\memories\repo\` | Estado vivo do workspace. **`_ESTADO-ATUAL.md` é o arquivo a ler primeiro** em qualquer retomada; `fase0-e-dicionario-ubiquo-2026-09-05.md` é o snapshot técnico da última sessão |
-| `session/` | mesma base, subpastas `<id-da-conversa>/` | Notas de trabalho por conversa: `fase0-contrato-v2.md` (sessão 2026-09-05/06) e as três da sessão de 2026-09-04 (análise da implementação, UI/UX, exploração do paradigma) |
+| `repo/` | `%APPDATA%\Code\User\workspaceStorage\<hash>\GitHub.copilot-chat\memory-tool\memories\repo\` | Estado vivo do workspace. **`_ESTADO-ATUAL.md` é o arquivo a ler primeiro** em qualquer retomada; `fable-e01-e02-parecer-v2-2026-11-25.md` é o snapshot técnico atual (além do histórico `fase0-e-dicionario-ubiquo-2026-09-05.md`) |
+| `session/` | mesma base, subpastas `<id-da-conversa>/` | Notas de trabalho por conversa: `sessao-2026-11-25-parecer-v2-e-reconciliacao.md`, `fase0-contrato-v2.md` (2026-09-05/06) e notas de 2026-09-03/04 |
 | `user/` | `%APPDATA%\Code\User\globalStorage\github.copilot-chat\memory-tool\memories\` | Memória transversal do usuário, filtrada ao que diz respeito ao IDD: axioma de memória, perfil/trajetória de Eliezer, comando epistêmico × operacional, padrão de runbooks, lição de monorepo TS |
 
 Não copiados (pertencem a outros projetos ou a configuração pessoal de ferramentas):
