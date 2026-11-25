@@ -1,4 +1,5 @@
 // src/lib/fase0/casos.ts — estrutura em disco de um caso da Fase 0
+import * as crypto from 'node:crypto';
 import * as fs from 'node:fs';
 import * as path from 'node:path';
 import { emptyDictionary, parseDictionary, type UbiquitousDictionary } from '@idd/core';
@@ -114,12 +115,102 @@ export function rodadaAplicada(p: CasoPaths, n: number): boolean {
 
 // ── decisoes.md ────────────────────────────────────────────────────
 
+export interface ParametrosHashDecisao {
+  id: string;
+  texto: string;
+  escolha: string;
+  autor: string;
+  data: string;
+}
+
+/**
+ * Calcula o hash SHA-256 canônico de uma decisão humana:
+ * SHA-256("${id}|${texto}|${escolha}|${autor}|${data}")
+ */
+export function calcularHashDecisao(p: ParametrosHashDecisao): string {
+  const canônico = `${p.id.trim()}|${p.texto.trim()}|${p.escolha.trim()}|${p.autor.trim()}|${p.data.trim()}`;
+  return crypto.createHash('sha256').update(canônico, 'utf8').digest('hex');
+}
+
 export interface Decisao {
   id: string;
   marcada: boolean;
   bloqueante: boolean;
   campos: string[];
   linha: number;
+  rawLinha?: string;
+  texto?: string;
+  escolha?: string;
+  autor?: string;
+  data?: string;
+  hash?: string;
+  hashCalculado?: string;
+  hashValido?: boolean;
+}
+
+/** Extrai os componentes semânticos e criptográficos de uma linha de decisão. */
+export function extrairComponentesDecisao(id: string, campos: string[]): {
+  texto?: string;
+  escolha?: string;
+  autor?: string;
+  data?: string;
+  hash?: string;
+  hashCalculado?: string;
+  hashValido?: boolean;
+} {
+  let autor: string | undefined;
+  let hash: string | undefined;
+
+  for (const c of campos) {
+    if (/^autor\s*:/i.test(c)) autor = c.replace(/^autor\s*:/i, '').trim();
+    if (/^sha256\s*:/i.test(c)) hash = c.replace(/^sha256\s*:/i, '').trim().toLowerCase();
+  }
+
+  const metaRodada = campos.find(c => /^(R\d+|L\d+)(\/|$)/i.test(c));
+  const metaBloq = campos.find(c => /^(bloqueante|não-bloqueante)$/i.test(c));
+  const conteudoCampos = campos.filter(c =>
+    c !== metaRodada &&
+    c !== metaBloq &&
+    !/^autor\s*:/i.test(c) &&
+    !/^sha256\s*:/i.test(c)
+  );
+
+  const miolo = conteudoCampos.join(' · ').trim();
+  const mData = miolo.match(/\((\d{4}-\d{2}-\d{2})\)\s*$/);
+  const data = mData ? mData[1] : undefined;
+  const mioloSemData = mData ? miolo.slice(0, mData.index).trim() : miolo;
+
+  let texto: string | undefined;
+  let escolha: string | undefined;
+
+  if (mioloSemData.includes('→')) {
+    const partes = mioloSemData.split('→');
+    texto = partes[0].trim();
+    escolha = partes.slice(1).join('→').trim();
+  } else if (mioloSemData.includes(':')) {
+    const idx = mioloSemData.indexOf(':');
+    escolha = mioloSemData.slice(0, idx).trim();
+    texto = mioloSemData.slice(idx + 1).trim();
+  } else if (mioloSemData.includes('—')) {
+    const idx = mioloSemData.indexOf('—');
+    escolha = mioloSemData.slice(0, idx).trim();
+    texto = mioloSemData.slice(idx + 1).trim();
+  } else if (mioloSemData.length > 0) {
+    texto = mioloSemData;
+    escolha = 'aprovado';
+  }
+
+  let hashCalculado: string | undefined;
+  let hashValido: boolean | undefined;
+
+  if (texto && escolha && autor && data) {
+    hashCalculado = calcularHashDecisao({ id, texto, escolha, autor, data });
+    hashValido = (hash !== undefined && hash.toLowerCase() === hashCalculado.toLowerCase());
+  } else if (hash !== undefined) {
+    hashValido = false;
+  }
+
+  return { texto, escolha, autor, data, hash, hashCalculado, hashValido };
 }
 
 /** Lê linhas `- [x] D-001 · R01/P01 · bloqueante · ...` */
@@ -131,10 +222,74 @@ export function lerDecisoes(texto: string): Decisao[] {
     if (emCodigo || /^\s*>/.test(raw)) return;
     const m = raw.match(/^\s*[-*]\s+\[( |x|X)\]\s+(D-\d+)\s*(?:·\s*(.*))?$/);
     if (!m) return;
-    const campos = (m[3] ?? '').split('·').map(s => s.trim());
-    out.push({ id: m[2], marcada: m[1] !== ' ', bloqueante: campos.some(c => c.toLowerCase() === 'bloqueante'), campos, linha: i + 1 });
+    const todosCampos = (m[3] ?? '').split('·').map(s => s.trim());
+    const campos = todosCampos.filter(c => !/^autor\s*:/i.test(c) && !/^sha256\s*:/i.test(c));
+    const id = m[2];
+    const marcada = m[1] !== ' ';
+    const bloqueante = campos.some(c => c.toLowerCase() === 'bloqueante');
+    const comp = extrairComponentesDecisao(id, todosCampos);
+
+    out.push({
+      id,
+      marcada,
+      bloqueante,
+      campos,
+      linha: i + 1,
+      rawLinha: raw,
+      ...comp,
+    });
   });
   return out;
+}
+
+/**
+ * Carimba uma linha de decisão em markdown com autor e hash SHA-256 canônico.
+ * Se a linha for `- [x] D-001 · ...`, calcula o hash canônico e anexa `· autor: <autor> · sha256: <hash>`.
+ */
+export function carimbarDecisaoLinha(raw: string, autorPadrao = 'Eliézer Rosa'): string {
+  const m = raw.match(/^\s*[-*]\s+\[(x|X)\]\s+(D-\d+)\s*(?:·\s*(.*))?$/);
+  if (!m) return raw;
+  const id = m[2];
+  const campos = (m[3] ?? '').split('·').map(s => s.trim());
+
+  let autor = autorPadrao;
+  for (const c of campos) {
+    if (/^autor\s*:/i.test(c)) autor = c.replace(/^autor\s*:/i, '').trim();
+  }
+
+  const camposBase = campos.filter(c => !/^autor\s*:/i.test(c) && !/^sha256\s*:/i.test(c));
+  const comp = extrairComponentesDecisao(id, camposBase);
+  if (!comp.texto || !comp.escolha || !comp.data) {
+    throw new Error(`Não foi possível extrair componentes da decisão ${id}: "${raw}"`);
+  }
+
+  const hash = calcularHashDecisao({
+    id,
+    texto: comp.texto,
+    escolha: comp.escolha,
+    autor,
+    data: comp.data,
+  });
+
+  const indent = raw.match(/^\s*/)?.[0] ?? '';
+  return `${indent}- [x] ${id} · ${camposBase.join(' · ')} · autor: ${autor} · sha256: ${hash}`;
+}
+
+export function carimbarDecisoesTexto(texto: string, autorPadrao = 'Eliézer Rosa'): { texto: string; total: number; carimbadas: number } {
+  let carimbadas = 0;
+  let total = 0;
+  let emCodigo = false;
+  const linhas = texto.split(/\r?\n/).map(raw => {
+    if (/^\s*(```|~~~)/.test(raw)) { emCodigo = !emCodigo; return raw; }
+    if (emCodigo || /^\s*>/.test(raw)) return raw;
+    if (/^\s*[-*]\s+\[(x|X)\]\s+(D-\d+)/.test(raw)) {
+      total++;
+      carimbadas++;
+      return carimbarDecisaoLinha(raw, autorPadrao);
+    }
+    return raw;
+  });
+  return { texto: linhas.join('\n'), total, carimbadas };
 }
 
 export function proximoIdDecisao(texto: string): number {
@@ -171,10 +326,11 @@ const CAB_INVARIANTES = `# Invariantes — {caso}
 const CAB_DECISOES = `# Decisões — {caso}
 
 > Registro das decisões humanas, uma por linha:
-> respondida: \`- [x] D-001 · R01/P01 · bloqueante · <pergunta> → <resposta> (AAAA-MM-DD)\`
+> respondida: \`- [x] D-001 · R01/P01 · bloqueante · <pergunta> → <resposta> (AAAA-MM-DD) · autor: <autor> · sha256: <hash>\`
 > em aberto:  \`- [ ] D-002 · R01/P02 · bloqueante · <pergunta>\`
 > Você também pode responder uma pergunta em aberto editando a linha e marcando [x].
-> O Gate 1 só fica verde sem decisões \`[ ]\` bloqueantes.
+> Toda decisão [x] deve ter autor e hash SHA-256 canônico ("\${id}|\${texto}|\${escolha}|\${autor}|\${data}").
+> O Gate 1 só fica verde sem decisões \`[ ]\` bloqueantes e com todas as [x] íntegras.
 
 `;
 

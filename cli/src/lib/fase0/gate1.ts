@@ -1,5 +1,5 @@
 // src/lib/fase0/gate1.ts — Gate 1 (fim do loop 1): critérios determinísticos, a IA não aprova a própria saída
-import { lerDecisoes, lerDicionarioCaso, lerTexto, type CasoPaths } from './casos.ts';
+import { lerDecisoes, lerDicionarioCaso, lerTexto, type CasoPaths, type Decisao } from './casos.ts';
 import { extrairItens, lintTexto, type DiagnosticoLn } from './lintLn.ts';
 import {
   calcularShalaPragmatico,
@@ -60,12 +60,53 @@ export function avaliarGate1(p: CasoPaths, diag: DiagnosticosCaso = lintCaso(p))
     detalhe: ruins.size === 0 ? `${itensInv.length} invariante(s) válida(s)` : `${ruins.size} invariante(s) com problema (linhas ${[...ruins].sort((x, y) => x - y).join(', ')})`,
   };
 
-  // (c) nenhuma decisão bloqueante em aberto
-  const abertas = lerDecisoes(lerTexto(p.decisoes)).filter(d => !d.marcada && d.bloqueante);
+  // (c) integridade criptográfica SHA-256 e nenhuma decisão bloqueante em aberto
+  const todasDecisoes = lerDecisoes(lerTexto(p.decisoes));
+  const abertas = todasDecisoes.filter(d => !d.marcada && d.bloqueante);
+  const marcadas = todasDecisoes.filter(d => d.marcada);
+
+  const semHash: Decisao[] = [];
+  const semAutor: Decisao[] = [];
+  const corrompidas: Array<{ decisao: Decisao; esperado: string; gravado: string }> = [];
+
+  for (const d of marcadas) {
+    if (!d.hash) {
+      semHash.push(d);
+    } else if (!d.autor) {
+      semAutor.push(d);
+    } else if (!d.hashValido) {
+      corrompidas.push({ decisao: d, esperado: d.hashCalculado ?? 'indefinido', gravado: d.hash });
+    }
+  }
+
+  const falhasC: string[] = [];
+  if (abertas.length > 0) {
+    falhasC.push(`${abertas.length} em aberto: ${abertas.map(d => d.id).join(', ')}`);
+  }
+  if (semHash.length > 0) {
+    falhasC.push(`${semHash.length} decisão(ões) [x] sem hash SHA-256 (linhas ${semHash.map(d => `${d.id}:L${d.linha}`).join(', ')})`);
+  }
+  if (semAutor.length > 0) {
+    falhasC.push(`${semAutor.length} decisão(ões) sem autoria declarada (linhas ${semAutor.map(d => `${d.id}:L${d.linha}`).join(', ')})`);
+  }
+  if (corrompidas.length > 0) {
+    for (const item of corrompidas) {
+      falhasC.push(`decisão ${item.decisao.id} corrompida na linha ${item.decisao.linha} (hash gravado ${item.gravado.slice(0, 10)}... != esperado ${item.esperado.slice(0, 10)}...)`);
+    }
+  }
+
+  const okC = falhasC.length === 0;
+  const detalheC = okC
+    ? (marcadas.length > 0
+        ? `${marcadas.length} decisão(ões) com SHA-256 íntegro; nenhuma bloqueante em aberto`
+        : 'nenhuma')
+    : falhasC.join('; ');
+
   const c: CriterioGate = {
-    id: 'c', descricao: 'nenhuma decisão bloqueante em aberto em decisoes.md',
-    ok: abertas.length === 0,
-    detalhe: abertas.length === 0 ? 'nenhuma' : `${abertas.length} em aberto: ${abertas.map(d => d.id).join(', ')}`,
+    id: 'c',
+    descricao: 'decisões íntegras (SHA-256), com autoria declarada e nenhuma bloqueante em aberto',
+    ok: okC,
+    detalhe: detalheC,
   };
 
   // (d) pelo menos 1 intenção e 1 invariante

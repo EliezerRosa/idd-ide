@@ -1,6 +1,6 @@
 // src/__tests__/graphify.test.ts — Testes unitários do Graphify / AST Ingestion do IDD
 import { describe, it, expect } from 'vitest';
-import { CAMPO_DINAMICO, extrairAstTypeScript, graphificarCodigo } from '../lib/fase0/graphify.ts';
+import { CAMPO_DINAMICO, extrairAstTypeScript, graphificarCodigo } from '../lib/fase0/astGraph.ts';
 
 describe('Graphify / AST & Code Ingestion', () => {
   it('extrai nós de classes, métodos e mutações de estado de código TypeScript', () => {

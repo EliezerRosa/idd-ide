@@ -1,6 +1,6 @@
 // src/lib/inspect.ts — ponte código → contrato: sugere anotações TSDoc (@intent, @mutates) a partir das
 // mutações de estado que o código já faz. Útil para adotar o IDD numa base existente, método a método.
-import { CAMPO_DINAMICO, extrairAstTypeScript } from './fase0/graphify.ts';
+import { CAMPO_DINAMICO, extrairAstTypeScript } from './fase0/astGraph.ts';
 
 export interface MetodoInspecionado {
   classe: string;

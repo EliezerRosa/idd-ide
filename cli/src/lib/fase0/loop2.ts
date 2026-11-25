@@ -6,7 +6,7 @@ import * as path from 'node:path';
 import { AguardandoRespostaManual, escolherProvedor, type LlmProvider } from '../llm/index.ts';
 import { avaliarAtividades, gravarAtividadesPuml, lerAtividades } from './atividades.ts';
 import {
-  caminhosCaso, fmtDecisaoId, hoje, lerDicionarioCaso, lerTexto, proximoIdDecisao, rotuloRodada, type CasoPaths,
+  caminhosCaso, carimbarDecisaoLinha, fmtDecisaoId, hoje, lerDicionarioCaso, lerTexto, proximoIdDecisao, rotuloRodada, type CasoPaths,
 } from './casos.ts';
 import { avaliarCasos, lerCasos, renderContexto } from './casosDeUso.ts';
 import { avaliarEstados, gravarEstadosPuml, lerEstados } from './estados.ts';
@@ -328,7 +328,8 @@ export function aplicarRodadaEtapa<S extends SaidaComum>(
   let contador = proximoIdDecisao(lerTexto(p.decisoes));
   const novas: string[] = [];
   const registrar = (marcada: boolean, alvo: string, campos: string): void => {
-    novas.push(`- [${marcada ? 'x' : ' '}] ${fmtDecisaoId(contador++)} · ${ref}/${alvo} · ${campos}`);
+    const raw = `- [${marcada ? 'x' : ' '}] ${fmtDecisaoId(contador++)} · ${ref}/${alvo} · ${campos}`;
+    novas.push(marcada ? carimbarDecisaoLinha(raw, 'Eliézer Rosa') : raw);
   };
 
   for (const q of saida.perguntas) {
