@@ -11,6 +11,13 @@
       "forbidden": []
     },
     {
+      "term": "Consumo",
+      "definition": "Associação entre um ItemConsumido e um Participante que o consumiu; define entre quem o preço do item é dividido.",
+      "kind": "entity",
+      "aliases": [],
+      "forbidden": []
+    },
+    {
       "term": "Cota",
       "definition": "Valor em centavos inteiros que um participante deve pagar: a parte dos itens que consumiu mais a parte proporcional da taxa de serviço.",
       "kind": "value-object",
@@ -47,6 +54,13 @@
       "forbidden": [
         "Notinha"
       ]
+    },
+    {
+      "term": "Pagamento",
+      "definition": "Comprovante enviado por um Participante para a própria Cota, com o valor em centavos e a confirmação do ResponsavelMesa.",
+      "kind": "entity",
+      "aliases": [],
+      "forbidden": []
     },
     {
       "term": "Participante",

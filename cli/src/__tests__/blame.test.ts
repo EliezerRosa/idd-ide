@@ -105,7 +105,8 @@ describe('getCurrentCommit', () => {
 // getFileHistory
 // ════════════════════════════════════════════════════════════════
 
-describe('getFileHistory', () => {
+// cria repositórios git e faz vários commits: o limite padrão de 5 s estoura com a suíte inteira em paralelo
+describe('getFileHistory', { timeout: 30_000 }, () => {
   it('retorna array vazio quando não é repo git', () => {
     expect(getFileHistory(tmpDir, 'foo.txt')).toHaveLength(0);
   });

@@ -1,6 +1,6 @@
 -- Gerado por idd domain compile
 -- Domínio: racha-conta  |  Versão: 0.0.1
--- Data: 2026-10-29T00:44:26.569Z
+-- Data: 2026-10-30T21:52:24.799Z
 -- Formas normais alvo: até 3NF/BCNF
 
 BEGIN;

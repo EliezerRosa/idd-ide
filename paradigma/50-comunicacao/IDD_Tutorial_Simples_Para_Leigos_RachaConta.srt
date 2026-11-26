@@ -1,0 +1,47 @@
+1
+00:00:01,000 --> 00:00:18,232
+[Apresentadora] Imagine que três amigos, Ana, Bruno e Carla, pediram uma pizza de cem reais. Na hora de dividir por três na calculadora, dá trinta e três reais e trinta e três centavos para cada um. Mas somando os três, dá noventa e nove e noventa e nove! Para onde foi o centavo que faltou?
+
+2
+00:00:18,682 --> 00:00:46,426
+[Eliézer Rosa] Esse exemplo mostra o que acontece quando pedimos para uma Inteligência Artificial criar um aplicativo no improviso. Sem regras claras, o programa perde centavos ou deixa mudar a conta depois de fechada. No método IDD, antes de programar, escrevemos os combinados em português claro: a primeira pessoa paga trinta e três e trinta e quatro, e as outras duas pagam trinta e três e trinta e três. A soma fecha em cem reais exatos!
+
+3
+00:00:46,876 --> 00:00:56,308
+[Apresentadora] Muito claro! E antes de abrirmos a tela do sistema: o que já está pronto e funcionando hoje para quem quiser usar, e o que ainda é plano para o futuro?
+
+4
+00:00:56,758 --> 00:01:18,598
+[Eliézer Rosa] Aqui nós jogamos limpo, separando o que está pronto do que é futuro. Hoje já funcionam o organizador de regras da Fase Zero, o fiscal automático que confere se a Inteligência Artificial respeitou os combinados, e o Painel Visual que vamos usar agora no navegador. Já a ideia de construir um programa editor próprio completo é um projeto para o futuro.
+
+5
+00:01:19,048 --> 00:01:29,752
+[Apresentadora] Vamos então ao Passo Um do nosso tutorial, com a tela bem grande e nítida! Como qualquer pessoa usa esse Painel Visual para conferir as regras do aplicativo Racha-Conta?
+
+6
+00:01:30,202 --> 00:01:53,602
+[Eliézer Rosa] É muito simples! Olhe para a lista na esquerda da tela: ali ficam todas as ações do aplicativo, como criar a mesa, anotar um item ou calcular a divisão. Basta clicar em Calcular Cotas: o painel mostra no centro o objetivo daquela ação em português simples e exibe o selo verde de cem por cento lá na direita, mostrando que a regra está sendo respeitada.
+
+7
+00:01:54,052 --> 00:02:03,700
+[Apresentadora] No Passo Dois, clicamos na ação Fechar a Mesa. Como uma pessoa leiga descobre o que o aplicativo pode mexer nessa hora e o que está trancado com cadeado?
+
+8
+00:02:04,150 --> 00:02:24,022
+[Eliézer Rosa] Olhe para as duas faixas no meio da tela! Na etiqueta verde está escrito o que o sistema tem permissão para anotar: apenas o horário em que a mesa fechou. Já nas etiquetas cinzas ao lado estão os itens protegidos com cadeado: o valor total da conta e o preço dos pedidos não podem ser alterados na hora de fechar a mesa.
+
+9
+00:02:24,472 --> 00:02:34,384
+[Apresentadora] E chegamos ao Passo Três! O que acontece se a Inteligência Artificial errar e tentar mudar o valor total da conta para zero bem na hora de fechar a mesa?
+
+10
+00:02:34,834 --> 00:02:55,858
+[Eliézer Rosa] Você mesmo pode testar isso na caixa da direita! Quando digitamos ali uma tentativa de zerar o total da conta, o painel acende um alerta vermelho na mesma hora, a nota lá na direita cai de cem para trinta por cento e uma mensagem explica exatamente qual regra foi quebrada. Para desfazer o teste, basta clicar no botão Restaurar.
+
+11
+00:02:56,308 --> 00:03:04,876
+[Apresentadora] Para concluir no Passo Quatro: quando o aplicativo tem várias ações, como encontrar rapidinho apenas a regra do pagamento por Pix?
+
+12
+00:03:05,326 --> 00:03:26,566
+[Eliézer Rosa] Basta clicar na barra de busca lá no topo da tela e digitar Pagamento. A lista da esquerda esconde todo o resto e mostra apenas Enviar Comprovante e Confirmar Pagamento. Assim você confere que ninguém pode dar baixa na conta sem apresentar o comprovante. Simples, visual e fácil de usar por qualquer pessoa!

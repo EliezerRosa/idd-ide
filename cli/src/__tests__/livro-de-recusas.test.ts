@@ -16,7 +16,8 @@ function runCli(cwd: string, args: string[]) {
   });
 }
 
-describe('Livro de Recusas — gates determinísticos (sem LLM, exit code != 0)', () => {
+// cada recusa sobe um processo do CLI: o limite padrão de 5 s estoura com a suíte inteira rodando em paralelo
+describe('Livro de Recusas — gates determinísticos (sem LLM, exit code != 0)', { timeout: 30_000 }, () => {
   let tmp: string;
   beforeEach(() => {
     tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'idd-recusa-'));
@@ -207,6 +208,67 @@ describe('Livro de Recusas — gates determinísticos (sem LLM, exit code != 0)'
     const res = runCli(tmp, ['verify', '--fail-on=critical']);
     expect(res.status).toBe(1);
     expect(res.stdout + res.stderr).toMatch(/\[A-02\]/);
+  });
+
+  it('Recusa #6: idd verify recusa mutação fora de allowed_fields e em campo read-only via AST (exit 1 com --fail-on=critical)', () => {
+    // 1. Criar contrato com allowed_fields e read_only_fields
+    fs.mkdirSync(path.join(tmp, 'conta'), { recursive: true });
+    fs.mkdirSync(path.join(tmp, '__tests__'), { recursive: true });
+    fs.writeFileSync(
+      path.join(tmp, 'conta', 'fechamento.intent.yaml'),
+      [
+        'version: "2.0"',
+        'intent: "Fechar a mesa registrando a data de encerramento"',
+        'module: conta/fechamento',
+        'target_class: Mesa',
+        'target_method: fechar',
+        'constraints:',
+        '  - id: C-01',
+        '    type: invariant',
+        '    severity: critical',
+        '    description: "Mesa fechada não pode ter o saldo alterado"',
+        'behavioral_contract:',
+        '  visibility: public',
+        '  state_mutation:',
+        '    allowed_fields: ["status", "fechada_em"]',
+        '    read_only_fields: ["id", "saldoCentavos"]',
+        'acceptance:',
+        '  - id: A-01',
+        '    given: "Mesa aberta"',
+        '    when: "Responsável fechar"',
+        '    then: "status passa para fechada"',
+      ].join('\n'),
+    );
+
+    // 2. Criar teste para cobrir acceptance e isolar a recusa na cerca de mutação
+    fs.writeFileSync(
+      path.join(tmp, '__tests__', 'fechamento.test.ts'),
+      'it("[A-01] status passa para fechada", () => {});\n'
+    );
+
+    // 3. Criar código que tenta violar: altera saldoCentavos (read-only) e campoEstranho (não autorizado)
+    fs.writeFileSync(
+      path.join(tmp, 'conta', 'fechamento.ts'),
+      [
+        'export class Mesa {',
+        '  public id: string = "1";',
+        '  public status: string = "aberta";',
+        '  public fechada_em: Date | null = null;',
+        '  public saldoCentavos: number = 0;',
+        '  public campoEstranho: number = 0;',
+        '',
+        '  fechar() {',
+        '    this.status = "fechada";',
+        '    this.saldoCentavos = 999; // Violação INV-ENCAP-01 (read-only)',
+        '    this.campoEstranho = 123; // Violação INV-UI-04 (fora de allowed_fields)',
+        '  }',
+        '}',
+      ].join('\n'),
+    );
+
+    const res = runCli(tmp, ['verify', '--fail-on=critical']);
+    expect(res.status).toBe(1);
+    expect(res.stdout + res.stderr).toMatch(/INV-ENCAP-01|INV-UI-04/);
   });
 });
 

@@ -3,6 +3,7 @@ import * as fs from 'node:fs';
 import * as os from 'node:os';
 import * as path from 'node:path';
 import { caminhosCaso, inicializarCaso, lerDecisoes, lerTexto } from '../lib/fase0/casos.ts';
+import { avaliarGate1 } from '../lib/fase0/gate1.ts';
 import { avaliarGate2 } from '../lib/fase0/gate2.ts';
 import { exportarCaso } from '../lib/fase0/exportacao.ts';
 import { arquivoEtapa, executarLoop2, lerRodadaMer } from '../lib/fase0/loop2.ts';

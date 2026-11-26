@@ -12,6 +12,7 @@ import {
   type Acceptance, type ContractVersion, type ImportViolation, type ProjectIntent,
 } from '@idd/core';
 import { checkIntentAgainstDictionary } from './dictionary.ts';
+import { verificarCercaMutacao } from '../lib/mutationFence.ts';
 
 interface IntentYaml {
   intent:      string;
@@ -285,7 +286,26 @@ export async function cmdVerify(args: string[]): Promise<void> {
     const code = fs.readFileSync(codeFile, 'utf8');
 
     // Análise estática
-    const { violations: staticViol, critical: staticCritical } = analyzeStatic(code, intent);
+    let { violations: staticViol, critical: staticCritical } = analyzeStatic(code, intent);
+
+    // Cerca de Mutação AST (INV-ENCAP-01 e INV-UI-04)
+    const allowedFields: string[] = parsed.ok
+      ? parsed.contract.behavioralContract.stateMutation.allowedFields
+      : (rawDoc as any)?.behavioral_contract?.state_mutation?.allowed_fields || (rawDoc as any)?.state_mutation?.allowed_fields || [];
+
+    const readOnlyFields: string[] = parsed.ok
+      ? parsed.contract.behavioralContract.stateMutation.readOnlyFields
+      : (rawDoc as any)?.behavioral_contract?.state_mutation?.read_only_fields || (rawDoc as any)?.state_mutation?.read_only_fields || [];
+
+    const targetClass = parsed.ok ? parsed.contract.targetClass : (rawDoc as any)?.target_class;
+    const targetMethod = parsed.ok ? parsed.contract.targetMethod : (rawDoc as any)?.target_method;
+    for (const v of verificarCercaMutacao(code, codeFile, { targetClass, targetMethod, allowedFields, readOnlyFields })) {
+      staticViol.push(v.mensagem);
+      staticCritical = true;
+      if (process.env.GITHUB_ACTIONS) {
+        console.error(`::error file=${codeFile},line=${v.mutacao.line},col=${v.mutacao.column}::${v.mensagem}`);
+      }
+    }
 
     // Dicionário Ubíquo (warn, nunca drift): linguagem fora do dicionário é ambiguidade latente
     let termViol: string[] = [];
@@ -355,7 +375,7 @@ export async function cmdVerify(args: string[]): Promise<void> {
     for (const r of withIssues) {
       console.log(`  ${BOLD}${r.module}${RESET}`);
       for (const v of r.violations) {
-        const isCrit = FORBIDDEN.find(f => f.msg === v)?.sev === 'critical';
+        const isCrit = FORBIDDEN.find(f => f.msg === v)?.sev === 'critical' || v.startsWith('[INV-');
         console.log(`    ${isCrit ? `${RED}✗` : `${YELLOW}⚠`}  ${v}${RESET}`);
       }
       for (const t of r.missingTests) {

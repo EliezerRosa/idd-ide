@@ -7,15 +7,19 @@
 | Intenção | Caso(s) de Uso | Transação(ões) | Método(s) Circunscrito(s) | Contrato(s) v2 |
 | --- | --- | --- | --- | --- |
 | **INT-001** | UC-02 (Registrar participantes e consumo), UC-03 (Consultar a própria cota) | TN-02, TN-03, TN-04 | `Mesa.incluirParticipante`, `Mesa.registrarItemConsumido`, `Mesa.calcularCotas` | `contratos/Mesa.incluirParticipante.intent.yaml`, `contratos/Mesa.registrarItemConsumido.intent.yaml`, `contratos/Mesa.calcularCotas.intent.yaml` |
+| **INT-002** | UC-03 (Consultar a própria cota) | TN-04 | `Mesa.calcularCotas` | `contratos/Mesa.calcularCotas.intent.yaml` |
 | **INT-003** | UC-03 (Consultar a própria cota) | TN-04 | `Mesa.calcularCotas` | `contratos/Mesa.calcularCotas.intent.yaml` |
 | **INT-004** | UC-05 (Pagar a própria cota) | TN-06, TN-07 | `Mesa.gerarCobrancaPix`, `Pagamento.enviarComprovante` | `contratos/Mesa.gerarCobrancaPix.intent.yaml`, `contratos/Pagamento.enviarComprovante.intent.yaml` |
 | **INT-005** | UC-01 (Criar mesa) | TN-01 | `Mesa.criar` | `contratos/Mesa.criar.intent.yaml` |
+| **INT-006** | UC-04 (Fechar mesa) | TN-05 | `Mesa.fechar` | `contratos/Mesa.fechar.intent.yaml` |
+| **INT-007** | UC-06 (Confirmar pagamento) | TN-08 | `Pagamento.confirmar` | `contratos/Pagamento.confirmar.intent.yaml` |
 
 ## 2. Invariantes → Transações → Métodos → Contratos
 
 | Invariante | Transação(ões) | Método(s) Circunscrito(s) | Contrato(s) v2 |
 | --- | --- | --- | --- |
 | **INV-001** | TN-04 | `Mesa.calcularCotas` | `contratos/Mesa.calcularCotas.intent.yaml` |
+| **INV-002** | TN-04 | `Mesa.calcularCotas` | `contratos/Mesa.calcularCotas.intent.yaml` |
 | **INV-003** | TN-03 | `Mesa.registrarItemConsumido` | `contratos/Mesa.registrarItemConsumido.intent.yaml` |
 | **INV-004** | TN-03 | `Mesa.registrarItemConsumido` | `contratos/Mesa.registrarItemConsumido.intent.yaml` |
 | **INV-005** | TN-04, TN-06 | `Mesa.calcularCotas`, `Mesa.gerarCobrancaPix` | `contratos/Mesa.calcularCotas.intent.yaml`, `contratos/Mesa.gerarCobrancaPix.intent.yaml` |

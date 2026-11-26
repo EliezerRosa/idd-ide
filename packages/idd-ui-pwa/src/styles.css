@@ -28,3 +28,115 @@ button { font: inherit; }
 .code-editor-input:focus { background: #eef6f2; }
 .code-preview { min-height: 120px !important; }
 .reset-btn { display: inline-flex; align-items: center; gap: 4px; padding: 2px 6px; border: 1px solid #b5b3a7; border-radius: 3px; background: #eceae0; color: #2d3e37; font: 9px 'DM Mono', monospace; cursor: pointer; }
+
+/* SHALA & Ubiquidade - Combo Científico Custo Zero */
+.shala-card { margin: 16px; padding: 12px; border: 1px solid #c9c7bb; background: #fdfcf9; border-radius: 4px; }
+.shala-card-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
+.shala-card-header span { font: 9px 'DM Mono', monospace; color: #68766f; text-transform: uppercase; letter-spacing: .05em; }
+.shala-card-header b { font: 12px 'DM Mono', monospace; color: #17865e; }
+.shala-pillars { display: flex; flex-direction: column; gap: 4px; margin: 8px 0; font: 10px 'DM Mono', monospace; color: #3b4e45; }
+.shala-pillar-row { display: flex; align-items: center; justify-content: space-between; padding: 2px 0; border-bottom: 1px dotted #e1ded3; }
+.shala-btn { width: 100%; margin-top: 8px; padding: 6px 8px; border: 1px solid #1f5c49; background: #17865e; color: #fff; font: 10px 'DM Mono', monospace; border-radius: 3px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 5px; transition: background 0.15s; }
+.shala-btn:hover { background: #136a4b; }
+
+.shala-modal-backdrop { position: fixed; inset: 0; background: rgba(16, 35, 31, 0.75); display: flex; align-items: center; justify-content: center; z-index: 1000; padding: 20px; }
+.shala-modal { background: #f4f1e8; border: 1px solid #345047; border-radius: 6px; width: min(840px, 95vw); max-height: 90vh; overflow-y: auto; box-shadow: 0 10px 25px rgba(0,0,0,0.5); display: flex; flex-direction: column; }
+.shala-modal-header { display: flex; align-items: center; justify-content: space-between; padding: 14px 18px; background: #10231f; color: #e8e7df; border-bottom: 1px solid #345047; }
+.shala-modal-header h3 { margin: 0; font-size: 15px; display: flex; align-items: center; gap: 8px; }
+.shala-modal-header button { background: transparent; border: 0; color: #c9c7bb; cursor: pointer; }
+.shala-modal-body { padding: 18px; color: #1d2925; font-size: 13px; line-height: 1.5; }
+.shala-table { width: 100%; border-collapse: collapse; margin: 14px 0; font: 11px 'DM Mono', monospace; background: #fff; border: 1px solid #cfcdc1; }
+.shala-table th, .shala-table td { padding: 8px 10px; border: 1px solid #cfcdc1; text-align: left; }
+.shala-table th { background: #eceae0; color: #23372f; font-weight: 700; }
+.shala-badge-red { color: #c94640; background: #fbeae8; padding: 2px 5px; border-radius: 3px; font-weight: bold; }
+.shala-badge-green { color: #17865e; background: #e4f4ed; padding: 2px 5px; border-radius: 3px; font-weight: bold; }
+
+/* Switcher de Fases no Topbar */
+.phase-switcher { display: flex; align-items: center; gap: 6px; margin: 0 16px; }
+.phase-tab { display: flex; align-items: center; gap: 6px; padding: 6px 12px; border-radius: 4px; border: 1px solid #345047; background: #163029; color: #aebfb8; font: 11px 'DM Mono', monospace; cursor: pointer; transition: all 0.15s; }
+.phase-tab:hover { background: #1d3c33; color: #fff; }
+.phase-tab.active { background: #e5c15c; color: #10231f; font-weight: 700; border-color: #e5c15c; }
+
+/* Barra de Menus Clássica de Desktop (File, Edit, View, Tools, Help) */
+.desktop-menubar { display: flex; align-items: center; gap: 2px; margin-left: 12px; }
+.menu-btn { background: transparent; border: 0; color: #c8d4ce; font: 11px 'DM Mono', monospace; padding: 5px 9px; border-radius: 3px; cursor: pointer; position: relative; transition: all 0.1s; }
+.menu-btn:hover, .menu-btn.active { background: #1d3c33; color: #fff; }
+.dropdown-menu { position: absolute; top: 100%; left: 0; background: #142823; border: 1px solid #345047; border-radius: 5px; min-width: 230px; box-shadow: 0 8px 24px rgba(0,0,0,0.55); z-index: 1050; padding: 5px 0; margin-top: 4px; display: flex; flex-direction: column; }
+.dropdown-item { display: flex; align-items: center; justify-content: space-between; padding: 7px 14px; color: #e2ece7; font: 11px 'DM Mono', monospace; cursor: pointer; background: transparent; border: 0; text-align: left; width: 100%; transition: background 0.1s; }
+.dropdown-item:hover { background: #1d4036; color: #e5c15c; }
+.dropdown-item span { display: flex; align-items: center; gap: 8px; }
+.dropdown-shortcut { color: #7b8e86; font-size: 10px; margin-left: 12px; }
+.dropdown-separator { height: 1px; background: #254037; margin: 4px 0; }
+
+/* Estúdio de Ingestão Fase 0 */
+.ingestion-studio { grid-column: 2 / -1; background: #f4f1e8; overflow-y: auto; padding: 24px 32px; min-height: 0; }
+.ingestion-header { margin-bottom: 24px; border-bottom: 1px solid #d4d0c4; padding-bottom: 16px; }
+.ingestion-header h1 { margin: 0 0 6px; font-size: 22px; color: #1c352d; display: flex; align-items: center; gap: 10px; }
+.ingestion-header p { margin: 0; font-size: 13px; color: #5f6f67; }
+.ingestion-grid { display: grid; grid-template-columns: 1.1fr 1fr; gap: 24px; }
+.ingestion-section { background: #fdfcf9; border: 1px solid #cfcdc1; border-radius: 6px; padding: 20px; box-shadow: 0 1px 3px rgba(0,0,0,0.04); }
+.ingestion-section h2 { margin: 0 0 14px; font-size: 15px; color: #1c352d; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #e5e3d8; padding-bottom: 8px; }
+.ingestion-section h2 span { font: 10px 'DM Mono', monospace; color: #76857d; font-weight: normal; }
+
+.dropzone { border: 2px dashed #b8c7bf; border-radius: 6px; padding: 24px 16px; text-align: center; background: #f7faf8; margin-bottom: 14px; cursor: pointer; transition: border-color 0.15s; }
+.dropzone:hover { border-color: #27765b; background: #f0f7f3; }
+.dropzone svg { color: #27765b; margin-bottom: 8px; }
+.dropzone strong { display: block; font-size: 13px; color: #1c352d; margin-bottom: 4px; }
+.dropzone small { display: block; font-size: 11px; color: #6d7b74; }
+
+.ingestion-textarea { width: 100%; min-height: 140px; padding: 12px; border: 1px solid #cfcdc1; border-radius: 4px; background: #fff; color: #1d2925; font: 12px/1.6 'DM Mono', monospace; resize: vertical; outline: none; margin-bottom: 12px; }
+.ingestion-textarea:focus { border-color: #27765b; ring: 2px solid #a2d2bf; }
+
+.action-row { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-top: 10px; }
+.btn-secondary { padding: 7px 12px; border: 1px solid #cfcdc1; background: #eceae0; color: #2d3e37; font: 11px 'DM Mono', monospace; border-radius: 4px; cursor: pointer; }
+.btn-secondary:hover { background: #e0ded4; }
+.btn-primary { padding: 9px 16px; border: 1px solid #145942; background: #17865e; color: #fff; font: 12px 'DM Mono', monospace; font-weight: 700; border-radius: 4px; cursor: pointer; display: flex; align-items: center; gap: 8px; }
+.btn-primary:hover { background: #116849; }
+
+.term-chips-container { display: flex; flex-wrap: wrap; gap: 8px; margin: 10px 0; }
+.term-chip-box { padding: 6px 10px; background: #edf4f0; border: 1px solid #bcd8cb; border-radius: 4px; font: 11px 'DM Mono', monospace; color: #164f3c; }
+.term-chip-box b { color: #0d3b2b; }
+
+.shala-meter-box { padding: 14px; border-radius: 6px; margin: 14px 0; border: 1px solid; }
+.shala-meter-box.high { background: #fdf2f0; border-color: #e5b0aa; color: #8e2b26; }
+.shala-meter-box.zero { background: #edf8f2; border-color: #a4dcc0; color: #10593e; }
+.shala-meter-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px; }
+.shala-meter-header strong { font-size: 15px; font-family: 'DM Mono', monospace; }
+
+.socratic-card { background: #fff; border: 1px solid #d4d0c4; border-left: 4px solid #d29d21; border-radius: 4px; padding: 14px; margin: 14px 0; }
+.socratic-card h4 { margin: 0 0 8px; font-size: 13px; color: #1c352d; }
+.socratic-options { display: flex; flex-direction: column; gap: 8px; margin-top: 10px; }
+.socratic-opt-btn { display: flex; align-items: flex-start; gap: 8px; padding: 10px 12px; border: 1px solid #cfcdc1; border-radius: 4px; background: #fbfaf5; text-align: left; cursor: pointer; font: 12px sans-serif; color: #2d3e37; transition: all 0.15s; }
+.socratic-opt-btn:hover { background: #f2f0e6; border-color: #27765b; }
+.socratic-opt-btn.chosen { background: #e3f2ea; border-color: #17865e; color: #0d3b2b; font-weight: 600; }
+
+.export-card-box { background: #163029; color: #e8e7df; border-radius: 6px; padding: 16px; margin-top: 16px; }
+.export-card-box h3 { margin: 0 0 10px; font-size: 14px; color: #e5c15c; display: flex; align-items: center; gap: 8px; }
+.export-files-list { list-style: none; padding: 0; margin: 0 0 14px; font: 11px 'DM Mono', monospace; }
+.export-files-list li { display: flex; align-items: center; gap: 8px; padding: 4px 0; color: #c8d4ce; }
+
+.source-tabs { display: flex; gap: 6px; margin-bottom: 12px; border-bottom: 1px solid #cfcdc1; padding-bottom: 8px; }
+.source-tab-btn { padding: 6px 11px; border: 1px solid #cfcdc1; background: #eceae0; color: #2d3e37; font: 11px 'DM Mono', monospace; border-radius: 4px; cursor: pointer; display: flex; align-items: center; gap: 6px; transition: all 0.15s; }
+.source-tab-btn:hover { background: #e0ded4; }
+.source-tab-btn.active { background: #17865e; color: #fff; border-color: #145942; font-weight: bold; }
+
+.graph-preview-box { background: #10231f; color: #dce6e0; padding: 14px; border-radius: 6px; font: 11px 'DM Mono', monospace; margin: 12px 0; border: 1px solid #345047; }
+.graph-tag { background: #1f4e3d; color: #7ee8bd; padding: 2px 6px; border-radius: 3px; font-size: 10px; margin-right: 6px; font-weight: bold; }
+.graph-edge-row { display: flex; align-items: center; gap: 6px; padding: 3px 0; color: #b7c7be; font-size: 11px; }
+
+/* Visualizador Interativo de Grafo & Inspetor de Nós */
+.graph-view-modal { background: #162622; border: 1px solid #345047; border-radius: 8px; width: min(1000px, 96vw); height: min(720px, 90vh); display: flex; flex-direction: column; box-shadow: 0 12px 35px rgba(0,0,0,0.6); overflow: hidden; }
+.graph-view-header { display: flex; align-items: center; justify-content: space-between; padding: 14px 20px; background: #0f1c19; border-bottom: 1px solid #2b453e; color: #e8e7df; }
+.graph-view-content { display: grid; grid-template-columns: 1fr 340px; flex: 1; min-height: 0; }
+.graph-svg-area { background: #0b1613; position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center; }
+.graph-svg-area svg { width: 100%; height: 100%; }
+
+.graph-inspector-panel { background: #162923; border-left: 1px solid #2b453e; padding: 20px; color: #dce6e0; overflow-y: auto; font-family: 'DM Mono', monospace; }
+.graph-inspector-panel h3 { margin: 0 0 12px; font-size: 14px; color: #e5c15c; border-bottom: 1px solid #2d4c42; padding-bottom: 8px; display: flex; align-items: center; gap: 8px; }
+.inspector-field { margin-bottom: 14px; }
+.inspector-field label { display: block; font-size: 10px; color: #8da59b; margin-bottom: 5px; text-transform: uppercase; }
+.inspector-field input, .inspector-field textarea, .inspector-field select { width: 100%; padding: 8px 10px; border-radius: 4px; border: 1px solid #36574c; background: #0f1e1a; color: #e8e7df; font: 12px 'DM Mono', monospace; outline: none; }
+.inspector-field textarea { min-height: 70px; resize: vertical; }
+.inspector-field input:focus, .inspector-field textarea:focus { border-color: #45b08c; }
+.inspector-save-btn { width: 100%; padding: 9px; border: 1px solid #145942; background: #17865e; color: #fff; font: 11px 'DM Mono', monospace; font-weight: bold; border-radius: 4px; cursor: pointer; transition: background 0.15s; margin-top: 8px; }
+.inspector-save-btn:hover { background: #116849; }

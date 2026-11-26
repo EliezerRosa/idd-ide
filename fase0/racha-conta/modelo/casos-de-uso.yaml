@@ -52,7 +52,7 @@ casos_de_uso:
   - id: UC-03
     nome: Consultar a própria cota
     ator: Participante
-    intencoes: [INT-001, INT-003]
+    intencoes: [INT-001, INT-002, INT-003]
     transacoes:
       - id: TN-04
         nome: Calcular as cotas da mesa
@@ -65,13 +65,13 @@ casos_de_uso:
           - "A parte da [[TaxaServico]] de cada [[Participante]] é proporcional ao valor dos itens que ele consumiu; o centavo indivisível da taxa continua o rodízio alfabético a partir do [[Participante]] seguinte ao último que recebeu centavo dos itens."
           - "A soma das [[Cota]]s é exatamente igual à soma dos preços dos [[ItemConsumido]] mais a [[TaxaServico]]."
           - "Toda [[Cota]] é um número inteiro de centavos ≥ 0."
-        invariantes: [INV-001, INV-005]
+        invariantes: [INV-001, INV-002, INV-005]
         altera: []
         le: [ItemConsumido.preco_centavos, ItemConsumido.ordem, Consumo, Participante.nome, Mesa.taxa_servico_percentual]
   - id: UC-04
     nome: Fechar mesa
     ator: ResponsavelMesa
-    intencoes: []
+    intencoes: [INT-006]
     transacoes:
       - id: TN-05
         nome: Fechar a mesa para pagamento
@@ -113,7 +113,7 @@ casos_de_uso:
   - id: UC-06
     nome: Confirmar pagamento
     ator: ResponsavelMesa
-    intencoes: []
+    intencoes: [INT-007]
     transacoes:
       - id: TN-08
         nome: Confirmar o pagamento de um participante

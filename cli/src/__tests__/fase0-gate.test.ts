@@ -32,7 +32,17 @@ const crit = (g: ReturnType<typeof avaliarGate1>, id: string) => g.criterios.fin
 describe('Gate 1', () => {
   it('verde quando tudo está em ordem', () => {
     const g = avaliarGate1(caso());
-    expect(g.criterios.map(c => c.ok)).toEqual([true, true, true, true]);
+    expect(g.criterios.map(c => c.ok)).toEqual([true, true, true, true, true]);
+    expect(g.verde).toBe(true);
+    expect(crit(g, 'e').ok).toBe(true);
+    expect(crit(g, 'e').detalhe).toContain('nenhuma detectada');
+  });
+
+  it('(e) consultivo: interpretações concorrentes viram pergunta, sem reprovar o gate', () => {
+    const g = avaliarGate1(caso({ int: '- **INT-001** O [[Sistema]] deve dividir a conta entre os participantes.\n' }));
+    expect(crit(g, 'e').ok).toBe(false);
+    expect(crit(g, 'e').consultivo).toBe(true);
+    expect(crit(g, 'e').detalhe).toMatch(/interpretações estimadas.*pergunta sugerida/);
     expect(g.verde).toBe(true);
   });
 
@@ -66,7 +76,7 @@ describe('Gate 1', () => {
     expect(crit(g, 'c').ok).toBe(false);
     expect(crit(g, 'c').detalhe).toContain('D-001');
     fs.rmSync(path.join(root, 'fase0'), { recursive: true, force: true });
-    const g2 = avaliarGate1(caso({ dec: '- [ ] D-001 · R01/P01 · não-bloqueante · Moeda?\n- [x] D-002 · R01/P02 · bloqueante · Q → R (2026-10-27)\n' }));
+    const g2 = avaliarGate1(caso({ dec: '- [ ] D-001 · R01/P01 · não-bloqueante · Moeda?\n- [x] D-002 · R01/P02 · bloqueante · Q → R (2026-10-27) · autor: Eliézer Rosa · sha256: cd701fdf4378f74deca346191982d6af67cecd00e161c8c3f2815e87a9576c9a\n' }));
     expect(crit(g2, 'c').ok).toBe(true);
   });
 

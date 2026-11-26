@@ -24,7 +24,7 @@ echo "→ Compilando CLI..."
 cd "$ROOT_DIR/cli"
 npm ci --ignore-scripts
 npx esbuild src/index.ts --bundle --platform=node --target=node20 \
-  --format=esm --outfile=dist/index.js --external:better-sqlite3
+  --format=esm --outfile=dist/index.js --external:better-sqlite3 --external:typescript
 # Garante shebang único e executável
 sed -i.bak '2{/^#!/d}' dist/index.js 2>/dev/null || sed -i '' '2{/^#!/d;}' dist/index.js
 rm -f dist/index.js.bak

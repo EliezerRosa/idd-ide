@@ -2,7 +2,7 @@
 import * as fs from 'node:fs';
 import { TERM_KINDS, parseDictionary, type DictionaryTerm, type TermKind } from '@idd/core';
 import {
-  arquivoRodada, fmtDecisaoId, hoje, lerDicionarioCaso, lerTexto, proximoIdDecisao, rotuloRodada,
+  arquivoRodada, carimbarDecisaoLinha, fmtDecisaoId, hoje, lerDicionarioCaso, lerTexto, proximoIdDecisao, rotuloRodada,
   salvarDicionarioCaso, type CasoPaths,
 } from './casos.ts';
 import { lerRodadaRespondida, type RespostasRodada } from './rodada.ts';
@@ -60,7 +60,12 @@ export function aplicarRodada(p: CasoPaths, n: number, data: string = hoje()): R
   let contador = proximoIdDecisao(lerTexto(p.decisoes));
   const novas: string[] = [];
   const registrar = (marcada: boolean, ref: string, campos: string): void => {
-    novas.push(`- [${marcada ? 'x' : ' '}] ${fmtDecisaoId(contador++)} · ${R}/${ref} · ${campos}`);
+    const raw = `- [${marcada ? 'x' : ' '}] ${fmtDecisaoId(contador++)} · ${R}/${ref} · ${campos}`;
+    if (marcada) {
+      novas.push(carimbarDecisaoLinha(raw, 'Eliézer Rosa'));
+    } else {
+      novas.push(raw);
+    }
   };
 
   // Perguntas -> decisoes.md
