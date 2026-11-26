@@ -20,10 +20,10 @@
 
 ### 4. Apresentação Interativa Integral do Parecer v2 (`apresentacao-parecer-idd`, fora do Git `idd-ide`)
 - Construída a aplicação completa em `c:\IDE IDD Claude-VS Code\apresentacao-parecer-idd\` (`index.html`, `styles.css`, `app.js`, `games.js`, `data/scenes.js`, `iniciar.ps1`).
-- **Conteúdo integral fiel ao Parecer v2:** 9 Atos, 32 cenas, **48 min 43 s** (`2.923,3 s`) de narração contínua com 11 personas (7 narradores dedicados às eras conceituais + Eliézer Rosa, Argon AI, Neon AI e Claude Opus 5 com avatares reais do workspace).
-- **Motor TTS (com transparência):** 20 faixas em `gemini-3.8-flash-tts`, 5 faixas em `gemini-3.8-flash-lite-tts` e 7 faixas em `edge-tts` Neural PT-BR após atingir cota diária Free Tier Gemini; todas masterizadas via FFmpeg EBU R128 (`-14 LUFS`, 48 kHz stereo, 160 kbps MP3).
+- **Conteúdo integral fiel ao Parecer v2:** 9 Atos, 32 cenas, **48 min 29 s** (`2.909,8 s`) de narração contínua com 11 personas (7 narradores dedicados às eras conceituais + Eliézer Rosa, Argon AI, Neon AI e Claude Opus 5 com avatares reais do workspace).
+- **Motor TTS (100% Gemini 3.8 Studio TTS após renovação de cota em 26/11):** 27 faixas em `gemini-3.8-flash-tts` + 5 faixas em `gemini-3.8-flash-lite-tts` (zero fallbacks `edge-tts`); todas masterizadas via FFmpeg EBU R128 (`-14 LUFS`, 48 kHz stereo, 160 kbps MP3).
 - **Mídia e interatividade:** 8 charges editoriais 1600×900 (Chromium headless SVG + avatares reais, devido ao limite Free Tier 0/dia de geração de imagem Gemini) + 8 GIFs animados 36-frame (Pillow) + 5 mini-jogos jogáveis (`ears`, `vault`, `ast`, `audit`, `science`) + 13 entrevistas/palestras reais verificadas no YouTube via `youtube.com/oembed`.
-- **Verificações:** sintaxe JS (`node --check`), integridade de DOM/games/assets (0 arquivos faltantes), escuta amostral de áudio (corrigida a cena 31 para `gemini-3.8-flash-lite-tts` `Despina`) e revisão visual das charges (corrigidos ajustes tipográficos nas charges 4 e 7). Pendente apenas o QA ao vivo no Chrome via `chrome_devtools` (aguardando autorização "Allow remote debugging?" no navegador).
+- **Verificações:** sintaxe JS (`node --check`), integridade de DOM/games/assets (0 arquivos faltantes), escuta amostral das vozes finais em Gemini 3.8 e revisão visual das 8 charges (ajustes tipográficos corrigidos nas charges 4 e 7). Pendente apenas o QA ao vivo no Chrome via `chrome_devtools` (aguardando autorização `chrome://inspect/#remote-debugging` no Chrome).
 
 ## Retomada imediata (próxima sessão / outro agente ou IDE)
 1. Ler `docs/memoria-agente/repo/_ESTADO-ATUAL.md` (seção **ONDE ESTAMOS**).
